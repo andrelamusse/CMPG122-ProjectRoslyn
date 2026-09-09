@@ -834,8 +834,8 @@ body {
 /* Sticky Question Jump Palette Navigator */
 .exam-navigator-bar {
   position: sticky;
-  top: 12px;
-  z-index: 80;
+  top: 76px;
+  z-index: 45;
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -861,6 +861,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .navigator-badge {
@@ -882,9 +883,25 @@ body {
   color: var(--text-main);
 }
 
+.nav-timer-pill {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--accent-amber);
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
 .navigator-actions {
   display: flex;
   gap: 0.4rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .action-btn-sm {
@@ -912,12 +929,13 @@ body {
   align-items: center;
   max-height: 120px;
   overflow-y: auto;
-  padding: 2px;
+  padding: 3px 2px;
 }
 
 .palette-pill {
-  width: 33px;
+  min-width: 34px;
   height: 33px;
+  padding: 0 4px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -947,19 +965,32 @@ body {
   font-weight: 800;
 }
 
+.palette-pill.flagged {
+  background: rgba(245, 158, 11, 0.2) !important;
+  border-color: var(--accent-amber) !important;
+  color: #fbbf24 !important;
+}
+
 .palette-pill.flagged::after {
   content: '★';
   position: absolute;
-  top: -5px;
-  right: -4px;
-  font-size: 0.65rem;
+  top: 1px;
+  right: 2px;
+  font-size: 0.6rem;
   color: var(--accent-amber);
   line-height: 1;
 }
 
+.palette-pill.answered.flagged {
+  background: rgba(59, 130, 246, 0.3) !important;
+  border-color: var(--accent-amber) !important;
+  color: #fde68a !important;
+}
+
 .palette-pill.current-card {
   border-color: var(--accent-purple) !important;
-  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.5);
+  box-shadow: 0 0 0 2px var(--accent-purple), 0 0 10px rgba(168, 85, 247, 0.4) !important;
+  color: #ffffff !important;
 }
 
 .palette-pill.correct {
@@ -972,6 +1003,56 @@ body {
   background: rgba(239, 68, 68, 0.25) !important;
   border-color: #ef4444 !important;
   color: #f87171 !important;
+}
+
+.palette-pill.unanswered-missed {
+  background: rgba(245, 158, 11, 0.2) !important;
+  border-color: #f59e0b !important;
+  color: #fbbf24 !important;
+}
+
+.palette-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  padding-top: 0.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.legend-dot.dot-unanswered {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+}
+
+.legend-dot.dot-answered {
+  background: rgba(59, 130, 246, 0.6);
+  border: 1px solid var(--accent-blue);
+}
+
+.legend-dot.dot-flagged {
+  background: rgba(245, 158, 11, 0.6);
+  border: 1px solid var(--accent-amber);
+}
+
+.legend-dot.dot-current {
+  border: 1.5px solid var(--accent-purple);
+  background: rgba(168, 85, 247, 0.5);
 }
 
 /* Continuous Examination Paper Cover & Document */
@@ -1110,7 +1191,7 @@ body {
   padding: 1.75rem;
   margin-bottom: 1.75rem;
   position: relative;
-  scroll-margin-top: 140px;
+  scroll-margin-top: 195px;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -1414,6 +1495,7 @@ body {
   margin-top: 2.5rem;
   margin-bottom: 3.5rem;
   text-align: center;
+  scroll-margin-top: 195px;
 }
 
 .paper-footer-title {
@@ -1591,6 +1673,28 @@ body {
   }
   .tools-drawer {
     width: 100vw;
+  }
+  .exam-navigator-bar {
+    top: 116px;
+    padding: 0.5rem 0.75rem;
+    gap: 0.45rem;
+  }
+  .exam-question-palette {
+    max-height: 84px;
+    gap: 0.3rem;
+  }
+  .palette-pill {
+    min-width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+  }
+  .paper-q-card {
+    scroll-margin-top: 225px;
+    padding: 1.25rem 1rem;
+  }
+  .paper-footer-card {
+    scroll-margin-top: 225px;
+    padding: 1.5rem 1rem;
   }
 }
 

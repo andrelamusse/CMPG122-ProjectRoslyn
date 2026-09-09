@@ -165,6 +165,8 @@
       examQuestionPalette: document.getElementById('examQuestionPalette'),
       btnJumpUnanswered: document.getElementById('btnJumpUnanswered'),
       btnJumpSubmit: document.getElementById('btnJumpSubmit'),
+      navExamTimer: document.getElementById('navExamTimer'),
+      btnNavExitExam: document.getElementById('btnNavExitExam'),
       continuousPaperArea: document.getElementById('continuousPaperArea'),
       singleCardArea: document.getElementById('singleCardArea'),
       // Drawer
@@ -792,6 +794,14 @@
     const shuffled = [...pool].sort(() => 0.5 - Math.random());
     const selected = shuffled.slice(0, Math.min(count, pool.length));
 
+    clearInterval(state.examTimerInterval);
+    state.isExamMode = false;
+    state.selectedExamId = null;
+    state.examSubmitted = false;
+    state.flags = {};
+    if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
+    if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
+
     launchQuizSession(`Custom Practice (${checked.join(', ')})`, selected, false);
   }
 
@@ -975,10 +985,13 @@
       return;
     }
     const unit = DATA.units.find(u => u.id === unitId);
+    clearInterval(state.examTimerInterval);
     state.isExamMode = false;
     state.selectedExamId = null;
     state.examSubmitted = false;
     state.flags = {};
+    if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
+    if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
     launchQuizSession(`${unit ? unit.title : unitId} Practice`, questions, false);
   }
 
@@ -992,8 +1005,10 @@
       return;
     }
 
+    clearInterval(state.examTimerInterval);
     state.isExamMode = true;
     state.selectedExamId = examId;
+    state.isTimedExam = !!isTimed;
     state.examSubmitted = false;
     state.flags = {};
     state.answers = {};
@@ -1010,9 +1025,11 @@
     // Timer setup
     if (isTimed) {
       if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'flex';
+      if (dom.navExamTimer) dom.navExamTimer.style.display = 'inline-flex';
       startExamTimer();
     } else {
       if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
+      if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
       clearInterval(state.examTimerInterval);
     }
 
@@ -1049,9 +1066,11 @@
     // Timer setup
     if (isTimed) {
       if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'flex';
+      if (dom.navExamTimer) dom.navExamTimer.style.display = 'inline-flex';
       startExamTimer();
     } else {
       if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
+      if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
       clearInterval(state.examTimerInterval);
     }
 
@@ -1077,7 +1096,7 @@
 
   function setViewMode(mode) {
     if (state.isExamMode) {
-      console.warn('Official exam papers are locked to Continuous Single-Sheet Paper Only.');
+      console.warn('CRITICAL INVARIANT: Official exam papers are strictly locked to Continuous Single-Sheet Paper Only.');
       return;
     }
     state.viewMode = mode;
@@ -1085,6 +1104,11 @@
   }
 
   function applyViewMode(mode) {
+    if (state.isExamMode) {
+      // Invariant safeguard: enforce continuous mode under all conditions in exams
+      mode = 'continuous';
+    }
+
     if (dom.btnModeContinuous) dom.btnModeContinuous.classList.toggle('active', mode === 'continuous');
     if (dom.btnModeCard) dom.btnModeCard.classList.toggle('active', mode === 'card');
 
@@ -1119,20 +1143,25 @@
 
       if (state.examSecondsLeft <= 0) {
         clearInterval(state.examTimerInterval);
-        alert('Time is up! Your exam will now be submitted automatically.');
-        submitCompleteExamPaper();
+        alert('Time is up! Your exam paper will now be submitted automatically.');
+        submitCompleteExamPaper(true); // Forced submission with NO cancellation allowed
       }
     }, 1000);
   }
 
   function updateTimerDisplay() {
-    if (!dom.quizTimerDisplay) return;
     const mins = Math.floor(state.examSecondsLeft / 60);
     const secs = state.examSecondsLeft % 60;
-    dom.quizTimerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    const formatted = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    if (dom.quizTimerDisplay) dom.quizTimerDisplay.textContent = formatted;
+    if (dom.navExamTimer) dom.navExamTimer.textContent = `⏱️ ${formatted}`;
   }
 
   function renderCurrentQuestion() {
+    if (state.isExamMode) {
+      console.warn('CRITICAL INVARIANT: Official exam papers cannot be rendered as a single-question card.');
+      return;
+    }
     if (!dom.quizArea || state.quizQuestions.length === 0) return;
 
     const q = state.quizQuestions[state.currentIndex];
@@ -1276,6 +1305,7 @@
   }
 
   function prevQuestion() {
+    if (state.isExamMode) return;
     if (state.currentIndex > 0) {
       state.currentIndex--;
       renderCurrentQuestion();
@@ -1283,16 +1313,12 @@
   }
 
   function nextQuestion() {
+    if (state.isExamMode) return;
     if (state.currentIndex < state.quizQuestions.length - 1) {
       state.currentIndex++;
       renderCurrentQuestion();
     } else {
-      // Finished
-      if (state.isExamMode) {
-        submitExam();
-      } else {
-        finishPractice();
-      }
+      finishPractice();
     }
   }
 
@@ -1573,6 +1599,46 @@
     html += `</div>`;
 
     dom.continuousPaperArea.innerHTML = html;
+    setupQuestionObserver();
+  }
+
+  let questionObserver = null;
+
+  function setupQuestionObserver() {
+    if (questionObserver) {
+      questionObserver.disconnect();
+      questionObserver = null;
+    }
+
+    if (!('IntersectionObserver' in window)) return;
+
+    const options = {
+      root: null,
+      rootMargin: '-100px 0px -60% 0px',
+      threshold: 0
+    };
+
+    questionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = parseInt(entry.target.getAttribute('data-idx'), 10);
+          if (!isNaN(idx)) {
+            state.currentIndex = idx;
+            highlightCurrentPalettePill(idx);
+          }
+        }
+      });
+    }, options);
+
+    const cards = document.querySelectorAll('.paper-q-card');
+    cards.forEach(card => questionObserver.observe(card));
+  }
+
+  function highlightCurrentPalettePill(currentIdx) {
+    const pills = document.querySelectorAll('.palette-pill');
+    pills.forEach((pill, idx) => {
+      pill.classList.toggle('current-card', idx === currentIdx);
+    });
   }
 
   function updateNavigatorSummary() {
@@ -1581,7 +1647,17 @@
     const answeredCount = Object.keys(state.answers).length;
     const flaggedCount = Object.values(state.flags).filter(Boolean).length;
     const pct = Math.round((answeredCount / total) * 100);
-    dom.examNavigatorSummary.textContent = `${answeredCount} / ${total} Answered (${pct}%) • ${flaggedCount} Flagged`;
+
+    if (state.examSubmitted) {
+      const totalMarks = state.quizQuestions.reduce((sum, q) => sum + (q.marks || 2), 0);
+      const earnedMarks = Object.values(state.answers).reduce((sum, a) => sum + (a.isCorrect ? a.score : 0), 0);
+      const scorePct = totalMarks > 0 ? Math.round((earnedMarks / totalMarks) * 100) : 0;
+      const correctCount = Object.values(state.answers).filter(a => a.isCorrect).length;
+      const missedCount = total - correctCount;
+      dom.examNavigatorSummary.textContent = `Score: ${earnedMarks}/${totalMarks} Marks (${scorePct}%) • ${correctCount} Correct • ${missedCount} Missed`;
+    } else {
+      dom.examNavigatorSummary.textContent = `${answeredCount} / ${total} Answered (${pct}%) • ${flaggedCount} Flagged`;
+    }
   }
 
   function renderExamPalette() {
@@ -1597,18 +1673,29 @@
       const isFlagged = !!state.flags[q.id];
 
       let pillClasses = 'palette-pill';
+      if (idx === state.currentIndex) pillClasses += ' current-card';
       if (isFlagged) pillClasses += ' flagged';
+
+      let statusDesc = isAnswered ? 'Answered' : 'Unanswered';
 
       if (state.examSubmitted) {
         const ans = state.answers[q.id];
-        if (ans && ans.isCorrect) pillClasses += ' correct';
-        else if (ans && !ans.isCorrect) pillClasses += ' incorrect';
+        if (ans && ans.isCorrect) {
+          pillClasses += ' correct';
+          statusDesc = `Correct (+${q.marks || 2} Marks)`;
+        } else if (ans && !ans.isCorrect) {
+          pillClasses += ' incorrect';
+          statusDesc = 'Incorrect (0 Marks)';
+        } else {
+          pillClasses += ' unanswered-missed';
+          statusDesc = 'Unanswered (0 Marks)';
+        }
       } else {
         if (isAnswered) pillClasses += ' answered';
       }
 
       html += `
-        <button type="button" class="${pillClasses}" id="palettePill_${q.id}" onclick="CMPG122_APP.jumpToQuestion(${idx})" title="Question ${qNum}: ${isAnswered ? 'Answered' : 'Unanswered'}${isFlagged ? ' (Flagged)' : ''}">
+        <button type="button" class="${pillClasses}" id="palettePill_${q.id}" onclick="CMPG122_APP.jumpToQuestion(${idx})" title="Question ${qNum}: ${statusDesc}${isFlagged ? ' (Flagged)' : ''}">
           Q${qNum}
         </button>
       `;
@@ -1651,8 +1738,9 @@
     const pill = document.getElementById(`palettePill_${qId}`);
     if (pill) {
       pill.classList.add('answered');
+      const qNum = state.quizQuestions.findIndex(item => item.id === qId) + 1;
       const isFlagged = !!state.flags[qId];
-      pill.title = `Question: Answered${isFlagged ? ' (Flagged)' : ''}`;
+      pill.title = `Question ${qNum}: Answered${isFlagged ? ' (Flagged)' : ''}`;
     }
 
     updateNavigatorSummary();
@@ -1692,8 +1780,15 @@
 
     const pill = document.getElementById(`palettePill_${qId}`);
     if (pill) {
-      if (cleanVal !== '') pill.classList.add('answered');
-      else pill.classList.remove('answered');
+      const qNum = state.quizQuestions.findIndex(item => item.id === qId) + 1;
+      const isFlagged = !!state.flags[qId];
+      if (cleanVal !== '') {
+        pill.classList.add('answered');
+        pill.title = `Question ${qNum}: Answered${isFlagged ? ' (Flagged)' : ''}`;
+      } else {
+        pill.classList.remove('answered');
+        pill.title = `Question ${qNum}: Unanswered${isFlagged ? ' (Flagged)' : ''}`;
+      }
     }
 
     updateNavigatorSummary();
@@ -1724,8 +1819,9 @@
     const pill = document.getElementById(`palettePill_${qId}`);
     if (pill) {
       pill.classList.toggle('flagged', isFlagged);
+      const qNum = state.quizQuestions.findIndex(item => item.id === qId) + 1;
       const isAnswered = state.answers[qId] !== undefined;
-      pill.title = `Question: ${isAnswered ? 'Answered' : 'Unanswered'}${isFlagged ? ' (Flagged)' : ''}`;
+      pill.title = `Question ${qNum}: ${isAnswered ? 'Answered' : 'Unanswered'}${isFlagged ? ' (Flagged)' : ''}`;
     }
 
     updateNavigatorSummary();
@@ -1733,6 +1829,7 @@
 
   function jumpToQuestion(idx) {
     if (idx < 0 || idx >= state.quizQuestions.length) return;
+    state.currentIndex = idx;
     const q = state.quizQuestions[idx];
     const card = document.getElementById(`paperQ_${q.id}`);
     if (card) {
@@ -1742,15 +1839,30 @@
         card.classList.remove('highlight-focus');
       }, 1500);
     }
+    highlightCurrentPalettePill(idx);
   }
 
   function jumpToNextUnanswered() {
     const questions = state.quizQuestions;
-    const idx = questions.findIndex(q => state.answers[q.id] === undefined);
-    if (idx !== -1) {
-      jumpToQuestion(idx);
+    const total = questions.length;
+    if (total === 0) return;
+
+    // Search starting from current position + 1, wrapping around circularly
+    let startIdx = (state.currentIndex + 1) % total;
+    let foundIdx = -1;
+
+    for (let i = 0; i < total; i++) {
+      const checkIdx = (startIdx + i) % total;
+      if (state.answers[questions[checkIdx].id] === undefined) {
+        foundIdx = checkIdx;
+        break;
+      }
+    }
+
+    if (foundIdx !== -1) {
+      jumpToQuestion(foundIdx);
     } else {
-      alert('All questions on this examination paper have been answered! You can review or submit at the foot of the document.');
+      alert('All questions on this examination paper have been answered! You can review or finalize your submission at the foot of the document.');
     }
   }
 
@@ -1761,14 +1873,14 @@
     }
   }
 
-  function submitCompleteExamPaper() {
+  function submitCompleteExamPaper(force = false) {
     if (state.examSubmitted) return;
 
     const totalQuestions = state.quizQuestions.length;
     const answeredCount = Object.keys(state.answers).length;
     const unansweredCount = totalQuestions - answeredCount;
 
-    if (unansweredCount > 0) {
+    if (!force && unansweredCount > 0) {
       const confirmSubmit = confirm(
         `Warning: You have ${unansweredCount} unanswered question(s) out of ${totalQuestions}.\n\nAre you sure you want to submit the complete examination paper now?`
       );
@@ -1777,6 +1889,8 @@
 
     clearInterval(state.examTimerInterval);
     state.examSubmitted = true;
+    if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
+    if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
 
     const totalMarks = state.quizQuestions.reduce((sum, q) => sum + (q.marks || 2), 0);
     const earnedMarks = Object.values(state.answers).reduce((sum, a) => sum + (a.isCorrect ? a.score : 0), 0);
@@ -1816,19 +1930,17 @@
     renderContinuousExamPaper();
     renderExamPalette();
 
-    alert(`NWU Examination Assessment Result:\nGrade: ${gradeTitle}\nTotal Score: ${earnedMarks} / ${totalMarks} Marks (${pct}%)\n\nYou can now review full step-by-step solutions for every question directly on this continuous examination paper.`);
-
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function submitExam() {
-    submitCompleteExamPaper();
+    submitCompleteExamPaper(false);
   }
 
   function retakeExam() {
     if (confirm("Are you sure you want to retake this examination paper? Your previous answers will be cleared.")) {
       if (state.selectedExamId) {
-        startExam(state.selectedExamId, false);
+        startExam(state.selectedExamId, !!state.isTimedExam);
       } else {
         launchQuizSession(dom.quizTitle ? dom.quizTitle.textContent : "Practice", state.quizQuestions, false);
       }
@@ -1841,10 +1953,17 @@
         return;
       }
     }
+    if (questionObserver) {
+      questionObserver.disconnect();
+      questionObserver = null;
+    }
     clearInterval(state.examTimerInterval);
     state.isExamMode = false;
     state.selectedExamId = null;
+    state.isTimedExam = false;
     state.examSubmitted = false;
+    if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
+    if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
     switchTab('exams');
   }
 
@@ -1856,7 +1975,10 @@
         clearInterval(state.examTimerInterval);
         state.isExamMode = false;
         state.selectedExamId = null;
+        state.isTimedExam = false;
         state.examSubmitted = false;
+        if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
+        if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
         switchTab('units');
       }
     }

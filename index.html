@@ -398,19 +398,27 @@
         </div>
 
         <!-- Sticky Question Jump Palette Navigator for Continuous Exam Paper -->
-        <div id="examNavigatorBar" class="exam-navigator-bar">
+        <div id="examNavigatorBar" class="exam-navigator-bar" style="display:none;">
           <div class="navigator-meta">
             <div class="navigator-title-row">
               <span class="navigator-badge">📋 QUESTION PALETTE</span>
               <span id="examNavigatorSummary" class="navigator-summary">0 / 16 Answered (0%)</span>
+              <span id="navExamTimer" class="nav-timer-pill" style="display:none;">⏱️ 180:00</span>
             </div>
             <div class="navigator-actions">
               <button type="button" id="btnJumpUnanswered" class="action-btn-sm" onclick="CMPG122_APP.jumpToNextUnanswered()">⏭️ Next Unanswered</button>
               <button type="button" id="btnJumpSubmit" class="action-btn-sm" onclick="CMPG122_APP.jumpToSubmit()">📋 Jump to Submit</button>
+              <button type="button" id="btnNavExitExam" class="action-btn-sm" onclick="CMPG122_APP.exitExamPaper()" style="color:var(--danger-text); border-color:var(--danger-border);" title="Exit Exam Paper">✕ Exit</button>
             </div>
           </div>
           <div id="examQuestionPalette" class="exam-question-palette">
             <!-- Dynamically populated question pills -->
+          </div>
+          <div class="palette-legend">
+            <span class="legend-item"><span class="legend-dot dot-unanswered"></span> Unanswered</span>
+            <span class="legend-item"><span class="legend-dot dot-answered"></span> Answered</span>
+            <span class="legend-item"><span class="legend-dot dot-flagged"></span> Flagged</span>
+            <span class="legend-item"><span class="legend-dot dot-current"></span> Current Position</span>
           </div>
         </div>
 
