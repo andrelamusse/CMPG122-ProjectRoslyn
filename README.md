@@ -1,6 +1,16 @@
 # NWU CMPG122 • User Interface Programming in Visual C# Study & Exam Suite
 
-Welcome to the **NWU CMPG122 Mastery Application Suite (Production V7.00)**. This application provides **100% curriculum exhaustion for Weeks 1 to 7** of North-West University's CMPG 122 module.
+Welcome to the **NWU CMPG122 Mastery Application Suite (Production V7.00)** ("Project Roslyn"). This application provides **100% curriculum exhaustion for Weeks 1 to 7** of North-West University's CMPG 122 module.
+
+---
+
+## 🌐 Official Live Deployment & Repository Endpoints
+
+- 🌐 **Live Student Web Application:** [https://andrelamusse.github.io/CMPG122-ProjectRoslyn/](https://andrelamusse.github.io/CMPG122-ProjectRoslyn/)
+- 📊 **Live Admin Analytics Dashboard:** [https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html](https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html)
+- 📁 **Official GitHub Repository:** [https://github.com/andrelamusse/CMPG122-ProjectRoslyn](https://github.com/andrelamusse/CMPG122-ProjectRoslyn)
+- 🤖 **Master Engineering Specification & Prompt:** [`MasterPrompt_V7.00.md`](./MasterPrompt_V7.00.md)
+- 💬 **Direct Creator Escalation Channel:** [https://wa.me/27660673757](https://wa.me/27660673757)
 
 ---
 

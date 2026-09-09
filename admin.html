@@ -158,6 +158,185 @@
   <!-- Main Content -->
   <main class="admin-wrapper">
 
+    <!-- Official Live Deployment Endpoints Card -->
+    <div class="admin-card" style="border-left: 4px solid var(--accent-azure);">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+        <div>
+          <h2 style="font-size:1.3rem; font-weight:800; color:var(--text-main); margin-bottom:0.25rem;">
+            🌐 Official Deployment & Repository Endpoints
+          </h2>
+          <p style="color:var(--text-muted); font-size:0.85rem;">
+            Verified production web apps, live telemetry dashboards, and source code repositories for NWU CMPG122.
+          </p>
+        </div>
+        <span class="badge-status">Production V7.00 • Active</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.88rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; background:var(--bg-card); padding:0.85rem 1.1rem; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <span style="font-size:1.4rem;">🌐</span>
+            <div>
+              <div style="font-weight:700; color:var(--text-main);">Live Student Web Application:</div>
+              <div style="font-family:var(--font-mono); font-size:0.82rem; color:var(--accent-azure); word-break:break-all;">https://andrelamusse.github.io/CMPG122-ProjectRoslyn/</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <button class="action-btn" onclick="copyText('https://andrelamusse.github.io/CMPG122-ProjectRoslyn/', this)">📋 Copy</button>
+            <a href="https://andrelamusse.github.io/CMPG122-ProjectRoslyn/" target="_blank" class="action-btn" style="text-decoration:none; background:var(--accent-azure); color:#fff;">🚀 Launch App</a>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; background:var(--bg-card); padding:0.85rem 1.1rem; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <span style="font-size:1.4rem;">📊</span>
+            <div>
+              <div style="font-weight:700; color:var(--text-main);">Live Admin Analytics Dashboard:</div>
+              <div style="font-family:var(--font-mono); font-size:0.82rem; color:var(--accent-cyan); word-break:break-all;">https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <button class="action-btn" onclick="copyText('https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html', this)">📋 Copy</button>
+            <a href="https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html" target="_blank" class="action-btn" style="text-decoration:none;">📊 Live Portal</a>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; background:var(--bg-card); padding:0.85rem 1.1rem; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <span style="font-size:1.4rem;">📁</span>
+            <div>
+              <div style="font-weight:700; color:var(--text-main);">Official GitHub Repository:</div>
+              <div style="font-family:var(--font-mono); font-size:0.82rem; color:var(--accent-emerald); word-break:break-all;">https://github.com/andrelamusse/CMPG122-ProjectRoslyn</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <button class="action-btn" onclick="copyText('https://github.com/andrelamusse/CMPG122-ProjectRoslyn', this)">📋 Copy</button>
+            <a href="https://github.com/andrelamusse/CMPG122-ProjectRoslyn" target="_blank" class="action-btn" style="text-decoration:none;">📁 View Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Master Specification & System Prompt Card -->
+    <div class="admin-card" style="border-left: 4px solid #ab47bc;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem;">
+        <div>
+          <h2 style="font-size:1.3rem; font-weight:800; color:var(--text-main); margin-bottom:0.25rem;">
+            🤖 Master Engineering Specification & AI Prompt (V7.00)
+          </h2>
+          <p style="color:var(--text-muted); font-size:0.85rem;">
+            Canonical architectural specification governing Project Roslyn and the NWU CMPG122 assessment suite.
+          </p>
+        </div>
+        <div style="display:flex; gap:0.5rem;">
+          <button class="action-btn" id="btnCopyPrompt" onclick="copyMasterPrompt()" style="background:#ab47bc; color:#fff; font-weight:700;">
+            📋 Copy Master Prompt
+          </button>
+          <button class="action-btn" onclick="togglePromptView()">
+            <span id="promptToggleText">▼ Show Prompt</span>
+          </button>
+        </div>
+      </div>
+      <div id="masterPromptViewer" style="display:none; background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:1.25rem; max-height:480px; overflow-y:auto; font-family:var(--font-mono); font-size:0.82rem; line-height:1.6; white-space:pre-wrap; color:var(--text-main);"># NWU CMPG122 • User Interface Programming in Visual C# Master Engineering Specification (V7.00)
+
+&gt; **Document Identifier:** NWU-CMPG122-PROJECT-ROSLYN-MASTER-SPECIFICATION-V7.00  
+&gt; **Official Repository:** https://github.com/andrelamusse/CMPG122-ProjectRoslyn  
+&gt; **Live Student Web Application:** https://andrelamusse.github.io/CMPG122-ProjectRoslyn/  
+&gt; **Live Admin Analytics Dashboard:** https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html  
+&gt; **Direct Creator Escalation Channel:** https://wa.me/27660673757  
+
+---
+
+You are an expert Educational Software Architect, Lead C# Compiler/Tooling Engineer, and Full-Stack Web Developer. Your mission is to build, audit, and deploy the official NWU CMPG122 (User Interface Programming in Visual C#, Weeks 1–7) Active Assessment &amp; Study Suite ("Project Roslyn") matching the Project Axiom reference architecture.
+
+---
+
+### 1. CORE ARCHITECTURAL INVARIANTS &amp; TECH STACK
+1. **Zero-Build &amp; Zero-CORS Standalone Architecture:**
+   - Pure Vanilla HTML5, CSS3 Custom Properties, and ECMAScript 2022+.
+   - Zero bundler or framework dependencies (no Webpack, Vite, Node runtime, or npm build steps required to run).
+   - Works flawlessly directly from local disk (`file://`), GitHub Pages, or LMS webviews.
+2. **Typography &amp; Styling:**
+   - Dark VS Code-inspired IDE theme (`#121418`, `#1a1e24`, `#21262d`) with neon accents (Teal `#00bcd4`, Azure `#007acc`, Amber `#ffb74d`, Emerald `#4caf50`, Purple `#ab47bc`, Coral `#f44336`).
+   - Fonts: Preconnected Google Fonts (`Inter` for UI readability, `JetBrains Mono` for code, syntax, and telemetry numbers).
+3. **Dual Distribution Formats:**
+   - Modular GitHub Pages suite (`CMPG122_App/` containing `index.html`, `admin.html`, `css/style.css`, `js/csharp_engine.js`, `js/data.js`, `js/telemetry.js`, `js/app.js`).
+   - Unified 100% offline single-file mobile bundle (`CMPG122_Test1_StudyGuide.html`) with all styles, engines, and questions inlined.
+
+---
+
+### 2. REAL-TIME GLOBAL CLOUD TELEMETRY (CountAPI Live)
+- **API Base:** `https://countapi.mileshilliard.com/api/v1`
+- **Module Production Keys:**
+  - Devices: `nwu_cmpg122_axiom_devices_prod` (Unique devices logged on first visit).
+  - Active Learners: `nwu_cmpg122_axiom_active_prod` (Students engaged in continuous study &gt;= 300 seconds / 5 mins).
+  - Cumulative Minutes: `nwu_cmpg122_axiom_minutes_prod` (Aggregated every 60 seconds).
+  - Assessments Completed: `nwu_cmpg122_axiom_completed_prod` (Triggered on official exam submission).
+- **Anti-Duplicate Deduplication:**
+  - Guarded via `localStorage.getItem('nwu_cmpg122_axiom_device_logged')` and `localStorage.getItem('nwu_cmpg122_axiom_active_logged')`.
+- **Isolated Admin Dashboard (`admin.html`):**
+  - Continuous 3-second live polling (`setInterval(updateDashboard, 3000)`).
+  - Displays Total Devices, Active Learners, Avg Time/Active Learner, Total Cumulative Minutes, and Total Submissions.
+  - Interactive Active Engagement Ratio gradient bar (0% Fleeting Clicks -&gt; Target &gt; 40% Deep Study -&gt; 100% Engaged).
+  - "Copy Class Link" button with instant `✅ Copied!` visual feedback.
+  - In-browser live engine diagnostic runner.
+
+---
+
+### 3. STRICT SECURITY, BLINDING &amp; CREATOR ESCALATION PROTOCOLS
+1. **Zero Admin &amp; Repo Leaks on Student App (`index.html`):**
+   - `index.html` MUST NEVER contain links, buttons, or redirects to `admin.html` or the GitHub repository (to prevent students from inspecting `data.js` and viewing answer keys).
+   - Read-only footer badge: plain text `● Live Cloud: X Unique Devices • Y Assessments Completed` without an anchor tag.
+2. **Direct Creator WhatsApp Escalation Modal:**
+   - Inquiries and bug reports route to WhatsApp: `https://wa.me/27660673757?text=Hi%20Andre%2C%20I%20have%20feedback%20%2F%20found%20an%20issue%20on%20Project%20Roslyn%20CMPG122%3A`
+   - Mandatory user advisory banner:
+     `📸 Important Note: Please take a screenshot of all issues and explain the problem clearly so I can assist and update the engine immediately.`
+3. **DOM Anti-Cheat Blinding:**
+   - In Exam Mode, options in the DOM do not expose `data-is-correct` or `data-correct-key` attributes.
+   - All answer options are dynamically shuffled on session creation.
+
+---
+
+### 4. C# RUNTIME ENGINE &amp; ROSLYN COMPILER LINTER (`csharp_engine.js`)
+1. **Roslyn Syntax Error Diagnostics:**
+   - Detects and flags: `CS1002` (`;` expected), `CS1513` (`}` expected), `CS1026` (`)` expected), `CS0029` (Cannot implicitly convert type without cast), `CS0103` (Name does not exist in context), `CS1525` (Invalid expression term).
+2. **NWU Coding Standards Checker:**
+   - Enforces Hungarian notation prefixes (`btn`, `txt`, `lbl`, `pic`, `grp`), defensive `TryParse` input validation, and currency formatting (`ToString("C")`).
+3. **Sandbox Polyfills &amp; Indexing:**
+   - Full PascalCase string polyfills: `.Trim()`, `.ToUpper()`, `.ToLower()`, `.Substring()`, `.Contains()`, `.StartsWith()`, `.EndsWith()`.
+   - `lstBox.Items[i]` and `cbo.Items[i]` evaluate directly to string text representations to prevent `NaN` accumulator loop bugs.
+   - Transparent handling of both `MessageBox.Show(text)` and `MessageBox.Show(text, caption)`.
+   - Safe transpilation of `const decimal RATE = 1.5m;` and hoisted `out` variables.
+4. **CodeGrade Scenarios:**
+   - 8 practical multi-case scenarios scoring 100% on model solutions with 0 compiler errors.
+
+---
+
+### 5. "SPOT &amp; FIX" CODE AUDIT MODULE (`CSharpCodeAuditor`)
+1. **Mathematical Invariance &amp; LCS Line Alignment:**
+   - Longest Common Subsequence line-matching to eliminate false regressions from inserted/deleted blank lines.
+   - Whitespace and semicolon spacing invariance (`x = 5;` vs `x = 5 ;`).
+   - Strict C# case-sensitivity (`decimal` vs `Decimal`, `txtInput.Text` vs `txtinput.text`).
+2. **5-Part NWU Bug Taxonomy (Weeks 1–7):**
+   - Casing &amp; Identifiers, Data Types &amp; Declarations, Control Flow &amp; Operator Logic, Syntax &amp; Punctuation, GUI &amp; Controls.
+3. **Natural Bug Scattering:**
+   - 3–5 bugs dispersed naturally across 20–30 lines of authentic exam code separated by clean distractor lines.
+4. **VS Code Split-Pane IDE:**
+   - Synchronized line numbers gutter, Tab-key trapping (4 spaces), C# syntax helper chips, and Live Diagnostic Terminal.
+
+---
+
+### 6. CURRICULUM EXHAUSTION &amp; EXAM SUMMARY INTEGRATION
+- **430 Verified Questions across Weeks 1–7:**
+  - SU7: Human-Computer Interaction (HCI &amp; Usability, 65 Qs).
+  - SU1: Introduction to Programming &amp; Visual C# GUI (Gaddis Ch 1–2, 65 Qs).
+  - SU2: Data Processing, Variables, Math &amp; Exceptions (Gaddis Ch 3, 75 Qs).
+  - SU3: Making Decisions, Selection Logic &amp; Validation (Gaddis Ch 4, 75 Qs).
+  - SU4: Loops, Accumulators &amp; ListBoxes (Gaddis Ch 4.11 &amp; 5, 70 Qs).
+  - Official Past Exam Simulations: 5 Papers from 2021–2024 (80 Qs).
+- Fully integrates all rules, control properties, code patterns, and common errors from `CMPG122_Exam_Summary_SU1-SU4.pdf`.</div>
+    </div>
+
     <!-- Global Real-Time Cloud Telemetry Card -->
     <div class="admin-card">
       <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
@@ -364,6 +543,47 @@
         document.documentElement.setAttribute('data-theme', savedTheme);
         themeBtn.textContent = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
       }
+    }
+
+    // Copy arbitrary text with visual feedback
+    function copyText(txt, btn) {
+      navigator.clipboard.writeText(txt).then(() => {
+        if (btn) {
+          const orig = btn.innerHTML;
+          btn.innerHTML = '✅ Copied!';
+          setTimeout(() => { btn.innerHTML = orig; }, 2000);
+        }
+      }).catch(() => {
+        prompt('Copy this link:', txt);
+      });
+    }
+
+    // Master Prompt toggle and copy
+    function togglePromptView() {
+      const el = document.getElementById('masterPromptViewer');
+      const txt = document.getElementById('promptToggleText');
+      if (el.style.display === 'none') {
+        el.style.display = 'block';
+        txt.textContent = '▲ Hide Prompt';
+      } else {
+        el.style.display = 'none';
+        txt.textContent = '▼ Show Prompt';
+      }
+    }
+
+    function copyMasterPrompt() {
+      const el = document.getElementById('masterPromptViewer');
+      const btn = document.getElementById('btnCopyPrompt');
+      if (!el) return;
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        if (btn) {
+          const orig = btn.innerHTML;
+          btn.innerHTML = '✅ Prompt Copied!';
+          setTimeout(() => { btn.innerHTML = orig; }, 2500);
+        }
+      }).catch(() => {
+        alert('Could not copy automatically. Please select the text and copy manually.');
+      });
     }
 
     // Copy Class Link with feedback
