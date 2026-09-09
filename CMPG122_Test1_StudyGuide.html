@@ -1430,8 +1430,7 @@ body {
       </nav>
 
       <div class="header-actions">
-        <a href="admin.html" class="action-btn" style="text-decoration:none;">📊 Admin Portal</a>
-        <a href="https://github.com/andrelamusse/CMPG122-ProjectRoslyn" target="_blank" class="action-btn" style="text-decoration:none;">📁 GitHub</a>
+        <button class="action-btn" id="btnOpenWhatsApp" onclick="openWhatsAppModal()">💬 Help / Inquiries</button>
         <button class="action-btn" id="btnOpenTools">🛠️ Tools Drawer</button>
         <button class="action-btn" id="themeToggle">☀️ Light</button>
       </div>
@@ -1902,6 +1901,49 @@ body {
       <div class="modal-body" id="summaryModalBody"></div>
     </div>
   </div>
+
+  <!-- WhatsApp Feedback & Escalation Modal -->
+  <div class="modal-backdrop" id="whatsappModal" style="display:none;">
+    <div class="modal-card" style="max-width:520px;">
+      <div class="modal-header">
+        <h3 style="font-size:1.15rem; font-weight:800; display:flex; align-items:center; gap:0.5rem;">
+          <span>💬 Direct Creator Support & Inquiries</span>
+        </h3>
+        <button class="close-btn" onclick="closeWhatsAppModal()">✕</button>
+      </div>
+      <div class="modal-body" style="line-height:1.6;">
+        <p style="margin-bottom:1rem; font-size:0.9rem;">
+          Have an academic question, syntax query, or discovered an issue in an assessment simulation? Connect directly with the course platform creator on WhatsApp:
+        </p>
+        <div style="background:rgba(217,119,6,0.1); border:1px solid rgba(217,119,6,0.3); border-radius:var(--radius-md); padding:1rem; margin-bottom:1.25rem; font-size:0.85rem; color:var(--accent-amber);">
+          <strong>📸 Important Note:</strong> Please take a screenshot of all issues and explain the problem clearly so I can assist and update the engine immediately.
+        </div>
+        <a href="https://wa.me/27660673757?text=Hi%20Andre%2C%20I%20have%20feedback%20%2F%20found%20an%20issue%20on%20Project%20Roslyn%20CMPG122%3A" target="_blank" class="btn-practice" style="display:block; text-align:center; text-decoration:none; padding:0.75rem 1.5rem; font-size:0.95rem; background:#25D366; color:#fff; font-weight:700; border-radius:var(--radius-sm);">
+          Open WhatsApp Direct Chat (066 067 3757)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Institutional Read-Only Footer with Live Cloud Telemetry Badge -->
+  <footer style="border-top:1px solid var(--border-subtle); padding:1.5rem 1rem; text-align:center; font-size:0.8rem; color:var(--text-faint); margin-top:3rem;">
+    <div id="telemetry-badge" style="display:inline-flex; align-items:center; gap:0.5rem; background:var(--bg-card); border:1px solid var(--border-subtle); padding:0.4rem 1.1rem; border-radius:999px; font-family:var(--font-mono); font-size:0.78rem;">
+      <span><span style="color: var(--accent-emerald, #4caf50);">●</span> Live Cloud Connected</span>
+    </div>
+    <div style="margin-top:0.65rem; color:var(--text-muted);">North-West University • Faculty of Natural & Agricultural Sciences • School of Computer Science & Information Systems</div>
+    <div style="margin-top:0.25rem; font-size:0.75rem; color:var(--text-faint);">CMPG122 Visual C# Study & Exam Suite • Production V7.00 • Active Assessment Platform</div>
+  </footer>
+
+  <script>
+    function openWhatsAppModal() {
+      const m = document.getElementById('whatsappModal');
+      if (m) m.style.display = 'flex';
+    }
+    function closeWhatsAppModal() {
+      const m = document.getElementById('whatsappModal');
+      if (m) m.style.display = 'none';
+    }
+  </script>
 
   <!-- Scripts -->
   <script>
@@ -15816,6 +15858,157 @@ body {
 
 </script>
   <script>
+// NWU CMPG122 Project Roslyn - Real Global Cloud Telemetry & Time Tracking Engine
+// Connected live to global cloud counter API (countapi.mileshilliard.com)
+// ZERO Fake Base Numbers • True Unique Devices • Real Active Learners
+
+(function() {
+  'use strict';
+
+  const CLOUD_BASE = 'https://countapi.mileshilliard.com/api/v1';
+  const KEYS = {
+    DEVICES: 'nwu_cmpg122_axiom_devices_prod',
+    ACTIVE: 'nwu_cmpg122_axiom_active_prod',
+    COMPLETED: 'nwu_cmpg122_axiom_completed_prod',
+    MINUTES: 'nwu_cmpg122_axiom_minutes_prod'
+  };
+
+  const STORAGE = {
+    DEVICE_LOGGED: 'nwu_cmpg122_axiom_device_logged',
+    ACTIVE_LOGGED: 'nwu_cmpg122_axiom_active_logged'
+  };
+
+  let sessionSeconds = 0;
+
+  // 1. Log Unique Device on First Visit
+  async function registerDeviceIfNew() {
+    const isRegistered = localStorage.getItem(STORAGE.DEVICE_LOGGED);
+    if (!isRegistered) {
+      try {
+        const res = await fetch(`${CLOUD_BASE}/hit/${KEYS.DEVICES}`, { cache: 'no-store' });
+        if (res.ok) {
+          localStorage.setItem(STORAGE.DEVICE_LOGGED, 'true');
+        }
+      } catch (e) {
+        console.warn('[Telemetry] Device registration fallback:', e);
+      }
+    }
+  }
+
+  // 2. Continuous Engagement Heartbeat (Every 10 seconds)
+  function startEngagementTimer() {
+    setInterval(async () => {
+      sessionSeconds += 10;
+
+      // Accumulate total minutes every 60 seconds
+      if (sessionSeconds % 60 === 0) {
+        try {
+          await fetch(`${CLOUD_BASE}/hit/${KEYS.MINUTES}`, { cache: 'no-store' });
+        } catch(e) {}
+      }
+
+      // Check Active User criteria: Continuous study >= 5 minutes (300 seconds)
+      if (sessionSeconds >= 300) {
+        const hasLoggedActive = localStorage.getItem(STORAGE.ACTIVE_LOGGED);
+        if (!hasLoggedActive) {
+          try {
+            const res = await fetch(`${CLOUD_BASE}/hit/${KEYS.ACTIVE}`, { cache: 'no-store' });
+            if (res.ok) {
+              localStorage.setItem(STORAGE.ACTIVE_LOGGED, 'true');
+            }
+          } catch(e) {}
+        }
+      }
+    }, 10000);
+  }
+
+  // 3. Log Completed Assessment
+  async function logAssessmentCompleted() {
+    try {
+      await fetch(`${CLOUD_BASE}/hit/${KEYS.COMPLETED}`, { cache: 'no-store' });
+    } catch(e) {
+      console.warn('[Telemetry] Assessment logging fallback:', e);
+    }
+    updateBadge();
+  }
+
+  // 4. Update Footer Badge with Real Live Cloud Numbers
+  async function updateBadge() {
+    const el = document.getElementById('telemetry-badge');
+    if (!el) return;
+
+    try {
+      const [devRes, compRes] = await Promise.all([
+        fetch(`${CLOUD_BASE}/get/${KEYS.DEVICES}`, { cache: 'no-store' }),
+        fetch(`${CLOUD_BASE}/get/${KEYS.COMPLETED}`, { cache: 'no-store' })
+      ]);
+      const devData = await devRes.json();
+      const compData = await compRes.json();
+
+      const devs = (devData && typeof devData.value === 'number') ? devData.value : 1;
+      const comps = (compData && typeof compData.value === 'number') ? compData.value : 0;
+
+      el.innerHTML = `<span><span style="color: var(--accent-emerald, #4caf50);">●</span> Live Cloud: <strong>${devs.toLocaleString()}</strong> Unique Devices</span> &nbsp;•&nbsp; <span><strong>${comps.toLocaleString()}</strong> Assessments Completed</span>`;
+    } catch (e) {
+      el.innerHTML = `<span><span style="color: var(--accent-emerald, #4caf50);">●</span> Live Cloud Connected</span>`;
+    }
+  }
+
+  // 5. Query Real Live Metrics for admin.html
+  async function getLiveCloudMetrics() {
+    try {
+      const [devRes, actRes, compRes, minRes] = await Promise.all([
+        fetch(`${CLOUD_BASE}/get/${KEYS.DEVICES}`, { cache: 'no-store' }),
+        fetch(`${CLOUD_BASE}/get/${KEYS.ACTIVE}`, { cache: 'no-store' }),
+        fetch(`${CLOUD_BASE}/get/${KEYS.COMPLETED}`, { cache: 'no-store' }),
+        fetch(`${CLOUD_BASE}/get/${KEYS.MINUTES}`, { cache: 'no-store' })
+      ]);
+
+      const devData = await devRes.json();
+      const actData = await actRes.json();
+      const compData = await compRes.json();
+      const minData = await minRes.json();
+
+      const totalDevices = (devData && typeof devData.value === 'number') ? devData.value : 0;
+      const activeUsers = (actData && typeof actData.value === 'number') ? actData.value : 0;
+      const totalMinutes = (minData && typeof minData.value === 'number') ? minData.value : 0;
+      const totalCompleted = (compData && typeof compData.value === 'number') ? compData.value : 0;
+
+      const avgActiveMinutes = activeUsers > 0 ? Math.round(totalMinutes / activeUsers) : 0;
+
+      return {
+        totalDevices,
+        activeUsers,
+        totalMinutes,
+        totalCompleted,
+        avgActiveMinutes
+      };
+    } catch (e) {
+      console.error('[Telemetry] Failed to fetch live cloud metrics:', e);
+      return null;
+    }
+  }
+
+  window.AxiomTelemetry = {
+    init: function() {
+      registerDeviceIfNew();
+      startEngagementTimer();
+      updateBadge();
+      setInterval(updateBadge, 15000);
+    },
+    logAssessmentCompleted: logAssessmentCompleted,
+    getLiveCloudMetrics: getLiveCloudMetrics
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', window.AxiomTelemetry.init);
+  } else {
+    window.AxiomTelemetry.init();
+  }
+})();
+
+</script>
+  <script>
 /**
  * NWU CMPG122 - Interactive Learning & Exam Mastery Application Engine
  * =========================================================================
@@ -17046,6 +17239,10 @@ body {
     if (pct > state.masteryStats.bestExamScore) {
       state.masteryStats.bestExamScore = pct;
       saveStats();
+    }
+
+    if (window.AxiomTelemetry && window.AxiomTelemetry.logAssessmentCompleted) {
+      window.AxiomTelemetry.logAssessmentCompleted();
     }
 
     const passed = pct >= 50;

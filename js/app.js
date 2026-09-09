@@ -1230,6 +1230,10 @@
       saveStats();
     }
 
+    if (window.AxiomTelemetry && window.AxiomTelemetry.logAssessmentCompleted) {
+      window.AxiomTelemetry.logAssessmentCompleted();
+    }
+
     const passed = pct >= 50;
     const distinction = pct >= 75;
 

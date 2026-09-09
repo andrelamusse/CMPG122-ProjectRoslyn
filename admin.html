@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>CMPG 122 • Live Admin Analytics & Telemetry Dashboard | NWU</title>
+  <title>CMPG 122 • Real-Time Cloud Telemetry & Admin Analytics | NWU</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
     .admin-wrapper {
@@ -110,6 +110,21 @@
       color: var(--accent-emerald);
       border: 1px solid rgba(46, 160, 67, 0.3);
     }
+    .engagement-bar-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      height: 18px;
+      overflow: hidden;
+      margin: 0.75rem 0 0.5rem 0;
+      position: relative;
+    }
+    .engagement-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00acc1, #4caf50);
+      width: 0%;
+      transition: width 1s ease-in-out;
+    }
   </style>
 </head>
 <body>
@@ -117,7 +132,7 @@
   <!-- Top Institutional Banner -->
   <div style="background:#090d16; border-bottom:1px solid var(--border-subtle); padding:0.4rem 1.5rem; font-size:0.75rem; color:var(--text-faint); display:flex; justify-content:space-between; align-items:center;">
     <span>North-West University • Faculty of Natural and Agricultural Sciences • School of Computer Science & Information Systems</span>
-    <span><span class="pulse-dot"></span>System Operational • Production V7.00</span>
+    <span><span class="pulse-dot"></span>Live Global Cloud Polling (3s Interval) • Production V7.00</span>
   </div>
 
   <!-- Header -->
@@ -132,8 +147,9 @@
       </div>
 
       <div class="header-actions">
-        <a href="index.html" class="action-btn" style="text-decoration:none;">🚀 Student Testbed</a>
+        <button class="action-btn" id="btnCopyClassLink" onclick="copyClassLink()">🔗 Copy Class Link</button>
         <a href="https://github.com/andrelamusse/CMPG122-ProjectRoslyn" target="_blank" class="action-btn" style="text-decoration:none;">📁 GitHub Repo</a>
+        <a href="index.html" class="action-btn" style="text-decoration:none;">🚀 Student Testbed</a>
         <button class="action-btn" id="themeToggle">☀️ Light</button>
       </div>
     </div>
@@ -142,22 +158,87 @@
   <!-- Main Content -->
   <main class="admin-wrapper">
 
-    <!-- Executive Overview Card -->
+    <!-- Global Real-Time Cloud Telemetry Card -->
     <div class="admin-card">
       <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
         <div>
           <h2 style="font-size:1.4rem; font-weight:800; color:var(--text-main); margin-bottom:0.35rem;">
-            📊 Curriculum & System Telemetry Executive Overview
+            ☁️ Real-Time Global Cloud Telemetry (CountAPI Live)
           </h2>
           <p style="color:var(--text-muted); font-size:0.88rem;">
-            Automated verification metrics, curriculum exhaustion census, and client-side execution analytics for NWU CMPG122 (Weeks 1–7).
+            Tracking unique university devices, continuous deep-study learners (≥ 5 mins), cumulative minutes, and submitted exam simulations.
           </p>
         </div>
-        <div style="display:flex; gap:0.5rem;">
-          <button class="btn-practice" onclick="runLiveEngineAudit()" style="padding:0.45rem 1rem; font-size:0.82rem;">
-            ⚡ Run In-Browser Engine Audit
-          </button>
+        <div style="display:flex; gap:0.5rem; align-items:center;">
+          <span class="badge-status" id="cloudStatusBadge">
+            <span class="pulse-dot"></span> POLLING (3s)
+          </span>
         </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <span class="stat-label">Total Unique Devices</span>
+          <span class="stat-val" id="cloudDevices">--</span>
+          <span class="stat-sub">Deduplicated First-Visit Devices</span>
+        </div>
+
+        <div class="stat-box cyan">
+          <span class="stat-label">Active Learners (&ge; 5m)</span>
+          <span class="stat-val cyan" id="cloudActive">--</span>
+          <span class="stat-sub">Continuous Study &ge; 300 Seconds</span>
+        </div>
+
+        <div class="stat-box emerald">
+          <span class="stat-label">Avg Time / Active Learner</span>
+          <span class="stat-val emerald" id="cloudAvgTime">--</span>
+          <span class="stat-sub">Minutes per Engaged Student</span>
+        </div>
+
+        <div class="stat-box amber">
+          <span class="stat-label">Total Cumulative Time</span>
+          <span class="stat-val amber" id="cloudTotalTime">--</span>
+          <span class="stat-sub">Aggregate Student Study Minutes</span>
+        </div>
+
+        <div class="stat-box purple">
+          <span class="stat-label">Assessments Completed</span>
+          <span class="stat-val purple" id="cloudCompleted">--</span>
+          <span class="stat-sub">Official Past Paper Submissions</span>
+        </div>
+      </div>
+
+      <!-- Active Engagement Ratio Bar -->
+      <div style="margin-top:1.5rem; background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:1.25rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.88rem; font-weight:700;">
+          <span>Active Engagement Ratio (Engaged &ge; 5m vs Total Devices)</span>
+          <span id="engagementRatioText" style="color:var(--accent-emerald); font-family:var(--font-mono);">0%</span>
+        </div>
+        <div class="engagement-bar-wrap">
+          <div class="engagement-bar-fill" id="engagementBarFill"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-faint); margin-top:0.35rem;">
+          <span>0% Fleeting Clicks</span>
+          <span>Target: &gt; 40% Deep Study Sessions</span>
+          <span>100% Fully Engaged</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Executive Overview Card -->
+    <div class="admin-card">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <h2 style="font-size:1.3rem; font-weight:800; color:var(--text-main); margin-bottom:0.35rem;">
+            📊 Curriculum Exhaustion Census (Weeks 1–7)
+          </h2>
+          <p style="color:var(--text-muted); font-size:0.88rem;">
+            Verified curriculum matrix covering 100% of SU7, SU1, SU2, SU3, SU4, and Official 2021–2024 Exam Simulations.
+          </p>
+        </div>
+        <button class="btn-practice" onclick="runLiveEngineAudit()" style="padding:0.45rem 1rem; font-size:0.82rem;">
+          ⚡ Run In-Browser Engine Audit
+        </button>
       </div>
 
       <div class="stats-grid">
@@ -262,45 +343,11 @@
       </div>
     </div>
 
-    <!-- Student Session Telemetry -->
-    <div class="admin-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h3 style="font-size:1.15rem; font-weight:800; color:var(--text-main);">
-          📱 Local Student Session Telemetry & Storage Inspector
-        </h3>
-        <button class="action-btn" onclick="clearStudentTelemetry()" style="color:var(--danger-text); border-color:var(--danger-border);">
-          🗑️ Reset Local Telemetry
-        </button>
-      </div>
-
-      <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:1.25rem;">
-        <div class="telemetry-row">
-          <span>Client Storage Engine</span>
-          <span style="font-family:var(--font-mono); color:var(--accent-azure);">HTML5 LocalStorage (Zero Server Dependency)</span>
-        </div>
-        <div class="telemetry-row">
-          <span>Questions Answered (This Browser)</span>
-          <span style="font-family:var(--font-mono); font-weight:700;" id="locAnswered">0</span>
-        </div>
-        <div class="telemetry-row">
-          <span>Current Overall Accuracy</span>
-          <span style="font-family:var(--font-mono); font-weight:700; color:var(--accent-emerald);" id="locAccuracy">--%</span>
-        </div>
-        <div class="telemetry-row">
-          <span>Best Official Exam Score</span>
-          <span style="font-family:var(--font-mono); font-weight:700; color:var(--accent-gold);" id="locExamBest">--</span>
-        </div>
-        <div class="telemetry-row">
-          <span>Active Bookmarked Items</span>
-          <span style="font-family:var(--font-mono); font-weight:700;" id="locBookmarks">0</span>
-        </div>
-      </div>
-    </div>
-
   </main>
 
   <script src="js/data.js"></script>
   <script src="js/csharp_engine.js"></script>
+  <script src="js/telemetry.js"></script>
   <script>
     // Theme toggle
     const themeBtn = document.getElementById('themeToggle');
@@ -319,40 +366,43 @@
       }
     }
 
-    // Load Live Telemetry Stats
-    function loadTelemetry() {
-      const DATA = window.CMPG122_DATA;
-      if (DATA) {
-        if (document.getElementById('admTotalQuestions')) document.getElementById('admTotalQuestions').textContent = DATA.questions.length;
-        if (document.getElementById('admTotalExams')) document.getElementById('admTotalExams').textContent = DATA.officialExams.length;
-        if (document.getElementById('admTotalCodeScenarios')) document.getElementById('admTotalCodeScenarios').textContent = Object.keys(DATA.codeScenarios).length;
-        if (document.getElementById('admTotalAuditScenarios')) document.getElementById('admTotalAuditScenarios').textContent = (DATA.auditScenarios || []).length;
-      }
-
-      // Read student localStorage
-      try {
-        const stats = JSON.parse(localStorage.getItem('cmpg122_stats') || '{}');
-        const bms = JSON.parse(localStorage.getItem('cmpg122_bookmarks') || '[]');
-        const ansCount = stats.totalAnswered || 0;
-        const correctCount = stats.totalCorrect || 0;
-        const accuracy = ansCount > 0 ? Math.round((correctCount / ansCount) * 100) : 0;
-        
-        document.getElementById('locAnswered').textContent = ansCount;
-        document.getElementById('locAccuracy').textContent = ansCount > 0 ? (accuracy + '%') : '--%';
-        document.getElementById('locExamBest').textContent = stats.bestExamScore !== undefined ? (stats.bestExamScore + '%') : '--';
-        document.getElementById('locBookmarks').textContent = bms.length;
-      } catch (e) {
-        console.warn('Storage read failed:', e);
-      }
+    // Copy Class Link with feedback
+    function copyClassLink() {
+      const btn = document.getElementById('btnCopyClassLink');
+      const url = window.location.origin + window.location.pathname.replace('admin.html', 'index.html');
+      navigator.clipboard.writeText(url).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = '✅ Copied!';
+        setTimeout(() => { btn.innerHTML = orig; }, 2000);
+      }).catch(() => {
+        prompt('Copy this student testbed link:', url);
+      });
     }
 
-    function clearStudentTelemetry() {
-      if (confirm('Clear local study history and reset test metrics?')) {
-        localStorage.removeItem('cmpg122_stats');
-        localStorage.removeItem('cmpg122_bookmarks');
-        loadTelemetry();
-        alert('Student local telemetry cleared.');
-      }
+    // Real-Time Cloud Telemetry Polling (every 3000ms)
+    async function updateDashboard() {
+      if (!window.AxiomTelemetry || !window.AxiomTelemetry.getLiveCloudMetrics) return;
+
+      const metrics = await window.AxiomTelemetry.getLiveCloudMetrics();
+      if (!metrics) return;
+
+      const devEl = document.getElementById('cloudDevices');
+      const actEl = document.getElementById('cloudActive');
+      const avgEl = document.getElementById('cloudAvgTime');
+      const totEl = document.getElementById('cloudTotalTime');
+      const compEl = document.getElementById('cloudCompleted');
+      const ratioEl = document.getElementById('engagementRatioText');
+      const barFill = document.getElementById('engagementBarFill');
+
+      if (devEl) devEl.textContent = metrics.totalDevices.toLocaleString();
+      if (actEl) actEl.textContent = metrics.activeUsers.toLocaleString();
+      if (avgEl) avgEl.textContent = metrics.avgActiveMinutes + ' min';
+      if (totEl) totEl.textContent = metrics.totalMinutes.toLocaleString() + ' min';
+      if (compEl) compEl.textContent = metrics.totalCompleted.toLocaleString();
+
+      const ratio = metrics.totalDevices > 0 ? Math.min(100, Math.round((metrics.activeUsers / metrics.totalDevices) * 100)) : 0;
+      if (ratioEl) ratioEl.textContent = ratio + '%';
+      if (barFill) barFill.style.width = ratio + '%';
     }
 
     function runLiveEngineAudit() {
@@ -422,7 +472,10 @@
       document.getElementById('admAuditStatus').style.color = allPass ? 'var(--accent-emerald)' : 'var(--accent-amber)';
     }
 
-    window.addEventListener('DOMContentLoaded', loadTelemetry);
+    window.addEventListener('DOMContentLoaded', () => {
+      updateDashboard();
+      setInterval(updateDashboard, 3000);
+    });
   </script>
 </body>
 </html>

@@ -28,8 +28,7 @@
       </nav>
 
       <div class="header-actions">
-        <a href="admin.html" class="action-btn" style="text-decoration:none;">📊 Admin Portal</a>
-        <a href="https://github.com/andrelamusse/CMPG122-ProjectRoslyn" target="_blank" class="action-btn" style="text-decoration:none;">📁 GitHub</a>
+        <button class="action-btn" id="btnOpenWhatsApp" onclick="openWhatsAppModal()">💬 Help / Inquiries</button>
         <button class="action-btn" id="btnOpenTools">🛠️ Tools Drawer</button>
         <button class="action-btn" id="themeToggle">☀️ Light</button>
       </div>
@@ -501,9 +500,53 @@
     </div>
   </div>
 
+  <!-- WhatsApp Feedback & Escalation Modal -->
+  <div class="modal-backdrop" id="whatsappModal" style="display:none;">
+    <div class="modal-card" style="max-width:520px;">
+      <div class="modal-header">
+        <h3 style="font-size:1.15rem; font-weight:800; display:flex; align-items:center; gap:0.5rem;">
+          <span>💬 Direct Creator Support & Inquiries</span>
+        </h3>
+        <button class="close-btn" onclick="closeWhatsAppModal()">✕</button>
+      </div>
+      <div class="modal-body" style="line-height:1.6;">
+        <p style="margin-bottom:1rem; font-size:0.9rem;">
+          Have an academic question, syntax query, or discovered an issue in an assessment simulation? Connect directly with the course platform creator on WhatsApp:
+        </p>
+        <div style="background:rgba(217,119,6,0.1); border:1px solid rgba(217,119,6,0.3); border-radius:var(--radius-md); padding:1rem; margin-bottom:1.25rem; font-size:0.85rem; color:var(--accent-amber);">
+          <strong>📸 Important Note:</strong> Please take a screenshot of all issues and explain the problem clearly so I can assist and update the engine immediately.
+        </div>
+        <a href="https://wa.me/27660673757?text=Hi%20Andre%2C%20I%20have%20feedback%20%2F%20found%20an%20issue%20on%20Project%20Roslyn%20CMPG122%3A" target="_blank" class="btn-practice" style="display:block; text-align:center; text-decoration:none; padding:0.75rem 1.5rem; font-size:0.95rem; background:#25D366; color:#fff; font-weight:700; border-radius:var(--radius-sm);">
+          Open WhatsApp Direct Chat (066 067 3757)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Institutional Read-Only Footer with Live Cloud Telemetry Badge -->
+  <footer style="border-top:1px solid var(--border-subtle); padding:1.5rem 1rem; text-align:center; font-size:0.8rem; color:var(--text-faint); margin-top:3rem;">
+    <div id="telemetry-badge" style="display:inline-flex; align-items:center; gap:0.5rem; background:var(--bg-card); border:1px solid var(--border-subtle); padding:0.4rem 1.1rem; border-radius:999px; font-family:var(--font-mono); font-size:0.78rem;">
+      <span><span style="color: var(--accent-emerald, #4caf50);">●</span> Live Cloud Connected</span>
+    </div>
+    <div style="margin-top:0.65rem; color:var(--text-muted);">North-West University • Faculty of Natural & Agricultural Sciences • School of Computer Science & Information Systems</div>
+    <div style="margin-top:0.25rem; font-size:0.75rem; color:var(--text-faint);">CMPG122 Visual C# Study & Exam Suite • Production V7.00 • Active Assessment Platform</div>
+  </footer>
+
+  <script>
+    function openWhatsAppModal() {
+      const m = document.getElementById('whatsappModal');
+      if (m) m.style.display = 'flex';
+    }
+    function closeWhatsAppModal() {
+      const m = document.getElementById('whatsappModal');
+      if (m) m.style.display = 'none';
+    }
+  </script>
+
   <!-- Scripts -->
   <script src="js/data.js"></script>
   <script src="js/csharp_engine.js"></script>
+  <script src="js/telemetry.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
