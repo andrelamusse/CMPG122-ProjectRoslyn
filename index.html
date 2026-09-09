@@ -366,15 +366,29 @@
     <!-- View 6: Interactive Quiz & Examination Engine -->
     <section id="viewQuiz" class="view-panel" style="display:none;">
       <div class="quiz-container">
+        <!-- Top Toolbar with Mode Toggle and Controls -->
         <div class="quiz-top-bar">
           <button id="btnExitQuiz" class="action-btn" style="padding:0.35rem 0.65rem;">✕ Exit</button>
-          <div class="quiz-progress-wrap">
+
+          <!-- Examination Layout View Toggle (Practice Only) -->
+          <div class="view-mode-toggle" id="viewModeToggleGroup" style="display:none;">
+            <button type="button" id="btnModeContinuous" class="view-mode-pill active" onclick="CMPG122_APP.setViewMode('continuous')">
+              📄 Continuous Paper View
+            </button>
+            <button type="button" id="btnModeCard" class="view-mode-pill" onclick="CMPG122_APP.setViewMode('card')">
+              🗂️ Single Question Card View
+            </button>
+          </div>
+
+          <!-- Single Card Progress Bar (shown in Card view) -->
+          <div class="quiz-progress-wrap" id="cardProgressWrap" style="display:none;">
             <div class="progress-bar-bg">
               <div id="quizProgressFill" class="progress-bar-fill"></div>
             </div>
           </div>
-          <span id="quizCounter" style="font-family:var(--font-mono); font-size:0.85rem; font-weight:700; color:var(--text-muted);">Q 1 of 20</span>
+          <span id="quizCounter" style="display:none; font-family:var(--font-mono); font-size:0.85rem; font-weight:700; color:var(--text-muted);">Q 1 of 20</span>
           
+          <!-- Exam Countdown Timer -->
           <div id="quizTimerBox" style="display:none; align-items:center; gap:0.4rem; background:var(--bg-subtle); border:1px solid var(--border-subtle); padding:0.25rem 0.6rem; border-radius:var(--radius-sm); font-family:var(--font-mono); font-weight:700; color:var(--accent-amber);">
             <span>⏱️</span>
             <span id="quizTimerDisplay">180:00</span>
@@ -383,20 +397,45 @@
           <button id="btnBookmark" class="action-btn" style="padding:0.35rem 0.65rem;">☆ Bookmark</button>
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-          <h2 id="quizTitle" style="font-size:1.15rem; font-weight:800;">Unit Practice</h2>
-          <button id="btnRetryWrong" class="action-btn" style="display:none; color:var(--danger-text); border-color:var(--danger-border);">
-            🔄 Retry Incorrect Qs
-          </button>
+        <!-- Sticky Question Jump Palette Navigator for Continuous Exam Paper -->
+        <div id="examNavigatorBar" class="exam-navigator-bar">
+          <div class="navigator-meta">
+            <div class="navigator-title-row">
+              <span class="navigator-badge">📋 QUESTION PALETTE</span>
+              <span id="examNavigatorSummary" class="navigator-summary">0 / 16 Answered (0%)</span>
+            </div>
+            <div class="navigator-actions">
+              <button type="button" id="btnJumpUnanswered" class="action-btn-sm" onclick="CMPG122_APP.jumpToNextUnanswered()">⏭️ Next Unanswered</button>
+              <button type="button" id="btnJumpSubmit" class="action-btn-sm" onclick="CMPG122_APP.jumpToSubmit()">📋 Jump to Submit</button>
+            </div>
+          </div>
+          <div id="examQuestionPalette" class="exam-question-palette">
+            <!-- Dynamically populated question pills -->
+          </div>
         </div>
 
-        <!-- Question Render Area -->
-        <div id="quizArea"></div>
+        <!-- Mode A: Continuous Single Exam Paper View -->
+        <div id="continuousPaperArea" class="continuous-paper-area">
+          <!-- Rendered dynamically by app.js: Cover, Questions 1..N, Submit Section -->
+        </div>
 
-        <!-- Navigation Controls -->
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.25rem;">
-          <button id="btnPrevQ" class="action-btn" disabled>← Previous</button>
-          <button id="btnNextQ" class="btn-practice" style="padding:0.6rem 1.5rem; font-size:0.9rem;">Next Question →</button>
+        <!-- Mode B: Single Question Card View -->
+        <div id="singleCardArea" class="single-card-area" style="display:none;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h2 id="quizTitle" style="font-size:1.15rem; font-weight:800;">Unit Practice</h2>
+            <button id="btnRetryWrong" class="action-btn" style="display:none; color:var(--danger-text); border-color:var(--danger-border);">
+              🔄 Retry Incorrect Qs
+            </button>
+          </div>
+
+          <!-- Question Render Area -->
+          <div id="quizArea"></div>
+
+          <!-- Navigation Controls -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.25rem;">
+            <button id="btnPrevQ" class="action-btn" disabled>← Previous</button>
+            <button id="btnNextQ" class="btn-practice" style="padding:0.6rem 1.5rem; font-size:0.9rem;">Next Question →</button>
+          </div>
         </div>
       </div>
     </section>

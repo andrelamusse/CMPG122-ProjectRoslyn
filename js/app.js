@@ -20,9 +20,12 @@
     quizQuestions: [],
     currentIndex: 0,
     answers: {}, // { [qId]: { selected: any, isCorrect: boolean, score: number } }
+    flags: {}, // { [qId]: boolean }
     bookmarks: JSON.parse(localStorage.getItem('cmpg122_bookmarks') || '[]'),
     score: 0,
     isExamMode: false,
+    examSubmitted: false,
+    viewMode: 'continuous', // 'continuous' or 'card'
     examSecondsLeft: 180 * 60,
     examTimerInterval: null,
     streak: 0,
@@ -152,6 +155,18 @@
       btnPrevQ: document.getElementById('btnPrevQ'),
       btnNextQ: document.getElementById('btnNextQ'),
       btnSubmitExam: document.getElementById('btnSubmitExam'),
+      // Continuous Exam Paper & Quick-Jump Palette DOM Elements
+      viewModeToggleGroup: document.getElementById('viewModeToggleGroup'),
+      btnModeContinuous: document.getElementById('btnModeContinuous'),
+      btnModeCard: document.getElementById('btnModeCard'),
+      cardProgressWrap: document.getElementById('cardProgressWrap'),
+      examNavigatorBar: document.getElementById('examNavigatorBar'),
+      examNavigatorSummary: document.getElementById('examNavigatorSummary'),
+      examQuestionPalette: document.getElementById('examQuestionPalette'),
+      btnJumpUnanswered: document.getElementById('btnJumpUnanswered'),
+      btnJumpSubmit: document.getElementById('btnJumpSubmit'),
+      continuousPaperArea: document.getElementById('continuousPaperArea'),
+      singleCardArea: document.getElementById('singleCardArea'),
       // Drawer
       toolsDrawer: document.getElementById('toolsDrawer'),
       drawerBackdrop: document.getElementById('drawerBackdrop'),
@@ -960,6 +975,10 @@
       return;
     }
     const unit = DATA.units.find(u => u.id === unitId);
+    state.isExamMode = false;
+    state.selectedExamId = null;
+    state.examSubmitted = false;
+    state.flags = {};
     launchQuizSession(`${unit ? unit.title : unitId} Practice`, questions, false);
   }
 
@@ -974,17 +993,55 @@
     }
 
     state.isExamMode = true;
+    state.selectedExamId = examId;
+    state.examSubmitted = false;
+    state.flags = {};
+    state.answers = {};
+    state.viewMode = 'continuous'; // MANDATORY INVARIANT: Continuous Single-Sheet Paper Only
     state.examSecondsLeft = (exam.durationMinutes || 180) * 60;
+    state.quizQuestions = questions;
+    state.currentIndex = 0;
+    state.score = 0;
+    state.wrongOnlyMode = false;
 
-    launchQuizSession(`${exam.title} ${isTimed ? '(Timed)' : ''}`, questions, isTimed);
+    if (dom.quizTitle) dom.quizTitle.textContent = `${exam.title} ${isTimed ? '(Timed)' : ''}`;
+    if (dom.btnRetryWrong) dom.btnRetryWrong.style.display = 'none';
+
+    // Timer setup
+    if (isTimed) {
+      if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'flex';
+      startExamTimer();
+    } else {
+      if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
+      clearInterval(state.examTimerInterval);
+    }
+
+    // MANDATORY CRITICAL EXAM ARCHITECTURE INVARIANT:
+    // Under NO circumstances may official exam papers be rendered as a single-question carousel,
+    // flashcard, or "Q 1 of N" paginated stepper with "Next Question" buttons.
+    // All official past papers MUST render as a CONTINUOUS, SINGLE SCROLLABLE EXAMINATION DOCUMENT.
+    if (dom.viewModeToggleGroup) dom.viewModeToggleGroup.style.display = 'none';
+    if (dom.cardProgressWrap) dom.cardProgressWrap.style.display = 'none';
+    if (dom.quizCounter) dom.quizCounter.style.display = 'none';
+    if (dom.btnBookmark) dom.btnBookmark.style.display = 'none';
+    if (dom.singleCardArea) dom.singleCardArea.style.display = 'none';
+    if (dom.continuousPaperArea) dom.continuousPaperArea.style.display = 'block';
+    if (dom.examNavigatorBar) dom.examNavigatorBar.style.display = 'flex';
+
+    switchTab('quiz');
+    renderContinuousExamPaper();
+    renderExamPalette();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function launchQuizSession(title, questions, isTimed) {
     state.quizQuestions = questions;
     state.currentIndex = 0;
     state.answers = {};
+    state.flags = {};
     state.score = 0;
     state.wrongOnlyMode = false;
+    state.examSubmitted = false;
 
     if (dom.quizTitle) dom.quizTitle.textContent = title;
     if (dom.btnRetryWrong) dom.btnRetryWrong.style.display = 'none';
@@ -999,7 +1056,57 @@
     }
 
     switchTab('quiz');
-    renderCurrentQuestion();
+
+    if (state.isExamMode) {
+      state.viewMode = 'continuous';
+      if (dom.viewModeToggleGroup) dom.viewModeToggleGroup.style.display = 'none';
+      if (dom.cardProgressWrap) dom.cardProgressWrap.style.display = 'none';
+      if (dom.quizCounter) dom.quizCounter.style.display = 'none';
+      if (dom.btnBookmark) dom.btnBookmark.style.display = 'none';
+      if (dom.singleCardArea) dom.singleCardArea.style.display = 'none';
+      if (dom.continuousPaperArea) dom.continuousPaperArea.style.display = 'block';
+      if (dom.examNavigatorBar) dom.examNavigatorBar.style.display = 'flex';
+      renderContinuousExamPaper();
+      renderExamPalette();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      if (dom.viewModeToggleGroup) dom.viewModeToggleGroup.style.display = 'inline-flex';
+      applyViewMode(state.viewMode || 'continuous');
+    }
+  }
+
+  function setViewMode(mode) {
+    if (state.isExamMode) {
+      console.warn('Official exam papers are locked to Continuous Single-Sheet Paper Only.');
+      return;
+    }
+    state.viewMode = mode;
+    applyViewMode(mode);
+  }
+
+  function applyViewMode(mode) {
+    if (dom.btnModeContinuous) dom.btnModeContinuous.classList.toggle('active', mode === 'continuous');
+    if (dom.btnModeCard) dom.btnModeCard.classList.toggle('active', mode === 'card');
+
+    if (mode === 'continuous') {
+      if (dom.singleCardArea) dom.singleCardArea.style.display = 'none';
+      if (dom.continuousPaperArea) dom.continuousPaperArea.style.display = 'block';
+      if (dom.examNavigatorBar) dom.examNavigatorBar.style.display = 'flex';
+      if (dom.cardProgressWrap) dom.cardProgressWrap.style.display = 'none';
+      if (dom.quizCounter) dom.quizCounter.style.display = 'none';
+      if (dom.btnBookmark) dom.btnBookmark.style.display = 'none';
+      renderContinuousExamPaper();
+      renderExamPalette();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      if (dom.singleCardArea) dom.singleCardArea.style.display = 'block';
+      if (dom.continuousPaperArea) dom.continuousPaperArea.style.display = 'none';
+      if (dom.examNavigatorBar) dom.examNavigatorBar.style.display = 'none';
+      if (dom.cardProgressWrap) dom.cardProgressWrap.style.display = 'block';
+      if (dom.quizCounter) dom.quizCounter.style.display = 'inline';
+      if (dom.btnBookmark) dom.btnBookmark.style.display = 'inline-block';
+      renderCurrentQuestion();
+    }
   }
 
   function startExamTimer() {
@@ -1013,7 +1120,7 @@
       if (state.examSecondsLeft <= 0) {
         clearInterval(state.examTimerInterval);
         alert('Time is up! Your exam will now be submitted automatically.');
-        submitExam();
+        submitCompleteExamPaper();
       }
     }, 1000);
   }
@@ -1218,17 +1325,484 @@
     launchQuizSession('Retry Incorrect Questions', wrong, false);
   }
 
-  function submitExam() {
+  // =========================================================================
+  // CONTINUOUS SINGLE-SHEET EXAMINATION PAPER ENGINE & QUICK-JUMP PALETTE
+  // Under NO circumstances may official exam papers be rendered as a single-question
+  // carousel, flashcard, or "Q 1 of N" paginated stepper with "Next Question" buttons.
+  // All official past papers render as a CONTINUOUS, SINGLE SCROLLABLE EXAMINATION DOCUMENT.
+  // =========================================================================
+
+  function renderContinuousExamPaper() {
+    if (!dom.continuousPaperArea || state.quizQuestions.length === 0) return;
+
+    const exam = state.selectedExamId ? DATA.officialExams.find(e => e.id === state.selectedExamId) : null;
+    const questions = state.quizQuestions;
+    const totalMarks = questions.reduce((sum, q) => sum + (q.marks || 2), 0);
+    const answeredCount = Object.keys(state.answers).length;
+    const unansweredCount = questions.length - answeredCount;
+    const earnedMarks = Object.values(state.answers).reduce((sum, a) => sum + (a.isCorrect ? a.score : 0), 0);
+    const pct = totalMarks > 0 ? Math.round((earnedMarks / totalMarks) * 100) : 0;
+
+    let html = '';
+
+    // Results Banner (rendered upon submission)
+    if (state.examSubmitted) {
+      const passed = pct >= 50;
+      const distinction = pct >= 75;
+      const bannerClass = distinction ? 'distinction' : (passed ? 'passed' : 'failed');
+      const bannerGrade = distinction ? 'Distinction! 🏆' : (passed ? 'Passed! 🎉' : 'Supplementary Revision Required ⚠️');
+      const correctCount = Object.values(state.answers).filter(a => a.isCorrect).length;
+      const incorrectCount = answeredCount - correctCount;
+
+      html += `
+        <div class="exam-results-banner ${bannerClass}">
+          <div class="results-top-row">
+            <div>
+              <div class="results-title">${bannerGrade}</div>
+              <div style="font-size:0.9rem; color:var(--text-muted); margin-top:0.25rem;">
+                Official NWU CMPG122 Examination Assessment Result
+              </div>
+            </div>
+            <div class="results-score-badge">
+              ${earnedMarks} / ${totalMarks} Marks (${pct}%)
+            </div>
+          </div>
+          <div class="results-stats-row">
+            <span class="result-stat-pill correct-pill">✓ ${correctCount} Correct</span>
+            <span class="result-stat-pill incorrect-pill">✗ ${incorrectCount} Incorrect</span>
+            <span class="result-stat-pill unanswered-pill">⚠️ ${unansweredCount} Unanswered</span>
+          </div>
+          <div class="results-actions-row">
+            <button type="button" class="btn-practice" onclick="CMPG122_APP.jumpToQuestion(0)">⬆️ Review Paper Solutions</button>
+            <button type="button" class="action-btn" onclick="CMPG122_APP.retakeExam()">🔄 Retake Exam Paper</button>
+            <button type="button" class="action-btn" onclick="CMPG122_APP.exitExamPaper()">✕ Exit to Exams List</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Cover Sheet
+    const instName = "North-West University (NWU)";
+    const facName = "Faculty of Natural and Agricultural Sciences • School of Computer Science & Information Systems";
+    const paperTitle = exam ? exam.title : (dom.quizTitle ? dom.quizTitle.textContent : "Examination Paper");
+    const paperBadge = exam ? `${exam.badge} • Academic Year ${exam.academicYear}` : "Official Examination Assessment";
+    const durationText = exam ? `${exam.durationMinutes} Minutes (3 Hours)` : "180 Minutes (3 Hours)";
+    const marksText = `${totalMarks} Marks (${questions.length} Questions)`;
+    const sittingText = exam ? exam.sitting : "Continuous Examination Assessment";
+    const scenarioText = exam ? exam.scenario : "This official examination paper evaluates full-spectrum competency across Visual C#, Windows Forms GUI architecture, data types, control flow, loops, and array manipulation.";
+
+    html += `
+      <div class="paper-cover-sheet">
+        <div class="paper-cover-header">
+          <div class="paper-inst-name">${instName}</div>
+          <div class="paper-faculty-name">${facName}</div>
+          <h2 class="paper-main-title">${escapeHtml(paperTitle)}</h2>
+          <div class="paper-sub-title">${escapeHtml(paperBadge)}</div>
+        </div>
+
+        <div class="paper-meta-grid">
+          <div class="paper-meta-card">
+            <span class="paper-meta-label">Module</span>
+            <span class="paper-meta-val">CMPG 122</span>
+          </div>
+          <div class="paper-meta-card">
+            <span class="paper-meta-label">Assessment</span>
+            <span class="paper-meta-val">${escapeHtml(sittingText)}</span>
+          </div>
+          <div class="paper-meta-card">
+            <span class="paper-meta-label">Duration</span>
+            <span class="paper-meta-val">${durationText}</span>
+          </div>
+          <div class="paper-meta-card">
+            <span class="paper-meta-label">Total Marks</span>
+            <span class="paper-meta-val">${marksText}</span>
+          </div>
+        </div>
+
+        <div class="paper-scenario-box">
+          <div class="paper-scenario-title">📋 PRACTICAL SPECIFICATION / SCENARIO OVERVIEW</div>
+          <div class="paper-scenario-text">${escapeHtml(scenarioText)}</div>
+        </div>
+
+        <div class="paper-instructions-box">
+          <h5>Examination Invariant & Candidate Guidelines:</h5>
+          <ul>
+            <li><strong>Continuous Single-Sheet Document:</strong> All ${questions.length} questions are presented below on this single scrollable sheet.</li>
+            <li><strong>Non-Linear Navigation:</strong> Scroll freely, answer questions in any order, and change your selections at any time prior to submission.</li>
+            <li><strong>Question Palette:</strong> The sticky palette at the top tracks your answered/flagged progress and allows instant smooth-scrolling to any question.</li>
+            <li><strong>Single Paper Submission:</strong> When you are satisfied with all responses, proceed to the foot of this document and click "Submit Complete Exam Paper".</li>
+          </ul>
+        </div>
+      </div>
+    `;
+
+    // Stacked Questions 1 through N
+    questions.forEach((q, idx) => {
+      const qNum = idx + 1;
+      const savedAns = state.answers[q.id];
+      const isFlagged = !!state.flags[q.id];
+      const marks = q.marks || 2;
+
+      let cardClasses = 'paper-q-card';
+      if (state.examSubmitted) {
+        if (savedAns && savedAns.isCorrect) cardClasses += ' is-correct';
+        else cardClasses += ' is-incorrect';
+      }
+
+      html += `
+        <div class="${cardClasses}" id="paperQ_${q.id}" data-qid="${q.id}" data-idx="${idx}">
+          <div class="paper-q-header">
+            <div class="paper-q-num-wrap">
+              <span class="paper-q-num">Question ${qNum}</span>
+              <span class="paper-q-provenance">${escapeHtml(q.provenance || `Step ${qNum}`)}</span>
+            </div>
+            <div class="paper-q-header-right">
+              <span class="q-marks-tag">${marks} Marks</span>
+              <button type="button" class="paper-q-flag-btn ${isFlagged ? 'flagged' : ''}" id="flagBtn_${q.id}" onclick="CMPG122_APP.toggleQuestionFlag('${q.id}')">
+                ${isFlagged ? '★ Flagged' : '☆ Flag'}
+              </button>
+            </div>
+          </div>
+
+          <div class="paper-q-title">${escapeHtml(q.q || q.title)}</div>
+      `;
+
+      if (q.codeSnippet) {
+        html += `<div style="background:#0f172a; padding:0.85rem 1.15rem; border-radius:var(--radius-sm); border:1px solid #1e293b; margin-bottom:1.25rem; font-family:var(--font-mono); font-size:0.85rem; color:#f8fafc; white-space:pre-wrap; overflow-x:auto;">${escapeHtml(q.codeSnippet)}</div>`;
+      }
+
+      // Options (MCQ)
+      if (q.options && q.options.length > 0) {
+        html += `<div class="paper-q-options" id="optionsWrap_${q.id}">`;
+        q.options.forEach((opt, optIdx) => {
+          const isSelected = (savedAns && savedAns.selected === optIdx);
+          let optClass = 'paper-option-label';
+          let badgeHtml = '';
+
+          if (isSelected) optClass += ' selected';
+
+          if (state.examSubmitted) {
+            if (optIdx === q.answer) {
+              optClass += ' correct';
+              if (isSelected) {
+                badgeHtml = `<span class="paper-q-badge badge-correct-sel">✓ Your Answer (Correct)</span>`;
+              } else {
+                badgeHtml = `<span class="paper-q-badge badge-correct-key">Correct Answer</span>`;
+              }
+            } else if (isSelected) {
+              optClass += ' incorrect';
+              badgeHtml = `<span class="paper-q-badge badge-incorrect-sel">✗ Your Answer</span>`;
+            }
+          }
+
+          html += `
+            <label class="${optClass}" id="label_${q.id}_${optIdx}" onclick="CMPG122_APP.selectPaperAnswer('${q.id}', ${optIdx})">
+              <input type="radio" name="paper_opt_${q.id}" value="${optIdx}" ${isSelected ? 'checked' : ''} ${state.examSubmitted ? 'disabled' : ''} style="display:none;">
+              <span class="q-option-letter">${String.fromCharCode(65 + optIdx)}.</span>
+              <span class="q-option-text">${escapeHtml(opt)}</span>
+              ${badgeHtml}
+            </label>
+          `;
+        });
+        html += `</div>`;
+      } else if (q.blankAnswer) {
+        const clozeVal = savedAns ? savedAns.selected : '';
+        html += `
+          <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:1rem;">
+            <input type="text" id="paperCloze_${q.id}" class="cloze-input" placeholder="Type answer here..." value="${escapeHtml(clozeVal)}" ${state.examSubmitted ? 'disabled' : ''} oninput="CMPG122_APP.setPaperClozeAnswer('${q.id}', this.value)" style="flex:1; max-width:320px;">
+          </div>
+        `;
+      }
+
+      // If submitted, show full step-by-step solution
+      if (state.examSubmitted) {
+        const isCorrect = savedAns && savedAns.isCorrect;
+        html += `
+          <div class="paper-q-explanation ${isCorrect ? 'correct' : 'incorrect'}">
+            <div class="explanation-header">
+              <strong style="color:${isCorrect ? '#34d399' : '#f87171'};">
+                ${isCorrect ? `✅ Full Credit: +${marks} / ${marks} Marks` : `❌ Incorrect: 0 / ${marks} Marks`}
+              </strong>
+              <span class="solution-tag">Official Memorandum Solution & Analysis</span>
+            </div>
+            <div class="explanation-body">
+              ${escapeHtml(q.exp || q.explanation || 'Refer to textbook and lecture slides for full specification.')}
+            </div>
+          </div>
+        `;
+      }
+
+      html += `</div>`;
+    });
+
+    // Foot of document: Submission Card
+    html += `
+      <div class="paper-footer-card" id="paperFooterCard">
+    `;
+
+    if (!state.examSubmitted) {
+      html += `
+        <div class="paper-footer-title">End of Examination Document</div>
+        <div class="paper-footer-desc">
+          Review your answers using the Sticky Question Palette or by scrolling freely above. You can change any response until you submit.
+        </div>
+        <div id="footerWarningBox">
+          ${unansweredCount > 0 
+            ? `<div class="unanswered-warning">⚠️ Notice: You have ${unansweredCount} unanswered question(s) out of ${questions.length}.</div>`
+            : `<div style="color:var(--success-text); font-weight:700; margin-bottom:1.25rem;">✅ All ${questions.length} questions answered! You are ready to finalize your submission.</div>`
+          }
+        </div>
+        <button type="button" id="btnSubmitExamPaper" class="btn-practice btn-submit-paper" onclick="CMPG122_APP.submitCompleteExamPaper()">
+          📤 Submit Complete Exam Paper
+        </button>
+      `;
+    } else {
+      html += `
+        <div class="paper-footer-title">Examination Completed & Graded</div>
+        <div class="paper-footer-desc" style="font-size:1.05rem; font-weight:700; color:var(--text-main); margin-bottom:1.25rem;">
+          Final Result: ${earnedMarks} / ${totalMarks} Marks (${pct}%)
+        </div>
+        <div class="results-actions-row" style="justify-content:center;">
+          <button type="button" class="btn-practice" onclick="CMPG122_APP.jumpToQuestion(0)">⬆️ Back to Top of Paper</button>
+          <button type="button" class="action-btn" onclick="CMPG122_APP.retakeExam()">🔄 Retake Exam Paper</button>
+          <button type="button" class="action-btn" onclick="CMPG122_APP.exitExamPaper()">✕ Exit to Exams List</button>
+        </div>
+      `;
+    }
+
+    html += `</div>`;
+
+    dom.continuousPaperArea.innerHTML = html;
+  }
+
+  function updateNavigatorSummary() {
+    if (!dom.examNavigatorSummary || state.quizQuestions.length === 0) return;
+    const total = state.quizQuestions.length;
+    const answeredCount = Object.keys(state.answers).length;
+    const flaggedCount = Object.values(state.flags).filter(Boolean).length;
+    const pct = Math.round((answeredCount / total) * 100);
+    dom.examNavigatorSummary.textContent = `${answeredCount} / ${total} Answered (${pct}%) • ${flaggedCount} Flagged`;
+  }
+
+  function renderExamPalette() {
+    if (!dom.examQuestionPalette || state.quizQuestions.length === 0) return;
+
+    const questions = state.quizQuestions;
+    updateNavigatorSummary();
+
+    let html = '';
+    questions.forEach((q, idx) => {
+      const qNum = idx + 1;
+      const isAnswered = state.answers[q.id] !== undefined;
+      const isFlagged = !!state.flags[q.id];
+
+      let pillClasses = 'palette-pill';
+      if (isFlagged) pillClasses += ' flagged';
+
+      if (state.examSubmitted) {
+        const ans = state.answers[q.id];
+        if (ans && ans.isCorrect) pillClasses += ' correct';
+        else if (ans && !ans.isCorrect) pillClasses += ' incorrect';
+      } else {
+        if (isAnswered) pillClasses += ' answered';
+      }
+
+      html += `
+        <button type="button" class="${pillClasses}" id="palettePill_${q.id}" onclick="CMPG122_APP.jumpToQuestion(${idx})" title="Question ${qNum}: ${isAnswered ? 'Answered' : 'Unanswered'}${isFlagged ? ' (Flagged)' : ''}">
+          Q${qNum}
+        </button>
+      `;
+    });
+
+    dom.examQuestionPalette.innerHTML = html;
+  }
+
+  function selectPaperAnswer(qId, optIdx) {
+    if (state.examSubmitted) return;
+
+    const q = state.quizQuestions.find(item => item.id === qId);
+    if (!q) return;
+
+    const isCorrect = (optIdx === q.answer);
+    state.answers[qId] = {
+      selected: optIdx,
+      isCorrect: isCorrect,
+      score: isCorrect ? (q.marks || 2) : 0
+    };
+
+    // Update option labels directly
+    const wrap = document.getElementById(`optionsWrap_${qId}`);
+    if (wrap) {
+      const labels = wrap.querySelectorAll('.paper-option-label');
+      labels.forEach((lbl, idx) => {
+        if (idx === optIdx) {
+          lbl.classList.add('selected');
+          const radio = lbl.querySelector('input[type="radio"]');
+          if (radio) radio.checked = true;
+        } else {
+          lbl.classList.remove('selected');
+          const radio = lbl.querySelector('input[type="radio"]');
+          if (radio) radio.checked = false;
+        }
+      });
+    }
+
+    // Update palette pill
+    const pill = document.getElementById(`palettePill_${qId}`);
+    if (pill) {
+      pill.classList.add('answered');
+      const isFlagged = !!state.flags[qId];
+      pill.title = `Question: Answered${isFlagged ? ' (Flagged)' : ''}`;
+    }
+
+    updateNavigatorSummary();
+
+    // Update footer warning box
+    const footerWarning = document.getElementById('footerWarningBox');
+    if (footerWarning) {
+      const total = state.quizQuestions.length;
+      const answeredCount = Object.keys(state.answers).length;
+      const unanswered = total - answeredCount;
+      if (unanswered > 0) {
+        footerWarning.innerHTML = `<div class="unanswered-warning">⚠️ Notice: You have ${unanswered} unanswered question(s) out of ${total}.</div>`;
+      } else {
+        footerWarning.innerHTML = `<div style="color:var(--success-text); font-weight:700; margin-bottom:1.25rem;">✅ All ${total} questions answered! You are ready to finalize your submission.</div>`;
+      }
+    }
+  }
+
+  function setPaperClozeAnswer(qId, val) {
+    if (state.examSubmitted) return;
+
+    const q = state.quizQuestions.find(item => item.id === qId);
+    if (!q) return;
+
+    const cleanVal = val.trim();
+    if (cleanVal === '') {
+      delete state.answers[qId];
+    } else {
+      const correctVal = String(q.blankAnswer).trim().toLowerCase();
+      const isCorrect = (cleanVal.toLowerCase() === correctVal);
+      state.answers[qId] = {
+        selected: cleanVal,
+        isCorrect: isCorrect,
+        score: isCorrect ? (q.marks || 2) : 0
+      };
+    }
+
+    const pill = document.getElementById(`palettePill_${qId}`);
+    if (pill) {
+      if (cleanVal !== '') pill.classList.add('answered');
+      else pill.classList.remove('answered');
+    }
+
+    updateNavigatorSummary();
+
+    const footerWarning = document.getElementById('footerWarningBox');
+    if (footerWarning) {
+      const total = state.quizQuestions.length;
+      const answeredCount = Object.keys(state.answers).length;
+      const unanswered = total - answeredCount;
+      if (unanswered > 0) {
+        footerWarning.innerHTML = `<div class="unanswered-warning">⚠️ Notice: You have ${unanswered} unanswered question(s) out of ${total}.</div>`;
+      } else {
+        footerWarning.innerHTML = `<div style="color:var(--success-text); font-weight:700; margin-bottom:1.25rem;">✅ All ${total} questions answered! You are ready to finalize your submission.</div>`;
+      }
+    }
+  }
+
+  function toggleQuestionFlag(qId) {
+    state.flags[qId] = !state.flags[qId];
+    const isFlagged = !!state.flags[qId];
+
+    const btn = document.getElementById(`flagBtn_${qId}`);
+    if (btn) {
+      btn.classList.toggle('flagged', isFlagged);
+      btn.textContent = isFlagged ? '★ Flagged' : '☆ Flag';
+    }
+
+    const pill = document.getElementById(`palettePill_${qId}`);
+    if (pill) {
+      pill.classList.toggle('flagged', isFlagged);
+      const isAnswered = state.answers[qId] !== undefined;
+      pill.title = `Question: ${isAnswered ? 'Answered' : 'Unanswered'}${isFlagged ? ' (Flagged)' : ''}`;
+    }
+
+    updateNavigatorSummary();
+  }
+
+  function jumpToQuestion(idx) {
+    if (idx < 0 || idx >= state.quizQuestions.length) return;
+    const q = state.quizQuestions[idx];
+    const card = document.getElementById(`paperQ_${q.id}`);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      card.classList.add('highlight-focus');
+      setTimeout(() => {
+        card.classList.remove('highlight-focus');
+      }, 1500);
+    }
+  }
+
+  function jumpToNextUnanswered() {
+    const questions = state.quizQuestions;
+    const idx = questions.findIndex(q => state.answers[q.id] === undefined);
+    if (idx !== -1) {
+      jumpToQuestion(idx);
+    } else {
+      alert('All questions on this examination paper have been answered! You can review or submit at the foot of the document.');
+    }
+  }
+
+  function jumpToSubmit() {
+    const footer = document.getElementById('paperFooterCard');
+    if (footer) {
+      footer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function submitCompleteExamPaper() {
+    if (state.examSubmitted) return;
+
+    const totalQuestions = state.quizQuestions.length;
+    const answeredCount = Object.keys(state.answers).length;
+    const unansweredCount = totalQuestions - answeredCount;
+
+    if (unansweredCount > 0) {
+      const confirmSubmit = confirm(
+        `Warning: You have ${unansweredCount} unanswered question(s) out of ${totalQuestions}.\n\nAre you sure you want to submit the complete examination paper now?`
+      );
+      if (!confirmSubmit) return;
+    }
+
     clearInterval(state.examTimerInterval);
+    state.examSubmitted = true;
 
     const totalMarks = state.quizQuestions.reduce((sum, q) => sum + (q.marks || 2), 0);
     const earnedMarks = Object.values(state.answers).reduce((sum, a) => sum + (a.isCorrect ? a.score : 0), 0);
     const pct = totalMarks > 0 ? Math.round((earnedMarks / totalMarks) * 100) : 0;
 
+    // Update persistent mastery statistics
     if (pct > state.masteryStats.bestExamScore) {
       state.masteryStats.bestExamScore = pct;
-      saveStats();
     }
+
+    state.quizQuestions.forEach(q => {
+      state.masteryStats.totalAttempts++;
+      const ans = state.answers[q.id];
+      if (ans && ans.isCorrect) {
+        state.masteryStats.correctAttempts++;
+        if (state.masteryStats.unitStats && state.masteryStats.unitStats[q.ch]) {
+          state.masteryStats.unitStats[q.ch].correct++;
+        }
+      }
+      if (state.masteryStats.unitStats && state.masteryStats.unitStats[q.ch]) {
+        state.masteryStats.unitStats[q.ch].total++;
+      }
+    });
+
+    saveStats();
+    updateStatsDisplay();
 
     if (window.AxiomTelemetry && window.AxiomTelemetry.logAssessmentCompleted) {
       window.AxiomTelemetry.logAssessmentCompleted();
@@ -1236,20 +1810,55 @@
 
     const passed = pct >= 50;
     const distinction = pct >= 75;
+    const gradeTitle = distinction ? 'Distinction! 🏆' : (passed ? 'Passed! 🎉' : 'Failed - Supplementary Revision Required ⚠️');
 
-    let gradeTitle = distinction ? 'Distinction! 🏆' : (passed ? 'Passed! 🎉' : 'Failed - Supplementary Revision Required ⚠️');
+    // Re-render continuous paper and palette to reveal full solutions, answer keys, and results banner
+    renderContinuousExamPaper();
+    renderExamPalette();
 
-    alert(`NWU Examination Assessment Result:\nGrade: ${gradeTitle}\nTotal Score: ${earnedMarks} / ${totalMarks} Marks (${pct}%)\n\nYou can now review full step-by-step solutions for every question.`);
+    alert(`NWU Examination Assessment Result:\nGrade: ${gradeTitle}\nTotal Score: ${earnedMarks} / ${totalMarks} Marks (${pct}%)\n\nYou can now review full step-by-step solutions for every question directly on this continuous examination paper.`);
 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function submitExam() {
+    submitCompleteExamPaper();
+  }
+
+  function retakeExam() {
+    if (confirm("Are you sure you want to retake this examination paper? Your previous answers will be cleared.")) {
+      if (state.selectedExamId) {
+        startExam(state.selectedExamId, false);
+      } else {
+        launchQuizSession(dom.quizTitle ? dom.quizTitle.textContent : "Practice", state.quizQuestions, false);
+      }
+    }
+  }
+
+  function exitExamPaper() {
+    if (!state.examSubmitted) {
+      if (!confirm("Are you sure you want to exit? Your exam progress will not be saved.")) {
+        return;
+      }
+    }
+    clearInterval(state.examTimerInterval);
     state.isExamMode = false;
-    renderCurrentQuestion();
+    state.selectedExamId = null;
+    state.examSubmitted = false;
+    switchTab('exams');
   }
 
   function exitQuiz() {
-    if (confirm("Are you sure you want to exit this session?")) {
-      clearInterval(state.examTimerInterval);
-      state.isExamMode = false;
-      switchTab('units');
+    if (state.isExamMode) {
+      exitExamPaper();
+    } else {
+      if (confirm("Are you sure you want to exit this session?")) {
+        clearInterval(state.examTimerInterval);
+        state.isExamMode = false;
+        state.selectedExamId = null;
+        state.examSubmitted = false;
+        switchTab('units');
+      }
     }
   }
 
@@ -1435,7 +2044,21 @@
     loadAuditScenario: loadAuditScenario,
     runCodeAudit: runCodeAudit,
     resetAuditScenario: resetAuditScenario,
-    toggleAuditSolution: toggleAuditSolution
+    toggleAuditSolution: toggleAuditSolution,
+    setViewMode: setViewMode,
+    renderContinuousExamPaper: renderContinuousExamPaper,
+    renderExamPalette: renderExamPalette,
+    selectPaperAnswer: selectPaperAnswer,
+    setPaperClozeAnswer: setPaperClozeAnswer,
+    toggleQuestionFlag: toggleQuestionFlag,
+    jumpToQuestion: jumpToQuestion,
+    jumpToNextUnanswered: jumpToNextUnanswered,
+    jumpToSubmit: jumpToSubmit,
+    submitCompleteExamPaper: submitCompleteExamPaper,
+    submitExam: submitExam,
+    retakeExam: retakeExam,
+    exitExamPaper: exitExamPaper,
+    exitQuiz: exitQuiz
   };
 
   window.addEventListener('DOMContentLoaded', init);

@@ -790,10 +790,669 @@ body {
   color: var(--success-text);
 }
 
+.q-option-label.selected {
+  border-color: var(--accent-blue);
+  background: rgba(59, 130, 246, 0.12);
+  box-shadow: 0 0 0 1px var(--accent-blue);
+}
+
 .feedback-box.incorrect {
   background: var(--danger-bg);
   border: 1px solid var(--danger-border);
   color: var(--text-main);
+}
+
+/* --- Continuous Single Exam Paper & Navigation Palette Suite --- */
+.view-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-subtle);
+  padding: 3px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  gap: 3px;
+}
+
+.view-mode-pill {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: calc(var(--radius-sm) - 2px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.view-mode-pill:hover {
+  color: var(--text-main);
+}
+
+.view-mode-pill.active {
+  background: var(--accent-blue);
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Sticky Question Jump Palette Navigator */
+.exam-navigator-bar {
+  position: sticky;
+  top: 12px;
+  z-index: 80;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.navigator-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.navigator-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navigator-badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--accent-purple);
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+}
+
+.navigator-summary {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.navigator-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.action-btn-sm {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.action-btn-sm:hover {
+  border-color: var(--border-focus);
+  color: var(--text-main);
+  background: var(--bg-card-hover);
+}
+
+.exam-question-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  max-height: 120px;
+  overflow-y: auto;
+  padding: 2px;
+}
+
+.palette-pill {
+  width: 33px;
+  height: 33px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-subtle);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.palette-pill:hover {
+  border-color: var(--accent-blue);
+  color: var(--text-main);
+  transform: translateY(-1px);
+}
+
+.palette-pill.answered {
+  background: rgba(59, 130, 246, 0.25);
+  border-color: var(--accent-blue);
+  color: #93c5fd;
+  font-weight: 800;
+}
+
+.palette-pill.flagged::after {
+  content: '★';
+  position: absolute;
+  top: -5px;
+  right: -4px;
+  font-size: 0.65rem;
+  color: var(--accent-amber);
+  line-height: 1;
+}
+
+.palette-pill.current-card {
+  border-color: var(--accent-purple) !important;
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.5);
+}
+
+.palette-pill.correct {
+  background: rgba(16, 185, 129, 0.25) !important;
+  border-color: #10b981 !important;
+  color: #34d399 !important;
+}
+
+.palette-pill.incorrect {
+  background: rgba(239, 68, 68, 0.25) !important;
+  border-color: #ef4444 !important;
+  color: #f87171 !important;
+}
+
+/* Continuous Examination Paper Cover & Document */
+.continuous-paper-area {
+  margin-top: 0.5rem;
+}
+
+.paper-cover-sheet {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+}
+
+.paper-cover-header {
+  text-align: center;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.paper-inst-name {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.paper-faculty-name {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.paper-main-title {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #f8fafc;
+  margin-bottom: 0.35rem;
+}
+
+.paper-sub-title {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.paper-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.paper-meta-card {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.85rem;
+}
+
+.paper-meta-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.paper-meta-val {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-main);
+  font-family: var(--font-mono);
+}
+
+.paper-scenario-box {
+  background: rgba(168, 85, 247, 0.08);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  border-left: 4px solid var(--accent-purple);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.paper-scenario-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--accent-purple);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.paper-scenario-text {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #e2e8f0;
+}
+
+.paper-instructions-box {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1.25rem;
+}
+
+.paper-instructions-box h5 {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-amber);
+  margin-bottom: 0.4rem;
+  font-weight: 800;
+}
+
+.paper-instructions-box ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Sequential Question Cards in Continuous Paper */
+.paper-q-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+  position: relative;
+  scroll-margin-top: 140px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.paper-q-card.highlight-focus {
+  border-color: var(--accent-blue) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4) !important;
+}
+
+.paper-q-card.is-correct {
+  border-left: 4px solid #10b981;
+}
+
+.paper-q-card.is-incorrect {
+  border-left: 4px solid #ef4444;
+}
+
+.paper-q-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.paper-q-num-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.paper-q-num {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.paper-q-provenance {
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.paper-q-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.paper-q-flag-btn {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem 0.55rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.paper-q-flag-btn:hover {
+  border-color: var(--accent-amber);
+  color: var(--accent-amber);
+}
+
+.paper-q-flag-btn.flagged {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: var(--accent-amber);
+  color: var(--accent-amber);
+  font-weight: 700;
+}
+
+.paper-q-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  color: var(--text-main);
+}
+
+.paper-q-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.paper-option-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: 1.5px solid var(--border-subtle);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  user-select: none;
+}
+
+.paper-option-label:hover {
+  border-color: var(--border-focus);
+  background: var(--bg-card-hover);
+}
+
+.paper-option-label.selected {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 1px var(--accent-blue);
+}
+
+.paper-option-label.correct {
+  background: var(--success-bg) !important;
+  border-color: var(--success-border) !important;
+  color: var(--success-text) !important;
+  font-weight: 700;
+}
+
+.paper-option-label.incorrect {
+  background: var(--danger-bg) !important;
+  border-color: var(--danger-border) !important;
+  color: var(--danger-text) !important;
+}
+
+.q-option-letter {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  color: var(--accent-blue);
+  min-width: 20px;
+}
+
+.q-option-text {
+  flex: 1;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.paper-q-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.badge-correct-sel {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.badge-correct-key {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid #10b981;
+}
+
+.badge-incorrect-sel {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.paper-q-explanation {
+  margin-top: 1.25rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  background: #0b1120;
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--accent-blue);
+}
+
+.paper-q-explanation.correct {
+  border-left-color: #10b981;
+}
+
+.paper-q-explanation.incorrect {
+  border-left-color: #ef4444;
+}
+
+.explanation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.solution-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.explanation-body {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+}
+
+/* Examination Results Banner (rendered upon submission) */
+.exam-results-banner {
+  background: var(--bg-card);
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.exam-results-banner.distinction {
+  border-color: #10b981;
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.12) 0%, var(--bg-card) 100%);
+}
+
+.exam-results-banner.passed {
+  border-color: var(--accent-blue);
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.12) 0%, var(--bg-card) 100%);
+}
+
+.exam-results-banner.failed {
+  border-color: #ef4444;
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.12) 0%, var(--bg-card) 100%);
+}
+
+.results-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.results-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+.results-score-badge {
+  font-size: 1.45rem;
+  font-weight: 900;
+  font-family: var(--font-mono);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+}
+
+.results-stats-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.result-stat-pill {
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.result-stat-pill.correct-pill {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.result-stat-pill.incorrect-pill {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.result-stat-pill.unanswered-pill {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.results-actions-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Paper Footer Submission Card */
+.paper-footer-card {
+  background: var(--bg-card);
+  border: 2px dashed var(--accent-blue);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 3.5rem;
+  text-align: center;
+}
+
+.paper-footer-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.paper-footer-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.unanswered-warning {
+  color: var(--accent-amber);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+}
+
+.btn-submit-paper {
+  padding: 0.9rem 2.5rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 18px rgba(59, 130, 246, 0.4);
 }
 
 /* Side Tools Drawer */
@@ -1768,15 +2427,29 @@ body {
     <!-- View 6: Interactive Quiz & Examination Engine -->
     <section id="viewQuiz" class="view-panel" style="display:none;">
       <div class="quiz-container">
+        <!-- Top Toolbar with Mode Toggle and Controls -->
         <div class="quiz-top-bar">
           <button id="btnExitQuiz" class="action-btn" style="padding:0.35rem 0.65rem;">✕ Exit</button>
-          <div class="quiz-progress-wrap">
+
+          <!-- Examination Layout View Toggle (Practice Only) -->
+          <div class="view-mode-toggle" id="viewModeToggleGroup" style="display:none;">
+            <button type="button" id="btnModeContinuous" class="view-mode-pill active" onclick="CMPG122_APP.setViewMode('continuous')">
+              📄 Continuous Paper View
+            </button>
+            <button type="button" id="btnModeCard" class="view-mode-pill" onclick="CMPG122_APP.setViewMode('card')">
+              🗂️ Single Question Card View
+            </button>
+          </div>
+
+          <!-- Single Card Progress Bar (shown in Card view) -->
+          <div class="quiz-progress-wrap" id="cardProgressWrap" style="display:none;">
             <div class="progress-bar-bg">
               <div id="quizProgressFill" class="progress-bar-fill"></div>
             </div>
           </div>
-          <span id="quizCounter" style="font-family:var(--font-mono); font-size:0.85rem; font-weight:700; color:var(--text-muted);">Q 1 of 20</span>
+          <span id="quizCounter" style="display:none; font-family:var(--font-mono); font-size:0.85rem; font-weight:700; color:var(--text-muted);">Q 1 of 20</span>
           
+          <!-- Exam Countdown Timer -->
           <div id="quizTimerBox" style="display:none; align-items:center; gap:0.4rem; background:var(--bg-subtle); border:1px solid var(--border-subtle); padding:0.25rem 0.6rem; border-radius:var(--radius-sm); font-family:var(--font-mono); font-weight:700; color:var(--accent-amber);">
             <span>⏱️</span>
             <span id="quizTimerDisplay">180:00</span>
@@ -1785,20 +2458,45 @@ body {
           <button id="btnBookmark" class="action-btn" style="padding:0.35rem 0.65rem;">☆ Bookmark</button>
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-          <h2 id="quizTitle" style="font-size:1.15rem; font-weight:800;">Unit Practice</h2>
-          <button id="btnRetryWrong" class="action-btn" style="display:none; color:var(--danger-text); border-color:var(--danger-border);">
-            🔄 Retry Incorrect Qs
-          </button>
+        <!-- Sticky Question Jump Palette Navigator for Continuous Exam Paper -->
+        <div id="examNavigatorBar" class="exam-navigator-bar">
+          <div class="navigator-meta">
+            <div class="navigator-title-row">
+              <span class="navigator-badge">📋 QUESTION PALETTE</span>
+              <span id="examNavigatorSummary" class="navigator-summary">0 / 16 Answered (0%)</span>
+            </div>
+            <div class="navigator-actions">
+              <button type="button" id="btnJumpUnanswered" class="action-btn-sm" onclick="CMPG122_APP.jumpToNextUnanswered()">⏭️ Next Unanswered</button>
+              <button type="button" id="btnJumpSubmit" class="action-btn-sm" onclick="CMPG122_APP.jumpToSubmit()">📋 Jump to Submit</button>
+            </div>
+          </div>
+          <div id="examQuestionPalette" class="exam-question-palette">
+            <!-- Dynamically populated question pills -->
+          </div>
         </div>
 
-        <!-- Question Render Area -->
-        <div id="quizArea"></div>
+        <!-- Mode A: Continuous Single Exam Paper View -->
+        <div id="continuousPaperArea" class="continuous-paper-area">
+          <!-- Rendered dynamically by app.js: Cover, Questions 1..N, Submit Section -->
+        </div>
 
-        <!-- Navigation Controls -->
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.25rem;">
-          <button id="btnPrevQ" class="action-btn" disabled>← Previous</button>
-          <button id="btnNextQ" class="btn-practice" style="padding:0.6rem 1.5rem; font-size:0.9rem;">Next Question →</button>
+        <!-- Mode B: Single Question Card View -->
+        <div id="singleCardArea" class="single-card-area" style="display:none;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h2 id="quizTitle" style="font-size:1.15rem; font-weight:800;">Unit Practice</h2>
+            <button id="btnRetryWrong" class="action-btn" style="display:none; color:var(--danger-text); border-color:var(--danger-border);">
+              🔄 Retry Incorrect Qs
+            </button>
+          </div>
+
+          <!-- Question Render Area -->
+          <div id="quizArea"></div>
+
+          <!-- Navigation Controls -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.25rem;">
+            <button id="btnPrevQ" class="action-btn" disabled>← Previous</button>
+            <button id="btnNextQ" class="btn-practice" style="padding:0.6rem 1.5rem; font-size:0.9rem;">Next Question →</button>
+          </div>
         </div>
       </div>
     </section>
@@ -16031,9 +16729,12 @@ body {
     quizQuestions: [],
     currentIndex: 0,
     answers: {}, // { [qId]: { selected: any, isCorrect: boolean, score: number } }
+    flags: {}, // { [qId]: boolean }
     bookmarks: JSON.parse(localStorage.getItem('cmpg122_bookmarks') || '[]'),
     score: 0,
     isExamMode: false,
+    examSubmitted: false,
+    viewMode: 'continuous', // 'continuous' or 'card'
     examSecondsLeft: 180 * 60,
     examTimerInterval: null,
     streak: 0,
@@ -16163,6 +16864,18 @@ body {
       btnPrevQ: document.getElementById('btnPrevQ'),
       btnNextQ: document.getElementById('btnNextQ'),
       btnSubmitExam: document.getElementById('btnSubmitExam'),
+      // Continuous Exam Paper & Quick-Jump Palette DOM Elements
+      viewModeToggleGroup: document.getElementById('viewModeToggleGroup'),
+      btnModeContinuous: document.getElementById('btnModeContinuous'),
+      btnModeCard: document.getElementById('btnModeCard'),
+      cardProgressWrap: document.getElementById('cardProgressWrap'),
+      examNavigatorBar: document.getElementById('examNavigatorBar'),
+      examNavigatorSummary: document.getElementById('examNavigatorSummary'),
+      examQuestionPalette: document.getElementById('examQuestionPalette'),
+      btnJumpUnanswered: document.getElementById('btnJumpUnanswered'),
+      btnJumpSubmit: document.getElementById('btnJumpSubmit'),
+      continuousPaperArea: document.getElementById('continuousPaperArea'),
+      singleCardArea: document.getElementById('singleCardArea'),
       // Drawer
       toolsDrawer: document.getElementById('toolsDrawer'),
       drawerBackdrop: document.getElementById('drawerBackdrop'),
@@ -16971,6 +17684,10 @@ body {
       return;
     }
     const unit = DATA.units.find(u => u.id === unitId);
+    state.isExamMode = false;
+    state.selectedExamId = null;
+    state.examSubmitted = false;
+    state.flags = {};
     launchQuizSession(`${unit ? unit.title : unitId} Practice`, questions, false);
   }
 
@@ -16985,17 +17702,55 @@ body {
     }
 
     state.isExamMode = true;
+    state.selectedExamId = examId;
+    state.examSubmitted = false;
+    state.flags = {};
+    state.answers = {};
+    state.viewMode = 'continuous'; // MANDATORY INVARIANT: Continuous Single-Sheet Paper Only
     state.examSecondsLeft = (exam.durationMinutes || 180) * 60;
+    state.quizQuestions = questions;
+    state.currentIndex = 0;
+    state.score = 0;
+    state.wrongOnlyMode = false;
 
-    launchQuizSession(`${exam.title} ${isTimed ? '(Timed)' : ''}`, questions, isTimed);
+    if (dom.quizTitle) dom.quizTitle.textContent = `${exam.title} ${isTimed ? '(Timed)' : ''}`;
+    if (dom.btnRetryWrong) dom.btnRetryWrong.style.display = 'none';
+
+    // Timer setup
+    if (isTimed) {
+      if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'flex';
+      startExamTimer();
+    } else {
+      if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
+      clearInterval(state.examTimerInterval);
+    }
+
+    // MANDATORY CRITICAL EXAM ARCHITECTURE INVARIANT:
+    // Under NO circumstances may official exam papers be rendered as a single-question carousel,
+    // flashcard, or "Q 1 of N" paginated stepper with "Next Question" buttons.
+    // All official past papers MUST render as a CONTINUOUS, SINGLE SCROLLABLE EXAMINATION DOCUMENT.
+    if (dom.viewModeToggleGroup) dom.viewModeToggleGroup.style.display = 'none';
+    if (dom.cardProgressWrap) dom.cardProgressWrap.style.display = 'none';
+    if (dom.quizCounter) dom.quizCounter.style.display = 'none';
+    if (dom.btnBookmark) dom.btnBookmark.style.display = 'none';
+    if (dom.singleCardArea) dom.singleCardArea.style.display = 'none';
+    if (dom.continuousPaperArea) dom.continuousPaperArea.style.display = 'block';
+    if (dom.examNavigatorBar) dom.examNavigatorBar.style.display = 'flex';
+
+    switchTab('quiz');
+    renderContinuousExamPaper();
+    renderExamPalette();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function launchQuizSession(title, questions, isTimed) {
     state.quizQuestions = questions;
     state.currentIndex = 0;
     state.answers = {};
+    state.flags = {};
     state.score = 0;
     state.wrongOnlyMode = false;
+    state.examSubmitted = false;
 
     if (dom.quizTitle) dom.quizTitle.textContent = title;
     if (dom.btnRetryWrong) dom.btnRetryWrong.style.display = 'none';
@@ -17010,7 +17765,57 @@ body {
     }
 
     switchTab('quiz');
-    renderCurrentQuestion();
+
+    if (state.isExamMode) {
+      state.viewMode = 'continuous';
+      if (dom.viewModeToggleGroup) dom.viewModeToggleGroup.style.display = 'none';
+      if (dom.cardProgressWrap) dom.cardProgressWrap.style.display = 'none';
+      if (dom.quizCounter) dom.quizCounter.style.display = 'none';
+      if (dom.btnBookmark) dom.btnBookmark.style.display = 'none';
+      if (dom.singleCardArea) dom.singleCardArea.style.display = 'none';
+      if (dom.continuousPaperArea) dom.continuousPaperArea.style.display = 'block';
+      if (dom.examNavigatorBar) dom.examNavigatorBar.style.display = 'flex';
+      renderContinuousExamPaper();
+      renderExamPalette();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      if (dom.viewModeToggleGroup) dom.viewModeToggleGroup.style.display = 'inline-flex';
+      applyViewMode(state.viewMode || 'continuous');
+    }
+  }
+
+  function setViewMode(mode) {
+    if (state.isExamMode) {
+      console.warn('Official exam papers are locked to Continuous Single-Sheet Paper Only.');
+      return;
+    }
+    state.viewMode = mode;
+    applyViewMode(mode);
+  }
+
+  function applyViewMode(mode) {
+    if (dom.btnModeContinuous) dom.btnModeContinuous.classList.toggle('active', mode === 'continuous');
+    if (dom.btnModeCard) dom.btnModeCard.classList.toggle('active', mode === 'card');
+
+    if (mode === 'continuous') {
+      if (dom.singleCardArea) dom.singleCardArea.style.display = 'none';
+      if (dom.continuousPaperArea) dom.continuousPaperArea.style.display = 'block';
+      if (dom.examNavigatorBar) dom.examNavigatorBar.style.display = 'flex';
+      if (dom.cardProgressWrap) dom.cardProgressWrap.style.display = 'none';
+      if (dom.quizCounter) dom.quizCounter.style.display = 'none';
+      if (dom.btnBookmark) dom.btnBookmark.style.display = 'none';
+      renderContinuousExamPaper();
+      renderExamPalette();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      if (dom.singleCardArea) dom.singleCardArea.style.display = 'block';
+      if (dom.continuousPaperArea) dom.continuousPaperArea.style.display = 'none';
+      if (dom.examNavigatorBar) dom.examNavigatorBar.style.display = 'none';
+      if (dom.cardProgressWrap) dom.cardProgressWrap.style.display = 'block';
+      if (dom.quizCounter) dom.quizCounter.style.display = 'inline';
+      if (dom.btnBookmark) dom.btnBookmark.style.display = 'inline-block';
+      renderCurrentQuestion();
+    }
   }
 
   function startExamTimer() {
@@ -17024,7 +17829,7 @@ body {
       if (state.examSecondsLeft <= 0) {
         clearInterval(state.examTimerInterval);
         alert('Time is up! Your exam will now be submitted automatically.');
-        submitExam();
+        submitCompleteExamPaper();
       }
     }, 1000);
   }
@@ -17229,17 +18034,484 @@ body {
     launchQuizSession('Retry Incorrect Questions', wrong, false);
   }
 
-  function submitExam() {
+  // =========================================================================
+  // CONTINUOUS SINGLE-SHEET EXAMINATION PAPER ENGINE & QUICK-JUMP PALETTE
+  // Under NO circumstances may official exam papers be rendered as a single-question
+  // carousel, flashcard, or "Q 1 of N" paginated stepper with "Next Question" buttons.
+  // All official past papers render as a CONTINUOUS, SINGLE SCROLLABLE EXAMINATION DOCUMENT.
+  // =========================================================================
+
+  function renderContinuousExamPaper() {
+    if (!dom.continuousPaperArea || state.quizQuestions.length === 0) return;
+
+    const exam = state.selectedExamId ? DATA.officialExams.find(e => e.id === state.selectedExamId) : null;
+    const questions = state.quizQuestions;
+    const totalMarks = questions.reduce((sum, q) => sum + (q.marks || 2), 0);
+    const answeredCount = Object.keys(state.answers).length;
+    const unansweredCount = questions.length - answeredCount;
+    const earnedMarks = Object.values(state.answers).reduce((sum, a) => sum + (a.isCorrect ? a.score : 0), 0);
+    const pct = totalMarks > 0 ? Math.round((earnedMarks / totalMarks) * 100) : 0;
+
+    let html = '';
+
+    // Results Banner (rendered upon submission)
+    if (state.examSubmitted) {
+      const passed = pct >= 50;
+      const distinction = pct >= 75;
+      const bannerClass = distinction ? 'distinction' : (passed ? 'passed' : 'failed');
+      const bannerGrade = distinction ? 'Distinction! 🏆' : (passed ? 'Passed! 🎉' : 'Supplementary Revision Required ⚠️');
+      const correctCount = Object.values(state.answers).filter(a => a.isCorrect).length;
+      const incorrectCount = answeredCount - correctCount;
+
+      html += `
+        <div class="exam-results-banner ${bannerClass}">
+          <div class="results-top-row">
+            <div>
+              <div class="results-title">${bannerGrade}</div>
+              <div style="font-size:0.9rem; color:var(--text-muted); margin-top:0.25rem;">
+                Official NWU CMPG122 Examination Assessment Result
+              </div>
+            </div>
+            <div class="results-score-badge">
+              ${earnedMarks} / ${totalMarks} Marks (${pct}%)
+            </div>
+          </div>
+          <div class="results-stats-row">
+            <span class="result-stat-pill correct-pill">✓ ${correctCount} Correct</span>
+            <span class="result-stat-pill incorrect-pill">✗ ${incorrectCount} Incorrect</span>
+            <span class="result-stat-pill unanswered-pill">⚠️ ${unansweredCount} Unanswered</span>
+          </div>
+          <div class="results-actions-row">
+            <button type="button" class="btn-practice" onclick="CMPG122_APP.jumpToQuestion(0)">⬆️ Review Paper Solutions</button>
+            <button type="button" class="action-btn" onclick="CMPG122_APP.retakeExam()">🔄 Retake Exam Paper</button>
+            <button type="button" class="action-btn" onclick="CMPG122_APP.exitExamPaper()">✕ Exit to Exams List</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Cover Sheet
+    const instName = "North-West University (NWU)";
+    const facName = "Faculty of Natural and Agricultural Sciences • School of Computer Science & Information Systems";
+    const paperTitle = exam ? exam.title : (dom.quizTitle ? dom.quizTitle.textContent : "Examination Paper");
+    const paperBadge = exam ? `${exam.badge} • Academic Year ${exam.academicYear}` : "Official Examination Assessment";
+    const durationText = exam ? `${exam.durationMinutes} Minutes (3 Hours)` : "180 Minutes (3 Hours)";
+    const marksText = `${totalMarks} Marks (${questions.length} Questions)`;
+    const sittingText = exam ? exam.sitting : "Continuous Examination Assessment";
+    const scenarioText = exam ? exam.scenario : "This official examination paper evaluates full-spectrum competency across Visual C#, Windows Forms GUI architecture, data types, control flow, loops, and array manipulation.";
+
+    html += `
+      <div class="paper-cover-sheet">
+        <div class="paper-cover-header">
+          <div class="paper-inst-name">${instName}</div>
+          <div class="paper-faculty-name">${facName}</div>
+          <h2 class="paper-main-title">${escapeHtml(paperTitle)}</h2>
+          <div class="paper-sub-title">${escapeHtml(paperBadge)}</div>
+        </div>
+
+        <div class="paper-meta-grid">
+          <div class="paper-meta-card">
+            <span class="paper-meta-label">Module</span>
+            <span class="paper-meta-val">CMPG 122</span>
+          </div>
+          <div class="paper-meta-card">
+            <span class="paper-meta-label">Assessment</span>
+            <span class="paper-meta-val">${escapeHtml(sittingText)}</span>
+          </div>
+          <div class="paper-meta-card">
+            <span class="paper-meta-label">Duration</span>
+            <span class="paper-meta-val">${durationText}</span>
+          </div>
+          <div class="paper-meta-card">
+            <span class="paper-meta-label">Total Marks</span>
+            <span class="paper-meta-val">${marksText}</span>
+          </div>
+        </div>
+
+        <div class="paper-scenario-box">
+          <div class="paper-scenario-title">📋 PRACTICAL SPECIFICATION / SCENARIO OVERVIEW</div>
+          <div class="paper-scenario-text">${escapeHtml(scenarioText)}</div>
+        </div>
+
+        <div class="paper-instructions-box">
+          <h5>Examination Invariant & Candidate Guidelines:</h5>
+          <ul>
+            <li><strong>Continuous Single-Sheet Document:</strong> All ${questions.length} questions are presented below on this single scrollable sheet.</li>
+            <li><strong>Non-Linear Navigation:</strong> Scroll freely, answer questions in any order, and change your selections at any time prior to submission.</li>
+            <li><strong>Question Palette:</strong> The sticky palette at the top tracks your answered/flagged progress and allows instant smooth-scrolling to any question.</li>
+            <li><strong>Single Paper Submission:</strong> When you are satisfied with all responses, proceed to the foot of this document and click "Submit Complete Exam Paper".</li>
+          </ul>
+        </div>
+      </div>
+    `;
+
+    // Stacked Questions 1 through N
+    questions.forEach((q, idx) => {
+      const qNum = idx + 1;
+      const savedAns = state.answers[q.id];
+      const isFlagged = !!state.flags[q.id];
+      const marks = q.marks || 2;
+
+      let cardClasses = 'paper-q-card';
+      if (state.examSubmitted) {
+        if (savedAns && savedAns.isCorrect) cardClasses += ' is-correct';
+        else cardClasses += ' is-incorrect';
+      }
+
+      html += `
+        <div class="${cardClasses}" id="paperQ_${q.id}" data-qid="${q.id}" data-idx="${idx}">
+          <div class="paper-q-header">
+            <div class="paper-q-num-wrap">
+              <span class="paper-q-num">Question ${qNum}</span>
+              <span class="paper-q-provenance">${escapeHtml(q.provenance || `Step ${qNum}`)}</span>
+            </div>
+            <div class="paper-q-header-right">
+              <span class="q-marks-tag">${marks} Marks</span>
+              <button type="button" class="paper-q-flag-btn ${isFlagged ? 'flagged' : ''}" id="flagBtn_${q.id}" onclick="CMPG122_APP.toggleQuestionFlag('${q.id}')">
+                ${isFlagged ? '★ Flagged' : '☆ Flag'}
+              </button>
+            </div>
+          </div>
+
+          <div class="paper-q-title">${escapeHtml(q.q || q.title)}</div>
+      `;
+
+      if (q.codeSnippet) {
+        html += `<div style="background:#0f172a; padding:0.85rem 1.15rem; border-radius:var(--radius-sm); border:1px solid #1e293b; margin-bottom:1.25rem; font-family:var(--font-mono); font-size:0.85rem; color:#f8fafc; white-space:pre-wrap; overflow-x:auto;">${escapeHtml(q.codeSnippet)}</div>`;
+      }
+
+      // Options (MCQ)
+      if (q.options && q.options.length > 0) {
+        html += `<div class="paper-q-options" id="optionsWrap_${q.id}">`;
+        q.options.forEach((opt, optIdx) => {
+          const isSelected = (savedAns && savedAns.selected === optIdx);
+          let optClass = 'paper-option-label';
+          let badgeHtml = '';
+
+          if (isSelected) optClass += ' selected';
+
+          if (state.examSubmitted) {
+            if (optIdx === q.answer) {
+              optClass += ' correct';
+              if (isSelected) {
+                badgeHtml = `<span class="paper-q-badge badge-correct-sel">✓ Your Answer (Correct)</span>`;
+              } else {
+                badgeHtml = `<span class="paper-q-badge badge-correct-key">Correct Answer</span>`;
+              }
+            } else if (isSelected) {
+              optClass += ' incorrect';
+              badgeHtml = `<span class="paper-q-badge badge-incorrect-sel">✗ Your Answer</span>`;
+            }
+          }
+
+          html += `
+            <label class="${optClass}" id="label_${q.id}_${optIdx}" onclick="CMPG122_APP.selectPaperAnswer('${q.id}', ${optIdx})">
+              <input type="radio" name="paper_opt_${q.id}" value="${optIdx}" ${isSelected ? 'checked' : ''} ${state.examSubmitted ? 'disabled' : ''} style="display:none;">
+              <span class="q-option-letter">${String.fromCharCode(65 + optIdx)}.</span>
+              <span class="q-option-text">${escapeHtml(opt)}</span>
+              ${badgeHtml}
+            </label>
+          `;
+        });
+        html += `</div>`;
+      } else if (q.blankAnswer) {
+        const clozeVal = savedAns ? savedAns.selected : '';
+        html += `
+          <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:1rem;">
+            <input type="text" id="paperCloze_${q.id}" class="cloze-input" placeholder="Type answer here..." value="${escapeHtml(clozeVal)}" ${state.examSubmitted ? 'disabled' : ''} oninput="CMPG122_APP.setPaperClozeAnswer('${q.id}', this.value)" style="flex:1; max-width:320px;">
+          </div>
+        `;
+      }
+
+      // If submitted, show full step-by-step solution
+      if (state.examSubmitted) {
+        const isCorrect = savedAns && savedAns.isCorrect;
+        html += `
+          <div class="paper-q-explanation ${isCorrect ? 'correct' : 'incorrect'}">
+            <div class="explanation-header">
+              <strong style="color:${isCorrect ? '#34d399' : '#f87171'};">
+                ${isCorrect ? `✅ Full Credit: +${marks} / ${marks} Marks` : `❌ Incorrect: 0 / ${marks} Marks`}
+              </strong>
+              <span class="solution-tag">Official Memorandum Solution & Analysis</span>
+            </div>
+            <div class="explanation-body">
+              ${escapeHtml(q.exp || q.explanation || 'Refer to textbook and lecture slides for full specification.')}
+            </div>
+          </div>
+        `;
+      }
+
+      html += `</div>`;
+    });
+
+    // Foot of document: Submission Card
+    html += `
+      <div class="paper-footer-card" id="paperFooterCard">
+    `;
+
+    if (!state.examSubmitted) {
+      html += `
+        <div class="paper-footer-title">End of Examination Document</div>
+        <div class="paper-footer-desc">
+          Review your answers using the Sticky Question Palette or by scrolling freely above. You can change any response until you submit.
+        </div>
+        <div id="footerWarningBox">
+          ${unansweredCount > 0 
+            ? `<div class="unanswered-warning">⚠️ Notice: You have ${unansweredCount} unanswered question(s) out of ${questions.length}.</div>`
+            : `<div style="color:var(--success-text); font-weight:700; margin-bottom:1.25rem;">✅ All ${questions.length} questions answered! You are ready to finalize your submission.</div>`
+          }
+        </div>
+        <button type="button" id="btnSubmitExamPaper" class="btn-practice btn-submit-paper" onclick="CMPG122_APP.submitCompleteExamPaper()">
+          📤 Submit Complete Exam Paper
+        </button>
+      `;
+    } else {
+      html += `
+        <div class="paper-footer-title">Examination Completed & Graded</div>
+        <div class="paper-footer-desc" style="font-size:1.05rem; font-weight:700; color:var(--text-main); margin-bottom:1.25rem;">
+          Final Result: ${earnedMarks} / ${totalMarks} Marks (${pct}%)
+        </div>
+        <div class="results-actions-row" style="justify-content:center;">
+          <button type="button" class="btn-practice" onclick="CMPG122_APP.jumpToQuestion(0)">⬆️ Back to Top of Paper</button>
+          <button type="button" class="action-btn" onclick="CMPG122_APP.retakeExam()">🔄 Retake Exam Paper</button>
+          <button type="button" class="action-btn" onclick="CMPG122_APP.exitExamPaper()">✕ Exit to Exams List</button>
+        </div>
+      `;
+    }
+
+    html += `</div>`;
+
+    dom.continuousPaperArea.innerHTML = html;
+  }
+
+  function updateNavigatorSummary() {
+    if (!dom.examNavigatorSummary || state.quizQuestions.length === 0) return;
+    const total = state.quizQuestions.length;
+    const answeredCount = Object.keys(state.answers).length;
+    const flaggedCount = Object.values(state.flags).filter(Boolean).length;
+    const pct = Math.round((answeredCount / total) * 100);
+    dom.examNavigatorSummary.textContent = `${answeredCount} / ${total} Answered (${pct}%) • ${flaggedCount} Flagged`;
+  }
+
+  function renderExamPalette() {
+    if (!dom.examQuestionPalette || state.quizQuestions.length === 0) return;
+
+    const questions = state.quizQuestions;
+    updateNavigatorSummary();
+
+    let html = '';
+    questions.forEach((q, idx) => {
+      const qNum = idx + 1;
+      const isAnswered = state.answers[q.id] !== undefined;
+      const isFlagged = !!state.flags[q.id];
+
+      let pillClasses = 'palette-pill';
+      if (isFlagged) pillClasses += ' flagged';
+
+      if (state.examSubmitted) {
+        const ans = state.answers[q.id];
+        if (ans && ans.isCorrect) pillClasses += ' correct';
+        else if (ans && !ans.isCorrect) pillClasses += ' incorrect';
+      } else {
+        if (isAnswered) pillClasses += ' answered';
+      }
+
+      html += `
+        <button type="button" class="${pillClasses}" id="palettePill_${q.id}" onclick="CMPG122_APP.jumpToQuestion(${idx})" title="Question ${qNum}: ${isAnswered ? 'Answered' : 'Unanswered'}${isFlagged ? ' (Flagged)' : ''}">
+          Q${qNum}
+        </button>
+      `;
+    });
+
+    dom.examQuestionPalette.innerHTML = html;
+  }
+
+  function selectPaperAnswer(qId, optIdx) {
+    if (state.examSubmitted) return;
+
+    const q = state.quizQuestions.find(item => item.id === qId);
+    if (!q) return;
+
+    const isCorrect = (optIdx === q.answer);
+    state.answers[qId] = {
+      selected: optIdx,
+      isCorrect: isCorrect,
+      score: isCorrect ? (q.marks || 2) : 0
+    };
+
+    // Update option labels directly
+    const wrap = document.getElementById(`optionsWrap_${qId}`);
+    if (wrap) {
+      const labels = wrap.querySelectorAll('.paper-option-label');
+      labels.forEach((lbl, idx) => {
+        if (idx === optIdx) {
+          lbl.classList.add('selected');
+          const radio = lbl.querySelector('input[type="radio"]');
+          if (radio) radio.checked = true;
+        } else {
+          lbl.classList.remove('selected');
+          const radio = lbl.querySelector('input[type="radio"]');
+          if (radio) radio.checked = false;
+        }
+      });
+    }
+
+    // Update palette pill
+    const pill = document.getElementById(`palettePill_${qId}`);
+    if (pill) {
+      pill.classList.add('answered');
+      const isFlagged = !!state.flags[qId];
+      pill.title = `Question: Answered${isFlagged ? ' (Flagged)' : ''}`;
+    }
+
+    updateNavigatorSummary();
+
+    // Update footer warning box
+    const footerWarning = document.getElementById('footerWarningBox');
+    if (footerWarning) {
+      const total = state.quizQuestions.length;
+      const answeredCount = Object.keys(state.answers).length;
+      const unanswered = total - answeredCount;
+      if (unanswered > 0) {
+        footerWarning.innerHTML = `<div class="unanswered-warning">⚠️ Notice: You have ${unanswered} unanswered question(s) out of ${total}.</div>`;
+      } else {
+        footerWarning.innerHTML = `<div style="color:var(--success-text); font-weight:700; margin-bottom:1.25rem;">✅ All ${total} questions answered! You are ready to finalize your submission.</div>`;
+      }
+    }
+  }
+
+  function setPaperClozeAnswer(qId, val) {
+    if (state.examSubmitted) return;
+
+    const q = state.quizQuestions.find(item => item.id === qId);
+    if (!q) return;
+
+    const cleanVal = val.trim();
+    if (cleanVal === '') {
+      delete state.answers[qId];
+    } else {
+      const correctVal = String(q.blankAnswer).trim().toLowerCase();
+      const isCorrect = (cleanVal.toLowerCase() === correctVal);
+      state.answers[qId] = {
+        selected: cleanVal,
+        isCorrect: isCorrect,
+        score: isCorrect ? (q.marks || 2) : 0
+      };
+    }
+
+    const pill = document.getElementById(`palettePill_${qId}`);
+    if (pill) {
+      if (cleanVal !== '') pill.classList.add('answered');
+      else pill.classList.remove('answered');
+    }
+
+    updateNavigatorSummary();
+
+    const footerWarning = document.getElementById('footerWarningBox');
+    if (footerWarning) {
+      const total = state.quizQuestions.length;
+      const answeredCount = Object.keys(state.answers).length;
+      const unanswered = total - answeredCount;
+      if (unanswered > 0) {
+        footerWarning.innerHTML = `<div class="unanswered-warning">⚠️ Notice: You have ${unanswered} unanswered question(s) out of ${total}.</div>`;
+      } else {
+        footerWarning.innerHTML = `<div style="color:var(--success-text); font-weight:700; margin-bottom:1.25rem;">✅ All ${total} questions answered! You are ready to finalize your submission.</div>`;
+      }
+    }
+  }
+
+  function toggleQuestionFlag(qId) {
+    state.flags[qId] = !state.flags[qId];
+    const isFlagged = !!state.flags[qId];
+
+    const btn = document.getElementById(`flagBtn_${qId}`);
+    if (btn) {
+      btn.classList.toggle('flagged', isFlagged);
+      btn.textContent = isFlagged ? '★ Flagged' : '☆ Flag';
+    }
+
+    const pill = document.getElementById(`palettePill_${qId}`);
+    if (pill) {
+      pill.classList.toggle('flagged', isFlagged);
+      const isAnswered = state.answers[qId] !== undefined;
+      pill.title = `Question: ${isAnswered ? 'Answered' : 'Unanswered'}${isFlagged ? ' (Flagged)' : ''}`;
+    }
+
+    updateNavigatorSummary();
+  }
+
+  function jumpToQuestion(idx) {
+    if (idx < 0 || idx >= state.quizQuestions.length) return;
+    const q = state.quizQuestions[idx];
+    const card = document.getElementById(`paperQ_${q.id}`);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      card.classList.add('highlight-focus');
+      setTimeout(() => {
+        card.classList.remove('highlight-focus');
+      }, 1500);
+    }
+  }
+
+  function jumpToNextUnanswered() {
+    const questions = state.quizQuestions;
+    const idx = questions.findIndex(q => state.answers[q.id] === undefined);
+    if (idx !== -1) {
+      jumpToQuestion(idx);
+    } else {
+      alert('All questions on this examination paper have been answered! You can review or submit at the foot of the document.');
+    }
+  }
+
+  function jumpToSubmit() {
+    const footer = document.getElementById('paperFooterCard');
+    if (footer) {
+      footer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function submitCompleteExamPaper() {
+    if (state.examSubmitted) return;
+
+    const totalQuestions = state.quizQuestions.length;
+    const answeredCount = Object.keys(state.answers).length;
+    const unansweredCount = totalQuestions - answeredCount;
+
+    if (unansweredCount > 0) {
+      const confirmSubmit = confirm(
+        `Warning: You have ${unansweredCount} unanswered question(s) out of ${totalQuestions}.\n\nAre you sure you want to submit the complete examination paper now?`
+      );
+      if (!confirmSubmit) return;
+    }
+
     clearInterval(state.examTimerInterval);
+    state.examSubmitted = true;
 
     const totalMarks = state.quizQuestions.reduce((sum, q) => sum + (q.marks || 2), 0);
     const earnedMarks = Object.values(state.answers).reduce((sum, a) => sum + (a.isCorrect ? a.score : 0), 0);
     const pct = totalMarks > 0 ? Math.round((earnedMarks / totalMarks) * 100) : 0;
 
+    // Update persistent mastery statistics
     if (pct > state.masteryStats.bestExamScore) {
       state.masteryStats.bestExamScore = pct;
-      saveStats();
     }
+
+    state.quizQuestions.forEach(q => {
+      state.masteryStats.totalAttempts++;
+      const ans = state.answers[q.id];
+      if (ans && ans.isCorrect) {
+        state.masteryStats.correctAttempts++;
+        if (state.masteryStats.unitStats && state.masteryStats.unitStats[q.ch]) {
+          state.masteryStats.unitStats[q.ch].correct++;
+        }
+      }
+      if (state.masteryStats.unitStats && state.masteryStats.unitStats[q.ch]) {
+        state.masteryStats.unitStats[q.ch].total++;
+      }
+    });
+
+    saveStats();
+    updateStatsDisplay();
 
     if (window.AxiomTelemetry && window.AxiomTelemetry.logAssessmentCompleted) {
       window.AxiomTelemetry.logAssessmentCompleted();
@@ -17247,20 +18519,55 @@ body {
 
     const passed = pct >= 50;
     const distinction = pct >= 75;
+    const gradeTitle = distinction ? 'Distinction! 🏆' : (passed ? 'Passed! 🎉' : 'Failed - Supplementary Revision Required ⚠️');
 
-    let gradeTitle = distinction ? 'Distinction! 🏆' : (passed ? 'Passed! 🎉' : 'Failed - Supplementary Revision Required ⚠️');
+    // Re-render continuous paper and palette to reveal full solutions, answer keys, and results banner
+    renderContinuousExamPaper();
+    renderExamPalette();
 
-    alert(`NWU Examination Assessment Result:\nGrade: ${gradeTitle}\nTotal Score: ${earnedMarks} / ${totalMarks} Marks (${pct}%)\n\nYou can now review full step-by-step solutions for every question.`);
+    alert(`NWU Examination Assessment Result:\nGrade: ${gradeTitle}\nTotal Score: ${earnedMarks} / ${totalMarks} Marks (${pct}%)\n\nYou can now review full step-by-step solutions for every question directly on this continuous examination paper.`);
 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function submitExam() {
+    submitCompleteExamPaper();
+  }
+
+  function retakeExam() {
+    if (confirm("Are you sure you want to retake this examination paper? Your previous answers will be cleared.")) {
+      if (state.selectedExamId) {
+        startExam(state.selectedExamId, false);
+      } else {
+        launchQuizSession(dom.quizTitle ? dom.quizTitle.textContent : "Practice", state.quizQuestions, false);
+      }
+    }
+  }
+
+  function exitExamPaper() {
+    if (!state.examSubmitted) {
+      if (!confirm("Are you sure you want to exit? Your exam progress will not be saved.")) {
+        return;
+      }
+    }
+    clearInterval(state.examTimerInterval);
     state.isExamMode = false;
-    renderCurrentQuestion();
+    state.selectedExamId = null;
+    state.examSubmitted = false;
+    switchTab('exams');
   }
 
   function exitQuiz() {
-    if (confirm("Are you sure you want to exit this session?")) {
-      clearInterval(state.examTimerInterval);
-      state.isExamMode = false;
-      switchTab('units');
+    if (state.isExamMode) {
+      exitExamPaper();
+    } else {
+      if (confirm("Are you sure you want to exit this session?")) {
+        clearInterval(state.examTimerInterval);
+        state.isExamMode = false;
+        state.selectedExamId = null;
+        state.examSubmitted = false;
+        switchTab('units');
+      }
     }
   }
 
@@ -17446,7 +18753,21 @@ body {
     loadAuditScenario: loadAuditScenario,
     runCodeAudit: runCodeAudit,
     resetAuditScenario: resetAuditScenario,
-    toggleAuditSolution: toggleAuditSolution
+    toggleAuditSolution: toggleAuditSolution,
+    setViewMode: setViewMode,
+    renderContinuousExamPaper: renderContinuousExamPaper,
+    renderExamPalette: renderExamPalette,
+    selectPaperAnswer: selectPaperAnswer,
+    setPaperClozeAnswer: setPaperClozeAnswer,
+    toggleQuestionFlag: toggleQuestionFlag,
+    jumpToQuestion: jumpToQuestion,
+    jumpToNextUnanswered: jumpToNextUnanswered,
+    jumpToSubmit: jumpToSubmit,
+    submitCompleteExamPaper: submitCompleteExamPaper,
+    submitExam: submitExam,
+    retakeExam: retakeExam,
+    exitExamPaper: exitExamPaper,
+    exitQuiz: exitQuiz
   };
 
   window.addEventListener('DOMContentLoaded', init);
