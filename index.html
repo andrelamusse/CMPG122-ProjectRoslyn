@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CMPG 122 • User Interface Programming in Visual C# | NWU</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="nav-container">
+      <div class="brand-group" id="brandHome" onclick="CMPG122_APP && window.location.reload();">
+        <div class="brand-logo">C#</div>
+        <div class="brand-info">
+          <h1>CMPG 122 <span class="brand-badge">NWU • V7.00</span></h1>
+          <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">User Interface Programming Study & Exam Engine</span>
+        </div>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="tab-btn active" data-tab="units">📚 Study Units</button>
+        <button class="tab-btn" data-tab="exams">📝 Official Past Exams</button>
+        <button class="tab-btn" data-tab="codegrade">💻 C# CodeGrade Lab</button>
+        <button class="tab-btn" data-tab="spoterror">🔍 Spot & Fix Gym</button>
+        <button class="tab-btn" data-tab="custom">⚙️ Custom Practice</button>
+      </nav>
+
+      <div class="header-actions">
+        <a href="admin.html" class="action-btn" style="text-decoration:none;">📊 Admin Portal</a>
+        <a href="https://github.com/andrelamusse/CMPG122-ProjectRoslyn" target="_blank" class="action-btn" style="text-decoration:none;">📁 GitHub</a>
+        <button class="action-btn" id="btnOpenTools">🛠️ Tools Drawer</button>
+        <button class="action-btn" id="themeToggle">☀️ Light</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="main-wrapper">
+
+    <!-- View 1: Study Units Hub -->
+    <section id="viewUnits" class="view-panel">
+      <!-- Hero Banner -->
+      <div class="hero-banner">
+        <div class="hero-text">
+          <h2>Master Visual C# Programming & Ace Your NWU Assessments</h2>
+          <p>
+            100% curriculum exhaustion for North-West University CMPG 122 (Weeks 1 to 7). Grounded directly in Tony Gaddis's <em>Starting Out With Visual C#</em>, Shneiderman's <em>HCI Principles</em>, and 9 official NWU examination papers (2021–2024).
+          </p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-pill">
+            <div class="stat-num" id="statTotalQs">430</div>
+            <div class="stat-label">Verified Questions</div>
+          </div>
+          <div class="stat-pill">
+            <div class="stat-num" id="statMastery">0%</div>
+            <div class="stat-label">Session Accuracy</div>
+          </div>
+          <div class="stat-pill">
+            <div class="stat-num" id="statStreak">🔥 0</div>
+            <div class="stat-label">Active Streak</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Units Grid -->
+      <div class="section-header">
+        <h3 class="section-title">📖 Prescribed Study Units (Weeks 1–7)</h3>
+        <span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">Tony Gaddis 4th/5th Ed • Ben Shneiderman 5th Ed</span>
+      </div>
+      <div class="units-grid" id="unitsGrid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- View 2: Official Past Exams Hub -->
+    <section id="viewExams" class="view-panel" style="display:none;">
+      <div class="section-header">
+        <h3 class="section-title">📝 Official Examination Paper Simulations</h3>
+        <span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">Authentic NWU Past Papers (2021–2024)</span>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">
+        Practice official NWU examination papers with full mark allocations (100 / 90 marks), step-by-step mark allocations, timed or untimed modes, and automated error grading.
+      </p>
+      <div class="units-grid" id="examsList">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- View 3: C# CodeGrade Lab & Diagnostics Engine -->
+    <section id="viewCodeGrade" class="view-panel" style="display:none;">
+      <div class="section-header">
+        <h3 class="section-title">💻 C# CodeGrade Automated Marking & Diagnostics Engine</h3>
+        <span class="badge" style="background:var(--success-bg); color:var(--success-text); border:1px solid var(--success-border); padding:0.25rem 0.6rem; border-radius:var(--radius-sm); font-size:0.75rem; font-family:var(--font-mono); font-weight:700;">Roslyn Diagnostics & Local Test Sandbox</span>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.25rem;">
+        Write full C# event handlers with instant Roslyn-style compiler diagnostics (CS1002, CS1513, CS0029, NWU prefixes), automated virtual test case execution, and CodeGrade rubric marking.
+      </p>
+
+      <div style="display:flex; gap:1rem; margin-bottom:1.25rem; align-items:center; flex-wrap:wrap;">
+        <label style="font-weight:700; font-size:0.9rem;">Select Scenario:</label>
+        <select id="codeScenarioSelect" class="cloze-input" style="min-width:320px; font-weight:600;">
+          <option value="scenario_wages">Scenario 1: Gross Wage & Overtime Calculator (SU1–SU3)</option>
+          <option value="scenario_grades">Scenario 2: Student Mark & Grade Classifier (SU1–SU3)</option>
+          <option value="scenario_investment">Scenario 3: Compound Investment Growth Loop (SU1–SU4)</option>
+          <option value="scenario_pos">Scenario 4: Retail POS Shopping Cart (SU1–SU3)</option>
+          <option value="scenario_temperature">Scenario 5: Temperature Converter with RadioButtons (SU1–SU3)</option>
+          <option value="scenario_accumulator">Scenario 6: Number Accumulator & Average Score Loop (SU1–SU4)</option>
+          <option value="scenario_car_rental">Scenario 7: Car Rental Mileage Surcharge Terminal (NWU 2024 Exam)</option>
+          <option value="scenario_tuition">Scenario 8: Tuition Fee & Bursary Assessment (NWU 2023 Exam)</option>
+        </select>
+        <button class="action-btn" id="btnShowSolution">💡 Model Solution</button>
+      </div>
+
+      <div class="q-card" style="margin-bottom:1.25rem; border-left:4px solid var(--accent-blue);">
+        <h4 id="scenarioTitle" style="font-size:1.1rem; font-weight:800; margin-bottom:0.5rem;">Gross Wage & Overtime Calculator</h4>
+        <p id="scenarioDesc" style="color:var(--text-muted); font-size:0.88rem; line-height:1.6; margin-bottom:0.75rem;">
+          Calculate gross wage with overtime paid at 1.5 times the hourly rate...
+        </p>
+        <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+          <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted);">Controls in Scope:</span>
+          <div id="scenarioControlsList" style="display:flex; gap:0.4rem; flex-wrap:wrap;"></div>
+        </div>
+      </div>
+
+      <!-- Editor Card -->
+      <div class="editor-card">
+        <div class="editor-header">
+          <span style="font-weight:700; font-size:0.85rem; color:var(--text-muted);">C# Event Handler Editor:</span>
+          <div class="editor-tools">
+            <span class="tool-chip" data-snippet="tryparse">+ TryParse</span>
+            <span class="tool-chip" data-snippet="trycatch">+ try-catch</span>
+            <span class="tool-chip" data-snippet="ifelse">+ if-else</span>
+            <span class="tool-chip" data-snippet="while">+ while loop</span>
+            <span class="tool-chip" data-snippet="for">+ for loop</span>
+            <span class="tool-chip" data-snippet="msgbox">+ MessageBox</span>
+            <span class="tool-chip" data-snippet="tostring">+ ToString("C")</span>
+          </div>
+        </div>
+
+        <div class="code-wrapper">
+          <div id="cgMethodHeader" class="method-sig-bar">
+            private void btnCalculate_Click(object sender, EventArgs e)
+            {
+          </div>
+          <textarea id="studentCodeInput" class="code-textarea" spellcheck="false" placeholder="// Write your C# statements here..."></textarea>
+          <div id="cgMethodFooter" class="method-sig-bar" style="border-top:1px solid #1e293b; border-bottom:none;">
+            }
+          </div>
+        </div>
+
+        <div style="padding:0.85rem 1.25rem; background:#131b2e; display:flex; gap:0.75rem; align-items:center; border-top:1px solid var(--border-subtle);">
+          <button class="btn-practice" id="btnRunCodeGrade" style="padding:0.6rem 1.5rem;">
+            ⚡ Run CodeGrade Evaluation
+          </button>
+          <button class="action-btn" id="btnClearCode">
+            🔄 Clear Code
+          </button>
+        </div>
+      </div>
+
+      <!-- Real-Time Roslyn Diagnostics Panel -->
+      <div id="diagnosticsPanel" class="diagnostics-panel" style="display:none;">
+        <div class="diagnostics-header">
+          <span>🔍 Compiler Diagnostics & Code Analysis</span>
+        </div>
+        <div id="diagList"></div>
+      </div>
+
+      <!-- Test Cases & Rubric Results -->
+      <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:1.25rem; margin-top:1.5rem;">
+        <div class="q-card" style="margin-bottom:0;">
+          <h4 style="font-size:1rem; font-weight:800; margin-bottom:0.75rem;">🧪 Automated Virtual Test Cases</h4>
+          <div style="overflow-x:auto;">
+            <table class="test-table" id="testResultsTable">
+              <tbody><tr><td style="color:var(--text-muted);">Click 'Run CodeGrade Evaluation' to execute test cases.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="q-card" style="margin-bottom:0;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+            <h4 style="font-size:1rem; font-weight:800;">📋 CodeGrade Rubric Assessment</h4>
+            <span id="rubricBadge" class="q-marks-tag">Not Graded</span>
+          </div>
+          <div id="rubricList">
+            <p style="color:var(--text-muted); font-size:0.85rem;">Run evaluation to generate rubric scores.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 4: Spot & Fix Code Audit Studio & Debugging Gym -->
+    <section id="viewSpotError" class="view-panel" style="display:none;">
+      <div class="section-header" style="align-items:flex-start; margin-bottom:1.25rem;">
+        <div>
+          <h3 class="section-title">🔍 "Spot & Fix the Bugs" Interactive Code Audit Studio</h3>
+          <span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">NWU CMPG122 Weeks 1–7 • Zero-Dependency Client-Side Compiler & AST Diff Engine</span>
+        </div>
+        <div class="audit-mode-selector">
+          <button class="audit-mode-btn active" id="btnAuditModeStudio" data-mode="studio">⚡ Code Audit Studio</button>
+          <button class="audit-mode-btn" id="btnAuditModeMcq" data-mode="mcq">📝 Rapid Exam MCQs (15 Bugs)</button>
+        </div>
+      </div>
+
+      <!-- Mode 1: Interactive Code Audit Studio -->
+      <div id="auditStudioContainer">
+        <!-- Scenario Selector & Info Header -->
+        <div class="audit-scenario-card">
+          <div class="audit-scenario-header">
+            <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+              <label style="font-weight:700; font-size:0.9rem; color:var(--text-muted);">Select Exam Scenario:</label>
+              <select id="auditScenarioSelect" class="audit-select">
+                <option value="audit_wages">Scenario 1: Gross Wage & Overtime Payroll Auditor (SU1–SU3)</option>
+                <option value="audit_grades">Scenario 2: Student Academic Grade Classifier & Results Terminal (SU1–SU3)</option>
+                <option value="audit_pos">Scenario 3: Retail POS Shopping Cart & Inventory Register (SU1–SU4)</option>
+                <option value="audit_investment">Scenario 4: Compound Investment Growth Loop & Table Generator (SU1–SU4)</option>
+                <option value="audit_mileage">Scenario 5: Fleet Mileage Array Surcharge & ListBox Auditor (SU1–SU5)</option>
+                <option value="audit_bursary">Scenario 6: Tuition Bursary & Surcharge Terminal (NWU Official Exam)</option>
+              </select>
+            </div>
+            <div class="audit-badge-group">
+              <span id="auditUnitBadge" class="audit-badge audit-badge-unit">SU1–SU3 (Weeks 1–3)</span>
+              <span id="auditBugCountBadge" class="audit-badge audit-badge-bugs">4 Planted Defects</span>
+              <span id="auditMarksBadge" class="audit-badge audit-badge-marks">20 Total Marks</span>
+              <div id="auditCategoryBadges" style="display:flex; gap:0.4rem; flex-wrap:wrap;"></div>
+            </div>
+          </div>
+          <h4 id="auditScenarioTitle" style="font-size:1.05rem; font-weight:800; margin-bottom:0.4rem; color:var(--text-main);">Scenario 1: Gross Wage & Overtime Payroll Auditor</h4>
+          <p id="auditScenarioDesc" style="color:var(--text-muted); font-size:0.88rem; line-height:1.6; margin:0;">
+            Audit an event handler that calculates employee gross wages. The handler reads hours and rate, validates numeric entry using TryParse, calculates standard vs overtime pay (hours > 40 paid at 1.5x), and formats gross pay into a Label as Currency.
+          </p>
+        </div>
+
+        <!-- Split-Pane Workspace: Buggy Code Editor (Left) vs Live Diagnostic Terminal & Marking Feedback (Right) -->
+        <div class="audit-workspace">
+          <!-- Left Pane: VS Code Editor -->
+          <div class="audit-editor-box">
+            <div class="audit-editor-topbar">
+              <div class="audit-editor-filetab">
+                <span>📄</span>
+                <span id="auditFileName">WagePayrollAuditor.cs</span>
+                <span style="font-size:0.7rem; color:var(--accent-teal); margin-left:0.25rem;">[C#]</span>
+              </div>
+              <div class="audit-editor-chips">
+                <span class="audit-chip" data-snippet="tryparse">+ TryParse</span>
+                <span class="audit-chip" data-snippet="msgbox">+ MessageBox</span>
+                <span class="audit-chip" data-snippet="equals">+ ==</span>
+                <span class="audit-chip" data-snippet="tostring">+ ToString("C")</span>
+                <span class="audit-chip" data-snippet="itemsadd">+ Items.Add</span>
+                <span class="audit-chip" data-snippet="break">+ break;</span>
+                <span class="audit-chip" data-snippet="interpolate">+ $""</span>
+              </div>
+            </div>
+
+            <div class="audit-editor-container">
+              <div id="auditLineGutter" class="audit-gutter"></div>
+              <textarea id="auditCodeInput" class="audit-textarea" spellcheck="false" wrap="off" placeholder="// Loading scenario code..."></textarea>
+            </div>
+
+            <div class="audit-editor-footer">
+              <div style="display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;">
+                <button id="btnRunAudit" class="audit-btn-primary">⚡ Run Code Audit & Grade</button>
+                <button id="btnResetAudit" class="audit-btn-secondary">🔄 Reset Buggy Code</button>
+                <button id="btnToggleSolutionAudit" class="audit-btn-secondary">💡 View Canonical Solution</button>
+              </div>
+              <span id="auditLiveStatus" class="audit-badge audit-badge-unit">Ready for Audit</span>
+            </div>
+          </div>
+
+          <!-- Right Pane: Live Diagnostic Terminal & Marking Feedback -->
+          <div class="audit-terminal-box">
+            <div class="audit-terminal-header">
+              <div class="audit-window-dots">
+                <span class="audit-window-dot dot-red"></span>
+                <span class="audit-window-dot dot-yellow"></span>
+                <span class="audit-window-dot dot-green"></span>
+              </div>
+              <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:700; color:var(--text-muted);">TERMINAL • C# CODE AUDIT ENGINE V7.00</span>
+              <span style="font-size:0.72rem; color:var(--accent-teal); font-family:var(--font-mono);">ONLINE</span>
+            </div>
+
+            <!-- Score and Rubric Overview -->
+            <div class="audit-score-summary">
+              <div style="display:flex; align-items:center; gap:0.75rem;">
+                <span id="auditScorePill" class="audit-score-pill">0%</span>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Audit Assessment</div>
+                  <div id="auditGradeBadge" style="font-size:0.95rem; font-weight:800; color:#ffb74d;">Unresolved Defects</div>
+                </div>
+              </div>
+              <div class="audit-score-metrics">
+                <span id="auditFixedPill" class="audit-metric-chip">0 / 4 Fixed</span>
+                <span id="auditMarksPill" class="audit-metric-chip">0 / 20 Marks</span>
+              </div>
+            </div>
+
+            <!-- Terminal Tabs -->
+            <div class="audit-terminal-tabs">
+              <button class="audit-term-tab active" id="auditTabStream" data-pane="stream">🖥️ Diagnostic Stream</button>
+              <button class="audit-term-tab" id="auditTabDiff" data-pane="diff">🔍 Line Diff & Defect Inspector</button>
+            </div>
+
+            <!-- Terminal Content Panes -->
+            <div class="audit-terminal-body">
+              <!-- Pane 1: Log Stream -->
+              <div id="auditTerminalStream">
+                <div class="audit-log-line audit-log-info">
+                  <span>[SYSTEM]</span>
+                  <span>Interactive C# Code Audit initialized. Audit against authentic NWU exam defects.</span>
+                </div>
+              </div>
+
+              <!-- Pane 2: Visual Line Diff Inspector -->
+              <div id="auditDiffInspector" style="display:none;">
+                <table class="audit-diff-table">
+                  <thead>
+                    <tr>
+                      <th style="width:38px;">Line</th>
+                      <th style="width:90px;">Status</th>
+                      <th>Observed / Target Statement</th>
+                    </tr>
+                  </thead>
+                  <tbody id="auditDiffTableBody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mode 2: Rapid Exam Diagnostics (15 MCQs) -->
+      <div id="auditMcqContainer" style="display:none;">
+        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">
+          Identify subtle syntax errors, runtime exception traps, and logic defects frequently tested in CMPG122 written and practical exams.
+        </p>
+        <div id="spotErrorList">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- View 5: Custom Practice Builder -->
+    <section id="viewCustom" class="view-panel" style="display:none;">
+      <div class="q-card" style="max-width:720px; margin:0 auto;">
+        <h3 style="font-size:1.3rem; font-weight:800; margin-bottom:0.5rem;">⚙️ Multi-Unit Custom Practice Builder</h3>
+        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">
+          Select any combination of Study Units (SU7 HCI, SU1 Fundamentals, SU2 Data, SU3 Decisions, SU4 Loops) to build a custom quiz session.
+        </p>
+        <div style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:1.5rem;" id="customUnitChecks">
+          <!-- Checkboxes injected dynamically -->
+        </div>
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
+          <label style="font-weight:700; font-size:0.9rem;">Target Question Count:</label>
+          <input type="number" id="customQuestionCount" value="20" min="5" max="100" class="cloze-input" style="width:90px; padding:0.4rem 0.8rem;">
+        </div>
+        <button id="btnStartCustom" class="btn-practice" style="padding:0.75rem 1.5rem; font-size:0.95rem; width:100%;">
+          ⚡ Launch Custom Practice Session
+        </button>
+      </div>
+    </section>
+
+    <!-- View 6: Interactive Quiz & Examination Engine -->
+    <section id="viewQuiz" class="view-panel" style="display:none;">
+      <div class="quiz-container">
+        <div class="quiz-top-bar">
+          <button id="btnExitQuiz" class="action-btn" style="padding:0.35rem 0.65rem;">✕ Exit</button>
+          <div class="quiz-progress-wrap">
+            <div class="progress-bar-bg">
+              <div id="quizProgressFill" class="progress-bar-fill"></div>
+            </div>
+          </div>
+          <span id="quizCounter" style="font-family:var(--font-mono); font-size:0.85rem; font-weight:700; color:var(--text-muted);">Q 1 of 20</span>
+          
+          <div id="quizTimerBox" style="display:none; align-items:center; gap:0.4rem; background:var(--bg-subtle); border:1px solid var(--border-subtle); padding:0.25rem 0.6rem; border-radius:var(--radius-sm); font-family:var(--font-mono); font-weight:700; color:var(--accent-amber);">
+            <span>⏱️</span>
+            <span id="quizTimerDisplay">180:00</span>
+          </div>
+
+          <button id="btnBookmark" class="action-btn" style="padding:0.35rem 0.65rem;">☆ Bookmark</button>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h2 id="quizTitle" style="font-size:1.15rem; font-weight:800;">Unit Practice</h2>
+          <button id="btnRetryWrong" class="action-btn" style="display:none; color:var(--danger-text); border-color:var(--danger-border);">
+            🔄 Retry Incorrect Qs
+          </button>
+        </div>
+
+        <!-- Question Render Area -->
+        <div id="quizArea"></div>
+
+        <!-- Navigation Controls -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.25rem;">
+          <button id="btnPrevQ" class="action-btn" disabled>← Previous</button>
+          <button id="btnNextQ" class="btn-practice" style="padding:0.6rem 1.5rem; font-size:0.9rem;">Next Question →</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Side Tools Drawer -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="tools-drawer" id="toolsDrawer">
+    <div class="drawer-header">
+      <h3>🛠️ C# Development Side Tools</h3>
+      <button class="close-btn" id="btnCloseTools">✕</button>
+    </div>
+    <div class="drawer-tabs">
+      <button class="drawer-tab-btn active" data-pane="paneSandbox">Expression Sandbox</button>
+      <button class="drawer-tab-btn" data-pane="paneTrace">Variable Trace Table</button>
+      <button class="drawer-tab-btn" data-pane="paneNaming">Hungarian Prefixes</button>
+      <button class="drawer-tab-btn" data-pane="paneScratch">Scratchpad</button>
+    </div>
+    <div class="drawer-content">
+
+      <!-- Pane 1: C# Expression Sandbox -->
+      <div id="paneSandbox" class="drawer-pane">
+        <h4 style="font-size:0.9rem; font-weight:700; color:var(--accent-blue); margin-bottom:0.75rem;">
+          ⚡ Quick C# Expression Evaluator
+        </h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">
+          Evaluate C# arithmetic, Math methods, and ToString specifiers instantly in the sandbox.
+        </p>
+        <textarea id="sandboxExpr" style="width:100%; height:80px; background:var(--bg-subtle); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); color:var(--text-main); font-family:var(--font-mono); font-size:0.85rem; padding:0.6rem; margin-bottom:0.75rem;" placeholder="(45 - 40) * 100 * 1.5m"></textarea>
+        <button id="btnRunSandbox" class="btn-practice" style="width:100%; padding:0.45rem; font-size:0.85rem; margin-bottom:0.75rem;">
+          Run Expression
+        </button>
+        <div id="sandboxResult"></div>
+      </div>
+
+      <!-- Pane 2: Variable State Trace Table -->
+      <div id="paneTrace" class="drawer-pane" style="display:none;">
+        <h4 style="font-size:0.9rem; font-weight:700; color:var(--accent-purple); margin-bottom:0.75rem;">
+          📊 Loop Variable State Trace Visualizer
+        </h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">
+          Step through loop counters, accumulators, and termination conditions.
+        </p>
+        <div style="background:#0f172a; padding:0.6rem; border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:0.78rem; margin-bottom:0.75rem;">
+          int count = 1;<br>
+          decimal total = 0m;<br>
+          while (count &lt;= 4) {<br>
+          &nbsp;&nbsp;total += 100m;<br>
+          &nbsp;&nbsp;count++;<br>
+          }
+        </div>
+        <button id="btnGenerateTrace" class="btn-practice" style="width:100%; padding:0.45rem; font-size:0.85rem; margin-bottom:0.75rem;">
+          Generate Trace Table
+        </button>
+        <div id="traceOutput"></div>
+      </div>
+
+      <!-- Pane 3: Hungarian Prefixes Cheatsheet -->
+      <div id="paneNaming" class="drawer-pane" style="display:none;">
+        <h4 style="font-size:0.9rem; font-weight:700; color:var(--accent-teal); margin-bottom:0.75rem;">
+          📋 NWU CMPG122 Control Naming Standards
+        </h4>
+        <table class="test-table">
+          <thead>
+            <tr><th>Control</th><th>Prefix</th><th>Example Identifier</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Button</td><td><code>btn</code></td><td><code>btnCalculate</code></td></tr>
+            <tr><td>TextBox</td><td><code>txt</code></td><td><code>txtHours</code></td></tr>
+            <tr><td>Label</td><td><code>lbl</code></td><td><code>lblGrossPay</code></td></tr>
+            <tr><td>ListBox</td><td><code>lst</code></td><td><code>lstReceipt</code></td></tr>
+            <tr><td>RadioButton</td><td><code>rdo</code> / <code>rad</code></td><td><code>rdoSedan</code></td></tr>
+            <tr><td>CheckBox</td><td><code>chk</code></td><td><code>chkDiscount</code></td></tr>
+            <tr><td>GroupBox</td><td><code>grp</code></td><td><code>grpVehicle</code></td></tr>
+            <tr><td>PictureBox</td><td><code>pic</code></td><td><code>picLogo</code></td></tr>
+            <tr><td>Timer</td><td><code>tmr</code></td><td><code>tmrClock</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pane 4: Scratchpad -->
+      <div id="paneScratch" class="drawer-pane" style="display:none;">
+        <h4 style="font-size:0.9rem; font-weight:700; color:var(--text-main); margin-bottom:0.5rem;">
+          📝 Local Scratchpad & Working Notes
+        </h4>
+        <textarea id="scratchpadText" style="width:100%; height:320px; background:var(--bg-subtle); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); color:var(--text-main); font-family:var(--font-mono); font-size:0.85rem; padding:0.75rem; outline:none; resize:none;" placeholder="Type code workings or notes here... (Auto-saved to local browser storage)"></textarea>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- Summary Modal Overlay -->
+  <div class="modal-backdrop" id="summaryModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="summaryModalTitle" style="font-size:1.15rem; font-weight:800;">Unit Summary</h3>
+        <button class="close-btn" id="btnCloseModal">✕</button>
+      </div>
+      <div class="modal-body" id="summaryModalBody"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/csharp_engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
