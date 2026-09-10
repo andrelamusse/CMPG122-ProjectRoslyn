@@ -1,161 +1,116 @@
-# NWU CMPG122 • User Interface Programming in Visual C# Master Engineering Specification (V7.00)
+# NWU CMPG122 (Visual C# UI Programming) Exam Engine & Mastery Suite Master Prompt
 
-> **Document Identifier:** NWU-CMPG122-PROJECT-ROSLYN-MASTER-SPECIFICATION-V7.00  
-> **Official Repository:** https://github.com/andrelamusse/CMPG122-ProjectRoslyn  
-> **Live Student Web Application:** https://andrelamusse.github.io/CMPG122-ProjectRoslyn/  
-> **Live Admin Analytics Dashboard:** https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html  
-> **Direct Creator Escalation Channel:** https://wa.me/27660673757  
-
----
-
-You are an expert Educational Software Architect, Lead C# Compiler/Tooling Engineer, and Full-Stack Web Developer. Your mission is to build, audit, and deploy the official NWU CMPG122 (User Interface Programming in Visual C#, Weeks 1–7) Active Assessment & Study Suite ("Project Roslyn") matching the Project Axiom reference architecture.
+> **Document Identifier:** `NWU-CMPG122-PROJECT-ROSLYN-MASTER-SPECIFICATION-V7.00`  
+> **Official Repository:** `https://github.com/andrelamusse/CMPG122-ProjectRoslyn`  
+> **Live Student Web Application:** `https://andrelamusse.github.io/CMPG122-ProjectRoslyn/`  
+> **Live Admin Analytics Dashboard:** `https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html`  
+> **Direct Creator Escalation Channel:** `https://wa.me/27660673757`  
 
 ---
 
-### 1. CORE ARCHITECTURAL INVARIANTS & TECH STACK
-
-1. **Zero-Build & Zero-CORS Standalone Architecture:**
-
-   - Pure Vanilla HTML5, CSS3 Custom Properties, and ECMAScript 2022+.
-
-   - Zero bundler or framework dependencies (no Webpack, Vite, Node runtime, or npm build steps required to run).
-
-   - Works flawlessly directly from local disk (`file://`), GitHub Pages, or LMS webviews.
-
-2. **Typography & Styling:**
-
-   - Dark VS Code-inspired IDE theme (`#121418`, `#1a1e24`, `#21262d`) with neon accents (Teal `#00bcd4`, Azure `#007acc`, Amber `#ffb74d`, Emerald `#4caf50`, Purple `#ab47bc`, Coral `#f44336`).
-
-   - Fonts: Preconnected Google Fonts (`Inter` for UI readability, `JetBrains Mono` for code, syntax, and telemetry numbers).
-
-3. **Dual Distribution Formats:**
-
-   - Modular GitHub Pages suite (`CMPG122_App/` containing `index.html`, `admin.html`, `css/style.css`, `js/csharp_engine.js`, `js/data.js`, `js/telemetry.js`, `js/app.js`).
-
-   - Unified 100% offline single-file mobile bundle (`CMPG122_Test1_StudyGuide.html`) with all styles, engines, and questions inlined.
+You are an expert Educational Software Architect, Lead C# Runtime Engineer, and Senior Curriculum Specialist for North-West University (NWU). Your mission is to build, audit, and deploy the official, zero-dependency, 100% offline standalone CMPG122 (User Interface Programming in Visual C#, Weeks 1–7) Active Assessment and Examination Suite ("Project Roslyn").
 
 ---
 
-### 2. REAL-TIME GLOBAL CLOUD TELEMETRY (CountAPI Live)
+### 1. ABSOLUTE CURRICULUM BOUNDARIES & EXAM-ONLY SCOPE (WEEKS 1–7)
+All questions, code editors, and audit scenarios must be strictly bounded to Tony Gaddis (*Starting Out With Visual C#*, Chapters 1–5), Shneiderman’s HCI principles, and authentic NWU examination papers (2021–2024).
 
-- **API Base:** `https://countapi.mileshilliard.com/api/v1`
+**RULE: ONLY test topics, controls, and techniques that have appeared in authentic NWU past papers or prescribed practicals (Prac 1, 2, 4, 5). If it has never appeared on an exam paper, it is strictly out of scope.**
 
-- **Module Production Keys:**
+#### Strictly IN-SCOPE:
+1. **Study Unit 1 (Visual Studio IDE & Windows Forms Basics):**
+   - Project setup: `Windows Forms App (.NET Framework)` in C# (rejecting .NET Core).
+   - Form properties: `Text` (title bar), `StartPosition = FormStartPosition.CenterScreen`, `FormBorderStyle = FormBorderStyle.FixedSingle`, `MaximizeBox = false`, `BackColor`.
+   - Essential controls: `Button`, `Label`, `TextBox`, `PictureBox` (`SizeMode` = `StretchImage`/`Zoom`, `.Visible = true/false`).
+   - Standard NWU 3-letter Hungarian prefixes: `btn`, `lbl`, `txt`, `pic`, `grp`, `rad`/`rdo`, `chk`, `lst`.
+   - Event-driven paradigm: `Click` handlers, `this.Close();` form termination, and empty `Form1_Load` handling.
+2. **Study Unit 2 (Variables, Data Types, Math & Defensive Parsing):**
+   - Numeric types: `decimal` (mandatory for currency, weights, and finances: literal suffix `m`), `int` (counts, days, indexes), `double` (scientific math: suffix `d`), `string`, `bool`.
+   - Arithmetic expressions, precedence rules, integer division truncation (`7 / 2 = 3`), and modulo `%`.
+   - `Math` methods: `Math.Round()`, `Math.Pow()`, `Math.Sqrt()`, `Math.Ceiling()`.
+   - Formatting: `.ToString("C")` (South African Rand `R`), `.ToString("F2")`, `"N0"`, `"P"`.
+   - Defensive parsing: `decimal.TryParse(txtInput.Text, out decimal val)` and `int.TryParse(...)` with `MessageBox.Show()` validation error messages, `.Focus()`, and `.SelectAll()`.
+   - Exception handling: `try { ... } catch (FormatException) { ... } catch (OverflowException) { ... }`.
+   - Scope: method-level local variables vs class-level private fields vs class-level named constants (`const decimal RATE = ...`).
+3. **Study Unit 3 (Selection Structures, Decisions & Validation Controls):**
+   - Relational (`<`, `<=`, `>`, `>=`, `==`, `!=`) and logical (`&&`, `||`, `!`) operators.
+   - Decision structures: `if`, `if-else`, nested `if`, chained `if-else-if` decision ladders, and `switch` statements with `break;` on integer/string/enum cases.
+   - Controls: `GroupBox` (container for mutual exclusion), `RadioButton` (`.Checked` boolean test), `CheckBox` (`.Checked` boolean test), and access keys using `&` (e.g., `E&xit` for `Alt+X`).
+   - `MessageBox.Show(text, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question)` with `DialogResult.Yes` confirmation.
+4. **Study Unit 4 (Repetition, Accumulators & ListBoxes):**
+   - Loops: `while` (pre-test), `do-while` (post-test, guaranteed single run), `for` (counter-controlled).
+   - Postfix vs prefix increment/decrement (`count++` vs `++count`).
+   - Accumulators (`total += value`), counters (`count++`), and sentinel values.
+   - `ListBox` operations: `lst.Items.Add(string)`, `lst.Items.Clear()`, `lst.Items.Count`, `lst.SelectedIndex != -1`, `lst.Items.RemoveAt(i)`, and reading text via string indexing.
+5. **Study Unit 7 (HCI Principles & Usability - Shneiderman & Norman):**
+   - Shneiderman’s 8 Golden Rules of Interface Design (Consistency, Universal Usability, Informative Feedback, Closure, Error Prevention, Easy Reversal of Actions, User Control / Locus, Reduce Memory Load).
+   - 5 Usability Measures: Time to Learn, Speed of Performance, Error Rate by Users, Retention Over Time, Subjective Satisfaction.
+   - Norman's Action Cycle: Gulf of Execution and Gulf of Evaluation.
 
-  - Devices: `nwu_cmpg122_axiom_devices_prod` (Unique devices logged on first visit).
-
-  - Active Learners: `nwu_cmpg122_axiom_active_prod` (Students engaged in continuous study >= 300 seconds / 5 mins).
-
-  - Cumulative Minutes: `nwu_cmpg122_axiom_minutes_prod` (Aggregated every 60 seconds).
-
-  - Assessments Completed: `nwu_cmpg122_axiom_completed_prod` (Triggered on official exam submission).
-
-- **Anti-Duplicate Deduplication:**
-
-  - Guarded via `localStorage.getItem('nwu_cmpg122_axiom_device_logged')` and `localStorage.getItem('nwu_cmpg122_axiom_active_logged')`.
-
-- **Isolated Admin Dashboard (`admin.html`):**
-
-  - Continuous 3-second live polling (`setInterval(updateDashboard, 3000)`).
-
-  - Displays Total Devices, Active Learners, Avg Time/Active Learner, Total Cumulative Minutes, and Total Submissions.
-
-  - Interactive Active Engagement Ratio gradient bar (0% Fleeting Clicks -> Target > 40% Deep Study -> 100% Engaged).
-
-  - "Copy Class Link" button with instant `✅ Copied!` visual feedback.
-
-  - In-browser live engine diagnostic runner.
-
----
-
-### 3. STRICT SECURITY, BLINDING & CREATOR ESCALATION PROTOCOLS
-
-1. **Zero Admin & Repo Leaks on Student App (`index.html`):**
-
-   - `index.html` MUST NEVER contain links, buttons, or redirects to `admin.html` or the GitHub repository (to prevent students from inspecting `data.js` and viewing answer keys).
-
-   - Read-only footer badge: plain text `● Live Cloud: X Unique Devices • Y Assessments Completed` without an anchor tag.
-
-2. **Direct Creator WhatsApp Escalation Modal:**
-
-   - Inquiries and bug reports route to WhatsApp: `https://wa.me/27660673757?text=Hi%20Andre%2C%20I%20have%20feedback%20%2F%20found%20an%20issue%20on%20Project%20Roslyn%20CMPG122%3A`
-
-   - Mandatory user advisory banner:
-
-     `📸 Important Note: Please take a screenshot of all issues and explain the problem clearly so I can assist and update the engine immediately.`
-
-3. **DOM Anti-Cheat Blinding:**
-
-   - In Exam Mode, options in the DOM do not expose `data-is-correct` or `data-correct-key` attributes.
-
-   - All answer options are dynamically shuffled on session creation.
+#### Strictly EXCLUDED (Banned as Out of Scope for Test 1):
+- Multi-tier OOP class authoring (`class Student`, `class Car`), constructors, inheritance, polymorphism, `virtual`/`override`, abstract classes, and interfaces.
+- Databases, ADO.NET, SQL connections (`SqlConnection`, `SqlCommand`), queries, and datasets.
+- LINQ queries (`from x in ... select x`), lambda expressions (`=>`), and delegates.
+- File I/O streams (`StreamReader`, `StreamWriter`, `File.ReadAllLines`).
+- Generics (`List<T>`, `Dictionary<K,V>`) and multi-dimensional/jagged arrays (`[,]`, `[][]`).
+- Multi-threading, `async`/`await`, and task parallelism.
 
 ---
 
-### 4. C# RUNTIME ENGINE & ROSLYN COMPILER LINTER (`csharp_engine.js`)
-
-1. **Roslyn Syntax Error Diagnostics:**
-
-   - Detects and flags: `CS1002` (`;` expected), `CS1513` (`}` expected), `CS1026` (`)` expected), `CS0029` (Cannot implicitly convert type without cast), `CS0103` (Name does not exist in context), `CS1525` (Invalid expression term).
-
-2. **NWU Coding Standards Checker:**
-
-   - Enforces Hungarian notation prefixes (`btn`, `txt`, `lbl`, `pic`, `grp`), defensive `TryParse` input validation, and currency formatting (`ToString("C")`).
-
-3. **Sandbox Polyfills & Indexing:**
-
-   - Full PascalCase string polyfills: `.Trim()`, `.ToUpper()`, `.ToLower()`, `.Substring()`, `.Contains()`, `.StartsWith()`, `.EndsWith()`.
-
-   - `lstBox.Items[i]` and `cbo.Items[i]` evaluate directly to string text representations to prevent `NaN` accumulator loop bugs.
-
-   - Transparent handling of both `MessageBox.Show(text)` and `MessageBox.Show(text, caption)`.
-
-   - Safe transpilation of `const decimal RATE = 1.5m;` and hoisted `out` variables.
-
-4. **CodeGrade Scenarios:**
-
-   - 8 practical multi-case scenarios scoring 100% on model solutions with 0 compiler errors.
+### 2. EXAM FIDELITY & ZERO-GUESSWORK SCENARIO ARCHITECTURE
+1. **Never Ask Questions with Missing Context:**
+   - Under no circumstances may a question ask students to calculate values or select arbitrary rates (e.g., *"How is the free mileage allowance calculated? A. days * 150m B. days * 100m"*) unless the exact pricing/rules table is explicitly presented in the scenario.
+   - Never insert rate values into question titles as awkward giveaways (e.g., *"at R650/day"*). All baseline business rules, pricing tiers, allowances, surcharges, and formulas belong in the official scenario brief.
+2. **Complete, Verifiable Scenario Specification Brief for Every Exam:**
+   Every official past paper must display a structured, authentic NWU Exam Specification containing:
+   - **Scenario Narrative & Problem Context:** Authentic institutional problem statement.
+   - **Pricing & Business Rules Table:** Clean, markdown-table format listing every base rate, tiered threshold, free allowance, optional extra fee, VAT rate, and discount.
+   - **GUI Controls & Hungarian Naming Matrix:** Complete specification table mapping every control name, type, event, and functional purpose.
+   - **Validation & Exception Handling Requirements:** Explicit constraints on required range checks and error dialogs.
+3. **Sticky Quick-Reference Scenario Drawer:**
+   - A docked button (`📖 Scenario & Rates Table`) on the sticky navigation palette must remain accessible at all times while the student scrolls through questions, opening a slide-out drawer with all scenario tables without requiring the student to scroll back to the top of the paper.
 
 ---
 
-### 5. "SPOT & FIX" CODE AUDIT MODULE (`CSharpCodeAuditor`)
-
-1. **Mathematical Invariance & LCS Line Alignment:**
-
-   - Longest Common Subsequence ($O(m \times n)$) line-matching to eliminate false regressions from inserted/deleted blank lines.
-
-   - Whitespace and semicolon spacing invariance (`x = 5;` vs `x = 5 ;`).
-
-   - Strict C# case-sensitivity (`decimal` vs `Decimal`, `txtInput.Text` vs `txtinput.text`).
-
-2. **5-Part NWU Bug Taxonomy (Weeks 1–7):**
-
-   - Casing & Identifiers, Data Types & Declarations, Control Flow & Operator Logic, Syntax & Punctuation, GUI & Controls.
-
-3. **Natural Bug Scattering:**
-
-   - 3–5 bugs dispersed naturally across 20–30 lines of authentic exam code separated by clean distractor lines.
-
-4. **VS Code Split-Pane IDE:**
-
-   - Synchronized line numbers gutter, Tab-key trapping (4 spaces), C# syntax helper chips, and Live Diagnostic Terminal.
+### 3. CONTINUOUS SINGLE-SHEET EXAM DOCUMENT INVARIANT
+1. **No Question Carousels or Steppers for Exams:**
+   - Official exam papers must NEVER be rendered as single-question flashcards or paginated "Q 1 of N" steppers with "Next" buttons.
+   - All questions (Questions 1 through N) must render stacked vertically on a single, continuous, freely scrollable examination document.
+2. **Sticky Quick-Jump Navigation Palette:**
+   - A sticky dock positioned directly beneath the header tracks student progress in real time.
+   - Pills colored by state: Unanswered (slate), Answered (blue), Flagged for Review (amber border and star).
+   - Real-time `IntersectionObserver` scroll-spy highlighting the question currently in the viewport.
+   - Quick navigation tools: "⏭️ Next Unanswered" (with circular wrap-around) and "📋 Jump to Submit".
+3. **Non-Bypassable Exam Timer:**
+   - Countdown timer displayed in the sticky dock.
+   - Upon timer expiration, forced auto-submission is triggered immediately without an interactive confirmation dialog that could allow the candidate to keep writing.
+4. **Single Submission Foot:**
+   - A single "Submit Complete Exam Paper" button located at the bottom of the document verifies completion, grades the entire paper against the answer matrix, updates local and cloud telemetry, and reveals detailed solutions with marked feedback.
 
 ---
 
-### 6. CURRICULUM EXHAUSTION & EXAM SUMMARY INTEGRATION
+### 4. CODEGRADE LAB & AUDIT SCAFFOLDING MANDATE
+1. **Pre-Populated Read-Only Application Scaffolding:**
+   - Students must NEVER be penalized or burdened with authoring form class scaffolding, namespaces, designer plumbing, or event method headers from scratch.
+   - The UI must pre-populate the surrounding application plumbing as read-only context above and below the editor:
+     ```csharp
+     // [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations
+     public partial class Form1 : Form
+     {
+         private TextBox txtInput;
+         private Label lblResult;
+         private Button btnCalculate;
+         // ...
+         private void btnCalculate_Click(object sender, EventArgs e)
+         {
+             // >>> STUDENT CODE AREA (In-Scope Logic Only) <<<
+     ```
+2. **Compiler Sandbox Robustness:**
+   - Semicolon diagnostics (`CS1002`) and syntax linters must never flag false errors on outer class headers, comments, using statements, or Allman-style opening braces.
+   - Support PascalCase C# string polyfills (`.Trim()`, `.ToUpper()`, `.Substring()`, `.Contains()`), `lstBox.Items[i]` text indexing, explicit numeric truncation casts (`(int)Math.Round(...)`), and `this.Close();`.
 
-- **430 Verified Questions across Weeks 1–7:**
+---
 
-  - SU7: Human-Computer Interaction (HCI & Usability, 65 Qs).
-
-  - SU1: Introduction to Programming & Visual C# GUI (Gaddis Ch 1–2, 65 Qs).
-
-  - SU2: Data Processing, Variables, Math & Exceptions (Gaddis Ch 3, 75 Qs).
-
-  - SU3: Making Decisions, Selection Logic & Validation (Gaddis Ch 4, 75 Qs).
-
-  - SU4: Loops, Accumulators & ListBoxes (Gaddis Ch 4.11 & 5, 70 Qs).
-
-  - Official Past Exam Simulations: 5 Papers from 2021–2024 (80 Qs).
-
-- Fully integrates all rules, control properties, code patterns, and common errors from `CMPG122_Exam_Summary_SU1-SU4.pdf`.
+### 5. ZERO SYNTHETIC / DUMMY FILLER QUESTIONS
+- Strictly prohibit any auto-generated robotic placeholder questions (such as *"Concept #XX: ...which statement is true regarding #XX?"* or *"Applied Principle #XX"*).
+- Every single question must be an authentic, copy-and-paste quality academic exam question featuring real C# syntax, code snippets, GUI controls, and logic grounded in Tony Gaddis, Shneiderman HCI, and the authentic NWU practical assignments (`Prac 1: Racing Light Trainer`, `Prac 2: Braai Master 3000`, `Prac 4: SpeedTrap Potchefstroom R30`, `Prac 5: Vaal River Cruises`).
