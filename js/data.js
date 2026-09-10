@@ -1,4 +1,4 @@
-// NWU CMPG122 - Comprehensive Verified Question Bank & Curriculum Dataset (V7.00)
+// NWU CMPG122 - Comprehensive Verified Question Bank & Curriculum Dataset (V8.00)
 // 100% Offline Compatible • Zero CORS • Standalone Production Suite
 
 (function(root) {
@@ -8,7 +8,7 @@
   "moduleCode": "CMPG122",
   "moduleTitle": "User Interface Programming in Visual C#",
   "institution": "North-West University (NWU)",
-  "version": "V7.00",
+  "version": "V8.00",
   "author": "Autonomous AI Curriculum Architect & Software Engineer",
   "prescribedTextbooks": [
     "Starting Out With Visual C# (4th / 5th Edition) - Tony Gaddis",
@@ -1354,6 +1354,34 @@
       ],
       "answer": 0,
       "explanation": "The variable 'total' was already declared on Line 1. Line 4 attempts to declare it again with 'decimal total = ...'. In C#, you cannot declare two local variables with the same name in the same scope. Line 4 should simply be an assignment: 'total = rate * count;'."
+    },
+    {
+      "id": "err_16",
+      "title": "Spot-the-Error: Duplicate Method Signature in Form Class (CS0111)",
+      "code": "1: private void btnClear_Click(object sender, EventArgs e)\n2: {\n3:     txtTest1.Text = \"\";\n4:     txtTest2.Text = \"\";\n5:     lblAverage.Text = \"\";\n6: }\n7: private void btnClear_Click(object sender, EventArgs e)\n8: {\n9:     this.Close();\n10: }",
+      "question": "Why does this C# Form class fail to compile with Roslyn error CS0111?",
+      "options": [
+        "Line 7: Two methods in the same class cannot share the identical identifier 'btnClear_Click' and parameter list",
+        "Line 1: Event handlers cannot be declared with 'private' access modifier",
+        "Line 5: Assigning empty string \"\" to a Label is invalid syntax",
+        "Line 9: 'this.Close();' cannot be called inside a Form class"
+      ],
+      "answer": 0,
+      "explanation": "In C#, declaring two methods in the same class with the same name and parameter list causes CS0111: Type already defines a member called 'btnClear_Click' with the same parameter types. The second method should be named 'btnExit_Click'."
+    },
+    {
+      "id": "err_17",
+      "title": "Spot-the-Error: Invalid Catch Syntax and String Formatting Typo",
+      "code": "1: try\n2: {\n3:     double test1 = double.Parse(txtTest1.Text);\n4:     double test2 = double.Parse(txtTest2.Text);\n5:     double avg = (test1 + test2) / 2.0;\n6:     lblAverage.Text = avg.toString(''n2'');\n7: }\n8: catch except(ex e)\n9: {\n10:    MessageBox.Show(\"Please enter valid numeric marks.\");\n11: }",
+      "question": "Which two lines contain syntax errors that prevent this event handler from compiling?",
+      "options": [
+        "Line 6 (lowercase 'toString' with single quotes ''n2'') and Line 8 (invalid 'catch except(ex e)' syntax)",
+        "Line 3 (double.Parse does not exist in C#) and Line 5 (division by 2.0 is illegal)",
+        "Line 1 (try cannot be lowercase) and Line 10 (MessageBox.Show requires 3 arguments)",
+        "Line 4 (txtTest2.Text is read-only) and Line 8 (missing finally block)"
+      ],
+      "answer": 0,
+      "explanation": "Line 6 violates C# PascalCase naming (must be ToString) and uses two single quotes (''n2'') instead of double quotes (\"n2\"). Line 8 has invalid catch syntax; C# requires 'catch (FormatException ex)' or 'catch (Exception ex)'."
     }
   ],
   "auditScenarios": [
@@ -4032,56 +4060,56 @@
       "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
-    {
+        {
       "id": "q_su7_058",
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "In Don Norman's Action Cycle, what is the 'Gulf of Execution'?",
-      "title": "In Don Norman's Action Cycle, what is the 'Gulf of Execution'?",
+      "q": "According to Shneiderman's 5th Golden Rule ('Prevent errors'), why is wrapping user input conversion in a `try-catch (FormatException)` block or using `double.TryParse` considered superior interface design in Practical 29?",
+      "title": "According to Shneiderman's 5th Golden Rule ('Prevent errors'), why is wrapping user input conversion in a `try-catch (FormatException)` block or using `double.TryParse` considered superior interface design in Practical 29?",
       "options": [
-        "The difference between the user's intended goal and the physical actions allowed by the interface to execute that goal",
-        "The time it takes for the CPU to compile C# code into MSIL",
-        "The distance between the monitor and the user's eyes",
-        "The difference between two floating-point numbers due to rounding error"
+        "It intercepts invalid non-numeric inputs gracefully, prevents the application from crashing, and displays constructive feedback with focus redirected to the erroneous field",
+        "It automatically changes negative marks to 100 without alerting the user",
+        "It disables Windows operating system error reporting",
+        "It prevents the user from typing letters on their hardware keyboard"
       ],
       "opts": [
-        "The difference between the user's intended goal and the physical actions allowed by the interface to execute that goal",
-        "The time it takes for the CPU to compile C# code into MSIL",
-        "The distance between the monitor and the user's eyes",
-        "The difference between two floating-point numbers due to rounding error"
+        "It intercepts invalid non-numeric inputs gracefully, prevents the application from crashing, and displays constructive feedback with focus redirected to the erroneous field",
+        "It automatically changes negative marks to 100 without alerting the user",
+        "It disables Windows operating system error reporting",
+        "It prevents the user from typing letters on their hardware keyboard"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "The Gulf of Execution measures how easily a user can translate their internal mental intentions into physical actions on the system (e.g. finding which button to click).",
-      "explanation": "The Gulf of Execution measures how easily a user can translate their internal mental intentions into physical actions on the system (e.g. finding which button to click).",
-      "provenance": "Shneiderman §2.2 & Norman",
+      "exp": "Rule 5 states that system design should prevent users from making serious errors, and when errors do occur, detect them gracefully and offer clear, constructive guidance without terminating the application.",
+      "explanation": "Rule 5 states that system design should prevent users from making serious errors, and when errors do occur, detect them gracefully and offer clear, constructive guidance without terminating the application.",
+      "provenance": "Shneiderman Ch 2 / Practical 29 HCI Alignment",
       "marks": 2
     },
-    {
+        {
       "id": "q_su7_059",
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "In Don Norman's Action Cycle, what is the 'Gulf of Evaluation'?",
-      "title": "In Don Norman's Action Cycle, what is the 'Gulf of Evaluation'?",
+      "q": "In Practical 29, when a student clicks 'btnCalculate' and `lblAverage.Text` immediately displays 'Average: 82.50%', which of Don Norman's conceptual user interface gulfs is bridged for the student?",
+      "title": "In Practical 29, when a student clicks 'btnCalculate' and `lblAverage.Text` immediately displays 'Average: 82.50%', which of Don Norman's conceptual user interface gulfs is bridged for the student?",
       "options": [
-        "The financial evaluation of software development expenses",
-        "The degree of difficulty the user experiences in perceiving and interpreting whether the system's state has changed in accordance with their goal",
-        "The automated grading test suite executed by CodeGrade",
-        "The benchmark measurement of system frames per second"
+        "The Gulf of Evaluation (allowing the user to perceive and interpret the new state of the system and verify their goal was achieved)",
+        "The Gulf of Execution (allowing the user to determine which physical buttons to press)",
+        "The Gulf of Compilation (verifying that source code contains no syntax errors)",
+        "The Gulf of Garbage Collection (reclaiming unused memory from the stack)"
       ],
       "opts": [
-        "The financial evaluation of software development expenses",
-        "The degree of difficulty the user experiences in perceiving and interpreting whether the system's state has changed in accordance with their goal",
-        "The automated grading test suite executed by CodeGrade",
-        "The benchmark measurement of system frames per second"
+        "The Gulf of Evaluation (allowing the user to perceive and interpret the new state of the system and verify their goal was achieved)",
+        "The Gulf of Execution (allowing the user to determine which physical buttons to press)",
+        "The Gulf of Compilation (verifying that source code contains no syntax errors)",
+        "The Gulf of Garbage Collection (reclaiming unused memory from the stack)"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "The Gulf of Evaluation represents the cognitive effort required by the user to assess the interface's current visual state and determine if their previous action succeeded.",
-      "explanation": "The Gulf of Evaluation represents the cognitive effort required by the user to assess the interface's current visual state and determine if their previous action succeeded.",
-      "provenance": "Shneiderman §2.2 & Norman",
+      "answer": 0,
+      "ans": 0,
+      "exp": "Don Norman's Gulf of Evaluation represents the difficulty users experience in assessing the system's state and determining if their intentions were met. Immediate, clear visual feedback bridges this gulf.",
+      "explanation": "Don Norman's Gulf of Evaluation represents the difficulty users experience in assessing the system's state and determining if their intentions were met. Immediate, clear visual feedback bridges this gulf.",
+      "provenance": "Norman Action Cycle / Practical 29 HCI Alignment",
       "marks": 2
     },
     {
@@ -4292,30 +4320,30 @@
       "provenance": "Gaddis 4th Ed §1.8",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_068",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Which Visual Studio window contains draggable GUI components such as Buttons, Labels, and TextBoxes?",
-      "title": "Which Visual Studio window contains draggable GUI components such as Buttons, Labels, and TextBoxes?",
+      "q": "In Visual Studio, what is the official name of the primary design-time window in which you visually construct a Windows Forms user interface and place controls (such as Buttons, Labels, and TextBoxes) onto a visual canvas?",
+      "title": "In Visual Studio, what is the official name of the primary design-time window in which you visually construct a Windows Forms user interface and place controls (such as Buttons, Labels, and TextBoxes) onto a visual canvas?",
       "options": [
-        "Toolbox",
-        "Component Tray",
-        "Error List",
-        "Solution Explorer"
+        "Designer (Form Designer)",
+        "Solution Explorer",
+        "Properties Window",
+        "Document Outline"
       ],
       "opts": [
-        "Toolbox",
-        "Component Tray",
-        "Error List",
-        "Solution Explorer"
+        "Designer (Form Designer)",
+        "Solution Explorer",
+        "Properties Window",
+        "Document Outline"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "The Toolbox contains tabs of controls and components that can be dragged and dropped onto the Windows Form Designer.",
-      "explanation": "The Toolbox contains tabs of controls and components that can be dragged and dropped onto the Windows Form Designer.",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "The Form Designer (or Designer) is the visual design surface in Visual Studio where developers visually place and configure Windows Forms controls (Tony Gaddis Chapter 1).",
+      "explanation": "The Form Designer (or Designer) is the visual design surface in Visual Studio where developers visually place and configure Windows Forms controls (Tony Gaddis Chapter 1).",
+      "provenance": "NWU Quiz 1 (SU1) Gaddis Chapter 1 Step",
       "marks": 2
     },
     {
@@ -4474,30 +4502,30 @@
       "provenance": "Gaddis 4th Ed §1.8",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_075",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "What symbol is used in Visual C# to write a single-line comment that is ignored by the compiler?",
-      "title": "What symbol is used in Visual C# to write a single-line comment that is ignored by the compiler?",
+      "q": "In Visual C#, what is the formal textbook term (Tony Gaddis Chapter 1) for a comment that begins with two forward slashes (`//`) and appears on only one line, as opposed to a multi-line block comment enclosed between `/*` and `*/`?",
+      "title": "In Visual C#, what is the formal textbook term (Tony Gaddis Chapter 1) for a comment that begins with two forward slashes (`//`) and appears on only one line, as opposed to a multi-line block comment enclosed between `/*` and `*/`?",
       "options": [
-        "//",
-        "/*",
-        "#",
-        "--"
+        "Line comment",
+        "Block comment",
+        "Inline docstring",
+        "Transient header"
       ],
       "opts": [
-        "//",
-        "/*",
-        "#",
-        "--"
+        "Line comment",
+        "Block comment",
+        "Inline docstring",
+        "Transient header"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double forward slashes '//' denote a single-line comment in C#. Multi-line comments use '/* ... */'.",
-      "explanation": "Double forward slashes '//' denote a single-line comment in C#. Multi-line comments use '/* ... */'.",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "According to Tony Gaddis Chapter 1, a comment that begins with '//' and spans only to the end of that single line is formally termed a 'line comment', whereas a comment enclosed between '/*' and '*/' is a 'block comment'.",
+      "explanation": "According to Tony Gaddis Chapter 1, a comment that begins with '//' and spans only to the end of that single line is formally termed a 'line comment', whereas a comment enclosed between '/*' and '*/' is a 'block comment'.",
+      "provenance": "NWU Quiz 1 (SU1) Gaddis Chapter 1 Step",
       "marks": 2
     },
     {
@@ -4578,30 +4606,30 @@
       "provenance": "Gaddis 4th Ed §1.8",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_079",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Which property of a Label control must be set to 'false' if you wish to manually resize its width and height using drag handles on the form?",
-      "title": "Which property of a Label control must be set to 'false' if you wish to manually resize its width and height using drag handles on the form?",
+      "q": "When a control or form is selected in the Visual Studio Form Designer, what are the small white or black squares that appear on its bounding box, used to resize its width and height, formally called?",
+      "title": "When a control or form is selected in the Visual Studio Form Designer, what are the small white or black squares that appear on its bounding box, used to resize its width and height, formally called?",
       "options": [
-        "AutoSize",
-        "Enabled",
-        "Visible",
-        "BorderStyle"
+        "Sizing handles",
+        "Border anchors",
+        "Docking margins",
+        "Alignment grips"
       ],
       "opts": [
-        "AutoSize",
-        "Enabled",
-        "Visible",
-        "BorderStyle"
+        "Sizing handles",
+        "Border anchors",
+        "Docking margins",
+        "Alignment grips"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "When AutoSize is true (default for labels), the label size fits its text automatically. Setting AutoSize = false allows manual bounding box sizing.",
-      "explanation": "When AutoSize is true (default for labels), the label size fits its text automatically. Setting AutoSize = false allows manual bounding box sizing.",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "In the Visual Studio Designer (Tony Gaddis Chapter 1), the eight small squares on a selected control's perimeter are called sizing handles.",
+      "explanation": "In the Visual Studio Designer (Tony Gaddis Chapter 1), the eight small squares on a selected control's perimeter are called sizing handles.",
+      "provenance": "NWU Quiz 1 (SU1) Gaddis Chapter 1 Step",
       "marks": 2
     },
     {
@@ -4864,30 +4892,30 @@
       "provenance": "NWU Practical 1: Racing Light Trainer Part D",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_090",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "In Practical 1, which C# statement should be executed in btnExit_Click to close the application safely?",
-      "title": "In Practical 1, which C# statement should be executed in btnExit_Click to close the application safely?",
+      "q": "The ________ is a standardized collection of classes, namespaces, and runtime libraries used by Visual C# to create and run Windows Forms applications on the Windows operating system.",
+      "title": "The ________ is a standardized collection of classes, namespaces, and runtime libraries used by Visual C# to create and run Windows Forms applications on the Windows operating system.",
       "options": [
-        "Stop();",
-        "this.Close();",
-        "Form1.Destroy();",
-        "System.Abort();"
+        ".NET Framework",
+        "Basic Input/Output System (BIOS)",
+        "Windows Kernel API only",
+        "Common Intermediate Firmware"
       ],
       "opts": [
-        "Stop();",
-        "this.Close();",
-        "Form1.Destroy();",
-        "System.Abort();"
+        ".NET Framework",
+        "Basic Input/Output System (BIOS)",
+        "Windows Kernel API only",
+        "Common Intermediate Firmware"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "In Windows Forms, 'this.Close();' closes the current form instance, releasing resources and terminating the application if it is the main startup form.",
-      "explanation": "In Windows Forms, 'this.Close();' closes the current form instance, releasing resources and terminating the application if it is the main startup form.",
-      "provenance": "NWU Practical 1: Racing Light Trainer Part B",
+      "answer": 0,
+      "ans": 0,
+      "exp": "The .NET Framework is Microsoft's collection of classes and runtime environment upon which Visual C# Windows Forms applications are built and executed (Tony Gaddis Chapter 1).",
+      "explanation": "The .NET Framework is Microsoft's collection of classes and runtime environment upon which Visual C# Windows Forms applications are built and executed (Tony Gaddis Chapter 1).",
+      "provenance": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
       "marks": 2
     },
     {
@@ -5020,30 +5048,30 @@
       "provenance": "Gaddis 4th Ed §2.3 & Practical Four",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_096",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Which control property specifies the numerical sequence in which controls gain keyboard focus when the user presses the Tab key?",
-      "title": "Which control property specifies the numerical sequence in which controls gain keyboard focus when the user presses the Tab key?",
+      "q": "In Visual C# Windows Forms, which control property determines the numerical order in which controls receive keyboard focus when the user presses the Tab key?",
+      "title": "In Visual C# Windows Forms, which control property determines the numerical order in which controls receive keyboard focus when the user presses the Tab key?",
       "options": [
+        "TabIndex",
+        "TabStop",
         "FocusOrder",
-        "SequenceNumber",
-        "TabOrder",
-        "TabIndex"
+        "TabSequence"
       ],
       "opts": [
+        "TabIndex",
+        "TabStop",
         "FocusOrder",
-        "SequenceNumber",
-        "TabOrder",
-        "TabIndex"
+        "TabSequence"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "The TabIndex property (starting from 0) defines the tab navigation sequence among focusable controls on a Form.",
-      "explanation": "The TabIndex property (starting from 0) defines the tab navigation sequence among focusable controls on a Form.",
-      "provenance": "Gaddis 4th Ed §2.3",
+      "answer": 0,
+      "ans": 0,
+      "exp": "The TabIndex property stores an integer specifying the order in which controls receive focus upon pressing Tab. The TabStop boolean property determines whether the control can receive focus via Tab at all (Tony Gaddis Chapter 2 & 3).",
+      "explanation": "The TabIndex property stores an integer specifying the order in which controls receive focus upon pressing Tab. The TabStop boolean property determines whether the control can receive focus via Tab at all (Tony Gaddis Chapter 2 & 3).",
+      "provenance": "NWU Test 1 (SU1) Gaddis Chapter 2 Step",
       "marks": 2
     },
     {
@@ -5202,30 +5230,30 @@
       "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_103",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "What is the standard C# method signature for a Button click event handler in Windows Forms?",
-      "title": "What is the standard C# method signature for a Button click event handler in Windows Forms?",
+      "q": "In a Windows Form class (such as Practical 29), a student defines two event handlers with the identical header `private void btnClear_Click(object sender, EventArgs e)` (one intended to clear TextBoxes and one intended to close the form). What compiler error does Roslyn report?",
+      "title": "In a Windows Form class (such as Practical 29), a student defines two event handlers with the identical header `private void btnClear_Click(object sender, EventArgs e)` (one intended to clear TextBoxes and one intended to close the form). What compiler error does Roslyn report?",
       "options": [
-        "public int btnClick()",
-        "static void Main(string[] args)",
-        "private void btnAction_Click(object sender, EventArgs e)",
-        "void HandleClick(Button btn)"
+        "CS0111: Type 'MainForm' already defines a member called 'btnClear_Click' with the same parameter types",
+        "CS0029: Cannot implicitly convert type 'void' to 'method'",
+        "CS1002: ; expected",
+        "The code compiles cleanly and executes both handlers sequentially upon clicking"
       ],
       "opts": [
-        "public int btnClick()",
-        "static void Main(string[] args)",
-        "private void btnAction_Click(object sender, EventArgs e)",
-        "void HandleClick(Button btn)"
+        "CS0111: Type 'MainForm' already defines a member called 'btnClear_Click' with the same parameter types",
+        "CS0029: Cannot implicitly convert type 'void' to 'method'",
+        "CS1002: ; expected",
+        "The code compiles cleanly and executes both handlers sequentially upon clicking"
       ],
-      "answer": 2,
-      "ans": 2,
-      "exp": "Standard Windows Forms event handlers return void, use private access, and take two parameters: 'object sender' and 'EventArgs e'.",
-      "explanation": "Standard Windows Forms event handlers return void, use private access, and take two parameters: 'object sender' and 'EventArgs e'.",
-      "provenance": "Gaddis 4th Ed §2.3",
+      "answer": 0,
+      "ans": 0,
+      "exp": "In C#, two methods in the same class cannot share the identical identifier and parameter list (CS0111). The exit button handler must have a unique identifier, such as btnExit_Click.",
+      "explanation": "In C#, two methods in the same class cannot share the identical identifier and parameter list (CS0111). The exit button handler must have a unique identifier, such as btnExit_Click.",
+      "provenance": "NWU Practical 29 Assessment Rubric Step",
       "marks": 2
     },
     {
@@ -5332,56 +5360,56 @@
       "provenance": "Gaddis 4th Ed §1.5",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_108",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Which core subsystem of the .NET Framework manages memory allocation, thread execution, and garbage collection for running C# programs?",
-      "title": "Which core subsystem of the .NET Framework manages memory allocation, thread execution, and garbage collection for running C# programs?",
+      "q": "In Visual C# object-oriented GUI programming, objects in a program have ________ (which represent data or attributes stored by the object) and ________ (which represent the operations, actions, or behaviors it can perform).",
+      "title": "In Visual C# object-oriented GUI programming, objects in a program have ________ (which represent data or attributes stored by the object) and ________ (which represent the operations, actions, or behaviors it can perform).",
       "options": [
-        "Visual Studio Solution Explorer",
-        "Windows File Explorer",
-        "Internet Information Services",
-        "Common Language Runtime (CLR)"
+        "properties / methods",
+        "data / propertys",
+        "attributes / constructors",
+        "events / delegates"
       ],
       "opts": [
-        "Visual Studio Solution Explorer",
-        "Windows File Explorer",
-        "Internet Information Services",
-        "Common Language Runtime (CLR)"
+        "properties / methods",
+        "data / propertys",
+        "attributes / constructors",
+        "events / delegates"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "The CLR (Common Language Runtime) is the virtual execution environment that manages memory, garbage collection, and code execution in .NET.",
-      "explanation": "The CLR (Common Language Runtime) is the virtual execution environment that manages memory, garbage collection, and code execution in .NET.",
-      "provenance": "Gaddis 4th Ed §1.5",
+      "answer": 0,
+      "ans": 0,
+      "exp": "According to Tony Gaddis (Chapter 1), objects in an application possess properties (which store data about the object) and methods (which define actions or operations the object can perform).",
+      "explanation": "According to Tony Gaddis (Chapter 1), objects in an application possess properties (which store data about the object) and methods (which define actions or operations the object can perform).",
+      "provenance": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_109",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Which Visual Studio window displays syntax errors, compiler warnings, and their corresponding line numbers when a build fails?",
-      "title": "Which Visual Studio window displays syntax errors, compiler warnings, and their corresponding line numbers when a build fails?",
+      "q": "When a syntax error is detected in the Visual Studio code editor as you type C# statements, how is the erroneous code visually flagged before the project is compiled?",
+      "title": "When a syntax error is detected in the Visual Studio code editor as you type C# statements, how is the erroneous code visually flagged before the project is compiled?",
       "options": [
-        "Error List",
-        "Toolbox",
-        "Properties Window",
-        "Object Browser"
+        "Underlined with a red jagged (squiggly) line",
+        "Highlighted with a solid green background",
+        "Displayed with a yellow double strike-through",
+        "Prefixed with a blinking modal dialog box"
       ],
       "opts": [
-        "Error List",
-        "Toolbox",
-        "Properties Window",
-        "Object Browser"
+        "Underlined with a red jagged (squiggly) line",
+        "Highlighted with a solid green background",
+        "Displayed with a yellow double strike-through",
+        "Prefixed with a blinking modal dialog box"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "The Error List window lists compiler errors and warnings with error codes (e.g. CS1002) and exact file/line locations.",
-      "explanation": "The Error List window lists compiler errors and warnings with error codes (e.g. CS1002) and exact file/line locations.",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "Visual Studio highlights syntax and grammatical errors dynamically in the code editor with a red jagged (squiggly) line, indicating that compilation will fail unless resolved (Tony Gaddis Chapter 1).",
+      "explanation": "Visual Studio highlights syntax and grammatical errors dynamically in the code editor with a red jagged (squiggly) line, indicating that compilation will fail unless resolved (Tony Gaddis Chapter 1).",
+      "provenance": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
       "marks": 2
     },
     {
@@ -5592,30 +5620,30 @@
       "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_118",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "According to NWU submission guidelines, what score is awarded if a student submits only an isolated .cs file rather than the complete zipped project folder?",
-      "title": "According to NWU submission guidelines, what score is awarded if a student submits only an isolated .cs file rather than the complete zipped project folder?",
+      "q": "A ________ is a debugging tool in Visual Studio that pauses program execution at a specific line of code, allowing the programmer to inspect variable values in the Locals window and step through execution.",
+      "title": "A ________ is a debugging tool in Visual Studio that pauses program execution at a specific line of code, allowing the programmer to inspect variable values in the Locals window and step through execution.",
       "options": [
-        "50% partial credit",
-        "0 marks because the full solution including project and designer files cannot be built and verified",
-        "100% full credit",
-        "75% with a minor late penalty"
+        "breakpoint",
+        "locals window",
+        "auto-complete",
+        "sizing handle"
       ],
       "opts": [
-        "50% partial credit",
-        "0 marks because the full solution including project and designer files cannot be built and verified",
-        "100% full credit",
-        "75% with a minor late penalty"
+        "breakpoint",
+        "locals window",
+        "auto-complete",
+        "sizing handle"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "NWU practical guidelines explicitly state that submitting individual files or an incomplete folder scores 0 marks because it cannot be built or graded.",
-      "explanation": "NWU practical guidelines explicitly state that submitting individual files or an incomplete folder scores 0 marks because it cannot be built or graded.",
-      "provenance": "NWU Practical 1 & 2 Submission Guidelines",
+      "answer": 0,
+      "ans": 0,
+      "exp": "A breakpoint (represented by a red dot in the left margin) pauses program execution right before the marked line executes, allowing the developer to examine memory and step through statements (Tony Gaddis Chapter 2 & 3).",
+      "explanation": "A breakpoint (represented by a red dot in the left margin) pauses program execution right before the marked line executes, allowing the developer to examine memory and step through statements (Tony Gaddis Chapter 2 & 3).",
+      "provenance": "NWU Test 1 (SU1) Gaddis Chapter 2 Step",
       "marks": 2
     },
     {
@@ -5644,56 +5672,56 @@
       "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_120",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Which characters are used to denote a single-line comment in Visual C# source code?",
-      "title": "Which characters are used to denote a single-line comment in Visual C# source code?",
+      "q": "To execute code one statement at a time during a debugging session in Visual Studio, entering into any called methods, you use the ________ feature, activated by pressing the F11 key.",
+      "title": "To execute code one statement at a time during a debugging session in Visual Studio, entering into any called methods, you use the ________ feature, activated by pressing the F11 key.",
       "options": [
-        "#",
-        "/*",
-        "--",
-        "//"
+        "single-stepping",
+        "line-by-line tracing",
+        "auto-stepping",
+        "breakpoint jumping"
       ],
       "opts": [
-        "#",
-        "/*",
-        "--",
-        "//"
+        "single-stepping",
+        "line-by-line tracing",
+        "auto-stepping",
+        "breakpoint jumping"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "In C#, double forward slashes ('//') mark the remainder of the line as a comment ignored by the compiler.",
-      "explanation": "In C#, double forward slashes ('//') mark the remainder of the line as a comment ignored by the compiler.",
-      "provenance": "Gaddis 4th Ed §2.3",
+      "answer": 0,
+      "ans": 0,
+      "exp": "Pressing F11 in Visual Studio activates 'single-stepping' (Step Into), which advances program execution one statement at a time, entering into called methods for granular inspection (Tony Gaddis Chapter 2 & 3).",
+      "explanation": "Pressing F11 in Visual Studio activates 'single-stepping' (Step Into), which advances program execution one statement at a time, entering into called methods for granular inspection (Tony Gaddis Chapter 2 & 3).",
+      "provenance": "NWU Test 1 (SU1) Gaddis Chapter 2 Step",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_121",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "In NWU coding standards, what information must be included in the header comment block at the very top of Form1.cs?",
-      "title": "In NWU coding standards, what information must be included in the header comment block at the very top of Form1.cs?",
+      "q": "An algorithm written out in plain English statements is called ________, whereas its standardized diagrammatic representation using geometric symbols and connecting arrows is called a ________.",
+      "title": "An algorithm written out in plain English statements is called ________, whereas its standardized diagrammatic representation using geometric symbols and connecting arrows is called a ________.",
       "options": [
-        "Student name, student number, practical number, and date",
-        "Only the Visual Studio version number",
-        "The computer's MAC address",
-        "The lecturer's home phone number"
+        "pseudocode / flowchart",
+        "blueprint / wireframe",
+        "pseudo code / design pattern",
+        "storyboard / schema"
       ],
       "opts": [
-        "Student name, student number, practical number, and date",
-        "Only the Visual Studio version number",
-        "The computer's MAC address",
-        "The lecturer's home phone number"
+        "pseudocode / flowchart",
+        "blueprint / wireframe",
+        "pseudo code / design pattern",
+        "storyboard / schema"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "NWU practical standards require every submitted source file to begin with a comment block identifying the author's name, student number, practical name/number, and date.",
-      "explanation": "NWU practical standards require every submitted source file to begin with a comment block identifying the author's name, student number, practical name/number, and date.",
-      "provenance": "NWU Practical 1 Part E & Code Standards",
+      "exp": "Pseudocode (single word, no space) is an informal natural language description of an algorithm. A flowchart is its standardized graphical representation using geometric symbols (Tony Gaddis Chapter 1).",
+      "explanation": "Pseudocode (single word, no space) is an informal natural language description of an algorithm. A flowchart is its standardized graphical representation using geometric symbols (Tony Gaddis Chapter 1).",
+      "provenance": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
       "marks": 2
     },
     {
@@ -5748,30 +5776,30 @@
       "provenance": "Gaddis 4th Ed §2.3",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_124",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Why is typing coordinate numbers into the Location property preferable to mouse dragging when aligning stacked graphics in Practical 1?",
-      "title": "Why is typing coordinate numbers into the Location property preferable to mouse dragging when aligning stacked graphics in Practical 1?",
+      "q": "The two primary categories of user interface in computer software are the ________ (which uses graphical windows, buttons, and menus) and the command line interface (CLI).",
+      "title": "The two primary categories of user interface in computer software are the ________ (which uses graphical windows, buttons, and menus) and the command line interface (CLI).",
       "options": [
-        "Mouse dragging permanently locks the control from future edits",
-        "Dragging disables the PictureBox image loader",
-        "Coordinates typed in code run 50% faster",
-        "Manual dragging cannot reliably guarantee pixel-exact placement, causing graphics to visibly stutter or shift upon switching"
+        "graphical user interface (GUI)",
+        "static user interface",
+        "console batch interface",
+        "natural voice interface"
       ],
       "opts": [
-        "Mouse dragging permanently locks the control from future edits",
-        "Dragging disables the PictureBox image loader",
-        "Coordinates typed in code run 50% faster",
-        "Manual dragging cannot reliably guarantee pixel-exact placement, causing graphics to visibly stutter or shift upon switching"
+        "graphical user interface (GUI)",
+        "static user interface",
+        "console batch interface",
+        "natural voice interface"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "Typing exact pixel values in the Properties window guarantees 100% exact alignment, eliminating visual jitter between stacked images.",
-      "explanation": "Typing exact pixel values in the Properties window guarantees 100% exact alignment, eliminating visual jitter between stacked images.",
-      "provenance": "NWU Practical 1 Part D",
+      "answer": 0,
+      "ans": 0,
+      "exp": "Tony Gaddis (Chapter 1) contrasts Graphical User Interfaces (GUIs), which allow users to interact via graphical elements, with Command Line Interfaces (CLIs), where users interact purely by typing text commands.",
+      "explanation": "Tony Gaddis (Chapter 1) contrasts Graphical User Interfaces (GUIs), which allow users to interact via graphical elements, with Command Line Interfaces (CLIs), where users interact purely by typing text commands.",
+      "provenance": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
       "marks": 2
     },
     {
@@ -5904,30 +5932,30 @@
       "provenance": "NWU Practical 1 Part D",
       "marks": 2
     },
-    {
+        {
       "id": "q_su1_130",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Which Visual Studio IDE feature provides automatic keyword completion, syntax member suggestions, and parameter hints while writing C# code?",
-      "title": "Which Visual Studio IDE feature provides automatic keyword completion, syntax member suggestions, and parameter hints while writing C# code?",
+      "q": "The ________ feature in Visual Studio provides automatic code completion, parameter information, quick info tooltips, and member lists as code is typed into the code editor.",
+      "title": "The ________ feature in Visual Studio provides automatic code completion, parameter information, quick info tooltips, and member lists as code is typed into the code editor.",
       "options": [
-        "CodeLens",
         "IntelliSense",
-        "LiveShare",
-        "RefactorNow"
+        "Auto-complete",
+        "CodeDOM",
+        "Live Share"
       ],
       "opts": [
-        "CodeLens",
         "IntelliSense",
-        "LiveShare",
-        "RefactorNow"
+        "Auto-complete",
+        "CodeDOM",
+        "Live Share"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "IntelliSense is Microsoft's context-aware code completion assistant that displays member lists, parameter tooltips, and syntax hints.",
-      "explanation": "IntelliSense is Microsoft's context-aware code completion assistant that displays member lists, parameter tooltips, and syntax hints.",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 0,
+      "ans": 0,
+      "exp": "IntelliSense is Microsoft's trademarked code-completion technology in Visual Studio that displays matching methods, properties, and parameters as you type (Tony Gaddis Chapters 1 & 2).",
+      "explanation": "IntelliSense is Microsoft's trademarked code-completion technology in Visual Studio that displays matching methods, properties, and parameters as you type (Tony Gaddis Chapters 1 & 2).",
+      "provenance": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
       "marks": 2
     },
     {
@@ -6242,30 +6270,30 @@
       "provenance": "Gaddis 4th Ed §3.11",
       "marks": 2
     },
-    {
+        {
       "id": "q_su2_143",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Which property of a Windows Form designates a button that is automatically clicked when the user presses the Enter key?",
-      "title": "Which property of a Windows Form designates a button that is automatically clicked when the user presses the Enter key?",
+      "q": "In the C# statement `answerLabel.Text = \"Theodore Roosevelt\";`, what is the formal textbook name (Tony Gaddis Chapter 1 & 2) of the `=` symbol?",
+      "title": "In the C# statement `answerLabel.Text = \"Theodore Roosevelt\";`, what is the formal textbook name (Tony Gaddis Chapter 1 & 2) of the `=` symbol?",
       "options": [
-        "AcceptButton",
-        "CancelButton",
-        "DefaultButton",
-        "EnterButton"
+        "Assignment operator",
+        "Equality comparison operator",
+        "Variable binder",
+        "Relational operator"
       ],
       "opts": [
-        "AcceptButton",
-        "CancelButton",
-        "DefaultButton",
-        "EnterButton"
+        "Assignment operator",
+        "Equality comparison operator",
+        "Variable binder",
+        "Relational operator"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "AcceptButton specifies the button automatically activated when the Enter key is pressed.",
-      "explanation": "AcceptButton specifies the button automatically activated when the Enter key is pressed.",
-      "provenance": "Gaddis 4th Ed §3.11",
+      "exp": "The '=' sign in C# is the assignment operator. It copies the expression on its right-hand side into the variable or property on its left-hand side. The '==' operator is used for equality comparison.",
+      "explanation": "The '=' sign in C# is the assignment operator. It copies the expression on its right-hand side into the variable or property on its left-hand side. The '==' operator is used for equality comparison.",
+      "provenance": "NWU Quiz 1 (SU1/SU2) Gaddis Chapter 2 Step",
       "marks": 2
     },
     {
@@ -6684,30 +6712,30 @@
       "provenance": "Gaddis 4th Ed §3.5",
       "marks": 2
     },
-    {
+        {
       "id": "q_su2_160",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "What is the value of the expression '7 / 2' in C#?",
-      "title": "What is the value of the expression '7 / 2' in C#?",
+      "q": "Consider the following Visual C# code snippet:\n```csharp\nint g1 = 2, g2 = 3;\nlabel2.Text = \"g1\" + \"g2\";\n```\nWhat text is displayed in `label2` when this code executes?",
+      "title": "Consider the following Visual C# code snippet:\n```csharp\nint g1 = 2, g2 = 3;\nlabel2.Text = \"g1\" + \"g2\";\n```\nWhat text is displayed in `label2` when this code executes?",
       "options": [
-        "3.5",
-        "4",
-        "3.0",
-        "3"
+        "5",
+        "g1g2",
+        "23",
+        "Compilation error (CS0029)"
       ],
       "opts": [
-        "3.5",
-        "4",
-        "3.0",
-        "3"
+        "5",
+        "g1g2",
+        "23",
+        "Compilation error (CS0029)"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "In C#, dividing an integer by another integer performs integer division, which drops (truncates) any fractional remainder, yielding 3.",
-      "explanation": "In C#, dividing an integer by another integer performs integer division, which drops (truncates) any fractional remainder, yielding 3.",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Notice the double quotation marks around \"g1\" and \"g2\". Because they are enclosed in quotes, they are string literals, not the variables g1 and g2. The + operator simply concatenates the letters together, producing \"g1g2\". The integer variables g1 and g2 are ignored completely.",
+      "explanation": "Notice the double quotation marks around \"g1\" and \"g2\". Because they are enclosed in quotes, they are string literals, not the variables g1 and g2. The + operator simply concatenates the letters together, producing \"g1g2\". The integer variables g1 and g2 are ignored completely.",
+      "provenance": "NWU Test 1 (SU2) Gaddis Chapter 2 Step",
       "marks": 2
     },
     {
@@ -6996,30 +7024,30 @@
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
-    {
+        {
       "id": "q_su2_172",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "What is C# string interpolation?",
-      "title": "What is C# string interpolation?",
+      "q": "In Visual C#, what output is produced by the interpolated string expression `$\"Total Due: {450.75m:C}\"` under standard South African regional culture settings?",
+      "title": "In Visual C#, what output is produced by the interpolated string expression `$\"Total Due: {450.75m:C}\"` under standard South African regional culture settings?",
       "options": [
-        "A technique for encrypting strings",
-        "A method that converts strings into sound files",
-        "A way to translate strings into foreign languages",
-        "A syntax where string literals are prefixed with '$' and expressions inside '{...}' are evaluated and formatted directly inline"
+        "Total Due: R 450.75",
+        "Total Due: $450.75",
+        "Total Due: 450.75m",
+        "Total Due: {450.75:C}"
       ],
       "opts": [
-        "A technique for encrypting strings",
-        "A method that converts strings into sound files",
-        "A way to translate strings into foreign languages",
-        "A syntax where string literals are prefixed with '$' and expressions inside '{...}' are evaluated and formatted directly inline"
+        "Total Due: R 450.75",
+        "Total Due: $450.75",
+        "Total Due: 450.75m",
+        "Total Due: {450.75:C}"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "String interpolation ($) allows expressions and format specifiers to be placed directly inside curly braces within string literals (e.g. $\"Total: {total:C}\").",
-      "explanation": "String interpolation ($) allows expressions and format specifiers to be placed directly inside curly braces within string literals (e.g. $\"Total: {total:C}\").",
-      "provenance": "Gaddis 4th Ed §3.5",
+      "answer": 0,
+      "ans": 0,
+      "exp": "String interpolation expressions prefixed with '$' evaluate expressions inside curly braces. The ':C' format specifier formats the decimal as currency with the regional symbol (R) and two decimal places (Tony Gaddis Chapter 3).",
+      "explanation": "String interpolation expressions prefixed with '$' evaluate expressions inside curly braces. The ':C' format specifier formats the decimal as currency with the regional symbol (R) and two decimal places (Tony Gaddis Chapter 3).",
+      "provenance": "NWU SU2 Format String Standards",
       "marks": 2
     },
     {
@@ -7048,56 +7076,56 @@
       "provenance": "Gaddis 4th Ed §3.5",
       "marks": 2
     },
-    {
+        {
       "id": "q_su2_174",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In a try-catch block, which specific Exception class catches errors caused by entering non-numeric characters into decimal.Parse?",
-      "title": "In a try-catch block, which specific Exception class catches errors caused by entering non-numeric characters into decimal.Parse?",
+      "q": "To convert a string representation of a whole number directly to an integer in Visual C#, which built-in method is prescribed in Tony Gaddis (Chapters 2–3) before introducing `int.TryParse()`?",
+      "title": "To convert a string representation of a whole number directly to an integer in Visual C#, which built-in method is prescribed in Tony Gaddis (Chapters 2–3) before introducing `int.TryParse()`?",
       "options": [
-        "DivideByZeroException",
-        "FormatException",
-        "IndexOutOfRangeException",
-        "NullReferenceException"
+        "int.Parse()",
+        ".toInt()",
+        "int.Convert()",
+        "Integer.ValueOf()"
       ],
       "opts": [
-        "DivideByZeroException",
-        "FormatException",
-        "IndexOutOfRangeException",
-        "NullReferenceException"
+        "int.Parse()",
+        ".toInt()",
+        "int.Convert()",
+        "Integer.ValueOf()"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "decimal.Parse throws a FormatException when the string argument does not contain a valid number in an acceptable format.",
-      "explanation": "decimal.Parse throws a FormatException when the string argument does not contain a valid number in an acceptable format.",
-      "provenance": "Gaddis 4th Ed §3.6",
+      "answer": 0,
+      "ans": 0,
+      "exp": "In Tony Gaddis Chapters 2–3, string-to-integer conversion is performed via int.Parse(string). In Chapter 4, defensive parsing with int.TryParse(string, out int) is taught to prevent runtime exceptions.",
+      "explanation": "In Tony Gaddis Chapters 2–3, string-to-integer conversion is performed via int.Parse(string). In Chapter 4, defensive parsing with int.TryParse(string, out int) is taught to prevent runtime exceptions.",
+      "provenance": "NWU Test 1 (SU2) Gaddis Chapter 2 Step",
       "marks": 2
     },
-    {
+        {
       "id": "q_su2_175",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "What is the purpose of the 'ex.Message' property inside 'catch (Exception ex)'?",
-      "title": "What is the purpose of the 'ex.Message' property inside 'catch (Exception ex)'?",
+      "q": "In Practical 29 (Student Test Average Calculator), user input from `txtTest1` is converted using `double.Parse(txtTest1.Text)`. What is the syntactically correct C# `try-catch` construct to intercept invalid non-numeric inputs?",
+      "title": "In Practical 29 (Student Test Average Calculator), user input from `txtTest1` is converted using `double.Parse(txtTest1.Text)`. What is the syntactically correct C# `try-catch` construct to intercept invalid non-numeric inputs?",
       "options": [
-        "It contains the user's password",
-        "It holds the name of the Visual Studio installer",
-        "It provides a human-readable description of why the exception occurred",
-        "It restarts the computer automatically"
+        "catch (FormatException ex) { ... }",
+        "catch except(ex e) { ... }",
+        "catch Exception: FormatException { ... }",
+        "catch (ex as FormatException) { ... }"
       ],
       "opts": [
-        "It contains the user's password",
-        "It holds the name of the Visual Studio installer",
-        "It provides a human-readable description of why the exception occurred",
-        "It restarts the computer automatically"
+        "catch (FormatException ex) { ... }",
+        "catch except(ex e) { ... }",
+        "catch Exception: FormatException { ... }",
+        "catch (ex as FormatException) { ... }"
       ],
-      "answer": 2,
-      "ans": 2,
-      "exp": "The Message property of an Exception object contains an error message explaining the underlying reason for the runtime failure.",
-      "explanation": "The Message property of an Exception object contains an error message explaining the underlying reason for the runtime failure.",
-      "provenance": "Gaddis 4th Ed §3.6",
+      "answer": 0,
+      "ans": 0,
+      "exp": "In C#, exception handling syntax requires 'catch (ExceptionType identifier)' such as 'catch (FormatException ex)'. Writing 'catch except(ex e)' is invalid C# syntax and causes compiler errors.",
+      "explanation": "In C#, exception handling syntax requires 'catch (ExceptionType identifier)' such as 'catch (FormatException ex)'. Writing 'catch except(ex e)' is invalid C# syntax and causes compiler errors.",
+      "provenance": "NWU Practical 29 Assessment Rubric Step",
       "marks": 2
     },
     {
@@ -7178,82 +7206,82 @@
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
-    {
+        {
       "id": "q_su2_179",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "What happens if you attempt to add a 'double' variable and a 'decimal' variable directly: 'double d = 2.5; decimal m = 10m; var res = d + m;'?",
-      "title": "What happens if you attempt to add a 'double' variable and a 'decimal' variable directly: 'double d = 2.5; decimal m = 10m; var res = d + m;'?",
+      "q": "In Practical 29, a student wrote: `lblAverage.Text = dblAverage.toString(''n2'');` to display an average mark of 84.5. Why does this line fail to compile in Visual C#?",
+      "title": "In Practical 29, a student wrote: `lblAverage.Text = dblAverage.toString(''n2'');` to display an average mark of 84.5. Why does this line fail to compile in Visual C#?",
       "options": [
-        "The result automatically becomes a float",
-        "The double is truncated to an int",
-        "Compiler error CS0019: Operator '+' cannot be applied to operands of type 'double' and 'decimal'",
-        "It compiles and evaluates without issue"
+        "C# method names are case-sensitive (ToString, not toString) and string format specifiers require standard double quotes (\"n2\"), not paired single quotes (''n2'')",
+        "The 'n2' specifier is only valid for integers, not doubles",
+        "A Label's Text property cannot be assigned values at runtime",
+        "The '+' operator must be used instead of the assignment operator '='"
       ],
       "opts": [
-        "The result automatically becomes a float",
-        "The double is truncated to an int",
-        "Compiler error CS0019: Operator '+' cannot be applied to operands of type 'double' and 'decimal'",
-        "It compiles and evaluates without issue"
+        "C# method names are case-sensitive (ToString, not toString) and string format specifiers require standard double quotes (\"n2\"), not paired single quotes (''n2'')",
+        "The 'n2' specifier is only valid for integers, not doubles",
+        "A Label's Text property cannot be assigned values at runtime",
+        "The '+' operator must be used instead of the assignment operator '='"
       ],
-      "answer": 2,
-      "ans": 2,
-      "exp": "C# does not define implicit conversions between double and decimal due to potential precision conflicts. One operand must be explicitly cast.",
-      "explanation": "C# does not define implicit conversions between double and decimal due to potential precision conflicts. One operand must be explicitly cast.",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 0,
+      "ans": 0,
+      "exp": "C# is strictly case-sensitive: toString() causes CS1061 ('double does not contain a definition for toString'). Furthermore, string literals require double quotes (\"n2\"); paired single quotes (''n2'') create an invalid character literal syntax error.",
+      "explanation": "C# is strictly case-sensitive: toString() causes CS1061 ('double does not contain a definition for toString'). Furthermore, string literals require double quotes (\"n2\"); paired single quotes (''n2'') create an invalid character literal syntax error.",
+      "provenance": "NWU Practical 29 Assessment Rubric Step",
       "marks": 2
     },
-    {
+        {
       "id": "q_su2_180",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "What is the difference between '(int)2.8' and 'Convert.ToInt32(2.8)' in C#?",
-      "title": "What is the difference between '(int)2.8' and 'Convert.ToInt32(2.8)' in C#?",
+      "q": "In Practical 29, a student wrote:\n```csharp\ndouble dblAverage = ((dblTest1 + dblTest2) / 2.0).ToString(\"n2\");\n```\nWhat compiler error does the Roslyn C# compiler raise for this statement?",
+      "title": "In Practical 29, a student wrote:\n```csharp\ndouble dblAverage = ((dblTest1 + dblTest2) / 2.0).ToString(\"n2\");\n```\nWhat compiler error does the Roslyn C# compiler raise for this statement?",
       "options": [
-        "(int)2.8 throws an exception",
-        "Convert.ToInt32 always produces 0",
-        "Both always produce 2.8",
-        "(int)2.8 truncates towards zero to produce 2, whereas Convert.ToInt32(2.8) rounds to the nearest integer to produce 3"
+        "CS0029: Cannot implicitly convert type 'string' to 'double'",
+        "CS0103: The name 'dblAverage' does not exist in the current context",
+        "CS0266: Cannot implicitly convert type 'double' to 'int'",
+        "No error is raised because C# automatically parses formatted strings into double variables"
       ],
       "opts": [
-        "(int)2.8 throws an exception",
-        "Convert.ToInt32 always produces 0",
-        "Both always produce 2.8",
-        "(int)2.8 truncates towards zero to produce 2, whereas Convert.ToInt32(2.8) rounds to the nearest integer to produce 3"
+        "CS0029: Cannot implicitly convert type 'string' to 'double'",
+        "CS0103: The name 'dblAverage' does not exist in the current context",
+        "CS0266: Cannot implicitly convert type 'double' to 'int'",
+        "No error is raised because C# automatically parses formatted strings into double variables"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "The explicit cast (int) truncates the fractional part towards zero. Convert.ToInt32 rounds to the nearest integer using banker's rounding.",
-      "explanation": "The explicit cast (int) truncates the fractional part towards zero. Convert.ToInt32 rounds to the nearest integer using banker's rounding.",
-      "provenance": "Gaddis 4th Ed §3.5",
+      "answer": 0,
+      "ans": 0,
+      "exp": "Calling .ToString(\"n2\") returns a formatted string object. In C#, a string cannot be assigned to a double variable, producing compiler error CS0029. The formatted string should be assigned to lblAverage.Text.",
+      "explanation": "Calling .ToString(\"n2\") returns a formatted string object. In C#, a string cannot be assigned to a double variable, producing compiler error CS0029. The formatted string should be assigned to lblAverage.Text.",
+      "provenance": "NWU Practical 29 Assessment Rubric Step",
       "marks": 2
     },
-    {
+        {
       "id": "q_su2_181",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "What does 'string clean = txtName.Text.Trim();' do?",
-      "title": "What does 'string clean = txtName.Text.Trim();' do?",
+      "q": "In Practical 29, when a user enters non-numeric text in `txtTest1`, the application catches `FormatException`. According to NWU practical marking rubrics and Shneiderman Rule 5 (Prevent errors), what pair of method calls should be executed to return focus and prepare the input field for immediate re-entry?",
+      "title": "In Practical 29, when a user enters non-numeric text in `txtTest1`, the application catches `FormatException`. According to NWU practical marking rubrics and Shneiderman Rule 5 (Prevent errors), what pair of method calls should be executed to return focus and prepare the input field for immediate re-entry?",
       "options": [
-        "Removes all leading and trailing whitespace characters from the text string",
-        "Converts the text to lowercase",
-        "Limits the string to 5 characters",
-        "Deletes all spaces between words"
+        "txtTest1.Focus(); txtTest1.SelectAll();",
+        "txtTest1.Clear(); txtTest1.Dispose();",
+        "txtTest1.Hide(); txtTest1.Show();",
+        "txtTest1.ResetText(); txtTest1.Undo();"
       ],
       "opts": [
-        "Removes all leading and trailing whitespace characters from the text string",
-        "Converts the text to lowercase",
-        "Limits the string to 5 characters",
-        "Deletes all spaces between words"
+        "txtTest1.Focus(); txtTest1.SelectAll();",
+        "txtTest1.Clear(); txtTest1.Dispose();",
+        "txtTest1.Hide(); txtTest1.Show();",
+        "txtTest1.ResetText(); txtTest1.Undo();"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "The Trim() method strips whitespace from both the beginning and the end of a string.",
-      "explanation": "The Trim() method strips whitespace from both the beginning and the end of a string.",
-      "provenance": "Gaddis 4th Ed §3.5",
+      "exp": "Calling txtTest1.Focus() places the insertion cursor into the control, and txtTest1.SelectAll() selects the entire erroneous string so the student can immediately overwrite it without manual backspacing.",
+      "explanation": "Calling txtTest1.Focus() places the insertion cursor into the control, and txtTest1.SelectAll() selects the entire erroneous string so the student can immediately overwrite it without manual backspacing.",
+      "provenance": "NWU Practical 29 Assessment Rubric Step",
       "marks": 2
     },
     {
@@ -8504,30 +8532,30 @@
       "provenance": "NWU Practical Four Part C (A named constant)",
       "marks": 2
     },
-    {
+        {
       "id": "q_su3_230",
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4, what are the two required string comparison techniques students must demonstrate?",
-      "title": "In Practical 4, what are the two required string comparison techniques students must demonstrate?",
+      "q": "In Practical 29, a student validates that two test marks (`dblTest1` and `dblTest2`) are within the valid academic bounds of 0 to 100 inclusive. Which `if` condition correctly triggers an error message if EITHER mark is out of bounds?",
+      "title": "In Practical 29, a student validates that two test marks (`dblTest1` and `dblTest2`) are within the valid academic bounds of 0 to 100 inclusive. Which `if` condition correctly triggers an error message if EITHER mark is out of bounds?",
       "options": [
-        "IndexOf() and Substring()",
-        "Regex.IsMatch() and char.IsDigit()",
-        "TryParse() and Convert.ToString()",
-        "The equality operator (==) for comparing zone text, and the String.CompareTo() method for checking the repeat offender text"
+        "if (dblTest1 < 0 || dblTest1 > 100 || dblTest2 < 0 || dblTest2 > 100)",
+        "if (dblTest1 < 0 && dblTest1 > 100 && dblTest2 < 0 && dblTest2 > 100)",
+        "if (0 <= dblTest1 <= 100 || 0 <= dblTest2 <= 100)",
+        "if (dblTest1 < 0 | dblTest1 > 100 & dblTest2 < 0 | dblTest2 > 100)"
       ],
       "opts": [
-        "IndexOf() and Substring()",
-        "Regex.IsMatch() and char.IsDigit()",
-        "TryParse() and Convert.ToString()",
-        "The equality operator (==) for comparing zone text, and the String.CompareTo() method for checking the repeat offender text"
+        "if (dblTest1 < 0 || dblTest1 > 100 || dblTest2 < 0 || dblTest2 > 100)",
+        "if (dblTest1 < 0 && dblTest1 > 100 && dblTest2 < 0 && dblTest2 > 100)",
+        "if (0 <= dblTest1 <= 100 || 0 <= dblTest2 <= 100)",
+        "if (dblTest1 < 0 | dblTest1 > 100 & dblTest2 < 0 | dblTest2 > 100)"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "The sheet states: 'There are two ways to ask whether two pieces of text are the same: an operator (==) for the zone and a method on String (.CompareTo()) that hands back 0 for the repeat offender.'",
-      "explanation": "The sheet states: 'There are two ways to ask whether two pieces of text are the same: an operator (==) for the zone and a method on String (.CompareTo()) that hands back 0 for the repeat offender.'",
-      "provenance": "NWU Practical Four Part C (Comparing the words)",
+      "answer": 0,
+      "ans": 0,
+      "exp": "To detect if either mark is invalid, each boundary condition is evaluated with the logical OR operator '||'. Chained relational comparisons like '0 <= dblTest1 <= 100' are illegal in C# (CS0019).",
+      "explanation": "To detect if either mark is invalid, each boundary condition is evaluated with the logical OR operator '||'. Chained relational comparisons like '0 <= dblTest1 <= 100' are illegal in C# (CS0019).",
+      "provenance": "NWU Practical 29 Assessment Rubric Step",
       "marks": 2
     },
     {
@@ -9414,30 +9442,30 @@
       "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
-    {
+        {
       "id": "q_su3_265",
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "What happens when 'bool ok = (10 < 2) && (5 / 0 == 1);' is evaluated in C#?",
-      "title": "What happens when 'bool ok = (10 < 2) && (5 / 0 == 1);' is evaluated in C#?",
+      "q": "In defensive input validation, consider the statement:\n```csharp\nif (double.TryParse(txtTest1.Text, out double m1) && m1 >= 0 && m1 <= 100)\n```\nWhy does this code safely avoid runtime errors even if `txtTest1` is empty or non-numeric?",
+      "title": "In defensive input validation, consider the statement:\n```csharp\nif (double.TryParse(txtTest1.Text, out double m1) && m1 >= 0 && m1 <= 100)\n```\nWhy does this code safely avoid runtime errors even if `txtTest1` is empty or non-numeric?",
       "options": [
-        "A DivideByZeroException crashes the application",
-        "The expression evaluates to true",
-        "'ok' becomes false without error because short-circuit evaluation skips '(5 / 0 == 1)'",
-        "The computer freezes"
+        "The '&&' operator short-circuits: if TryParse returns false, the subsequent conditions 'm1 >= 0' and 'm1 <= 100' are never evaluated",
+        "C# TryParse automatically replaces empty strings with 100",
+        "The 'out' keyword bypasses boolean evaluation entirely",
+        "The compiler converts the if statement into a background try-catch block"
       ],
       "opts": [
-        "A DivideByZeroException crashes the application",
-        "The expression evaluates to true",
-        "'ok' becomes false without error because short-circuit evaluation skips '(5 / 0 == 1)'",
-        "The computer freezes"
+        "The '&&' operator short-circuits: if TryParse returns false, the subsequent conditions 'm1 >= 0' and 'm1 <= 100' are never evaluated",
+        "C# TryParse automatically replaces empty strings with 100",
+        "The 'out' keyword bypasses boolean evaluation entirely",
+        "The compiler converts the if statement into a background try-catch block"
       ],
-      "answer": 2,
-      "ans": 2,
-      "exp": "Because 10 < 2 is false, the '&&' short-circuits immediately, preventing execution of the second operand.",
-      "explanation": "Because 10 < 2 is false, the '&&' short-circuits immediately, preventing execution of the second operand.",
-      "provenance": "Gaddis 4th Ed §4.5",
+      "answer": 0,
+      "ans": 0,
+      "exp": "Logical AND ('&&') performs short-circuit evaluation. If the first operand evaluates to false (as when TryParse fails), evaluation terminates immediately, ensuring the uninitialized or default value of m1 is never erroneously validated.",
+      "explanation": "Logical AND ('&&') performs short-circuit evaluation. If the first operand evaluates to false (as when TryParse fails), evaluation terminates immediately, ensuring the uninitialized or default value of m1 is never erroneously validated.",
+      "provenance": "NWU Practical 29 Defensive Validation Step",
       "marks": 2
     },
     {
@@ -10376,30 +10404,30 @@
       "provenance": "Gaddis 4th Ed §5.1",
       "marks": 2
     },
-    {
+        {
       "id": "q_su4_302",
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "What is an accumulator variable in Visual C# programming?",
-      "title": "What is an accumulator variable in Visual C# programming?",
+      "q": "Consider the following loop calculating the average mark of test scores stored in a ListBox named `lstMarks`:\n```csharp\ndouble total = 0;\nfor (int i = 0; i < lstMarks.Items.Count; i++)\n{\n    total += double.Parse(lstMarks.Items[i].ToString());\n}\ndouble average = total / lstMarks.Items.Count;\n```\nIf `lstMarks.Items` contains the marks `70`, `80`, and `90`, what are the values of `total` and `average` upon loop termination?",
+      "title": "Consider the following loop calculating the average mark of test scores stored in a ListBox named `lstMarks`:\n```csharp\ndouble total = 0;\nfor (int i = 0; i < lstMarks.Items.Count; i++)\n{\n    total += double.Parse(lstMarks.Items[i].ToString());\n}\ndouble average = total / lstMarks.Items.Count;\n```\nIf `lstMarks.Items` contains the marks `70`, `80`, and `90`, what are the values of `total` and `average` upon loop termination?",
       "options": [
-        "A variable that stores mouse coordinates",
-        "A numeric variable used to accumulate and maintain a running total of values added across loop iterations",
-        "A variable that tracks the number of open windows",
-        "A variable that measures CPU temperature"
+        "total = 240.0; average = 80.0",
+        "total = 240.0; average = 0.0",
+        "total = 90.0; average = 30.0",
+        "total = 0.0; average = 0.0"
       ],
       "opts": [
-        "A variable that stores mouse coordinates",
-        "A numeric variable used to accumulate and maintain a running total of values added across loop iterations",
-        "A variable that tracks the number of open windows",
-        "A variable that measures CPU temperature"
+        "total = 240.0; average = 80.0",
+        "total = 240.0; average = 0.0",
+        "total = 90.0; average = 30.0",
+        "total = 0.0; average = 0.0"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "An accumulator is a numeric variable updated with '+=' to collect a running total as a loop progresses.",
-      "explanation": "An accumulator is a numeric variable updated with '+=' to collect a running total as a loop progresses.",
-      "provenance": "Gaddis 4th Ed §5.5",
+      "answer": 0,
+      "ans": 0,
+      "exp": "The loop accumulates all 3 items: total = 0 + 70 + 80 + 90 = 240.0. After the loop, average = 240.0 / 3 = 80.0 (Tony Gaddis Chapter 5).",
+      "explanation": "The loop accumulates all 3 items: total = 0 + 70 + 80 + 90 = 240.0. After the loop, average = 240.0 / 3 = 80.0 (Tony Gaddis Chapter 5).",
+      "provenance": "NWU Practical 29 Accumulator Loop Step",
       "marks": 2
     },
     {
@@ -10428,30 +10456,30 @@
       "provenance": "Gaddis 4th Ed §5.5",
       "marks": 2
     },
-    {
+        {
       "id": "q_su4_304",
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "What is a loop counter variable?",
-      "title": "What is a loop counter variable?",
+      "q": "Consider the C# loop header: `for (int count = 1; count <= 10; count++)`. What is the formal role of `count`, and what is its value when the loop terminates?",
+      "title": "Consider the C# loop header: `for (int count = 1; count <= 10; count++)`. What is the formal role of `count`, and what is its value when the loop terminates?",
       "options": [
-        "A control that displays the current computer time",
-        "A variable that prevents the user from clicking buttons",
-        "A special keyword that replaces the if statement",
-        "A variable initialized before a loop and incremented by a constant amount (usually 1) on each iteration to track the number of cycles executed"
+        "It is a counter variable initialized to 1, incremented by 1 each iteration, and its value is 11 when the loop condition evaluates to false and terminates",
+        "It is an accumulator variable that sums the numbers 1 to 10, terminating with value 55",
+        "It is a sentinel variable that terminates when the user types 'stop'",
+        "It is an unassigned local variable that causes a compile error"
       ],
       "opts": [
-        "A control that displays the current computer time",
-        "A variable that prevents the user from clicking buttons",
-        "A special keyword that replaces the if statement",
-        "A variable initialized before a loop and incremented by a constant amount (usually 1) on each iteration to track the number of cycles executed"
+        "It is a counter variable initialized to 1, incremented by 1 each iteration, and its value is 11 when the loop condition evaluates to false and terminates",
+        "It is an accumulator variable that sums the numbers 1 to 10, terminating with value 55",
+        "It is a sentinel variable that terminates when the user types 'stop'",
+        "It is an unassigned local variable that causes a compile error"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "A counter variable tracks occurrences or iteration counts by incrementing or decrementing by a fixed step value.",
-      "explanation": "A counter variable tracks occurrences or iteration counts by incrementing or decrementing by a fixed step value.",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 0,
+      "ans": 0,
+      "exp": "In a count-controlled for loop, 'count' is the loop control variable (counter). It increments after each iteration body executes, and when count reaches 11, the condition 'count <= 10' becomes false, exiting the loop (Tony Gaddis Chapter 5).",
+      "explanation": "In a count-controlled for loop, 'count' is the loop control variable (counter). It increments after each iteration body executes, and when count reaches 11, the condition 'count <= 10' becomes false, exiting the loop (Tony Gaddis Chapter 5).",
+      "provenance": "Tony Gaddis Chapter 5 Step",
       "marks": 2
     },
     {
@@ -11208,30 +11236,30 @@
       "provenance": "Gaddis 4th Ed §5.2 & §5.3",
       "marks": 2
     },
-    {
+        {
       "id": "q_su4_334",
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "What is a nested loop in C#?",
-      "title": "What is a nested loop in C#?",
+      "q": "Consider the following nested loop structure in Visual C#:\n```csharp\nfor (int student = 1; student <= 3; student++)\n{\n    for (int test = 1; test <= 2; test++)\n    {\n        lstLog.Items.Add($\"Student {student}, Test {test}\");\n    }\n}\n```\nHow many total items will be added to `lstLog` upon loop completion?",
+      "title": "Consider the following nested loop structure in Visual C#:\n```csharp\nfor (int student = 1; student <= 3; student++)\n{\n    for (int test = 1; test <= 2; test++)\n    {\n        lstLog.Items.Add($\"Student {student}, Test {test}\");\n    }\n}\n```\nHow many total items will be added to `lstLog` upon loop completion?",
       "options": [
-        "A loop that contains an if statement",
-        "A loop that is situated entirely within the body of another enclosing loop",
-        "A loop that reads from a file",
-        "A loop that has two exit buttons"
+        "6 items (for each of the 3 outer iterations, the inner loop executes 2 times: 3 * 2 = 6)",
+        "5 items (3 outer iterations + 2 inner iterations)",
+        "2 items (only the inner loop adds items)",
+        "12 items (3 * 2 * 2)"
       ],
       "opts": [
-        "A loop that contains an if statement",
-        "A loop that is situated entirely within the body of another enclosing loop",
-        "A loop that reads from a file",
-        "A loop that has two exit buttons"
+        "6 items (for each of the 3 outer iterations, the inner loop executes 2 times: 3 * 2 = 6)",
+        "5 items (3 outer iterations + 2 inner iterations)",
+        "2 items (only the inner loop adds items)",
+        "12 items (3 * 2 * 2)"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "A nested loop is a loop located inside another loop. The inner loop completes all its iterations for every single cycle of the outer loop.",
-      "explanation": "A nested loop is a loop located inside another loop. The inner loop completes all its iterations for every single cycle of the outer loop.",
-      "provenance": "Gaddis 4th Ed §5.7",
+      "answer": 0,
+      "ans": 0,
+      "exp": "In a nested loop, for every single iteration of the outer loop, the inner loop executes its full cycle from start to finish. With 3 outer iterations and 2 inner iterations, the inner statement executes 3 * 2 = 6 times (Tony Gaddis Chapter 5).",
+      "explanation": "In a nested loop, for every single iteration of the outer loop, the inner loop executes its full cycle from start to finish. With 3 outer iterations and 2 inner iterations, the inner statement executes 3 * 2 = 6 times (Tony Gaddis Chapter 5).",
+      "provenance": "Tony Gaddis Chapter 5 Step",
       "marks": 2
     },
     {
