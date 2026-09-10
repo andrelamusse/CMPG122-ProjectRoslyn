@@ -813,11 +813,16 @@
 
     if (dom.scenarioTitle) dom.scenarioTitle.textContent = sc.title;
     if (dom.scenarioDesc) dom.scenarioDesc.textContent = sc.description;
-    if (dom.cgMethodHeader) dom.cgMethodHeader.textContent = sc.methodHeader;
-    if (dom.cgMethodFooter) dom.cgMethodFooter.textContent = sc.methodFooter;
+
+    // Pre-populate read-only scaffolding with application plumbing & control context
+    const controlsList = (sc.controls && sc.controls.length > 0) ? sc.controls.join(', ') : 'None';
+    const plumbingHeader = sc.classScaffolding || `// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations\n// (Students write and debug only the in-scope logic assessed inside)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Auto-instantiated Controls: ${controlsList}\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    ${sc.methodHeader.trim()}`;
+
+    if (dom.cgMethodHeader) dom.cgMethodHeader.textContent = plumbingHeader;
+    if (dom.cgMethodFooter) dom.cgMethodFooter.textContent = sc.methodFooter || "    }\n}";
     if (dom.studentCodeInput) {
       dom.studentCodeInput.value = '';
-      dom.studentCodeInput.placeholder = "// Write your C# statements here...\n// e.g. decimal hours; decimal rate;\n// if (decimal.TryParse(txtHours.Text, out hours)) { ... }";
+      dom.studentCodeInput.placeholder = "// Write your C# statements here...\n// e.g. decimal.TryParse(txtInput.Text, out val); if-else; loops; ListBox...";
     }
 
     if (dom.scenarioControlsList) {

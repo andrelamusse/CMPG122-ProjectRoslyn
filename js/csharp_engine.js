@@ -338,10 +338,47 @@
    */
   function unwrapMethodWrapper(code) {
     if (!code) return code;
-    const trimmed = code.trim();
-    const methodMatch = trimmed.match(/^\s*(?:public|private|protected)?\s*(?:static\s+)?(?:void|[a-zA-Z0-9_<>]+)\s+[a-zA-Z0-9_]+\s*\([^)]*\)\s*\{([\s\S]*)\}\s*$/);
-    if (methodMatch) {
-      return methodMatch[1];
+    let text = code.trim();
+
+    const methodHeaderRegex = /(?:(?:public|private|protected|internal)\s+)?(?:static\s+)?void\s+[a-zA-Z0-9_]+\s*\([^)]*\)\s*\{/i;
+    const match = methodHeaderRegex.exec(text);
+    if (match) {
+      const openBraceIdx = match.index + match[0].length - 1;
+      let depth = 1;
+      let inStr = false;
+      let strChar = '';
+      let i = openBraceIdx + 1;
+      while (i < text.length && depth > 0) {
+        const c = text[i];
+        if (inStr) {
+          if (c === '\\') { i += 2; continue; }
+          if (c === strChar) inStr = false;
+        } else {
+          if (c === '"' || c === "'") {
+            inStr = true;
+            strChar = c;
+          } else if (c === '/' && text[i + 1] === '/') {
+            const nl = text.indexOf('\n', i + 2);
+            if (nl === -1) break;
+            i = nl;
+            continue;
+          } else if (c === '/' && text[i + 1] === '*') {
+            const endC = text.indexOf('*/', i + 2);
+            if (endC === -1) break;
+            i = endC + 2;
+            continue;
+          } else if (c === '{') {
+            depth++;
+          } else if (c === '}') {
+            depth--;
+            if (depth === 0) {
+              return text.slice(openBraceIdx + 1, i).trim();
+            }
+          }
+        }
+        i++;
+      }
+      return text.slice(openBraceIdx + 1).trim();
     }
     return code;
   }
@@ -457,6 +494,13 @@
             return;
           }
           if (/^else(\s+if\s*\(.*\))?$/.test(clean)) {
+            return;
+          }
+          // Exempt class, struct, namespace, interface, and method signature headers
+          if (/^(?:public\s+|private\s+|protected\s+|internal\s+)?(?:partial\s+)?(?:class|interface|struct|namespace|enum)\b/.test(clean)) {
+            return;
+          }
+          if (/^(?:public\s+|private\s+|protected\s+|internal\s+)?(?:static\s+|override\s+|virtual\s+)?(?:void|[a-zA-Z0-9_<>]+)\s+[a-zA-Z0-9_]+\s*\([^)]*\)$/.test(clean)) {
             return;
           }
           diagnostics.push({
@@ -767,11 +811,19 @@
     // 6. Handle numeric literals with C# suffixes: 100.5m -> 100.5, 0.15m -> 0.15, 10d -> 10, 40.0m -> 40.0
     js = js.replace(/(\d+(?:\.\d+)?)[mMDdfF]\b/g, '$1');
 
-    // Explicit numeric casts: (int)(expr) -> Math.trunc(expr), (int)x -> Math.trunc(x)
+    // Explicit numeric casts:
+    // 1. (int)func(...) -> Math.trunc(func(...))
+    js = js.replace(/\(\s*int\s*\)\s*([a-zA-Z0-9_\.]+\s*\([^)]*\))/g, 'Math.trunc($1)');
+    // 2. (double|decimal|float)func(...) -> Number(func(...))
+    js = js.replace(/\(\s*(?:double|decimal|float)\s*\)\s*([a-zA-Z0-9_\.]+\s*\([^)]*\))/g, 'Number($1)');
+    // 3. (int)(expr) -> Math.trunc(expr)
     js = js.replace(/\(\s*int\s*\)\s*(?=\()/g, 'Math.trunc');
-    js = js.replace(/\(\s*int\s*\)\s*([a-zA-Z0-9_\.]+)/g, (m, g1) => 'Math.trunc(' + g1 + ')');
+    // 4. (double|decimal|float)(expr) -> Number(expr)
     js = js.replace(/\(\s*(?:double|decimal|float)\s*\)\s*(?=\()/g, 'Number');
-    js = js.replace(/\(\s*(?:double|decimal|float)\s*\)\s*([a-zA-Z0-9_\.]+)/g, (m, g1) => 'Number(' + g1 + ')');
+    // 5. (int)ident -> Math.trunc(ident)
+    js = js.replace(/\(\s*int\s*\)\s*([a-zA-Z0-9_\.]+)(?!\s*\()/g, 'Math.trunc($1)');
+    // 6. (double|decimal|float)ident -> Number(ident)
+    js = js.replace(/\(\s*(?:double|decimal|float)\s*\)\s*([a-zA-Z0-9_\.]+)(?!\s*\()/g, 'Number($1)');
 
     // 7. String methods & helpers
     js = js.replace(/\b(?:string|String)\.IsNullOrEmpty\s*\(\s*([^)]+)\s*\)/g, '(!($1) || ($1).length === 0)');
@@ -935,6 +987,21 @@
           ForeColor: 'Black'
         };
       }
+      if (name.startsWith('pic')) {
+        let isVis = false;
+        let sMode = 'Normal';
+        if (typeof initialVal === 'boolean') {
+          isVis = initialVal;
+        } else if (typeof initialVal === 'object' && initialVal !== null) {
+          isVis = initialVal.Visible !== undefined ? Boolean(initialVal.Visible) : false;
+          sMode = initialVal.SizeMode || 'Normal';
+        }
+        return {
+          Visible: isVis,
+          SizeMode: sMode,
+          Image: null
+        };
+      }
       if (name.startsWith('rdo') || name.startsWith('rad') || name.startsWith('chk') || name.startsWith('cb')) {
         return { Checked: Boolean(initialVal) };
       }
@@ -982,12 +1049,28 @@
       _closeForm: function() {
         sandbox._isClosed = true;
       },
+      Close: function() {
+        sandbox._isClosed = true;
+      },
+      BackColor: 'White',
       string: String,
       String: String,
       MessageBoxButtons: { OK: 0, OKCancel: 1, YesNo: 4, YesNoCancel: 3 },
       MessageBoxIcon: { None: 0, Error: 16, Question: 32, Warning: 48, Information: 64 },
       DialogResult: { OK: 1, Cancel: 2, Yes: 6, No: 7 },
-      Color: { Red: 'Red', Green: 'Green', Blue: 'Blue', Black: 'Black', White: 'White', Yellow: 'Yellow' },
+      Color: {
+        Red: 'Red',
+        Green: 'Green',
+        Blue: 'Blue',
+        Black: 'Black',
+        White: 'White',
+        Yellow: 'Yellow',
+        Amber: 'Amber',
+        Pink: 'Pink',
+        Orange: 'Orange',
+        LightBlue: 'LightBlue',
+        Navy: 'Navy'
+      },
       Convert: {
         ToDecimal: function(val) { const v = parseFloat(val); if (isNaN(v)) throw new Error("Input string was not in a correct format."); return v; },
         ToDouble: function(val) { const v = parseFloat(val); if (isNaN(v)) throw new Error("Input string was not in a correct format."); return v; },
@@ -1026,7 +1109,7 @@
           throw e;
         }
       `);
-      runner(...vals);
+      runner.call(sandbox, ...vals);
 
       let passed = true;
       let actualSummary = [];
@@ -1058,6 +1141,27 @@
           } else if (!actualVal.toLowerCase().includes(String(expectedVal).toLowerCase())) {
             passed = false;
           }
+        } else if (outKey.startsWith('pic')) {
+          const expectedVis = (typeof expectedVal === 'object' && expectedVal.Visible !== undefined) ? Boolean(expectedVal.Visible) : Boolean(expectedVal);
+          const actualVis = (sandbox[outKey] && sandbox[outKey].Visible !== undefined) ? Boolean(sandbox[outKey].Visible) : Boolean(sandbox[outKey]);
+          actualSummary.push(`${outKey}.Visible = ${actualVis}`);
+          expectedSummary.push(`${outKey}.Visible = ${expectedVis}`);
+          if (actualVis !== expectedVis) passed = false;
+        } else if (outKey.startsWith('rdo') || outKey.startsWith('rad') || outKey.startsWith('chk') || outKey.startsWith('cb')) {
+          const expectedChecked = Boolean(expectedVal);
+          const actualChecked = (sandbox[outKey] && sandbox[outKey].Checked !== undefined) ? Boolean(sandbox[outKey].Checked) : Boolean(sandbox[outKey]);
+          actualSummary.push(`${outKey}.Checked = ${actualChecked}`);
+          expectedSummary.push(`${outKey}.Checked = ${expectedChecked}`);
+          if (actualChecked !== expectedChecked) passed = false;
+        } else if (outKey === 'BackColor' || outKey === 'Form.BackColor') {
+          const actualColor = sandbox.BackColor;
+          actualSummary.push(`Form.BackColor = "${actualColor}"`);
+          expectedSummary.push(`Form.BackColor = "${expectedVal}"`);
+          if (String(actualColor).toLowerCase() !== String(expectedVal).toLowerCase()) passed = false;
+        } else if (outKey === '_isClosed' || outKey === 'this.Close') {
+          actualSummary.push(`Form.Close called: ${sandbox._isClosed}`);
+          expectedSummary.push(`Form.Close called: ${expectedVal}`);
+          if (Boolean(sandbox._isClosed) !== Boolean(expectedVal)) passed = false;
         } else if (outKey.startsWith('lst')) {
           const items = sandbox[outKey] ? sandbox[outKey].Items._items : [];
           actualSummary.push(`${outKey} (${items.length} items)`);

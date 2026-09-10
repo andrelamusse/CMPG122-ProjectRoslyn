@@ -869,7 +869,11 @@
         "btnStop"
       ],
       "expectedOutputs": [
-        "lblInstruction"
+        "lblInstruction",
+        "picRed",
+        "picAmber",
+        "picGreen",
+        "picDark"
       ],
       "weights": {
         "syntax": 25,
@@ -877,8 +881,9 @@
         "tests": 35,
         "gui": 15
       },
+      "classScaffolding": "// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations (Practical 1)\n// (Students are only assessed on the inside logic of the event handler)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Controls: PictureBox picRed, picAmber, picGreen, picDark; Label lblInstruction; Button btnStop;\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    private void btnStop_Click(object sender, EventArgs e)\n    {",
       "methodHeader": "private void btnStop_Click(object sender, EventArgs e)\n{",
-      "methodFooter": "}",
+      "methodFooter": "    }\n}",
       "modelSolution": "picRed.Visible = true;\npicAmber.Visible = false;\npicGreen.Visible = false;\npicDark.Visible = false;\nlblInstruction.Text = \"STOP\";",
       "testCases": [
         {
@@ -887,11 +892,32 @@
             "lblInstruction": "SELECT A LIGHT",
             "picDark": true,
             "picRed": false,
+            "picAmber": true,
+            "picGreen": true
+          },
+          "expected": {
+            "lblInstruction": "STOP",
+            "picRed": true,
+            "picAmber": false,
+            "picGreen": false,
+            "picDark": false
+          }
+        },
+        {
+          "name": "Stop Signal from Ready Lamp (Verify all PictureBox states)",
+          "inputs": {
+            "lblInstruction": "TRAINER READY",
+            "picDark": true,
+            "picRed": false,
             "picAmber": false,
             "picGreen": false
           },
           "expected": {
-            "lblInstruction": "STOP"
+            "lblInstruction": "STOP",
+            "picRed": true,
+            "picAmber": false,
+            "picGreen": false,
+            "picDark": false
           }
         }
       ]
@@ -904,6 +930,7 @@
         "SU2"
       ],
       "requiresCurrency": true,
+      "requiresValidation": true,
       "description": "Develop the event handler for btnCalculate_Click in Practical 2 (Braai Master 3000). Read kilograms of wors from txtWorsKg, butcher price per kg from txtPricePerKg, and price per roll from txtPricePerRoll using decimal.TryParse(). If any value fails to parse or is <= 0, display 'Please enter valid positive numbers.' using MessageBox.Show(\"Please enter valid positive numbers.\", \"Input Error\") and exit. Declare a constant for roll capacity: const decimal GRAMS_PER_ROLL = 120m;. Calculate: wors cost = kg * price/kg; total grams = kg * 1000m; rolls needed = (int)(totalGrams / GRAMS_PER_ROLL); rolls cost = rolls needed * price/roll; total cost = wors cost + rolls cost. Format total cost using .ToString(\"C\") and display in lblTotalCost.",
       "controls": [
         "txtName",
@@ -922,8 +949,9 @@
         "tests": 35,
         "gui": 15
       },
+      "classScaffolding": "// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations (Practical 2)\n// (Students are only assessed on the inside logic of the event handler)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Controls: TextBox txtName, txtWorsKg, txtPricePerKg, txtPricePerRoll; Label lblTotalCost; Button btnCalculate;\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    private void btnCalculate_Click(object sender, EventArgs e)\n    {",
       "methodHeader": "private void btnCalculate_Click(object sender, EventArgs e)\n{",
-      "methodFooter": "}",
+      "methodFooter": "    }\n}",
       "modelSolution": "decimal worsKg;\ndecimal pricePerKg;\ndecimal pricePerRoll;\nconst decimal GRAMS_PER_ROLL = 120m;\n\nif (decimal.TryParse(txtWorsKg.Text, out worsKg) &&\n    decimal.TryParse(txtPricePerKg.Text, out pricePerKg) &&\n    decimal.TryParse(txtPricePerRoll.Text, out pricePerRoll))\n{\n    if (worsKg <= 0m || pricePerKg <= 0m || pricePerRoll <= 0m)\n    {\n        MessageBox.Show(\"Please enter valid positive numbers.\", \"Input Error\");\n        return;\n    }\n\n    decimal worsCost = worsKg * pricePerKg;\n    decimal totalGrams = worsKg * 1000m;\n    int rollsNeeded = (int)(totalGrams / GRAMS_PER_ROLL);\n    decimal rollsCost = rollsNeeded * pricePerRoll;\n    decimal totalCost = worsCost + rollsCost;\n\n    lblTotalCost.Text = totalCost.ToString(\"C\");\n}\nelse\n{\n    MessageBox.Show(\"Please enter valid positive numbers.\", \"Input Error\");\n}",
       "testCases": [
         {
@@ -949,6 +977,30 @@
           "expected": {
             "lblTotalCost": "148"
           }
+        },
+        {
+          "name": "Invalid Input Validation (Non-numeric text triggers MessageBox)",
+          "inputs": {
+            "txtName": "Kobus",
+            "txtWorsKg": "invalid",
+            "txtPricePerKg": "85.00",
+            "txtPricePerRoll": "3.50"
+          },
+          "expected": {
+            "_messages": "Please enter valid positive numbers."
+          }
+        },
+        {
+          "name": "Negative Value Validation (Negative wors kg triggers MessageBox)",
+          "inputs": {
+            "txtName": "Kobus",
+            "txtWorsKg": "-5",
+            "txtPricePerKg": "85.00",
+            "txtPricePerRoll": "3.50"
+          },
+          "expected": {
+            "_messages": "Please enter valid positive numbers."
+          }
         }
       ]
     },
@@ -961,6 +1013,7 @@
         "SU3"
       ],
       "requiresCurrency": true,
+      "requiresValidation": true,
       "description": "Develop btnCheck_Click for Practical 4 (SpeedTrap R30). Parse recorded speed from txtSpeed and limit from txtLimit using int.TryParse(). If invalid, display an error message with MessageBox.Show(). Calculate speedOver = speed - limit. If speedOver <= 0, set lblKmOver to '0 km/h', lblCategory to 'Within the limit', and lblFine to 'No fine. Safe driving.'. Otherwise, set lblKmOver to speedOver.ToString() + ' km/h' and evaluate the band: 1-10 is R250 ('Minor'), 11-20 is R750 ('Serious'), 21-30 is R1500 ('Severe'), >30 is R2500 ('Court appearance'). If zone (txtZone.Text) is 'School' or 'Town' AND speedOver > 20, double the fine and append ' - built-up area' to the category. If txtRepeat.Text is 'yes', add class constant REPEAT_FINE (500m) to the fine. Output category to lblCategory and fine formatted with .ToString('C') to lblFine.",
       "controls": [
         "txtSpeed",
@@ -983,8 +1036,9 @@
         "tests": 35,
         "gui": 15
       },
+      "classScaffolding": "// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations (Practical 4)\n// (Students are only assessed on the inside logic of the event handler)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Controls: TextBox txtSpeed, txtLimit, txtZone, txtRepeat; Label lblKmOver, lblCategory, lblFine; Button btnCheck;\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    private void btnCheck_Click(object sender, EventArgs e)\n    {",
       "methodHeader": "private void btnCheck_Click(object sender, EventArgs e)\n{",
-      "methodFooter": "}",
+      "methodFooter": "    }\n}",
       "modelSolution": "int speed;\nint limit;\nconst decimal REPEAT_FINE = 500m;\n\nif (int.TryParse(txtSpeed.Text, out speed) && int.TryParse(txtLimit.Text, out limit))\n{\n    int speedOver = speed - limit;\n    if (speedOver <= 0)\n    {\n        lblKmOver.Text = \"0 km/h\";\n        lblCategory.Text = \"Within the limit\";\n        lblFine.Text = \"No fine. Safe driving.\";\n        return;\n    }\n\n    lblKmOver.Text = speedOver.ToString() + \" km/h\";\n    decimal fine = 0m;\n    string category = \"\";\n\n    if (speedOver <= 10)\n    {\n        fine = 250m;\n        category = \"Minor\";\n    }\n    else if (speedOver <= 20)\n    {\n        fine = 750m;\n        category = \"Serious\";\n    }\n    else if (speedOver <= 30)\n    {\n        fine = 1500m;\n        category = \"Severe\";\n    }\n    else\n    {\n        fine = 2500m;\n        category = \"Court appearance\";\n    }\n\n    string zone = txtZone.Text;\n    bool isBuiltUp = (zone == \"School\" || zone == \"Town\");\n    if (isBuiltUp && speedOver > 20)\n    {\n        fine *= 2m;\n        category += \" - built-up area\";\n    }\n\n    if (txtRepeat.Text.CompareTo(\"yes\") == 0)\n    {\n        fine += REPEAT_FINE;\n    }\n\n    lblCategory.Text = category;\n    lblFine.Text = fine.ToString(\"C\");\n}\nelse\n{\n    MessageBox.Show(\"Please enter valid integers for speed and limit.\", \"Input Error\");\n}",
       "testCases": [
         {
@@ -1028,6 +1082,18 @@
             "lblCategory": "Within the limit",
             "lblFine": "No fine. Safe driving."
           }
+        },
+        {
+          "name": "Non-numeric Speed Validation (Invalid speed triggers MessageBox)",
+          "inputs": {
+            "txtSpeed": "fast",
+            "txtLimit": "60",
+            "txtZone": "Town",
+            "txtRepeat": "no"
+          },
+          "expected": {
+            "_messages": "Please enter valid integers for speed and limit."
+          }
         }
       ]
     },
@@ -1041,6 +1107,7 @@
         "SU4"
       ],
       "requiresCurrency": true,
+      "requiresValidation": true,
       "description": "Develop btnBook_Click for Practical 5 (Vaal River Cruises). Validate that a cruise route is selected from lstRoutes (lstRoutes.SelectedIndex != -1). If none selected, show 'Please select a cruise route.' using MessageBox.Show() and exit. Validate passenger count from txtPassengers using int.TryParse(); if invalid or < 1, display 'Please enter a valid passenger count of at least 1.' and return. Use a switch statement on lstRoutes.SelectedIndex: 0 is R250 (Sunset Leisure Cruise), 1 is R400 (Speedboat Adventure), 2 is R800 (Private Pontoon Charter). Subtotal = passengers * ticketPrice. If passengers >= 6, apply a 10% group discount. Final due = subtotal - discount. Display final due formatted with .ToString('C') in lblTotalDue.",
       "controls": [
         "lstRoutes",
@@ -1059,8 +1126,9 @@
         "tests": 35,
         "gui": 15
       },
+      "classScaffolding": "// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations (Practical 5)\n// (Students are only assessed on the inside logic of the event handler)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Controls: ListBox lstRoutes; TextBox txtPassengers; RadioButton radDaytime, radSunset; Label lblTotalDue; Button btnBook;\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    private void btnBook_Click(object sender, EventArgs e)\n    {",
       "methodHeader": "private void btnBook_Click(object sender, EventArgs e)\n{",
-      "methodFooter": "}",
+      "methodFooter": "    }\n}",
       "modelSolution": "if (lstRoutes.SelectedIndex == -1)\n{\n    MessageBox.Show(\"Please select a cruise route.\", \"Selection Error\");\n    return;\n}\n\nint passengers;\nif (int.TryParse(txtPassengers.Text, out passengers) && passengers >= 1)\n{\n    decimal ticketPrice = 0m;\n    switch (lstRoutes.SelectedIndex)\n    {\n        case 0:\n            ticketPrice = 250m;\n            break;\n        case 1:\n            ticketPrice = 400m;\n            break;\n        case 2:\n            ticketPrice = 800m;\n            break;\n        default:\n            ticketPrice = 250m;\n            break;\n    }\n\n    decimal subtotal = passengers * ticketPrice;\n    decimal discount = 0m;\n    if (passengers >= 6)\n    {\n        discount = subtotal * 0.10m;\n    }\n\n    decimal finalDue = subtotal - discount;\n    lblTotalDue.Text = finalDue.ToString(\"C\");\n}\nelse\n{\n    MessageBox.Show(\"Please enter a valid passenger count of at least 1.\", \"Input Error\");\n}",
       "testCases": [
         {
@@ -1095,6 +1163,40 @@
           },
           "expected": {
             "lblTotalDue": "2160"
+          }
+        },
+        {
+          "name": "Passenger Count Validation (0 passengers triggers MessageBox)",
+          "inputs": {
+            "lstRoutes": {
+              "items": [
+                "Sunset Leisure Cruise (R250)",
+                "Speedboat Adventure (R400)",
+                "Private Pontoon Charter (R800)"
+              ],
+              "selectedIndex": 0
+            },
+            "txtPassengers": "0"
+          },
+          "expected": {
+            "_messages": "Please enter a valid passenger count of at least 1."
+          }
+        },
+        {
+          "name": "Route Selection Validation (No route selected triggers MessageBox)",
+          "inputs": {
+            "lstRoutes": {
+              "items": [
+                "Sunset Leisure Cruise (R250)",
+                "Speedboat Adventure (R400)",
+                "Private Pontoon Charter (R800)"
+              ],
+              "selectedIndex": -1
+            },
+            "txtPassengers": "4"
+          },
+          "expected": {
+            "_messages": "Please select a cruise route."
           }
         }
       ]
@@ -2213,25 +2315,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #16: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
-      "title": "HCI Applied Principle #16: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
+      "q": "Which of Shneiderman's 5 measurable usability goals evaluates the amount of time required for a typical user to achieve basic proficiency with an application?",
+      "title": "Which of Shneiderman's 5 measurable usability goals evaluates the amount of time required for a typical user to achieve basic proficiency with an application?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Time to learn",
+        "Subjective satisfaction",
+        "Speed of performance",
+        "Retention over time"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Time to learn",
+        "Subjective satisfaction",
+        "Speed of performance",
+        "Retention over time"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "exp": "Time to learn measures how long it takes for users from the target audience to acquire the knowledge needed to carry out interface tasks successfully.",
+      "explanation": "Time to learn measures how long it takes for users from the target audience to acquire the knowledge needed to carry out interface tasks successfully.",
+      "provenance": "Shneiderman 5th Ed §1.2.2",
       "marks": 2
     },
     {
@@ -2239,25 +2341,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #17: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
-      "title": "HCI Applied Principle #17: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
+      "q": "In a busy commercial retail terminal, an interface architect configures keyboard access keys (e.g. Alt+C for Calculate) and sets the Form's AcceptButton to btnCalculate. Which usability measure is directly optimized?",
+      "title": "In a busy commercial retail terminal, an interface architect configures keyboard access keys (e.g. Alt+C for Calculate) and sets the Form's AcceptButton to btnCalculate. Which usability measure is directly optimized?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Subjective retention",
+        "Speed of performance",
+        "Hardware scalability",
+        "System boot latency"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Subjective retention",
+        "Speed of performance",
+        "Hardware scalability",
+        "System boot latency"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Speed of performance measures how quickly routine tasks are completed once learned. Access keys and default enter keys allow expert operators to execute transactions rapidly without reaching for the mouse.",
+      "explanation": "Speed of performance measures how quickly routine tasks are completed once learned. Access keys and default enter keys allow expert operators to execute transactions rapidly without reaching for the mouse.",
+      "provenance": "Shneiderman 5th Ed §1.2.2",
       "marks": 2
     },
     {
@@ -2265,25 +2367,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #18: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
-      "title": "HCI Applied Principle #18: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
+      "q": "Replacing a free-text TextBox with a ListBox or ComboBox for selecting standardized cruise packages directly improves which usability measure?",
+      "title": "Replacing a free-text TextBox with a ListBox or ComboBox for selecting standardized cruise packages directly improves which usability measure?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "CPU cycle consumption",
+        "Form design compile time",
+        "Rate of errors by users",
+        "Network bandwidth throughput"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "CPU cycle consumption",
+        "Form design compile time",
+        "Rate of errors by users",
+        "Network bandwidth throughput"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Rate of errors by users measures how many and what kinds of mistakes users make. Constraining choices to valid items in a ListBox eliminates typing mistakes, misspellings, and out-of-range errors.",
+      "explanation": "Rate of errors by users measures how many and what kinds of mistakes users make. Constraining choices to valid items in a ListBox eliminates typing mistakes, misspellings, and out-of-range errors.",
+      "provenance": "Shneiderman 5th Ed §1.2.2",
       "marks": 2
     },
     {
@@ -2291,25 +2393,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #19: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
-      "title": "HCI Applied Principle #19: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
+      "q": "An agricultural taxation tool is used by seasonal farmers only once every six months. Which usability measure is most critical to ensure they do not require extensive retraining each year?",
+      "title": "An agricultural taxation tool is used by seasonal farmers only once every six months. Which usability measure is most critical to ensure they do not require extensive retraining each year?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Compilation throughput",
+        "Peak memory efficiency",
+        "Algorithmic recursion speed",
+        "Retention over time"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Compilation throughput",
+        "Peak memory efficiency",
+        "Algorithmic recursion speed",
+        "Retention over time"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Retention over time evaluates how well users preserve their interface operating skills after prolonged periods without using the system. Consistent layouts and clear visual cues facilitate high retention.",
+      "explanation": "Retention over time evaluates how well users preserve their interface operating skills after prolonged periods without using the system. Consistent layouts and clear visual cues facilitate high retention.",
+      "provenance": "Shneiderman 5th Ed §1.2.2",
       "marks": 2
     },
     {
@@ -2317,25 +2419,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #20: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
-      "title": "HCI Applied Principle #20: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
+      "q": "How is the usability measure 'Subjective satisfaction' typically assessed in software development?",
+      "title": "How is the usability measure 'Subjective satisfaction' typically assessed in software development?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Through user post-test surveys, interviews, and Likert-scale satisfaction questionnaires",
+        "By counting compiler warnings generated during build",
+        "By measuring the physical weight of the monitor",
+        "By timing the millisecond latency of the garbage collector"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Through user post-test surveys, interviews, and Likert-scale satisfaction questionnaires",
+        "By counting compiler warnings generated during build",
+        "By measuring the physical weight of the monitor",
+        "By timing the millisecond latency of the garbage collector"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "exp": "Subjective satisfaction measures users' personal perception, comfort, and enjoyment of the system, determined via questionnaires (such as QUIS), interviews, and rating scales.",
+      "explanation": "Subjective satisfaction measures users' personal perception, comfort, and enjoyment of the system, determined via questionnaires (such as QUIS), interviews, and rating scales.",
+      "provenance": "Shneiderman 5th Ed §1.2.2",
       "marks": 2
     },
     {
@@ -2343,25 +2445,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #21: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
-      "title": "HCI Applied Principle #21: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
+      "q": "In life-critical systems (e.g., intensive care patient monitoring, air traffic control, nuclear power management), what usability trade-off is strictly mandated?",
+      "title": "In life-critical systems (e.g., intensive care patient monitoring, air traffic control, nuclear power management), what usability trade-off is strictly mandated?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Aesthetics and animated transitions must be prioritized over reliability",
+        "Zero-tolerance for user error and absolute reliability take precedence over rapid learning or novelty",
+        "Training time must always be kept under 5 minutes",
+        "Voice synthesis must entirely replace visual graphical interfaces"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Aesthetics and animated transitions must be prioritized over reliability",
+        "Zero-tolerance for user error and absolute reliability take precedence over rapid learning or novelty",
+        "Training time must always be kept under 5 minutes",
+        "Voice synthesis must entirely replace visual graphical interfaces"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 1,
+      "ans": 1,
+      "exp": "In life-critical applications, the cost of human error is fatal. Lengthy training is acceptable if it guarantees near-zero operating errors, fail-safe confirmations, and rapid emergency intervention.",
+      "explanation": "In life-critical applications, the cost of human error is fatal. Lengthy training is acceptable if it guarantees near-zero operating errors, fail-safe confirmations, and rapid emergency intervention.",
+      "provenance": "Shneiderman 5th Ed §1.3.1",
       "marks": 2
     },
     {
@@ -2369,25 +2471,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #22: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
-      "title": "HCI Applied Principle #22: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
+      "q": "For industrial and commercial office systems (e.g. banking teller terminals, insurance claim auditing), what is the primary economic driver of interface usability?",
+      "title": "For industrial and commercial office systems (e.g. banking teller terminals, insurance claim auditing), what is the primary economic driver of interface usability?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Maximizing playful animations to entertain staff",
+        "Ensuring the program can run without an operating system",
+        "Minimizing operator transaction time and reducing costly data-entry mistakes to lower business operating costs",
+        "Designing interfaces that require no keyboard"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Maximizing playful animations to entertain staff",
+        "Ensuring the program can run without an operating system",
+        "Minimizing operator transaction time and reducing costly data-entry mistakes to lower business operating costs",
+        "Designing interfaces that require no keyboard"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 2,
+      "ans": 2,
+      "exp": "In commercial settings, reducing repetitive transaction times by even seconds across thousands of daily operations dramatically reduces labor costs and costly operational mistakes.",
+      "explanation": "In commercial settings, reducing repetitive transaction times by even seconds across thousands of daily operations dramatically reduces labor costs and costly operational mistakes.",
+      "provenance": "Shneiderman 5th Ed §1.3.2",
       "marks": 2
     },
     {
@@ -2395,25 +2497,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #23: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
-      "title": "HCI Applied Principle #23: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
+      "q": "In office, home, and entertainment applications, what factor most heavily determines whether users continue to adopt and utilize the software?",
+      "title": "In office, home, and entertainment applications, what factor most heavily determines whether users continue to adopt and utilize the software?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "The number of command-line switches available",
+        "The presence of complex nested multi-tiered menus",
+        "Forced registration and complex password renewals",
+        "Ease of learning, low frustration, and seamless self-explanatory operation without formal training manuals"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "The number of command-line switches available",
+        "The presence of complex nested multi-tiered menus",
+        "Forced registration and complex password renewals",
+        "Ease of learning, low frustration, and seamless self-explanatory operation without formal training manuals"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Consumers in home and office settings will quickly abandon or reject software that causes frustration, confusion, or steep learning curves.",
+      "explanation": "Consumers in home and office settings will quickly abandon or reject software that causes frustration, confusion, or steep learning curves.",
+      "provenance": "Shneiderman 5th Ed §1.3.3",
       "marks": 2
     },
     {
@@ -2421,25 +2523,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #24: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
-      "title": "HCI Applied Principle #24: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
+      "q": "What core interface capability is essential for exploratory, creative, and collaborative applications (such as CAD modeling, graphic design, and music editors)?",
+      "title": "What core interface capability is essential for exploratory, creative, and collaborative applications (such as CAD modeling, graphic design, and music editors)?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Easy exploration with comprehensive Undo/Redo capabilities and non-destructive experimentation",
+        "Strict modal dialogs that prevent multitasking",
+        "Disabling keyboard shortcuts to prevent accidental commands",
+        "Forcing permanent saving after every mouse click"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Easy exploration with comprehensive Undo/Redo capabilities and non-destructive experimentation",
+        "Strict modal dialogs that prevent multitasking",
+        "Disabling keyboard shortcuts to prevent accidental commands",
+        "Forcing permanent saving after every mouse click"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "exp": "Creative applications encourage innovation by enabling users to explore alternative ideas freely, supported by robust, multi-level Undo/Redo mechanisms.",
+      "explanation": "Creative applications encourage innovation by enabling users to explore alternative ideas freely, supported by robust, multi-level Undo/Redo mechanisms.",
+      "provenance": "Shneiderman 5th Ed §1.3.4",
       "marks": 2
     },
     {
@@ -2447,25 +2549,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #25: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
-      "title": "HCI Applied Principle #25: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
+      "q": "In socio-technical public systems (such as national election voting kiosks and municipal service portals), which interface attribute is paramount?",
+      "title": "In socio-technical public systems (such as national election voting kiosks and municipal service portals), which interface attribute is paramount?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "High-speed keyboard commands intended only for expert typists",
+        "Trust, accessibility for citizens of all literacy levels, and total prevention of ambiguous inputs",
+        "Integration with cutting-edge 3D virtual reality headsets",
+        "Eliminating confirmation screens to accelerate line throughput"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "High-speed keyboard commands intended only for expert typists",
+        "Trust, accessibility for citizens of all literacy levels, and total prevention of ambiguous inputs",
+        "Integration with cutting-edge 3D virtual reality headsets",
+        "Eliminating confirmation screens to accelerate line throughput"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Socio-technical systems serve diverse citizen populations; they must ensure equal accessibility, unambiguous comprehension, verifiable trust, and zero disenfranchisement.",
+      "explanation": "Socio-technical systems serve diverse citizen populations; they must ensure equal accessibility, unambiguous comprehension, verifiable trust, and zero disenfranchisement.",
+      "provenance": "Shneiderman 5th Ed §1.3.5",
       "marks": 2
     },
     {
@@ -2473,25 +2575,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #26: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
-      "title": "HCI Applied Principle #26: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
+      "q": "When designing a Windows Form for users with motor impairments or hand tremors, which design choice directly complies with universal usability principles?",
+      "title": "When designing a Windows Form for users with motor impairments or hand tremors, which design choice directly complies with universal usability principles?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Using tiny 12x12 pixel icon buttons clustered closely together",
+        "Removing all button borders so the user must click invisible text",
+        "Providing larger click targets (e.g. min 32x32 pixels) with generous margins and full keyboard navigability via TabIndex",
+        "Requiring fast double-clicks within 100 milliseconds for all actions"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Using tiny 12x12 pixel icon buttons clustered closely together",
+        "Removing all button borders so the user must click invisible text",
+        "Providing larger click targets (e.g. min 32x32 pixels) with generous margins and full keyboard navigability via TabIndex",
+        "Requiring fast double-clicks within 100 milliseconds for all actions"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Users with motor challenges require larger interactive targets and sufficient spacing to prevent accidental mis-clicks, alongside complete keyboard alternatives.",
+      "explanation": "Users with motor challenges require larger interactive targets and sufficient spacing to prevent accidental mis-clicks, alongside complete keyboard alternatives.",
+      "provenance": "Shneiderman 5th Ed §1.4.1",
       "marks": 2
     },
     {
@@ -2499,25 +2601,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #27: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
-      "title": "HCI Applied Principle #27: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
+      "q": "In Practical 1 (Racing Light Trainer), the form uses red, amber, and green light images but ALSO updates lblInstruction with 'STOP', 'GET READY', and 'GO'. Why is this redundant coding vital for universal usability?",
+      "title": "In Practical 1 (Racing Light Trainer), the form uses red, amber, and green light images but ALSO updates lblInstruction with 'STOP', 'GET READY', and 'GO'. Why is this redundant coding vital for universal usability?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "It forces the C# compiler to allocate double the graphics memory",
+        "It is a required syntax requirement of .NET Framework 4.8",
+        "It speeds up CPU rendering of JPEG images",
+        "It satisfies accessibility requirements for color-blind users (deuteranopia/protanopia) who cannot distinguish red from green solely by hue"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "It forces the C# compiler to allocate double the graphics memory",
+        "It is a required syntax requirement of .NET Framework 4.8",
+        "It speeds up CPU rendering of JPEG images",
+        "It satisfies accessibility requirements for color-blind users (deuteranopia/protanopia) who cannot distinguish red from green solely by hue"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Never rely solely on color to convey meaning or state. Color-blind users depend on secondary cues such as text labels, shapes, or spatial positions to interpret system states accurately.",
+      "explanation": "Never rely solely on color to convey meaning or state. Color-blind users depend on secondary cues such as text labels, shapes, or spatial positions to interpret system states accurately.",
+      "provenance": "Shneiderman 5th Ed §1.4.1",
       "marks": 2
     },
     {
@@ -2525,25 +2627,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #28: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
-      "title": "HCI Applied Principle #28: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
+      "q": "How does grouping related controls inside a GroupBox with a descriptive text header (e.g. grpRoute, grpFinding) improve cognitive usability?",
+      "title": "How does grouping related controls inside a GroupBox with a descriptive text header (e.g. grpRoute, grpFinding) improve cognitive usability?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "It reduces visual clutter and chunks related information, easing cognitive processing and visual search",
+        "It increases the screen resolution of the form",
+        "It automatically encrypts variables inside the group",
+        "It converts TextBox controls to decimal variables automatically"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "It reduces visual clutter and chunks related information, easing cognitive processing and visual search",
+        "It increases the screen resolution of the form",
+        "It automatically encrypts variables inside the group",
+        "It converts TextBox controls to decimal variables automatically"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "exp": "Visual chunking via GroupBoxes organizes complex form layouts into digestible semantic units, reducing visual search time and user cognitive load.",
+      "explanation": "Visual chunking via GroupBoxes organizes complex form layouts into digestible semantic units, reducing visual search time and user cognitive load.",
+      "provenance": "Shneiderman 5th Ed §1.4.2",
       "marks": 2
     },
     {
@@ -2551,25 +2653,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #29: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
-      "title": "HCI Applied Principle #29: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
+      "q": "Which interface adaptation is specifically recommended when designing Visual C# Windows Forms for elderly users?",
+      "title": "Which interface adaptation is specifically recommended when designing Visual C# Windows Forms for elderly users?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Using low-contrast light grey text on dark grey backgrounds to reduce brightness",
+        "Employing scalable high-contrast fonts (minimum 11-12pt), distinct button affordances, and forgiving error handling",
+        "Removing all confirmation dialogs to eliminate extra clicks",
+        "Hiding standard controls inside complex contextual right-click menus"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Using low-contrast light grey text on dark grey backgrounds to reduce brightness",
+        "Employing scalable high-contrast fonts (minimum 11-12pt), distinct button affordances, and forgiving error handling",
+        "Removing all confirmation dialogs to eliminate extra clicks",
+        "Hiding standard controls inside complex contextual right-click menus"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Elderly users benefit from higher visual contrast, larger font sizes, clear button boundaries that look clickable, and generous spatial separation between interactive elements.",
+      "explanation": "Elderly users benefit from higher visual contrast, larger font sizes, clear button boundaries that look clickable, and generous spatial separation between interactive elements.",
+      "provenance": "Shneiderman 5th Ed §1.4.3",
       "marks": 2
     },
     {
@@ -2577,25 +2679,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #30: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
-      "title": "HCI Applied Principle #30: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
+      "q": "What design strategy best supports internationalization (i18n) when displaying financial outputs in a South African Visual C# application?",
+      "title": "What design strategy best supports internationalization (i18n) when displaying financial outputs in a South African Visual C# application?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Hardcoding the dollar symbol '$' directly into string concatenations",
+        "Writing custom loop algorithms to replace commas with asterisks",
+        "Formatting numeric variables using .ToString(\"C\") to dynamically leverage the regional culture currency symbol ('R') and decimal separator",
+        "Displaying financial amounts as unformatted floating-point raw numbers"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Hardcoding the dollar symbol '$' directly into string concatenations",
+        "Writing custom loop algorithms to replace commas with asterisks",
+        "Formatting numeric variables using .ToString(\"C\") to dynamically leverage the regional culture currency symbol ('R') and decimal separator",
+        "Displaying financial amounts as unformatted floating-point raw numbers"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Using .ToString(\"C\") automatically formats monetary values according to the host system's culture settings, correctly rendering South African Rand ('R') without hardcoded symbols.",
+      "explanation": "Using .ToString(\"C\") automatically formats monetary values according to the host system's culture settings, correctly rendering South African Rand ('R') without hardcoded symbols.",
+      "provenance": "Shneiderman 5th Ed §1.4.4 & Gaddis Ch 3",
       "marks": 2
     },
     {
@@ -2603,25 +2705,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #31: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
-      "title": "HCI Applied Principle #31: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
+      "q": "In Windows Forms controls, what is the role of the 'AccessibleName' and 'AccessibleDescription' properties?",
+      "title": "In Windows Forms controls, what is the role of the 'AccessibleName' and 'AccessibleDescription' properties?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "They set the C# identifier name used in source code logic",
+        "They determine the file path for control background bitmaps",
+        "They control database access permissions for the control",
+        "They provide descriptive spoken text for assistive screen readers utilized by visually impaired users"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "They set the C# identifier name used in source code logic",
+        "They determine the file path for control background bitmaps",
+        "They control database access permissions for the control",
+        "They provide descriptive spoken text for assistive screen readers utilized by visually impaired users"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Assistive technologies like Windows Narrator read AccessibleName and AccessibleDescription aloud to convey the purpose and state of UI controls to visually impaired users.",
+      "explanation": "Assistive technologies like Windows Narrator read AccessibleName and AccessibleDescription aloud to convey the purpose and state of UI controls to visually impaired users.",
+      "provenance": "Shneiderman 5th Ed §1.4.1",
       "marks": 2
     },
     {
@@ -2629,25 +2731,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #32: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
-      "title": "HCI Applied Principle #32: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
+      "q": "Why does Shneiderman's 1st Golden Rule ('Strive for consistency') mandate adopting standard Hungarian control prefixes (btn, txt, lbl, pic)?",
+      "title": "Why does Shneiderman's 1st Golden Rule ('Strive for consistency') mandate adopting standard Hungarian control prefixes (btn, txt, lbl, pic)?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "It helps developers immediately recognize control types in code, preventing semantic mismatches between UI design and event logic",
+        "The C# compiler produces a syntax error if prefixes are missing",
+        "It makes the compiled executable file significantly smaller",
+        "It automatically formats numbers to two decimal places"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "It helps developers immediately recognize control types in code, preventing semantic mismatches between UI design and event logic",
+        "The C# compiler produces a syntax error if prefixes are missing",
+        "It makes the compiled executable file significantly smaller",
+        "It automatically formats numbers to two decimal places"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "exp": "Consistent naming conventions (Hungarian prefixes) reduce cognitive friction for software engineers by making control types self-evident during development and code review.",
+      "explanation": "Consistent naming conventions (Hungarian prefixes) reduce cognitive friction for software engineers by making control types self-evident during development and code review.",
+      "provenance": "Shneiderman §2.3.1 & NWU Standard",
       "marks": 2
     },
     {
@@ -2655,25 +2757,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #33: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
-      "title": "HCI Applied Principle #33: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
+      "q": "Which scenario represents an unacceptable violation of Shneiderman's 1st Golden Rule ('Strive for consistency') across a multi-form application?",
+      "title": "Which scenario represents an unacceptable violation of Shneiderman's 1st Golden Rule ('Strive for consistency') across a multi-form application?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Setting TabIndex on all textboxes in logical top-to-bottom reading order",
+        "Using the label 'Exit' on Form 1, 'Quit' on Form 2, and 'Close Window' on Form 3 with varying button placements",
+        "Using Arial 9pt font for all data input labels across all forms",
+        "Placing the primary action button at the bottom right of each window"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Setting TabIndex on all textboxes in logical top-to-bottom reading order",
+        "Using the label 'Exit' on Form 1, 'Quit' on Form 2, and 'Close Window' on Form 3 with varying button placements",
+        "Using Arial 9pt font for all data input labels across all forms",
+        "Placing the primary action button at the bottom right of each window"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Inconsistent terminology ('Exit' vs 'Quit' vs 'Close Window') and shifting button coordinates confuse users and destroy mental predictability.",
+      "explanation": "Inconsistent terminology ('Exit' vs 'Quit' vs 'Close Window') and shifting button coordinates confuse users and destroy mental predictability.",
+      "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
     {
@@ -2681,25 +2783,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #34: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
-      "title": "HCI Applied Principle #34: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
+      "q": "Setting the Button's Text property to '&Calculate' enables an access key. How does a user trigger this button from the keyboard, and which Golden Rule does this satisfy?",
+      "title": "Setting the Button's Text property to '&Calculate' enables an access key. How does a user trigger this button from the keyboard, and which Golden Rule does this satisfy?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Pressing Ctrl+Alt+Delete; satisfies Rule 5 (Prevent errors)",
+        "Pressing Shift+F12; satisfies Rule 6 (Permit easy reversal of actions)",
+        "Pressing Alt+C; satisfies Rule 2 (Cater to universal usability / shortcuts for experts)",
+        "Pressing Esc; satisfies Rule 8 (Reduce short-term memory load)"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Pressing Ctrl+Alt+Delete; satisfies Rule 5 (Prevent errors)",
+        "Pressing Shift+F12; satisfies Rule 6 (Permit easy reversal of actions)",
+        "Pressing Alt+C; satisfies Rule 2 (Cater to universal usability / shortcuts for experts)",
+        "Pressing Esc; satisfies Rule 8 (Reduce short-term memory load)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 1",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The ampersand '&' underlines the subsequent letter ('C') and binds the Alt+C keyboard accelerator, providing rapid navigation for power users (Rule 2).",
+      "explanation": "The ampersand '&' underlines the subsequent letter ('C') and binds the Alt+C keyboard accelerator, providing rapid navigation for power users (Rule 2).",
+      "provenance": "Shneiderman §2.3.1 & Gaddis Ch 4",
       "marks": 2
     },
     {
@@ -2707,25 +2809,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #35: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
-      "title": "HCI Applied Principle #35: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
+      "q": "On a Windows Form, setting Form.AcceptButton = btnCalculate and Form.CancelButton = btnExit fulfills which usability principle?",
+      "title": "On a Windows Form, setting Form.AcceptButton = btnCalculate and Form.CancelButton = btnExit fulfills which usability principle?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Violating user locus of control by triggering actions without clicks",
+        "Forcing the application to compile without Roslyn diagnostics",
+        "Encrypting the user's keystrokes for security compliance",
+        "Catering to universal usability by standardizing Enter and Esc keyboard behavior"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Violating user locus of control by triggering actions without clicks",
+        "Forcing the application to compile without Roslyn diagnostics",
+        "Encrypting the user's keystrokes for security compliance",
+        "Catering to universal usability by standardizing Enter and Esc keyboard behavior"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Binding AcceptButton to Enter and CancelButton to Escape honors universal usability and user expectations by enabling standard, effortless keyboard control.",
+      "explanation": "Binding AcceptButton to Enter and CancelButton to Escape honors universal usability and user expectations by enabling standard, effortless keyboard control.",
+      "provenance": "Shneiderman §2.3.1 & Gaddis Ch 3",
       "marks": 2
     },
     {
@@ -2733,25 +2835,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #36: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
-      "title": "HCI Applied Principle #36: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
+      "q": "According to Shneiderman's 3rd Golden Rule ('Offer informative feedback'), how should the interface respond when a user clicks 'Add Item' to insert a product into a shopping cart ListBox?",
+      "title": "According to Shneiderman's 3rd Golden Rule ('Offer informative feedback'), how should the interface respond when a user clicks 'Add Item' to insert a product into a shopping cart ListBox?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Immediately append the item to the ListBox and update the running total label",
+        "Give no visual response until the entire application is closed",
+        "Display a modal pop-up dialog that interrupts the user for every single item added",
+        "Clear the entire form and reset all variables to zero"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Immediately append the item to the ListBox and update the running total label",
+        "Give no visual response until the entire application is closed",
+        "Display a modal pop-up dialog that interrupts the user for every single item added",
+        "Clear the entire form and reset all variables to zero"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "exp": "Frequent, minor actions require modest, immediate visual feedback: seeing the item appear in the list and watching the total update acknowledges the action without disruption.",
+      "explanation": "Frequent, minor actions require modest, immediate visual feedback: seeing the item appear in the list and watching the total update acknowledges the action without disruption.",
+      "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
     {
@@ -2759,25 +2861,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #37: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
-      "title": "HCI Applied Principle #37: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
+      "q": "Why is it unacceptable for a C# Windows Forms application to execute a prolonged 10-second data processing loop without showing a ProgressBar, status label, or wait cursor?",
+      "title": "Why is it unacceptable for a C# Windows Forms application to execute a prolonged 10-second data processing loop without showing a ProgressBar, status label, or wait cursor?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "The C# runtime will terminate the thread with a FatalExecutionEngineError",
+        "Users will assume the application has frozen, crashed, or ignored their click (violating Rule 3: Offer informative feedback)",
+        "The Windows OS will immediately delete the project .exe file",
+        "It violates C# Hungarian naming guidelines"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "The C# runtime will terminate the thread with a FatalExecutionEngineError",
+        "Users will assume the application has frozen, crashed, or ignored their click (violating Rule 3: Offer informative feedback)",
+        "The Windows OS will immediately delete the project .exe file",
+        "It violates C# Hungarian naming guidelines"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Without visual feedback during lengthy operations, users lose confidence, suspect system lockup, and frequently re-click buttons or terminate the application prematurely.",
+      "explanation": "Without visual feedback during lengthy operations, users lose confidence, suspect system lockup, and frequently re-click buttons or terminate the application prematurely.",
+      "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
     {
@@ -2785,25 +2887,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #38: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
-      "title": "HCI Applied Principle #38: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
+      "q": "Which design technique best embodies Shneiderman's 4th Golden Rule ('Design dialogs to yield closure') upon completing a multi-step booking process in Practical 5 (Vaal River Cruises)?",
+      "title": "Which design technique best embodies Shneiderman's 4th Golden Rule ('Design dialogs to yield closure') upon completing a multi-step booking process in Practical 5 (Vaal River Cruises)?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Abruptly closing the form without any message",
+        "Leaving input fields filled with no indication whether the booking was registered",
+        "Presenting a final booking summary dialog showing total tickets, package selected, and final Rand amount, signaling that the transaction is finalized",
+        "Switching form background color to black without explanation"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Abruptly closing the form without any message",
+        "Leaving input fields filled with no indication whether the booking was registered",
+        "Presenting a final booking summary dialog showing total tickets, package selected, and final Rand amount, signaling that the transaction is finalized",
+        "Switching form background color to black without explanation"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Rule 4 states that sequences of action should have an organized beginning, middle, and end. A clear confirmation screen delivers closure, satisfaction, and peace of mind.",
+      "explanation": "Rule 4 states that sequences of action should have an organized beginning, middle, and end. A clear confirmation screen delivers closure, satisfaction, and peace of mind.",
+      "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
     {
@@ -2811,25 +2913,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #39: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
-      "title": "HCI Applied Principle #39: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
+      "q": "What psychological benefit does the user experience when an interface successfully provides 'closure' (Rule 4)?",
+      "title": "What psychological benefit does the user experience when an interface successfully provides 'closure' (Rule 4)?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "A feeling of helplessness and loss of control",
+        "Confusion regarding whether payment was processed",
+        "A desire to rewrite the underlying C# source code",
+        "Relief of anxiety, confirmation that the goal was attained, and mental readiness to initiate the next task"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "A feeling of helplessness and loss of control",
+        "Confusion regarding whether payment was processed",
+        "A desire to rewrite the underlying C# source code",
+        "Relief of anxiety, confirmation that the goal was attained, and mental readiness to initiate the next task"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Closure provides users with the satisfaction of accomplishment and frees their short-term working memory to focus on subsequent tasks.",
+      "explanation": "Closure provides users with the satisfaction of accomplishment and frees their short-term working memory to focus on subsequent tasks.",
+      "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
     {
@@ -2837,25 +2939,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #40: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
-      "title": "HCI Applied Principle #40: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
+      "q": "In Practical 2 (Braai Master 3000), using decimal.TryParse() to guard text inputs instead of raw decimal.Parse() satisfies which Golden Rule?",
+      "title": "In Practical 2 (Braai Master 3000), using decimal.TryParse() to guard text inputs instead of raw decimal.Parse() satisfies which Golden Rule?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Rule 5: Prevent errors (and handle them gracefully when they occur)",
+        "Rule 8: Reduce short-term memory load only",
+        "Rule 1: Strive for consistency only",
+        "Rule 4: Design dialogs to yield closure only"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Rule 5: Prevent errors (and handle them gracefully when they occur)",
+        "Rule 8: Reduce short-term memory load only",
+        "Rule 1: Strive for consistency only",
+        "Rule 4: Design dialogs to yield closure only"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "exp": "Rule 5 mandates designing systems so users make fewer errors and handling mistakes gracefully with non-destructive, friendly alerts rather than unhandled exception crashes.",
+      "explanation": "Rule 5 mandates designing systems so users make fewer errors and handling mistakes gracefully with non-destructive, friendly alerts rather than unhandled exception crashes.",
+      "provenance": "Shneiderman §2.3.1 & Gaddis Ch 3",
       "marks": 2
     },
     {
@@ -2863,25 +2965,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #41: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
-      "title": "HCI Applied Principle #41: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
+      "q": "Which error message complies best with Shneiderman's guidelines for effective error message construction?",
+      "title": "Which error message complies best with Shneiderman's guidelines for effective error message construction?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "'FATAL ERROR 0x80004005: System.FormatException at offset 12'",
+        "'Invalid Input. Please enter a positive numeric value for Wors Kilograms (e.g., 2.5).'",
+        "'You made a stupid mistake in txtWorsKg!'",
+        "'Error! Program halted.'"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "'FATAL ERROR 0x80004005: System.FormatException at offset 12'",
+        "'Invalid Input. Please enter a positive numeric value for Wors Kilograms (e.g., 2.5).'",
+        "'You made a stupid mistake in txtWorsKg!'",
+        "'Error! Program halted.'"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Effective error messages are polite, specific, avoid technical jargon, do not blame the user, and offer constructive guidance on how to rectify the problem.",
+      "explanation": "Effective error messages are polite, specific, avoid technical jargon, do not blame the user, and offer constructive guidance on how to rectify the problem.",
+      "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
     {
@@ -2889,25 +2991,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #42: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
-      "title": "HCI Applied Principle #42: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
+      "q": "What is the HCI justification for providing a dedicated 'Clear' button (btnClear) in Practical 2 and Practical 4?",
+      "title": "What is the HCI justification for providing a dedicated 'Clear' button (btnClear) in Practical 2 and Practical 4?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "It is mandatory to free RAM from Windows OS paging",
+        "It forces the garbage collector to immediately purge all controls",
+        "It fulfills Rule 6: Permit easy reversal of actions, allowing users to wipe erroneous data entry and start fresh without restarting the application",
+        "It satisfies Gaddis rule of using at least 5 buttons on every form"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "It is mandatory to free RAM from Windows OS paging",
+        "It forces the garbage collector to immediately purge all controls",
+        "It fulfills Rule 6: Permit easy reversal of actions, allowing users to wipe erroneous data entry and start fresh without restarting the application",
+        "It satisfies Gaddis rule of using at least 5 buttons on every form"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Easy reversal relieves anxiety, since users know that mistakes can be painlessly cleared and undone without consequences.",
+      "explanation": "Easy reversal relieves anxiety, since users know that mistakes can be painlessly cleared and undone without consequences.",
+      "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
     {
@@ -2915,25 +3017,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #43: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
-      "title": "HCI Applied Principle #43: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
+      "q": "When a user clicks 'btnExit', Practical 4 requires displaying a MessageBox asking 'Are you sure you want to exit?' with Yes and No buttons. Which usability rule does this enforce?",
+      "title": "When a user clicks 'btnExit', Practical 4 requires displaying a MessageBox asking 'Are you sure you want to exit?' with Yes and No buttons. Which usability rule does this enforce?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Rule 1: Strive for consistency only",
+        "Rule 2: Cater to universal usability only",
+        "Rule 8: Reduce short-term memory load only",
+        "Rule 6: Permit easy reversal of actions / Error prevention by preventing accidental termination of the user's workflow"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Rule 1: Strive for consistency only",
+        "Rule 2: Cater to universal usability only",
+        "Rule 8: Reduce short-term memory load only",
+        "Rule 6: Permit easy reversal of actions / Error prevention by preventing accidental termination of the user's workflow"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Confirmation before potentially destructive actions (like exiting or deleting) allows users to cancel accidental clicks, supporting easy error reversal.",
+      "explanation": "Confirmation before potentially destructive actions (like exiting or deleting) allows users to cancel accidental clicks, supporting easy error reversal.",
+      "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
     {
@@ -2941,25 +3043,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #44: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
-      "title": "HCI Applied Principle #44: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
+      "q": "What does Shneiderman's 7th Golden Rule ('Support internal locus of control') mean in the context of GUI application design?",
+      "title": "What does Shneiderman's 7th Golden Rule ('Support internal locus of control') mean in the context of GUI application design?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Users should feel that they are in charge of the system and that the system responds predictably to their explicit commands",
+        "The computer system should make autonomous decisions and navigate between forms without user initiation",
+        "The CPU clock must synchronize with the monitor refresh rate",
+        "Database records should automatically delete themselves after 30 days"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Users should feel that they are in charge of the system and that the system responds predictably to their explicit commands",
+        "The computer system should make autonomous decisions and navigate between forms without user initiation",
+        "The CPU clock must synchronize with the monitor refresh rate",
+        "Database records should automatically delete themselves after 30 days"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "exp": "Internal locus of control means users feel like initiators rather than responders. Unexpected behaviors, modal lockouts, or automated unsolicited pop-ups strip this control and cause dissatisfaction.",
+      "explanation": "Internal locus of control means users feel like initiators rather than responders. Unexpected behaviors, modal lockouts, or automated unsolicited pop-ups strip this control and cause dissatisfaction.",
+      "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
     {
@@ -2967,25 +3069,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #45: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
-      "title": "HCI Applied Principle #45: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
+      "q": "Which interface design defect directly violates Shneiderman's 7th Golden Rule (Internal Locus of Control)?",
+      "title": "Which interface design defect directly violates Shneiderman's 7th Golden Rule (Internal Locus of Control)?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Providing a clear 'Clear' button that resets inputs",
+        "A form that automatically changes the user's cursor position and submits data without the user clicking the Submit button",
+        "Allowing the user to select between Daytime and Sunset cruises using RadioButtons",
+        "Formatting currency outputs with two decimal places"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Providing a clear 'Clear' button that resets inputs",
+        "A form that automatically changes the user's cursor position and submits data without the user clicking the Submit button",
+        "Allowing the user to select between Daytime and Sunset cruises using RadioButtons",
+        "Formatting currency outputs with two decimal places"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Unsolicited automatic submissions or involuntary cursor shifts make users feel manipulated and powerless, severely violating internal locus of control.",
+      "explanation": "Unsolicited automatic submissions or involuntary cursor shifts make users feel manipulated and powerless, severely violating internal locus of control.",
+      "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
     {
@@ -2993,25 +3095,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #46: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
-      "title": "HCI Applied Principle #46: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
+      "q": "How does Shneiderman's 8th Golden Rule ('Reduce short-term memory load') explain why displaying a running ListBox of items with an active total label is superior to only showing the final bill at checkout?",
+      "title": "How does Shneiderman's 8th Golden Rule ('Reduce short-term memory load') explain why displaying a running ListBox of items with an active total label is superior to only showing the final bill at checkout?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "ListBox controls require zero memory on the graphics card",
+        "It allows the user to memorize 50 items simultaneously",
+        "Human short-term memory can only hold 7 ± 2 chunks of information; displaying current entries externally prevents cognitive overload",
+        "It speeds up arithmetic addition in the ALU"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "ListBox controls require zero memory on the graphics card",
+        "It allows the user to memorize 50 items simultaneously",
+        "Human short-term memory can only hold 7 ± 2 chunks of information; displaying current entries externally prevents cognitive overload",
+        "It speeds up arithmetic addition in the ALU"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Displaying current state, previous entries, and running totals externally on the screen frees the user from having to remember details in short-term memory (Miller's Rule of 7 ± 2).",
+      "explanation": "Displaying current state, previous entries, and running totals externally on the screen frees the user from having to remember details in short-term memory (Miller's Rule of 7 ± 2).",
+      "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
     {
@@ -3019,25 +3121,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #47: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
-      "title": "HCI Applied Principle #47: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
+      "q": "A student builds a Windows Form containing 45 unorganized TextBoxes on a single screen without any tabs, grouping, or progression. Which HCI guideline is most severely breached?",
+      "title": "A student builds a Windows Form containing 45 unorganized TextBoxes on a single screen without any tabs, grouping, or progression. Which HCI guideline is most severely breached?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Rule 6: Permit easy reversal of actions only",
+        "Rule 3: Offer informative feedback only",
+        "Rule 2: Cater to universal usability only",
+        "Rule 8: Reduce short-term memory load (exceeding human cognitive processing capacity through excessive visual clutter)"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Rule 6: Permit easy reversal of actions only",
+        "Rule 3: Offer informative feedback only",
+        "Rule 2: Cater to universal usability only",
+        "Rule 8: Reduce short-term memory load (exceeding human cognitive processing capacity through excessive visual clutter)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Presenting dozens of raw inputs at once overwhelms working memory and visual attention. Dividing forms into tabs, wizards, or logical group boxes keeps cognitive load within human limits.",
+      "explanation": "Presenting dozens of raw inputs at once overwhelms working memory and visual attention. Dividing forms into tabs, wizards, or logical group boxes keeps cognitive load within human limits.",
+      "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
     {
@@ -3045,25 +3147,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #48: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
-      "title": "HCI Applied Principle #48: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
+      "q": "In Don Norman's Action Cycle, what is the 'Gulf of Execution'?",
+      "title": "In Don Norman's Action Cycle, what is the 'Gulf of Execution'?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "The difference between the user's intended goal and the physical actions allowed by the interface to execute that goal",
+        "The time it takes for the CPU to compile C# code into MSIL",
+        "The distance between the monitor and the user's eyes",
+        "The difference between two floating-point numbers due to rounding error"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "The difference between the user's intended goal and the physical actions allowed by the interface to execute that goal",
+        "The time it takes for the CPU to compile C# code into MSIL",
+        "The distance between the monitor and the user's eyes",
+        "The difference between two floating-point numbers due to rounding error"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "exp": "The Gulf of Execution measures how easily a user can translate their internal mental intentions into physical actions on the system (e.g. finding which button to click).",
+      "explanation": "The Gulf of Execution measures how easily a user can translate their internal mental intentions into physical actions on the system (e.g. finding which button to click).",
+      "provenance": "Shneiderman §2.2 & Norman",
       "marks": 2
     },
     {
@@ -3071,25 +3173,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #49: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
-      "title": "HCI Applied Principle #49: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
+      "q": "In Don Norman's Action Cycle, what is the 'Gulf of Evaluation'?",
+      "title": "In Don Norman's Action Cycle, what is the 'Gulf of Evaluation'?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "The financial evaluation of software development expenses",
+        "The degree of difficulty the user experiences in perceiving and interpreting whether the system's state has changed in accordance with their goal",
+        "The automated grading test suite executed by CodeGrade",
+        "The benchmark measurement of system frames per second"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "The financial evaluation of software development expenses",
+        "The degree of difficulty the user experiences in perceiving and interpreting whether the system's state has changed in accordance with their goal",
+        "The automated grading test suite executed by CodeGrade",
+        "The benchmark measurement of system frames per second"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The Gulf of Evaluation represents the cognitive effort required by the user to assess the interface's current visual state and determine if their previous action succeeded.",
+      "explanation": "The Gulf of Evaluation represents the cognitive effort required by the user to assess the interface's current visual state and determine if their previous action succeeded.",
+      "provenance": "Shneiderman §2.2 & Norman",
       "marks": 2
     },
     {
@@ -3097,25 +3199,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #50: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
-      "title": "HCI Applied Principle #50: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
+      "q": "In Practical 1 (Racing Light Trainer), when a user clicks 'btnGo', the application immediately displays the green light (picGreen.Visible = true) and sets lblInstruction.Text = 'GO'. Which gulf does this immediate visual response bridge?",
+      "title": "In Practical 1 (Racing Light Trainer), when a user clicks 'btnGo', the application immediately displays the green light (picGreen.Visible = true) and sets lblInstruction.Text = 'GO'. Which gulf does this immediate visual response bridge?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "The Gulf of Execution only",
+        "The Gulf of Compilation",
+        "The Gulf of Evaluation (enabling the user to effortlessly perceive that the go signal is now active)",
+        "The Gulf of Hardware Paging"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "The Gulf of Execution only",
+        "The Gulf of Compilation",
+        "The Gulf of Evaluation (enabling the user to effortlessly perceive that the go signal is now active)",
+        "The Gulf of Hardware Paging"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Immediate, unmistakable visual feedback bridges the Gulf of Evaluation by making the system's updated internal state transparent and easy to interpret.",
+      "explanation": "Immediate, unmistakable visual feedback bridges the Gulf of Evaluation by making the system's updated internal state transparent and easy to interpret.",
+      "provenance": "Shneiderman §2.2 & Norman",
       "marks": 2
     },
     {
@@ -3123,25 +3225,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #51: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
-      "title": "HCI Applied Principle #51: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 2?",
+      "q": "Which design implementation in Visual C# Windows Forms best bridges the Gulf of Execution?",
+      "title": "Which design implementation in Visual C# Windows Forms best bridges the Gulf of Execution?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Hiding button controls until the user hovers over an unmarked panel",
+        "Using obscure abbreviations like 'btnX1' and 'lblZ' on the interface",
+        "Removing all button click event handlers",
+        "Using distinct, raised button controls labeled with active action verbs (e.g., 'Calculate Total', 'Clear Form', 'Exit')"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Hiding button controls until the user hovers over an unmarked panel",
+        "Using obscure abbreviations like 'btnX1' and 'lblZ' on the interface",
+        "Removing all button click event handlers",
+        "Using distinct, raised button controls labeled with active action verbs (e.g., 'Calculate Total', 'Clear Form', 'Exit')"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Clear visual affordances (buttons that look clickable) paired with explicit verbs tell the user exactly what physical action will achieve their intended goal, narrowing the Gulf of Execution.",
+      "explanation": "Clear visual affordances (buttons that look clickable) paired with explicit verbs tell the user exactly what physical action will achieve their intended goal, narrowing the Gulf of Execution.",
+      "provenance": "Shneiderman §2.2 & Norman",
       "marks": 2
     },
     {
@@ -3149,25 +3251,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #52: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
-      "title": "HCI Applied Principle #52: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 3?",
+      "q": "According to Fitts' Law in Human-Computer Interaction, what factors determine the time required to rapidly move to and click a target control?",
+      "title": "According to Fitts' Law in Human-Computer Interaction, what factors determine the time required to rapidly move to and click a target control?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "The distance to the target and the physical width/size of the target",
+        "The color depth of the monitor and the RAM capacity",
+        "The length of the variable name in the C# code",
+        "The speed of the network internet connection"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "The distance to the target and the physical width/size of the target",
+        "The color depth of the monitor and the RAM capacity",
+        "The length of the variable name in the C# code",
+        "The speed of the network internet connection"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "exp": "Fitts' Law models pointing time: MT = a + b * log2(2D / W), meaning larger targets (W) located closer to the pointer (D) are acquired significantly faster and with fewer errors.",
+      "explanation": "Fitts' Law models pointing time: MT = a + b * log2(2D / W), meaning larger targets (W) located closer to the pointer (D) are acquired significantly faster and with fewer errors.",
+      "provenance": "Shneiderman §1.2 & §2.2",
       "marks": 2
     },
     {
@@ -3175,25 +3277,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #53: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
-      "title": "HCI Applied Principle #53: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 4?",
+      "q": "How does Fitts' Law practically advise a CMPG122 student when designing the 'Calculate' button on a data-entry form?",
+      "title": "How does Fitts' Law practically advise a CMPG122 student when designing the 'Calculate' button on a data-entry form?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Make the button tiny and hide it in the top corner of the screen",
+        "Make the primary action button sufficiently large and place it directly adjacent to the input fields in the user's natural scanning path",
+        "Change the button position randomly after each click",
+        "Require the user to drag the button across the screen before clicking"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Make the button tiny and hide it in the top corner of the screen",
+        "Make the primary action button sufficiently large and place it directly adjacent to the input fields in the user's natural scanning path",
+        "Change the button position randomly after each click",
+        "Require the user to drag the button across the screen before clicking"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Larger target dimensions and closer spatial proximity minimize pointer acquisition time and reduce accidental misclicks.",
+      "explanation": "Larger target dimensions and closer spatial proximity minimize pointer acquisition time and reduce accidental misclicks.",
+      "provenance": "Shneiderman §1.2 & §2.2",
       "marks": 2
     },
     {
@@ -3201,25 +3303,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #54: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
-      "title": "HCI Applied Principle #54: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 5?",
+      "q": "According to Hick-Hyman Law, what happens to user decision time as the number of unorganized choices on an interface increases?",
+      "title": "According to Hick-Hyman Law, what happens to user decision time as the number of unorganized choices on an interface increases?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Decision time drops to zero immediately",
+        "Users always choose the first option without thinking",
+        "Decision time increases logarithmically with the number of available options",
+        "Decision time is completely unaffected by the number of alternatives"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "Decision time drops to zero immediately",
+        "Users always choose the first option without thinking",
+        "Decision time increases logarithmically with the number of available options",
+        "Decision time is completely unaffected by the number of alternatives"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Hick's Law: T = b * log2(n + 1). As the number of choices (n) increases, cognitive selection time grows. Structuring choices into logical groups or categories speeds decision-making.",
+      "explanation": "Hick's Law: T = b * log2(n + 1). As the number of choices (n) increases, cognitive selection time grows. Structuring choices into logical groups or categories speeds decision-making.",
+      "provenance": "Shneiderman §1.2 & §2.2",
       "marks": 2
     },
     {
@@ -3227,25 +3329,25 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "HCI Applied Principle #55: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
-      "title": "HCI Applied Principle #55: When evaluating interface usability in CMPG122 GUI forms, which guideline directly impacts measure 1?",
+      "q": "Why is it superior usability practice to use RadioButtons grouped in a GroupBox (as in Practical 5 for Cruise Time: Daytime vs Sunset) rather than letting users type 'day' or 'sunset' into a TextBox?",
+      "title": "Why is it superior usability practice to use RadioButtons grouped in a GroupBox (as in Practical 5 for Cruise Time: Daytime vs Sunset) rather than letting users type 'day' or 'sunset' into a TextBox?",
       "options": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "It makes the C# source code twice as long",
+        "RadioButtons consume less power on mobile batteries",
+        "TextBoxes cannot handle string data in Visual C#",
+        "It enforces mutual exclusion, provides immediate visual recognition of all valid choices, and eliminates spelling/capitalization errors"
       ],
       "opts": [
-        "Consistent visual layout and immediate feedback (Rule 1 & 3)",
-        "Complex nested dialogs without keyboard navigation",
-        "Unlabeled icon-only buttons with ambiguous meanings",
-        "Requiring users to manually calculate VAT in their heads"
+        "It makes the C# source code twice as long",
+        "RadioButtons consume less power on mobile batteries",
+        "TextBoxes cannot handle string data in Visual C#",
+        "It enforces mutual exclusion, provides immediate visual recognition of all valid choices, and eliminates spelling/capitalization errors"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "explanation": "Measurable usability depends directly on applying Shneiderman's Golden Rules. Clear labels, consistent layouts, and offloading math to C# code reduce cognitive load.",
-      "provenance": "Shneiderman 5th Ed Ch 2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Recognizing a choice among visible RadioButtons requires far less cognitive effort than recalling terms and typing free text, while eliminating input validation failures (Rule 5 & 8).",
+      "explanation": "Recognizing a choice among visible RadioButtons requires far less cognitive effort than recalling terms and typing free text, while eliminating input validation failures (Rule 5 & 8).",
+      "provenance": "Shneiderman §2.3.1 & Gaddis Ch 4",
       "marks": 2
     },
     {
