@@ -169,6 +169,12 @@
       btnNavExitExam: document.getElementById('btnNavExitExam'),
       continuousPaperArea: document.getElementById('continuousPaperArea'),
       singleCardArea: document.getElementById('singleCardArea'),
+      btnOpenScenarioDrawer: document.getElementById('btnOpenScenarioDrawer'),
+      btnCloseScenarioDrawer: document.getElementById('btnCloseScenarioDrawer'),
+      scenarioDrawerBackdrop: document.getElementById('scenarioDrawerBackdrop'),
+      scenarioDrawer: document.getElementById('scenarioDrawer'),
+      scenarioDrawerTitle: document.getElementById('scenarioDrawerTitle'),
+      scenarioDrawerBody: document.getElementById('scenarioDrawerBody'),
       // Drawer
       toolsDrawer: document.getElementById('toolsDrawer'),
       drawerBackdrop: document.getElementById('drawerBackdrop'),
@@ -222,6 +228,19 @@
     if (dom.summaryModal) {
       dom.summaryModal.addEventListener('click', (e) => {
         if (e.target === dom.summaryModal) closeModal();
+      });
+    }
+
+    if (dom.btnOpenScenarioDrawer) dom.btnOpenScenarioDrawer.addEventListener('click', openScenarioDrawer);
+    if (dom.btnCloseScenarioDrawer) dom.btnCloseScenarioDrawer.addEventListener('click', closeScenarioDrawer);
+    if (dom.scenarioDrawerBackdrop) dom.scenarioDrawerBackdrop.addEventListener('click', closeScenarioDrawer);
+
+    if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeScenarioDrawer();
+          closeModal();
+        }
       });
     }
 
@@ -1451,8 +1470,13 @@
         </div>
 
         <div class="paper-scenario-box">
-          <div class="paper-scenario-title">📋 PRACTICAL SPECIFICATION / SCENARIO OVERVIEW</div>
-          <div class="paper-scenario-text">${escapeHtml(scenarioText)}</div>
+          <div class="paper-scenario-title">
+            <span>📋 PRACTICAL SPECIFICATION, PRICING &amp; CONTROLS MATRIX</span>
+            <button type="button" class="action-btn-sm btn-scenario-drawer" onclick="CMPG122_APP.openScenarioDrawer()">📖 Open Floating Reference Drawer</button>
+          </div>
+          <div class="paper-scenario-content">
+            ${exam && exam.scenarioHtml ? exam.scenarioHtml : `<div class="paper-scenario-text">${escapeHtml(scenarioText)}</div>`}
+          </div>
         </div>
 
         <div class="paper-instructions-box">
@@ -1952,7 +1976,27 @@
     }
   }
 
+  function openScenarioDrawer() {
+    const exam = state.selectedExamId ? DATA.officialExams.find(e => e.id === state.selectedExamId) : null;
+    if (!exam) return;
+
+    if (dom.scenarioDrawerTitle) {
+      dom.scenarioDrawerTitle.textContent = `${exam.title} — Scenario & Rates Table`;
+    }
+    if (dom.scenarioDrawerBody) {
+      dom.scenarioDrawerBody.innerHTML = exam.scenarioHtml || `<div class="paper-scenario-text">${escapeHtml(exam.scenario || '')}</div>`;
+    }
+    if (dom.scenarioDrawerBackdrop) dom.scenarioDrawerBackdrop.style.display = 'block';
+    if (dom.scenarioDrawer) dom.scenarioDrawer.style.display = 'flex';
+  }
+
+  function closeScenarioDrawer() {
+    if (dom.scenarioDrawerBackdrop) dom.scenarioDrawerBackdrop.style.display = 'none';
+    if (dom.scenarioDrawer) dom.scenarioDrawer.style.display = 'none';
+  }
+
   function exitExamPaper() {
+    closeScenarioDrawer();
     if (!state.examSubmitted) {
       if (!confirm("Are you sure you want to exit? Your exam progress will not be saved.")) {
         return;
@@ -2185,7 +2229,9 @@
     submitExam: submitExam,
     retakeExam: retakeExam,
     exitExamPaper: exitExamPaper,
-    exitQuiz: exitQuiz
+    exitQuiz: exitQuiz,
+    openScenarioDrawer: openScenarioDrawer,
+    closeScenarioDrawer: closeScenarioDrawer
   };
 
   window.addEventListener('DOMContentLoaded', init);

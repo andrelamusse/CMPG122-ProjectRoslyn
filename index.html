@@ -410,6 +410,7 @@
               <span id="navExamTimer" class="nav-timer-pill" style="display:none;">⏱️ 180:00</span>
             </div>
             <div class="navigator-actions">
+              <button type="button" id="btnOpenScenarioDrawer" class="action-btn-sm btn-scenario-drawer" onclick="CMPG122_APP.openScenarioDrawer()">📖 Scenario & Rates Table</button>
               <button type="button" id="btnJumpUnanswered" class="action-btn-sm" onclick="CMPG122_APP.jumpToNextUnanswered()">⏭️ Next Unanswered</button>
               <button type="button" id="btnJumpSubmit" class="action-btn-sm" onclick="CMPG122_APP.jumpToSubmit()">📋 Jump to Submit</button>
               <button type="button" id="btnNavExitExam" class="action-btn-sm" onclick="CMPG122_APP.exitExamPaper()" style="color:var(--danger-text); border-color:var(--danger-border);" title="Exit Exam Paper">✕ Exit</button>
@@ -571,6 +572,19 @@
           Open WhatsApp Direct Chat (066 067 3757)
         </a>
       </div>
+    </div>
+  <!-- Sticky Slide-Out Scenario & Rates Reference Drawer for Exam Mode -->
+  <div id="scenarioDrawerBackdrop" class="scenario-drawer-backdrop" style="display:none;" onclick="CMPG122_APP.closeScenarioDrawer()"></div>
+  <div id="scenarioDrawer" class="scenario-drawer" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="scenarioDrawerTitle">
+    <div class="scenario-drawer-header">
+      <div class="scenario-drawer-title-wrap">
+        <span class="scenario-drawer-badge">OFFICIAL EXAM SPECIFICATION</span>
+        <h3 id="scenarioDrawerTitle" class="scenario-drawer-title">Practical Scenario & Rates Table</h3>
+      </div>
+      <button type="button" id="btnCloseScenarioDrawer" class="action-btn-sm" onclick="CMPG122_APP.closeScenarioDrawer()" title="Close Specification Drawer">✕ Close</button>
+    </div>
+    <div id="scenarioDrawerBody" class="scenario-drawer-body">
+      <!-- Populated dynamically with rich scenario tables, naming matrix, and business rules -->
     </div>
   </div>
 
