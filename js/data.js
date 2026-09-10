@@ -851,6 +851,254 @@
     }
   ],
   "codeScenarios": {
+    "scenario_racing_light": {
+      "id": "scenario_racing_light",
+      "title": "Practical 1: Racing Light Trainer (SU1)",
+      "studyUnits": [
+        "SU1"
+      ],
+      "requiresCurrency": false,
+      "requiresValidation": false,
+      "description": "Develop the event handler for btnStop_Click. In Practical 1 (Racing Light Trainer), when the Stop button is clicked, the application must display the red traffic light (picRed.Visible = true), hide the amber light (picAmber.Visible = false), hide the green light (picGreen.Visible = false), hide the dark lamp (picDark.Visible = false), and update the instruction label text to 'STOP' (lblInstruction.Text = 'STOP').",
+      "controls": [
+        "picRed",
+        "picAmber",
+        "picGreen",
+        "picDark",
+        "lblInstruction",
+        "btnStop"
+      ],
+      "expectedOutputs": [
+        "lblInstruction"
+      ],
+      "weights": {
+        "syntax": 25,
+        "validation": 25,
+        "tests": 35,
+        "gui": 15
+      },
+      "methodHeader": "private void btnStop_Click(object sender, EventArgs e)\n{",
+      "methodFooter": "}",
+      "modelSolution": "picRed.Visible = true;\npicAmber.Visible = false;\npicGreen.Visible = false;\npicDark.Visible = false;\nlblInstruction.Text = \"STOP\";",
+      "testCases": [
+        {
+          "name": "Stop Signal Selected (Show Red, Hide Others, Set Text to STOP)",
+          "inputs": {
+            "lblInstruction": "SELECT A LIGHT",
+            "picDark": true,
+            "picRed": false,
+            "picAmber": false,
+            "picGreen": false
+          },
+          "expected": {
+            "lblInstruction": "STOP"
+          }
+        }
+      ]
+    },
+    "scenario_braai_master": {
+      "id": "scenario_braai_master",
+      "title": "Practical 2: Braai Master 3000 (SU1–SU2)",
+      "studyUnits": [
+        "SU1",
+        "SU2"
+      ],
+      "requiresCurrency": true,
+      "description": "Develop the event handler for btnCalculate_Click in Practical 2 (Braai Master 3000). Read kilograms of wors from txtWorsKg, butcher price per kg from txtPricePerKg, and price per roll from txtPricePerRoll using decimal.TryParse(). If any value fails to parse or is <= 0, display 'Please enter valid positive numbers.' using MessageBox.Show(\"Please enter valid positive numbers.\", \"Input Error\") and exit. Declare a constant for roll capacity: const decimal GRAMS_PER_ROLL = 120m;. Calculate: wors cost = kg * price/kg; total grams = kg * 1000m; rolls needed = (int)(totalGrams / GRAMS_PER_ROLL); rolls cost = rolls needed * price/roll; total cost = wors cost + rolls cost. Format total cost using .ToString(\"C\") and display in lblTotalCost.",
+      "controls": [
+        "txtName",
+        "txtWorsKg",
+        "txtPricePerKg",
+        "txtPricePerRoll",
+        "lblTotalCost",
+        "btnCalculate"
+      ],
+      "expectedOutputs": [
+        "lblTotalCost"
+      ],
+      "weights": {
+        "syntax": 25,
+        "validation": 25,
+        "tests": 35,
+        "gui": 15
+      },
+      "methodHeader": "private void btnCalculate_Click(object sender, EventArgs e)\n{",
+      "methodFooter": "}",
+      "modelSolution": "decimal worsKg;\ndecimal pricePerKg;\ndecimal pricePerRoll;\nconst decimal GRAMS_PER_ROLL = 120m;\n\nif (decimal.TryParse(txtWorsKg.Text, out worsKg) &&\n    decimal.TryParse(txtPricePerKg.Text, out pricePerKg) &&\n    decimal.TryParse(txtPricePerRoll.Text, out pricePerRoll))\n{\n    if (worsKg <= 0m || pricePerKg <= 0m || pricePerRoll <= 0m)\n    {\n        MessageBox.Show(\"Please enter valid positive numbers.\", \"Input Error\");\n        return;\n    }\n\n    decimal worsCost = worsKg * pricePerKg;\n    decimal totalGrams = worsKg * 1000m;\n    int rollsNeeded = (int)(totalGrams / GRAMS_PER_ROLL);\n    decimal rollsCost = rollsNeeded * pricePerRoll;\n    decimal totalCost = worsCost + rollsCost;\n\n    lblTotalCost.Text = totalCost.ToString(\"C\");\n}\nelse\n{\n    MessageBox.Show(\"Please enter valid positive numbers.\", \"Input Error\");\n}",
+      "testCases": [
+        {
+          "name": "Standard Braai: 2.5kg Wors @ R85/kg, R3.50/roll (Wors R212.50, 20 Rolls R70 -> Total R282.50)",
+          "inputs": {
+            "txtName": "Kobus",
+            "txtWorsKg": "2.5",
+            "txtPricePerKg": "85.00",
+            "txtPricePerRoll": "3.50"
+          },
+          "expected": {
+            "lblTotalCost": "282.5"
+          }
+        },
+        {
+          "name": "Small Braai: 1.2kg Wors @ R90/kg, R4.00/roll (Wors R108.00, 10 Rolls R40 -> Total R148.00)",
+          "inputs": {
+            "txtName": "Anri",
+            "txtWorsKg": "1.2",
+            "txtPricePerKg": "90.00",
+            "txtPricePerRoll": "4.00"
+          },
+          "expected": {
+            "lblTotalCost": "148"
+          }
+        }
+      ]
+    },
+    "scenario_speedtrap": {
+      "id": "scenario_speedtrap",
+      "title": "Practical 4: SpeedTrap Potchefstroom R30 (SU1–SU3)",
+      "studyUnits": [
+        "SU1",
+        "SU2",
+        "SU3"
+      ],
+      "requiresCurrency": true,
+      "description": "Develop btnCheck_Click for Practical 4 (SpeedTrap R30). Parse recorded speed from txtSpeed and limit from txtLimit using int.TryParse(). If invalid, display an error message with MessageBox.Show(). Calculate speedOver = speed - limit. If speedOver <= 0, set lblKmOver to '0 km/h', lblCategory to 'Within the limit', and lblFine to 'No fine. Safe driving.'. Otherwise, set lblKmOver to speedOver.ToString() + ' km/h' and evaluate the band: 1-10 is R250 ('Minor'), 11-20 is R750 ('Serious'), 21-30 is R1500 ('Severe'), >30 is R2500 ('Court appearance'). If zone (txtZone.Text) is 'School' or 'Town' AND speedOver > 20, double the fine and append ' - built-up area' to the category. If txtRepeat.Text is 'yes', add class constant REPEAT_FINE (500m) to the fine. Output category to lblCategory and fine formatted with .ToString('C') to lblFine.",
+      "controls": [
+        "txtSpeed",
+        "txtLimit",
+        "txtZone",
+        "txtRepeat",
+        "lblKmOver",
+        "lblCategory",
+        "lblFine",
+        "btnCheck"
+      ],
+      "expectedOutputs": [
+        "lblKmOver",
+        "lblCategory",
+        "lblFine"
+      ],
+      "weights": {
+        "syntax": 25,
+        "validation": 25,
+        "tests": 35,
+        "gui": 15
+      },
+      "methodHeader": "private void btnCheck_Click(object sender, EventArgs e)\n{",
+      "methodFooter": "}",
+      "modelSolution": "int speed;\nint limit;\nconst decimal REPEAT_FINE = 500m;\n\nif (int.TryParse(txtSpeed.Text, out speed) && int.TryParse(txtLimit.Text, out limit))\n{\n    int speedOver = speed - limit;\n    if (speedOver <= 0)\n    {\n        lblKmOver.Text = \"0 km/h\";\n        lblCategory.Text = \"Within the limit\";\n        lblFine.Text = \"No fine. Safe driving.\";\n        return;\n    }\n\n    lblKmOver.Text = speedOver.ToString() + \" km/h\";\n    decimal fine = 0m;\n    string category = \"\";\n\n    if (speedOver <= 10)\n    {\n        fine = 250m;\n        category = \"Minor\";\n    }\n    else if (speedOver <= 20)\n    {\n        fine = 750m;\n        category = \"Serious\";\n    }\n    else if (speedOver <= 30)\n    {\n        fine = 1500m;\n        category = \"Severe\";\n    }\n    else\n    {\n        fine = 2500m;\n        category = \"Court appearance\";\n    }\n\n    string zone = txtZone.Text;\n    bool isBuiltUp = (zone == \"School\" || zone == \"Town\");\n    if (isBuiltUp && speedOver > 20)\n    {\n        fine *= 2m;\n        category += \" - built-up area\";\n    }\n\n    if (txtRepeat.Text.CompareTo(\"yes\") == 0)\n    {\n        fine += REPEAT_FINE;\n    }\n\n    lblCategory.Text = category;\n    lblFine.Text = fine.ToString(\"C\");\n}\nelse\n{\n    MessageBox.Show(\"Please enter valid integers for speed and limit.\", \"Input Error\");\n}",
+      "testCases": [
+        {
+          "name": "School Zone 85 in 60 (25 km/h over -> Severe R1500 doubled to R3000)",
+          "inputs": {
+            "txtSpeed": "85",
+            "txtLimit": "60",
+            "txtZone": "School",
+            "txtRepeat": "no"
+          },
+          "expected": {
+            "lblKmOver": "25 km/h",
+            "lblCategory": "Severe - built-up area",
+            "lblFine": "3000"
+          }
+        },
+        {
+          "name": "Highway 105 in 80 with Repeat (25 km/h over -> Severe R1500 + R500 = R2000)",
+          "inputs": {
+            "txtSpeed": "105",
+            "txtLimit": "80",
+            "txtZone": "Highway",
+            "txtRepeat": "yes"
+          },
+          "expected": {
+            "lblKmOver": "25 km/h",
+            "lblCategory": "Severe",
+            "lblFine": "2000"
+          }
+        },
+        {
+          "name": "Safe Driving: 55 in 60 (0 km/h, Within the limit, No fine)",
+          "inputs": {
+            "txtSpeed": "55",
+            "txtLimit": "60",
+            "txtZone": "Town",
+            "txtRepeat": "no"
+          },
+          "expected": {
+            "lblKmOver": "0 km/h",
+            "lblCategory": "Within the limit",
+            "lblFine": "No fine. Safe driving."
+          }
+        }
+      ]
+    },
+    "scenario_vaal_cruise": {
+      "id": "scenario_vaal_cruise",
+      "title": "Practical 5: Vaal River Cruises Booking (SU1–SU4)",
+      "studyUnits": [
+        "SU1",
+        "SU2",
+        "SU3",
+        "SU4"
+      ],
+      "requiresCurrency": true,
+      "description": "Develop btnBook_Click for Practical 5 (Vaal River Cruises). Validate that a cruise route is selected from lstRoutes (lstRoutes.SelectedIndex != -1). If none selected, show 'Please select a cruise route.' using MessageBox.Show() and exit. Validate passenger count from txtPassengers using int.TryParse(); if invalid or < 1, display 'Please enter a valid passenger count of at least 1.' and return. Use a switch statement on lstRoutes.SelectedIndex: 0 is R250 (Sunset Leisure Cruise), 1 is R400 (Speedboat Adventure), 2 is R800 (Private Pontoon Charter). Subtotal = passengers * ticketPrice. If passengers >= 6, apply a 10% group discount. Final due = subtotal - discount. Display final due formatted with .ToString('C') in lblTotalDue.",
+      "controls": [
+        "lstRoutes",
+        "txtPassengers",
+        "radDaytime",
+        "radSunset",
+        "lblTotalDue",
+        "btnBook"
+      ],
+      "expectedOutputs": [
+        "lblTotalDue"
+      ],
+      "weights": {
+        "syntax": 25,
+        "validation": 25,
+        "tests": 35,
+        "gui": 15
+      },
+      "methodHeader": "private void btnBook_Click(object sender, EventArgs e)\n{",
+      "methodFooter": "}",
+      "modelSolution": "if (lstRoutes.SelectedIndex == -1)\n{\n    MessageBox.Show(\"Please select a cruise route.\", \"Selection Error\");\n    return;\n}\n\nint passengers;\nif (int.TryParse(txtPassengers.Text, out passengers) && passengers >= 1)\n{\n    decimal ticketPrice = 0m;\n    switch (lstRoutes.SelectedIndex)\n    {\n        case 0:\n            ticketPrice = 250m;\n            break;\n        case 1:\n            ticketPrice = 400m;\n            break;\n        case 2:\n            ticketPrice = 800m;\n            break;\n        default:\n            ticketPrice = 250m;\n            break;\n    }\n\n    decimal subtotal = passengers * ticketPrice;\n    decimal discount = 0m;\n    if (passengers >= 6)\n    {\n        discount = subtotal * 0.10m;\n    }\n\n    decimal finalDue = subtotal - discount;\n    lblTotalDue.Text = finalDue.ToString(\"C\");\n}\nelse\n{\n    MessageBox.Show(\"Please enter a valid passenger count of at least 1.\", \"Input Error\");\n}",
+      "testCases": [
+        {
+          "name": "Sunset Leisure 4 Passengers (4 * R250 = R1000)",
+          "inputs": {
+            "lstRoutes": {
+              "items": [
+                "Sunset Leisure Cruise (R250)",
+                "Speedboat Adventure (R400)",
+                "Private Pontoon Charter (R800)"
+              ],
+              "selectedIndex": 0
+            },
+            "txtPassengers": "4"
+          },
+          "expected": {
+            "lblTotalDue": "1000"
+          }
+        },
+        {
+          "name": "Speedboat Adventure 6 Passengers (6 * R400 = R2400 minus 10% = R2160)",
+          "inputs": {
+            "lstRoutes": {
+              "items": [
+                "Sunset Leisure Cruise (R250)",
+                "Speedboat Adventure (R400)",
+                "Private Pontoon Charter (R800)"
+              ],
+              "selectedIndex": 1
+            },
+            "txtPassengers": "6"
+          },
+          "expected": {
+            "lblTotalDue": "2160"
+          }
+        }
+      ]
+    },
     "scenario_wages": {
       "id": "scenario_wages",
       "title": "Scenario 1: Gross Wage & Overtime Calculator",
@@ -3395,25 +3643,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #16: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #16: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "When creating a new Visual Studio project for NWU CMPG122 practicals (such as Practical 1: Racing Light Trainer), why must students select 'Windows Forms App (.NET Framework)' tagged C# rather than 'Windows Forms App' without .NET Framework?",
+      "title": "When creating a new Visual Studio project for NWU CMPG122 practicals (such as Practical 1: Racing Light Trainer), why must students select 'Windows Forms App (.NET Framework)' tagged C# rather than 'Windows Forms App' without .NET Framework?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The non-framework template targets .NET Core where the visual form designer behaves differently and is incompatible with the prescribed module grading environment",
+        ".NET Core does not allow creating buttons or picture boxes in Visual Studio",
+        "The (.NET Framework) template is written in Python, which is required for Test 1",
+        "Windows Forms App without .NET Framework cannot be saved to the desktop"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The non-framework template targets .NET Core where the visual form designer behaves differently and is incompatible with the prescribed module grading environment",
+        ".NET Core does not allow creating buttons or picture boxes in Visual Studio",
+        "The (.NET Framework) template is written in Python, which is required for Test 1",
+        "Windows Forms App without .NET Framework cannot be saved to the desktop"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "NWU CMPG122 requires the traditional .NET Framework Windows Forms template. The modern .NET (Core) template uses an out-of-process designer that behaves differently and can break module rubrics.",
+      "explanation": "NWU CMPG122 requires the traditional .NET Framework Windows Forms template. The modern .NET (Core) template uses an out-of-process designer that behaves differently and can break module rubrics.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part A",
       "marks": 2
     },
     {
@@ -3421,25 +3669,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #17: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #17: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "In the Visual Studio 'Configure your new project' dialog for Practical 1, why is it critical to check 'Place solution and project in the same directory'?",
+      "title": "In the Visual Studio 'Configure your new project' dialog for Practical 1, why is it critical to check 'Place solution and project in the same directory'?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "It enables automatic hardware acceleration for graphics",
+        "It prevents an extra nested folder level, keeping the .sln and project files together for clean zipping and submission",
+        "It makes the application run twice as fast on laboratory workstations",
+        "It automatically renames all controls using Hungarian notation"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "It enables automatic hardware acceleration for graphics",
+        "It prevents an extra nested folder level, keeping the .sln and project files together for clean zipping and submission",
+        "It makes the application run twice as fast on laboratory workstations",
+        "It automatically renames all controls using Hungarian notation"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Checking this box places the solution file (.sln) and project contents into a single folder (e.g. 12345678_Prac1), making it simple to zip and preventing missing project file errors during grading.",
+      "explanation": "Checking this box places the solution file (.sln) and project contents into a single folder (e.g. 12345678_Prac1), making it simple to zip and preventing missing project file errors during grading.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part A Step 3",
       "marks": 2
     },
     {
@@ -3447,25 +3695,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #18: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #18: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "In Practical 1, four PictureBoxes (Off.png, Red.png, Amber.png, Green.png) represent a single traffic signal. What designer technique ensures the traffic light does not visibly jump or shift when changing colours?",
+      "title": "In Practical 1, four PictureBoxes (Off.png, Red.png, Amber.png, Green.png) represent a single traffic signal. What designer technique ensures the traffic light does not visibly jump or shift when changing colours?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Setting the opacity of the form to 50%",
+        "Placing them on four separate tabs in a TabControl",
+        "Setting identical pixel values for Location and Size in the Properties window rather than dragging by mouse",
+        "Calling Application.Restart() each time a button is clicked"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Setting the opacity of the form to 50%",
+        "Placing them on four separate tabs in a TabControl",
+        "Setting identical pixel values for Location and Size in the Properties window rather than dragging by mouse",
+        "Calling Application.Restart() each time a button is clicked"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Dragging controls by mouse cannot reliably align them to the exact pixel. Typing the exact same Location (X, Y) and Size (Width, Height) in the Properties window guarantees seamless stacking.",
+      "explanation": "Dragging controls by mouse cannot reliably align them to the exact pixel. Typing the exact same Location (X, Y) and Size (Width, Height) in the Properties window guarantees seamless stacking.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part D",
       "marks": 2
     },
     {
@@ -3473,25 +3721,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #19: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #19: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Once four PictureBoxes are stacked at identical coordinates on the form in Practical 1, only the top control can be clicked on the canvas. How can a developer select one of the PictureBoxes underneath?",
+      "title": "Once four PictureBoxes are stacked at identical coordinates on the form in Practical 1, only the top control can be clicked on the canvas. How can a developer select one of the PictureBoxes underneath?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Delete the top PictureBox, modify the lower one, and then undo",
+        "Hold Shift while clicking the Windows desktop wallpaper",
+        "Close Visual Studio and edit the .csproj file in Notepad",
+        "Use the drop-down control selector at the top of the Properties window"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Delete the top PictureBox, modify the lower one, and then undo",
+        "Hold Shift while clicking the Windows desktop wallpaper",
+        "Close Visual Studio and edit the .csproj file in Notepad",
+        "Use the drop-down control selector at the top of the Properties window"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The drop-down object list at the top of the Visual Studio Properties window lists every control on the form by name, allowing instant selection of any layered or hidden control.",
+      "explanation": "The drop-down object list at the top of the Visual Studio Properties window lists every control on the form by name, allowing instant selection of any layered or hidden control.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part D",
       "marks": 2
     },
     {
@@ -3499,25 +3747,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #20: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #20: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which PictureBox SizeMode property setting must be selected in Practical 1 to ensure traffic light graphics scale proportionally without being cropped or distorted?",
+      "title": "Which PictureBox SizeMode property setting must be selected in Practical 1 to ensure traffic light graphics scale proportionally without being cropped or distorted?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Zoom",
+        "Normal",
+        "AutoSize",
+        "StretchImage"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Zoom",
+        "Normal",
+        "AutoSize",
+        "StretchImage"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "PictureBoxSizeMode.Zoom scales the whole image up or down to fit the control while maintaining its correct aspect ratio, preventing a squashed or cropped traffic light.",
+      "explanation": "PictureBoxSizeMode.Zoom scales the whole image up or down to fit the control while maintaining its correct aspect ratio, preventing a squashed or cropped traffic light.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part D",
       "marks": 2
     },
     {
@@ -3525,25 +3773,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #21: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #21: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Why does setting a PictureBox's SizeMode to 'StretchImage' often cause mark deductions in NWU Practical 1?",
+      "title": "Why does setting a PictureBox's SizeMode to 'StretchImage' often cause mark deductions in NWU Practical 1?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "It causes a runtime crash if the image is in PNG format",
+        "It forces the image to distort its aspect ratio to match the box dimensions, resulting in a squashed or stretched graphic",
+        "It hides the PictureBox behind the Form background",
+        "It converts the image into grayscale"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "It causes a runtime crash if the image is in PNG format",
+        "It forces the image to distort its aspect ratio to match the box dimensions, resulting in a squashed or stretched graphic",
+        "It hides the PictureBox behind the Form background",
+        "It converts the image into grayscale"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 1,
+      "ans": 1,
+      "exp": "StretchImage stretches the width and height independently to fill the control bounds, distorting the original image proportions unless the control has the exact same aspect ratio.",
+      "explanation": "StretchImage stretches the width and height independently to fill the control bounds, distorting the original image proportions unless the control has the exact same aspect ratio.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part D",
       "marks": 2
     },
     {
@@ -3551,25 +3799,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #22: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #22: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "When Practical 1 starts, the dark traffic light (Off.png) must be visible and the other three lamps hidden. How should this be configured at design time?",
+      "title": "When Practical 1 starts, the dark traffic light (Off.png) must be visible and the other three lamps hidden. How should this be configured at design time?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Delete picRed, picAmber, and picGreen from the project until needed",
+        "Set Form1.Enabled to false",
+        "Set picRed.Visible, picAmber.Visible, and picGreen.Visible to false in the Properties window",
+        "Set the Opacity of the three lamps to 99%"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Delete picRed, picAmber, and picGreen from the project until needed",
+        "Set Form1.Enabled to false",
+        "Set picRed.Visible, picAmber.Visible, and picGreen.Visible to false in the Properties window",
+        "Set the Opacity of the three lamps to 99%"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Setting the Visible property to false in the Properties window ensures the red, amber, and green PictureBoxes are hidden when the form initializes, showing only the off lamp.",
+      "explanation": "Setting the Visible property to false in the Properties window ensures the red, amber, and green PictureBoxes are hidden when the form initializes, showing only the off lamp.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part D",
       "marks": 2
     },
     {
@@ -3577,25 +3825,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #23: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #23: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "If a student accidentally double-clicks the Form canvas instead of a Button, creating 'private void Form1_Load(object sender, EventArgs e)', what happens if they simply delete that method from Form1.cs?",
+      "title": "If a student accidentally double-clicks the Form canvas instead of a Button, creating 'private void Form1_Load(object sender, EventArgs e)', what happens if they simply delete that method from Form1.cs?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Visual Studio automatically replaces it with a button click handler",
+        "The Form permanently switches to full-screen mode",
+        "Nothing happens; Visual Studio silently cleans up the reference",
+        "The project fails to build because Form1.Designer.cs still contains an event hook referencing the deleted method"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Visual Studio automatically replaces it with a button click handler",
+        "The Form permanently switches to full-screen mode",
+        "Nothing happens; Visual Studio silently cleans up the reference",
+        "The project fails to build because Form1.Designer.cs still contains an event hook referencing the deleted method"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Double-clicking adds an event handler in Form1.cs and wires it up in Form1.Designer.cs ('this.Load += ...'). Deleting the method in Form1.cs leaves a broken reference in the designer, causing compiler errors.",
+      "explanation": "Double-clicking adds an event handler in Form1.cs and wires it up in Form1.Designer.cs ('this.Load += ...'). Deleting the method in Form1.cs leaves a broken reference in the designer, causing compiler errors.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part D (Traps)",
       "marks": 2
     },
     {
@@ -3603,25 +3851,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #24: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #24: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "What is the recommended student response when an accidental Form1_Load method is scaffolded in Form1.cs?",
+      "title": "What is the recommended student response when an accidental Form1_Load method is scaffolded in Form1.cs?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Either leave the empty method in Form1.cs (which is harmless) or clear the Load event in the Properties window Events tab before deleting the code",
+        "Restart Windows immediately",
+        "Change the project language to Visual Basic",
+        "Rename Form1.cs to Form2.cs"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Either leave the empty method in Form1.cs (which is harmless) or clear the Load event in the Properties window Events tab before deleting the code",
+        "Restart Windows immediately",
+        "Change the project language to Visual Basic",
+        "Rename Form1.cs to Form2.cs"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "Leaving an empty event handler method does no harm and keeps the build intact. Alternatively, remove the wireup from the Properties window Events tab first.",
+      "explanation": "Leaving an empty event handler method does no harm and keeps the build intact. Alternatively, remove the wireup from the Properties window Events tab first.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part D",
       "marks": 2
     },
     {
@@ -3629,25 +3877,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #25: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #25: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "In Practical 1, which C# statement should be executed in btnExit_Click to close the application safely?",
+      "title": "In Practical 1, which C# statement should be executed in btnExit_Click to close the application safely?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Stop();",
+        "this.Close();",
+        "Form1.Destroy();",
+        "System.Abort();"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Stop();",
+        "this.Close();",
+        "Form1.Destroy();",
+        "System.Abort();"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 1,
+      "ans": 1,
+      "exp": "In Windows Forms, 'this.Close();' closes the current form instance, releasing resources and terminating the application if it is the main startup form.",
+      "explanation": "In Windows Forms, 'this.Close();' closes the current form instance, releasing resources and terminating the application if it is the main startup form.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part B",
       "marks": 2
     },
     {
@@ -3655,25 +3903,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #26: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #26: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "In Practical 1, the window must be a fixed size that the user cannot resize or maximize. Which two Form properties control this?",
+      "title": "In Practical 1, the window must be a fixed size that the user cannot resize or maximize. Which two Form properties control this?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "WindowState = Minimized and ControlBox = false",
+        "AutoSize = true and AutoSizeMode = GrowOnly",
+        "FormBorderStyle = FixedSingle (or FixedDialog) and MaximizeBox = false",
+        "Locked = true and ShowIcon = false"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "WindowState = Minimized and ControlBox = false",
+        "AutoSize = true and AutoSizeMode = GrowOnly",
+        "FormBorderStyle = FixedSingle (or FixedDialog) and MaximizeBox = false",
+        "Locked = true and ShowIcon = false"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Setting FormBorderStyle to FixedSingle prevents border dragging, and setting MaximizeBox to false disables the maximize button on the title bar.",
+      "explanation": "Setting FormBorderStyle to FixedSingle prevents border dragging, and setting MaximizeBox to false disables the maximize button on the title bar.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part D",
       "marks": 2
     },
     {
@@ -3681,25 +3929,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #27: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #27: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which Form property changes the text displayed in the application's top title bar from 'Form1' to 'Racing Light Trainer'?",
+      "title": "Which Form property changes the text displayed in the application's top title bar from 'Form1' to 'Racing Light Trainer'?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Name",
+        "Title",
+        "Caption",
+        "Text"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Name",
+        "Title",
+        "Caption",
+        "Text"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 3,
+      "ans": 3,
+      "exp": "In Windows Forms, the 'Text' property of the Form controls the string rendered in the title bar.",
+      "explanation": "In Windows Forms, the 'Text' property of the Form controls the string rendered in the title bar.",
+      "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
     {
@@ -3707,25 +3955,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #28: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #28: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "According to NWU CMPG122 Hungarian naming standards, which identifier is properly named for a Button that prompts the driver to get ready?",
+      "title": "According to NWU CMPG122 Hungarian naming standards, which identifier is properly named for a Button that prompts the driver to get ready?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "btnReady",
+        "Button_Ready",
+        "ReadyButton",
+        "ready_btn"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "btnReady",
+        "Button_Ready",
+        "ReadyButton",
+        "ready_btn"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "NWU CMPG122 standards require a 3-letter lowercase prefix indicating control type ('btn') followed by a descriptive PascalCase name ('Ready').",
+      "explanation": "NWU CMPG122 standards require a 3-letter lowercase prefix indicating control type ('btn') followed by a descriptive PascalCase name ('Ready').",
+      "provenance": "NWU CMPG122 Naming Conventions Guide",
       "marks": 2
     },
     {
@@ -3733,25 +3981,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #29: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #29: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which of the following identifier names is ILLEGAL under C# lexical rules?",
+      "title": "Which of the following identifier names is ILLEGAL under C# lexical rules?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "picRedLamp",
+        "3rdLight",
+        "_tempValue",
+        "lblResult"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "picRedLamp",
+        "3rdLight",
+        "_tempValue",
+        "lblResult"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 1,
+      "ans": 1,
+      "exp": "C# identifiers must begin with an alphabetic character or underscore; they cannot start with a numeric digit (e.g. '3rdLight').",
+      "explanation": "C# identifiers must begin with an alphabetic character or underscore; they cannot start with a numeric digit (e.g. '3rdLight').",
+      "provenance": "Gaddis 4th Ed §2.3",
       "marks": 2
     },
     {
@@ -3759,25 +4007,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #30: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #30: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "How do you create a keyboard access key (mnemonic) for the Stop button so the user can press Alt+S to activate it?",
+      "title": "How do you create a keyboard access key (mnemonic) for the Stop button so the user can press Alt+S to activate it?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Set the button's KeyPreview property to 'S'",
+        "Set the button's AccessKey property to 'Alt+S'",
+        "Set the button's Text property to '&Stop'",
+        "Prefix the button name with 's_'"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Set the button's KeyPreview property to 'S'",
+        "Set the button's AccessKey property to 'Alt+S'",
+        "Set the button's Text property to '&Stop'",
+        "Prefix the button name with 's_'"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 2,
+      "ans": 2,
+      "exp": "In Windows Forms, placing an ampersand ('&') immediately before a character in a Button's Text property (e.g. '&Stop') creates a keyboard mnemonic (Alt+S).",
+      "explanation": "In Windows Forms, placing an ampersand ('&') immediately before a character in a Button's Text property (e.g. '&Stop') creates a keyboard mnemonic (Alt+S).",
+      "provenance": "Gaddis 4th Ed §2.3 & Practical Four",
       "marks": 2
     },
     {
@@ -3785,25 +4033,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #31: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #31: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which control property specifies the numerical sequence in which controls gain keyboard focus when the user presses the Tab key?",
+      "title": "Which control property specifies the numerical sequence in which controls gain keyboard focus when the user presses the Tab key?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "FocusOrder",
+        "SequenceNumber",
+        "TabOrder",
+        "TabIndex"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "FocusOrder",
+        "SequenceNumber",
+        "TabOrder",
+        "TabIndex"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The TabIndex property (starting from 0) defines the tab navigation sequence among focusable controls on a Form.",
+      "explanation": "The TabIndex property (starting from 0) defines the tab navigation sequence among focusable controls on a Form.",
+      "provenance": "Gaddis 4th Ed §2.3",
       "marks": 2
     },
     {
@@ -3811,25 +4059,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #32: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #32: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Why does pressing the Tab key on a Windows Form never place keyboard focus onto a Label control?",
+      "title": "Why does pressing the Tab key on a Windows Form never place keyboard focus onto a Label control?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Labels have their TabStop property set to false by default because they do not accept keyboard input",
+        "Labels are not drawn by the Windows operating system",
+        "Labels do not have a TabIndex property",
+        "Labels automatically close the active form when focused"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Labels have their TabStop property set to false by default because they do not accept keyboard input",
+        "Labels are not drawn by the Windows operating system",
+        "Labels do not have a TabIndex property",
+        "Labels automatically close the active form when focused"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "Labels are purely informational display controls; their TabStop property is false by default, so Tab navigation skips them.",
+      "explanation": "Labels are purely informational display controls; their TabStop property is false by default, so Tab navigation skips them.",
+      "provenance": "Gaddis 4th Ed §2.3",
       "marks": 2
     },
     {
@@ -3837,25 +4085,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #33: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #33: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "In Practical 1, lblInstruction displays words of differing lengths ('STOP', 'GET READY', 'GO'). Why should AutoSize be set to false and TextAlign to MiddleCenter?",
+      "title": "In Practical 1, lblInstruction displays words of differing lengths ('STOP', 'GET READY', 'GO'). Why should AutoSize be set to false and TextAlign to MiddleCenter?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "To allow the label to act as a button",
+        "To prevent the label boundary from shifting unpredictably and keep each instruction centered in its display area",
+        "To enable multi-line text input from the keyboard",
+        "To automatically translate text into Afrikaans"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "To allow the label to act as a button",
+        "To prevent the label boundary from shifting unpredictably and keep each instruction centered in its display area",
+        "To enable multi-line text input from the keyboard",
+        "To automatically translate text into Afrikaans"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 1,
+      "ans": 1,
+      "exp": "With AutoSize set to false, the label has fixed dimensions. Combined with TextAlign = MiddleCenter, messages of varying character length remain perfectly centered without resizing the label.",
+      "explanation": "With AutoSize set to false, the label has fixed dimensions. Combined with TextAlign = MiddleCenter, messages of varying character length remain perfectly centered without resizing the label.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part D",
       "marks": 2
     },
     {
@@ -3863,25 +4111,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #34: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #34: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "In Practical 1, what complete code block should execute inside btnStop_Click when the driver clicks Stop?",
+      "title": "In Practical 1, what complete code block should execute inside btnStop_Click when the driver clicks Stop?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "picRed.Visible = false; picAmber.Visible = true; lblInstruction.Text = \"GO\";",
+        "lblInstruction.Text = \"STOP\"; this.Close();",
+        "picRed.Visible = true; picAmber.Visible = false; picGreen.Visible = false; picDark.Visible = false; lblInstruction.Text = \"STOP\";",
+        "picRed.Image = picDark.Image; lblInstruction.Visible = false;"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "picRed.Visible = false; picAmber.Visible = true; lblInstruction.Text = \"GO\";",
+        "lblInstruction.Text = \"STOP\"; this.Close();",
+        "picRed.Visible = true; picAmber.Visible = false; picGreen.Visible = false; picDark.Visible = false; lblInstruction.Text = \"STOP\";",
+        "picRed.Image = picDark.Image; lblInstruction.Visible = false;"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Clicking Stop must show only the red light, hide the amber, green, and dark lamps, and update the instruction label text to 'STOP'.",
+      "explanation": "Clicking Stop must show only the red light, hide the amber, green, and dark lamps, and update the instruction label text to 'STOP'.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part E",
       "marks": 2
     },
     {
@@ -3889,25 +4137,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #35: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #35: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "In Practical 1, why is btnExit formatted with BackColor set to Red according to user interface design standards?",
+      "title": "In Practical 1, why is btnExit formatted with BackColor set to Red according to user interface design standards?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "To satisfy a compiler requirement for closing forms",
+        "Because red buttons process code faster",
+        "To make the button text invisible",
+        "To provide an unmistakable visual warning that clicking this button terminates the current session"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "To satisfy a compiler requirement for closing forms",
+        "Because red buttons process code faster",
+        "To make the button text invisible",
+        "To provide an unmistakable visual warning that clicking this button terminates the current session"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 3,
+      "ans": 3,
+      "exp": "In GUI design, high-consequence actions like exiting or deleting are highlighted in warning colors (such as red) to provide clear visual affordance and prevent accidental triggering.",
+      "explanation": "In GUI design, high-consequence actions like exiting or deleting are highlighted in warning colors (such as red) to provide clear visual affordance and prevent accidental triggering.",
+      "provenance": "NWU Practical 1: Racing Light Trainer Part D & Shneiderman Rule 5",
       "marks": 2
     },
     {
@@ -3915,25 +4163,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #36: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #36: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "What is the primary role of the InitializeComponent() method called inside the Form1 constructor?",
+      "title": "What is the primary role of the InitializeComponent() method called inside the Form1 constructor?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "It runs the auto-generated code in Form1.Designer.cs that instantiates controls, sets properties, and attaches event handlers",
+        "It connects to the remote eFundi grading server",
+        "It formats all numbers on the form as South African Rand",
+        "It shuts down the Visual Studio IDE"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "It runs the auto-generated code in Form1.Designer.cs that instantiates controls, sets properties, and attaches event handlers",
+        "It connects to the remote eFundi grading server",
+        "It formats all numbers on the form as South African Rand",
+        "It shuts down the Visual Studio IDE"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "InitializeComponent() is auto-generated by Visual Studio in Form1.Designer.cs to create controls, assign their initial properties, and bind event delegates.",
+      "explanation": "InitializeComponent() is auto-generated by Visual Studio in Form1.Designer.cs to create controls, assign their initial properties, and bind event delegates.",
+      "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
     {
@@ -3941,25 +4189,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #37: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #37: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Why does Visual C# use the 'partial' keyword when defining 'public partial class Form1 : Form'?",
+      "title": "Why does Visual C# use the 'partial' keyword when defining 'public partial class Form1 : Form'?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "It indicates that the class is only partially compiled",
+        "It allows the class implementation to be split across Form1.cs (user code) and Form1.Designer.cs (designer plumbing)",
+        "It restricts the class to single-threaded execution",
+        "It forces all methods in the class to return void"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "It indicates that the class is only partially compiled",
+        "It allows the class implementation to be split across Form1.cs (user code) and Form1.Designer.cs (designer plumbing)",
+        "It restricts the class to single-threaded execution",
+        "It forces all methods in the class to return void"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The 'partial' keyword allows a single C# class definition to be partitioned across multiple source files, keeping designer-generated plumbing separate from human-written code.",
+      "explanation": "The 'partial' keyword allows a single C# class definition to be partitioned across multiple source files, keeping designer-generated plumbing separate from human-written code.",
+      "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
     {
@@ -3967,25 +4215,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #38: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #38: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "What is the standard C# method signature for a Button click event handler in Windows Forms?",
+      "title": "What is the standard C# method signature for a Button click event handler in Windows Forms?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "public int btnClick()",
+        "static void Main(string[] args)",
+        "private void btnAction_Click(object sender, EventArgs e)",
+        "void HandleClick(Button btn)"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "public int btnClick()",
+        "static void Main(string[] args)",
+        "private void btnAction_Click(object sender, EventArgs e)",
+        "void HandleClick(Button btn)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Standard Windows Forms event handlers return void, use private access, and take two parameters: 'object sender' and 'EventArgs e'.",
+      "explanation": "Standard Windows Forms event handlers return void, use private access, and take two parameters: 'object sender' and 'EventArgs e'.",
+      "provenance": "Gaddis 4th Ed §2.3",
       "marks": 2
     },
     {
@@ -3993,25 +4241,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #39: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #39: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "In the event handler signature 'private void btnGo_Click(object sender, EventArgs e)', what does the 'sender' parameter hold?",
+      "title": "In the event handler signature 'private void btnGo_Click(object sender, EventArgs e)', what does the 'sender' parameter hold?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The email address of the current user",
+        "The time in milliseconds since the form loaded",
+        "The return value of the previous calculation",
+        "A reference to the control that raised the event (in this case, btnGo)"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The email address of the current user",
+        "The time in milliseconds since the form loaded",
+        "The return value of the previous calculation",
+        "A reference to the control that raised the event (in this case, btnGo)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The 'sender' parameter contains a reference to the specific object/control that triggered the event notification.",
+      "explanation": "The 'sender' parameter contains a reference to the specific object/control that triggered the event notification.",
+      "provenance": "Gaddis 4th Ed §2.3",
       "marks": 2
     },
     {
@@ -4019,25 +4267,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #40: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #40: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which file in a standard C# Windows Forms project contains the static Main() method that serves as the execution starting point?",
+      "title": "Which file in a standard C# Windows Forms project contains the static Main() method that serves as the execution starting point?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Program.cs",
+        "Form1.cs",
+        "Form1.Designer.cs",
+        "App.config"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Program.cs",
+        "Form1.cs",
+        "Form1.Designer.cs",
+        "App.config"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "Program.cs contains the static void Main() entry point method that calls Application.Run(new Form1()).",
+      "explanation": "Program.cs contains the static void Main() entry point method that calls Application.Run(new Form1()).",
+      "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
     {
@@ -4045,25 +4293,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #41: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #41: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which keyboard shortcut in Visual Studio executes 'Save All', ensuring all modified code files and designer changes are saved before submission?",
+      "title": "Which keyboard shortcut in Visual Studio executes 'Save All', ensuring all modified code files and designer changes are saved before submission?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Ctrl + S",
+        "Ctrl + Shift + S",
+        "Alt + F4",
+        "F5"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Ctrl + S",
+        "Ctrl + Shift + S",
+        "Alt + F4",
+        "F5"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Ctrl+Shift+S triggers 'Save All'. Ctrl+S saves only the current active document, which often leads to lost designer changes in practical submissions.",
+      "explanation": "Ctrl+Shift+S triggers 'Save All'. Ctrl+S saves only the current active document, which often leads to lost designer changes in practical submissions.",
+      "provenance": "NWU Practical 1 & 2 Submission Instructions",
       "marks": 2
     },
     {
@@ -4071,25 +4319,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #42: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #42: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "When a C# project is compiled, what intermediate format is produced before the CLR converts it into machine code?",
+      "title": "When a C# project is compiled, what intermediate format is produced before the CLR converts it into machine code?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Native x86 Assembly",
+        "Raw Java Bytecode",
+        "Common Intermediate Language (CIL/MSIL)",
+        "Pure ASCII text"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Native x86 Assembly",
+        "Raw Java Bytecode",
+        "Common Intermediate Language (CIL/MSIL)",
+        "Pure ASCII text"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The C# compiler compiles source code into Common Intermediate Language (CIL/MSIL), which the Common Language Runtime (CLR) JIT compiler translates to native machine code at runtime.",
+      "explanation": "The C# compiler compiles source code into Common Intermediate Language (CIL/MSIL), which the Common Language Runtime (CLR) JIT compiler translates to native machine code at runtime.",
+      "provenance": "Gaddis 4th Ed §1.5",
       "marks": 2
     },
     {
@@ -4097,25 +4345,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #43: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #43: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which core subsystem of the .NET Framework manages memory allocation, thread execution, and garbage collection for running C# programs?",
+      "title": "Which core subsystem of the .NET Framework manages memory allocation, thread execution, and garbage collection for running C# programs?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Visual Studio Solution Explorer",
+        "Windows File Explorer",
+        "Internet Information Services",
+        "Common Language Runtime (CLR)"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Visual Studio Solution Explorer",
+        "Windows File Explorer",
+        "Internet Information Services",
+        "Common Language Runtime (CLR)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The CLR (Common Language Runtime) is the virtual execution environment that manages memory, garbage collection, and code execution in .NET.",
+      "explanation": "The CLR (Common Language Runtime) is the virtual execution environment that manages memory, garbage collection, and code execution in .NET.",
+      "provenance": "Gaddis 4th Ed §1.5",
       "marks": 2
     },
     {
@@ -4123,24 +4371,24 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #44: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #44: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which Visual Studio window displays syntax errors, compiler warnings, and their corresponding line numbers when a build fails?",
+      "title": "Which Visual Studio window displays syntax errors, compiler warnings, and their corresponding line numbers when a build fails?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Error List",
+        "Toolbox",
+        "Properties Window",
+        "Object Browser"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Error List",
+        "Toolbox",
+        "Properties Window",
+        "Object Browser"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
+      "exp": "The Error List window lists compiler errors and warnings with error codes (e.g. CS1002) and exact file/line locations.",
+      "explanation": "The Error List window lists compiler errors and warnings with error codes (e.g. CS1002) and exact file/line locations.",
       "provenance": "Gaddis 4th Ed §1.8",
       "marks": 2
     },
@@ -4149,24 +4397,24 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #45: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #45: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "In the Visual Studio Designer, which tab in the Toolbox contains essential GUI elements like Button, CheckBox, Label, ListBox, and TextBox?",
+      "title": "In the Visual Studio Designer, which tab in the Toolbox contains essential GUI elements like Button, CheckBox, Label, ListBox, and TextBox?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Printing",
+        "Common Controls",
+        "Data Connections",
+        "WPF Interop"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Printing",
+        "Common Controls",
+        "Data Connections",
+        "WPF Interop"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The 'Common Controls' category in the Visual Studio Toolbox houses the most frequently used Windows Forms controls.",
+      "explanation": "The 'Common Controls' category in the Visual Studio Toolbox houses the most frequently used Windows Forms controls.",
       "provenance": "Gaddis 4th Ed §1.8",
       "marks": 2
     },
@@ -4175,25 +4423,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #46: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #46: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which property of a Label control changes the color of the text displayed on the screen?",
+      "title": "Which property of a Label control changes the color of the text displayed on the screen?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "BackColor",
+        "TextColor",
+        "ForeColor",
+        "FontColor"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "BackColor",
+        "TextColor",
+        "ForeColor",
+        "FontColor"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 2,
+      "ans": 2,
+      "exp": "ForeColor controls the text/foreground color of a control, whereas BackColor controls its background fill color.",
+      "explanation": "ForeColor controls the text/foreground color of a control, whereas BackColor controls its background fill color.",
+      "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
     {
@@ -4201,25 +4449,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #47: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #47: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "According to the NWU practical marking rubric, what happens if controls are left with default names like 'button1' or 'pictureBox3'?",
+      "title": "According to the NWU practical marking rubric, what happens if controls are left with default names like 'button1' or 'pictureBox3'?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The program crashes on launch",
+        "Visual Studio refuses to save the files",
+        "The project is automatically converted to Visual Basic",
+        "Marks are deducted under the Naming Conventions and Code Standards criterion"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The program crashes on launch",
+        "Visual Studio refuses to save the files",
+        "The project is automatically converted to Visual Basic",
+        "Marks are deducted under the Naming Conventions and Code Standards criterion"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Leaving default control names violates naming standards and results in mark deductions during practical marking.",
+      "explanation": "Leaving default control names violates naming standards and results in mark deductions during practical marking.",
+      "provenance": "NWU Practical 1 & Naming Conventions Guide",
       "marks": 2
     },
     {
@@ -4227,25 +4475,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #48: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #48: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which C# statement displays a modal message box with a caption and message string to inform the user?",
+      "title": "Which C# statement displays a modal message box with a caption and message string to inform the user?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "MessageBox.Show(\"Operation complete.\", \"Notice\");",
+        "Console.WriteLine(\"Message\");",
+        "Form.Alert(\"Operation complete.\");",
+        "Window.Prompt(\"Notice\", \"Message\");"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "MessageBox.Show(\"Operation complete.\", \"Notice\");",
+        "Console.WriteLine(\"Message\");",
+        "Form.Alert(\"Operation complete.\");",
+        "Window.Prompt(\"Notice\", \"Message\");"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "MessageBox.Show() is the standard method in Windows Forms to present modal pop-up messages.",
+      "explanation": "MessageBox.Show() is the standard method in Windows Forms to present modal pop-up messages.",
+      "provenance": "Gaddis 4th Ed §2.4",
       "marks": 2
     },
     {
@@ -4253,25 +4501,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #49: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #49: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "How does Shneiderman's 1st Golden Rule ('Strive for consistency') apply to control design across Windows Forms applications?",
+      "title": "How does Shneiderman's 1st Golden Rule ('Strive for consistency') apply to control design across Windows Forms applications?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Every form must be painted red",
+        "All buttons on all forms should use identical font styles, standard button heights, and consistent Hungarian naming prefixes",
+        "The user must be forced to use only keyboard arrows",
+        "Every control must have a random background color"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Every form must be painted red",
+        "All buttons on all forms should use identical font styles, standard button heights, and consistent Hungarian naming prefixes",
+        "The user must be forced to use only keyboard arrows",
+        "Every control must have a random background color"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Consistency in fonts, sizing, terminology, and naming reduces cognitive load and allows users to predict interface behavior.",
+      "explanation": "Consistency in fonts, sizing, terminology, and naming reduces cognitive load and allows users to predict interface behavior.",
+      "provenance": "Shneiderman HCI Ch 2 & SU7",
       "marks": 2
     },
     {
@@ -4279,25 +4527,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #50: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #50: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "How does Shneiderman's 3rd Golden Rule ('Offer informative feedback') apply when the user clicks 'btnGo' in Practical 1?",
+      "title": "How does Shneiderman's 3rd Golden Rule ('Offer informative feedback') apply when the user clicks 'btnGo' in Practical 1?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The program should remain silent and wait for the user to guess if it worked",
+        "The form minimizes to the Windows taskbar",
+        "The interface immediately switches the green light on and displays 'GO' in bold text to acknowledge the click",
+        "A sound card diagnostic routine runs in the background"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The program should remain silent and wait for the user to guess if it worked",
+        "The form minimizes to the Windows taskbar",
+        "The interface immediately switches the green light on and displays 'GO' in bold text to acknowledge the click",
+        "A sound card diagnostic routine runs in the background"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Informative feedback requires that every user action receives an immediate, clear visual confirmation (green lamp lit, instruction updated).",
+      "explanation": "Informative feedback requires that every user action receives an immediate, clear visual confirmation (green lamp lit, instruction updated).",
+      "provenance": "NWU Practical 1 & Shneiderman Rule 3",
       "marks": 2
     },
     {
@@ -4305,24 +4553,24 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #51: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #51: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "What characterizes the event-driven programming paradigm utilized in C# Windows Forms?",
+      "title": "What characterizes the event-driven programming paradigm utilized in C# Windows Forms?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Code executes strictly from line 1 to the end without stopping",
+        "Programs can only be run once per day",
+        "Only the CPU clock triggers code execution",
+        "The application waits in an event loop and executes specific handler routines in response to user actions like clicks and keystrokes"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Code executes strictly from line 1 to the end without stopping",
+        "Programs can only be run once per day",
+        "Only the CPU clock triggers code execution",
+        "The application waits in an event loop and executes specific handler routines in response to user actions like clicks and keystrokes"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
+      "answer": 3,
+      "ans": 3,
+      "exp": "In event-driven applications, user actions (button clicks, text inputs, form loading) fire events that trigger registered event handler methods.",
+      "explanation": "In event-driven applications, user actions (button clicks, text inputs, form loading) fire events that trigger registered event handler methods.",
       "provenance": "Gaddis 4th Ed §1.8",
       "marks": 2
     },
@@ -4331,25 +4579,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #52: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #52: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which Form property configures the form to open centered in the middle of the user's computer screen at launch?",
+      "title": "Which Form property configures the form to open centered in the middle of the user's computer screen at launch?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "StartPosition = FormStartPosition.CenterScreen;",
+        "CenterToScreen = true;",
+        "Location = Point(0, 0);",
+        "WindowState = FormWindowState.Normal;"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "StartPosition = FormStartPosition.CenterScreen;",
+        "CenterToScreen = true;",
+        "Location = Point(0, 0);",
+        "WindowState = FormWindowState.Normal;"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "Setting StartPosition to FormStartPosition.CenterScreen ensures the form appears neatly centered on the primary display upon opening.",
+      "explanation": "Setting StartPosition to FormStartPosition.CenterScreen ensures the form appears neatly centered on the primary display upon opening.",
+      "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
     {
@@ -4357,25 +4605,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #53: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #53: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "According to NWU submission guidelines, what score is awarded if a student submits only an isolated .cs file rather than the complete zipped project folder?",
+      "title": "According to NWU submission guidelines, what score is awarded if a student submits only an isolated .cs file rather than the complete zipped project folder?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "50% partial credit",
+        "0 marks because the full solution including project and designer files cannot be built and verified",
+        "100% full credit",
+        "75% with a minor late penalty"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "50% partial credit",
+        "0 marks because the full solution including project and designer files cannot be built and verified",
+        "100% full credit",
+        "75% with a minor late penalty"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 1,
+      "ans": 1,
+      "exp": "NWU practical guidelines explicitly state that submitting individual files or an incomplete folder scores 0 marks because it cannot be built or graded.",
+      "explanation": "NWU practical guidelines explicitly state that submitting individual files or an incomplete folder scores 0 marks because it cannot be built or graded.",
+      "provenance": "NWU Practical 1 & 2 Submission Guidelines",
       "marks": 2
     },
     {
@@ -4383,25 +4631,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #54: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #54: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which property of a Button can be set to false in code to prevent the user from clicking it, rendering it visually grayed out?",
+      "title": "Which property of a Button can be set to false in code to prevent the user from clicking it, rendering it visually grayed out?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Visible",
+        "ReadOnly",
+        "Enabled",
+        "Locked"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Visible",
+        "ReadOnly",
+        "Enabled",
+        "Locked"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Setting Enabled to false disables user interaction and renders the control in a grayed-out inactive state.",
+      "explanation": "Setting Enabled to false disables user interaction and renders the control in a grayed-out inactive state.",
+      "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
     {
@@ -4409,25 +4657,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #55: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #55: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which characters are used to denote a single-line comment in Visual C# source code?",
+      "title": "Which characters are used to denote a single-line comment in Visual C# source code?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "#",
+        "/*",
+        "--",
+        "//"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "#",
+        "/*",
+        "--",
+        "//"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 3,
+      "ans": 3,
+      "exp": "In C#, double forward slashes ('//') mark the remainder of the line as a comment ignored by the compiler.",
+      "explanation": "In C#, double forward slashes ('//') mark the remainder of the line as a comment ignored by the compiler.",
+      "provenance": "Gaddis 4th Ed §2.3",
       "marks": 2
     },
     {
@@ -4435,25 +4683,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #56: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #56: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "In NWU coding standards, what information must be included in the header comment block at the very top of Form1.cs?",
+      "title": "In NWU coding standards, what information must be included in the header comment block at the very top of Form1.cs?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Student name, student number, practical number, and date",
+        "Only the Visual Studio version number",
+        "The computer's MAC address",
+        "The lecturer's home phone number"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Student name, student number, practical number, and date",
+        "Only the Visual Studio version number",
+        "The computer's MAC address",
+        "The lecturer's home phone number"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "NWU practical standards require every submitted source file to begin with a comment block identifying the author's name, student number, practical name/number, and date.",
+      "explanation": "NWU practical standards require every submitted source file to begin with a comment block identifying the author's name, student number, practical name/number, and date.",
+      "provenance": "NWU Practical 1 Part E & Code Standards",
       "marks": 2
     },
     {
@@ -4461,25 +4709,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #57: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #57: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which method on a Windows Forms control programmatically brings it to the top of the z-order so it is not obscured by other controls?",
+      "title": "Which method on a Windows Forms control programmatically brings it to the top of the z-order so it is not obscured by other controls?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "SendToBack()",
+        "BringToFront()",
+        "SetTopLevel(true)",
+        "ShowAbove()"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "SendToBack()",
+        "BringToFront()",
+        "SetTopLevel(true)",
+        "ShowAbove()"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The BringToFront() method moves the target control to the front of the z-order layering stack.",
+      "explanation": "The BringToFront() method moves the target control to the front of the z-order layering stack.",
+      "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
     {
@@ -4487,25 +4735,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #58: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #58: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "What happens when a user presses Alt plus the underlined letter on a button with an access key?",
+      "title": "What happens when a user presses Alt plus the underlined letter on a button with an access key?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The button text changes to uppercase",
+        "The button moves to the center of the screen",
+        "The button's Click event handler executes exactly as if the mouse clicked it",
+        "The active form closes without saving"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The button text changes to uppercase",
+        "The button moves to the center of the screen",
+        "The button's Click event handler executes exactly as if the mouse clicked it",
+        "The active form closes without saving"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Pressing an access key combination (Alt + mnemonic) fires that button's Click event, facilitating rapid keyboard-only navigation.",
+      "explanation": "Pressing an access key combination (Alt + mnemonic) fires that button's Click event, facilitating rapid keyboard-only navigation.",
+      "provenance": "Gaddis 4th Ed §2.3",
       "marks": 2
     },
     {
@@ -4513,25 +4761,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #59: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #59: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Why is typing coordinate numbers into the Location property preferable to mouse dragging when aligning stacked graphics in Practical 1?",
+      "title": "Why is typing coordinate numbers into the Location property preferable to mouse dragging when aligning stacked graphics in Practical 1?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Mouse dragging permanently locks the control from future edits",
+        "Dragging disables the PictureBox image loader",
+        "Coordinates typed in code run 50% faster",
+        "Manual dragging cannot reliably guarantee pixel-exact placement, causing graphics to visibly stutter or shift upon switching"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Mouse dragging permanently locks the control from future edits",
+        "Dragging disables the PictureBox image loader",
+        "Coordinates typed in code run 50% faster",
+        "Manual dragging cannot reliably guarantee pixel-exact placement, causing graphics to visibly stutter or shift upon switching"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Typing exact pixel values in the Properties window guarantees 100% exact alignment, eliminating visual jitter between stacked images.",
+      "explanation": "Typing exact pixel values in the Properties window guarantees 100% exact alignment, eliminating visual jitter between stacked images.",
+      "provenance": "NWU Practical 1 Part D",
       "marks": 2
     },
     {
@@ -4539,25 +4787,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #60: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #60: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which namespace directive must be present at the top of Form1.cs to access Form, Button, and PictureBox classes?",
+      "title": "Which namespace directive must be present at the top of Form1.cs to access Form, Button, and PictureBox classes?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "using System.Windows.Forms;",
+        "using System.Web.UI;",
+        "using System.Console.Graphics;",
+        "using Microsoft.VisualBasic;"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "using System.Windows.Forms;",
+        "using System.Web.UI;",
+        "using System.Console.Graphics;",
+        "using Microsoft.VisualBasic;"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "'using System.Windows.Forms;' imports the Windows Forms control class hierarchy into the source file.",
+      "explanation": "'using System.Windows.Forms;' imports the Windows Forms control class hierarchy into the source file.",
+      "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
     {
@@ -4565,25 +4813,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #61: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #61: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "What is the runtime effect of executing 'picAmber.Visible = false;' in an event handler?",
+      "title": "What is the runtime effect of executing 'picAmber.Visible = false;' in an event handler?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The picture box is deleted from memory",
+        "The picture box and its image are hidden from view on the form",
+        "The image turns completely black",
+        "The image file on the hard drive is erased"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The picture box is deleted from memory",
+        "The picture box and its image are hidden from view on the form",
+        "The image turns completely black",
+        "The image file on the hard drive is erased"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Setting Visible = false hides the control from the user interface while preserving its state and properties in memory.",
+      "explanation": "Setting Visible = false hides the control from the user interface while preserving its state and properties in memory.",
+      "provenance": "NWU Practical 1 Part B",
       "marks": 2
     },
     {
@@ -4591,25 +4839,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #62: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #62: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "In the Visual Studio Properties window, what does clicking the lightning bolt icon display?",
+      "title": "In the Visual Studio Properties window, what does clicking the lightning bolt icon display?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "CPU performance statistics",
+        "Battery power level",
+        "The list of available events for the currently selected control",
+        "Database connection status"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "CPU performance statistics",
+        "Battery power level",
+        "The list of available events for the currently selected control",
+        "Database connection status"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The lightning bolt icon switches the Properties window to show all events (e.g. Click, TextChanged, KeyPress) supported by the control.",
+      "explanation": "The lightning bolt icon switches the Properties window to show all events (e.g. Click, TextChanged, KeyPress) supported by the control.",
+      "provenance": "Gaddis 4th Ed §2.3",
       "marks": 2
     },
     {
@@ -4617,25 +4865,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #63: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #63: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "When you double-click a TextBox control on a form in the Designer, which default event handler method is scaffolded?",
+      "title": "When you double-click a TextBox control on a form in the Designer, which default event handler method is scaffolded?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Click",
+        "Enter",
+        "Leave",
+        "TextChanged"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "Click",
+        "Enter",
+        "Leave",
+        "TextChanged"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The default event for a TextBox in Visual Studio is TextChanged, which fires whenever the text inside the box is altered.",
+      "explanation": "The default event for a TextBox in Visual Studio is TextChanged, which fires whenever the text inside the box is altered.",
+      "provenance": "Gaddis 4th Ed §2.3",
       "marks": 2
     },
     {
@@ -4643,25 +4891,25 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #64: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #64: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "What is the effect of setting a Form's MaximizeBox property to false?",
+      "title": "What is the effect of setting a Form's MaximizeBox property to false?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The maximize button in the form title bar is disabled (grayed out) or removed",
+        "The minimize button disappears",
+        "The form is automatically closed",
+        "The user cannot close the form"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "The maximize button in the form title bar is disabled (grayed out) or removed",
+        "The minimize button disappears",
+        "The form is automatically closed",
+        "The user cannot close the form"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "provenance": "Gaddis 4th Ed §1.8",
+      "exp": "Setting MaximizeBox = false prevents the user from expanding the form to fill the entire desktop screen.",
+      "explanation": "Setting MaximizeBox = false prevents the user from expanding the form to fill the entire desktop screen.",
+      "provenance": "NWU Practical 1 Part D",
       "marks": 2
     },
     {
@@ -4669,24 +4917,24 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Visual Studio GUI Concept #65: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
-      "title": "Visual Studio GUI Concept #65: In Gaddis Chapter 1, which principle governs Visual C# event handler method generation?",
+      "q": "Which Visual Studio IDE feature provides automatic keyword completion, syntax member suggestions, and parameter hints while writing C# code?",
+      "title": "Which Visual Studio IDE feature provides automatic keyword completion, syntax member suggestions, and parameter hints while writing C# code?",
       "options": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "CodeLens",
+        "IntelliSense",
+        "LiveShare",
+        "RefactorNow"
       ],
       "opts": [
-        "Double-clicking a control in the Designer generates its default event handler (e.g. Click) in Form1.cs",
-        "Event handlers must be written in assembly language",
-        "Controls can never have more than one event",
-        "Clicking a button automatically restarts Windows"
+        "CodeLens",
+        "IntelliSense",
+        "LiveShare",
+        "RefactorNow"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
-      "explanation": "Double-clicking a form control in the Visual Studio Designer automatically scaffolds its primary event handler (e.g. private void btn_Click).",
+      "answer": 1,
+      "ans": 1,
+      "exp": "IntelliSense is Microsoft's context-aware code completion assistant that displays member lists, parameter tooltips, and syntax hints.",
+      "explanation": "IntelliSense is Microsoft's context-aware code completion assistant that displays member lists, parameter tooltips, and syntax hints.",
       "provenance": "Gaddis 4th Ed §1.8",
       "marks": 2
     },
@@ -5085,25 +5333,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #16: In C# arithmetic and conversions, what rule applies to expression evaluation #16?",
-      "title": "Data Processing Concept #16: In C# arithmetic and conversions, what rule applies to expression evaluation #16?",
+      "q": "In Practical 2 (Braai Master 3000), why is 'decimal' the required and justified data type for butcher prices (pricePerKg, pricePerRoll) and total costs, rather than 'float' or 'double'?",
+      "title": "In Practical 2 (Braai Master 3000), why is 'decimal' the required and justified data type for butcher prices (pricePerKg, pricePerRoll) and total costs, rather than 'float' or 'double'?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "The double type is too large to fit into computer RAM",
+        "The decimal type uses 128-bit base-10 fixed-point representation, eliminating binary floating-point rounding errors in monetary calculations",
+        "The decimal type runs twice as fast as integer arithmetic",
+        "Visual Studio does not permit using double variables inside button click event handlers"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "The double type is too large to fit into computer RAM",
+        "The decimal type uses 128-bit base-10 fixed-point representation, eliminating binary floating-point rounding errors in monetary calculations",
+        "The decimal type runs twice as fast as integer arithmetic",
+        "Visual Studio does not permit using double variables inside button click event handlers"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Financial calculations demand exact precision. Binary floating-point types (float and double) suffer from representation errors with base-10 fractions (like 0.10), whereas decimal uses base-10 representation tailored for currency.",
+      "explanation": "Financial calculations demand exact precision. Binary floating-point types (float and double) suffer from representation errors with base-10 fractions (like 0.10), whereas decimal uses base-10 representation tailored for currency.",
+      "provenance": "NWU Practical 2 Part D & Gaddis 4th Ed §3.3",
       "marks": 2
     },
     {
@@ -5111,25 +5359,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #17: In C# arithmetic and conversions, what rule applies to expression evaluation #17?",
-      "title": "Data Processing Concept #17: In C# arithmetic and conversions, what rule applies to expression evaluation #17?",
+      "q": "In Practical 2, why must the number of bread rolls needed to serve the wors be declared as an 'int' rather than a 'decimal'?",
+      "title": "In Practical 2, why must the number of bread rolls needed to serve the wors be declared as an 'int' rather than a 'decimal'?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "C# does not allow dividing decimals",
+        "The int type automatically rounds numbers to four decimal places",
+        "Bread rolls are discrete physical items purchased in whole units; fractional rolls cannot be purchased from a bakery",
+        "int variables use more memory than decimal variables"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "C# does not allow dividing decimals",
+        "The int type automatically rounds numbers to four decimal places",
+        "Bread rolls are discrete physical items purchased in whole units; fractional rolls cannot be purchased from a bakery",
+        "int variables use more memory than decimal variables"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Choosing data types requires domain justification: rolls are discrete whole items (you cannot buy 0.3 of a roll), making int the only conceptually sound choice.",
+      "explanation": "Choosing data types requires domain justification: rolls are discrete whole items (you cannot buy 0.3 of a roll), making int the only conceptually sound choice.",
+      "provenance": "NWU Practical 2 Part D",
       "marks": 2
     },
     {
@@ -5137,25 +5385,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #18: In C# arithmetic and conversions, what rule applies to expression evaluation #18?",
-      "title": "Data Processing Concept #18: In C# arithmetic and conversions, what rule applies to expression evaluation #18?",
+      "q": "In Practical 2, a user enters 2.5 in txtWorsKg (kilograms) and a roll holds 120 grams. What unit conversion must be performed before calculating how many rolls can be filled?",
+      "title": "In Practical 2, a user enters 2.5 in txtWorsKg (kilograms) and a roll holds 120 grams. What unit conversion must be performed before calculating how many rolls can be filled?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Divide kilograms by 1000",
+        "Add 120 to kilograms directly",
+        "Convert kilograms into pounds",
+        "Multiply kilograms by 1000 to convert kilograms into grams: worsKg * 1000m"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Divide kilograms by 1000",
+        "Add 120 to kilograms directly",
+        "Convert kilograms into pounds",
+        "Multiply kilograms by 1000 to convert kilograms into grams: worsKg * 1000m"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Because roll capacity is measured in grams (120g) while butcher purchases are entered in kilograms, kilograms must be converted to grams by multiplying by 1000 before dividing.",
+      "explanation": "Because roll capacity is measured in grams (120g) while butcher purchases are entered in kilograms, kilograms must be converted to grams by multiplying by 1000 before dividing.",
+      "provenance": "NWU Practical 2 Part C Step 2",
       "marks": 2
     },
     {
@@ -5163,25 +5411,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #19: In C# arithmetic and conversions, what rule applies to expression evaluation #19?",
-      "title": "Data Processing Concept #19: In C# arithmetic and conversions, what rule applies to expression evaluation #19?",
+      "q": "In Practical 2, one roll holds 120 grams of wors. Why does writing 'int rolls = (int)(grams / 120);' directly in code violate NWU code standards?",
+      "title": "In Practical 2, one roll holds 120 grams of wors. Why does writing 'int rolls = (int)(grams / 120);' directly in code violate NWU code standards?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "120 is a magic number; fixed domain rules must be declared as a named constant (e.g. const decimal GRAMS_PER_ROLL = 120m;)",
+        "C# does not allow the number 120 in expressions",
+        "Division must always use a while loop",
+        "Parentheses are illegal around division operations"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "120 is a magic number; fixed domain rules must be declared as a named constant (e.g. const decimal GRAMS_PER_ROLL = 120m;)",
+        "C# does not allow the number 120 in expressions",
+        "Division must always use a while loop",
+        "Parentheses are illegal around division operations"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "exp": "Hardcoding unexplained numeric literals ('magic numbers') loses marks. Coding standards require declaring fixed problem domain constants with descriptive names.",
+      "explanation": "Hardcoding unexplained numeric literals ('magic numbers') loses marks. Coding standards require declaring fixed problem domain constants with descriptive names.",
+      "provenance": "NWU Practical 2 Part C & Code Standards",
       "marks": 2
     },
     {
@@ -5189,24 +5437,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #20: In C# arithmetic and conversions, what rule applies to expression evaluation #20?",
-      "title": "Data Processing Concept #20: In C# arithmetic and conversions, what rule applies to expression evaluation #20?",
+      "q": "Which statement correctly declares a named constant in C# for the 120-gram roll capacity?",
+      "title": "Which statement correctly declares a named constant in C# for the 120-gram roll capacity?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "var GRAMS_PER_ROLL = const 120;",
+        "const decimal GRAMS_PER_ROLL = 120m;",
+        "decimal constant GRAMS_PER_ROLL = 120;",
+        "readonly 120 = GRAMS_PER_ROLL;"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "var GRAMS_PER_ROLL = const 120;",
+        "const decimal GRAMS_PER_ROLL = 120m;",
+        "decimal constant GRAMS_PER_ROLL = 120;",
+        "readonly 120 = GRAMS_PER_ROLL;"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Named constants in C# use the 'const' keyword followed by the data type, an uppercase identifier, and an initialization value: 'const decimal GRAMS_PER_ROLL = 120m;'.",
+      "explanation": "Named constants in C# use the 'const' keyword followed by the data type, an uppercase identifier, and an initialization value: 'const decimal GRAMS_PER_ROLL = 120m;'.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -5215,25 +5463,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #21: In C# arithmetic and conversions, what rule applies to expression evaluation #21?",
-      "title": "Data Processing Concept #21: In C# arithmetic and conversions, what rule applies to expression evaluation #21?",
+      "q": "If total grams is 2500m and GRAMS_PER_ROLL is 120m, what is the evaluated result of '(int)(2500m / 120m)' in C#?",
+      "title": "If total grams is 2500m and GRAMS_PER_ROLL is 120m, what is the evaluated result of '(int)(2500m / 120m)' in C#?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "21",
+        "20.83",
+        "20",
+        "25"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "21",
+        "20.83",
+        "20",
+        "25"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 2,
+      "ans": 2,
+      "exp": "2500 / 120 equals 20.833... Explicitly casting to (int) truncates the decimal fraction towards zero, leaving exactly 20 whole rolls filled.",
+      "explanation": "2500 / 120 equals 20.833... Explicitly casting to (int) truncates the decimal fraction towards zero, leaving exactly 20 whole rolls filled.",
+      "provenance": "NWU Practical 2 Part D & Gaddis 4th Ed §3.5",
       "marks": 2
     },
     {
@@ -5241,25 +5489,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #22: In C# arithmetic and conversions, what rule applies to expression evaluation #22?",
-      "title": "Data Processing Concept #22: In C# arithmetic and conversions, what rule applies to expression evaluation #22?",
+      "q": "What happens when you compile the C# statement 'decimal price = 85.50;' without an 'm' or 'M' suffix?",
+      "title": "What happens when you compile the C# statement 'decimal price = 85.50;' without an 'm' or 'M' suffix?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "It compiles and runs without error",
+        "Visual Studio automatically inserts the 'm' suffix",
+        "The variable is converted to an int",
+        "Compiler error CS0664: Literal of type double cannot be implicitly converted to type decimal"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "It compiles and runs without error",
+        "Visual Studio automatically inserts the 'm' suffix",
+        "The variable is converted to an int",
+        "Compiler error CS0664: Literal of type double cannot be implicitly converted to type decimal"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Real number literals with decimal points are treated as double by default in C#. Converting double to decimal requires an explicit 'm' suffix or cast.",
+      "explanation": "Real number literals with decimal points are treated as double by default in C#. Converting double to decimal requires an explicit 'm' suffix or cast.",
+      "provenance": "Gaddis 4th Ed §3.3",
       "marks": 2
     },
     {
@@ -5267,25 +5515,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #23: In C# arithmetic and conversions, what rule applies to expression evaluation #23?",
-      "title": "Data Processing Concept #23: In C# arithmetic and conversions, what rule applies to expression evaluation #23?",
+      "q": "In Practical 2, what is the exact logical sequence required to calculate the total braai cost?",
+      "title": "In Practical 2, what is the exact logical sequence required to calculate the total braai cost?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "1. Wors cost = kg * price/kg; 2. Total grams = kg * 1000; 3. Rolls = grams / 120; 4. Rolls cost = rolls * price/roll; 5. Total = wors cost + rolls cost",
+        "Calculate total cost first, then divide by rolls",
+        "Multiply name by rolls, then add wors price",
+        "Divide price per roll by price per kg, then multiply by 120"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "1. Wors cost = kg * price/kg; 2. Total grams = kg * 1000; 3. Rolls = grams / 120; 4. Rolls cost = rolls * price/roll; 5. Total = wors cost + rolls cost",
+        "Calculate total cost first, then divide by rolls",
+        "Multiply name by rolls, then add wors price",
+        "Divide price per roll by price per kg, then multiply by 120"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "exp": "Practical 2 Part C prescribes the exact calculation pipeline: compute meat cost, convert meat to grams, determine rolls filled, calculate bread cost, and sum both costs.",
+      "explanation": "Practical 2 Part C prescribes the exact calculation pipeline: compute meat cost, convert meat to grams, determine rolls filled, calculate bread cost, and sum both costs.",
+      "provenance": "NWU Practical 2 Part C",
       "marks": 2
     },
     {
@@ -5293,25 +5541,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #24: In C# arithmetic and conversions, what rule applies to expression evaluation #24?",
-      "title": "Data Processing Concept #24: In C# arithmetic and conversions, what rule applies to expression evaluation #24?",
+      "q": "Why is 'decimal.TryParse(txtWorsKg.Text, out decimal worsKg)' strongly preferred over 'decimal.Parse(txtWorsKg.Text)' in Windows Forms?",
+      "title": "Why is 'decimal.TryParse(txtWorsKg.Text, out decimal worsKg)' strongly preferred over 'decimal.Parse(txtWorsKg.Text)' in Windows Forms?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "TryParse converts text into upper case",
+        "TryParse returns a boolean indicating success or failure without crashing the application with an unhandled FormatException if the user enters non-numeric text",
+        "TryParse automatically rounds negative numbers to positive",
+        "TryParse writes the value directly to the printer"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "TryParse converts text into upper case",
+        "TryParse returns a boolean indicating success or failure without crashing the application with an unhandled FormatException if the user enters non-numeric text",
+        "TryParse automatically rounds negative numbers to positive",
+        "TryParse writes the value directly to the printer"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 1,
+      "ans": 1,
+      "exp": "TryParse provides defensive input parsing: if the user enters letters or leaves the box blank, TryParse simply returns false rather than throwing a crashing FormatException.",
+      "explanation": "TryParse provides defensive input parsing: if the user enters letters or leaves the box blank, TryParse simply returns false rather than throwing a crashing FormatException.",
+      "provenance": "Gaddis 4th Ed §3.6",
       "marks": 2
     },
     {
@@ -5319,25 +5567,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #25: In C# arithmetic and conversions, what rule applies to expression evaluation #25?",
-      "title": "Data Processing Concept #25: In C# arithmetic and conversions, what rule applies to expression evaluation #25?",
+      "q": "In the statement 'bool ok = decimal.TryParse(txtWorsKg.Text, out worsKg);', what is the purpose of the 'out' keyword?",
+      "title": "In the statement 'bool ok = decimal.TryParse(txtWorsKg.Text, out worsKg);', what is the purpose of the 'out' keyword?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "It prints the variable to the debug console",
+        "It deletes the variable from memory when the method exits",
+        "It specifies that worsKg is passed by reference to receive the parsed numeric result from inside the method",
+        "It marks the variable as an output label"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "It prints the variable to the debug console",
+        "It deletes the variable from memory when the method exits",
+        "It specifies that worsKg is passed by reference to receive the parsed numeric result from inside the method",
+        "It marks the variable as an output label"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The 'out' parameter modifier allows a method to return multiple values by writing results directly into the caller's variable.",
+      "explanation": "The 'out' parameter modifier allows a method to return multiple values by writing results directly into the caller's variable.",
+      "provenance": "Gaddis 4th Ed §3.6",
       "marks": 2
     },
     {
@@ -5345,25 +5593,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #26: In C# arithmetic and conversions, what rule applies to expression evaluation #26?",
-      "title": "Data Processing Concept #26: In C# arithmetic and conversions, what rule applies to expression evaluation #26?",
+      "q": "If the user leaves txtWorsKg blank and clicks Calculate, what happens during 'decimal.TryParse(txtWorsKg.Text, out decimal worsKg)'?",
+      "title": "If the user leaves txtWorsKg blank and clicks Calculate, what happens during 'decimal.TryParse(txtWorsKg.Text, out decimal worsKg)'?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "The computer beeps and shuts down",
+        "The method returns true and worsKg becomes null",
+        "A fatal StackOverflowException is thrown",
+        "The method returns false and worsKg is set to its default value 0m"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "The computer beeps and shuts down",
+        "The method returns true and worsKg becomes null",
+        "A fatal StackOverflowException is thrown",
+        "The method returns false and worsKg is set to its default value 0m"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 3,
+      "ans": 3,
+      "exp": "When TryParse fails to parse an invalid or empty string, it returns false and populates the out variable with its type default (0m for decimal).",
+      "explanation": "When TryParse fails to parse an invalid or empty string, it returns false and populates the out variable with its type default (0m for decimal).",
+      "provenance": "Gaddis 4th Ed §3.6",
       "marks": 2
     },
     {
@@ -5371,25 +5619,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #27: In C# arithmetic and conversions, what rule applies to expression evaluation #27?",
-      "title": "Data Processing Concept #27: In C# arithmetic and conversions, what rule applies to expression evaluation #27?",
+      "q": "Which C# format string formats a decimal variable as South African Rand (e.g. 'R 282.50') matching the Practical 2 rubric?",
+      "title": "Which C# format string formats a decimal variable as South African Rand (e.g. 'R 282.50') matching the Practical 2 rubric?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "totalCost.ToString(\"C\")",
+        "totalCost.ToString(\"R\")",
+        "totalCost.ToString(\"M\")",
+        "totalCost.ToRand()"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "totalCost.ToString(\"C\")",
+        "totalCost.ToString(\"R\")",
+        "totalCost.ToString(\"M\")",
+        "totalCost.ToRand()"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "exp": "The 'C' (Currency) format specifier formats a numeric value with the regional currency symbol (Rand in South Africa) and 2 decimal places.",
+      "explanation": "The 'C' (Currency) format specifier formats a numeric value with the regional currency symbol (Rand in South Africa) and 2 decimal places.",
+      "provenance": "Gaddis 4th Ed §3.5 & Practical 2",
       "marks": 2
     },
     {
@@ -5397,25 +5645,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #28: In C# arithmetic and conversions, what rule applies to expression evaluation #28?",
-      "title": "Data Processing Concept #28: In C# arithmetic and conversions, what rule applies to expression evaluation #28?",
+      "q": "If 'decimal total = 282.5m;', what is the output of 'total.ToString(\"C\")' under South African regional settings?",
+      "title": "If 'decimal total = 282.5m;', what is the output of 'total.ToString(\"C\")' under South African regional settings?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "$282.50",
+        "R 282.50",
+        "282.50 Rand",
+        "R282.5"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "$282.50",
+        "R 282.50",
+        "282.50 Rand",
+        "R282.5"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The South African 'C' currency format formats the number with the 'R' prefix, space separator, and two fractional digits: 'R 282.50' (or 'R 282,50').",
+      "explanation": "The South African 'C' currency format formats the number with the 'R' prefix, space separator, and two fractional digits: 'R 282.50' (or 'R 282,50').",
+      "provenance": "NWU Practical 2 Part E",
       "marks": 2
     },
     {
@@ -5423,25 +5671,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #29: In C# arithmetic and conversions, what rule applies to expression evaluation #29?",
-      "title": "Data Processing Concept #29: In C# arithmetic and conversions, what rule applies to expression evaluation #29?",
+      "q": "What is the difference between 'total.ToString(\"C\")' and 'total.ToString(\"F2\")'?",
+      "title": "What is the difference between 'total.ToString(\"C\")' and 'total.ToString(\"F2\")'?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "\"F2\" rounds to two significant digits while \"C\" truncates",
+        "\"C\" only works on integers",
+        "\"C\" includes the currency symbol (e.g. 'R'), whereas \"F2\" displays strictly the fixed-point number with 2 decimals and no currency symbol",
+        "There is no difference between them"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "\"F2\" rounds to two significant digits while \"C\" truncates",
+        "\"C\" only works on integers",
+        "\"C\" includes the currency symbol (e.g. 'R'), whereas \"F2\" displays strictly the fixed-point number with 2 decimals and no currency symbol",
+        "There is no difference between them"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 2,
+      "ans": 2,
+      "exp": "\"C\" formats as regional currency with a symbol, while \"F\" (Fixed-point) formats purely as digits without currency indicators.",
+      "explanation": "\"C\" formats as regional currency with a symbol, while \"F\" (Fixed-point) formats purely as digits without currency indicators.",
+      "provenance": "Gaddis 4th Ed §3.5",
       "marks": 2
     },
     {
@@ -5449,24 +5697,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #30: In C# arithmetic and conversions, what rule applies to expression evaluation #30?",
-      "title": "Data Processing Concept #30: In C# arithmetic and conversions, what rule applies to expression evaluation #30?",
+      "q": "What is the value of the expression '7 / 2' in C#?",
+      "title": "What is the value of the expression '7 / 2' in C#?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "3.5",
+        "4",
+        "3.0",
+        "3"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "3.5",
+        "4",
+        "3.0",
+        "3"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "answer": 3,
+      "ans": 3,
+      "exp": "In C#, dividing an integer by another integer performs integer division, which drops (truncates) any fractional remainder, yielding 3.",
+      "explanation": "In C#, dividing an integer by another integer performs integer division, which drops (truncates) any fractional remainder, yielding 3.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -5475,24 +5723,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #31: In C# arithmetic and conversions, what rule applies to expression evaluation #31?",
-      "title": "Data Processing Concept #31: In C# arithmetic and conversions, what rule applies to expression evaluation #31?",
+      "q": "How can a programmer prevent integer division truncation when dividing two integer variables 'int a = 7; int b = 2;'?",
+      "title": "How can a programmer prevent integer division truncation when dividing two integer variables 'int a = 7; int b = 2;'?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "double result = (double)a / b;",
+        "double result = a / b;",
+        "double result = int.Parse(a / b);",
+        "double result = Math.Floor(a / b);"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "double result = (double)a / b;",
+        "double result = a / b;",
+        "double result = int.Parse(a / b);",
+        "double result = Math.Floor(a / b);"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "exp": "Casting at least one operand to double (or decimal) forces C# to evaluate the expression using floating-point division: (double)7 / 2 evaluates to 3.5.",
+      "explanation": "Casting at least one operand to double (or decimal) forces C# to evaluate the expression using floating-point division: (double)7 / 2 evaluates to 3.5.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -5501,24 +5749,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #32: In C# arithmetic and conversions, what rule applies to expression evaluation #32?",
-      "title": "Data Processing Concept #32: In C# arithmetic and conversions, what rule applies to expression evaluation #32?",
+      "q": "What is the result of evaluating '17 % 5' in C#?",
+      "title": "What is the result of evaluating '17 % 5' in C#?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "3.4",
+        "2",
+        "3",
+        "1"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "3.4",
+        "2",
+        "3",
+        "1"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The modulus operator (%) calculates the integer division remainder: 17 divided by 5 is 3 with a remainder of 2.",
+      "explanation": "The modulus operator (%) calculates the integer division remainder: 17 divided by 5 is 3 with a remainder of 2.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -5527,24 +5775,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #33: In C# arithmetic and conversions, what rule applies to expression evaluation #33?",
-      "title": "Data Processing Concept #33: In C# arithmetic and conversions, what rule applies to expression evaluation #33?",
+      "q": "What is the key difference in scope between a local variable declared inside btnCalculate_Click and a class-level field declared in Form1?",
+      "title": "What is the key difference in scope between a local variable declared inside btnCalculate_Click and a class-level field declared in Form1?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Local variables can be accessed by any program in Windows",
+        "Class-level fields can only hold strings",
+        "Local variables exist only while the method executes; class-level fields exist for the lifetime of the form and can be accessed by all methods in the class",
+        "Local variables cannot be modified"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Local variables can be accessed by any program in Windows",
+        "Class-level fields can only hold strings",
+        "Local variables exist only while the method executes; class-level fields exist for the lifetime of the form and can be accessed by all methods in the class",
+        "Local variables cannot be modified"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Local variables are created on method entry and destroyed on exit. Class-level fields persist across multiple events and can be shared among handlers.",
+      "explanation": "Local variables are created on method entry and destroyed on exit. Class-level fields persist across multiple events and can be shared among handlers.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -5553,25 +5801,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #34: In C# arithmetic and conversions, what rule applies to expression evaluation #34?",
-      "title": "Data Processing Concept #34: In C# arithmetic and conversions, what rule applies to expression evaluation #34?",
+      "q": "What compiler error occurs if you declare a local variable 'decimal total;' inside an event handler and attempt to use it in an expression without initializing it first?",
+      "title": "What compiler error occurs if you declare a local variable 'decimal total;' inside an event handler and attempt to use it in an expression without initializing it first?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "CS0029: Cannot convert decimal to int",
+        "CS1002: Semicolon expected",
+        "CS0103: The name 'total' does not exist",
+        "CS0165: Use of unassigned local variable 'total'"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "CS0029: Cannot convert decimal to int",
+        "CS1002: Semicolon expected",
+        "CS0103: The name 'total' does not exist",
+        "CS0165: Use of unassigned local variable 'total'"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 3,
+      "ans": 3,
+      "exp": "C# enforces definite assignment for local variables. Reading an uninitialized local variable generates compiler error CS0165.",
+      "explanation": "C# enforces definite assignment for local variables. Reading an uninitialized local variable generates compiler error CS0165.",
+      "provenance": "Gaddis 4th Ed §3.2",
       "marks": 2
     },
     {
@@ -5579,24 +5827,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #35: In C# arithmetic and conversions, what rule applies to expression evaluation #35?",
-      "title": "Data Processing Concept #35: In C# arithmetic and conversions, what rule applies to expression evaluation #35?",
+      "q": "Unlike local variables, what default value do numeric class-level fields automatically receive when a Form instance is initialized?",
+      "title": "Unlike local variables, what default value do numeric class-level fields automatically receive when a Form instance is initialized?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "0 (or 0m)",
+        "-1",
+        "null",
+        "Undefined"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "0 (or 0m)",
+        "-1",
+        "null",
+        "Undefined"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "exp": "Class-level fields in C# are automatically initialized to their type's default value (0 for integers, 0.0 for floating-point, 0m for decimal, false for bool).",
+      "explanation": "Class-level fields in C# are automatically initialized to their type's default value (0 for integers, 0.0 for floating-point, 0m for decimal, false for bool).",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -5605,25 +5853,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #36: In C# arithmetic and conversions, what rule applies to expression evaluation #36?",
-      "title": "Data Processing Concept #36: In C# arithmetic and conversions, what rule applies to expression evaluation #36?",
+      "q": "In Practical 2, which statements in btnClear_Click correctly reset the form controls and ready the interface for another calculation?",
+      "title": "In Practical 2, which statements in btnClear_Click correctly reset the form controls and ready the interface for another calculation?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "this.Close();",
+        "txtName.Clear(); txtWorsKg.Clear(); txtPricePerKg.Clear(); txtPricePerRoll.Clear(); lblTotalResult.Text = \"\"; txtName.Focus();",
+        "txtName.Text = \"0\"; txtWorsKg.Text = \"0\";",
+        "Application.Restart();"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "this.Close();",
+        "txtName.Clear(); txtWorsKg.Clear(); txtPricePerKg.Clear(); txtPricePerRoll.Clear(); lblTotalResult.Text = \"\"; txtName.Focus();",
+        "txtName.Text = \"0\"; txtWorsKg.Text = \"0\";",
+        "Application.Restart();"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 1,
+      "ans": 1,
+      "exp": "A proper Clear routine empties all input textboxes, clears output result labels, and returns keyboard focus to the first input field (txtName.Focus()).",
+      "explanation": "A proper Clear routine empties all input textboxes, clears output result labels, and returns keyboard focus to the first input field (txtName.Focus()).",
+      "provenance": "NWU Practical 2 Part C & Gaddis §3.8",
       "marks": 2
     },
     {
@@ -5631,25 +5879,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #37: In C# arithmetic and conversions, what rule applies to expression evaluation #37?",
-      "title": "Data Processing Concept #37: In C# arithmetic and conversions, what rule applies to expression evaluation #37?",
+      "q": "What does calling 'txtName.Focus();' accomplish in a Windows Forms application?",
+      "title": "What does calling 'txtName.Focus();' accomplish in a Windows Forms application?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "It maximizes the textbox to fill the screen",
+        "It changes the textbox background to yellow",
+        "It sets the active blinking keyboard cursor into txtName so the user can begin typing immediately without clicking",
+        "It validates the textbox contents against a database"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "It maximizes the textbox to fill the screen",
+        "It changes the textbox background to yellow",
+        "It sets the active blinking keyboard cursor into txtName so the user can begin typing immediately without clicking",
+        "It validates the textbox contents against a database"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The Focus() method programmatically assigns keyboard focus to the specified control, optimizing usability and reducing mouse actions.",
+      "explanation": "The Focus() method programmatically assigns keyboard focus to the specified control, optimizing usability and reducing mouse actions.",
+      "provenance": "Gaddis 4th Ed §3.8",
       "marks": 2
     },
     {
@@ -5657,25 +5905,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #38: In C# arithmetic and conversions, what rule applies to expression evaluation #38?",
-      "title": "Data Processing Concept #38: In C# arithmetic and conversions, what rule applies to expression evaluation #38?",
+      "q": "During practical marking at NWU, why is replying 'because it compiled' rejected by demonstrators when asked to justify choosing a variable's data type?",
+      "title": "During practical marking at NWU, why is replying 'because it compiled' rejected by demonstrators when asked to justify choosing a variable's data type?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Compilers never check data types",
+        "All variables must be strings in C#",
+        "Demonstrators prefer Python over C#",
+        "Valid justifications must be grounded in domain logic: required precision, avoidance of floating-point rounding errors, memory footprint, and discrete versus continuous values"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Compilers never check data types",
+        "All variables must be strings in C#",
+        "Demonstrators prefer Python over C#",
+        "Valid justifications must be grounded in domain logic: required precision, avoidance of floating-point rounding errors, memory footprint, and discrete versus continuous values"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Code compiling does not mean the design is sound (e.g. using double for money compiles but causes rounding errors). Types must be justified by business requirements.",
+      "explanation": "Code compiling does not mean the design is sound (e.g. using double for money compiles but causes rounding errors). Types must be justified by business requirements.",
+      "provenance": "NWU Practical 2 Part D (Marking Standards)",
       "marks": 2
     },
     {
@@ -5683,25 +5931,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #39: In C# arithmetic and conversions, what rule applies to expression evaluation #39?",
-      "title": "Data Processing Concept #39: In C# arithmetic and conversions, what rule applies to expression evaluation #39?",
+      "q": "Which C# primitive type stores an 8-byte (64-bit) floating-point number adhering to the IEEE 754 standard?",
+      "title": "Which C# primitive type stores an 8-byte (64-bit) floating-point number adhering to the IEEE 754 standard?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "double",
+        "float",
+        "decimal",
+        "long"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "double",
+        "float",
+        "decimal",
+        "long"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "exp": "The 'double' keyword represents 64-bit IEEE 754 double-precision floating-point numbers, offering 15-17 digits of precision.",
+      "explanation": "The 'double' keyword represents 64-bit IEEE 754 double-precision floating-point numbers, offering 15-17 digits of precision.",
+      "provenance": "Gaddis 4th Ed §3.3",
       "marks": 2
     },
     {
@@ -5709,24 +5957,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #40: In C# arithmetic and conversions, what rule applies to expression evaluation #40?",
-      "title": "Data Processing Concept #40: In C# arithmetic and conversions, what rule applies to expression evaluation #40?",
+      "q": "Which statement correctly declares a class-level constant for South African VAT at 15%?",
+      "title": "Which statement correctly declares a class-level constant for South African VAT at 15%?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "decimal const VAT_RATE = 15%;",
+        "const decimal VAT_RATE = 0.15m;",
+        "readonly VAT_RATE = 0.15;",
+        "static const decimal VAT_RATE := 0.15;"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "decimal const VAT_RATE = 15%;",
+        "const decimal VAT_RATE = 0.15m;",
+        "readonly VAT_RATE = 0.15;",
+        "static const decimal VAT_RATE := 0.15;"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "answer": 1,
+      "ans": 1,
+      "exp": "'const decimal VAT_RATE = 0.15m;' follows C# syntax: const keyword, type, uppercase identifier, and literal with 'm' suffix.",
+      "explanation": "'const decimal VAT_RATE = 0.15m;' follows C# syntax: const keyword, type, uppercase identifier, and literal with 'm' suffix.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -5735,24 +5983,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #41: In C# arithmetic and conversions, what rule applies to expression evaluation #41?",
-      "title": "Data Processing Concept #41: In C# arithmetic and conversions, what rule applies to expression evaluation #41?",
+      "q": "Why can a constant declared with the 'const' keyword NOT be reassigned inside an event handler?",
+      "title": "Why can a constant declared with the 'const' keyword NOT be reassigned inside an event handler?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Event handlers can only modify strings",
+        "The CLR disables memory writes after form loading",
+        "Constants are immutable values resolved at compile time whose values can never change during program execution",
+        "Constants only exist while the form is hidden"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Event handlers can only modify strings",
+        "The CLR disables memory writes after form loading",
+        "Constants are immutable values resolved at compile time whose values can never change during program execution",
+        "Constants only exist while the form is hidden"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Constants are read-only and immutable by definition. Attempting to reassign a const variable produces a compile-time error.",
+      "explanation": "Constants are read-only and immutable by definition. Attempting to reassign a const variable produces a compile-time error.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -5761,25 +6009,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #42: In C# arithmetic and conversions, what rule applies to expression evaluation #42?",
-      "title": "Data Processing Concept #42: In C# arithmetic and conversions, what rule applies to expression evaluation #42?",
+      "q": "What is C# string interpolation?",
+      "title": "What is C# string interpolation?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "A technique for encrypting strings",
+        "A method that converts strings into sound files",
+        "A way to translate strings into foreign languages",
+        "A syntax where string literals are prefixed with '$' and expressions inside '{...}' are evaluated and formatted directly inline"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "A technique for encrypting strings",
+        "A method that converts strings into sound files",
+        "A way to translate strings into foreign languages",
+        "A syntax where string literals are prefixed with '$' and expressions inside '{...}' are evaluated and formatted directly inline"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 3,
+      "ans": 3,
+      "exp": "String interpolation ($) allows expressions and format specifiers to be placed directly inside curly braces within string literals (e.g. $\"Total: {total:C}\").",
+      "explanation": "String interpolation ($) allows expressions and format specifiers to be placed directly inside curly braces within string literals (e.g. $\"Total: {total:C}\").",
+      "provenance": "Gaddis 4th Ed §3.5",
       "marks": 2
     },
     {
@@ -5787,25 +6035,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #43: In C# arithmetic and conversions, what rule applies to expression evaluation #43?",
-      "title": "Data Processing Concept #43: In C# arithmetic and conversions, what rule applies to expression evaluation #43?",
+      "q": "What string is produced by the interpolated expression '$\"Cost: {25.5m:C}\"' under South African locale settings?",
+      "title": "What string is produced by the interpolated expression '$\"Cost: {25.5m:C}\"' under South African locale settings?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Cost: R 25.50",
+        "Cost: 25.5m",
+        "Cost: R25.5",
+        "Cost: $25.50"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Cost: R 25.50",
+        "Cost: 25.5m",
+        "Cost: R25.5",
+        "Cost: $25.50"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "exp": "The ':C' format specifier inside the interpolation hole formats the decimal literal 25.5m as South African Rand: 'Cost: R 25.50'.",
+      "explanation": "The ':C' format specifier inside the interpolation hole formats the decimal literal 25.5m as South African Rand: 'Cost: R 25.50'.",
+      "provenance": "Gaddis 4th Ed §3.5",
       "marks": 2
     },
     {
@@ -5813,25 +6061,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #44: In C# arithmetic and conversions, what rule applies to expression evaluation #44?",
-      "title": "Data Processing Concept #44: In C# arithmetic and conversions, what rule applies to expression evaluation #44?",
+      "q": "In a try-catch block, which specific Exception class catches errors caused by entering non-numeric characters into decimal.Parse?",
+      "title": "In a try-catch block, which specific Exception class catches errors caused by entering non-numeric characters into decimal.Parse?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "DivideByZeroException",
+        "FormatException",
+        "IndexOutOfRangeException",
+        "NullReferenceException"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "DivideByZeroException",
+        "FormatException",
+        "IndexOutOfRangeException",
+        "NullReferenceException"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 1,
+      "ans": 1,
+      "exp": "decimal.Parse throws a FormatException when the string argument does not contain a valid number in an acceptable format.",
+      "explanation": "decimal.Parse throws a FormatException when the string argument does not contain a valid number in an acceptable format.",
+      "provenance": "Gaddis 4th Ed §3.6",
       "marks": 2
     },
     {
@@ -5839,25 +6087,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #45: In C# arithmetic and conversions, what rule applies to expression evaluation #45?",
-      "title": "Data Processing Concept #45: In C# arithmetic and conversions, what rule applies to expression evaluation #45?",
+      "q": "What is the purpose of the 'ex.Message' property inside 'catch (Exception ex)'?",
+      "title": "What is the purpose of the 'ex.Message' property inside 'catch (Exception ex)'?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "It contains the user's password",
+        "It holds the name of the Visual Studio installer",
+        "It provides a human-readable description of why the exception occurred",
+        "It restarts the computer automatically"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "It contains the user's password",
+        "It holds the name of the Visual Studio installer",
+        "It provides a human-readable description of why the exception occurred",
+        "It restarts the computer automatically"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The Message property of an Exception object contains an error message explaining the underlying reason for the runtime failure.",
+      "explanation": "The Message property of an Exception object contains an error message explaining the underlying reason for the runtime failure.",
+      "provenance": "Gaddis 4th Ed §3.6",
       "marks": 2
     },
     {
@@ -5865,24 +6113,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #46: In C# arithmetic and conversions, what rule applies to expression evaluation #46?",
-      "title": "Data Processing Concept #46: In C# arithmetic and conversions, what rule applies to expression evaluation #46?",
+      "q": "What is the evaluated result of 'decimal res = 10m + 5m * 2m;' in C#?",
+      "title": "What is the evaluated result of 'decimal res = 10m + 5m * 2m;' in C#?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "30m",
+        "100m",
+        "25m",
+        "20m"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "30m",
+        "100m",
+        "25m",
+        "20m"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Multiplication has higher precedence than addition: 5m * 2m evaluates to 10m, and 10m + 10m equals 20m.",
+      "explanation": "Multiplication has higher precedence than addition: 5m * 2m evaluates to 10m, and 10m + 10m equals 20m.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -5891,24 +6139,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #47: In C# arithmetic and conversions, what rule applies to expression evaluation #47?",
-      "title": "Data Processing Concept #47: In C# arithmetic and conversions, what rule applies to expression evaluation #47?",
+      "q": "What is the evaluated result of 'decimal res = (10m + 5m) * 2m;' in C#?",
+      "title": "What is the evaluated result of 'decimal res = (10m + 5m) * 2m;' in C#?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "30m",
+        "20m",
+        "15m",
+        "25m"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "30m",
+        "20m",
+        "15m",
+        "25m"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "exp": "Parentheses have the highest precedence: (10m + 5m) evaluates to 15m, which is then multiplied by 2m to yield 30m.",
+      "explanation": "Parentheses have the highest precedence: (10m + 5m) evaluates to 15m, which is then multiplied by 2m to yield 30m.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -5917,24 +6165,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #48: In C# arithmetic and conversions, what rule applies to expression evaluation #48?",
-      "title": "Data Processing Concept #48: In C# arithmetic and conversions, what rule applies to expression evaluation #48?",
+      "q": "Can an 'int' variable be implicitly assigned to a 'decimal' variable in C#?",
+      "title": "Can an 'int' variable be implicitly assigned to a 'decimal' variable in C#?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "No, C# forbids mixing int and decimal completely",
+        "Yes, int to decimal is an implicit widening conversion because all 32-bit integers fit within 128-bit decimal without loss of precision",
+        "Only if the int is negative",
+        "Only if an explicit cast is supplied"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "No, C# forbids mixing int and decimal completely",
+        "Yes, int to decimal is an implicit widening conversion because all 32-bit integers fit within 128-bit decimal without loss of precision",
+        "Only if the int is negative",
+        "Only if an explicit cast is supplied"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "answer": 1,
+      "ans": 1,
+      "exp": "An implicit conversion exists from int to decimal because no magnitude or precision is lost (widening conversion).",
+      "explanation": "An implicit conversion exists from int to decimal because no magnitude or precision is lost (widening conversion).",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -5943,24 +6191,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #49: In C# arithmetic and conversions, what rule applies to expression evaluation #49?",
-      "title": "Data Processing Concept #49: In C# arithmetic and conversions, what rule applies to expression evaluation #49?",
+      "q": "What happens if you attempt to add a 'double' variable and a 'decimal' variable directly: 'double d = 2.5; decimal m = 10m; var res = d + m;'?",
+      "title": "What happens if you attempt to add a 'double' variable and a 'decimal' variable directly: 'double d = 2.5; decimal m = 10m; var res = d + m;'?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "The result automatically becomes a float",
+        "The double is truncated to an int",
+        "Compiler error CS0019: Operator '+' cannot be applied to operands of type 'double' and 'decimal'",
+        "It compiles and evaluates without issue"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "The result automatically becomes a float",
+        "The double is truncated to an int",
+        "Compiler error CS0019: Operator '+' cannot be applied to operands of type 'double' and 'decimal'",
+        "It compiles and evaluates without issue"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "answer": 2,
+      "ans": 2,
+      "exp": "C# does not define implicit conversions between double and decimal due to potential precision conflicts. One operand must be explicitly cast.",
+      "explanation": "C# does not define implicit conversions between double and decimal due to potential precision conflicts. One operand must be explicitly cast.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -5969,25 +6217,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #50: In C# arithmetic and conversions, what rule applies to expression evaluation #50?",
-      "title": "Data Processing Concept #50: In C# arithmetic and conversions, what rule applies to expression evaluation #50?",
+      "q": "What is the difference between '(int)2.8' and 'Convert.ToInt32(2.8)' in C#?",
+      "title": "What is the difference between '(int)2.8' and 'Convert.ToInt32(2.8)' in C#?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "(int)2.8 throws an exception",
+        "Convert.ToInt32 always produces 0",
+        "Both always produce 2.8",
+        "(int)2.8 truncates towards zero to produce 2, whereas Convert.ToInt32(2.8) rounds to the nearest integer to produce 3"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "(int)2.8 throws an exception",
+        "Convert.ToInt32 always produces 0",
+        "Both always produce 2.8",
+        "(int)2.8 truncates towards zero to produce 2, whereas Convert.ToInt32(2.8) rounds to the nearest integer to produce 3"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The explicit cast (int) truncates the fractional part towards zero. Convert.ToInt32 rounds to the nearest integer using banker's rounding.",
+      "explanation": "The explicit cast (int) truncates the fractional part towards zero. Convert.ToInt32 rounds to the nearest integer using banker's rounding.",
+      "provenance": "Gaddis 4th Ed §3.5",
       "marks": 2
     },
     {
@@ -5995,25 +6243,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #51: In C# arithmetic and conversions, what rule applies to expression evaluation #51?",
-      "title": "Data Processing Concept #51: In C# arithmetic and conversions, what rule applies to expression evaluation #51?",
+      "q": "What does 'string clean = txtName.Text.Trim();' do?",
+      "title": "What does 'string clean = txtName.Text.Trim();' do?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Removes all leading and trailing whitespace characters from the text string",
+        "Converts the text to lowercase",
+        "Limits the string to 5 characters",
+        "Deletes all spaces between words"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Removes all leading and trailing whitespace characters from the text string",
+        "Converts the text to lowercase",
+        "Limits the string to 5 characters",
+        "Deletes all spaces between words"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "exp": "The Trim() method strips whitespace from both the beginning and the end of a string.",
+      "explanation": "The Trim() method strips whitespace from both the beginning and the end of a string.",
+      "provenance": "Gaddis 4th Ed §3.5",
       "marks": 2
     },
     {
@@ -6021,25 +6269,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #52: In C# arithmetic and conversions, what rule applies to expression evaluation #52?",
-      "title": "Data Processing Concept #52: In C# arithmetic and conversions, what rule applies to expression evaluation #52?",
+      "q": "Which declaration creates a boolean flag variable initialized to false?",
+      "title": "Which declaration creates a boolean flag variable initialized to false?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "boolean isValid = 0;",
+        "bool isValid = false;",
+        "bit isValid = false;",
+        "int isValid = false;"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "boolean isValid = 0;",
+        "bool isValid = false;",
+        "bit isValid = false;",
+        "int isValid = false;"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 1,
+      "ans": 1,
+      "exp": "In C#, boolean variables are declared with the 'bool' keyword and take literal values 'true' or 'false'.",
+      "explanation": "In C#, boolean variables are declared with the 'bool' keyword and take literal values 'true' or 'false'.",
+      "provenance": "Gaddis 4th Ed §3.3",
       "marks": 2
     },
     {
@@ -6047,25 +6295,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #53: In C# arithmetic and conversions, what rule applies to expression evaluation #53?",
-      "title": "Data Processing Concept #53: In C# arithmetic and conversions, what rule applies to expression evaluation #53?",
+      "q": "Under NWU Hungarian naming standards, what is the correct control prefix and identifier for a TextBox accepting a student's surname?",
+      "title": "Under NWU Hungarian naming standards, what is the correct control prefix and identifier for a TextBox accepting a student's surname?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "tb_Surname",
+        "SurnameTextBox",
+        "txtSurname",
+        "textSurname"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "tb_Surname",
+        "SurnameTextBox",
+        "txtSurname",
+        "textSurname"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 2,
+      "ans": 2,
+      "exp": "NWU standard prefixes mandate 'txt' for TextBox controls, followed by PascalCase: 'txtSurname'.",
+      "explanation": "NWU standard prefixes mandate 'txt' for TextBox controls, followed by PascalCase: 'txtSurname'.",
+      "provenance": "NWU CMPG122 Naming Conventions Guide",
       "marks": 2
     },
     {
@@ -6073,25 +6321,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #54: In C# arithmetic and conversions, what rule applies to expression evaluation #54?",
-      "title": "Data Processing Concept #54: In C# arithmetic and conversions, what rule applies to expression evaluation #54?",
+      "q": "Under NWU Hungarian naming standards, what is the correct control identifier for a Label displaying calculated gross pay?",
+      "title": "Under NWU Hungarian naming standards, what is the correct control identifier for a Label displaying calculated gross pay?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "lbl_pay",
+        "GrossPayLabel",
+        "labelGrossPay",
+        "lblGrossPay"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "lbl_pay",
+        "GrossPayLabel",
+        "labelGrossPay",
+        "lblGrossPay"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Labels use the 'lbl' prefix followed by descriptive PascalCase naming: 'lblGrossPay'.",
+      "explanation": "Labels use the 'lbl' prefix followed by descriptive PascalCase naming: 'lblGrossPay'.",
+      "provenance": "NWU CMPG122 Naming Conventions Guide",
       "marks": 2
     },
     {
@@ -6099,24 +6347,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #55: In C# arithmetic and conversions, what rule applies to expression evaluation #55?",
-      "title": "Data Processing Concept #55: In C# arithmetic and conversions, what rule applies to expression evaluation #55?",
+      "q": "Why is 'Math.Round(val, 2, MidpointRounding.AwayFromZero)' commonly used in financial accounting?",
+      "title": "Why is 'Math.Round(val, 2, MidpointRounding.AwayFromZero)' commonly used in financial accounting?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "It rounds .005 up to .01 (standard commercial rounding) rather than rounding to the nearest even number (banker's rounding)",
+        "It converts negative numbers to positive",
+        "It automatically calculates VAT",
+        "It eliminates all decimal places"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "It rounds .005 up to .01 (standard commercial rounding) rather than rounding to the nearest even number (banker's rounding)",
+        "It converts negative numbers to positive",
+        "It automatically calculates VAT",
+        "It eliminates all decimal places"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "exp": "MidpointRounding.AwayFromZero implements traditional arithmetic rounding (e.g. 2.5 rounds to 3), which matches standard commercial practice.",
+      "explanation": "MidpointRounding.AwayFromZero implements traditional arithmetic rounding (e.g. 2.5 rounds to 3), which matches standard commercial practice.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -6125,25 +6373,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #56: In C# arithmetic and conversions, what rule applies to expression evaluation #56?",
-      "title": "Data Processing Concept #56: In C# arithmetic and conversions, what rule applies to expression evaluation #56?",
+      "q": "What output does '15000m.ToString(\"N0\")' produce?",
+      "title": "What output does '15000m.ToString(\"N0\")' produce?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "15000.00",
+        "15,000",
+        "R 15000",
+        "1.50E+04"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "15000.00",
+        "15,000",
+        "R 15000",
+        "1.50E+04"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The 'N0' format specifier formats a number with digit group separators (commas) and zero fractional decimal places: '15,000'.",
+      "explanation": "The 'N0' format specifier formats a number with digit group separators (commas) and zero fractional decimal places: '15,000'.",
+      "provenance": "Gaddis 4th Ed §3.5",
       "marks": 2
     },
     {
@@ -6151,25 +6399,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #57: In C# arithmetic and conversions, what rule applies to expression evaluation #57?",
-      "title": "Data Processing Concept #57: In C# arithmetic and conversions, what rule applies to expression evaluation #57?",
+      "q": "What happens when the '+' operator is used with a string operand and a numeric operand in C#?",
+      "title": "What happens when the '+' operator is used with a string operand and a numeric operand in C#?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "A FormatException is thrown at runtime",
+        "The string is converted to a number and added",
+        "String concatenation is performed; the numeric value is converted to a string and joined to the other string",
+        "Compiler error CS0019 occurs"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "A FormatException is thrown at runtime",
+        "The string is converted to a number and added",
+        "String concatenation is performed; the numeric value is converted to a string and joined to the other string",
+        "Compiler error CS0019 occurs"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 2,
+      "ans": 2,
+      "exp": "When either operand of '+' is a string, C# treats '+' as the string concatenation operator, converting the other operand to its string representation.",
+      "explanation": "When either operand of '+' is a string, C# treats '+' as the string concatenation operator, converting the other operand to its string representation.",
+      "provenance": "Gaddis 4th Ed §3.2",
       "marks": 2
     },
     {
@@ -6177,25 +6425,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #58: In C# arithmetic and conversions, what rule applies to expression evaluation #58?",
-      "title": "Data Processing Concept #58: In C# arithmetic and conversions, what rule applies to expression evaluation #58?",
+      "q": "What does '\"Subtotal: \" + 50 + 20' evaluate to in C#?",
+      "title": "What does '\"Subtotal: \" + 50 + 20' evaluate to in C#?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "\"Subtotal: 70\"",
+        "\"Subtotal: 1000\"",
+        "A compilation error",
+        "\"Subtotal: 5020\""
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "\"Subtotal: 70\"",
+        "\"Subtotal: 1000\"",
+        "A compilation error",
+        "\"Subtotal: 5020\""
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Evaluation proceeds left-to-right: '\"Subtotal: \" + 50' produces '\"Subtotal: 50\"', and concatenating 20 yields '\"Subtotal: 5020\"'.",
+      "explanation": "Evaluation proceeds left-to-right: '\"Subtotal: \" + 50' produces '\"Subtotal: 50\"', and concatenating 20 yields '\"Subtotal: 5020\"'.",
+      "provenance": "Gaddis 4th Ed §3.2",
       "marks": 2
     },
     {
@@ -6203,25 +6451,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #59: In C# arithmetic and conversions, what rule applies to expression evaluation #59?",
-      "title": "Data Processing Concept #59: In C# arithmetic and conversions, what rule applies to expression evaluation #59?",
+      "q": "How can '\"Subtotal: \" + 50 + 20' be corrected to display 'Subtotal: 70'?",
+      "title": "How can '\"Subtotal: \" + 50 + 20' be corrected to display 'Subtotal: 70'?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "\"Subtotal: \" + (50 + 20)",
+        "\"Subtotal: \" + 50 - 20",
+        "\"Subtotal: \" * (50 + 20)",
+        "\"Subtotal: \" + \"70\" - 20"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "\"Subtotal: \" + (50 + 20)",
+        "\"Subtotal: \" + 50 - 20",
+        "\"Subtotal: \" * (50 + 20)",
+        "\"Subtotal: \" + \"70\" - 20"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "exp": "Enclosing the numbers in parentheses '(50 + 20)' forces arithmetic addition first before string concatenation.",
+      "explanation": "Enclosing the numbers in parentheses '(50 + 20)' forces arithmetic addition first before string concatenation.",
+      "provenance": "Gaddis 4th Ed §3.2",
       "marks": 2
     },
     {
@@ -6229,24 +6477,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #60: In C# arithmetic and conversions, what rule applies to expression evaluation #60?",
-      "title": "Data Processing Concept #60: In C# arithmetic and conversions, what rule applies to expression evaluation #60?",
+      "q": "What is the evaluated result of '10 / 4.0' in C#?",
+      "title": "What is the evaluated result of '10 / 4.0' in C#?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "2",
+        "2.5",
+        "2.0",
+        "3"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "2",
+        "2.5",
+        "2.0",
+        "3"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Because 4.0 is a double literal, C# performs floating-point division, producing the exact double result 2.5.",
+      "explanation": "Because 4.0 is a double literal, C# performs floating-point division, producing the exact double result 2.5.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -6255,25 +6503,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #61: In C# arithmetic and conversions, what rule applies to expression evaluation #61?",
-      "title": "Data Processing Concept #61: In C# arithmetic and conversions, what rule applies to expression evaluation #61?",
+      "q": "Which C# method returns true if a string variable is either null, empty, or contains only whitespace spaces?",
+      "title": "Which C# method returns true if a string variable is either null, empty, or contains only whitespace spaces?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "str.IsEmpty()",
+        "string.CheckEmpty(str)",
+        "string.IsNullOrWhiteSpace(str)",
+        "str.HasNoText()"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "str.IsEmpty()",
+        "string.CheckEmpty(str)",
+        "string.IsNullOrWhiteSpace(str)",
+        "str.HasNoText()"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 2,
+      "ans": 2,
+      "exp": "string.IsNullOrWhiteSpace() evaluates whether a string is null, empty (\"\"), or consists entirely of whitespace characters.",
+      "explanation": "string.IsNullOrWhiteSpace() evaluates whether a string is null, empty (\"\"), or consists entirely of whitespace characters.",
+      "provenance": "Gaddis 4th Ed §3.5",
       "marks": 2
     },
     {
@@ -6281,25 +6529,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #62: In C# arithmetic and conversions, what rule applies to expression evaluation #62?",
-      "title": "Data Processing Concept #62: In C# arithmetic and conversions, what rule applies to expression evaluation #62?",
+      "q": "What happens if a student uses 'decimal.Parse(\"\")' on an empty TextBox string without try-catch protection?",
+      "title": "What happens if a student uses 'decimal.Parse(\"\")' on an empty TextBox string without try-catch protection?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "The variable is assigned 0m silently",
+        "The form reloads automatically",
+        "The textbox turns red",
+        "A FormatException is thrown, immediately terminating or crashing the application"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "The variable is assigned 0m silently",
+        "The form reloads automatically",
+        "The textbox turns red",
+        "A FormatException is thrown, immediately terminating or crashing the application"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 3,
+      "ans": 3,
+      "exp": "decimal.Parse cannot parse an empty string and throws an unhandled FormatException, causing a program crash.",
+      "explanation": "decimal.Parse cannot parse an empty string and throws an unhandled FormatException, causing a program crash.",
+      "provenance": "Gaddis 4th Ed §3.6",
       "marks": 2
     },
     {
@@ -6307,25 +6555,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #63: In C# arithmetic and conversions, what rule applies to expression evaluation #63?",
-      "title": "Data Processing Concept #63: In C# arithmetic and conversions, what rule applies to expression evaluation #63?",
+      "q": "In Practical 2, how should the greeting line for the braai master (e.g. 'Braai master: Andre') be generated?",
+      "title": "In Practical 2, how should the greeting line for the braai master (e.g. 'Braai master: Andre') be generated?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "lblGreeting.Text = $\"Braai master: {txtName.Text.Trim()}\";",
+        "lblGreeting.Text = \"Braai master: user\";",
+        "txtName.Text = lblGreeting.Text;",
+        "lblGreeting.Name = txtName.Name;"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "lblGreeting.Text = $\"Braai master: {txtName.Text.Trim()}\";",
+        "lblGreeting.Text = \"Braai master: user\";",
+        "txtName.Text = lblGreeting.Text;",
+        "lblGreeting.Name = txtName.Name;"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "exp": "String interpolation or concatenation with txtName.Text dynamically formats the personalized greeting required by Practical 2.",
+      "explanation": "String interpolation or concatenation with txtName.Text dynamically formats the personalized greeting required by Practical 2.",
+      "provenance": "NWU Practical 2 Part C",
       "marks": 2
     },
     {
@@ -6333,24 +6581,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #64: In C# arithmetic and conversions, what rule applies to expression evaluation #64?",
-      "title": "Data Processing Concept #64: In C# arithmetic and conversions, what rule applies to expression evaluation #64?",
+      "q": "What operator in C# explicitly converts an expression from one data type to another, such as '(int)totalCost'?",
+      "title": "What operator in C# explicitly converts an expression from one data type to another, such as '(int)totalCost'?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Ternary operator",
+        "Cast operator",
+        "Modulus operator",
+        "Null-coalescing operator"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Ternary operator",
+        "Cast operator",
+        "Modulus operator",
+        "Null-coalescing operator"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The cast operator (parentheses enclosing a type name) explicitly instructs the compiler to convert a value to the specified type.",
+      "explanation": "The cast operator (parentheses enclosing a type name) explicitly instructs the compiler to convert a value to the specified type.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -6359,25 +6607,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #65: In C# arithmetic and conversions, what rule applies to expression evaluation #65?",
-      "title": "Data Processing Concept #65: In C# arithmetic and conversions, what rule applies to expression evaluation #65?",
+      "q": "What is the approximate maximum value that can be held by a standard 32-bit signed C# 'int' variable?",
+      "title": "What is the approximate maximum value that can be held by a standard 32-bit signed C# 'int' variable?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Approximately 32,767",
+        "Approximately 65,535",
+        "Approximately 2.14 billion (2,147,483,647)",
+        "Virtually unlimited"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Approximately 32,767",
+        "Approximately 65,535",
+        "Approximately 2.14 billion (2,147,483,647)",
+        "Virtually unlimited"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 2,
+      "ans": 2,
+      "exp": "A signed 32-bit integer ranges from -2,147,483,648 to +2,147,483,647 (int.MaxValue).",
+      "explanation": "A signed 32-bit integer ranges from -2,147,483,648 to +2,147,483,647 (int.MaxValue).",
+      "provenance": "Gaddis 4th Ed §3.3",
       "marks": 2
     },
     {
@@ -6385,25 +6633,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #66: In C# arithmetic and conversions, what rule applies to expression evaluation #66?",
-      "title": "Data Processing Concept #66: In C# arithmetic and conversions, what rule applies to expression evaluation #66?",
+      "q": "Which C# primitive type represents a single 16-bit Unicode character enclosed in single quotation marks?",
+      "title": "Which C# primitive type represents a single 16-bit Unicode character enclosed in single quotation marks?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "string",
+        "byte",
+        "character",
+        "char"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "string",
+        "byte",
+        "character",
+        "char"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The 'char' type represents a single 16-bit Unicode character (e.g. 'A', '7', '$') written in single quotes.",
+      "explanation": "The 'char' type represents a single 16-bit Unicode character (e.g. 'A', '7', '$') written in single quotes.",
+      "provenance": "Gaddis 4th Ed §3.3",
       "marks": 2
     },
     {
@@ -6411,24 +6659,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #67: In C# arithmetic and conversions, what rule applies to expression evaluation #67?",
-      "title": "Data Processing Concept #67: In C# arithmetic and conversions, what rule applies to expression evaluation #67?",
+      "q": "What is the scope of a variable declared inside the body block of an 'if' statement?",
+      "title": "What is the scope of a variable declared inside the body block of an 'if' statement?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Block scope: it is accessible only inside that specific if block and ceases to exist once the block finishes",
+        "Global scope: accessible to the whole Windows operating system",
+        "Class scope: accessible across all forms",
+        "Method scope: accessible throughout the entire method"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Block scope: it is accessible only inside that specific if block and ceases to exist once the block finishes",
+        "Global scope: accessible to the whole Windows operating system",
+        "Class scope: accessible across all forms",
+        "Method scope: accessible throughout the entire method"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "exp": "Variables declared within a code block (inside curly braces) have block scope and cannot be referenced outside those braces.",
+      "explanation": "Variables declared within a code block (inside curly braces) have block scope and cannot be referenced outside those braces.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -6437,25 +6685,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #68: In C# arithmetic and conversions, what rule applies to expression evaluation #68?",
-      "title": "Data Processing Concept #68: In C# arithmetic and conversions, what rule applies to expression evaluation #68?",
+      "q": "According to Practical 2 Code Standards, why should blank lines be used between input parsing, calculations, and output display?",
+      "title": "According to Practical 2 Code Standards, why should blank lines be used between input parsing, calculations, and output display?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Visual Studio requires blank lines to compile",
+        "Blank lines visually structure code into logical paragraphs, improving readability and maintainability",
+        "Blank lines increase execution speed",
+        "Blank lines automatically reset memory"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Visual Studio requires blank lines to compile",
+        "Blank lines visually structure code into logical paragraphs, improving readability and maintainability",
+        "Blank lines increase execution speed",
+        "Blank lines automatically reset memory"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Using blank lines to visually decouple reading input, processing calculations, and writing output makes code legible and aligns with NWU code standards.",
+      "explanation": "Using blank lines to visually decouple reading input, processing calculations, and writing output makes code legible and aligns with NWU code standards.",
+      "provenance": "NWU Practical 2 Part F (Code Standards)",
       "marks": 2
     },
     {
@@ -6463,25 +6711,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #69: In C# arithmetic and conversions, what rule applies to expression evaluation #69?",
-      "title": "Data Processing Concept #69: In C# arithmetic and conversions, what rule applies to expression evaluation #69?",
+      "q": "What property of a string object returns the total count of characters it contains?",
+      "title": "What property of a string object returns the total count of characters it contains?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Count()",
+        "Size",
+        "Length",
+        "TotalChars"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Count()",
+        "Size",
+        "Length",
+        "TotalChars"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The .Length property returns the number of characters in a string as an integer.",
+      "explanation": "The .Length property returns the number of characters in a string as an integer.",
+      "provenance": "Gaddis 4th Ed §3.5",
       "marks": 2
     },
     {
@@ -6489,24 +6737,24 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #70: In C# arithmetic and conversions, what rule applies to expression evaluation #70?",
-      "title": "Data Processing Concept #70: In C# arithmetic and conversions, what rule applies to expression evaluation #70?",
+      "q": "Which unary operator increments an integer variable's value by exactly 1 in C#?",
+      "title": "Which unary operator increments an integer variable's value by exactly 1 in C#?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "--",
+        "+=",
+        "**",
+        "++"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "--",
+        "+=",
+        "**",
+        "++"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The increment operator (++) increases the numeric value of its operand by 1.",
+      "explanation": "The increment operator (++) increases the numeric value of its operand by 1.",
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
@@ -6515,25 +6763,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #71: In C# arithmetic and conversions, what rule applies to expression evaluation #71?",
-      "title": "Data Processing Concept #71: In C# arithmetic and conversions, what rule applies to expression evaluation #71?",
+      "q": "In Practical 2, if wors costs R85.00/kg and rolls cost R3.50 each, what is the cost of 1.5 kg of wors (1500g / 120g = 12 rolls)?",
+      "title": "In Practical 2, if wors costs R85.00/kg and rolls cost R3.50 each, what is the cost of 1.5 kg of wors (1500g / 120g = 12 rolls)?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Wors: R 127.50, Rolls: R 42.00, Total: R 169.50",
+        "Wors: R 100.00, Rolls: R 35.00, Total: R 135.00",
+        "Wors: R 85.00, Rolls: R 42.00, Total: R 127.00",
+        "Wors: R 150.00, Rolls: R 50.00, Total: R 200.00"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Wors: R 127.50, Rolls: R 42.00, Total: R 169.50",
+        "Wors: R 100.00, Rolls: R 35.00, Total: R 135.00",
+        "Wors: R 85.00, Rolls: R 42.00, Total: R 127.00",
+        "Wors: R 150.00, Rolls: R 50.00, Total: R 200.00"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "exp": "1.5 kg * R85 = R127.50. 1500g / 120g = 12 rolls. 12 rolls * R3.50 = R42.00. Total = R127.50 + R42.00 = R169.50.",
+      "explanation": "1.5 kg * R85 = R127.50. 1500g / 120g = 12 rolls. 12 rolls * R3.50 = R42.00. Total = R127.50 + R42.00 = R169.50.",
+      "provenance": "NWU Practical 2 Part C (Calculations)",
       "marks": 2
     },
     {
@@ -6541,25 +6789,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #72: In C# arithmetic and conversions, what rule applies to expression evaluation #72?",
-      "title": "Data Processing Concept #72: In C# arithmetic and conversions, what rule applies to expression evaluation #72?",
+      "q": "Which escape sequence represents a newline character when formatting multi-line strings in C#?",
+      "title": "Which escape sequence represents a newline character when formatting multi-line strings in C#?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "\\t",
+        "\\n",
+        "\\r",
+        "\\b"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "\\t",
+        "\\n",
+        "\\r",
+        "\\b"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The escape sequence '\\n' inserts a linefeed (newline) character into a string.",
+      "explanation": "The escape sequence '\\n' inserts a linefeed (newline) character into a string.",
+      "provenance": "Gaddis 4th Ed §3.2",
       "marks": 2
     },
     {
@@ -6567,25 +6815,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #73: In C# arithmetic and conversions, what rule applies to expression evaluation #73?",
-      "title": "Data Processing Concept #73: In C# arithmetic and conversions, what rule applies to expression evaluation #73?",
+      "q": "Which escape sequence inserts a horizontal tab space into a string?",
+      "title": "Which escape sequence inserts a horizontal tab space into a string?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "\\s",
+        "\\a",
+        "\\t",
+        "\\n"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "\\s",
+        "\\a",
+        "\\t",
+        "\\n"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The escape sequence '\\t' inserts a horizontal tab character.",
+      "explanation": "The escape sequence '\\t' inserts a horizontal tab character.",
+      "provenance": "Gaddis 4th Ed §3.2",
       "marks": 2
     },
     {
@@ -6593,25 +6841,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #74: In C# arithmetic and conversions, what rule applies to expression evaluation #74?",
-      "title": "Data Processing Concept #74: In C# arithmetic and conversions, what rule applies to expression evaluation #74?",
+      "q": "What C# statement should be called inside an event handler to exit immediately if validation detects invalid input?",
+      "title": "What C# statement should be called inside an event handler to exit immediately if validation detects invalid input?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "break;",
+        "stop;",
+        "exit;",
+        "return;"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "break;",
+        "stop;",
+        "exit;",
+        "return;"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The 'return;' statement immediately terminates execution of a void method, preventing subsequent calculations from running with invalid data.",
+      "explanation": "The 'return;' statement immediately terminates execution of a void method, preventing subsequent calculations from running with invalid data.",
+      "provenance": "Gaddis 4th Ed §3.6",
       "marks": 2
     },
     {
@@ -6619,25 +6867,25 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Data Processing Concept #75: In C# arithmetic and conversions, what rule applies to expression evaluation #75?",
-      "title": "Data Processing Concept #75: In C# arithmetic and conversions, what rule applies to expression evaluation #75?",
+      "q": "Why must students use 'File -> Save All' (Ctrl+Shift+S) rather than 'File -> Save' (Ctrl+S) before submitting Practical 2?",
+      "title": "Why must students use 'File -> Save All' (Ctrl+Shift+S) rather than 'File -> Save' (Ctrl+S) before submitting Practical 2?",
       "options": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Ctrl+S saves only the active code tab, leaving designer layout modifications unsaved on disk",
+        "Ctrl+S corrupts the project file",
+        "Ctrl+Shift+S compresses the folder into a zip file",
+        "Ctrl+Shift+S submits the project directly to eFundi"
       ],
       "opts": [
-        "Multiplication, division, and modulus take precedence over addition and subtraction",
-        "Addition always executes before parentheses",
-        "Strings can be multiplied directly with decimals",
-        "Variables declared without a type default to decimal"
+        "Ctrl+S saves only the active code tab, leaving designer layout modifications unsaved on disk",
+        "Ctrl+S corrupts the project file",
+        "Ctrl+Shift+S compresses the folder into a zip file",
+        "Ctrl+Shift+S submits the project directly to eFundi"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "explanation": "Standard operator precedence applies: parentheses first, then multiplicative (*, /, %), then additive (+, -).",
-      "provenance": "Gaddis 4th Ed §3.4",
+      "exp": "Ctrl+S saves only the currently viewed file. If Form1.cs is open, recent Designer changes are not saved unless Save All (Ctrl+Shift+S) is used.",
+      "explanation": "Ctrl+S saves only the currently viewed file. If Form1.cs is open, recent Designer changes are not saved unless Save All (Ctrl+Shift+S) is used.",
+      "provenance": "NWU Practical 2 Submission Instructions",
       "marks": 2
     },
     {
@@ -7035,25 +7283,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #16: In C# conditional logic and selection controls, which statement is true regarding #16?",
-      "title": "Decision Logic Concept #16: In C# conditional logic and selection controls, which statement is true regarding #16?",
+      "q": "In Practical 4 (SpeedTrap Potchefstroom R30), what initial subtraction determines how far over the legal speed limit a vehicle was traveling?",
+      "title": "In Practical 4 (SpeedTrap Potchefstroom R30), what initial subtraction determines how far over the legal speed limit a vehicle was traveling?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "int speedOver = limit - recordedSpeed;",
+        "decimal speedOver = recordedSpeed / limit;",
+        "int speedOver = recordedSpeed - limit;",
+        "int speedOver = (recordedSpeed + limit) % 2;"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "int speedOver = limit - recordedSpeed;",
+        "decimal speedOver = recordedSpeed / limit;",
+        "int speedOver = recordedSpeed - limit;",
+        "int speedOver = (recordedSpeed + limit) % 2;"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The practical requires one simple subtraction: recorded speed minus the zone speed limit. A positive result indicates speeding, while zero or negative means within the limit.",
+      "explanation": "The practical requires one simple subtraction: recorded speed minus the zone speed limit. A positive result indicates speeding, while zero or negative means within the limit.",
+      "provenance": "NWU Practical Four Part C (How far over)",
       "marks": 2
     },
     {
@@ -7061,25 +7309,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #17: In C# conditional logic and selection controls, which statement is true regarding #17?",
-      "title": "Decision Logic Concept #17: In C# conditional logic and selection controls, which statement is true regarding #17?",
+      "q": "In Practical 4, what exact outputs must be displayed if the driver was traveling at or below the legal limit (speedOver <= 0)?",
+      "title": "In Practical 4, what exact outputs must be displayed if the driver was traveling at or below the legal limit (speedOver <= 0)?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "lblKmOver.Text = \"-5 km/h\"; lblCategory.Text = \"Legal\"; lblFine.Text = \"R 0.00\";",
+        "lblKmOver.Text = \"OK\"; lblCategory.Text = \"Pass\"; lblFine.Text = \"None\";",
+        "lblFine.Text = \"Warning: drive faster\";",
+        "lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Within the limit\"; lblFine.Text = \"No fine. Safe driving.\";"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "lblKmOver.Text = \"-5 km/h\"; lblCategory.Text = \"Legal\"; lblFine.Text = \"R 0.00\";",
+        "lblKmOver.Text = \"OK\"; lblCategory.Text = \"Pass\"; lblFine.Text = \"None\";",
+        "lblFine.Text = \"Warning: drive faster\";",
+        "lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Within the limit\"; lblFine.Text = \"No fine. Safe driving.\";"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The Practical 4 specification mandates exact character-for-character output for legal driving: '0 km/h', category 'Within the limit', and fine line 'No fine. Safe driving.'.",
+      "explanation": "The Practical 4 specification mandates exact character-for-character output for legal driving: '0 km/h', category 'Within the limit', and fine line 'No fine. Safe driving.'.",
+      "provenance": "NWU Practical Four Part B & Part D",
       "marks": 2
     },
     {
@@ -7087,25 +7335,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #18: In C# conditional logic and selection controls, which statement is true regarding #18?",
-      "title": "Decision Logic Concept #18: In C# conditional logic and selection controls, which statement is true regarding #18?",
+      "q": "Why is the speeding fine band assessment in Practical 4 engineered as a connected 'if-else-if' chain rather than separate unchained 'if' statements?",
+      "title": "Why is the speeding fine band assessment in Practical 4 engineered as a connected 'if-else-if' chain rather than separate unchained 'if' statements?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "In a connected chain, once a test evaluates to true, remaining branches are skipped, allowing each condition to test only its upper boundary because lower values were already filtered out",
+        "C# does not allow writing more than one independent if statement in the same method",
+        "Separate if statements execute 10 times slower in Windows Forms",
+        "Connected chains prevent variables from going out of scope"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "In a connected chain, once a test evaluates to true, remaining branches are skipped, allowing each condition to test only its upper boundary because lower values were already filtered out",
+        "C# does not allow writing more than one independent if statement in the same method",
+        "Separate if statements execute 10 times slower in Windows Forms",
+        "Connected chains prevent variables from going out of scope"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "A connected chain ensures mutually exclusive execution. Anyone reaching 'else if (speedOver <= 20)' has already failed '<= 10', so the lower bound is implicitly guaranteed.",
+      "explanation": "A connected chain ensures mutually exclusive execution. Anyone reaching 'else if (speedOver <= 20)' has already failed '<= 10', so the lower bound is implicitly guaranteed.",
+      "provenance": "NWU Practical Four Part C (The bands)",
       "marks": 2
     },
     {
@@ -7113,25 +7361,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #19: In C# conditional logic and selection controls, which statement is true regarding #19?",
-      "title": "Decision Logic Concept #19: In C# conditional logic and selection controls, which statement is true regarding #19?",
+      "q": "In Practical 4, what fine and category apply for a vehicle traveling at 85 km/h against a 60 km/h limit (25 km/h over) on a Highway for a first-time offender?",
+      "title": "In Practical 4, what fine and category apply for a vehicle traveling at 85 km/h against a 60 km/h limit (25 km/h over) on a Highway for a first-time offender?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Fine: R 750, Category: \"Serious\"",
+        "Fine: R 1500, Category: \"Severe\"",
+        "Fine: R 2500, Category: \"Court appearance\"",
+        "Fine: R 3000, Category: \"Severe - built-up area\""
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Fine: R 750, Category: \"Serious\"",
+        "Fine: R 1500, Category: \"Severe\"",
+        "Fine: R 2500, Category: \"Court appearance\"",
+        "Fine: R 3000, Category: \"Severe - built-up area\""
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "25 km/h over falls into the 21-30 band (R1500, 'Severe'). Highway is not a built-up area, and repeat offender is false, so no doubling or surcharge applies.",
+      "explanation": "25 km/h over falls into the 21-30 band (R1500, 'Severe'). Highway is not a built-up area, and repeat offender is false, so no doubling or surcharge applies.",
+      "provenance": "NWU Practical Four Part B & Part D",
       "marks": 2
     },
     {
@@ -7139,25 +7387,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #20: In C# conditional logic and selection controls, which statement is true regarding #20?",
-      "title": "Decision Logic Concept #20: In C# conditional logic and selection controls, which statement is true regarding #20?",
+      "q": "In Practical 4, which two speed trap zones are classified as built-up areas?",
+      "title": "In Practical 4, which two speed trap zones are classified as built-up areas?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "\"Highway\" and \"Town\"",
+        "\"School\" and \"Highway\"",
+        "\"School\" and \"Town\"",
+        "Only \"School\""
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "\"Highway\" and \"Town\"",
+        "\"School\" and \"Highway\"",
+        "\"School\" and \"Town\"",
+        "Only \"School\""
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Practical 4 defines: 'A School zone and a Town zone are both built-up areas. In a built-up area, being more than 20 km/h over the limit doubles the fine.'",
+      "explanation": "Practical 4 defines: 'A School zone and a Town zone are both built-up areas. In a built-up area, being more than 20 km/h over the limit doubles the fine.'",
+      "provenance": "NWU Practical Four Part B",
       "marks": 2
     },
     {
@@ -7165,25 +7413,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #21: In C# conditional logic and selection controls, which statement is true regarding #21?",
-      "title": "Decision Logic Concept #21: In C# conditional logic and selection controls, which statement is true regarding #21?",
+      "q": "In Practical 4, what exact condition triggers doubling of the fine and appending ' - built-up area' to the category?",
+      "title": "In Practical 4, what exact condition triggers doubling of the fine and appending ' - built-up area' to the category?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "The zone is a Highway and speedOver >= 20",
+        "Whenever the driver was traveling at more than 10 km/h over the limit in any zone",
+        "Whenever the repeat offender answer is 'yes'",
+        "The zone is a built-up area (\"School\" or \"Town\") AND speedOver is strictly greater than 20 km/h (speedOver > 20)"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "The zone is a Highway and speedOver >= 20",
+        "Whenever the driver was traveling at more than 10 km/h over the limit in any zone",
+        "Whenever the repeat offender answer is 'yes'",
+        "The zone is a built-up area (\"School\" or \"Town\") AND speedOver is strictly greater than 20 km/h (speedOver > 20)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Both conditions must hold: isBuiltUp must be true AND the vehicle must exceed the limit by strictly more than 20 km/h.",
+      "explanation": "Both conditions must hold: isBuiltUp must be true AND the vehicle must exceed the limit by strictly more than 20 km/h.",
+      "provenance": "NWU Practical Four Part B & Part C",
       "marks": 2
     },
     {
@@ -7191,25 +7439,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #22: In C# conditional logic and selection controls, which statement is true regarding #22?",
-      "title": "Decision Logic Concept #22: In C# conditional logic and selection controls, which statement is true regarding #22?",
+      "q": "In Practical 4, if a vehicle travels at 80 km/h in a 60 km/h School zone (exactly 20 km/h over), what happens to the fine?",
+      "title": "In Practical 4, if a vehicle travels at 80 km/h in a 60 km/h School zone (exactly 20 km/h over), what happens to the fine?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "The fine does NOT double because the specification requires MORE than 20 km/h over; exactly 20 km/h over remains at R750 (Serious)",
+        "The fine doubles to R1500 immediately",
+        "The driver receives a court appearance summons",
+        "The fine is reduced to R250"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "The fine does NOT double because the specification requires MORE than 20 km/h over; exactly 20 km/h over remains at R750 (Serious)",
+        "The fine doubles to R1500 immediately",
+        "The driver receives a court appearance summons",
+        "The fine is reduced to R250"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "Edge case test from rubric: 'a School zone at exactly 20 over must not double.' The rule specifies 'more than 20', so speedOver > 20 evaluates to false when speedOver == 20.",
+      "explanation": "Edge case test from rubric: 'a School zone at exactly 20 over must not double.' The rule specifies 'more than 20', so speedOver > 20 evaluates to false when speedOver == 20.",
+      "provenance": "NWU Practical Four Part D (Test the edges)",
       "marks": 2
     },
     {
@@ -7217,25 +7465,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #23: In C# conditional logic and selection controls, which statement is true regarding #23?",
-      "title": "Decision Logic Concept #23: In C# conditional logic and selection controls, which statement is true regarding #23?",
+      "q": "In Practical 4, what suffix string must be appended to the category when a fine doubles in a built-up area?",
+      "title": "In Practical 4, what suffix string must be appended to the category when a fine doubles in a built-up area?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "\" (DOUBLED)\"",
+        "\" - built-up area\"",
+        "\" *BUILT UP*\"",
+        "\" [ZONE 1]\""
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "\" (DOUBLED)\"",
+        "\" - built-up area\"",
+        "\" *BUILT UP*\"",
+        "\" [ZONE 1]\""
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The rubric requires appending exactly ' - built-up area' to the category string (e.g. 'Severe - built-up area').",
+      "explanation": "The rubric requires appending exactly ' - built-up area' to the category string (e.g. 'Severe - built-up area').",
+      "provenance": "NWU Practical Four Part B & Part D",
       "marks": 2
     },
     {
@@ -7243,25 +7491,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #24: In C# conditional logic and selection controls, which statement is true regarding #24?",
-      "title": "Decision Logic Concept #24: In C# conditional logic and selection controls, which statement is true regarding #24?",
+      "q": "In Practical 4, where and how must the R500 repeat offender fine be declared according to coding standards?",
+      "title": "In Practical 4, where and how must the R500 repeat offender fine be declared according to coding standards?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Inside btnCheck_Click as a local int variable",
+        "Inside txtRepeat.Text property window",
+        "At class level, outside every method, declared with the 'const' keyword: const decimal REPEAT_FINE = 500m;",
+        "In Program.cs as a static string"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Inside btnCheck_Click as a local int variable",
+        "Inside txtRepeat.Text property window",
+        "At class level, outside every method, declared with the 'const' keyword: const decimal REPEAT_FINE = 500m;",
+        "In Program.cs as a static string"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The practical specifies: 'The R500 that a repeat offender pays is written down once, at class level, outside every method. There is a keyword for this (const) and a naming tradition (UPPERCASE) that goes with it.'",
+      "explanation": "The practical specifies: 'The R500 that a repeat offender pays is written down once, at class level, outside every method. There is a keyword for this (const) and a naming tradition (UPPERCASE) that goes with it.'",
+      "provenance": "NWU Practical Four Part C (A named constant)",
       "marks": 2
     },
     {
@@ -7269,25 +7517,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #25: In C# conditional logic and selection controls, which statement is true regarding #25?",
-      "title": "Decision Logic Concept #25: In C# conditional logic and selection controls, which statement is true regarding #25?",
+      "q": "In Practical 4, what are the two required string comparison techniques students must demonstrate?",
+      "title": "In Practical 4, what are the two required string comparison techniques students must demonstrate?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "IndexOf() and Substring()",
+        "Regex.IsMatch() and char.IsDigit()",
+        "TryParse() and Convert.ToString()",
+        "The equality operator (==) for comparing zone text, and the String.CompareTo() method for checking the repeat offender text"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "IndexOf() and Substring()",
+        "Regex.IsMatch() and char.IsDigit()",
+        "TryParse() and Convert.ToString()",
+        "The equality operator (==) for comparing zone text, and the String.CompareTo() method for checking the repeat offender text"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The sheet states: 'There are two ways to ask whether two pieces of text are the same: an operator (==) for the zone and a method on String (.CompareTo()) that hands back 0 for the repeat offender.'",
+      "explanation": "The sheet states: 'There are two ways to ask whether two pieces of text are the same: an operator (==) for the zone and a method on String (.CompareTo()) that hands back 0 for the repeat offender.'",
+      "provenance": "NWU Practical Four Part C (Comparing the words)",
       "marks": 2
     },
     {
@@ -7295,25 +7543,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #26: In C# conditional logic and selection controls, which statement is true regarding #26?",
-      "title": "Decision Logic Concept #26: In C# conditional logic and selection controls, which statement is true regarding #26?",
+      "q": "How does 'txtRepeat.Text.CompareTo(\"yes\") == 0' determine if the driver is a repeat offender?",
+      "title": "How does 'txtRepeat.Text.CompareTo(\"yes\") == 0' determine if the driver is a repeat offender?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "CompareTo returns 0 when the calling string and argument are identical in alphabetical sort order",
+        "CompareTo returns true or false directly",
+        "CompareTo returns 0 only when the string is empty",
+        "CompareTo throws a FormatException if strings do not match"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "CompareTo returns 0 when the calling string and argument are identical in alphabetical sort order",
+        "CompareTo returns true or false directly",
+        "CompareTo returns 0 only when the string is empty",
+        "CompareTo throws a FormatException if strings do not match"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "String.CompareTo returns 0 if two strings are identical in value and case, a negative integer if the caller precedes the argument, and positive if it follows.",
+      "explanation": "String.CompareTo returns 0 if two strings are identical in value and case, a negative integer if the caller precedes the argument, and positive if it follows.",
+      "provenance": "NWU Practical Four Part C & Gaddis §4.9",
       "marks": 2
     },
     {
@@ -7321,25 +7569,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #27: In C# conditional logic and selection controls, which statement is true regarding #27?",
-      "title": "Decision Logic Concept #27: In C# conditional logic and selection controls, which statement is true regarding #27?",
+      "q": "Why does Practical 4 instruct students: 'Do not write an empty else just to have one' when checking repeat offender status?",
+      "title": "Why does Practical 4 instruct students: 'Do not write an empty else just to have one' when checking repeat offender status?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Empty else blocks cause compiler error CS0101",
+        "Writing empty 'else { }' blocks is poor coding style that clutters code and adds zero functional value; a single-alternative if is correct",
+        "Visual Studio deletes empty else blocks during compilation",
+        "Else blocks can only be used with numbers"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Empty else blocks cause compiler error CS0101",
+        "Writing empty 'else { }' blocks is poor coding style that clutters code and adds zero functional value; a single-alternative if is correct",
+        "Visual Studio deletes empty else blocks during compilation",
+        "Else blocks can only be used with numbers"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "A single-alternative if statement ('if (isRepeat) fine += REPEAT_FINE;') is the cleanest construct when no action is needed on false. An empty else block loses marks.",
+      "explanation": "A single-alternative if statement ('if (isRepeat) fine += REPEAT_FINE;') is the cleanest construct when no action is needed on false. An empty else block loses marks.",
+      "provenance": "NWU Practical Four Part C (Repeat offenders)",
       "marks": 2
     },
     {
@@ -7347,25 +7595,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #28: In C# conditional logic and selection controls, which statement is true regarding #28?",
-      "title": "Decision Logic Concept #28: In C# conditional logic and selection controls, which statement is true regarding #28?",
+      "q": "In Practical 4, why is a GroupBox control chosen for the 'Finding' container rather than a Panel control?",
+      "title": "In Practical 4, why is a GroupBox control chosen for the 'Finding' container rather than a Panel control?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Panels cannot hold Label controls",
+        "GroupBoxes automatically calculate speeding fines",
+        "A GroupBox has a built-in bordered frame and a Text property to display a titled caption ('Finding'), whereas a Panel has no caption property",
+        "Panels only work on Windows 7"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Panels cannot hold Label controls",
+        "GroupBoxes automatically calculate speeding fines",
+        "A GroupBox has a built-in bordered frame and a Text property to display a titled caption ('Finding'), whereas a Panel has no caption property",
+        "Panels only work on Windows 7"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "GroupBox controls provide a visible boundary with an integrated title text caption ('Finding'). Panels do not support header text captions.",
+      "explanation": "GroupBox controls provide a visible boundary with an integrated title text caption ('Finding'). Panels do not support header text captions.",
+      "provenance": "NWU Practical Four Part B (A GroupBox)",
       "marks": 2
     },
     {
@@ -7373,25 +7621,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #29: In C# conditional logic and selection controls, which statement is true regarding #29?",
-      "title": "Decision Logic Concept #29: In C# conditional logic and selection controls, which statement is true regarding #29?",
+      "q": "Which logical operator in C# represents short-circuit logical AND?",
+      "title": "Which logical operator in C# represents short-circuit logical AND?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "||",
+        "!",
+        "&",
+        "&&"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "||",
+        "!",
+        "&",
+        "&&"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The '&&' operator performs short-circuit logical AND, evaluating to true only if both sub-expressions are true.",
+      "explanation": "The '&&' operator performs short-circuit logical AND, evaluating to true only if both sub-expressions are true.",
+      "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
     {
@@ -7399,25 +7647,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #30: In C# conditional logic and selection controls, which statement is true regarding #30?",
-      "title": "Decision Logic Concept #30: In C# conditional logic and selection controls, which statement is true regarding #30?",
+      "q": "Which logical operator in C# represents short-circuit logical OR?",
+      "title": "Which logical operator in C# represents short-circuit logical OR?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "||",
+        "&&",
+        "!",
+        "|"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "||",
+        "&&",
+        "!",
+        "|"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "The '||' operator performs short-circuit logical OR, evaluating to true if at least one sub-expression is true.",
+      "explanation": "The '||' operator performs short-circuit logical OR, evaluating to true if at least one sub-expression is true.",
+      "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
     {
@@ -7425,25 +7673,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #31: In C# conditional logic and selection controls, which statement is true regarding #31?",
-      "title": "Decision Logic Concept #31: In C# conditional logic and selection controls, which statement is true regarding #31?",
+      "q": "What is short-circuit evaluation in C# logical expressions?",
+      "title": "What is short-circuit evaluation in C# logical expressions?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "The computer shuts down if an expression is too long",
+        "If the first operand of '&&' is false, or the first of '||' is true, the second operand is never evaluated because the overall result is already determined",
+        "All conditions in an expression are evaluated in parallel by multiple CPU cores",
+        "Expressions with errors are automatically converted to true"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "The computer shuts down if an expression is too long",
+        "If the first operand of '&&' is false, or the first of '||' is true, the second operand is never evaluated because the overall result is already determined",
+        "All conditions in an expression are evaluated in parallel by multiple CPU cores",
+        "Expressions with errors are automatically converted to true"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Short-circuit evaluation stops evaluating composite boolean expressions as soon as the outcome is guaranteed, preventing runtime errors (e.g. division by zero or null dereferences).",
+      "explanation": "Short-circuit evaluation stops evaluating composite boolean expressions as soon as the outcome is guaranteed, preventing runtime errors (e.g. division by zero or null dereferences).",
+      "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
     {
@@ -7451,25 +7699,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #32: In C# conditional logic and selection controls, which statement is true regarding #32?",
-      "title": "Decision Logic Concept #32: In C# conditional logic and selection controls, which statement is true regarding #32?",
+      "q": "What is the evaluated boolean value of '!(10 > 4)' in C#?",
+      "title": "What is the evaluated boolean value of '!(10 > 4)' in C#?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "true",
+        "null",
+        "false",
+        "1"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "true",
+        "null",
+        "false",
+        "1"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "10 > 4 is true. The logical NOT operator (!) reverses the truth value, resulting in false.",
+      "explanation": "10 > 4 is true. The logical NOT operator (!) reverses the truth value, resulting in false.",
+      "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
     {
@@ -7477,25 +7725,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #33: In C# conditional logic and selection controls, which statement is true regarding #33?",
-      "title": "Decision Logic Concept #33: In C# conditional logic and selection controls, which statement is true regarding #33?",
+      "q": "Which relational operator in C# checks whether two values are NOT equal?",
+      "title": "Which relational operator in C# checks whether two values are NOT equal?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "<>",
+        "==",
+        "!==",
+        "!="
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "<>",
+        "==",
+        "!==",
+        "!="
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "'!=' is the inequality relational operator in C#.",
+      "explanation": "'!=' is the inequality relational operator in C#.",
+      "provenance": "Gaddis 4th Ed §4.1",
       "marks": 2
     },
     {
@@ -7503,25 +7751,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #34: In C# conditional logic and selection controls, which statement is true regarding #34?",
-      "title": "Decision Logic Concept #34: In C# conditional logic and selection controls, which statement is true regarding #34?",
+      "q": "What common compilation error occurs if a student mistakenly writes 'if (speed = 80)' instead of 'if (speed == 80)' in C#?",
+      "title": "What common compilation error occurs if a student mistakenly writes 'if (speed = 80)' instead of 'if (speed == 80)' in C#?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Compiler error CS0029: Cannot implicitly convert type 'int' to 'bool'",
+        "The code compiles and executes silently",
+        "Visual Studio converts speed to a string",
+        "A warning is logged but execution proceeds"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Compiler error CS0029: Cannot implicitly convert type 'int' to 'bool'",
+        "The code compiles and executes silently",
+        "Visual Studio converts speed to a string",
+        "A warning is logged but execution proceeds"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "'=' is the assignment operator. 'speed = 80' returns an int (80), which cannot be implicitly converted to the bool required by an if statement.",
+      "explanation": "'=' is the assignment operator. 'speed = 80' returns an int (80), which cannot be implicitly converted to the bool required by an if statement.",
+      "provenance": "Gaddis 4th Ed §4.2",
       "marks": 2
     },
     {
@@ -7529,25 +7777,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #35: In C# conditional logic and selection controls, which statement is true regarding #35?",
-      "title": "Decision Logic Concept #35: In C# conditional logic and selection controls, which statement is true regarding #35?",
+      "q": "In Practical 5 (Vaal River Cruises), which GUI control is used to present the three available cruise route options for selection?",
+      "title": "In Practical 5 (Vaal River Cruises), which GUI control is used to present the three available cruise route options for selection?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "TextBox (txtRoutes)",
+        "ListBox (lstRoutes)",
+        "PictureBox (picRoutes)",
+        "Timer (tmrRoutes)"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "TextBox (txtRoutes)",
+        "ListBox (lstRoutes)",
+        "PictureBox (picRoutes)",
+        "Timer (tmrRoutes)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Practical 5 GUI requirements mandate a ListBox (lstRoutes) displaying Sunset Leisure Cruise (R250), Speedboat Adventure (R400), and Private Pontoon Charter (R800).",
+      "explanation": "Practical 5 GUI requirements mandate a ListBox (lstRoutes) displaying Sunset Leisure Cruise (R250), Speedboat Adventure (R400), and Private Pontoon Charter (R800).",
+      "provenance": "NWU Practical 5 GUI Requirements",
       "marks": 2
     },
     {
@@ -7555,25 +7803,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #36: In C# conditional logic and selection controls, which statement is true regarding #36?",
-      "title": "Decision Logic Concept #36: In C# conditional logic and selection controls, which statement is true regarding #36?",
+      "q": "In Practical 5, what C# condition verifies that the user has selected at least one cruise route from lstRoutes before processing a booking?",
+      "title": "In Practical 5, what C# condition verifies that the user has selected at least one cruise route from lstRoutes before processing a booking?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "lstRoutes.Items.Count > 0",
+        "lstRoutes.Text == \"Selected\"",
+        "lstRoutes.SelectedIndex != -1",
+        "lstRoutes.Focused == true"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "lstRoutes.Items.Count > 0",
+        "lstRoutes.Text == \"Selected\"",
+        "lstRoutes.SelectedIndex != -1",
+        "lstRoutes.Focused == true"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "When no item is selected in a ListBox, SelectedIndex is -1. Checking 'SelectedIndex != -1' ensures a valid item has been picked.",
+      "explanation": "When no item is selected in a ListBox, SelectedIndex is -1. Checking 'SelectedIndex != -1' ensures a valid item has been picked.",
+      "provenance": "NWU Practical 5 Technical Requirements §2",
       "marks": 2
     },
     {
@@ -7581,25 +7829,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #37: In C# conditional logic and selection controls, which statement is true regarding #37?",
-      "title": "Decision Logic Concept #37: In C# conditional logic and selection controls, which statement is true regarding #37?",
+      "q": "What value does the SelectedIndex property of a ListBox hold when the user has NOT selected any item?",
+      "title": "What value does the SelectedIndex property of a ListBox hold when the user has NOT selected any item?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "0",
+        "null",
+        "999",
+        "-1"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "0",
+        "null",
+        "999",
+        "-1"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "SelectedIndex is 0-indexed. When no selection exists, it defaults to -1.",
+      "explanation": "SelectedIndex is 0-indexed. When no selection exists, it defaults to -1.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -7607,25 +7855,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #38: In C# conditional logic and selection controls, which statement is true regarding #38?",
-      "title": "Decision Logic Concept #38: In C# conditional logic and selection controls, which statement is true regarding #38?",
+      "q": "In Practical 5, what is the base ticket price per person for 'Sunset Leisure Cruise' (ListBox index 0)?",
+      "title": "In Practical 5, what is the base ticket price per person for 'Sunset Leisure Cruise' (ListBox index 0)?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "R 250",
+        "R 400",
+        "R 800",
+        "R 150"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "R 250",
+        "R 400",
+        "R 800",
+        "R 150"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "The Practical 5 scenario specifies: Sunset Leisure Cruise = R250 per person.",
+      "explanation": "The Practical 5 scenario specifies: Sunset Leisure Cruise = R250 per person.",
+      "provenance": "NWU Practical 5 GUI Requirements",
       "marks": 2
     },
     {
@@ -7633,25 +7881,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #39: In C# conditional logic and selection controls, which statement is true regarding #39?",
-      "title": "Decision Logic Concept #39: In C# conditional logic and selection controls, which statement is true regarding #39?",
+      "q": "In Practical 5, what is the base ticket price per person for 'Speedboat Adventure' (ListBox index 1)?",
+      "title": "In Practical 5, what is the base ticket price per person for 'Speedboat Adventure' (ListBox index 1)?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "R 250",
+        "R 400",
+        "R 800",
+        "R 500"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "R 250",
+        "R 400",
+        "R 800",
+        "R 500"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The Practical 5 scenario specifies: Speedboat Adventure = R400 per person.",
+      "explanation": "The Practical 5 scenario specifies: Speedboat Adventure = R400 per person.",
+      "provenance": "NWU Practical 5 GUI Requirements",
       "marks": 2
     },
     {
@@ -7659,25 +7907,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #40: In C# conditional logic and selection controls, which statement is true regarding #40?",
-      "title": "Decision Logic Concept #40: In C# conditional logic and selection controls, which statement is true regarding #40?",
+      "q": "In Practical 5, what is the base ticket price per person for 'Private Pontoon Charter' (ListBox index 2)?",
+      "title": "In Practical 5, what is the base ticket price per person for 'Private Pontoon Charter' (ListBox index 2)?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "R 250",
+        "R 400",
+        "R 800",
+        "R 1200"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "R 250",
+        "R 400",
+        "R 800",
+        "R 1200"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The Practical 5 scenario specifies: Private Pontoon Charter = R800 per person.",
+      "explanation": "The Practical 5 scenario specifies: Private Pontoon Charter = R800 per person.",
+      "provenance": "NWU Practical 5 GUI Requirements",
       "marks": 2
     },
     {
@@ -7685,25 +7933,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #41: In C# conditional logic and selection controls, which statement is true regarding #41?",
-      "title": "Decision Logic Concept #41: In C# conditional logic and selection controls, which statement is true regarding #41?",
+      "q": "In Practical 5, how should the base ticket price be determined using a switch statement on the selected route?",
+      "title": "In Practical 5, how should the base ticket price be determined using a switch statement on the selected route?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "switch (txtPassengers.Text) { case \"1\": price = 250m; break; }",
+        "switch (btnBook.Text) { case \"Book\": price = 250m; break; }",
+        "switch (this.BackColor) { case Color.Orange: price = 400m; break; }",
+        "switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "switch (txtPassengers.Text) { case \"1\": price = 250m; break; }",
+        "switch (btnBook.Text) { case \"Book\": price = 250m; break; }",
+        "switch (this.BackColor) { case Color.Orange: price = 400m; break; }",
+        "switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Practical 5 explicitly requires a switch statement evaluating the ListBox route selection to assign the base ticket price per person.",
+      "explanation": "Practical 5 explicitly requires a switch statement evaluating the ListBox route selection to assign the base ticket price per person.",
+      "provenance": "NWU Practical 5 Technical Requirements §2",
       "marks": 2
     },
     {
@@ -7711,25 +7959,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #42: In C# conditional logic and selection controls, which statement is true regarding #42?",
-      "title": "Decision Logic Concept #42: In C# conditional logic and selection controls, which statement is true regarding #42?",
+      "q": "In C#, what happens if a case block in a switch statement contains executable statements but omits a break, return, or goto statement?",
+      "title": "In C#, what happens if a case block in a switch statement contains executable statements but omits a break, return, or goto statement?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Compiler error CS0163: Control cannot fall through from one case label to another",
+        "The code falls through silently to the next case as in C++",
+        "Visual Studio automatically inserts a break statement",
+        "The application throws a SwitchFallthroughException at runtime"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Compiler error CS0163: Control cannot fall through from one case label to another",
+        "The code falls through silently to the next case as in C++",
+        "Visual Studio automatically inserts a break statement",
+        "The application throws a SwitchFallthroughException at runtime"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "Unlike C/C++, C# enforces strict no-fall-through semantics. Every non-empty case block must end with a jump statement like break or return.",
+      "explanation": "Unlike C/C++, C# enforces strict no-fall-through semantics. Every non-empty case block must end with a jump statement like break or return.",
+      "provenance": "Gaddis 4th Ed §4.8",
       "marks": 2
     },
     {
@@ -7737,25 +7985,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #43: In C# conditional logic and selection controls, which statement is true regarding #43?",
-      "title": "Decision Logic Concept #43: In C# conditional logic and selection controls, which statement is true regarding #43?",
+      "q": "In Practical 5, what discount rule is applied to passenger group bookings?",
+      "title": "In Practical 5, what discount rule is applied to passenger group bookings?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "If passenger count is 10 or more, apply a 20% discount",
+        "If the validated passenger count is 6 or more, apply a 10% discount to the total bill",
+        "All bookings on weekends receive 50% discount",
+        "Only children receive discounts"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "If passenger count is 10 or more, apply a 20% discount",
+        "If the validated passenger count is 6 or more, apply a 10% discount to the total bill",
+        "All bookings on weekends receive 50% discount",
+        "Only children receive discounts"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Practical 5 requirement §4 states: 'Group Discount: If the validated passenger count is 6 or more, apply a 10% discount to the total bill.'",
+      "explanation": "Practical 5 requirement §4 states: 'Group Discount: If the validated passenger count is 6 or more, apply a 10% discount to the total bill.'",
+      "provenance": "NWU Practical 5 Technical Requirements §4",
       "marks": 2
     },
     {
@@ -7763,25 +8011,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #44: In C# conditional logic and selection controls, which statement is true regarding #44?",
-      "title": "Decision Logic Concept #44: In C# conditional logic and selection controls, which statement is true regarding #44?",
+      "q": "In Practical 5, what visual GUI modification is wired to the CheckedChanged event of the time slot RadioButtons?",
+      "title": "In Practical 5, what visual GUI modification is wired to the CheckedChanged event of the time slot RadioButtons?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "The form minimizes immediately",
+        "All textboxes are disabled",
+        "If Sunset is checked, set this.BackColor = Color.Orange; otherwise set it to Color.PowderBlue",
+        "The ListBox font changes to Comic Sans"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "The form minimizes immediately",
+        "All textboxes are disabled",
+        "If Sunset is checked, set this.BackColor = Color.Orange; otherwise set it to Color.PowderBlue",
+        "The ListBox font changes to Comic Sans"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Practical 5 requirement §3 mandates: 'If Sunset / Evening is selected, the form background colour must change to orange otherwise powdered blue.'",
+      "explanation": "Practical 5 requirement §3 mandates: 'If Sunset / Evening is selected, the form background colour must change to orange otherwise powdered blue.'",
+      "provenance": "NWU Practical 5 Technical Requirements §3",
       "marks": 2
     },
     {
@@ -7789,25 +8037,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #45: In C# conditional logic and selection controls, which statement is true regarding #45?",
-      "title": "Decision Logic Concept #45: In C# conditional logic and selection controls, which statement is true regarding #45?",
+      "q": "Why are RadioButtons inside the same container mutually exclusive by default?",
+      "title": "Why are RadioButtons inside the same container mutually exclusive by default?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "RadioButtons delete other buttons when clicked",
+        "RadioButtons can only hold numbers",
+        "Only one button can be visible at a time",
+        "Windows Forms ensures that checking any one RadioButton in a shared parent automatically unchecks all other RadioButtons in that container"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "RadioButtons delete other buttons when clicked",
+        "RadioButtons can only hold numbers",
+        "Only one button can be visible at a time",
+        "Windows Forms ensures that checking any one RadioButton in a shared parent automatically unchecks all other RadioButtons in that container"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "RadioButtons represent mutually exclusive choices: selecting one unselects all sibling RadioButtons sharing the same parent container.",
+      "explanation": "RadioButtons represent mutually exclusive choices: selecting one unselects all sibling RadioButtons sharing the same parent container.",
+      "provenance": "Gaddis 4th Ed §4.7",
       "marks": 2
     },
     {
@@ -7815,25 +8063,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #46: In C# conditional logic and selection controls, which statement is true regarding #46?",
-      "title": "Decision Logic Concept #46: In C# conditional logic and selection controls, which statement is true regarding #46?",
+      "q": "If an application requires two separate independent groups of RadioButtons on the same form (e.g. TimeSlot and PaymentMethod), how should they be designed?",
+      "title": "If an application requires two separate independent groups of RadioButtons on the same form (e.g. TimeSlot and PaymentMethod), how should they be designed?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Place each group inside its own container control, such as a GroupBox or Panel",
+        "Use CheckBoxes instead of RadioButtons",
+        "Separate them with empty labels",
+        "Place them on different monitor displays"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Place each group inside its own container control, such as a GroupBox or Panel",
+        "Use CheckBoxes instead of RadioButtons",
+        "Separate them with empty labels",
+        "Place them on different monitor displays"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "Placing RadioButton sets into distinct container controls (like GroupBoxes) isolates their mutual exclusivity to that container.",
+      "explanation": "Placing RadioButton sets into distinct container controls (like GroupBoxes) isolates their mutual exclusivity to that container.",
+      "provenance": "Gaddis 4th Ed §4.7",
       "marks": 2
     },
     {
@@ -7841,25 +8089,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #47: In C# conditional logic and selection controls, which statement is true regarding #47?",
-      "title": "Decision Logic Concept #47: In C# conditional logic and selection controls, which statement is true regarding #47?",
+      "q": "What is the primary operational difference between a RadioButton and a CheckBox?",
+      "title": "What is the primary operational difference between a RadioButton and a CheckBox?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "RadioButtons are square while CheckBoxes are circular",
+        "RadioButtons allow only one selection from a mutually exclusive group, whereas CheckBoxes allow multiple independent options to be checked simultaneously",
+        "CheckBoxes cannot be clicked with a mouse",
+        "RadioButtons do not have a Checked property"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "RadioButtons are square while CheckBoxes are circular",
+        "RadioButtons allow only one selection from a mutually exclusive group, whereas CheckBoxes allow multiple independent options to be checked simultaneously",
+        "CheckBoxes cannot be clicked with a mouse",
+        "RadioButtons do not have a Checked property"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "RadioButtons force a 1-of-N mutually exclusive choice; CheckBoxes represent independent binary (on/off) toggles allowing 0, 1, or many selections.",
+      "explanation": "RadioButtons force a 1-of-N mutually exclusive choice; CheckBoxes represent independent binary (on/off) toggles allowing 0, 1, or many selections.",
+      "provenance": "Gaddis 4th Ed §4.7",
       "marks": 2
     },
     {
@@ -7867,25 +8115,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #48: In C# conditional logic and selection controls, which statement is true regarding #48?",
-      "title": "Decision Logic Concept #48: In C# conditional logic and selection controls, which statement is true regarding #48?",
+      "q": "In Practical 5, what input validation rule must be enforced on txtPassengers before calculating ticket totals?",
+      "title": "In Practical 5, what input validation rule must be enforced on txtPassengers before calculating ticket totals?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "It must be an even number",
+        "It cannot exceed 2 passengers",
+        "It must parse to an integer using int.TryParse and the resulting passenger count must be at least 1 (passengers >= 1)",
+        "It must be spelled in words (e.g. 'two')"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "It must be an even number",
+        "It cannot exceed 2 passengers",
+        "It must parse to an integer using int.TryParse and the resulting passenger count must be at least 1 (passengers >= 1)",
+        "It must be spelled in words (e.g. 'two')"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Requirement §1 mandates: 'Read passenger count from TextBox. If parsing fails or the value is less than 1, display an error message using MessageBox.Show() and set focus back.'",
+      "explanation": "Requirement §1 mandates: 'Read passenger count from TextBox. If parsing fails or the value is less than 1, display an error message using MessageBox.Show() and set focus back.'",
+      "provenance": "NWU Practical 5 Technical Requirements §1",
       "marks": 2
     },
     {
@@ -7893,25 +8141,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #49: In C# conditional logic and selection controls, which statement is true regarding #49?",
-      "title": "Decision Logic Concept #49: In C# conditional logic and selection controls, which statement is true regarding #49?",
+      "q": "In Practical 5, why is 'txtPassengers.Focus();' called immediately after displaying an error message for invalid passenger count?",
+      "title": "In Practical 5, why is 'txtPassengers.Focus();' called immediately after displaying an error message for invalid passenger count?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "To erase the hard drive",
+        "To print the error message on paper",
+        "To close the form window",
+        "To return the blinking cursor to the invalid textbox so the user can correct their input immediately without reaching for the mouse"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "To erase the hard drive",
+        "To print the error message on paper",
+        "To close the form window",
+        "To return the blinking cursor to the invalid textbox so the user can correct their input immediately without reaching for the mouse"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Setting focus back to the offending control is standard defensive GUI design, reducing physical effort and cognitive friction (Shneiderman HCI).",
+      "explanation": "Setting focus back to the offending control is standard defensive GUI design, reducing physical effort and cognitive friction (Shneiderman HCI).",
+      "provenance": "NWU Practical 5 Technical Requirements §1 & HCI",
       "marks": 2
     },
     {
@@ -7919,25 +8167,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #50: In C# conditional logic and selection controls, which statement is true regarding #50?",
-      "title": "Decision Logic Concept #50: In C# conditional logic and selection controls, which statement is true regarding #50?",
+      "q": "What does calling 'txtPassengers.SelectAll();' do when input validation fails?",
+      "title": "What does calling 'txtPassengers.SelectAll();' do when input validation fails?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Highlights the entire text inside the textbox so typing a new character immediately overwrites the invalid input",
+        "Copies the text to the Windows clipboard",
+        "Selects all textboxes on the form simultaneously",
+        "Deletes the textbox from the form"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Highlights the entire text inside the textbox so typing a new character immediately overwrites the invalid input",
+        "Copies the text to the Windows clipboard",
+        "Selects all textboxes on the form simultaneously",
+        "Deletes the textbox from the form"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "SelectAll() highlights all text in the textbox, allowing instant replacement without manually pressing backspace.",
+      "explanation": "SelectAll() highlights all text in the textbox, allowing instant replacement without manually pressing backspace.",
+      "provenance": "Gaddis 4th Ed §4.7",
       "marks": 2
     },
     {
@@ -7945,25 +8193,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #51: In C# conditional logic and selection controls, which statement is true regarding #51?",
-      "title": "Decision Logic Concept #51: In C# conditional logic and selection controls, which statement is true regarding #51?",
+      "q": "In Practical 4, if a vehicle was recorded traveling at 105 km/h against an 80 km/h Highway limit (25 km/h over) and the driver is a repeat offender ('yes'), what is the total fine?",
+      "title": "In Practical 4, if a vehicle was recorded traveling at 105 km/h against an 80 km/h Highway limit (25 km/h over) and the driver is a repeat offender ('yes'), what is the total fine?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "R 1500",
+        "R 2000 (Base R1500 + R500 repeat fine)",
+        "R 3000",
+        "R 3500"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "R 1500",
+        "R 2000 (Base R1500 + R500 repeat fine)",
+        "R 3000",
+        "R 3500"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "25 km/h over lands in the 21-30 band (Severe = R1500). Highway is not built-up, so fine does not double. Repeat offender adds R500: R1500 + R500 = R2000.",
+      "explanation": "25 km/h over lands in the 21-30 band (Severe = R1500). Highway is not built-up, so fine does not double. Repeat offender adds R500: R1500 + R500 = R2000.",
+      "provenance": "NWU Practical Four Part B & Part C",
       "marks": 2
     },
     {
@@ -7971,25 +8219,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #52: In C# conditional logic and selection controls, which statement is true regarding #52?",
-      "title": "Decision Logic Concept #52: In C# conditional logic and selection controls, which statement is true regarding #52?",
+      "q": "In Practical 4, if a driver was recorded at 85 km/h in a 60 km/h School zone (25 km/h over) and is a repeat offender ('yes'), what is the total fine?",
+      "title": "In Practical 4, if a driver was recorded at 85 km/h in a 60 km/h School zone (25 km/h over) and is a repeat offender ('yes'), what is the total fine?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "R 2000",
+        "R 4000",
+        "R 3500 (Base R1500 doubled to R3000, plus R500 repeat fine)",
+        "R 2500"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "R 2000",
+        "R 4000",
+        "R 3500 (Base R1500 doubled to R3000, plus R500 repeat fine)",
+        "R 2500"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "25 over in School (built-up > 20) doubles base R1500 to R3000. Repeat offender adds R500 on top: R3000 + R500 = R3500.",
+      "explanation": "25 over in School (built-up > 20) doubles base R1500 to R3000. Repeat offender adds R500 on top: R3000 + R500 = R3500.",
+      "provenance": "NWU Practical Four Part B & Part C",
       "marks": 2
     },
     {
@@ -7997,25 +8245,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #53: In C# conditional logic and selection controls, which statement is true regarding #53?",
-      "title": "Decision Logic Concept #53: In C# conditional logic and selection controls, which statement is true regarding #53?",
+      "q": "Which C# expression correctly tests whether an integer variable 'mark' is between 0 and 100 inclusive?",
+      "title": "Which C# expression correctly tests whether an integer variable 'mark' is between 0 and 100 inclusive?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "0 <= mark <= 100",
+        "mark >= 0 || mark <= 100",
+        "mark BETWEEN 0 AND 100",
+        "mark >= 0 && mark <= 100"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "0 <= mark <= 100",
+        "mark >= 0 || mark <= 100",
+        "mark BETWEEN 0 AND 100",
+        "mark >= 0 && mark <= 100"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "In C#, range boundary checks must be joined by the '&&' operator: 'mark >= 0 && mark <= 100'.",
+      "explanation": "In C#, range boundary checks must be joined by the '&&' operator: 'mark >= 0 && mark <= 100'.",
+      "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
     {
@@ -8023,25 +8271,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #54: In C# conditional logic and selection controls, which statement is true regarding #54?",
-      "title": "Decision Logic Concept #54: In C# conditional logic and selection controls, which statement is true regarding #54?",
+      "q": "Why does the expression '0 <= mark <= 100' cause a compilation error in C#?",
+      "title": "Why does the expression '0 <= mark <= 100' cause a compilation error in C#?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "C# evaluates left-to-right: '0 <= mark' produces a boolean, and comparing a boolean to an integer ('bool <= 100') is illegal syntax",
+        "Numbers cannot be compared to 0 in C#",
+        "The '<=' operator can only be used once per line",
+        "C# requires all inequalities to use the word 'AND'"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "C# evaluates left-to-right: '0 <= mark' produces a boolean, and comparing a boolean to an integer ('bool <= 100') is illegal syntax",
+        "Numbers cannot be compared to 0 in C#",
+        "The '<=' operator can only be used once per line",
+        "C# requires all inequalities to use the word 'AND'"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "Binary relational operators evaluate from left to right yielding a bool. C# does not support chained mathematical inequalities.",
+      "explanation": "Binary relational operators evaluate from left to right yielding a bool. C# does not support chained mathematical inequalities.",
+      "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
     {
@@ -8049,25 +8297,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #55: In C# conditional logic and selection controls, which statement is true regarding #55?",
-      "title": "Decision Logic Concept #55: In C# conditional logic and selection controls, which statement is true regarding #55?",
+      "q": "What is the key functional difference between '&' and '&&' in C# boolean expressions?",
+      "title": "What is the key functional difference between '&' and '&&' in C# boolean expressions?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "'&' only works on strings",
+        "'&&' is short-circuiting (stops if the first operand is false), while '&' always evaluates both operands regardless of the first",
+        "'&&' can only compare two variables",
+        "There is no difference in C#"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "'&' only works on strings",
+        "'&&' is short-circuiting (stops if the first operand is false), while '&' always evaluates both operands regardless of the first",
+        "'&&' can only compare two variables",
+        "There is no difference in C#"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "'&&' is the short-circuit logical AND operator, whereas '&' is the logical/bitwise AND operator that evaluates both operands unconditionally.",
+      "explanation": "'&&' is the short-circuit logical AND operator, whereas '&' is the logical/bitwise AND operator that evaluates both operands unconditionally.",
+      "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
     {
@@ -8075,25 +8323,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #56: In C# conditional logic and selection controls, which statement is true regarding #56?",
-      "title": "Decision Logic Concept #56: In C# conditional logic and selection controls, which statement is true regarding #56?",
+      "q": "What is the key functional difference between '|' and '||' in C# boolean expressions?",
+      "title": "What is the key functional difference between '|' and '||' in C# boolean expressions?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "'|' is used for division while '||' is for addition",
+        "'||' only works on numbers",
+        "'||' is short-circuiting (stops if the first operand is true), while '|' always evaluates both operands unconditionally",
+        "There is no difference"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "'|' is used for division while '||' is for addition",
+        "'||' only works on numbers",
+        "'||' is short-circuiting (stops if the first operand is true), while '|' always evaluates both operands unconditionally",
+        "There is no difference"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "'||' skips evaluation of the second operand if the first is true. '|' always evaluates both sides unconditionally.",
+      "explanation": "'||' skips evaluation of the second operand if the first is true. '|' always evaluates both sides unconditionally.",
+      "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
     {
@@ -8101,25 +8349,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #57: In C# conditional logic and selection controls, which statement is true regarding #57?",
-      "title": "Decision Logic Concept #57: In C# conditional logic and selection controls, which statement is true regarding #57?",
+      "q": "In a nested if structure without explicit curly braces, which 'if' statement does an 'else' clause automatically pair with?",
+      "title": "In a nested if structure without explicit curly braces, which 'if' statement does an 'else' clause automatically pair with?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "The very first 'if' in the method",
+        "The 'if' that appears at the same indentation level",
+        "It causes a compiler syntax error",
+        "The closest preceding 'if' within the same block that does not already have an associated 'else'"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "The very first 'if' in the method",
+        "The 'if' that appears at the same indentation level",
+        "It causes a compiler syntax error",
+        "The closest preceding 'if' within the same block that does not already have an associated 'else'"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The 'dangling else' rule in C# matches an else with the nearest preceding unmatched if in the same lexical scope.",
+      "explanation": "The 'dangling else' rule in C# matches an else with the nearest preceding unmatched if in the same lexical scope.",
+      "provenance": "Gaddis 4th Ed §4.4",
       "marks": 2
     },
     {
@@ -8127,25 +8375,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #58: In C# conditional logic and selection controls, which statement is true regarding #58?",
-      "title": "Decision Logic Concept #58: In C# conditional logic and selection controls, which statement is true regarding #58?",
+      "q": "How can a developer unambiguously resolve the 'dangling else' problem and ensure an else matches the intended outer if?",
+      "title": "How can a developer unambiguously resolve the 'dangling else' problem and ensure an else matches the intended outer if?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "By enclosing the inner if statement and its body inside curly braces { }",
+        "By pressing Tab three times",
+        "By adding a comment above the else",
+        "By declaring all variables as static"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "By enclosing the inner if statement and its body inside curly braces { }",
+        "By pressing Tab three times",
+        "By adding a comment above the else",
+        "By declaring all variables as static"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "Explicit curly braces establish clear block boundaries, leaving no ambiguity about which if statement owns the else.",
+      "explanation": "Explicit curly braces establish clear block boundaries, leaving no ambiguity about which if statement owns the else.",
+      "provenance": "Gaddis 4th Ed §4.4",
       "marks": 2
     },
     {
@@ -8153,25 +8401,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #59: In C# conditional logic and selection controls, which statement is true regarding #59?",
-      "title": "Decision Logic Concept #59: In C# conditional logic and selection controls, which statement is true regarding #59?",
+      "q": "What happens when 'bool ok = (10 > 2) || (5 / 0 == 1);' is evaluated in C#?",
+      "title": "What happens when 'bool ok = (10 > 2) || (5 / 0 == 1);' is evaluated in C#?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "A DivideByZeroException crashes the application",
+        "'ok' becomes true without error because short-circuit evaluation skips '(5 / 0 == 1)'",
+        "The expression evaluates to false",
+        "Compiler error CS0020 occurs"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "A DivideByZeroException crashes the application",
+        "'ok' becomes true without error because short-circuit evaluation skips '(5 / 0 == 1)'",
+        "The expression evaluates to false",
+        "Compiler error CS0020 occurs"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Because 10 > 2 is true, the '||' short-circuits immediately, never evaluating the illegal division by zero.",
+      "explanation": "Because 10 > 2 is true, the '||' short-circuits immediately, never evaluating the illegal division by zero.",
+      "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
     {
@@ -8179,25 +8427,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #60: In C# conditional logic and selection controls, which statement is true regarding #60?",
-      "title": "Decision Logic Concept #60: In C# conditional logic and selection controls, which statement is true regarding #60?",
+      "q": "What happens when 'bool ok = (10 < 2) && (5 / 0 == 1);' is evaluated in C#?",
+      "title": "What happens when 'bool ok = (10 < 2) && (5 / 0 == 1);' is evaluated in C#?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "A DivideByZeroException crashes the application",
+        "The expression evaluates to true",
+        "'ok' becomes false without error because short-circuit evaluation skips '(5 / 0 == 1)'",
+        "The computer freezes"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "A DivideByZeroException crashes the application",
+        "The expression evaluates to true",
+        "'ok' becomes false without error because short-circuit evaluation skips '(5 / 0 == 1)'",
+        "The computer freezes"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Because 10 < 2 is false, the '&&' short-circuits immediately, preventing execution of the second operand.",
+      "explanation": "Because 10 < 2 is false, the '&&' short-circuits immediately, preventing execution of the second operand.",
+      "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
     {
@@ -8205,25 +8453,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #61: In C# conditional logic and selection controls, which statement is true regarding #61?",
-      "title": "Decision Logic Concept #61: In C# conditional logic and selection controls, which statement is true regarding #61?",
+      "q": "In C#, what is a boolean flag variable?",
+      "title": "In C#, what is a boolean flag variable?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "A variable that prints an image of the South African flag",
+        "A variable that can hold three different values",
+        "A variable that only exists in memory for 1 second",
+        "A bool variable used to signal whether a specific condition or state has been met (e.g. bool isSpeeding = speedOver > 0;)"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "A variable that prints an image of the South African flag",
+        "A variable that can hold three different values",
+        "A variable that only exists in memory for 1 second",
+        "A bool variable used to signal whether a specific condition or state has been met (e.g. bool isSpeeding = speedOver > 0;)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "A flag is a boolean variable whose value (true/false) indicates whether a condition has occurred or an option is active.",
+      "explanation": "A flag is a boolean variable whose value (true/false) indicates whether a condition has occurred or an option is active.",
+      "provenance": "Gaddis 4th Ed §4.6 & Practical Four",
       "marks": 2
     },
     {
@@ -8231,25 +8479,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #62: In C# conditional logic and selection controls, which statement is true regarding #62?",
-      "title": "Decision Logic Concept #62: In C# conditional logic and selection controls, which statement is true regarding #62?",
+      "q": "In Practical 5, if 8 passengers book 'Speedboat Adventure' (R400 per person), what is the calculated total after applying the 10% group discount?",
+      "title": "In Practical 5, if 8 passengers book 'Speedboat Adventure' (R400 per person), what is the calculated total after applying the 10% group discount?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "R 2880 (Subtotal R3200 minus R320 discount)",
+        "R 3200",
+        "R 2500",
+        "R 3000"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "R 2880 (Subtotal R3200 minus R320 discount)",
+        "R 3200",
+        "R 2500",
+        "R 3000"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "Subtotal = 8 * R400 = R3200. Because passengers >= 6, a 10% discount applies (R320). Final = R3200 - R320 = R2880.",
+      "explanation": "Subtotal = 8 * R400 = R3200. Because passengers >= 6, a 10% discount applies (R320). Final = R3200 - R320 = R2880.",
+      "provenance": "NWU Practical 5 Technical Requirements §4",
       "marks": 2
     },
     {
@@ -8257,25 +8505,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #63: In C# conditional logic and selection controls, which statement is true regarding #63?",
-      "title": "Decision Logic Concept #63: In C# conditional logic and selection controls, which statement is true regarding #63?",
+      "q": "In Practical 5, what C# statement in btnClear_Click deselects any currently selected item in lstRoutes?",
+      "title": "In Practical 5, what C# statement in btnClear_Click deselects any currently selected item in lstRoutes?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "lstRoutes.SelectedItem = \"None\";",
+        "lstRoutes.SelectedIndex = -1;",
+        "lstRoutes.Items.Delete();",
+        "lstRoutes.ClearSelectedItems = true;"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "lstRoutes.SelectedItem = \"None\";",
+        "lstRoutes.SelectedIndex = -1;",
+        "lstRoutes.Items.Delete();",
+        "lstRoutes.ClearSelectedItems = true;"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Setting SelectedIndex to -1 removes any active highlighting, leaving no item selected in the ListBox.",
+      "explanation": "Setting SelectedIndex to -1 removes any active highlighting, leaving no item selected in the ListBox.",
+      "provenance": "NWU Practical 5 GUI Requirements & Gaddis §4.11",
       "marks": 2
     },
     {
@@ -8283,25 +8531,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #64: In C# conditional logic and selection controls, which statement is true regarding #64?",
-      "title": "Decision Logic Concept #64: In C# conditional logic and selection controls, which statement is true regarding #64?",
+      "q": "What statement completely empties all entries from a ListBox named lstRoutes?",
+      "title": "What statement completely empties all entries from a ListBox named lstRoutes?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "lstRoutes.Clear();",
+        "lstRoutes.Items.RemoveAll();",
+        "lstRoutes.Items.Clear();",
+        "lstRoutes.Reset();"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "lstRoutes.Clear();",
+        "lstRoutes.Items.RemoveAll();",
+        "lstRoutes.Items.Clear();",
+        "lstRoutes.Reset();"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The Items collection of a ListBox exposes Clear() to remove all member objects.",
+      "explanation": "The Items collection of a ListBox exposes Clear() to remove all member objects.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -8309,25 +8557,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #65: In C# conditional logic and selection controls, which statement is true regarding #65?",
-      "title": "Decision Logic Concept #65: In C# conditional logic and selection controls, which statement is true regarding #65?",
+      "q": "How can an event handler check whether a RadioButton named 'radSunset' is currently selected by the user?",
+      "title": "How can an event handler check whether a RadioButton named 'radSunset' is currently selected by the user?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "if (radSunset.Selected == 1)",
+        "if (radSunset.Text == \"True\")",
+        "if (radSunset.Value == true)",
+        "if (radSunset.Checked)"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "if (radSunset.Selected == 1)",
+        "if (radSunset.Text == \"True\")",
+        "if (radSunset.Value == true)",
+        "if (radSunset.Checked)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The 'Checked' property of a RadioButton is a boolean returning true if selected, false otherwise.",
+      "explanation": "The 'Checked' property of a RadioButton is a boolean returning true if selected, false otherwise.",
+      "provenance": "Gaddis 4th Ed §4.7",
       "marks": 2
     },
     {
@@ -8335,25 +8583,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #66: In C# conditional logic and selection controls, which statement is true regarding #66?",
-      "title": "Decision Logic Concept #66: In C# conditional logic and selection controls, which statement is true regarding #66?",
+      "q": "Which C# property sets or gets the background surface color of a Windows Form?",
+      "title": "Which C# property sets or gets the background surface color of a Windows Form?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "this.BackColor",
+        "this.Color",
+        "this.BackgroundFill",
+        "this.CanvasColor"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "this.BackColor",
+        "this.Color",
+        "this.BackgroundFill",
+        "this.CanvasColor"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "The BackColor property determines the background color of forms and controls in Windows Forms.",
+      "explanation": "The BackColor property determines the background color of forms and controls in Windows Forms.",
+      "provenance": "Gaddis 4th Ed §2.2 & Practical 5",
       "marks": 2
     },
     {
@@ -8361,25 +8609,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #67: In C# conditional logic and selection controls, which statement is true regarding #67?",
-      "title": "Decision Logic Concept #67: In C# conditional logic and selection controls, which statement is true regarding #67?",
+      "q": "When should a developer prefer a C# switch statement over a long chain of if-else-if statements?",
+      "title": "When should a developer prefer a C# switch statement over a long chain of if-else-if statements?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "When checking complex relational inequalities with multiple variables (e.g. x > 5 && y < 10)",
+        "When testing a single discrete variable (like an int, string, or char) against multiple constant candidate values",
+        "When repeating code 100 times",
+        "When reading from a file"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "When checking complex relational inequalities with multiple variables (e.g. x > 5 && y < 10)",
+        "When testing a single discrete variable (like an int, string, or char) against multiple constant candidate values",
+        "When repeating code 100 times",
+        "When reading from a file"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Switch statements are designed for multi-way branching based on equality testing of a single selector expression against discrete constant values.",
+      "explanation": "Switch statements are designed for multi-way branching based on equality testing of a single selector expression against discrete constant values.",
+      "provenance": "Gaddis 4th Ed §4.8",
       "marks": 2
     },
     {
@@ -8387,25 +8635,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #68: In C# conditional logic and selection controls, which statement is true regarding #68?",
-      "title": "Decision Logic Concept #68: In C# conditional logic and selection controls, which statement is true regarding #68?",
+      "q": "What is the purpose of the 'default:' section in a C# switch statement?",
+      "title": "What is the purpose of the 'default:' section in a C# switch statement?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "It executes before every other case",
+        "It runs only if an exception is thrown",
+        "It executes when none of the explicitly defined case constants match the evaluated selector value",
+        "It defines the default background color of the form"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "It executes before every other case",
+        "It runs only if an exception is thrown",
+        "It executes when none of the explicitly defined case constants match the evaluated selector value",
+        "It defines the default background color of the form"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The default section is the fallback branch in a switch statement, analogous to the trailing else in an if-else-if chain.",
+      "explanation": "The default section is the fallback branch in a switch statement, analogous to the trailing else in an if-else-if chain.",
+      "provenance": "Gaddis 4th Ed §4.8",
       "marks": 2
     },
     {
@@ -8413,25 +8661,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #69: In C# conditional logic and selection controls, which statement is true regarding #69?",
-      "title": "Decision Logic Concept #69: In C# conditional logic and selection controls, which statement is true regarding #69?",
+      "q": "In Practical 4, if a vehicle is recorded traveling at exactly 60 km/h in a 60 km/h zone, what band and fine apply?",
+      "title": "In Practical 4, if a vehicle is recorded traveling at exactly 60 km/h in a 60 km/h zone, what band and fine apply?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "speedOver is 0; category is \"Minor\" and fine is R250",
+        "speedOver is 1; category is \"Serious\"",
+        "A warning letter is printed",
+        "speedOver is 0; category is \"Within the limit\" and fine is \"No fine. Safe driving.\""
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "speedOver is 0; category is \"Minor\" and fine is R250",
+        "speedOver is 1; category is \"Serious\"",
+        "A warning letter is printed",
+        "speedOver is 0; category is \"Within the limit\" and fine is \"No fine. Safe driving.\""
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "60 - 60 = 0. When speedOver <= 0, the driver is within the limit, incurring no fine.",
+      "explanation": "60 - 60 = 0. When speedOver <= 0, the driver is within the limit, incurring no fine.",
+      "provenance": "NWU Practical Four Part B",
       "marks": 2
     },
     {
@@ -8439,25 +8687,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #70: In C# conditional logic and selection controls, which statement is true regarding #70?",
-      "title": "Decision Logic Concept #70: In C# conditional logic and selection controls, which statement is true regarding #70?",
+      "q": "Why does 'txtZone.Text == \"School\"' evaluate to false if the officer typed 'school' with a lowercase 's'?",
+      "title": "Why does 'txtZone.Text == \"School\"' evaluate to false if the officer typed 'school' with a lowercase 's'?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "C# string comparisons using the equality operator (==) are strictly case-sensitive",
+        "Strings cannot be compared using ==",
+        "Visual Studio automatically capitalizes all text",
+        "TextBoxes do not support lowercase letters"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "C# string comparisons using the equality operator (==) are strictly case-sensitive",
+        "Strings cannot be compared using ==",
+        "Visual Studio automatically capitalizes all text",
+        "TextBoxes do not support lowercase letters"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "String equality in C# compares characters by their exact Unicode/ASCII values; 'S' (ASCII 83) does not equal 's' (ASCII 115).",
+      "explanation": "String equality in C# compares characters by their exact Unicode/ASCII values; 'S' (ASCII 83) does not equal 's' (ASCII 115).",
+      "provenance": "Gaddis 4th Ed §4.9 & Practical Four",
       "marks": 2
     },
     {
@@ -8465,25 +8713,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #71: In C# conditional logic and selection controls, which statement is true regarding #71?",
-      "title": "Decision Logic Concept #71: In C# conditional logic and selection controls, which statement is true regarding #71?",
+      "q": "How can a C# string comparison be performed in a case-insensitive manner?",
+      "title": "How can a C# string comparison be performed in a case-insensitive manner?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "txtZone.Text = \"school\"",
+        "txtZone.Text.ToLower() == \"school\"",
+        "txtZone.Text.NoCase()",
+        "txtZone.Text.IgnoreCaps()"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "txtZone.Text = \"school\"",
+        "txtZone.Text.ToLower() == \"school\"",
+        "txtZone.Text.NoCase()",
+        "txtZone.Text.IgnoreCaps()"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Converting both strings to lower case (using .ToLower()) normalizes character casing, allowing reliable case-insensitive equality comparison.",
+      "explanation": "Converting both strings to lower case (using .ToLower()) normalizes character casing, allowing reliable case-insensitive equality comparison.",
+      "provenance": "Gaddis 4th Ed §4.9",
       "marks": 2
     },
     {
@@ -8491,25 +8739,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #72: In C# conditional logic and selection controls, which statement is true regarding #72?",
-      "title": "Decision Logic Concept #72: In C# conditional logic and selection controls, which statement is true regarding #72?",
+      "q": "What does the C# conditional (ternary) operator 'condition ? expr1 : expr2' do?",
+      "title": "What does the C# conditional (ternary) operator 'condition ? expr1 : expr2' do?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Repeats expr1 while condition is true",
+        "Declares a three-dimensional array",
+        "Evaluates the condition and returns expr1 if true, or expr2 if false",
+        "Prints both expressions to a label"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "Repeats expr1 while condition is true",
+        "Declares a three-dimensional array",
+        "Evaluates the condition and returns expr1 if true, or expr2 if false",
+        "Prints both expressions to a label"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The conditional ternary operator (?:) provides a concise single-line expression alternative to a dual-alternative if-else statement.",
+      "explanation": "The conditional ternary operator (?:) provides a concise single-line expression alternative to a dual-alternative if-else statement.",
+      "provenance": "Gaddis 4th Ed §4.8",
       "marks": 2
     },
     {
@@ -8517,25 +8765,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #73: In C# conditional logic and selection controls, which statement is true regarding #73?",
-      "title": "Decision Logic Concept #73: In C# conditional logic and selection controls, which statement is true regarding #73?",
+      "q": "In Practical 5, how does the Clear button reset the form background color back to its standard Windows theme color?",
+      "title": "In Practical 5, how does the Clear button reset the form background color back to its standard Windows theme color?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "this.BackColor = Color.White;",
+        "this.BackColor = Color.None;",
+        "this.ResetColor();",
+        "this.BackColor = SystemColors.Control;"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "this.BackColor = Color.White;",
+        "this.BackColor = Color.None;",
+        "this.ResetColor();",
+        "this.BackColor = SystemColors.Control;"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 3,
+      "ans": 3,
+      "exp": "SystemColors.Control represents the standard default background color of Windows Forms surfaces.",
+      "explanation": "SystemColors.Control represents the standard default background color of Windows Forms surfaces.",
+      "provenance": "NWU Practical 5 GUI Requirements",
       "marks": 2
     },
     {
@@ -8543,25 +8791,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #74: In C# conditional logic and selection controls, which statement is true regarding #74?",
-      "title": "Decision Logic Concept #74: In C# conditional logic and selection controls, which statement is true regarding #74?",
+      "q": "According to De Morgan's Laws, what is the logical equivalent of '!(A && B)'?",
+      "title": "According to De Morgan's Laws, what is the logical equivalent of '!(A && B)'?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "!A || !B",
+        "!A && !B",
+        "A || B",
+        "!A && B"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "!A || !B",
+        "!A && !B",
+        "A || B",
+        "!A && B"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "exp": "De Morgan's Laws state: the negation of a conjunction '!(A && B)' is logically equivalent to the disjunction of the negations '!A || !B'.",
+      "explanation": "De Morgan's Laws state: the negation of a conjunction '!(A && B)' is logically equivalent to the disjunction of the negations '!A || !B'.",
+      "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
     {
@@ -8569,25 +8817,25 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Decision Logic Concept #75: In C# conditional logic and selection controls, which statement is true regarding #75?",
-      "title": "Decision Logic Concept #75: In C# conditional logic and selection controls, which statement is true regarding #75?",
+      "q": "According to De Morgan's Laws, what is the logical equivalent of '!(A || B)'?",
+      "title": "According to De Morgan's Laws, what is the logical equivalent of '!(A || B)'?",
       "options": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "!A || !B",
+        "!A && !B",
+        "A && B",
+        "!A || B"
       ],
       "opts": [
-        "Nested if statements allow multi-level hierarchical condition testing",
-        "Switch expressions can only evaluate boolean variables",
-        "RadioButtons must always be placed inside textboxes",
-        "TryParse can only be used on string literals, never textboxes"
+        "!A || !B",
+        "!A && !B",
+        "A && B",
+        "!A || B"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "explanation": "Nested decision structures place an if statement inside another if or else branch to evaluate secondary conditions.",
-      "provenance": "Gaddis 4th Ed §4.3",
+      "answer": 1,
+      "ans": 1,
+      "exp": "De Morgan's Laws state: the negation of a disjunction '!(A || B)' is logically equivalent to the conjunction of the negations '!A && !B'.",
+      "explanation": "De Morgan's Laws state: the negation of a disjunction '!(A || B)' is logically equivalent to the conjunction of the negations '!A && !B'.",
+      "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
     {
@@ -8985,25 +9233,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #16: In C# iteration mechanics, which rule applies to execution sequence #16?",
-      "title": "Loop Structure Concept #16: In C# iteration mechanics, which rule applies to execution sequence #16?",
+      "q": "In Visual C#, what is the fundamental behavioral difference between a 'while' loop and a 'do-while' loop?",
+      "title": "In Visual C#, what is the fundamental behavioral difference between a 'while' loop and a 'do-while' loop?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "A 'while' loop can only count backwards",
+        "A 'do-while' loop cannot contain if statements",
+        "A 'while' loop requires an array to run",
+        "A 'while' loop tests its condition before each iteration (pre-test) and may execute zero times, whereas a 'do-while' loop tests its condition after each iteration (post-test) and always executes at least once"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "A 'while' loop can only count backwards",
+        "A 'do-while' loop cannot contain if statements",
+        "A 'while' loop requires an array to run",
+        "A 'while' loop tests its condition before each iteration (pre-test) and may execute zero times, whereas a 'do-while' loop tests its condition after each iteration (post-test) and always executes at least once"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Pre-test loops (while, for) evaluate conditions prior to body entry; post-test loops (do-while) evaluate after body execution, guaranteeing at least one run.",
+      "explanation": "Pre-test loops (while, for) evaluate conditions prior to body entry; post-test loops (do-while) evaluate after body execution, guaranteeing at least one run.",
+      "provenance": "Gaddis 4th Ed §5.2 & §5.3",
       "marks": 2
     },
     {
@@ -9011,25 +9259,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #17: In C# iteration mechanics, which rule applies to execution sequence #17?",
-      "title": "Loop Structure Concept #17: In C# iteration mechanics, which rule applies to execution sequence #17?",
+      "q": "Why does C# syntax require a terminating semicolon after the condition in a do-while loop ('do { ... } while (condition);')?",
+      "title": "Why does C# syntax require a terminating semicolon after the condition in a do-while loop ('do { ... } while (condition);')?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The semicolon is required by C# grammar to mark the formal end of the do-while statement",
+        "It pauses execution for one second",
+        "It resets all local variables to zero",
+        "It forces the loop to iterate an infinite number of times"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The semicolon is required by C# grammar to mark the formal end of the do-while statement",
+        "It pauses execution for one second",
+        "It resets all local variables to zero",
+        "It forces the loop to iterate an infinite number of times"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "Because the loop condition appears at the bottom of the block, C# syntax mandates a semicolon to terminate the do-while statement.",
+      "explanation": "Because the loop condition appears at the bottom of the block, C# syntax mandates a semicolon to terminate the do-while statement.",
+      "provenance": "Gaddis 4th Ed §5.3",
       "marks": 2
     },
     {
@@ -9037,25 +9285,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #18: In C# iteration mechanics, which rule applies to execution sequence #18?",
-      "title": "Loop Structure Concept #18: In C# iteration mechanics, which rule applies to execution sequence #18?",
+      "q": "What are the three control expressions defined inside a standard C# for loop header: 'for (1; 2; 3)'?",
+      "title": "What are the three control expressions defined inside a standard C# for loop header: 'for (1; 2; 3)'?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "1: Input textbox, 2: Output label, 3: Button",
+        "1: Initialization expression, 2: Boolean test condition, 3: Update/increment expression",
+        "1: File name, 2: File size, 3: File type",
+        "1: Start point, 2: Font size, 3: Form title"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "1: Input textbox, 2: Output label, 3: Button",
+        "1: Initialization expression, 2: Boolean test condition, 3: Update/increment expression",
+        "1: File name, 2: File size, 3: File type",
+        "1: Start point, 2: Font size, 3: Form title"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The for loop header consists of: initialization (runs once), test condition (checked before each iteration), and update (executed after each iteration).",
+      "explanation": "The for loop header consists of: initialization (runs once), test condition (checked before each iteration), and update (executed after each iteration).",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9063,25 +9311,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #19: In C# iteration mechanics, which rule applies to execution sequence #19?",
-      "title": "Loop Structure Concept #19: In C# iteration mechanics, which rule applies to execution sequence #19?",
+      "q": "In what exact chronological order are the components of a 'for' loop executed during the very first iteration?",
+      "title": "In what exact chronological order are the components of a 'for' loop executed during the very first iteration?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Update -> Initialization -> Condition test -> Loop body",
+        "Loop body -> Condition test -> Initialization -> Update",
+        "Initialization -> Boolean condition test -> Loop body execution -> Update expression",
+        "Initialization -> Update -> Loop body -> Condition test"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Update -> Initialization -> Condition test -> Loop body",
+        "Loop body -> Condition test -> Initialization -> Update",
+        "Initialization -> Boolean condition test -> Loop body execution -> Update expression",
+        "Initialization -> Update -> Loop body -> Condition test"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Initialization runs first. The condition is evaluated; if true, the body executes, followed by the update expression.",
+      "explanation": "Initialization runs first. The condition is evaluated; if true, the body executes, followed by the update expression.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9089,25 +9337,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #20: In C# iteration mechanics, which rule applies to execution sequence #20?",
-      "title": "Loop Structure Concept #20: In C# iteration mechanics, which rule applies to execution sequence #20?",
+      "q": "In what exact sequence do components of a 'for' loop execute during the second and subsequent iterations?",
+      "title": "In what exact sequence do components of a 'for' loop execute during the second and subsequent iterations?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Initialization -> Boolean condition test -> Loop body",
+        "Loop body -> Initialization -> Update",
+        "Update -> Initialization -> Boolean test",
+        "Boolean condition test -> Loop body execution -> Update expression"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Initialization -> Boolean condition test -> Loop body",
+        "Loop body -> Initialization -> Update",
+        "Update -> Initialization -> Boolean test",
+        "Boolean condition test -> Loop body execution -> Update expression"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "After iteration 1, initialization never runs again. Each subsequent cycle runs: condition check, loop body (if true), and update expression.",
+      "explanation": "After iteration 1, initialization never runs again. Each subsequent cycle runs: condition check, loop body (if true), and update expression.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9115,25 +9363,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #21: In C# iteration mechanics, which rule applies to execution sequence #21?",
-      "title": "Loop Structure Concept #21: In C# iteration mechanics, which rule applies to execution sequence #21?",
+      "q": "What is the operational difference between postfix increment ('count++') and prefix increment ('++count') when used inside an expression?",
+      "title": "What is the operational difference between postfix increment ('count++') and prefix increment ('++count') when used inside an expression?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Postfix ('count++') uses the current value in the surrounding expression first, then increments; prefix ('++count') increments first, then uses the updated value",
+        "Postfix only works with negative numbers",
+        "Prefix adds 2 instead of 1",
+        "Postfix creates an infinite loop"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Postfix ('count++') uses the current value in the surrounding expression first, then increments; prefix ('++count') increments first, then uses the updated value",
+        "Postfix only works with negative numbers",
+        "Prefix adds 2 instead of 1",
+        "Postfix creates an infinite loop"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "Postfix evaluates then increments. Prefix increments then evaluates.",
+      "explanation": "Postfix evaluates then increments. Prefix increments then evaluates.",
+      "provenance": "Gaddis 4th Ed §5.1",
       "marks": 2
     },
     {
@@ -9141,25 +9389,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #22: In C# iteration mechanics, which rule applies to execution sequence #22?",
-      "title": "Loop Structure Concept #22: In C# iteration mechanics, which rule applies to execution sequence #22?",
+      "q": "What is an accumulator variable in Visual C# programming?",
+      "title": "What is an accumulator variable in Visual C# programming?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "A variable that stores mouse coordinates",
+        "A numeric variable used to accumulate and maintain a running total of values added across loop iterations",
+        "A variable that tracks the number of open windows",
+        "A variable that measures CPU temperature"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "A variable that stores mouse coordinates",
+        "A numeric variable used to accumulate and maintain a running total of values added across loop iterations",
+        "A variable that tracks the number of open windows",
+        "A variable that measures CPU temperature"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "An accumulator is a numeric variable updated with '+=' to collect a running total as a loop progresses.",
+      "explanation": "An accumulator is a numeric variable updated with '+=' to collect a running total as a loop progresses.",
+      "provenance": "Gaddis 4th Ed §5.5",
       "marks": 2
     },
     {
@@ -9167,25 +9415,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #23: In C# iteration mechanics, which rule applies to execution sequence #23?",
-      "title": "Loop Structure Concept #23: In C# iteration mechanics, which rule applies to execution sequence #23?",
+      "q": "What compiler error occurs if an accumulator variable 'decimal total;' is declared inside an event handler but not initialized before being used inside a loop ('total += amount;')?",
+      "title": "What compiler error occurs if an accumulator variable 'decimal total;' is declared inside an event handler but not initialized before being used inside a loop ('total += amount;')?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Compiler error CS1002: Semicolon expected",
+        "Compiler error CS0029: Cannot convert double to int",
+        "Compiler error CS0165: Use of unassigned local variable 'total'",
+        "Compiler error CS0103: The name 'total' does not exist"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Compiler error CS1002: Semicolon expected",
+        "Compiler error CS0029: Cannot convert double to int",
+        "Compiler error CS0165: Use of unassigned local variable 'total'",
+        "Compiler error CS0103: The name 'total' does not exist"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "C# requires local variables to be assigned before reading. An accumulator must be initialized (e.g. 'decimal total = 0m;') prior to entering the loop.",
+      "explanation": "C# requires local variables to be assigned before reading. An accumulator must be initialized (e.g. 'decimal total = 0m;') prior to entering the loop.",
+      "provenance": "Gaddis 4th Ed §5.5",
       "marks": 2
     },
     {
@@ -9193,24 +9441,24 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #24: In C# iteration mechanics, which rule applies to execution sequence #24?",
-      "title": "Loop Structure Concept #24: In C# iteration mechanics, which rule applies to execution sequence #24?",
+      "q": "What is a loop counter variable?",
+      "title": "What is a loop counter variable?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "A control that displays the current computer time",
+        "A variable that prevents the user from clicking buttons",
+        "A special keyword that replaces the if statement",
+        "A variable initialized before a loop and incremented by a constant amount (usually 1) on each iteration to track the number of cycles executed"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "A control that displays the current computer time",
+        "A variable that prevents the user from clicking buttons",
+        "A special keyword that replaces the if statement",
+        "A variable initialized before a loop and incremented by a constant amount (usually 1) on each iteration to track the number of cycles executed"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
+      "answer": 3,
+      "ans": 3,
+      "exp": "A counter variable tracks occurrences or iteration counts by incrementing or decrementing by a fixed step value.",
+      "explanation": "A counter variable tracks occurrences or iteration counts by incrementing or decrementing by a fixed step value.",
       "provenance": "Gaddis 4th Ed §5.2",
       "marks": 2
     },
@@ -9219,25 +9467,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #25: In C# iteration mechanics, which rule applies to execution sequence #25?",
-      "title": "Loop Structure Concept #25: In C# iteration mechanics, which rule applies to execution sequence #25?",
+      "q": "What is a sentinel value in C# repetition structures?",
+      "title": "What is a sentinel value in C# repetition structures?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "A distinctive placeholder value (such as -1 or 999) that signals the end of user data input and prompts loop termination",
+        "The maximum value an integer can store",
+        "A virus detection routine in .NET",
+        "The name of the main form in a project"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "A distinctive placeholder value (such as -1 or 999) that signals the end of user data input and prompts loop termination",
+        "The maximum value an integer can store",
+        "A virus detection routine in .NET",
+        "The name of the main form in a project"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "A sentinel is an agreed-upon special value outside the normal range of input data that signals when a loop should stop accepting input.",
+      "explanation": "A sentinel is an agreed-upon special value outside the normal range of input data that signals when a loop should stop accepting input.",
+      "provenance": "Gaddis 4th Ed §5.6",
       "marks": 2
     },
     {
@@ -9245,24 +9493,24 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #26: In C# iteration mechanics, which rule applies to execution sequence #26?",
-      "title": "Loop Structure Concept #26: In C# iteration mechanics, which rule applies to execution sequence #26?",
+      "q": "What is the primary cause of an infinite loop in a while loop construct?",
+      "title": "What is the primary cause of an infinite loop in a while loop construct?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The form is minimized by the user",
+        "The loop continuation condition never evaluates to false, often because the counter update statement was omitted from the loop body",
+        "The computer has insufficient hard drive space",
+        "A button on the form has its Visible property set to false"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The form is minimized by the user",
+        "The loop continuation condition never evaluates to false, often because the counter update statement was omitted from the loop body",
+        "The computer has insufficient hard drive space",
+        "A button on the form has its Visible property set to false"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
+      "answer": 1,
+      "ans": 1,
+      "exp": "An infinite loop occurs when the loop condition remains perpetually true, typically because the code fails to modify the loop control variable inside the body.",
+      "explanation": "An infinite loop occurs when the loop condition remains perpetually true, typically because the code fails to modify the loop control variable inside the body.",
       "provenance": "Gaddis 4th Ed §5.2",
       "marks": 2
     },
@@ -9271,25 +9519,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #27: In C# iteration mechanics, which rule applies to execution sequence #27?",
-      "title": "Loop Structure Concept #27: In C# iteration mechanics, which rule applies to execution sequence #27?",
+      "q": "What is an 'off-by-one' error in loop implementation?",
+      "title": "What is an 'off-by-one' error in loop implementation?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "A syntax error caused by missing one quotation mark",
+        "A compiler error caused by adding two numbers incorrectly",
+        "A logic error where a loop executes one iteration too many or one too few, usually caused by writing '<=' instead of '<' or initializing at 1 instead of 0",
+        "An error where one button has two event handlers"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "A syntax error caused by missing one quotation mark",
+        "A compiler error caused by adding two numbers incorrectly",
+        "A logic error where a loop executes one iteration too many or one too few, usually caused by writing '<=' instead of '<' or initializing at 1 instead of 0",
+        "An error where one button has two event handlers"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "An off-by-one bug occurs when the loop boundary condition is misconfigured, causing the loop body to execute N+1 or N-1 times instead of N.",
+      "explanation": "An off-by-one bug occurs when the loop boundary condition is misconfigured, causing the loop body to execute N+1 or N-1 times instead of N.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9297,25 +9545,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #28: In C# iteration mechanics, which rule applies to execution sequence #28?",
-      "title": "Loop Structure Concept #28: In C# iteration mechanics, which rule applies to execution sequence #28?",
+      "q": "How many times does the body of the loop 'for (int i = 0; i < 5; i++)' execute?",
+      "title": "How many times does the body of the loop 'for (int i = 0; i < 5; i++)' execute?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "4 times",
+        "6 times",
+        "0 times",
+        "5 times (for i = 0, 1, 2, 3, 4)"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "4 times",
+        "6 times",
+        "0 times",
+        "5 times (for i = 0, 1, 2, 3, 4)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The loop executes for i = 0, 1, 2, 3, and 4 (exactly 5 times). When i reaches 5, the condition '5 < 5' is false and the loop terminates.",
+      "explanation": "The loop executes for i = 0, 1, 2, 3, and 4 (exactly 5 times). When i reaches 5, the condition '5 < 5' is false and the loop terminates.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9323,25 +9571,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #29: In C# iteration mechanics, which rule applies to execution sequence #29?",
-      "title": "Loop Structure Concept #29: In C# iteration mechanics, which rule applies to execution sequence #29?",
+      "q": "How many times does the body of the loop 'for (int i = 1; i <= 5; i++)' execute?",
+      "title": "How many times does the body of the loop 'for (int i = 1; i <= 5; i++)' execute?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "5 times (for i = 1, 2, 3, 4, 5)",
+        "4 times",
+        "6 times",
+        "Infinite times"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "5 times (for i = 1, 2, 3, 4, 5)",
+        "4 times",
+        "6 times",
+        "Infinite times"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "The loop executes for i = 1, 2, 3, 4, and 5 (5 times total). When i reaches 6, '6 <= 5' is false and the loop terminates.",
+      "explanation": "The loop executes for i = 1, 2, 3, 4, and 5 (5 times total). When i reaches 6, '6 <= 5' is false and the loop terminates.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9349,25 +9597,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #30: In C# iteration mechanics, which rule applies to execution sequence #30?",
-      "title": "Loop Structure Concept #30: In C# iteration mechanics, which rule applies to execution sequence #30?",
+      "q": "If 'int i;' is declared before the loop 'for (i = 0; i < 5; i++) { }', what is the value of 'i' immediately after the loop terminates?",
+      "title": "If 'int i;' is declared before the loop 'for (i = 0; i < 5; i++) { }', what is the value of 'i' immediately after the loop terminates?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "4",
+        "5",
+        "0",
+        "-1"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "4",
+        "5",
+        "0",
+        "-1"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The loop increments i to 5, at which point '5 < 5' is false, causing loop termination with i retaining the value 5.",
+      "explanation": "The loop increments i to 5, at which point '5 < 5' is false, causing loop termination with i retaining the value 5.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9375,25 +9623,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #31: In C# iteration mechanics, which rule applies to execution sequence #31?",
-      "title": "Loop Structure Concept #31: In C# iteration mechanics, which rule applies to execution sequence #31?",
+      "q": "If a loop control variable is declared in the for loop header ('for (int count = 0; count < 10; count++)'), can 'count' be used outside the loop?",
+      "title": "If a loop control variable is declared in the for loop header ('for (int count = 0; count < 10; count++)'), can 'count' be used outside the loop?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Yes, it remains available throughout the entire method",
+        "Yes, it becomes a class-level field",
+        "No, 'count' has block scope limited strictly to the for loop header and body; referencing it outside causes compiler error CS0103",
+        "Only if the loop iterated at least once"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Yes, it remains available throughout the entire method",
+        "Yes, it becomes a class-level field",
+        "No, 'count' has block scope limited strictly to the for loop header and body; referencing it outside causes compiler error CS0103",
+        "Only if the loop iterated at least once"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Variables declared in the initialization section of a for loop header have scope confined to the loop construct itself.",
+      "explanation": "Variables declared in the initialization section of a for loop header have scope confined to the loop construct itself.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9401,25 +9649,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #32: In C# iteration mechanics, which rule applies to execution sequence #32?",
-      "title": "Loop Structure Concept #32: In C# iteration mechanics, which rule applies to execution sequence #32?",
+      "q": "Which for loop header correctly counts backwards from 10 down to 1 inclusive?",
+      "title": "Which for loop header correctly counts backwards from 10 down to 1 inclusive?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "for (int i = 1; i <= 10; i--)",
+        "for (int i = 10; i < 1; i++)",
+        "for (int i = 10; i > 0; i++)",
+        "for (int i = 10; i >= 1; i--)"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "for (int i = 1; i <= 10; i--)",
+        "for (int i = 10; i < 1; i++)",
+        "for (int i = 10; i > 0; i++)",
+        "for (int i = 10; i >= 1; i--)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Counting down starts at 10, tests that i >= 1, and decrements with i-- after each iteration.",
+      "explanation": "Counting down starts at 10, tests that i >= 1, and decrements with i-- after each iteration.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9427,25 +9675,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #33: In C# iteration mechanics, which rule applies to execution sequence #33?",
-      "title": "Loop Structure Concept #33: In C# iteration mechanics, which rule applies to execution sequence #33?",
+      "q": "Which for loop header iterates through even numbers from 2 up to 20 inclusive?",
+      "title": "Which for loop header iterates through even numbers from 2 up to 20 inclusive?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "for (int i = 2; i <= 20; i += 2)",
+        "for (int i = 2; i < 20; i++)",
+        "for (int i = 0; i <= 20; i * 2)",
+        "for (int i = 2; i == 20; i += 2)"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "for (int i = 2; i <= 20; i += 2)",
+        "for (int i = 2; i < 20; i++)",
+        "for (int i = 0; i <= 20; i * 2)",
+        "for (int i = 2; i == 20; i += 2)"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "Starting at 2, terminating when i exceeds 20, and stepping by 2 ('i += 2') yields 2, 4, 6, ..., 20.",
+      "explanation": "Starting at 2, terminating when i exceeds 20, and stepping by 2 ('i += 2') yields 2, 4, 6, ..., 20.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9453,25 +9701,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #34: In C# iteration mechanics, which rule applies to execution sequence #34?",
-      "title": "Loop Structure Concept #34: In C# iteration mechanics, which rule applies to execution sequence #34?",
+      "q": "What happens when a 'break;' statement is encountered inside a loop body?",
+      "title": "What happens when a 'break;' statement is encountered inside a loop body?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The computer restarts",
+        "The loop terminates immediately, and execution jumps to the statement directly following the loop",
+        "The current iteration is skipped and the loop starts again",
+        "All variables in the program are reset to null"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The computer restarts",
+        "The loop terminates immediately, and execution jumps to the statement directly following the loop",
+        "The current iteration is skipped and the loop starts again",
+        "All variables in the program are reset to null"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The 'break' statement immediately exits the innermost enclosing loop, bypassing any remaining iterations.",
+      "explanation": "The 'break' statement immediately exits the innermost enclosing loop, bypassing any remaining iterations.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9479,25 +9727,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #35: In C# iteration mechanics, which rule applies to execution sequence #35?",
-      "title": "Loop Structure Concept #35: In C# iteration mechanics, which rule applies to execution sequence #35?",
+      "q": "What happens when a 'continue;' statement is encountered inside a loop body?",
+      "title": "What happens when a 'continue;' statement is encountered inside a loop body?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The loop is terminated completely",
+        "The application terminates immediately",
+        "The remainder of the current iteration is skipped, and control jumps directly to the update/test expression for the next iteration",
+        "The form reloads"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The loop is terminated completely",
+        "The application terminates immediately",
+        "The remainder of the current iteration is skipped, and control jumps directly to the update/test expression for the next iteration",
+        "The form reloads"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The 'continue' statement bypasses any statements remaining in the current iteration and advances to the next loop iteration.",
+      "explanation": "The 'continue' statement bypasses any statements remaining in the current iteration and advances to the next loop iteration.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9505,25 +9753,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #36: In C# iteration mechanics, which rule applies to execution sequence #36?",
-      "title": "Loop Structure Concept #36: In C# iteration mechanics, which rule applies to execution sequence #36?",
+      "q": "Which C# statement adds a new text item to a ListBox named lstResults?",
+      "title": "Which C# statement adds a new text item to a ListBox named lstResults?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstResults.Add(\"New Item\");",
+        "lstResults.Items.InsertItem(\"New Item\");",
+        "lstResults.Text += \"New Item\";",
+        "lstResults.Items.Add(\"New Item\");"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstResults.Add(\"New Item\");",
+        "lstResults.Items.InsertItem(\"New Item\");",
+        "lstResults.Text += \"New Item\";",
+        "lstResults.Items.Add(\"New Item\");"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Items are appended to a ListBox through its Items collection using 'lstResults.Items.Add(...)'.",
+      "explanation": "Items are appended to a ListBox through its Items collection using 'lstResults.Items.Add(...)'.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -9531,25 +9779,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #37: In C# iteration mechanics, which rule applies to execution sequence #37?",
-      "title": "Loop Structure Concept #37: In C# iteration mechanics, which rule applies to execution sequence #37?",
+      "q": "Which C# statement removes all items from a ListBox named lstResults?",
+      "title": "Which C# statement removes all items from a ListBox named lstResults?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstResults.Items.Clear();",
+        "lstResults.Clear();",
+        "lstResults.Items.DeleteAll();",
+        "lstResults.Reset();"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstResults.Items.Clear();",
+        "lstResults.Clear();",
+        "lstResults.Items.DeleteAll();",
+        "lstResults.Reset();"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "Calling lstResults.Items.Clear() empties the Items collection of the ListBox.",
+      "explanation": "Calling lstResults.Items.Clear() empties the Items collection of the ListBox.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -9557,25 +9805,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #38: In C# iteration mechanics, which rule applies to execution sequence #38?",
-      "title": "Loop Structure Concept #38: In C# iteration mechanics, which rule applies to execution sequence #38?",
+      "q": "Which property returns the total count of items currently populated in lstResults?",
+      "title": "Which property returns the total count of items currently populated in lstResults?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstResults.Length",
+        "lstResults.Items.Count",
+        "lstResults.Items.Size",
+        "lstResults.TotalItems"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstResults.Length",
+        "lstResults.Items.Count",
+        "lstResults.Items.Size",
+        "lstResults.TotalItems"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The .Count property on the Items collection returns an integer indicating how many items the ListBox contains.",
+      "explanation": "The .Count property on the Items collection returns an integer indicating how many items the ListBox contains.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -9583,25 +9831,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #39: In C# iteration mechanics, which rule applies to execution sequence #39?",
-      "title": "Loop Structure Concept #39: In C# iteration mechanics, which rule applies to execution sequence #39?",
+      "q": "In C# Windows Forms, what is the index of the first item in a ListBox?",
+      "title": "In C# Windows Forms, what is the index of the first item in a ListBox?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "1",
+        "-1",
+        "0 (ListBoxes are zero-indexed)",
+        "null"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "1",
+        "-1",
+        "0 (ListBoxes are zero-indexed)",
+        "null"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "ListBox collections are 0-indexed in C#; the first element resides at index 0.",
+      "explanation": "ListBox collections are 0-indexed in C#; the first element resides at index 0.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -9609,25 +9857,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #40: In C# iteration mechanics, which rule applies to execution sequence #40?",
-      "title": "Loop Structure Concept #40: In C# iteration mechanics, which rule applies to execution sequence #40?",
+      "q": "If a ListBox contains N items, what is the index of the last item in the list?",
+      "title": "If a ListBox contains N items, what is the index of the last item in the list?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "N",
+        "N + 1",
+        "0",
+        "N - 1 (or lstResults.Items.Count - 1)"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "N",
+        "N + 1",
+        "0",
+        "N - 1 (or lstResults.Items.Count - 1)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Because indexing begins at 0, the final element in an N-item collection is located at index N - 1.",
+      "explanation": "Because indexing begins at 0, the final element in an N-item collection is located at index N - 1.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -9635,25 +9883,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #41: In C# iteration mechanics, which rule applies to execution sequence #41?",
-      "title": "Loop Structure Concept #41: In C# iteration mechanics, which rule applies to execution sequence #41?",
+      "q": "What runtime exception occurs if you attempt to access 'lstResults.Items[10]' when the ListBox contains only 3 items?",
+      "title": "What runtime exception occurs if you attempt to access 'lstResults.Items[10]' when the ListBox contains only 3 items?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "ArgumentOutOfRangeException",
+        "NullReferenceException",
+        "FormatException",
+        "DivideByZeroException"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "ArgumentOutOfRangeException",
+        "NullReferenceException",
+        "FormatException",
+        "DivideByZeroException"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "Accessing an index outside the valid range [0, Count-1] throws an ArgumentOutOfRangeException.",
+      "explanation": "Accessing an index outside the valid range [0, Count-1] throws an ArgumentOutOfRangeException.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -9661,25 +9909,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #42: In C# iteration mechanics, which rule applies to execution sequence #42?",
-      "title": "Loop Structure Concept #42: In C# iteration mechanics, which rule applies to execution sequence #42?",
+      "q": "How can a developer safely extract the currently selected item from lstResults as a string?",
+      "title": "How can a developer safely extract the currently selected item from lstResults as a string?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "string item = lstResults.SelectedItem.ToString(); without checking selection",
+        "if (lstResults.SelectedIndex != -1) { string item = lstResults.SelectedItem.ToString(); }",
+        "string item = lstResults.Text.Substring(0, 5);",
+        "string item = lstResults.Items[-1];"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "string item = lstResults.SelectedItem.ToString(); without checking selection",
+        "if (lstResults.SelectedIndex != -1) { string item = lstResults.SelectedItem.ToString(); }",
+        "string item = lstResults.Text.Substring(0, 5);",
+        "string item = lstResults.Items[-1];"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Checking SelectedIndex != -1 verifies an item is selected before calling SelectedItem.ToString(), preventing NullReferenceExceptions.",
+      "explanation": "Checking SelectedIndex != -1 verifies an item is selected before calling SelectedItem.ToString(), preventing NullReferenceExceptions.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -9687,25 +9935,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #43: In C# iteration mechanics, which rule applies to execution sequence #43?",
-      "title": "Loop Structure Concept #43: In C# iteration mechanics, which rule applies to execution sequence #43?",
+      "q": "Which for loop header correctly iterates through every item in a ListBox named lstScores?",
+      "title": "Which for loop header correctly iterates through every item in a ListBox named lstScores?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "for (int i = 1; i <= lstScores.Items.Count; i++)",
+        "for (int i = 0; i <= lstScores.Items.Count; i++)",
+        "for (int i = 0; i < lstScores.Items.Count; i++)",
+        "for (int i = lstScores.Items.Count; i > 0; i++)"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "for (int i = 1; i <= lstScores.Items.Count; i++)",
+        "for (int i = 0; i <= lstScores.Items.Count; i++)",
+        "for (int i = 0; i < lstScores.Items.Count; i++)",
+        "for (int i = lstScores.Items.Count; i > 0; i++)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Valid indices range from 0 to Count - 1. Using 'i = 0; i < lstScores.Items.Count; i++' visits each valid element safely.",
+      "explanation": "Valid indices range from 0 to Count - 1. Using 'i = 0; i < lstScores.Items.Count; i++' visits each valid element safely.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9713,25 +9961,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #44: In C# iteration mechanics, which rule applies to execution sequence #44?",
-      "title": "Loop Structure Concept #44: In C# iteration mechanics, which rule applies to execution sequence #44?",
+      "q": "How can numeric values stored as text in a ListBox (lstScores) be summed using an accumulator in a loop?",
+      "title": "How can numeric values stored as text in a ListBox (lstScores) be summed using an accumulator in a loop?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "decimal total = lstScores.Items.Count * 100;",
+        "decimal total = lstScores.Items.Sum(); without declaring total",
+        "decimal total; total += lstScores.SelectedIndex;",
+        "decimal total = 0m;\nfor (int i = 0; i < lstScores.Items.Count; i++)\n{\n    total += decimal.Parse(lstScores.Items[i].ToString());\n}"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "decimal total = lstScores.Items.Count * 100;",
+        "decimal total = lstScores.Items.Sum(); without declaring total",
+        "decimal total; total += lstScores.SelectedIndex;",
+        "decimal total = 0m;\nfor (int i = 0; i < lstScores.Items.Count; i++)\n{\n    total += decimal.Parse(lstScores.Items[i].ToString());\n}"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Initialize total to 0m, iterate through items from 0 to Count-1, extract each item as a string, parse it to decimal, and add to total.",
+      "explanation": "Initialize total to 0m, iterate through items from 0 to Count-1, extract each item as a string, parse it to decimal, and add to total.",
+      "provenance": "Gaddis 4th Ed §5.5",
       "marks": 2
     },
     {
@@ -9739,25 +9987,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #45: In C# iteration mechanics, which rule applies to execution sequence #45?",
-      "title": "Loop Structure Concept #45: In C# iteration mechanics, which rule applies to execution sequence #45?",
+      "q": "When calculating the average of numbers stored in a ListBox, what check must be included to avoid a runtime division by zero exception?",
+      "title": "When calculating the average of numbers stored in a ListBox, what check must be included to avoid a runtime division by zero exception?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Verify that lstScores.Items.Count > 0 before dividing",
+        "Check if the form has a title bar",
+        "Verify that the user entered a positive name",
+        "Ensure that the computer is connected to the internet"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Verify that lstScores.Items.Count > 0 before dividing",
+        "Check if the form has a title bar",
+        "Verify that the user entered a positive name",
+        "Ensure that the computer is connected to the internet"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "If the ListBox is empty (Count == 0), dividing by Count throws a DivideByZeroException for integers or produces NaN for floating point.",
+      "explanation": "If the ListBox is empty (Count == 0), dividing by Count throws a DivideByZeroException for integers or produces NaN for floating point.",
+      "provenance": "Gaddis 4th Ed §5.5",
       "marks": 2
     },
     {
@@ -9765,25 +10013,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #46: In C# iteration mechanics, which rule applies to execution sequence #46?",
-      "title": "Loop Structure Concept #46: In C# iteration mechanics, which rule applies to execution sequence #46?",
+      "q": "What insidious bug is created by accidentally placing a semicolon at the end of a while loop header: 'while (count < 10); { count++; }'?",
+      "title": "What insidious bug is created by accidentally placing a semicolon at the end of a while loop header: 'while (count < 10); { count++; }'?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The code fails to compile with CS1002",
+        "The semicolon forms an empty loop body; since count is never incremented, the loop hangs indefinitely in an infinite loop",
+        "The block '{ count++; }' executes 10 times immediately",
+        "Visual Studio deletes the while statement"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The code fails to compile with CS1002",
+        "The semicolon forms an empty loop body; since count is never incremented, the loop hangs indefinitely in an infinite loop",
+        "The block '{ count++; }' executes 10 times immediately",
+        "Visual Studio deletes the while statement"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "A semicolon after while(...) creates an empty statement as the loop body. The loop endlessly tests 'count < 10' without ever incrementing count.",
+      "explanation": "A semicolon after while(...) creates an empty statement as the loop body. The loop endlessly tests 'count < 10' without ever incrementing count.",
+      "provenance": "Gaddis 4th Ed §5.2 (Common Pitfalls)",
       "marks": 2
     },
     {
@@ -9791,25 +10039,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #47: In C# iteration mechanics, which rule applies to execution sequence #47?",
-      "title": "Loop Structure Concept #47: In C# iteration mechanics, which rule applies to execution sequence #47?",
+      "q": "What happens if an accidental semicolon is placed immediately after a for loop header: 'for (int i = 0; i < 5; i++); { lstOutput.Items.Add(\"Hi\"); }'?",
+      "title": "What happens if an accidental semicolon is placed immediately after a for loop header: 'for (int i = 0; i < 5; i++); { lstOutput.Items.Add(\"Hi\"); }'?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The program crashes with an OutOfMemoryException",
+        "'Hi' is added 5 times as expected",
+        "The loop executes all 5 iterations doing nothing; then the block executes once, adding 'Hi' only a single time",
+        "A syntax error stops compilation"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The program crashes with an OutOfMemoryException",
+        "'Hi' is added 5 times as expected",
+        "The loop executes all 5 iterations doing nothing; then the block executes once, adding 'Hi' only a single time",
+        "A syntax error stops compilation"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The semicolon acts as an empty loop body, cycling i from 0 to 5. The following block executes as normal sequential code exactly once.",
+      "explanation": "The semicolon acts as an empty loop body, cycling i from 0 to 5. The following block executes as normal sequential code exactly once.",
+      "provenance": "Gaddis 4th Ed §5.4 (Common Pitfalls)",
       "marks": 2
     },
     {
@@ -9817,25 +10065,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #48: In C# iteration mechanics, which rule applies to execution sequence #48?",
-      "title": "Loop Structure Concept #48: In C# iteration mechanics, which rule applies to execution sequence #48?",
+      "q": "In a retail POS transaction system, why is 'lstCart.Items.Clear();' called when the cashier clicks the 'New Sale' button?",
+      "title": "In a retail POS transaction system, why is 'lstCart.Items.Clear();' called when the cashier clicks the 'New Sale' button?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "To print the customer receipt",
+        "To calculate 15% VAT",
+        "To close the cash register drawer",
+        "To remove all scanned items from the previous customer from the display and memory before starting a new transaction"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "To print the customer receipt",
+        "To calculate 15% VAT",
+        "To close the cash register drawer",
+        "To remove all scanned items from the previous customer from the display and memory before starting a new transaction"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Clearing the ListBox ensures no residual items or prices from a prior transaction contaminate the new transaction.",
+      "explanation": "Clearing the ListBox ensures no residual items or prices from a prior transaction contaminate the new transaction.",
+      "provenance": "NWU PEC 2024 Exam & Practical 5",
       "marks": 2
     },
     {
@@ -9843,25 +10091,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #49: In C# iteration mechanics, which rule applies to execution sequence #49?",
-      "title": "Loop Structure Concept #49: In C# iteration mechanics, which rule applies to execution sequence #49?",
+      "q": "How can a multiplication table for the number 5 (from '5 x 1 = 5' to '5 x 10 = 50') be populated into lstTable?",
+      "title": "How can a multiplication table for the number 5 (from '5 x 1 = 5' to '5 x 10 = 50') be populated into lstTable?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "for (int i = 1; i <= 10; i++) { lstTable.Items.Add($\"5 x {i} = {5 * i}\"); }",
+        "lstTable.Items.Add(5 * 10);",
+        "for (int i = 10; i < 1; i++) { lstTable.Items.Add(5 * i); }",
+        "while (i <= 10) { lstTable.Items.Add(5); }"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "for (int i = 1; i <= 10; i++) { lstTable.Items.Add($\"5 x {i} = {5 * i}\"); }",
+        "lstTable.Items.Add(5 * 10);",
+        "for (int i = 10; i < 1; i++) { lstTable.Items.Add(5 * i); }",
+        "while (i <= 10) { lstTable.Items.Add(5); }"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "A for loop counting from 1 to 10 dynamically evaluates and appends each formatted multiplication product.",
+      "explanation": "A for loop counting from 1 to 10 dynamically evaluates and appends each formatted multiplication product.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9869,25 +10117,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #50: In C# iteration mechanics, which rule applies to execution sequence #50?",
-      "title": "Loop Structure Concept #50: In C# iteration mechanics, which rule applies to execution sequence #50?",
+      "q": "In financial investment simulation, why is a loop necessary to calculate compound interest over multiple years instead of simple multiplication?",
+      "title": "In financial investment simulation, why is a loop necessary to calculate compound interest over multiple years instead of simple multiplication?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Multiplication is not supported on decimal variables",
+        "Interest earned in each year is added to the principal balance, so subsequent interest is calculated on the new compounded total",
+        "Compounding only works if executed inside an event handler",
+        "C# requires loops for all numbers greater than 1000"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Multiplication is not supported on decimal variables",
+        "Interest earned in each year is added to the principal balance, so subsequent interest is calculated on the new compounded total",
+        "Compounding only works if executed inside an event handler",
+        "C# requires loops for all numbers greater than 1000"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Compound growth is an iterative accumulation: each period's interest increases the base principal for subsequent calculations.",
+      "explanation": "Compound growth is an iterative accumulation: each period's interest increases the base principal for subsequent calculations.",
+      "provenance": "Gaddis 4th Ed §5.5",
       "marks": 2
     },
     {
@@ -9895,25 +10143,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #51: In C# iteration mechanics, which rule applies to execution sequence #51?",
-      "title": "Loop Structure Concept #51: In C# iteration mechanics, which rule applies to execution sequence #51?",
+      "q": "In an investment simulator, how can yearly balances be appended to a ListBox with tab separation and Rand currency formatting?",
+      "title": "In an investment simulator, how can yearly balances be appended to a ListBox with tab separation and Rand currency formatting?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstGrowth.Items.Add(year + balance);",
+        "lstGrowth.Text = balance.ToString();",
+        "lstGrowth.Items.Add($\"Year {year}:\\t{balance:C}\");",
+        "lstGrowth.Items.Insert(year, balance);"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstGrowth.Items.Add(year + balance);",
+        "lstGrowth.Text = balance.ToString();",
+        "lstGrowth.Items.Add($\"Year {year}:\\t{balance:C}\");",
+        "lstGrowth.Items.Insert(year, balance);"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "String interpolation with the tab escape sequence '\\t' and currency specifier ':C' formats tabular monetary output cleanly.",
+      "explanation": "String interpolation with the tab escape sequence '\\t' and currency specifier ':C' formats tabular monetary output cleanly.",
+      "provenance": "Gaddis 4th Ed §5.5 & Practical 2",
       "marks": 2
     },
     {
@@ -9921,25 +10169,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #52: In C# iteration mechanics, which rule applies to execution sequence #52?",
-      "title": "Loop Structure Concept #52: In C# iteration mechanics, which rule applies to execution sequence #52?",
+      "q": "Which loop construct is best suited when the exact number of iterations is known before entering the loop?",
+      "title": "Which loop construct is best suited when the exact number of iterations is known before entering the loop?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "while loop",
+        "do-while loop",
+        "infinite loop",
+        "for loop"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "while loop",
+        "do-while loop",
+        "infinite loop",
+        "for loop"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The count-controlled for loop is ideal when the iteration count is predetermined (e.g. iterating N times or over an array).",
+      "explanation": "The count-controlled for loop is ideal when the iteration count is predetermined (e.g. iterating N times or over an array).",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -9947,25 +10195,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #53: In C# iteration mechanics, which rule applies to execution sequence #53?",
-      "title": "Loop Structure Concept #53: In C# iteration mechanics, which rule applies to execution sequence #53?",
+      "q": "Which loop construct is best suited for repeating an action until the user provides valid numeric input?",
+      "title": "Which loop construct is best suited for repeating an action until the user provides valid numeric input?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "while (or do-while) loop",
+        "for loop counting to 100",
+        "switch statement",
+        "single if statement"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "while (or do-while) loop",
+        "for loop counting to 100",
+        "switch statement",
+        "single if statement"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "Condition-controlled loops (while and do-while) are designed for situations where the number of attempts is indeterminate.",
+      "explanation": "Condition-controlled loops (while and do-while) are designed for situations where the number of attempts is indeterminate.",
+      "provenance": "Gaddis 4th Ed §5.2 & §5.3",
       "marks": 2
     },
     {
@@ -9973,25 +10221,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #54: In C# iteration mechanics, which rule applies to execution sequence #54?",
-      "title": "Loop Structure Concept #54: In C# iteration mechanics, which rule applies to execution sequence #54?",
+      "q": "What is a nested loop in C#?",
+      "title": "What is a nested loop in C#?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "A loop that contains an if statement",
+        "A loop that is situated entirely within the body of another enclosing loop",
+        "A loop that reads from a file",
+        "A loop that has two exit buttons"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "A loop that contains an if statement",
+        "A loop that is situated entirely within the body of another enclosing loop",
+        "A loop that reads from a file",
+        "A loop that has two exit buttons"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "A nested loop is a loop located inside another loop. The inner loop completes all its iterations for every single cycle of the outer loop.",
+      "explanation": "A nested loop is a loop located inside another loop. The inner loop completes all its iterations for every single cycle of the outer loop.",
+      "provenance": "Gaddis 4th Ed §5.7",
       "marks": 2
     },
     {
@@ -9999,25 +10247,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #55: In C# iteration mechanics, which rule applies to execution sequence #55?",
-      "title": "Loop Structure Concept #55: In C# iteration mechanics, which rule applies to execution sequence #55?",
+      "q": "If an outer loop iterates 5 times and an inner nested loop iterates 3 times per outer cycle, how many total times will the inner loop's body execute?",
+      "title": "If an outer loop iterates 5 times and an inner nested loop iterates 3 times per outer cycle, how many total times will the inner loop's body execute?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "8 times",
+        "5 times",
+        "15 times (5 * 3)",
+        "3 times"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "8 times",
+        "5 times",
+        "15 times (5 * 3)",
+        "3 times"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The inner loop runs 3 times on each of the outer loop's 5 iterations, totaling 5 * 3 = 15 executions.",
+      "explanation": "The inner loop runs 3 times on each of the outer loop's 5 iterations, totaling 5 * 3 = 15 executions.",
+      "provenance": "Gaddis 4th Ed §5.7",
       "marks": 2
     },
     {
@@ -10025,25 +10273,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #56: In C# iteration mechanics, which rule applies to execution sequence #56?",
-      "title": "Loop Structure Concept #56: In C# iteration mechanics, which rule applies to execution sequence #56?",
+      "q": "Which compound assignment operator adds the value of the right operand to the variable on the left: 'total = total + value;'?",
+      "title": "Which compound assignment operator adds the value of the right operand to the variable on the left: 'total = total + value;'?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "=+",
+        "++",
+        "&&",
+        "+="
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "=+",
+        "++",
+        "&&",
+        "+="
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "The '+=' operator adds the right-hand value to the variable on the left and reassigns the sum to that variable.",
+      "explanation": "The '+=' operator adds the right-hand value to the variable on the left and reassigns the sum to that variable.",
+      "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
     {
@@ -10051,25 +10299,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #57: In C# iteration mechanics, which rule applies to execution sequence #57?",
-      "title": "Loop Structure Concept #57: In C# iteration mechanics, which rule applies to execution sequence #57?",
+      "q": "Which compound assignment operator multiplies the variable on the left by the right operand: 'balance = balance * factor;'?",
+      "title": "Which compound assignment operator multiplies the variable on the left by the right operand: 'balance = balance * factor;'?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "*=",
+        "=*",
+        "**",
+        "^="
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "*=",
+        "=*",
+        "**",
+        "^="
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "The '*=' operator performs in-place multiplication on the target variable.",
+      "explanation": "The '*=' operator performs in-place multiplication on the target variable.",
+      "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
     {
@@ -10077,25 +10325,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #58: In C# iteration mechanics, which rule applies to execution sequence #58?",
-      "title": "Loop Structure Concept #58: In C# iteration mechanics, which rule applies to execution sequence #58?",
+      "q": "How can a loop find the highest numeric score stored in a ListBox named lstScores?",
+      "title": "How can a loop find the highest numeric score stored in a ListBox named lstScores?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Sort the form alphabetically",
+        "Initialize a variable 'highest' with the first item, iterate through remaining items, and update 'highest' whenever an item exceeds it",
+        "Sum all numbers and divide by 2",
+        "Call lstScores.Items.Clear()"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Sort the form alphabetically",
+        "Initialize a variable 'highest' with the first item, iterate through remaining items, and update 'highest' whenever an item exceeds it",
+        "Sum all numbers and divide by 2",
+        "Call lstScores.Items.Clear()"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "The standard linear search algorithm initializes the extreme value candidate with element 0, then updates candidate whenever a larger value is found.",
+      "explanation": "The standard linear search algorithm initializes the extreme value candidate with element 0, then updates candidate whenever a larger value is found.",
+      "provenance": "Gaddis 4th Ed §5.5",
       "marks": 2
     },
     {
@@ -10103,25 +10351,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #59: In C# iteration mechanics, which rule applies to execution sequence #59?",
-      "title": "Loop Structure Concept #59: In C# iteration mechanics, which rule applies to execution sequence #59?",
+      "q": "When finding the maximum value among a series of positive test scores entered by a user, what initial value should the 'highest' accumulator hold before the loop?",
+      "title": "When finding the maximum value among a series of positive test scores entered by a user, what initial value should the 'highest' accumulator hold before the loop?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "100",
+        "int.MaxValue",
+        "0 (or the first score in the series)",
+        "-999999"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "100",
+        "int.MaxValue",
+        "0 (or the first score in the series)",
+        "-999999"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Initializing with 0 or the first actual score ensures that any valid positive score will be equal to or greater than the initial candidate.",
+      "explanation": "Initializing with 0 or the first actual score ensures that any valid positive score will be equal to or greater than the initial candidate.",
+      "provenance": "Gaddis 4th Ed §5.5",
       "marks": 2
     },
     {
@@ -10129,24 +10377,24 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #60: In C# iteration mechanics, which rule applies to execution sequence #60?",
-      "title": "Loop Structure Concept #60: In C# iteration mechanics, which rule applies to execution sequence #60?",
+      "q": "What happens if 'while (false)' is written in C#?",
+      "title": "What happens if 'while (false)' is written in C#?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The loop executes once",
+        "The loop executes infinitely",
+        "The operating system crashes",
+        "The loop condition is false from the start; the loop body never executes, and the compiler flags unreachable code if statements follow inside"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The loop executes once",
+        "The loop executes infinitely",
+        "The operating system crashes",
+        "The loop condition is false from the start; the loop body never executes, and the compiler flags unreachable code if statements follow inside"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
+      "answer": 3,
+      "ans": 3,
+      "exp": "A pre-test while loop checks its condition first. If false initially, body statements execute zero times.",
+      "explanation": "A pre-test while loop checks its condition first. If false initially, body statements execute zero times.",
       "provenance": "Gaddis 4th Ed §5.2",
       "marks": 2
     },
@@ -10155,25 +10403,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #61: In C# iteration mechanics, which rule applies to execution sequence #61?",
-      "title": "Loop Structure Concept #61: In C# iteration mechanics, which rule applies to execution sequence #61?",
+      "q": "What happens if 'do { ... } while (false);' is written in C#?",
+      "title": "What happens if 'do { ... } while (false);' is written in C#?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The loop body executes exactly once because the post-test condition is only evaluated after the first iteration",
+        "The loop body never executes",
+        "The loop runs infinitely",
+        "It causes a compilation error"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The loop body executes exactly once because the post-test condition is only evaluated after the first iteration",
+        "The loop body never executes",
+        "The loop runs infinitely",
+        "It causes a compilation error"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "Post-test do-while loops execute the body unconditionally on the first pass before evaluating the test expression.",
+      "explanation": "Post-test do-while loops execute the body unconditionally on the first pass before evaluating the test expression.",
+      "provenance": "Gaddis 4th Ed §5.3",
       "marks": 2
     },
     {
@@ -10181,25 +10429,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #62: In C# iteration mechanics, which rule applies to execution sequence #62?",
-      "title": "Loop Structure Concept #62: In C# iteration mechanics, which rule applies to execution sequence #62?",
+      "q": "Why is it considered bad programming practice to alter the loop control variable manually inside the body of a for loop?",
+      "title": "Why is it considered bad programming practice to alter the loop control variable manually inside the body of a for loop?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The C# compiler refuses to compile the project",
+        "It obscures loop termination logic, making execution flow difficult to trace and greatly increasing the risk of off-by-one or infinite loop bugs",
+        "It deletes the variable from memory",
+        "It automatically changes the loop to a while loop"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The C# compiler refuses to compile the project",
+        "It obscures loop termination logic, making execution flow difficult to trace and greatly increasing the risk of off-by-one or infinite loop bugs",
+        "It deletes the variable from memory",
+        "It automatically changes the loop to a while loop"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "For loops are designed for predictable iteration managed by their header. Modifying the counter inside the body compromises readability and predictability.",
+      "explanation": "For loops are designed for predictable iteration managed by their header. Modifying the counter inside the body compromises readability and predictability.",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -10207,25 +10455,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #63: In C# iteration mechanics, which rule applies to execution sequence #63?",
-      "title": "Loop Structure Concept #63: In C# iteration mechanics, which rule applies to execution sequence #63?",
+      "q": "Which method removes an item from a ListBox by matching its text content?",
+      "title": "Which method removes an item from a ListBox by matching its text content?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstItems.Items.RemoveAt(\"ItemText\");",
+        "lstItems.Delete(\"ItemText\");",
+        "lstItems.Items.Remove(\"ItemText\");",
+        "lstItems.Text = \"\";"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstItems.Items.RemoveAt(\"ItemText\");",
+        "lstItems.Delete(\"ItemText\");",
+        "lstItems.Items.Remove(\"ItemText\");",
+        "lstItems.Text = \"\";"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Items.Remove(object) searches for and removes the first matching item object from the collection.",
+      "explanation": "Items.Remove(object) searches for and removes the first matching item object from the collection.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -10233,25 +10481,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #64: In C# iteration mechanics, which rule applies to execution sequence #64?",
-      "title": "Loop Structure Concept #64: In C# iteration mechanics, which rule applies to execution sequence #64?",
+      "q": "Which method removes an item from a ListBox by its zero-based numerical index position?",
+      "title": "Which method removes an item from a ListBox by its zero-based numerical index position?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstItems.Items.Remove(index);",
+        "lstItems.Items.DeleteIndex(index);",
+        "lstItems.Items[index] = null;",
+        "lstItems.Items.RemoveAt(index);"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstItems.Items.Remove(index);",
+        "lstItems.Items.DeleteIndex(index);",
+        "lstItems.Items[index] = null;",
+        "lstItems.Items.RemoveAt(index);"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Items.RemoveAt(int index) removes the item occupying the specified index location.",
+      "explanation": "Items.RemoveAt(int index) removes the item occupying the specified index location.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -10259,25 +10507,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #65: In C# iteration mechanics, which rule applies to execution sequence #65?",
-      "title": "Loop Structure Concept #65: In C# iteration mechanics, which rule applies to execution sequence #65?",
+      "q": "How can a developer insert an item at the very top (index 0) of a ListBox named lstItems?",
+      "title": "How can a developer insert an item at the very top (index 0) of a ListBox named lstItems?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstItems.Items.Insert(0, \"First Item\");",
+        "lstItems.Items.AddTop(\"First Item\");",
+        "lstItems.Items[0] = \"First Item\";",
+        "lstItems.Items.Prepend(\"First Item\");"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstItems.Items.Insert(0, \"First Item\");",
+        "lstItems.Items.AddTop(\"First Item\");",
+        "lstItems.Items[0] = \"First Item\";",
+        "lstItems.Items.Prepend(\"First Item\");"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "Items.Insert(index, item) inserts an element at the specified position, shifting existing items downwards.",
+      "explanation": "Items.Insert(index, item) inserts an element at the specified position, shifting existing items downwards.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -10285,25 +10533,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #66: In C# iteration mechanics, which rule applies to execution sequence #66?",
-      "title": "Loop Structure Concept #66: In C# iteration mechanics, which rule applies to execution sequence #66?",
+      "q": "Which ListBox property can be set to true at design time to automatically keep entries sorted alphabetically?",
+      "title": "Which ListBox property can be set to true at design time to automatically keep entries sorted alphabetically?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "AutoSort",
+        "Sorted",
+        "Alphabetical",
+        "OrderItems"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "AutoSort",
+        "Sorted",
+        "Alphabetical",
+        "OrderItems"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Setting the 'Sorted' property to true automatically sorts text entries alphabetically as they are added.",
+      "explanation": "Setting the 'Sorted' property to true automatically sorts text entries alphabetically as they are added.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -10311,25 +10559,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #67: In C# iteration mechanics, which rule applies to execution sequence #67?",
-      "title": "Loop Structure Concept #67: In C# iteration mechanics, which rule applies to execution sequence #67?",
+      "q": "What does the method call 'lstItems.Items.Contains(\"Apples\")' return?",
+      "title": "What does the method call 'lstItems.Items.Contains(\"Apples\")' return?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The index position where \"Apples\" is stored",
+        "The total count of apples",
+        "A bool (true if \"Apples\" exists in the ListBox, false otherwise)",
+        "A new ListBox with only apples"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The index position where \"Apples\" is stored",
+        "The total count of apples",
+        "A bool (true if \"Apples\" exists in the ListBox, false otherwise)",
+        "A new ListBox with only apples"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Items.Contains(object) checks for item membership, returning a boolean true or false.",
+      "explanation": "Items.Contains(object) checks for item membership, returning a boolean true or false.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -10337,25 +10585,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #68: In C# iteration mechanics, which rule applies to execution sequence #68?",
-      "title": "Loop Structure Concept #68: In C# iteration mechanics, which rule applies to execution sequence #68?",
+      "q": "If a ListBox has SelectionMode set to MultiSimple or MultiExtended, which collection holds all indices selected by the user?",
+      "title": "If a ListBox has SelectionMode set to MultiSimple or MultiExtended, which collection holds all indices selected by the user?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstItems.SelectedItemsList",
+        "lstItems.CheckedIndices",
+        "lstItems.MultiSelections",
+        "lstItems.SelectedIndices"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "lstItems.SelectedItemsList",
+        "lstItems.CheckedIndices",
+        "lstItems.MultiSelections",
+        "lstItems.SelectedIndices"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 3,
+      "ans": 3,
+      "exp": "SelectedIndices contains the collection of zero-based index numbers for all highlighted items in a multi-selection ListBox.",
+      "explanation": "SelectedIndices contains the collection of zero-based index numbers for all highlighted items in a multi-selection ListBox.",
+      "provenance": "Gaddis 4th Ed §4.11",
       "marks": 2
     },
     {
@@ -10363,25 +10611,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #69: In C# iteration mechanics, which rule applies to execution sequence #69?",
-      "title": "Loop Structure Concept #69: In C# iteration mechanics, which rule applies to execution sequence #69?",
+      "q": "Why should UI updates (such as adding items to a ListBox) inside a loop with 100,000 iterations be handled with care?",
+      "title": "Why should UI updates (such as adding items to a ListBox) inside a loop with 100,000 iterations be handled with care?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Repeatedly updating the GUI thread inside a tight loop causes UI freezing and severe performance degradation",
+        "Visual Studio will delete the form",
+        "ListBoxes can never hold more than 100 items",
+        "The monitor will turn off"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "Repeatedly updating the GUI thread inside a tight loop causes UI freezing and severe performance degradation",
+        "Visual Studio will delete the form",
+        "ListBoxes can never hold more than 100 items",
+        "The monitor will turn off"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "exp": "Excessive GUI repainting on the UI thread starves the message pump, causing responsiveness issues unless batched (e.g. with BeginUpdate/EndUpdate).",
+      "explanation": "Excessive GUI repainting on the UI thread starves the message pump, causing responsiveness issues unless batched (e.g. with BeginUpdate/EndUpdate).",
+      "provenance": "Gaddis 4th Ed §5.4",
       "marks": 2
     },
     {
@@ -10389,25 +10637,25 @@
       "ch": "SU4",
       "su": "SU4",
       "type": "mcq",
-      "q": "Loop Structure Concept #70: In C# iteration mechanics, which rule applies to execution sequence #70?",
-      "title": "Loop Structure Concept #70: In C# iteration mechanics, which rule applies to execution sequence #70?",
+      "q": "How does Shneiderman's 8th Golden Rule ('Reduce short-term memory load') apply to displaying accumulated transaction items in a ListBox?",
+      "title": "How does Shneiderman's 8th Golden Rule ('Reduce short-term memory load') apply to displaying accumulated transaction items in a ListBox?",
       "options": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The user must memorize all product barcodes",
+        "Presenting all scanned items and subtotals persistently in a scrollable list frees users from having to remember entered transactions while continuing work",
+        "All items should disappear immediately after scanning",
+        "The application should only display one number at a time"
       ],
       "opts": [
-        "A loop continuation condition must evaluate to a boolean expression (true or false)",
-        "Loops cannot contain if statements inside their bodies",
-        "The for loop cannot decrement variables",
-        "While loops only execute when the form is minimized"
+        "The user must memorize all product barcodes",
+        "Presenting all scanned items and subtotals persistently in a scrollable list frees users from having to remember entered transactions while continuing work",
+        "All items should disappear immediately after scanning",
+        "The application should only display one number at a time"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "explanation": "All C# loop continuation tests require a boolean expression that evaluates to true (continue) or false (exit).",
-      "provenance": "Gaddis 4th Ed §5.2",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Visible history in a ListBox offloads cognitive load from human short-term memory into the interface display.",
+      "explanation": "Visible history in a ListBox offloads cognitive load from human short-term memory into the interface display.",
+      "provenance": "Shneiderman HCI Ch 2 & SU7",
       "marks": 2
     },
     {

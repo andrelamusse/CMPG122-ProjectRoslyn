@@ -64,6 +64,13 @@
   String.prototype.Contains = function(s) { return this.includes(s); };
   String.prototype.StartsWith = function(s) { return this.startsWith(s); };
   String.prototype.EndsWith = function(s) { return this.endsWith(s); };
+  String.prototype.CompareTo = function(s) {
+    const a = String(this);
+    const b = String(s);
+    if (a < b) return -1;
+    if (a > b) return 1;
+    return 0;
+  };
   String.prototype.Substring = function(start, len) {
     if (len === undefined) return this.substring(start);
     return this.substring(start, start + len);
@@ -404,7 +411,7 @@
       if (!clean) return; // Skip blank lines
 
       // Check if this line starts a control statement
-      if (parenDepth === 0 && /^(if|while|for|foreach)\b/.test(clean)) {
+      if (parenDepth === 0 && /^(if|while|for|foreach|switch)\b/.test(clean)) {
         controlParenActive = true;
       }
 
@@ -446,7 +453,7 @@
       if (!isBlockOpen && !isBlockClose && !isCaseOrDefault && !isDirective && !isContinuation && !justClosedControlParen) {
         if (!clean.endsWith(';')) {
           // If it looks like a while loop header, if statement header, etc.
-          if (/^(if|while|for|foreach)\s*\(.*\)$/.test(clean)) {
+          if (/^(if|while|for|foreach|switch)\s*\(.*\)$/.test(clean)) {
             return;
           }
           if (/^else(\s+if\s*\(.*\))?$/.test(clean)) {
@@ -760,6 +767,12 @@
     // 6. Handle numeric literals with C# suffixes: 100.5m -> 100.5, 0.15m -> 0.15, 10d -> 10, 40.0m -> 40.0
     js = js.replace(/(\d+(?:\.\d+)?)[mMDdfF]\b/g, '$1');
 
+    // Explicit numeric casts: (int)(expr) -> Math.trunc(expr), (int)x -> Math.trunc(x)
+    js = js.replace(/\(\s*int\s*\)\s*(?=\()/g, 'Math.trunc');
+    js = js.replace(/\(\s*int\s*\)\s*([a-zA-Z0-9_\.]+)/g, (m, g1) => 'Math.trunc(' + g1 + ')');
+    js = js.replace(/\(\s*(?:double|decimal|float)\s*\)\s*(?=\()/g, 'Number');
+    js = js.replace(/\(\s*(?:double|decimal|float)\s*\)\s*([a-zA-Z0-9_\.]+)/g, (m, g1) => 'Number(' + g1 + ')');
+
     // 7. String methods & helpers
     js = js.replace(/\b(?:string|String)\.IsNullOrEmpty\s*\(\s*([^)]+)\s*\)/g, '(!($1) || ($1).length === 0)');
     js = js.replace(/\b(?:string|String)\.IsNullOrWhiteSpace\s*\(\s*([^)]+)\s*\)/g, '(!($1) || String($1).trim().length === 0)');
@@ -814,6 +827,13 @@
     String.prototype.Contains = function(s) { return this.includes(s); };
     String.prototype.StartsWith = function(s) { return this.startsWith(s); };
     String.prototype.EndsWith = function(s) { return this.endsWith(s); };
+    String.prototype.CompareTo = function(s) {
+      const a = String(this);
+      const b = String(s);
+      if (a < b) return -1;
+      if (a > b) return 1;
+      return 0;
+    };
     String.prototype.Substring = function(start, len) {
       if (len === undefined) return this.substring(start);
       return this.substring(start, start + len);
@@ -919,10 +939,22 @@
         return { Checked: Boolean(initialVal) };
       }
       if (name.startsWith('lst') || name.startsWith('cbo')) {
-        const items = createListBoxItems(Array.isArray(initialVal) ? initialVal : (initialVal ? [initialVal] : []));
+        let itemsArray = [];
+        let selIdx = -1;
+        if (Array.isArray(initialVal)) {
+          itemsArray = initialVal;
+          selIdx = itemsArray.length > 0 ? 0 : -1;
+        } else if (initialVal && typeof initialVal === 'object') {
+          itemsArray = initialVal.items || initialVal.Items || [];
+          selIdx = initialVal.selectedIndex !== undefined ? initialVal.selectedIndex : (initialVal.SelectedIndex !== undefined ? initialVal.SelectedIndex : (itemsArray.length > 0 ? 0 : -1));
+        } else if (initialVal) {
+          itemsArray = [initialVal];
+          selIdx = 0;
+        }
+        const items = createListBoxItems(itemsArray);
         return {
           Items: items,
-          SelectedIndex: -1,
+          SelectedIndex: selIdx,
           get SelectedItem() {
             if (this.SelectedIndex >= 0 && this.SelectedIndex < this.Items._items.length) {
               return this.Items._items[this.SelectedIndex];
@@ -1095,7 +1127,7 @@
     totalPoints += valWeight;
     const usesTryParse = /\b(?:decimal|double|int)\.TryParse\b/.test(code);
     const usesTryCatch = /\btry\s*\{[\s\S]*\}\s*catch\b/.test(code);
-    const valPassed = usesTryParse || usesTryCatch;
+    const valPassed = (valWeight === 0 || scenario.requiresValidation === false) ? true : (usesTryParse || usesTryCatch);
     const valEarned = valPassed ? valWeight : Math.round(valWeight * 0.4);
     earnedPoints += valEarned;
     rubricItems.push({

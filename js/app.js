@@ -31,7 +31,7 @@
     streak: 0,
     bestStreak: parseInt(localStorage.getItem('cmpg122_best_streak') || '0', 10),
     wrongOnlyMode: false,
-    activeScenarioId: 'scenario_wages',
+    activeScenarioId: 'scenario_racing_light',
     activeAuditScenarioId: 'audit_wages',
     isShowingAuditSolution: false,
     auditMode: 'studio',
