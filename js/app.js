@@ -78,6 +78,14 @@
     initTheme();
     initScratchpad();
     updateStatsDisplay();
+
+    // Check URL hash routing (e.g. #test3, #exams, #codegrade, #spoterror)
+    const initialHash = (typeof window !== 'undefined' && window.location && typeof window.location.hash === 'string')
+      ? window.location.hash.replace('#', '').toLowerCase()
+      : '';
+    if (initialHash && dom.views && dom.views[initialHash]) {
+      switchTab(initialHash);
+    }
   }
 
   function cacheDOM() {
@@ -383,6 +391,9 @@
     });
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (typeof window !== 'undefined' && window.history && window.history.replaceState) {
+      window.history.replaceState(null, null, '#' + tabId);
+    }
   }
 
   function renderUnitsGrid() {
