@@ -2575,6 +2575,752 @@
       ]
     }
   },
+
+  "test3Quiz": {
+  "id": "quiz_test3_su4",
+  "title": "NWU CMPG122 \u2014 Test 3 Assessment Simulator (Study Unit 4)",
+  "subtitle": "Loops, Accumulators, C# Operators, HCI Golden Rules & Hungarian Standards",
+  "academicUnit": "SU4 (Weeks 6 & 7)",
+  "prescribedReading": "Tony Gaddis Ch 5 & Ben Shneiderman 8 Golden Rules",
+  "totalMarks": 25,
+  "totalQuestions": 25,
+  "durationMinutes": 30,
+  "parts": [
+    {
+      "part": 1,
+      "title": "Part 1 of 11: while Loop Mechanics & Counter Iteration",
+      "questionsCount": 3,
+      "points": 3.0,
+      "type": "True/False"
+    },
+    {
+      "part": 2,
+      "title": "Part 2 of 11: Compound Assignment & Increment/Decrement Operators",
+      "questionsCount": 2,
+      "points": 2.0,
+      "type": "True/False"
+    },
+    {
+      "part": 3,
+      "title": "Part 3 of 11: do-while Post-Test Loop Behavior",
+      "questionsCount": 3,
+      "points": 3.0,
+      "type": "True/False"
+    },
+    {
+      "part": 4,
+      "title": "Part 4 of 11: HCI Consistency & Hungarian Naming Conventions",
+      "questionsCount": 2,
+      "points": 2.0,
+      "type": "True/False"
+    },
+    {
+      "part": 5,
+      "title": "Part 5 of 11 - Week 7 - MC: while Loop Analysis & Loop Condition Testing",
+      "questionsCount": 3,
+      "points": 3.0,
+      "type": "Multiple Choice"
+    },
+    {
+      "part": 6,
+      "title": "Part 6 of 11: Postfix vs Prefix Evaluation & Variable Tracing",
+      "questionsCount": 3,
+      "points": 3.0,
+      "type": "Multiple Choice"
+    },
+    {
+      "part": 7,
+      "title": "Part 7 of 11: Loop Guarantees & Accumulator Tracing",
+      "questionsCount": 2,
+      "points": 2.0,
+      "type": "Multiple Choice"
+    },
+    {
+      "part": 8,
+      "title": "Part 8 of 11: PascalCase Method Conventions & Feedback",
+      "questionsCount": 2,
+      "points": 2.0,
+      "type": "Multiple Choice"
+    },
+    {
+      "part": 9,
+      "title": "Part 9 of 11 - Week 7 - Fill in the blank: Loop Terminology & Pretest Concepts",
+      "questionsCount": 3,
+      "points": 3.0,
+      "type": "Fill in the blank"
+    },
+    {
+      "part": 10,
+      "title": "Part 10 of 11: Prefix Mode Terminology",
+      "questionsCount": 1,
+      "points": 1.0,
+      "type": "Fill in the blank"
+    },
+    {
+      "part": 11,
+      "title": "Part 11 of 11: Increment Operator Terminology",
+      "questionsCount": 1,
+      "points": 1.0,
+      "type": "Fill in the blank"
+    }
+  ],
+  "questions": [
+    {
+      "id": "test3_q1",
+      "qNum": 1,
+      "part": 1,
+      "partTitle": "Part 1 of 11: while Loop Mechanics & Counter Iteration",
+      "points": 1.0,
+      "type": "tf",
+      "q": "Given int count = 3; followed by while (count <= 5) { lblOut.Text = count.ToString(); count = count + 1; }, the statements between the braces run two times.",
+      "codeSnippet": "int count = 3;\nwhile (count <= 5)\n{\n    lblOut.Text = count.ToString();\n    count = count + 1;\n}",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "ans": 1,
+      "answerKey": "False",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The loop starts with count = 3 and tests count <= 5. The loop body executes 3 times for count = 3, 4, and 5. When count reaches 6, the test 6 <= 5 evaluates to false, terminating the loop. Thus the statements run 3 times, not two times (Answer: False).",
+      "exp": "The loop starts with count = 3 and tests count <= 5. The loop body executes 3 times for count = 3, 4, and 5. When count reaches 6, the test 6 <= 5 evaluates to false, terminating the loop. Thus the statements run 3 times, not two times (Answer: False)."
+    },
+    {
+      "id": "test3_q2",
+      "qNum": 2,
+      "part": 1,
+      "partTitle": "Part 1 of 11: while Loop Mechanics & Counter Iteration",
+      "points": 1.0,
+      "type": "tf",
+      "q": "In while (count <= 5) { count = count + 1; } the condition is checked one more time after the last time the statements run.",
+      "codeSnippet": "while (count <= 5)\n{\n    count = count + 1;\n}",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "In a while loop, the condition is evaluated before every iteration. After the final execution of the loop body, control returns to the loop header where the condition is evaluated once more, evaluates to false, and terminates the loop (Answer: True).",
+      "exp": "In a while loop, the condition is evaluated before every iteration. After the final execution of the loop body, control returns to the loop header where the condition is evaluated once more, evaluates to false, and terminates the loop (Answer: True)."
+    },
+    {
+      "id": "test3_q3",
+      "qNum": 3,
+      "part": 1,
+      "partTitle": "Part 1 of 11: while Loop Mechanics & Counter Iteration",
+      "points": 1.0,
+      "type": "tf",
+      "q": "The variable that a while loop's condition tests may be left without a starting value, because the loop gives it one automatically.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "ans": 1,
+      "answerKey": "False",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "In C#, local variables are never automatically initialized to a default value. Reading an uninitialized local variable in a while condition causes compiler error CS0165 (Use of unassigned local variable). The programmer must explicitly give the variable an initial starting value (Answer: False).",
+      "exp": "In C#, local variables are never automatically initialized to a default value. Reading an uninitialized local variable in a while condition causes compiler error CS0165 (Use of unassigned local variable). The programmer must explicitly give the variable an initial starting value (Answer: False)."
+    },
+    {
+      "id": "test3_q4",
+      "qNum": 4,
+      "part": 2,
+      "partTitle": "Part 2 of 11: Compound Assignment & Increment/Decrement",
+      "points": 1.0,
+      "type": "tf",
+      "q": "count -= 1; is another way of writing count = count - 1;.",
+      "codeSnippet": "count -= 1;  // Equivalent to count = count - 1;",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The compound subtraction assignment operator (-=) subtracts the right operand from the left variable and stores the result back in the variable. Thus, count -= 1; is another way of writing count = count - 1; (Answer: True).",
+      "exp": "The compound subtraction assignment operator (-=) subtracts the right operand from the left variable and stores the result back in the variable. Thus, count -= 1; is another way of writing count = count - 1; (Answer: True)."
+    },
+    {
+      "id": "test3_q5",
+      "qNum": 5,
+      "part": 2,
+      "partTitle": "Part 2 of 11: Compound Assignment & Increment/Decrement",
+      "points": 1.0,
+      "type": "tf",
+      "q": "Written on a line of its own, count++; has the same effect on count as ++count; does.",
+      "codeSnippet": "count++;  // Postfix\n++count;  // Prefix",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "When written as an isolated statement on its own line, both postfix (count++;) and prefix (++count;) increase the variable count by 1. The distinction between prefix and postfix only matters when the expression's return value is used in an assignment or surrounding expression (Answer: True).",
+      "exp": "When written as an isolated statement on its own line, both postfix (count++;) and prefix (++count;) increase the variable count by 1. The distinction between prefix and postfix only matters when the expression's return value is used in an assignment or surrounding expression (Answer: True)."
+    },
+    {
+      "id": "test3_q6",
+      "qNum": 6,
+      "part": 3,
+      "partTitle": "Part 3 of 11: do-while Post-Test Loop Behavior",
+      "points": 1.0,
+      "type": "tf",
+      "q": "Given int number = 1; do { MessageBox.Show(number.ToString()); } while (number < 0); the message box is displayed.",
+      "codeSnippet": "int number = 1;\ndo\n{\n    MessageBox.Show(number.ToString());\n} while (number < 0);",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The do-while loop is a post-test loop. It always executes the statements within its block at least once before testing the condition at the end. Because number = 1, MessageBox.Show(\"1\") is displayed, and then (1 < 0) evaluates to false, terminating the loop (Answer: True).",
+      "exp": "The do-while loop is a post-test loop. It always executes the statements within its block at least once before testing the condition at the end. Because number = 1, MessageBox.Show(\"1\") is displayed, and then (1 < 0) evaluates to false, terminating the loop (Answer: True)."
+    },
+    {
+      "id": "test3_q7",
+      "qNum": 7,
+      "part": 3,
+      "partTitle": "Part 3 of 11: do-while Post-Test Loop Behavior",
+      "points": 1.0,
+      "type": "tf",
+      "q": "Given int count = 1; do { count = count + 3; } while (count < 7);, the loop leaves count equal to 7.",
+      "codeSnippet": "int count = 1;\ndo\n{\n    count = count + 3;\n} while (count < 7);",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Initial count = 1. Iteration 1: count becomes 1 + 3 = 4; condition 4 < 7 is true. Iteration 2: count becomes 4 + 3 = 7; condition 7 < 7 is false. The loop terminates, leaving count equal to 7 (Answer: True).",
+      "exp": "Initial count = 1. Iteration 1: count becomes 1 + 3 = 4; condition 4 < 7 is true. Iteration 2: count becomes 4 + 3 = 7; condition 7 < 7 is false. The loop terminates, leaving count equal to 7 (Answer: True)."
+    },
+    {
+      "id": "test3_q8",
+      "qNum": 8,
+      "part": 3,
+      "partTitle": "Part 3 of 11: do-while Post-Test Loop Behavior",
+      "points": 1.0,
+      "type": "tf",
+      "q": "int count = 5; do { count++; } while (count < 0); will not compile, because its condition can never be true.",
+      "codeSnippet": "int count = 5;\ndo\n{\n    count++;\n} while (count < 0);",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "ans": 1,
+      "answerKey": "False",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The code compiles without any compiler errors. C# compilers allow loop conditions that evaluate to false at runtime. The loop body executes once, incrementing count to 6, then tests 6 < 0 which is false, terminating cleanly (Answer: False).",
+      "exp": "The code compiles without any compiler errors. C# compilers allow loop conditions that evaluate to false at runtime. The loop body executes once, incrementing count to 6, then tests 6 < 0 which is false, terminating cleanly (Answer: False)."
+    },
+    {
+      "id": "test3_q9",
+      "qNum": 9,
+      "part": 4,
+      "partTitle": "Part 4 of 11: HCI Consistency & Hungarian Naming",
+      "points": 1.0,
+      "type": "tf",
+      "q": "Naming one button btnSave and another SaveButton2 on the same form works against the golden rule \"strive for consistency\".",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Shneiderman's Golden Rule #1 is 'Strive for consistency'. In UI development and C# event programming, having erratic naming styles like btnSave and SaveButton2 on the same form undermines consistency and increases cognitive overhead (Answer: True).",
+      "exp": "Shneiderman's Golden Rule #1 is 'Strive for consistency'. In UI development and C# event programming, having erratic naming styles like btnSave and SaveButton2 on the same form undermines consistency and increases cognitive overhead (Answer: True)."
+    },
+    {
+      "id": "test3_q10",
+      "qNum": 10,
+      "part": 4,
+      "partTitle": "Part 4 of 11: HCI Consistency & Hungarian Naming",
+      "points": 1.0,
+      "type": "tf",
+      "q": "pbLogo follows the module's naming standard for a PictureBox that displays a company logo.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "In NWU CMPG122 naming conventions and standard Hungarian notation, pb (or pic) is the prescribed prefix for a PictureBox control, followed by a PascalCase descriptive name (Logo), so pbLogo strictly adheres to the standard (Answer: True).",
+      "exp": "In NWU CMPG122 naming conventions and standard Hungarian notation, pb (or pic) is the prescribed prefix for a PictureBox control, followed by a PascalCase descriptive name (Logo), so pbLogo strictly adheres to the standard (Answer: True)."
+    },
+    {
+      "id": "test3_q11",
+      "qNum": 11,
+      "part": 5,
+      "partTitle": "Part 5 of 11 - Week 7 - MC: while Loop Analysis & Loop Condition Testing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "Which loop adds exactly three entries to lstOut?",
+      "options": [
+        "int i = 1; while (i < 3) { lstOut.Items.Add(\"row\"); i++; }",
+        "int i = 3; while (i > 0) { lstOut.Items.Add(\"row\"); }",
+        "int i = 0; while (i <= 3) { lstOut.Items.Add(\"row\"); i++; }",
+        "int i = 0; while (i < 3) { lstOut.Items.Add(\"row\"); i++; }"
+      ],
+      "opts": [
+        "int i = 1; while (i < 3) { lstOut.Items.Add(\"row\"); i++; }",
+        "int i = 3; while (i > 0) { lstOut.Items.Add(\"row\"); }",
+        "int i = 0; while (i <= 3) { lstOut.Items.Add(\"row\"); i++; }",
+        "int i = 0; while (i < 3) { lstOut.Items.Add(\"row\"); i++; }"
+      ],
+      "answer": 3,
+      "ans": 3,
+      "answerKey": "D",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Option D starts at i = 0 and iterates while i < 3 (values 0, 1, 2), executing exactly 3 times and adding 3 entries. Option A runs twice (i = 1, 2). Option B is infinite (i is never modified). Option C runs 4 times (i = 0, 1, 2, 3).",
+      "exp": "Option D starts at i = 0 and iterates while i < 3 (values 0, 1, 2), executing exactly 3 times and adding 3 entries. Option A runs twice (i = 1, 2). Option B is infinite (i is never modified). Option C runs 4 times (i = 0, 1, 2, 3)."
+    },
+    {
+      "id": "test3_q12",
+      "qNum": 12,
+      "part": 5,
+      "partTitle": "Part 5 of 11 - Week 7 - MC: while Loop Analysis & Loop Condition Testing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "In while (total < limit) { total = total + amount; }, which part is tested for a true or false value?",
+      "codeSnippet": "while (total < limit)\n{\n    total = total + amount;\n}",
+      "options": [
+        "total = total + amount;",
+        "total < limit",
+        "the curly braces",
+        "the word while"
+      ],
+      "opts": [
+        "total = total + amount;",
+        "total < limit",
+        "the curly braces",
+        "the word while"
+      ],
+      "answer": 1,
+      "ans": 1,
+      "answerKey": "B",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The relational expression in parentheses, (total < limit), is the boolean condition tested prior to every iteration to determine whether to execute the loop body.",
+      "exp": "The relational expression in parentheses, (total < limit), is the boolean condition tested prior to every iteration to determine whether to execute the loop body."
+    },
+    {
+      "id": "test3_q13",
+      "qNum": 13,
+      "part": 5,
+      "partTitle": "Part 5 of 11 - Week 7 - MC: while Loop Analysis & Loop Condition Testing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "How many times do the statements between the braces run?\n\nint i = 5;\nwhile (i > 0)\n{\n    i = i - 1;\n}",
+      "codeSnippet": "int i = 5;\nwhile (i > 0)\n{\n    i = i - 1;\n}",
+      "options": [
+        "6",
+        "5",
+        "4",
+        "0"
+      ],
+      "opts": [
+        "6",
+        "5",
+        "4",
+        "0"
+      ],
+      "answer": 1,
+      "ans": 1,
+      "answerKey": "B",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "i starts at 5. The loop tests 5 > 0 (runs, i=4), 4 > 0 (runs, i=3), 3 > 0 (runs, i=2), 2 > 0 (runs, i=1), 1 > 0 (runs, i=0). When i is 0, 0 > 0 is false. The statements run exactly 5 times.",
+      "exp": "i starts at 5. The loop tests 5 > 0 (runs, i=4), 4 > 0 (runs, i=3), 3 > 0 (runs, i=2), 2 > 0 (runs, i=1), 1 > 0 (runs, i=0). When i is 0, 0 > 0 is false. The statements run exactly 5 times."
+    },
+    {
+      "id": "test3_q14",
+      "qNum": 14,
+      "part": 6,
+      "partTitle": "Part 6 of 11: Postfix vs Prefix Evaluation & Variable Tracing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "Which statement has the same effect on count as count = count + 1;?",
+      "options": [
+        "count =+ 1;",
+        "count == 1;",
+        "count++;",
+        "count--;"
+      ],
+      "opts": [
+        "count =+ 1;",
+        "count == 1;",
+        "count++;",
+        "count--;"
+      ],
+      "answer": 2,
+      "ans": 2,
+      "answerKey": "C",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The postfix increment statement count++; adds 1 to count, having the exact same effect as count = count + 1; or count += 1;.",
+      "exp": "The postfix increment statement count++; adds 1 to count, having the exact same effect as count = count + 1; or count += 1;."
+    },
+    {
+      "id": "test3_q15",
+      "qNum": 15,
+      "part": 6,
+      "partTitle": "Part 6 of 11: Postfix vs Prefix Evaluation & Variable Tracing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "In lblOut.Text = Convert.ToString(count++);, when is count changed, relative to the value handed to Convert.ToString?",
+      "codeSnippet": "lblOut.Text = Convert.ToString(count++);",
+      "options": [
+        "Before that value is taken",
+        "count is not changed at all",
+        "After that value is taken",
+        "Only when count is greater than zero"
+      ],
+      "opts": [
+        "Before that value is taken",
+        "count is not changed at all",
+        "After that value is taken",
+        "Only when count is greater than zero"
+      ],
+      "answer": 2,
+      "ans": 2,
+      "answerKey": "C",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "In postfix mode (count++), the current value of count is returned first for evaluation (passed to Convert.ToString), and then after the value is taken, count is incremented in memory.",
+      "exp": "In postfix mode (count++), the current value of count is returned first for evaluation (passed to Convert.ToString), and then after the value is taken, count is incremented in memory."
+    },
+    {
+      "id": "test3_q16",
+      "qNum": 16,
+      "part": 6,
+      "partTitle": "Part 6 of 11: Postfix vs Prefix Evaluation & Variable Tracing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "What does lblN display?\n\nint n = 4;\nn++;\nn--;\nn--;\nlblN.Text = n.ToString();",
+      "codeSnippet": "int n = 4;\nn++;\nn--;\nn--;\nlblN.Text = n.ToString();",
+      "options": [
+        "5",
+        "4",
+        "2",
+        "3"
+      ],
+      "opts": [
+        "5",
+        "4",
+        "2",
+        "3"
+      ],
+      "answer": 3,
+      "ans": 3,
+      "answerKey": "D",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Trace: n begins at 4. After n++, n is 5. After first n--, n is 4. After second n--, n is 3. Line 5 formats 3 as text. Therefore, lblN displays 3.",
+      "exp": "Trace: n begins at 4. After n++, n is 5. After first n--, n is 4. After second n--, n is 3. Line 5 formats 3 as text. Therefore, lblN displays 3."
+    },
+    {
+      "id": "test3_q17",
+      "qNum": 17,
+      "part": 7,
+      "partTitle": "Part 7 of 11: Loop Guarantees & Accumulator Tracing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "Which loop is guaranteed to run its statements even when its condition is false from the very start?",
+      "options": [
+        "The do-while loop",
+        "The while loop",
+        "Neither of them",
+        "Both of them"
+      ],
+      "opts": [
+        "The do-while loop",
+        "The while loop",
+        "Neither of them",
+        "Both of them"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "A",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The do-while loop is a post-test loop: its statements execute first, and the condition is only tested at the end of the iteration. Thus, it always executes at least once, even if the condition is false initially.",
+      "exp": "The do-while loop is a post-test loop: its statements execute first, and the condition is only tested at the end of the iteration. Thus, it always executes at least once, even if the condition is false initially."
+    },
+    {
+      "id": "test3_q18",
+      "qNum": 18,
+      "part": 7,
+      "partTitle": "Part 7 of 11: Loop Guarantees & Accumulator Tracing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "What value does total hold once this loop has finished?\n\nint total = 0;\nint n = 1;\ndo\n{\n    total = total + n;\n    n++;\n} while (n <= 3);",
+      "codeSnippet": "int total = 0;\nint n = 1;\ndo\n{\n    total = total + n;\n    n++;\n} while (n <= 3);",
+      "options": [
+        "3",
+        "6",
+        "1",
+        "10"
+      ],
+      "opts": [
+        "3",
+        "6",
+        "1",
+        "10"
+      ],
+      "answer": 1,
+      "ans": 1,
+      "answerKey": "B",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Iteration 1: total = 0 + 1 = 1, n = 2; (2 <= 3) is true. Iteration 2: total = 1 + 2 = 3, n = 3; (3 <= 3) is true. Iteration 3: total = 3 + 3 = 6, n = 4; (4 <= 3) is false. Loop finishes with total = 6.",
+      "exp": "Iteration 1: total = 0 + 1 = 1, n = 2; (2 <= 3) is true. Iteration 2: total = 1 + 2 = 3, n = 3; (3 <= 3) is true. Iteration 3: total = 3 + 3 = 6, n = 4; (4 <= 3) is false. Loop finishes with total = 6."
+    },
+    {
+      "id": "test3_q19",
+      "qNum": 19,
+      "part": 8,
+      "partTitle": "Part 8 of 11: PascalCase Method Conventions & Feedback",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "Which name follows the standard for a method that clears a list?",
+      "options": [
+        "clear_list",
+        "clearList",
+        "ClearList",
+        "CLEARLIST"
+      ],
+      "opts": [
+        "clear_list",
+        "clearList",
+        "ClearList",
+        "CLEARLIST"
+      ],
+      "answer": 2,
+      "ans": 2,
+      "answerKey": "C",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "In standard C# and .NET naming guidelines (prescribed in CMPG122), method names must use PascalCase (upper camel case), starting with a capital letter and capitalizing each concatenated word (ClearList).",
+      "exp": "In standard C# and .NET naming guidelines (prescribed in CMPG122), method names must use PascalCase (upper camel case), starting with a capital letter and capitalizing each concatenated word (ClearList)."
+    },
+    {
+      "id": "test3_q20",
+      "qNum": 20,
+      "part": 8,
+      "partTitle": "Part 8 of 11: PascalCase Method Conventions & Feedback",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "A loop runs for several seconds and writes nothing to the form until it has finished, leaving the window looking frozen. Which golden rule does this work against?",
+      "options": [
+        "Strive for consistency",
+        "Cater to universal usability",
+        "Reduce short term memory load",
+        "Offer informative feedback"
+      ],
+      "opts": [
+        "Strive for consistency",
+        "Cater to universal usability",
+        "Reduce short term memory load",
+        "Offer informative feedback"
+      ],
+      "answer": 3,
+      "ans": 3,
+      "answerKey": "D",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Shneiderman's Golden Rule #3 is 'Offer informative feedback'. When an application performs lengthy processing without updating the UI, progress bars, or labels, the user is left unaware of whether the application is running or frozen.",
+      "exp": "Shneiderman's Golden Rule #3 is 'Offer informative feedback'. When an application performs lengthy processing without updating the UI, progress bars, or labels, the user is left unaware of whether the application is running or frozen."
+    },
+    {
+      "id": "test3_q21",
+      "qNum": 21,
+      "part": 9,
+      "partTitle": "Part 9 of 11 - Week 7 - Fill in the blank: Loop Terminology & Pretest Concepts",
+      "points": 1.0,
+      "type": "fill",
+      "q": "The first line of a while loop, while (count <= 5), is called the while _____.",
+      "codeSnippet": "while (count <= 5) // <-- What is this first line called?",
+      "blankPrefix": "The first line of a while loop, while (count <= 5), is called the while ",
+      "blankSuffix": ".",
+      "acceptedAnswers": [
+        "clause",
+        "while clause",
+        "the clause"
+      ],
+      "answerKey": "clause",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "In Tony Gaddis Chapter 5, the first line of a while loop, consisting of the while keyword followed by a boolean condition in parentheses, is called the while clause (or loop header).",
+      "exp": "In Tony Gaddis Chapter 5, the first line of a while loop, consisting of the while keyword followed by a boolean condition in parentheses, is called the while clause (or loop header)."
+    },
+    {
+      "id": "test3_q22",
+      "qNum": 22,
+      "part": 9,
+      "partTitle": "Part 9 of 11 - Week 7 - Fill in the blank: Loop Terminology & Pretest Concepts",
+      "points": 1.0,
+      "type": "fill",
+      "q": "Because a while loop tests its condition before it runs its statements, it is called a _____ loop.",
+      "codeSnippet": "// Condition tested BEFORE statements execute:",
+      "blankPrefix": "Because a while loop tests its condition before it runs its statements, it is called a ",
+      "blankSuffix": " loop.",
+      "acceptedAnswers": [
+        "pretest",
+        "pre-test",
+        "pre test",
+        "pretest loop",
+        "pre-test loop",
+        "pre test loop",
+        "pretested"
+      ],
+      "answerKey": "pretest",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "A loop that evaluates its condition prior to running any statements in the body is termed a pretest (or pre-test) loop. If the condition is false initially, the body does not execute at all.",
+      "exp": "A loop that evaluates its condition prior to running any statements in the body is termed a pretest (or pre-test) loop. If the condition is false initially, the body does not execute at all."
+    },
+    {
+      "id": "test3_q23",
+      "qNum": 23,
+      "part": 9,
+      "partTitle": "Part 9 of 11 - Week 7 - Fill in the blank: Loop Terminology & Pretest Concepts",
+      "points": 1.0,
+      "type": "fill",
+      "q": "The variable that a while loop's condition tests, and that its statements change each time round, is called the _____ variable.",
+      "codeSnippet": "int count = 1; while (count <= 5) { count++; } // 'count' is the...",
+      "blankPrefix": "The variable that a while loop's condition tests, and that its statements change each time round, is called the ",
+      "blankSuffix": " variable.",
+      "acceptedAnswers": [
+        "counter",
+        "count",
+        "counting",
+        "counter variable",
+        "control",
+        "loop control",
+        "control variable"
+      ],
+      "answerKey": "counter",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The variable tested by a while loop's condition and incremented/decremented inside the loop body to regulate iterations is called the counter variable (or loop control variable).",
+      "exp": "The variable tested by a while loop's condition and incremented/decremented inside the loop body to regulate iterations is called the counter variable (or loop control variable)."
+    },
+    {
+      "id": "test3_q24",
+      "qNum": 24,
+      "part": 10,
+      "partTitle": "Part 10 of 11: Prefix Mode Terminology",
+      "points": 1.0,
+      "type": "fill",
+      "q": "Placing the operator before its variable, as in ++count, is called _____ mode.",
+      "codeSnippet": "++count; // Operator precedes variable",
+      "blankPrefix": "Placing the operator before its variable, as in ++count, is called ",
+      "blankSuffix": " mode.",
+      "acceptedAnswers": [
+        "prefix",
+        "pre-fix",
+        "pre fix",
+        "prefix mode",
+        "prefixed"
+      ],
+      "answerKey": "prefix",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Placing the increment or decrement operator before the variable name (e.g. ++count or --count) is termed prefix mode.",
+      "exp": "Placing the increment or decrement operator before the variable name (e.g. ++count or --count) is termed prefix mode."
+    },
+    {
+      "id": "test3_q25",
+      "qNum": 25,
+      "part": 11,
+      "partTitle": "Part 11 of 11: Increment Operator Terminology",
+      "points": 1.0,
+      "type": "fill",
+      "q": "To _____ a variable means to make its value larger, and C# gives us the ++ operator to do it.",
+      "codeSnippet": "count++; // increases variable value by 1",
+      "blankPrefix": "To ",
+      "blankSuffix": " a variable means to make its value larger, and C# gives us the ++ operator to do it.",
+      "acceptedAnswers": [
+        "increment",
+        "incrementing",
+        "increments",
+        "incremement",
+        "incrament"
+      ],
+      "answerKey": "increment",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "To increment a variable means to increase its value. C# provides the ++ unary operator specifically to increment numeric variables by 1.",
+      "exp": "To increment a variable means to increase its value. C# provides the ++ unary operator specifically to increment numeric variables by 1."
+    }
+  ]
+},
   "questions": [
     {
       "id": "q_su7_001",

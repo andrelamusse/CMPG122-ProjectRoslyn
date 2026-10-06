@@ -2375,6 +2375,280 @@ body {
   color: var(--text-muted);
 }
 
+/* =========================================================================
+   TEST 3 QUESTIONNAIRE SIMULATOR STYLES
+   ========================================================================= */
+.test3-parts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.test3-part-card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.9rem;
+  transition: var(--transition);
+}
+
+.test3-part-card:hover {
+  border-color: var(--accent-pink);
+  transform: translateY(-1px);
+}
+
+.test3-part-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.test3-part-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.test3-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+}
+
+.test3-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid var(--accent-amber);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.test3-part-section {
+  margin-bottom: 2rem;
+}
+
+.test3-part-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(90deg, rgba(236,72,153,0.12), transparent);
+  border-left: 4px solid var(--accent-pink);
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+}
+
+.test3-part-header-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.test3-part-header-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-pink);
+  background: rgba(236,72,153,0.15);
+  border: 1px solid rgba(236,72,153,0.3);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.test3-q-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  transition: var(--transition);
+}
+
+.test3-q-card:hover {
+  border-color: rgba(236,72,153,0.4);
+}
+
+.test3-q-card.is-correct {
+  border-left: 4px solid var(--success-border);
+}
+
+.test3-q-card.is-incorrect {
+  border-left: 4px solid var(--danger-border);
+}
+
+.test3-q-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.test3-q-num {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--accent-pink);
+  text-transform: uppercase;
+}
+
+.test3-q-points {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.test3-q-stem {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+}
+
+.test3-code-snippet {
+  background: var(--code-bg);
+  border: 1px solid #1e293b;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #f8fafc;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  white-space: pre-wrap;
+}
+
+.test3-options-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.test3-tf-group {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.test3-option-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+  color: var(--text-main);
+  user-select: none;
+}
+
+.test3-option-pill:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-pink);
+}
+
+.test3-option-pill.selected {
+  background: rgba(236,72,153,0.15);
+  border-color: var(--accent-pink);
+  font-weight: 700;
+}
+
+.test3-option-pill.correct-ans {
+  background: var(--success-bg) !important;
+  border-color: var(--success-border) !important;
+  color: var(--success-text) !important;
+  font-weight: 700;
+}
+
+.test3-option-pill.incorrect-ans {
+  background: var(--danger-bg) !important;
+  border-color: var(--danger-border) !important;
+  color: var(--danger-text) !important;
+}
+
+.test3-fill-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.test3-fill-input {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  padding: 0.55rem 0.85rem;
+  min-width: 260px;
+  outline: none;
+  transition: var(--transition);
+}
+
+.test3-fill-input:focus {
+  border-color: var(--accent-pink);
+  box-shadow: 0 0 0 2px rgba(236,72,153,0.25);
+}
+
+.test3-fill-input.is-correct-input {
+  border-color: var(--success-border);
+  background: var(--success-bg);
+}
+
+.test3-fill-input.is-incorrect-input {
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
+}
+
+.test3-memo-banner {
+  background: rgba(236,72,153,0.1);
+  border: 1px solid rgba(236,72,153,0.3);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.test3-floating-bar {
+  position: sticky;
+  bottom: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  z-index: 40;
+  margin-top: 1.5rem;
+}
+
 </style>
 </head>
 <body>
@@ -2393,6 +2667,7 @@ body {
       <nav class="nav-tabs">
         <button class="tab-btn active" data-tab="units">📚 Study Units</button>
         <button class="tab-btn" data-tab="exams">📝 Official Past Exams</button>
+        <button class="tab-btn" data-tab="test3">📋 Test 3 Simulator</button>
         <button class="tab-btn" data-tab="codegrade">💻 C# CodeGrade Lab</button>
         <button class="tab-btn" data-tab="spoterror">🔍 Spot & Fix Gym</button>
         <button class="tab-btn" data-tab="custom">⚙️ Custom Practice</button>
@@ -2456,6 +2731,100 @@ body {
       </p>
       <div class="units-grid" id="examsList">
         <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- View 2.5: Test 3 Official Assessment Simulator & Questionnaire -->
+    <section id="viewTest3" class="view-panel" style="display:none;">
+      <!-- Hero Banner -->
+      <div class="hero-banner" style="background: linear-gradient(135deg, rgba(236,72,153,0.15), rgba(168,85,247,0.15)); border: 1px solid rgba(236,72,153,0.3);">
+        <div class="hero-text">
+          <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem; flex-wrap:wrap;">
+            <span class="unit-badge" style="background:rgba(236,72,153,0.2); color:var(--accent-pink); border:1px solid var(--accent-pink);">
+              📋 NWU Official Assessment • Test 3
+            </span>
+            <span class="unit-badge" style="background:rgba(14,165,233,0.2); color:var(--accent-blue); border:1px solid var(--accent-blue);">
+              Study Unit 4 (Week 7) &amp; HCI Standards
+            </span>
+          </div>
+          <h2>Test 3 Official Assessment Questionnaire</h2>
+          <p>
+            Authentic North-West University Test 3 assessment questionnaire based on Tony Gaddis <em>Starting Out With Visual C#</em> Chapter 5 (Loops, Increment/Decrement Operators, Accumulators) and Ben Shneiderman's <em>HCI Principles</em> (Golden Rules &amp; Hungarian Control Naming).
+          </p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-pill">
+            <div class="stat-num" id="test3ScoreDisplay">0 / 25</div>
+            <div class="stat-label">Assessment Score</div>
+          </div>
+          <div class="stat-pill">
+            <div class="stat-num" id="test3PctDisplay">0%</div>
+            <div class="stat-label">Mastery Accuracy</div>
+          </div>
+          <div class="stat-pill">
+            <div class="stat-num">11 Parts</div>
+            <div class="stat-label">Assessment Scope</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scope & Split of Questions Overview Card -->
+      <div class="q-card" style="margin-bottom:1.5rem; border-left:4px solid var(--accent-pink);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">
+          <h4 style="font-size:1.05rem; font-weight:800; color:var(--text-main);">
+            📊 Test 3 Assessment Scope &amp; Parts Distribution (25 Total Points)
+          </h4>
+          <span style="font-size:0.8rem; font-family:var(--font-mono); color:var(--accent-pink); font-weight:700;">
+            Authentic NWU eFundi / Test 3 Format
+          </span>
+        </div>
+        <div class="test3-parts-grid" id="test3PartsSummary">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+
+      <!-- Test 3 Action Toolbar -->
+      <div class="test3-toolbar">
+        <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+          <button type="button" class="btn-practice" id="btnSubmitTest3" onclick="CMPG122_APP.submitTest3Assessment()">
+            📤 Submit Test 3 Assessment
+          </button>
+          <button type="button" class="action-btn" id="btnResetTest3" onclick="CMPG122_APP.resetTest3Assessment()">
+            🔄 Reset Answers
+          </button>
+          <button type="button" class="action-btn" id="btnToggleMemoTest3" onclick="CMPG122_APP.toggleTest3Memo()">
+            💡 Toggle Memorandum &amp; Explanations
+          </button>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+          <div id="test3TimerBox" class="test3-timer" style="display:none;">
+            <span>⏱️ Time Remaining:</span>
+            <span id="test3TimerDisplay" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-amber);">30:00</span>
+          </div>
+          <button type="button" class="action-btn" id="btnToggleTest3Timer" onclick="CMPG122_APP.toggleTest3Timer()">
+            ⏱️ Start 30-Min Timer
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Summary Banner (shown upon submit) -->
+      <div id="test3ResultsBanner" style="display:none; margin-bottom:1.5rem;"></div>
+
+      <!-- Questionnaire Sheet Container -->
+      <div id="test3QuestionnaireContainer" class="test3-questionnaire-container">
+        <!-- Questions rendered dynamically by app.js -->
+      </div>
+
+      <!-- Floating Bottom Status Bar -->
+      <div class="test3-floating-bar" id="test3FloatingBar">
+        <div style="font-size:0.9rem; font-weight:700;">
+          <span id="test3AnsweredCount">0</span> of 25 Questions Answered
+        </div>
+        <div style="display:flex; gap:0.75rem;">
+          <button type="button" class="btn-practice" onclick="CMPG122_APP.submitTest3Assessment()" style="padding:0.5rem 1.25rem;">
+            Submit Test 3 📤
+          </button>
+        </div>
       </div>
     </section>
 
@@ -5560,6 +5929,752 @@ body {
       ]
     }
   },
+
+  "test3Quiz": {
+  "id": "quiz_test3_su4",
+  "title": "NWU CMPG122 \u2014 Test 3 Assessment Simulator (Study Unit 4)",
+  "subtitle": "Loops, Accumulators, C# Operators, HCI Golden Rules & Hungarian Standards",
+  "academicUnit": "SU4 (Weeks 6 & 7)",
+  "prescribedReading": "Tony Gaddis Ch 5 & Ben Shneiderman 8 Golden Rules",
+  "totalMarks": 25,
+  "totalQuestions": 25,
+  "durationMinutes": 30,
+  "parts": [
+    {
+      "part": 1,
+      "title": "Part 1 of 11: while Loop Mechanics & Counter Iteration",
+      "questionsCount": 3,
+      "points": 3.0,
+      "type": "True/False"
+    },
+    {
+      "part": 2,
+      "title": "Part 2 of 11: Compound Assignment & Increment/Decrement Operators",
+      "questionsCount": 2,
+      "points": 2.0,
+      "type": "True/False"
+    },
+    {
+      "part": 3,
+      "title": "Part 3 of 11: do-while Post-Test Loop Behavior",
+      "questionsCount": 3,
+      "points": 3.0,
+      "type": "True/False"
+    },
+    {
+      "part": 4,
+      "title": "Part 4 of 11: HCI Consistency & Hungarian Naming Conventions",
+      "questionsCount": 2,
+      "points": 2.0,
+      "type": "True/False"
+    },
+    {
+      "part": 5,
+      "title": "Part 5 of 11 - Week 7 - MC: while Loop Analysis & Loop Condition Testing",
+      "questionsCount": 3,
+      "points": 3.0,
+      "type": "Multiple Choice"
+    },
+    {
+      "part": 6,
+      "title": "Part 6 of 11: Postfix vs Prefix Evaluation & Variable Tracing",
+      "questionsCount": 3,
+      "points": 3.0,
+      "type": "Multiple Choice"
+    },
+    {
+      "part": 7,
+      "title": "Part 7 of 11: Loop Guarantees & Accumulator Tracing",
+      "questionsCount": 2,
+      "points": 2.0,
+      "type": "Multiple Choice"
+    },
+    {
+      "part": 8,
+      "title": "Part 8 of 11: PascalCase Method Conventions & Feedback",
+      "questionsCount": 2,
+      "points": 2.0,
+      "type": "Multiple Choice"
+    },
+    {
+      "part": 9,
+      "title": "Part 9 of 11 - Week 7 - Fill in the blank: Loop Terminology & Pretest Concepts",
+      "questionsCount": 3,
+      "points": 3.0,
+      "type": "Fill in the blank"
+    },
+    {
+      "part": 10,
+      "title": "Part 10 of 11: Prefix Mode Terminology",
+      "questionsCount": 1,
+      "points": 1.0,
+      "type": "Fill in the blank"
+    },
+    {
+      "part": 11,
+      "title": "Part 11 of 11: Increment Operator Terminology",
+      "questionsCount": 1,
+      "points": 1.0,
+      "type": "Fill in the blank"
+    }
+  ],
+  "questions": [
+    {
+      "id": "test3_q1",
+      "qNum": 1,
+      "part": 1,
+      "partTitle": "Part 1 of 11: while Loop Mechanics & Counter Iteration",
+      "points": 1.0,
+      "type": "tf",
+      "q": "Given int count = 3; followed by while (count <= 5) { lblOut.Text = count.ToString(); count = count + 1; }, the statements between the braces run two times.",
+      "codeSnippet": "int count = 3;\nwhile (count <= 5)\n{\n    lblOut.Text = count.ToString();\n    count = count + 1;\n}",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "ans": 1,
+      "answerKey": "False",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The loop starts with count = 3 and tests count <= 5. The loop body executes 3 times for count = 3, 4, and 5. When count reaches 6, the test 6 <= 5 evaluates to false, terminating the loop. Thus the statements run 3 times, not two times (Answer: False).",
+      "exp": "The loop starts with count = 3 and tests count <= 5. The loop body executes 3 times for count = 3, 4, and 5. When count reaches 6, the test 6 <= 5 evaluates to false, terminating the loop. Thus the statements run 3 times, not two times (Answer: False)."
+    },
+    {
+      "id": "test3_q2",
+      "qNum": 2,
+      "part": 1,
+      "partTitle": "Part 1 of 11: while Loop Mechanics & Counter Iteration",
+      "points": 1.0,
+      "type": "tf",
+      "q": "In while (count <= 5) { count = count + 1; } the condition is checked one more time after the last time the statements run.",
+      "codeSnippet": "while (count <= 5)\n{\n    count = count + 1;\n}",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "In a while loop, the condition is evaluated before every iteration. After the final execution of the loop body, control returns to the loop header where the condition is evaluated once more, evaluates to false, and terminates the loop (Answer: True).",
+      "exp": "In a while loop, the condition is evaluated before every iteration. After the final execution of the loop body, control returns to the loop header where the condition is evaluated once more, evaluates to false, and terminates the loop (Answer: True)."
+    },
+    {
+      "id": "test3_q3",
+      "qNum": 3,
+      "part": 1,
+      "partTitle": "Part 1 of 11: while Loop Mechanics & Counter Iteration",
+      "points": 1.0,
+      "type": "tf",
+      "q": "The variable that a while loop's condition tests may be left without a starting value, because the loop gives it one automatically.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "ans": 1,
+      "answerKey": "False",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "In C#, local variables are never automatically initialized to a default value. Reading an uninitialized local variable in a while condition causes compiler error CS0165 (Use of unassigned local variable). The programmer must explicitly give the variable an initial starting value (Answer: False).",
+      "exp": "In C#, local variables are never automatically initialized to a default value. Reading an uninitialized local variable in a while condition causes compiler error CS0165 (Use of unassigned local variable). The programmer must explicitly give the variable an initial starting value (Answer: False)."
+    },
+    {
+      "id": "test3_q4",
+      "qNum": 4,
+      "part": 2,
+      "partTitle": "Part 2 of 11: Compound Assignment & Increment/Decrement",
+      "points": 1.0,
+      "type": "tf",
+      "q": "count -= 1; is another way of writing count = count - 1;.",
+      "codeSnippet": "count -= 1;  // Equivalent to count = count - 1;",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The compound subtraction assignment operator (-=) subtracts the right operand from the left variable and stores the result back in the variable. Thus, count -= 1; is another way of writing count = count - 1; (Answer: True).",
+      "exp": "The compound subtraction assignment operator (-=) subtracts the right operand from the left variable and stores the result back in the variable. Thus, count -= 1; is another way of writing count = count - 1; (Answer: True)."
+    },
+    {
+      "id": "test3_q5",
+      "qNum": 5,
+      "part": 2,
+      "partTitle": "Part 2 of 11: Compound Assignment & Increment/Decrement",
+      "points": 1.0,
+      "type": "tf",
+      "q": "Written on a line of its own, count++; has the same effect on count as ++count; does.",
+      "codeSnippet": "count++;  // Postfix\n++count;  // Prefix",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "When written as an isolated statement on its own line, both postfix (count++;) and prefix (++count;) increase the variable count by 1. The distinction between prefix and postfix only matters when the expression's return value is used in an assignment or surrounding expression (Answer: True).",
+      "exp": "When written as an isolated statement on its own line, both postfix (count++;) and prefix (++count;) increase the variable count by 1. The distinction between prefix and postfix only matters when the expression's return value is used in an assignment or surrounding expression (Answer: True)."
+    },
+    {
+      "id": "test3_q6",
+      "qNum": 6,
+      "part": 3,
+      "partTitle": "Part 3 of 11: do-while Post-Test Loop Behavior",
+      "points": 1.0,
+      "type": "tf",
+      "q": "Given int number = 1; do { MessageBox.Show(number.ToString()); } while (number < 0); the message box is displayed.",
+      "codeSnippet": "int number = 1;\ndo\n{\n    MessageBox.Show(number.ToString());\n} while (number < 0);",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The do-while loop is a post-test loop. It always executes the statements within its block at least once before testing the condition at the end. Because number = 1, MessageBox.Show(\"1\") is displayed, and then (1 < 0) evaluates to false, terminating the loop (Answer: True).",
+      "exp": "The do-while loop is a post-test loop. It always executes the statements within its block at least once before testing the condition at the end. Because number = 1, MessageBox.Show(\"1\") is displayed, and then (1 < 0) evaluates to false, terminating the loop (Answer: True)."
+    },
+    {
+      "id": "test3_q7",
+      "qNum": 7,
+      "part": 3,
+      "partTitle": "Part 3 of 11: do-while Post-Test Loop Behavior",
+      "points": 1.0,
+      "type": "tf",
+      "q": "Given int count = 1; do { count = count + 3; } while (count < 7);, the loop leaves count equal to 7.",
+      "codeSnippet": "int count = 1;\ndo\n{\n    count = count + 3;\n} while (count < 7);",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Initial count = 1. Iteration 1: count becomes 1 + 3 = 4; condition 4 < 7 is true. Iteration 2: count becomes 4 + 3 = 7; condition 7 < 7 is false. The loop terminates, leaving count equal to 7 (Answer: True).",
+      "exp": "Initial count = 1. Iteration 1: count becomes 1 + 3 = 4; condition 4 < 7 is true. Iteration 2: count becomes 4 + 3 = 7; condition 7 < 7 is false. The loop terminates, leaving count equal to 7 (Answer: True)."
+    },
+    {
+      "id": "test3_q8",
+      "qNum": 8,
+      "part": 3,
+      "partTitle": "Part 3 of 11: do-while Post-Test Loop Behavior",
+      "points": 1.0,
+      "type": "tf",
+      "q": "int count = 5; do { count++; } while (count < 0); will not compile, because its condition can never be true.",
+      "codeSnippet": "int count = 5;\ndo\n{\n    count++;\n} while (count < 0);",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 1,
+      "ans": 1,
+      "answerKey": "False",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The code compiles without any compiler errors. C# compilers allow loop conditions that evaluate to false at runtime. The loop body executes once, incrementing count to 6, then tests 6 < 0 which is false, terminating cleanly (Answer: False).",
+      "exp": "The code compiles without any compiler errors. C# compilers allow loop conditions that evaluate to false at runtime. The loop body executes once, incrementing count to 6, then tests 6 < 0 which is false, terminating cleanly (Answer: False)."
+    },
+    {
+      "id": "test3_q9",
+      "qNum": 9,
+      "part": 4,
+      "partTitle": "Part 4 of 11: HCI Consistency & Hungarian Naming",
+      "points": 1.0,
+      "type": "tf",
+      "q": "Naming one button btnSave and another SaveButton2 on the same form works against the golden rule \"strive for consistency\".",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Shneiderman's Golden Rule #1 is 'Strive for consistency'. In UI development and C# event programming, having erratic naming styles like btnSave and SaveButton2 on the same form undermines consistency and increases cognitive overhead (Answer: True).",
+      "exp": "Shneiderman's Golden Rule #1 is 'Strive for consistency'. In UI development and C# event programming, having erratic naming styles like btnSave and SaveButton2 on the same form undermines consistency and increases cognitive overhead (Answer: True)."
+    },
+    {
+      "id": "test3_q10",
+      "qNum": 10,
+      "part": 4,
+      "partTitle": "Part 4 of 11: HCI Consistency & Hungarian Naming",
+      "points": 1.0,
+      "type": "tf",
+      "q": "pbLogo follows the module's naming standard for a PictureBox that displays a company logo.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "opts": [
+        "True",
+        "False"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "True",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "In NWU CMPG122 naming conventions and standard Hungarian notation, pb (or pic) is the prescribed prefix for a PictureBox control, followed by a PascalCase descriptive name (Logo), so pbLogo strictly adheres to the standard (Answer: True).",
+      "exp": "In NWU CMPG122 naming conventions and standard Hungarian notation, pb (or pic) is the prescribed prefix for a PictureBox control, followed by a PascalCase descriptive name (Logo), so pbLogo strictly adheres to the standard (Answer: True)."
+    },
+    {
+      "id": "test3_q11",
+      "qNum": 11,
+      "part": 5,
+      "partTitle": "Part 5 of 11 - Week 7 - MC: while Loop Analysis & Loop Condition Testing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "Which loop adds exactly three entries to lstOut?",
+      "options": [
+        "int i = 1; while (i < 3) { lstOut.Items.Add(\"row\"); i++; }",
+        "int i = 3; while (i > 0) { lstOut.Items.Add(\"row\"); }",
+        "int i = 0; while (i <= 3) { lstOut.Items.Add(\"row\"); i++; }",
+        "int i = 0; while (i < 3) { lstOut.Items.Add(\"row\"); i++; }"
+      ],
+      "opts": [
+        "int i = 1; while (i < 3) { lstOut.Items.Add(\"row\"); i++; }",
+        "int i = 3; while (i > 0) { lstOut.Items.Add(\"row\"); }",
+        "int i = 0; while (i <= 3) { lstOut.Items.Add(\"row\"); i++; }",
+        "int i = 0; while (i < 3) { lstOut.Items.Add(\"row\"); i++; }"
+      ],
+      "answer": 3,
+      "ans": 3,
+      "answerKey": "D",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Option D starts at i = 0 and iterates while i < 3 (values 0, 1, 2), executing exactly 3 times and adding 3 entries. Option A runs twice (i = 1, 2). Option B is infinite (i is never modified). Option C runs 4 times (i = 0, 1, 2, 3).",
+      "exp": "Option D starts at i = 0 and iterates while i < 3 (values 0, 1, 2), executing exactly 3 times and adding 3 entries. Option A runs twice (i = 1, 2). Option B is infinite (i is never modified). Option C runs 4 times (i = 0, 1, 2, 3)."
+    },
+    {
+      "id": "test3_q12",
+      "qNum": 12,
+      "part": 5,
+      "partTitle": "Part 5 of 11 - Week 7 - MC: while Loop Analysis & Loop Condition Testing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "In while (total < limit) { total = total + amount; }, which part is tested for a true or false value?",
+      "codeSnippet": "while (total < limit)\n{\n    total = total + amount;\n}",
+      "options": [
+        "total = total + amount;",
+        "total < limit",
+        "the curly braces",
+        "the word while"
+      ],
+      "opts": [
+        "total = total + amount;",
+        "total < limit",
+        "the curly braces",
+        "the word while"
+      ],
+      "answer": 1,
+      "ans": 1,
+      "answerKey": "B",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The relational expression in parentheses, (total < limit), is the boolean condition tested prior to every iteration to determine whether to execute the loop body.",
+      "exp": "The relational expression in parentheses, (total < limit), is the boolean condition tested prior to every iteration to determine whether to execute the loop body."
+    },
+    {
+      "id": "test3_q13",
+      "qNum": 13,
+      "part": 5,
+      "partTitle": "Part 5 of 11 - Week 7 - MC: while Loop Analysis & Loop Condition Testing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "How many times do the statements between the braces run?\n\nint i = 5;\nwhile (i > 0)\n{\n    i = i - 1;\n}",
+      "codeSnippet": "int i = 5;\nwhile (i > 0)\n{\n    i = i - 1;\n}",
+      "options": [
+        "6",
+        "5",
+        "4",
+        "0"
+      ],
+      "opts": [
+        "6",
+        "5",
+        "4",
+        "0"
+      ],
+      "answer": 1,
+      "ans": 1,
+      "answerKey": "B",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "i starts at 5. The loop tests 5 > 0 (runs, i=4), 4 > 0 (runs, i=3), 3 > 0 (runs, i=2), 2 > 0 (runs, i=1), 1 > 0 (runs, i=0). When i is 0, 0 > 0 is false. The statements run exactly 5 times.",
+      "exp": "i starts at 5. The loop tests 5 > 0 (runs, i=4), 4 > 0 (runs, i=3), 3 > 0 (runs, i=2), 2 > 0 (runs, i=1), 1 > 0 (runs, i=0). When i is 0, 0 > 0 is false. The statements run exactly 5 times."
+    },
+    {
+      "id": "test3_q14",
+      "qNum": 14,
+      "part": 6,
+      "partTitle": "Part 6 of 11: Postfix vs Prefix Evaluation & Variable Tracing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "Which statement has the same effect on count as count = count + 1;?",
+      "options": [
+        "count =+ 1;",
+        "count == 1;",
+        "count++;",
+        "count--;"
+      ],
+      "opts": [
+        "count =+ 1;",
+        "count == 1;",
+        "count++;",
+        "count--;"
+      ],
+      "answer": 2,
+      "ans": 2,
+      "answerKey": "C",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The postfix increment statement count++; adds 1 to count, having the exact same effect as count = count + 1; or count += 1;.",
+      "exp": "The postfix increment statement count++; adds 1 to count, having the exact same effect as count = count + 1; or count += 1;."
+    },
+    {
+      "id": "test3_q15",
+      "qNum": 15,
+      "part": 6,
+      "partTitle": "Part 6 of 11: Postfix vs Prefix Evaluation & Variable Tracing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "In lblOut.Text = Convert.ToString(count++);, when is count changed, relative to the value handed to Convert.ToString?",
+      "codeSnippet": "lblOut.Text = Convert.ToString(count++);",
+      "options": [
+        "Before that value is taken",
+        "count is not changed at all",
+        "After that value is taken",
+        "Only when count is greater than zero"
+      ],
+      "opts": [
+        "Before that value is taken",
+        "count is not changed at all",
+        "After that value is taken",
+        "Only when count is greater than zero"
+      ],
+      "answer": 2,
+      "ans": 2,
+      "answerKey": "C",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "In postfix mode (count++), the current value of count is returned first for evaluation (passed to Convert.ToString), and then after the value is taken, count is incremented in memory.",
+      "exp": "In postfix mode (count++), the current value of count is returned first for evaluation (passed to Convert.ToString), and then after the value is taken, count is incremented in memory."
+    },
+    {
+      "id": "test3_q16",
+      "qNum": 16,
+      "part": 6,
+      "partTitle": "Part 6 of 11: Postfix vs Prefix Evaluation & Variable Tracing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "What does lblN display?\n\nint n = 4;\nn++;\nn--;\nn--;\nlblN.Text = n.ToString();",
+      "codeSnippet": "int n = 4;\nn++;\nn--;\nn--;\nlblN.Text = n.ToString();",
+      "options": [
+        "5",
+        "4",
+        "2",
+        "3"
+      ],
+      "opts": [
+        "5",
+        "4",
+        "2",
+        "3"
+      ],
+      "answer": 3,
+      "ans": 3,
+      "answerKey": "D",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Trace: n begins at 4. After n++, n is 5. After first n--, n is 4. After second n--, n is 3. Line 5 formats 3 as text. Therefore, lblN displays 3.",
+      "exp": "Trace: n begins at 4. After n++, n is 5. After first n--, n is 4. After second n--, n is 3. Line 5 formats 3 as text. Therefore, lblN displays 3."
+    },
+    {
+      "id": "test3_q17",
+      "qNum": 17,
+      "part": 7,
+      "partTitle": "Part 7 of 11: Loop Guarantees & Accumulator Tracing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "Which loop is guaranteed to run its statements even when its condition is false from the very start?",
+      "options": [
+        "The do-while loop",
+        "The while loop",
+        "Neither of them",
+        "Both of them"
+      ],
+      "opts": [
+        "The do-while loop",
+        "The while loop",
+        "Neither of them",
+        "Both of them"
+      ],
+      "answer": 0,
+      "ans": 0,
+      "answerKey": "A",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The do-while loop is a post-test loop: its statements execute first, and the condition is only tested at the end of the iteration. Thus, it always executes at least once, even if the condition is false initially.",
+      "exp": "The do-while loop is a post-test loop: its statements execute first, and the condition is only tested at the end of the iteration. Thus, it always executes at least once, even if the condition is false initially."
+    },
+    {
+      "id": "test3_q18",
+      "qNum": 18,
+      "part": 7,
+      "partTitle": "Part 7 of 11: Loop Guarantees & Accumulator Tracing",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "What value does total hold once this loop has finished?\n\nint total = 0;\nint n = 1;\ndo\n{\n    total = total + n;\n    n++;\n} while (n <= 3);",
+      "codeSnippet": "int total = 0;\nint n = 1;\ndo\n{\n    total = total + n;\n    n++;\n} while (n <= 3);",
+      "options": [
+        "3",
+        "6",
+        "1",
+        "10"
+      ],
+      "opts": [
+        "3",
+        "6",
+        "1",
+        "10"
+      ],
+      "answer": 1,
+      "ans": 1,
+      "answerKey": "B",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Iteration 1: total = 0 + 1 = 1, n = 2; (2 <= 3) is true. Iteration 2: total = 1 + 2 = 3, n = 3; (3 <= 3) is true. Iteration 3: total = 3 + 3 = 6, n = 4; (4 <= 3) is false. Loop finishes with total = 6.",
+      "exp": "Iteration 1: total = 0 + 1 = 1, n = 2; (2 <= 3) is true. Iteration 2: total = 1 + 2 = 3, n = 3; (3 <= 3) is true. Iteration 3: total = 3 + 3 = 6, n = 4; (4 <= 3) is false. Loop finishes with total = 6."
+    },
+    {
+      "id": "test3_q19",
+      "qNum": 19,
+      "part": 8,
+      "partTitle": "Part 8 of 11: PascalCase Method Conventions & Feedback",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "Which name follows the standard for a method that clears a list?",
+      "options": [
+        "clear_list",
+        "clearList",
+        "ClearList",
+        "CLEARLIST"
+      ],
+      "opts": [
+        "clear_list",
+        "clearList",
+        "ClearList",
+        "CLEARLIST"
+      ],
+      "answer": 2,
+      "ans": 2,
+      "answerKey": "C",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "In standard C# and .NET naming guidelines (prescribed in CMPG122), method names must use PascalCase (upper camel case), starting with a capital letter and capitalizing each concatenated word (ClearList).",
+      "exp": "In standard C# and .NET naming guidelines (prescribed in CMPG122), method names must use PascalCase (upper camel case), starting with a capital letter and capitalizing each concatenated word (ClearList)."
+    },
+    {
+      "id": "test3_q20",
+      "qNum": 20,
+      "part": 8,
+      "partTitle": "Part 8 of 11: PascalCase Method Conventions & Feedback",
+      "points": 1.0,
+      "type": "mcq",
+      "q": "A loop runs for several seconds and writes nothing to the form until it has finished, leaving the window looking frozen. Which golden rule does this work against?",
+      "options": [
+        "Strive for consistency",
+        "Cater to universal usability",
+        "Reduce short term memory load",
+        "Offer informative feedback"
+      ],
+      "opts": [
+        "Strive for consistency",
+        "Cater to universal usability",
+        "Reduce short term memory load",
+        "Offer informative feedback"
+      ],
+      "answer": 3,
+      "ans": 3,
+      "answerKey": "D",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Shneiderman's Golden Rule #3 is 'Offer informative feedback'. When an application performs lengthy processing without updating the UI, progress bars, or labels, the user is left unaware of whether the application is running or frozen.",
+      "exp": "Shneiderman's Golden Rule #3 is 'Offer informative feedback'. When an application performs lengthy processing without updating the UI, progress bars, or labels, the user is left unaware of whether the application is running or frozen."
+    },
+    {
+      "id": "test3_q21",
+      "qNum": 21,
+      "part": 9,
+      "partTitle": "Part 9 of 11 - Week 7 - Fill in the blank: Loop Terminology & Pretest Concepts",
+      "points": 1.0,
+      "type": "fill",
+      "q": "The first line of a while loop, while (count <= 5), is called the while _____.",
+      "codeSnippet": "while (count <= 5) // <-- What is this first line called?",
+      "blankPrefix": "The first line of a while loop, while (count <= 5), is called the while ",
+      "blankSuffix": ".",
+      "acceptedAnswers": [
+        "clause",
+        "while clause",
+        "the clause"
+      ],
+      "answerKey": "clause",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "In Tony Gaddis Chapter 5, the first line of a while loop, consisting of the while keyword followed by a boolean condition in parentheses, is called the while clause (or loop header).",
+      "exp": "In Tony Gaddis Chapter 5, the first line of a while loop, consisting of the while keyword followed by a boolean condition in parentheses, is called the while clause (or loop header)."
+    },
+    {
+      "id": "test3_q22",
+      "qNum": 22,
+      "part": 9,
+      "partTitle": "Part 9 of 11 - Week 7 - Fill in the blank: Loop Terminology & Pretest Concepts",
+      "points": 1.0,
+      "type": "fill",
+      "q": "Because a while loop tests its condition before it runs its statements, it is called a _____ loop.",
+      "codeSnippet": "// Condition tested BEFORE statements execute:",
+      "blankPrefix": "Because a while loop tests its condition before it runs its statements, it is called a ",
+      "blankSuffix": " loop.",
+      "acceptedAnswers": [
+        "pretest",
+        "pre-test",
+        "pre test",
+        "pretest loop",
+        "pre-test loop",
+        "pre test loop",
+        "pretested"
+      ],
+      "answerKey": "pretest",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "A loop that evaluates its condition prior to running any statements in the body is termed a pretest (or pre-test) loop. If the condition is false initially, the body does not execute at all.",
+      "exp": "A loop that evaluates its condition prior to running any statements in the body is termed a pretest (or pre-test) loop. If the condition is false initially, the body does not execute at all."
+    },
+    {
+      "id": "test3_q23",
+      "qNum": 23,
+      "part": 9,
+      "partTitle": "Part 9 of 11 - Week 7 - Fill in the blank: Loop Terminology & Pretest Concepts",
+      "points": 1.0,
+      "type": "fill",
+      "q": "The variable that a while loop's condition tests, and that its statements change each time round, is called the _____ variable.",
+      "codeSnippet": "int count = 1; while (count <= 5) { count++; } // 'count' is the...",
+      "blankPrefix": "The variable that a while loop's condition tests, and that its statements change each time round, is called the ",
+      "blankSuffix": " variable.",
+      "acceptedAnswers": [
+        "counter",
+        "count",
+        "counting",
+        "counter variable",
+        "control",
+        "loop control",
+        "control variable"
+      ],
+      "answerKey": "counter",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "The variable tested by a while loop's condition and incremented/decremented inside the loop body to regulate iterations is called the counter variable (or loop control variable).",
+      "exp": "The variable tested by a while loop's condition and incremented/decremented inside the loop body to regulate iterations is called the counter variable (or loop control variable)."
+    },
+    {
+      "id": "test3_q24",
+      "qNum": 24,
+      "part": 10,
+      "partTitle": "Part 10 of 11: Prefix Mode Terminology",
+      "points": 1.0,
+      "type": "fill",
+      "q": "Placing the operator before its variable, as in ++count, is called _____ mode.",
+      "codeSnippet": "++count; // Operator precedes variable",
+      "blankPrefix": "Placing the operator before its variable, as in ++count, is called ",
+      "blankSuffix": " mode.",
+      "acceptedAnswers": [
+        "prefix",
+        "pre-fix",
+        "pre fix",
+        "prefix mode",
+        "prefixed"
+      ],
+      "answerKey": "prefix",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "Placing the increment or decrement operator before the variable name (e.g. ++count or --count) is termed prefix mode.",
+      "exp": "Placing the increment or decrement operator before the variable name (e.g. ++count or --count) is termed prefix mode."
+    },
+    {
+      "id": "test3_q25",
+      "qNum": 25,
+      "part": 11,
+      "partTitle": "Part 11 of 11: Increment Operator Terminology",
+      "points": 1.0,
+      "type": "fill",
+      "q": "To _____ a variable means to make its value larger, and C# gives us the ++ operator to do it.",
+      "codeSnippet": "count++; // increases variable value by 1",
+      "blankPrefix": "To ",
+      "blankSuffix": " a variable means to make its value larger, and C# gives us the ++ operator to do it.",
+      "acceptedAnswers": [
+        "increment",
+        "incrementing",
+        "increments",
+        "incremement",
+        "incrament"
+      ],
+      "answerKey": "increment",
+      "ch": "SU4",
+      "su": "SU4",
+      "explanation": "To increment a variable means to increase its value. C# provides the ++ unary operator specifically to increment numeric variables by 1.",
+      "exp": "To increment a variable means to increase its value. C# provides the ++ unary operator specifically to increment numeric variables by 1."
+    }
+  ]
+},
   "questions": [
     {
       "id": "q_su7_001",
@@ -18465,7 +19580,7 @@ body {
 
   // Application State
   const state = {
-    currentTab: 'units', // 'units', 'exams', 'codegrade', 'spoterror', 'custom', 'quiz'
+    currentTab: 'units', // 'units', 'exams', 'test3', 'codegrade', 'spoterror', 'custom', 'quiz'
     selectedUnitId: null,
     selectedExamId: null,
     quizQuestions: [],
@@ -18479,6 +19594,13 @@ body {
     viewMode: 'continuous', // 'continuous' or 'card'
     examSecondsLeft: 180 * 60,
     examTimerInterval: null,
+    // Test 3 Questionnaire Simulator State
+    test3Answers: {},
+    test3Submitted: false,
+    test3MemoRevealed: false,
+    test3TimerInterval: null,
+    test3SecondsLeft: 30 * 60,
+    test3TimerActive: false,
     streak: 0,
     bestStreak: parseInt(localStorage.getItem('cmpg122_best_streak') || '0', 10),
     wrongOnlyMode: false,
@@ -18514,6 +19636,7 @@ body {
     bindEvents();
     renderUnitsGrid();
     renderExamsList();
+    renderTest3Questionnaire();
     renderSpotErrorList();
     initCodeAudit();
     renderCustomUnitChecks();
@@ -18530,11 +19653,23 @@ body {
       views: {
         units: document.getElementById('viewUnits'),
         exams: document.getElementById('viewExams'),
+        test3: document.getElementById('viewTest3'),
         codegrade: document.getElementById('viewCodeGrade'),
         spoterror: document.getElementById('viewSpotError'),
         custom: document.getElementById('viewCustom'),
         quiz: document.getElementById('viewQuiz')
       },
+      // Test 3 Questionnaire Elements
+      test3ScoreDisplay: document.getElementById('test3ScoreDisplay'),
+      test3PctDisplay: document.getElementById('test3PctDisplay'),
+      test3PartsSummary: document.getElementById('test3PartsSummary'),
+      test3ResultsBanner: document.getElementById('test3ResultsBanner'),
+      test3QuestionnaireContainer: document.getElementById('test3QuestionnaireContainer'),
+      test3AnsweredCount: document.getElementById('test3AnsweredCount'),
+      test3TimerBox: document.getElementById('test3TimerBox'),
+      test3TimerDisplay: document.getElementById('test3TimerDisplay'),
+      btnToggleTest3Timer: document.getElementById('btnToggleTest3Timer'),
+      btnToggleMemoTest3: document.getElementById('btnToggleMemoTest3'),
       // Units
       unitsGrid: document.getElementById('unitsGrid'),
       statTotalQs: document.getElementById('statTotalQs'),
@@ -19449,6 +20584,366 @@ body {
       if (dom.studentCodeInput) {
         dom.studentCodeInput.value = sc.modelSolution;
       }
+    }
+  }
+
+  // =========================================================================
+  // TEST 3 QUESTIONNAIRE SIMULATOR CONTROLLER
+  // =========================================================================
+  function renderTest3Questionnaire() {
+    if (!DATA || !DATA.test3Quiz) return;
+    const test3 = DATA.test3Quiz;
+
+    // Render Parts Summary Cards
+    if (dom.test3PartsSummary) {
+      let partsHtml = '';
+      test3.parts.forEach(p => {
+        partsHtml += `
+          <div class="test3-part-card">
+            <div class="test3-part-meta">
+              <span>Part ${p.part} of 11</span>
+              <span style="color:var(--accent-pink);">${p.points.toFixed(1)} Pts • ${p.type}</span>
+            </div>
+            <div class="test3-part-title">${escapeHtml(p.title)}</div>
+          </div>
+        `;
+      });
+      dom.test3PartsSummary.innerHTML = partsHtml;
+    }
+
+    // Render 25 Questions grouped by 11 parts
+    if (!dom.test3QuestionnaireContainer) return;
+
+    let qHtml = '';
+    test3.parts.forEach(p => {
+      const partQs = test3.questions.filter(q => q.part === p.part);
+      qHtml += `
+        <div class="test3-part-section" id="test3_part_${p.part}">
+          <div class="test3-part-header-bar">
+            <div class="test3-part-header-title">${escapeHtml(p.title)}</div>
+            <div class="test3-part-header-badge">${p.questionsCount} Questions • ${p.points.toFixed(1)} Points</div>
+          </div>
+      `;
+
+      partQs.forEach(q => {
+        const userAns = state.test3Answers[q.id];
+        let cardClass = 'test3-q-card';
+        if (state.test3Submitted) {
+          cardClass += userAns && userAns.isCorrect ? ' is-correct' : ' is-incorrect';
+        }
+
+        qHtml += `
+          <div class="${cardClass}" id="card_${q.id}">
+            <div class="test3-q-meta">
+              <span class="test3-q-num">Question ${q.qNum} of 25</span>
+              <span class="test3-q-points">${q.points.toFixed(1)} Points • ${q.type.toUpperCase()}</span>
+            </div>
+            <div class="test3-q-stem">${escapeHtml(q.q)}</div>
+        `;
+
+        if (q.codeSnippet) {
+          qHtml += `<div class="test3-code-snippet">${escapeHtml(q.codeSnippet)}</div>`;
+        }
+
+        // Render input controls
+        if (q.type === 'tf') {
+          qHtml += `<div class="test3-tf-group">`;
+          q.options.forEach((opt, optIdx) => {
+            let pillClass = 'test3-option-pill';
+            const isSelected = userAns && userAns.selected === optIdx;
+            if (isSelected) pillClass += ' selected';
+            if (state.test3Submitted || state.test3MemoRevealed) {
+              if (optIdx === q.answer) pillClass += ' correct-ans';
+              else if (isSelected && !userAns.isCorrect) pillClass += ' incorrect-ans';
+            }
+            qHtml += `
+              <div class="${pillClass}" onclick="CMPG122_APP.selectTest3Answer('${q.id}', ${optIdx})">
+                <span style="font-weight:800; color:var(--accent-pink);">${optIdx === 0 ? 'A.' : 'B.'}</span>
+                <span>${escapeHtml(opt)}</span>
+              </div>
+            `;
+          });
+          qHtml += `</div>`;
+        } else if (q.type === 'mcq') {
+          qHtml += `<div class="test3-options-group">`;
+          q.options.forEach((opt, optIdx) => {
+            let pillClass = 'test3-option-pill';
+            const isSelected = userAns && userAns.selected === optIdx;
+            if (isSelected) pillClass += ' selected';
+            if (state.test3Submitted || state.test3MemoRevealed) {
+              if (optIdx === q.answer) pillClass += ' correct-ans';
+              else if (isSelected && !userAns.isCorrect) pillClass += ' incorrect-ans';
+            }
+            qHtml += `
+              <div class="${pillClass}" onclick="CMPG122_APP.selectTest3Answer('${q.id}', ${optIdx})">
+                <span style="font-family:var(--font-mono); font-weight:800; color:var(--accent-blue);">${String.fromCharCode(65 + optIdx)}.</span>
+                <span style="font-family:${opt.includes(';') ? 'var(--font-mono)' : 'inherit'};">${escapeHtml(opt)}</span>
+              </div>
+            `;
+          });
+          qHtml += `</div>`;
+        } else if (q.type === 'fill') {
+          const currentVal = userAns ? (userAns.selected || '') : '';
+          let inputClass = 'test3-fill-input';
+          if (state.test3Submitted) {
+            inputClass += (userAns && userAns.isCorrect) ? ' is-correct-input' : ' is-incorrect-input';
+          }
+          qHtml += `
+            <div class="test3-fill-wrap">
+              <span style="font-size:0.9rem; color:var(--text-muted);">${escapeHtml(q.blankPrefix || 'Answer:')}</span>
+              <input type="text" class="${inputClass}" id="input_${q.id}"
+                value="${escapeHtml(String(currentVal))}"
+                placeholder="Type word or phrase here..."
+                oninput="CMPG122_APP.onTest3TextInput('${q.id}', this.value)">
+              <span style="font-size:0.9rem; color:var(--text-muted);">${escapeHtml(q.blankSuffix || '')}</span>
+            </div>
+          `;
+          if (state.test3Submitted || state.test3MemoRevealed) {
+            qHtml += `
+              <div style="font-size:0.8rem; font-family:var(--font-mono); margin-top:0.35rem; color:${userAns && userAns.isCorrect ? 'var(--success-text)' : 'var(--accent-amber)'};">
+                ✓ Accepted answer(s): <strong>${escapeHtml(q.acceptedAnswers.join(' | '))}</strong>
+              </div>
+            `;
+          }
+        }
+
+        // Explanations banner (shown upon submission or memo toggle)
+        if (state.test3Submitted || state.test3MemoRevealed) {
+          qHtml += `
+            <div class="test3-memo-banner">
+              <div style="font-weight:700; color:var(--text-main); margin-bottom:0.25rem;">
+                💡 Tutoring &amp; Assessment Explanation:
+              </div>
+              <div>${escapeHtml(q.explanation)}</div>
+            </div>
+          `;
+        }
+
+        qHtml += `</div>`; // end test3-q-card
+      });
+
+      qHtml += `</div>`; // end test3-part-section
+    });
+
+    dom.test3QuestionnaireContainer.innerHTML = qHtml;
+    updateTest3AnsweredCount();
+  }
+
+  function selectTest3Answer(qId, optIdx) {
+    const test3 = DATA.test3Quiz;
+    if (!test3) return;
+    const q = test3.questions.find(x => x.id === qId);
+    if (!q) return;
+
+    const isCorrect = (optIdx === q.answer);
+    state.test3Answers[qId] = {
+      selected: optIdx,
+      isCorrect: isCorrect,
+      score: isCorrect ? q.points : 0
+    };
+
+    renderTest3Questionnaire();
+    if (state.test3Submitted) {
+      updateTest3Scorecard();
+    }
+  }
+
+  function onTest3TextInput(qId, text) {
+    const test3 = DATA.test3Quiz;
+    if (!test3) return;
+    const q = test3.questions.find(x => x.id === qId);
+    if (!q) return;
+
+    const clean = (text || '').trim().toLowerCase();
+    const isCorrect = q.acceptedAnswers.some(ans => ans.toLowerCase().trim() === clean);
+
+    state.test3Answers[qId] = {
+      selected: text,
+      isCorrect: isCorrect,
+      score: isCorrect ? q.points : 0
+    };
+
+    updateTest3AnsweredCount();
+  }
+
+  function updateTest3AnsweredCount() {
+    const answered = Object.keys(state.test3Answers).filter(k => {
+      const a = state.test3Answers[k];
+      return a && (a.selected !== undefined && a.selected !== null && String(a.selected).trim() !== '');
+    }).length;
+
+    if (dom.test3AnsweredCount) {
+      dom.test3AnsweredCount.textContent = answered;
+    }
+  }
+
+  function submitTest3Assessment() {
+    const test3 = DATA.test3Quiz;
+    if (!test3) return;
+
+    // Validate and score every question
+    let earnedMarks = 0;
+    let correctCount = 0;
+
+    test3.questions.forEach(q => {
+      const ansObj = state.test3Answers[q.id];
+      let isCorrect = false;
+
+      if (q.type === 'tf' || q.type === 'mcq') {
+        isCorrect = ansObj && ansObj.selected === q.answer;
+      } else if (q.type === 'fill') {
+        const val = ansObj && typeof ansObj.selected === 'string' ? ansObj.selected.trim().toLowerCase() : '';
+        isCorrect = q.acceptedAnswers.some(a => a.toLowerCase().trim() === val);
+      }
+
+      const score = isCorrect ? q.points : 0;
+      if (isCorrect) {
+        earnedMarks += score;
+        correctCount++;
+      }
+
+      state.test3Answers[q.id] = {
+        selected: ansObj ? ansObj.selected : null,
+        isCorrect: isCorrect,
+        score: score
+      };
+    });
+
+    state.test3Submitted = true;
+    updateTest3Scorecard();
+    renderTest3Questionnaire();
+
+    if (dom.test3ResultsBanner && typeof dom.test3ResultsBanner.scrollIntoView === 'function') {
+      dom.test3ResultsBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  function updateTest3Scorecard() {
+    const test3 = DATA.test3Quiz;
+    if (!test3) return;
+
+    let earnedMarks = 0;
+    let correctCount = 0;
+    test3.questions.forEach(q => {
+      const a = state.test3Answers[q.id];
+      if (a && a.isCorrect) {
+        earnedMarks += q.points;
+        correctCount++;
+      }
+    });
+
+    const totalMarks = test3.totalMarks || 25;
+    const pct = Math.round((earnedMarks / totalMarks) * 100);
+    const passed = pct >= 50;
+    const distinction = pct >= 75;
+
+    if (dom.test3ScoreDisplay) dom.test3ScoreDisplay.textContent = `${earnedMarks} / ${totalMarks}`;
+    if (dom.test3PctDisplay) dom.test3PctDisplay.textContent = `${pct}%`;
+
+    if (dom.test3ResultsBanner) {
+      const bannerClass = distinction ? 'distinction' : (passed ? 'passed' : 'failed');
+      const badgeText = distinction ? 'Distinction! 🏆' : (passed ? 'Passed! 🎉' : 'Revision Required ⚠️');
+
+      // Breakdown by Question Category
+      const tfCount = test3.questions.filter(q => q.type === 'tf').length;
+      const tfCorrect = test3.questions.filter(q => q.type === 'tf' && state.test3Answers[q.id]?.isCorrect).length;
+
+      const mcCount = test3.questions.filter(q => q.type === 'mcq').length;
+      const mcCorrect = test3.questions.filter(q => q.type === 'mcq' && state.test3Answers[q.id]?.isCorrect).length;
+
+      const fillCount = test3.questions.filter(q => q.type === 'fill').length;
+      const fillCorrect = test3.questions.filter(q => q.type === 'fill' && state.test3Answers[q.id]?.isCorrect).length;
+
+      dom.test3ResultsBanner.style.display = 'block';
+      dom.test3ResultsBanner.innerHTML = `
+        <div class="exam-results-banner ${bannerClass}">
+          <div class="results-top-row">
+            <div>
+              <div class="results-title">${badgeText}</div>
+              <div style="font-size:0.9rem; color:var(--text-muted); margin-top:0.25rem;">
+                Official Test 3 Questionnaire Assessment Result
+              </div>
+            </div>
+            <div class="results-score-badge">
+              ${earnedMarks} / ${totalMarks} Points (${pct}%)
+            </div>
+          </div>
+          <div class="results-stats-row">
+            <span class="result-stat-pill correct-pill">✓ ${correctCount} / 25 Correct</span>
+            <span class="result-stat-pill incorrect-pill">✗ ${25 - correctCount} Incorrect</span>
+            <span class="result-stat-pill" style="background:rgba(236,72,153,0.15); color:var(--accent-pink); border:1px solid rgba(236,72,153,0.3);">
+              T/F: ${tfCorrect}/${tfCount} • MC: ${mcCorrect}/${mcCount} • Fill: ${fillCorrect}/${fillCount}
+            </span>
+          </div>
+          <div class="results-actions-row">
+            <button type="button" class="btn-practice" onclick="CMPG122_APP.resetTest3Assessment()">🔄 Retake Test 3</button>
+            <button type="button" class="action-btn" onclick="CMPG122_APP.toggleTest3Memo()">💡 View Explanations</button>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  function resetTest3Assessment() {
+    state.test3Answers = {};
+    state.test3Submitted = false;
+    state.test3MemoRevealed = false;
+    if (state.test3TimerInterval) {
+      clearInterval(state.test3TimerInterval);
+      state.test3TimerInterval = null;
+    }
+    state.test3TimerActive = false;
+    state.test3SecondsLeft = 30 * 60;
+
+    if (dom.test3TimerBox) dom.test3TimerBox.style.display = 'none';
+    if (dom.btnToggleTest3Timer) dom.btnToggleTest3Timer.textContent = '⏱️ Start 30-Min Timer';
+    if (dom.test3ResultsBanner) dom.test3ResultsBanner.style.display = 'none';
+    if (dom.test3ScoreDisplay) dom.test3ScoreDisplay.textContent = '0 / 25';
+    if (dom.test3PctDisplay) dom.test3PctDisplay.textContent = '0%';
+
+    renderTest3Questionnaire();
+    if (typeof window.scrollTo === 'function') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  function toggleTest3Memo() {
+    state.test3MemoRevealed = !state.test3MemoRevealed;
+    if (dom.btnToggleMemoTest3) {
+      dom.btnToggleMemoTest3.textContent = state.test3MemoRevealed ? '💡 Hide Explanations' : '💡 Toggle Memorandum & Explanations';
+    }
+    renderTest3Questionnaire();
+  }
+
+  function toggleTest3Timer() {
+    if (state.test3TimerActive) {
+      // Stop timer
+      clearInterval(state.test3TimerInterval);
+      state.test3TimerInterval = null;
+      state.test3TimerActive = false;
+      if (dom.test3TimerBox) dom.test3TimerBox.style.display = 'none';
+      if (dom.btnToggleTest3Timer) dom.btnToggleTest3Timer.textContent = '⏱️ Start 30-Min Timer';
+    } else {
+      // Start timer
+      state.test3TimerActive = true;
+      state.test3SecondsLeft = 30 * 60;
+      if (dom.test3TimerBox) dom.test3TimerBox.style.display = 'inline-flex';
+      if (dom.btnToggleTest3Timer) dom.btnToggleTest3Timer.textContent = '⏸️ Stop Timer';
+
+      state.test3TimerInterval = setInterval(() => {
+        state.test3SecondsLeft--;
+        if (dom.test3TimerDisplay) {
+          const mins = Math.floor(state.test3SecondsLeft / 60);
+          const secs = state.test3SecondsLeft % 60;
+          dom.test3TimerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        if (state.test3SecondsLeft <= 0) {
+          clearInterval(state.test3TimerInterval);
+          state.test3TimerActive = false;
+          alert('⏱️ Test 3 Time has expired! Submitting assessment automatically...');
+          submitTest3Assessment();
+        }
+      }, 1000);
     }
   }
 
@@ -20682,7 +22177,15 @@ body {
     exitExamPaper: exitExamPaper,
     exitQuiz: exitQuiz,
     openScenarioDrawer: openScenarioDrawer,
-    closeScenarioDrawer: closeScenarioDrawer
+    closeScenarioDrawer: closeScenarioDrawer,
+    // Test 3 Questionnaire Simulator
+    renderTest3Questionnaire: renderTest3Questionnaire,
+    selectTest3Answer: selectTest3Answer,
+    onTest3TextInput: onTest3TextInput,
+    submitTest3Assessment: submitTest3Assessment,
+    resetTest3Assessment: resetTest3Assessment,
+    toggleTest3Memo: toggleTest3Memo,
+    toggleTest3Timer: toggleTest3Timer
   };
 
   window.addEventListener('DOMContentLoaded', init);

@@ -14,7 +14,7 @@
 
   // Application State
   const state = {
-    currentTab: 'units', // 'units', 'exams', 'codegrade', 'spoterror', 'custom', 'quiz'
+    currentTab: 'units', // 'units', 'exams', 'test3', 'codegrade', 'spoterror', 'custom', 'quiz'
     selectedUnitId: null,
     selectedExamId: null,
     quizQuestions: [],
@@ -28,6 +28,13 @@
     viewMode: 'continuous', // 'continuous' or 'card'
     examSecondsLeft: 180 * 60,
     examTimerInterval: null,
+    // Test 3 Questionnaire Simulator State
+    test3Answers: {},
+    test3Submitted: false,
+    test3MemoRevealed: false,
+    test3TimerInterval: null,
+    test3SecondsLeft: 30 * 60,
+    test3TimerActive: false,
     streak: 0,
     bestStreak: parseInt(localStorage.getItem('cmpg122_best_streak') || '0', 10),
     wrongOnlyMode: false,
@@ -63,6 +70,7 @@
     bindEvents();
     renderUnitsGrid();
     renderExamsList();
+    renderTest3Questionnaire();
     renderSpotErrorList();
     initCodeAudit();
     renderCustomUnitChecks();
@@ -79,11 +87,23 @@
       views: {
         units: document.getElementById('viewUnits'),
         exams: document.getElementById('viewExams'),
+        test3: document.getElementById('viewTest3'),
         codegrade: document.getElementById('viewCodeGrade'),
         spoterror: document.getElementById('viewSpotError'),
         custom: document.getElementById('viewCustom'),
         quiz: document.getElementById('viewQuiz')
       },
+      // Test 3 Questionnaire Elements
+      test3ScoreDisplay: document.getElementById('test3ScoreDisplay'),
+      test3PctDisplay: document.getElementById('test3PctDisplay'),
+      test3PartsSummary: document.getElementById('test3PartsSummary'),
+      test3ResultsBanner: document.getElementById('test3ResultsBanner'),
+      test3QuestionnaireContainer: document.getElementById('test3QuestionnaireContainer'),
+      test3AnsweredCount: document.getElementById('test3AnsweredCount'),
+      test3TimerBox: document.getElementById('test3TimerBox'),
+      test3TimerDisplay: document.getElementById('test3TimerDisplay'),
+      btnToggleTest3Timer: document.getElementById('btnToggleTest3Timer'),
+      btnToggleMemoTest3: document.getElementById('btnToggleMemoTest3'),
       // Units
       unitsGrid: document.getElementById('unitsGrid'),
       statTotalQs: document.getElementById('statTotalQs'),
@@ -998,6 +1018,366 @@
       if (dom.studentCodeInput) {
         dom.studentCodeInput.value = sc.modelSolution;
       }
+    }
+  }
+
+  // =========================================================================
+  // TEST 3 QUESTIONNAIRE SIMULATOR CONTROLLER
+  // =========================================================================
+  function renderTest3Questionnaire() {
+    if (!DATA || !DATA.test3Quiz) return;
+    const test3 = DATA.test3Quiz;
+
+    // Render Parts Summary Cards
+    if (dom.test3PartsSummary) {
+      let partsHtml = '';
+      test3.parts.forEach(p => {
+        partsHtml += `
+          <div class="test3-part-card">
+            <div class="test3-part-meta">
+              <span>Part ${p.part} of 11</span>
+              <span style="color:var(--accent-pink);">${p.points.toFixed(1)} Pts • ${p.type}</span>
+            </div>
+            <div class="test3-part-title">${escapeHtml(p.title)}</div>
+          </div>
+        `;
+      });
+      dom.test3PartsSummary.innerHTML = partsHtml;
+    }
+
+    // Render 25 Questions grouped by 11 parts
+    if (!dom.test3QuestionnaireContainer) return;
+
+    let qHtml = '';
+    test3.parts.forEach(p => {
+      const partQs = test3.questions.filter(q => q.part === p.part);
+      qHtml += `
+        <div class="test3-part-section" id="test3_part_${p.part}">
+          <div class="test3-part-header-bar">
+            <div class="test3-part-header-title">${escapeHtml(p.title)}</div>
+            <div class="test3-part-header-badge">${p.questionsCount} Questions • ${p.points.toFixed(1)} Points</div>
+          </div>
+      `;
+
+      partQs.forEach(q => {
+        const userAns = state.test3Answers[q.id];
+        let cardClass = 'test3-q-card';
+        if (state.test3Submitted) {
+          cardClass += userAns && userAns.isCorrect ? ' is-correct' : ' is-incorrect';
+        }
+
+        qHtml += `
+          <div class="${cardClass}" id="card_${q.id}">
+            <div class="test3-q-meta">
+              <span class="test3-q-num">Question ${q.qNum} of 25</span>
+              <span class="test3-q-points">${q.points.toFixed(1)} Points • ${q.type.toUpperCase()}</span>
+            </div>
+            <div class="test3-q-stem">${escapeHtml(q.q)}</div>
+        `;
+
+        if (q.codeSnippet) {
+          qHtml += `<div class="test3-code-snippet">${escapeHtml(q.codeSnippet)}</div>`;
+        }
+
+        // Render input controls
+        if (q.type === 'tf') {
+          qHtml += `<div class="test3-tf-group">`;
+          q.options.forEach((opt, optIdx) => {
+            let pillClass = 'test3-option-pill';
+            const isSelected = userAns && userAns.selected === optIdx;
+            if (isSelected) pillClass += ' selected';
+            if (state.test3Submitted || state.test3MemoRevealed) {
+              if (optIdx === q.answer) pillClass += ' correct-ans';
+              else if (isSelected && !userAns.isCorrect) pillClass += ' incorrect-ans';
+            }
+            qHtml += `
+              <div class="${pillClass}" onclick="CMPG122_APP.selectTest3Answer('${q.id}', ${optIdx})">
+                <span style="font-weight:800; color:var(--accent-pink);">${optIdx === 0 ? 'A.' : 'B.'}</span>
+                <span>${escapeHtml(opt)}</span>
+              </div>
+            `;
+          });
+          qHtml += `</div>`;
+        } else if (q.type === 'mcq') {
+          qHtml += `<div class="test3-options-group">`;
+          q.options.forEach((opt, optIdx) => {
+            let pillClass = 'test3-option-pill';
+            const isSelected = userAns && userAns.selected === optIdx;
+            if (isSelected) pillClass += ' selected';
+            if (state.test3Submitted || state.test3MemoRevealed) {
+              if (optIdx === q.answer) pillClass += ' correct-ans';
+              else if (isSelected && !userAns.isCorrect) pillClass += ' incorrect-ans';
+            }
+            qHtml += `
+              <div class="${pillClass}" onclick="CMPG122_APP.selectTest3Answer('${q.id}', ${optIdx})">
+                <span style="font-family:var(--font-mono); font-weight:800; color:var(--accent-blue);">${String.fromCharCode(65 + optIdx)}.</span>
+                <span style="font-family:${opt.includes(';') ? 'var(--font-mono)' : 'inherit'};">${escapeHtml(opt)}</span>
+              </div>
+            `;
+          });
+          qHtml += `</div>`;
+        } else if (q.type === 'fill') {
+          const currentVal = userAns ? (userAns.selected || '') : '';
+          let inputClass = 'test3-fill-input';
+          if (state.test3Submitted) {
+            inputClass += (userAns && userAns.isCorrect) ? ' is-correct-input' : ' is-incorrect-input';
+          }
+          qHtml += `
+            <div class="test3-fill-wrap">
+              <span style="font-size:0.9rem; color:var(--text-muted);">${escapeHtml(q.blankPrefix || 'Answer:')}</span>
+              <input type="text" class="${inputClass}" id="input_${q.id}"
+                value="${escapeHtml(String(currentVal))}"
+                placeholder="Type word or phrase here..."
+                oninput="CMPG122_APP.onTest3TextInput('${q.id}', this.value)">
+              <span style="font-size:0.9rem; color:var(--text-muted);">${escapeHtml(q.blankSuffix || '')}</span>
+            </div>
+          `;
+          if (state.test3Submitted || state.test3MemoRevealed) {
+            qHtml += `
+              <div style="font-size:0.8rem; font-family:var(--font-mono); margin-top:0.35rem; color:${userAns && userAns.isCorrect ? 'var(--success-text)' : 'var(--accent-amber)'};">
+                ✓ Accepted answer(s): <strong>${escapeHtml(q.acceptedAnswers.join(' | '))}</strong>
+              </div>
+            `;
+          }
+        }
+
+        // Explanations banner (shown upon submission or memo toggle)
+        if (state.test3Submitted || state.test3MemoRevealed) {
+          qHtml += `
+            <div class="test3-memo-banner">
+              <div style="font-weight:700; color:var(--text-main); margin-bottom:0.25rem;">
+                💡 Tutoring &amp; Assessment Explanation:
+              </div>
+              <div>${escapeHtml(q.explanation)}</div>
+            </div>
+          `;
+        }
+
+        qHtml += `</div>`; // end test3-q-card
+      });
+
+      qHtml += `</div>`; // end test3-part-section
+    });
+
+    dom.test3QuestionnaireContainer.innerHTML = qHtml;
+    updateTest3AnsweredCount();
+  }
+
+  function selectTest3Answer(qId, optIdx) {
+    const test3 = DATA.test3Quiz;
+    if (!test3) return;
+    const q = test3.questions.find(x => x.id === qId);
+    if (!q) return;
+
+    const isCorrect = (optIdx === q.answer);
+    state.test3Answers[qId] = {
+      selected: optIdx,
+      isCorrect: isCorrect,
+      score: isCorrect ? q.points : 0
+    };
+
+    renderTest3Questionnaire();
+    if (state.test3Submitted) {
+      updateTest3Scorecard();
+    }
+  }
+
+  function onTest3TextInput(qId, text) {
+    const test3 = DATA.test3Quiz;
+    if (!test3) return;
+    const q = test3.questions.find(x => x.id === qId);
+    if (!q) return;
+
+    const clean = (text || '').trim().toLowerCase();
+    const isCorrect = q.acceptedAnswers.some(ans => ans.toLowerCase().trim() === clean);
+
+    state.test3Answers[qId] = {
+      selected: text,
+      isCorrect: isCorrect,
+      score: isCorrect ? q.points : 0
+    };
+
+    updateTest3AnsweredCount();
+  }
+
+  function updateTest3AnsweredCount() {
+    const answered = Object.keys(state.test3Answers).filter(k => {
+      const a = state.test3Answers[k];
+      return a && (a.selected !== undefined && a.selected !== null && String(a.selected).trim() !== '');
+    }).length;
+
+    if (dom.test3AnsweredCount) {
+      dom.test3AnsweredCount.textContent = answered;
+    }
+  }
+
+  function submitTest3Assessment() {
+    const test3 = DATA.test3Quiz;
+    if (!test3) return;
+
+    // Validate and score every question
+    let earnedMarks = 0;
+    let correctCount = 0;
+
+    test3.questions.forEach(q => {
+      const ansObj = state.test3Answers[q.id];
+      let isCorrect = false;
+
+      if (q.type === 'tf' || q.type === 'mcq') {
+        isCorrect = ansObj && ansObj.selected === q.answer;
+      } else if (q.type === 'fill') {
+        const val = ansObj && typeof ansObj.selected === 'string' ? ansObj.selected.trim().toLowerCase() : '';
+        isCorrect = q.acceptedAnswers.some(a => a.toLowerCase().trim() === val);
+      }
+
+      const score = isCorrect ? q.points : 0;
+      if (isCorrect) {
+        earnedMarks += score;
+        correctCount++;
+      }
+
+      state.test3Answers[q.id] = {
+        selected: ansObj ? ansObj.selected : null,
+        isCorrect: isCorrect,
+        score: score
+      };
+    });
+
+    state.test3Submitted = true;
+    updateTest3Scorecard();
+    renderTest3Questionnaire();
+
+    if (dom.test3ResultsBanner && typeof dom.test3ResultsBanner.scrollIntoView === 'function') {
+      dom.test3ResultsBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  function updateTest3Scorecard() {
+    const test3 = DATA.test3Quiz;
+    if (!test3) return;
+
+    let earnedMarks = 0;
+    let correctCount = 0;
+    test3.questions.forEach(q => {
+      const a = state.test3Answers[q.id];
+      if (a && a.isCorrect) {
+        earnedMarks += q.points;
+        correctCount++;
+      }
+    });
+
+    const totalMarks = test3.totalMarks || 25;
+    const pct = Math.round((earnedMarks / totalMarks) * 100);
+    const passed = pct >= 50;
+    const distinction = pct >= 75;
+
+    if (dom.test3ScoreDisplay) dom.test3ScoreDisplay.textContent = `${earnedMarks} / ${totalMarks}`;
+    if (dom.test3PctDisplay) dom.test3PctDisplay.textContent = `${pct}%`;
+
+    if (dom.test3ResultsBanner) {
+      const bannerClass = distinction ? 'distinction' : (passed ? 'passed' : 'failed');
+      const badgeText = distinction ? 'Distinction! 🏆' : (passed ? 'Passed! 🎉' : 'Revision Required ⚠️');
+
+      // Breakdown by Question Category
+      const tfCount = test3.questions.filter(q => q.type === 'tf').length;
+      const tfCorrect = test3.questions.filter(q => q.type === 'tf' && state.test3Answers[q.id]?.isCorrect).length;
+
+      const mcCount = test3.questions.filter(q => q.type === 'mcq').length;
+      const mcCorrect = test3.questions.filter(q => q.type === 'mcq' && state.test3Answers[q.id]?.isCorrect).length;
+
+      const fillCount = test3.questions.filter(q => q.type === 'fill').length;
+      const fillCorrect = test3.questions.filter(q => q.type === 'fill' && state.test3Answers[q.id]?.isCorrect).length;
+
+      dom.test3ResultsBanner.style.display = 'block';
+      dom.test3ResultsBanner.innerHTML = `
+        <div class="exam-results-banner ${bannerClass}">
+          <div class="results-top-row">
+            <div>
+              <div class="results-title">${badgeText}</div>
+              <div style="font-size:0.9rem; color:var(--text-muted); margin-top:0.25rem;">
+                Official Test 3 Questionnaire Assessment Result
+              </div>
+            </div>
+            <div class="results-score-badge">
+              ${earnedMarks} / ${totalMarks} Points (${pct}%)
+            </div>
+          </div>
+          <div class="results-stats-row">
+            <span class="result-stat-pill correct-pill">✓ ${correctCount} / 25 Correct</span>
+            <span class="result-stat-pill incorrect-pill">✗ ${25 - correctCount} Incorrect</span>
+            <span class="result-stat-pill" style="background:rgba(236,72,153,0.15); color:var(--accent-pink); border:1px solid rgba(236,72,153,0.3);">
+              T/F: ${tfCorrect}/${tfCount} • MC: ${mcCorrect}/${mcCount} • Fill: ${fillCorrect}/${fillCount}
+            </span>
+          </div>
+          <div class="results-actions-row">
+            <button type="button" class="btn-practice" onclick="CMPG122_APP.resetTest3Assessment()">🔄 Retake Test 3</button>
+            <button type="button" class="action-btn" onclick="CMPG122_APP.toggleTest3Memo()">💡 View Explanations</button>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  function resetTest3Assessment() {
+    state.test3Answers = {};
+    state.test3Submitted = false;
+    state.test3MemoRevealed = false;
+    if (state.test3TimerInterval) {
+      clearInterval(state.test3TimerInterval);
+      state.test3TimerInterval = null;
+    }
+    state.test3TimerActive = false;
+    state.test3SecondsLeft = 30 * 60;
+
+    if (dom.test3TimerBox) dom.test3TimerBox.style.display = 'none';
+    if (dom.btnToggleTest3Timer) dom.btnToggleTest3Timer.textContent = '⏱️ Start 30-Min Timer';
+    if (dom.test3ResultsBanner) dom.test3ResultsBanner.style.display = 'none';
+    if (dom.test3ScoreDisplay) dom.test3ScoreDisplay.textContent = '0 / 25';
+    if (dom.test3PctDisplay) dom.test3PctDisplay.textContent = '0%';
+
+    renderTest3Questionnaire();
+    if (typeof window.scrollTo === 'function') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  function toggleTest3Memo() {
+    state.test3MemoRevealed = !state.test3MemoRevealed;
+    if (dom.btnToggleMemoTest3) {
+      dom.btnToggleMemoTest3.textContent = state.test3MemoRevealed ? '💡 Hide Explanations' : '💡 Toggle Memorandum & Explanations';
+    }
+    renderTest3Questionnaire();
+  }
+
+  function toggleTest3Timer() {
+    if (state.test3TimerActive) {
+      // Stop timer
+      clearInterval(state.test3TimerInterval);
+      state.test3TimerInterval = null;
+      state.test3TimerActive = false;
+      if (dom.test3TimerBox) dom.test3TimerBox.style.display = 'none';
+      if (dom.btnToggleTest3Timer) dom.btnToggleTest3Timer.textContent = '⏱️ Start 30-Min Timer';
+    } else {
+      // Start timer
+      state.test3TimerActive = true;
+      state.test3SecondsLeft = 30 * 60;
+      if (dom.test3TimerBox) dom.test3TimerBox.style.display = 'inline-flex';
+      if (dom.btnToggleTest3Timer) dom.btnToggleTest3Timer.textContent = '⏸️ Stop Timer';
+
+      state.test3TimerInterval = setInterval(() => {
+        state.test3SecondsLeft--;
+        if (dom.test3TimerDisplay) {
+          const mins = Math.floor(state.test3SecondsLeft / 60);
+          const secs = state.test3SecondsLeft % 60;
+          dom.test3TimerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        if (state.test3SecondsLeft <= 0) {
+          clearInterval(state.test3TimerInterval);
+          state.test3TimerActive = false;
+          alert('⏱️ Test 3 Time has expired! Submitting assessment automatically...');
+          submitTest3Assessment();
+        }
+      }, 1000);
     }
   }
 
@@ -2231,7 +2611,15 @@
     exitExamPaper: exitExamPaper,
     exitQuiz: exitQuiz,
     openScenarioDrawer: openScenarioDrawer,
-    closeScenarioDrawer: closeScenarioDrawer
+    closeScenarioDrawer: closeScenarioDrawer,
+    // Test 3 Questionnaire Simulator
+    renderTest3Questionnaire: renderTest3Questionnaire,
+    selectTest3Answer: selectTest3Answer,
+    onTest3TextInput: onTest3TextInput,
+    submitTest3Assessment: submitTest3Assessment,
+    resetTest3Assessment: resetTest3Assessment,
+    toggleTest3Memo: toggleTest3Memo,
+    toggleTest3Timer: toggleTest3Timer
   };
 
   window.addEventListener('DOMContentLoaded', init);

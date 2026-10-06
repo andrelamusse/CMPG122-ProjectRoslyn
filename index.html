@@ -22,6 +22,7 @@
       <nav class="nav-tabs">
         <button class="tab-btn active" data-tab="units">📚 Study Units</button>
         <button class="tab-btn" data-tab="exams">📝 Official Past Exams</button>
+        <button class="tab-btn" data-tab="test3">📋 Test 3 Simulator</button>
         <button class="tab-btn" data-tab="codegrade">💻 C# CodeGrade Lab</button>
         <button class="tab-btn" data-tab="spoterror">🔍 Spot & Fix Gym</button>
         <button class="tab-btn" data-tab="custom">⚙️ Custom Practice</button>
@@ -85,6 +86,100 @@
       </p>
       <div class="units-grid" id="examsList">
         <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- View 2.5: Test 3 Official Assessment Simulator & Questionnaire -->
+    <section id="viewTest3" class="view-panel" style="display:none;">
+      <!-- Hero Banner -->
+      <div class="hero-banner" style="background: linear-gradient(135deg, rgba(236,72,153,0.15), rgba(168,85,247,0.15)); border: 1px solid rgba(236,72,153,0.3);">
+        <div class="hero-text">
+          <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem; flex-wrap:wrap;">
+            <span class="unit-badge" style="background:rgba(236,72,153,0.2); color:var(--accent-pink); border:1px solid var(--accent-pink);">
+              📋 NWU Official Assessment • Test 3
+            </span>
+            <span class="unit-badge" style="background:rgba(14,165,233,0.2); color:var(--accent-blue); border:1px solid var(--accent-blue);">
+              Study Unit 4 (Week 7) &amp; HCI Standards
+            </span>
+          </div>
+          <h2>Test 3 Official Assessment Questionnaire</h2>
+          <p>
+            Authentic North-West University Test 3 assessment questionnaire based on Tony Gaddis <em>Starting Out With Visual C#</em> Chapter 5 (Loops, Increment/Decrement Operators, Accumulators) and Ben Shneiderman's <em>HCI Principles</em> (Golden Rules &amp; Hungarian Control Naming).
+          </p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-pill">
+            <div class="stat-num" id="test3ScoreDisplay">0 / 25</div>
+            <div class="stat-label">Assessment Score</div>
+          </div>
+          <div class="stat-pill">
+            <div class="stat-num" id="test3PctDisplay">0%</div>
+            <div class="stat-label">Mastery Accuracy</div>
+          </div>
+          <div class="stat-pill">
+            <div class="stat-num">11 Parts</div>
+            <div class="stat-label">Assessment Scope</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scope & Split of Questions Overview Card -->
+      <div class="q-card" style="margin-bottom:1.5rem; border-left:4px solid var(--accent-pink);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">
+          <h4 style="font-size:1.05rem; font-weight:800; color:var(--text-main);">
+            📊 Test 3 Assessment Scope &amp; Parts Distribution (25 Total Points)
+          </h4>
+          <span style="font-size:0.8rem; font-family:var(--font-mono); color:var(--accent-pink); font-weight:700;">
+            Authentic NWU eFundi / Test 3 Format
+          </span>
+        </div>
+        <div class="test3-parts-grid" id="test3PartsSummary">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+
+      <!-- Test 3 Action Toolbar -->
+      <div class="test3-toolbar">
+        <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+          <button type="button" class="btn-practice" id="btnSubmitTest3" onclick="CMPG122_APP.submitTest3Assessment()">
+            📤 Submit Test 3 Assessment
+          </button>
+          <button type="button" class="action-btn" id="btnResetTest3" onclick="CMPG122_APP.resetTest3Assessment()">
+            🔄 Reset Answers
+          </button>
+          <button type="button" class="action-btn" id="btnToggleMemoTest3" onclick="CMPG122_APP.toggleTest3Memo()">
+            💡 Toggle Memorandum &amp; Explanations
+          </button>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+          <div id="test3TimerBox" class="test3-timer" style="display:none;">
+            <span>⏱️ Time Remaining:</span>
+            <span id="test3TimerDisplay" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-amber);">30:00</span>
+          </div>
+          <button type="button" class="action-btn" id="btnToggleTest3Timer" onclick="CMPG122_APP.toggleTest3Timer()">
+            ⏱️ Start 30-Min Timer
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Summary Banner (shown upon submit) -->
+      <div id="test3ResultsBanner" style="display:none; margin-bottom:1.5rem;"></div>
+
+      <!-- Questionnaire Sheet Container -->
+      <div id="test3QuestionnaireContainer" class="test3-questionnaire-container">
+        <!-- Questions rendered dynamically by app.js -->
+      </div>
+
+      <!-- Floating Bottom Status Bar -->
+      <div class="test3-floating-bar" id="test3FloatingBar">
+        <div style="font-size:0.9rem; font-weight:700;">
+          <span id="test3AnsweredCount">0</span> of 25 Questions Answered
+        </div>
+        <div style="display:flex; gap:0.75rem;">
+          <button type="button" class="btn-practice" onclick="CMPG122_APP.submitTest3Assessment()" style="padding:0.5rem 1.25rem;">
+            Submit Test 3 📤
+          </button>
+        </div>
       </div>
     </section>
 

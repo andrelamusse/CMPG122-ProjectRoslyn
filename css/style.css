@@ -2367,3 +2367,277 @@ body {
 .audit-diff-row-clean {
   color: var(--text-muted);
 }
+
+/* =========================================================================
+   TEST 3 QUESTIONNAIRE SIMULATOR STYLES
+   ========================================================================= */
+.test3-parts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.test3-part-card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.9rem;
+  transition: var(--transition);
+}
+
+.test3-part-card:hover {
+  border-color: var(--accent-pink);
+  transform: translateY(-1px);
+}
+
+.test3-part-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.test3-part-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.test3-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+}
+
+.test3-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid var(--accent-amber);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.test3-part-section {
+  margin-bottom: 2rem;
+}
+
+.test3-part-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(90deg, rgba(236,72,153,0.12), transparent);
+  border-left: 4px solid var(--accent-pink);
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+}
+
+.test3-part-header-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.test3-part-header-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-pink);
+  background: rgba(236,72,153,0.15);
+  border: 1px solid rgba(236,72,153,0.3);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.test3-q-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  transition: var(--transition);
+}
+
+.test3-q-card:hover {
+  border-color: rgba(236,72,153,0.4);
+}
+
+.test3-q-card.is-correct {
+  border-left: 4px solid var(--success-border);
+}
+
+.test3-q-card.is-incorrect {
+  border-left: 4px solid var(--danger-border);
+}
+
+.test3-q-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.test3-q-num {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--accent-pink);
+  text-transform: uppercase;
+}
+
+.test3-q-points {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.test3-q-stem {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+}
+
+.test3-code-snippet {
+  background: var(--code-bg);
+  border: 1px solid #1e293b;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #f8fafc;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  white-space: pre-wrap;
+}
+
+.test3-options-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.test3-tf-group {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.test3-option-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+  color: var(--text-main);
+  user-select: none;
+}
+
+.test3-option-pill:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-pink);
+}
+
+.test3-option-pill.selected {
+  background: rgba(236,72,153,0.15);
+  border-color: var(--accent-pink);
+  font-weight: 700;
+}
+
+.test3-option-pill.correct-ans {
+  background: var(--success-bg) !important;
+  border-color: var(--success-border) !important;
+  color: var(--success-text) !important;
+  font-weight: 700;
+}
+
+.test3-option-pill.incorrect-ans {
+  background: var(--danger-bg) !important;
+  border-color: var(--danger-border) !important;
+  color: var(--danger-text) !important;
+}
+
+.test3-fill-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.test3-fill-input {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  padding: 0.55rem 0.85rem;
+  min-width: 260px;
+  outline: none;
+  transition: var(--transition);
+}
+
+.test3-fill-input:focus {
+  border-color: var(--accent-pink);
+  box-shadow: 0 0 0 2px rgba(236,72,153,0.25);
+}
+
+.test3-fill-input.is-correct-input {
+  border-color: var(--success-border);
+  background: var(--success-bg);
+}
+
+.test3-fill-input.is-incorrect-input {
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
+}
+
+.test3-memo-banner {
+  background: rgba(236,72,153,0.1);
+  border: 1px solid rgba(236,72,153,0.3);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.test3-floating-bar {
+  position: sticky;
+  bottom: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  z-index: 40;
+  margin-top: 1.5rem;
+}
