@@ -19,7 +19,7 @@
       "id": "SU7",
       "code": "SU7",
       "title": "Study Unit 7: Human-Computer Interaction (HCI) Principles",
-      "weeks": "Week 1 (Completed First per NWU Curriculum)",
+      "weeks": "Week 1",
       "icon": "🧠",
       "color": "#a855f7",
       "badge": "Shneiderman Ch 1 & 2",
@@ -30,7 +30,8 @@
         "Shneiderman's 8 Golden Rules of Interface Design",
         "Norman's 7 Stages of Action & Gulf of Execution/Evaluation"
       ],
-      "summary": "Focuses on user-centric interface engineering, accessibility, cognitive load reduction, error prevention, and the 8 Golden Rules of Interface Design. Taught in Week 1 to guide all subsequent GUI programming."
+      "summary": "Usability metrics, Shneiderman's 8 Golden Rules of Interface Design, universal accessibility, Norman's Execution/Evaluation gulfs, Fitts' Law, and Hick's Law.",
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. 5 Measurable Human Factors (Usability Goals) &amp; 5 Motivations</h4>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>5 Measurable Usability Goals</th><th>Core Evaluation Question</th><th>5 System Motivations &amp; Priority</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>1. Time to learn</strong></td><td>How long for a typical user to reach proficiency?</td><td><strong>Life-Critical</strong> (ATC, medical, nuclear): Zero errors &amp; reliability above all.</td></tr>\n        <tr><td><strong>2. Speed of performance</strong></td><td>How fast can benchmark tasks be carried out?</td><td><strong>Industrial / Commercial</strong> (banking, POS): Speed, low error rate, reduced training cost.</td></tr>\n        <tr><td><strong>3. Rate of errors by users</strong></td><td>How many and what kinds of errors occur?</td><td><strong>Office / Home / Entertainment</strong>: Ease of learning, low cognitive load, high satisfaction.</td></tr>\n        <tr><td><strong>4. Retention over time</strong></td><td>How well do users maintain knowledge after non-use?</td><td><strong>Exploratory / Creative / Collaborative</strong>: Transparent interface, rich workflow support.</td></tr>\n        <tr><td><strong>5. Subjective satisfaction</strong></td><td>Do users like using various aspects of the system?</td><td><strong>Socio-Technical Systems</strong> (voting, healthcare, ID): Trust, privacy, universal access.</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Shneiderman's 8 Golden Rules of Interface Design</h4>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>Golden Rule</th><th>Exact Definition</th><th>Visual C# Windows Forms Implementation</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>Rule 1: Strive for consistency</strong></td><td>Identical terminology, colours, layout, and naming across prompts and forms.</td><td>Standard Hungarian prefixes (<code>btn</code>, <code>txt</code>, <code>lbl</code>), consistent button placement and fonts.</td></tr>\n        <tr><td><strong>Rule 2: Cater to universal usability</strong></td><td>Recognize diverse needs (novice vs expert, elderly, disabled, colour-blind).</td><td>Access keys (<code>&amp;Calculate</code>), <code>AcceptButton</code>, redundant text + colour cues (<code>STOP</code> + red lamp).</td></tr>\n        <tr><td><strong>Rule 3: Offer informative feedback</strong></td><td>Every user action must produce an immediate, clear visual response.</td><td>Updating <code>lblTotal.Text</code> or appending to <code>lstReceipt.Items</code> immediately on button click.</td></tr>\n        <tr><td><strong>Rule 4: Design dialogs to yield closure</strong></td><td>Action sequences must have a beginning, middle, and end with final confirmation.</td><td>Displaying a completed receipt breakdown or confirmation <code>MessageBox</code> after checkout.</td></tr>\n        <tr><td><strong>Rule 5: Prevent errors</strong></td><td>Design the system so users cannot make serious errors; handle bad input gracefully.</td><td>Disable premature buttons (<code>Enabled = false</code>), use <code>RadioButton</code>/<code>ListBox</code>, validate with <code>TryParse</code>, restore <code>.Focus()</code> and <code>.SelectAll()</code>.</td></tr>\n        <tr><td><strong>Rule 6: Permit easy reversal of actions</strong></td><td>Allow actions to be undone to relieve user anxiety and encourage exploration.</td><td>Provide <code>btnClear</code> to reset inputs/outputs; prompt <code>MessageBoxButtons.YesNo</code> before exiting.</td></tr>\n        <tr><td><strong>Rule 7: Support internal locus of control</strong></td><td>Users must feel they are the initiators of actions, not controlled by the system.</td><td>Run logic inside explicit user events (<code>btnCalculate_Click</code>); avoid unsolicited pop-ups or forced cursor jumps.</td></tr>\n        <tr><td><strong>Rule 8: Reduce short-term memory load</strong></td><td>Human working memory holds <strong>7 &plusmn; 2 chunks</strong> (Miller's Law); keep state visible.</td><td>Display running item history and subtotals in a <code>ListBox</code> instead of forcing users to remember inputs.</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">3. Norman's Action Gulfs, Fitts' Law &amp; Hick-Hyman Law</h4>\n    <ul class=\"cs-list\">\n      <li><strong>Gulf of Execution:</strong> Difference between the user's intentions and the allowable actions provided by the interface (bridged by clear affordances, visible labels, and logical control grouping).</li>\n      <li><strong>Gulf of Evaluation:</strong> Effort required to interpret the physical state of the system and determine how well expectations were met (bridged by immediate, formatted output in Labels/ListBoxes).</li>\n      <li><strong>Fitts' Law (<code>MT = a + b * log2(2D / W)</code>):</strong> Movement time depends on distance (<code>D</code>) and target width (<code>W</code>). Primary action buttons (<code>btnCalculate</code>) should be large and placed close to input controls.</li>\n      <li><strong>Hick-Hyman Law (<code>T = b * log2(n + 1)</code>):</strong> Decision time increases logarithmically with the number of choices (<code>n</code>). Group related options into <code>GroupBox</code> containers.</li>\n    </ul>\n  </div>\n</div>"
     },
     {
       "id": "SU1",
@@ -48,7 +49,8 @@
         "C# Syntax, Semicolons, Comments, Indentation, this.Close();",
         "NWU Hungarian Control Naming Prefixes (btn, txt, lbl, pic, grp)"
       ],
-      "summary": "Introduces event-driven GUI development in Visual Studio 2019/2022, standard control properties, Gaddis 6-phase development cycle, and proper C# syntax."
+      "summary": "Visual Studio IDE, 6-phase development cycle, Windows Forms controls (Button, Label, TextBox, PictureBox), Hungarian prefixes, and event-driven C# syntax.",
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Gaddis 6-Phase Program Development Cycle &amp; Hungarian Prefixes</h4>\n    <p class=\"cs-note\"><strong>6 Phases in Order:</strong> 1. Understand the program's purpose &rarr; 2. Design the GUI on paper/designer &rarr; 3. Design the program's logic (pseudocode/flowcharts) &rarr; 4. Write the C# code &rarr; 5. Correct syntax errors (compile time) &rarr; 6. Test the program and correct logic errors (runtime).</p>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>Control Type</th><th>Prefix</th><th>Example Identifier</th><th>Essential Properties &amp; Behaviour</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>Button</strong></td><td><code>btn</code></td><td><code>btnCalculate</code>, <code>btnExit</code></td><td><code>Text = \"&amp;Calculate\"</code> (creates <code>Alt+C</code> access key); triggers <code>Click</code> event.</td></tr>\n        <tr><td><strong>TextBox</strong></td><td><code>txt</code></td><td><code>txtDays</code>, <code>txtPrice</code></td><td><code>Text</code> stores user input as <code>string</code>; <code>Clear()</code>, <code>Focus()</code>, <code>SelectAll()</code>.</td></tr>\n        <tr><td><strong>Label</strong></td><td><code>lbl</code></td><td><code>lblTotalDue</code></td><td>Output labels: <code>AutoSize = false</code>, <code>BorderStyle = BorderStyle.Fixed3D</code>, <code>TabStop = false</code>.</td></tr>\n        <tr><td><strong>PictureBox</strong></td><td><code>pic</code></td><td><code>picGreen</code>, <code>picLogo</code></td><td><code>SizeMode = PictureBoxSizeMode.Zoom</code> (proportional scaling); <code>StretchImage</code> distorts aspect ratio.</td></tr>\n        <tr><td><strong>ListBox</strong></td><td><code>lst</code></td><td><code>lstReceipt</code>, <code>lstRoutes</code></td><td><code>Items.Add(...)</code>, <code>Items.Clear()</code>, <code>Items.Count</code>, <code>SelectedIndex</code> (<code>-1</code> if none).</td></tr>\n        <tr><td><strong>RadioButton</strong></td><td><code>rdo</code> / <code>rad</code></td><td><code>rdoSedan</code>, <code>rdoSuv</code></td><td><code>Checked</code> (<code>bool</code>); mutually exclusive when placed inside the same <code>GroupBox</code>.</td></tr>\n        <tr><td><strong>CheckBox</strong></td><td><code>chk</code></td><td><code>chkGps</code>, <code>chkBursary</code></td><td><code>Checked</code> (<code>bool</code>); independent multi-select options.</td></tr>\n        <tr><td><strong>GroupBox</strong></td><td><code>grp</code></td><td><code>grpVehicle</code></td><td>Framed container with a visible <code>Text</code> caption (unlike <code>Panel</code>, which has no caption).</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Form Properties &amp; Standard Event Handler Templates</h4>\n    <ul class=\"cs-list\">\n      <li><strong>Fixed Window &amp; Centering:</strong> <code>FormBorderStyle = FormBorderStyle.FixedSingle;</code>, <code>MaximizeBox = false;</code>, <code>StartPosition = FormStartPosition.CenterScreen;</code></li>\n      <li><strong>Keyboard Enter / Esc Bindings:</strong> <code>AcceptButton = btnCalculate;</code> (Enter key), <code>CancelButton = btnExit;</code> (Esc key), <code>TabIndex = 0</code> on first input TextBox.</li>\n      <li><strong>Saving All Files:</strong> Always use <code>File &rarr; Save All</code> (<code>Ctrl+Shift+S</code>) so both <code>Form1.cs</code> and <code>Form1.Designer.cs</code> changes are written to disk.</li>\n    </ul>\n    <pre class=\"cs-code\"><code>// Standard Event Handler Signature:\nprivate void btnClear_Click(object sender, EventArgs e)\n{\n    txtDays.Clear();                        // Empty input TextBox\n    lblTotalDue.Text = \"\";                  // Clear output Label\n    this.BackColor = SystemColors.Control;  // Restore default Windows form colour\n    txtDays.Focus();                        // Return cursor to first input\n}\n\nprivate void btnExit_Click(object sender, EventArgs e)\n{\n    this.Close();                           // Close active Form instance\n}</code></pre>\n  </div>\n</div>"
     },
     {
       "id": "SU2",
@@ -69,7 +71,8 @@
         "Math Class Methods (Pow, Sqrt, Round, Abs, Max, Min)",
         "GUI Polish (Focus(), TabIndex, TabStop, AcceptButton, CancelButton)"
       ],
-      "summary": "Covers numeric data types, monetary calculations with decimal, operator precedence, string formatting, robust try-catch exception handling, scope, and Math library methods."
+      "summary": "Variables, numeric data types (int, double, decimal), arithmetic precedence, Parse conversions, ToString format specifiers (C, F, N, P, D), try-catch, and Math methods.",
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. C# Data Types, Literal Suffixes, Scope &amp; Arithmetic Rules</h4>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>C# Type</th><th>Size / Precision</th><th>Literal Suffix</th><th>Domain Use Case &amp; Rules</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>int</code></td><td>32-bit whole integer</td><td>None (<code>42</code>)</td><td>Discrete whole counts (days, items, credits, bread rolls). <code>int / int</code> truncates fractional part (<code>7 / 2 == 3</code>).</td></tr>\n        <tr><td><code>double</code></td><td>64-bit binary float</td><td><code>d</code> / <code>D</code> (<code>3.5</code>)</td><td>Scientific/continuous measurements (weight, distance, test averages). Never use for money.</td></tr>\n        <tr><td><code>decimal</code></td><td>128-bit base-10 financial</td><td><code>m</code> / <code>M</code> (<code>450.00m</code>)</td><td><strong>Mandatory for all currency, prices, VAT, and financial totals</strong> (eliminates base-2 rounding error).</td></tr>\n        <tr><td><code>string</code> / <code>bool</code></td><td>UTF-16 text / Boolean</td><td><code>\"text\"</code> / <code>true</code></td><td>Text uses double quotes <code>\"...\"</code>; single characters (<code>char</code>) use single quotes <code>'A'</code>.</td></tr>\n      </tbody>\n    </table>\n    <ul class=\"cs-list\">\n      <li><strong>Operator Precedence:</strong> <code>()</code> highest &rarr; unary <code>+ -</code> &rarr; <code>* / %</code> &rarr; binary <code>+ -</code> lowest (evaluated left-to-right).</li>\n      <li><strong>Named Constants vs Fields vs Local Variables:</strong>\n        <code>const decimal VAT_RATE = 0.15m;</code> (immutable, prevents magic numbers);\n        <code>private decimal _sessionTotal = 0m;</code> (class-level field: persists across multiple button clicks);\n        local variables inside an event handler are destroyed when the method finishes executing.</li>\n    </ul>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Standard .ToString() Format Specifiers &amp; Math Library</h4>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>Specifier</th><th>Meaning</th><th>Code Example</th><th>Formatted Output</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>\"C\"</code> or <code>\"C2\"</code></td><td>Currency (Rand symbol, commas, 2 decimals)</td><td><code>(1250.5m).ToString(\"C\")</code></td><td><code>\"R 1,250.50\"</code></td></tr>\n        <tr><td><code>\"F2\"</code></td><td>Fixed-point (2 decimals, no comma separator)</td><td><code>(1250.5m).ToString(\"F2\")</code></td><td><code>\"1250.50\"</code></td></tr>\n        <tr><td><code>\"N2\"</code></td><td>Number (thousands separator + 2 decimals)</td><td><code>(1250.5m).ToString(\"N2\")</code></td><td><code>\"1,250.50\"</code></td></tr>\n        <tr><td><code>\"P1\"</code></td><td>Percentage (multiplies by 100 and adds <code>%</code>)</td><td><code>(0.15m).ToString(\"P1\")</code></td><td><code>\"15.0%\"</code></td></tr>\n        <tr><td><code>\"D5\"</code></td><td>Decimal integer (pads with leading zeros)</td><td><code>(125).ToString(\"D5\")</code></td><td><code>\"00125\"</code></td></tr>\n      </tbody>\n    </table>\n    <pre class=\"cs-code\"><code>// Parsing, Math Methods &amp; try-catch Exception Handling:\ntry\n{\n    decimal price = decimal.Parse(txtPrice.Text);\n    int qty = int.Parse(txtQuantity.Text);\n    decimal subtotal = Math.Round(price * qty, 2);\n    lblTotal.Text = subtotal.ToString(\"C\");\n}\ncatch (FormatException)\n{\n    MessageBox.Show(\"Please enter valid numeric values.\", \"Input Error\",\n        MessageBoxButtons.OK, MessageBoxIcon.Error);\n    txtPrice.Focus();\n    txtPrice.SelectAll();\n}</code></pre>\n  </div>\n</div>"
     },
     {
       "id": "SU3",
@@ -89,7 +92,8 @@
         "MessageBox.Show() (Captions, MessageBoxButtons, MessageBoxIcon)",
         "ListBox Basics (Items.Add, Clear, Count, SelectedIndex, SelectedItem)"
       ],
-      "summary": "Exhaustive treatment of conditional branching, defensive programming with TryParse, radio buttons, check boxes, message dialogs, and ListBox selection guards."
+      "summary": "Relational and logical operators, if-else chains, switch statements, defensive TryParse validation, RadioButtons, CheckBoxes, GroupBoxes, MessageBox, and ListBox selection.",
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Relational &amp; Logical Operators, De Morgan's Laws &amp; Range Checks</h4>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>Construct</th><th>C# Syntax</th><th>Critical Exam Rules &amp; Traps</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>Equality vs Assignment</strong></td><td><code>==</code> vs <code>=</code>, <code>!=</code></td><td><code>if (x = 5)</code> is a compiler error (<code>CS0029</code>); always use <code>==</code> for equality comparison.</td></tr>\n        <tr><td><strong>Logical Precedence</strong></td><td><code>!</code> &rarr; <code>&amp;&amp;</code> &rarr; <code>||</code></td><td><code>&amp;&amp;</code> (AND: both true) and <code>||</code> (OR: either true) use short-circuit evaluation.</td></tr>\n        <tr><td><strong>Inclusive Valid Range</strong></td><td><code>credits &gt;= 1 &amp;&amp; credits &lt;= 25</code></td><td>Chained comparisons like <code>1 &lt;= credits &lt;= 25</code> are illegal in C# (<code>CS0019</code>).</td></tr>\n        <tr><td><strong>Out-of-Bounds Trap</strong></td><td><code>credits &lt; 1 || credits &gt; 25</code></td><td>Use logical OR (<code>||</code>) to detect when a value violates either boundary.</td></tr>\n        <tr><td><strong>De Morgan's Laws</strong></td><td><code>!(A &amp;&amp; B) &equiv; !A || !B</code></td><td>Also: <code>!(A || B) &equiv; !A &amp;&amp; !B</code>.</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Defensive TryParse Validation, switch, RadioButton &amp; ListBox Guards</h4>\n    <pre class=\"cs-code\"><code>// 1. Defensive Input Validation with TryParse &amp; Range Guard:\nif (!int.TryParse(txtDays.Text, out int days) || days &lt;= 0)\n{\n    MessageBox.Show(\"Rental days must be a positive whole number.\", \"Validation Error\",\n        MessageBoxButtons.OK, MessageBoxIcon.Warning);\n    txtDays.Focus();\n    txtDays.SelectAll();\n    return;\n}\n\n// 2. ListBox Selection Guard &amp; switch Statement (break; required on every case):\nif (lstRoutes.SelectedIndex == -1)\n{\n    MessageBox.Show(\"Please select a route.\", \"Selection Required\");\n    return;\n}\ndecimal basePrice = 0m;\nswitch (lstRoutes.SelectedIndex)\n{\n    case 0: basePrice = 250m; break;\n    case 1: basePrice = 400m; break;\n    case 2: basePrice = 800m; break;\n    default: basePrice = 0m; break;\n}\n\n// 3. Confirmation Dialog Before Closing:\nDialogResult res = MessageBox.Show(\"Are you sure you want to exit?\", \"Confirm Exit\",\n    MessageBoxButtons.YesNo, MessageBoxIcon.Question);\nif (res == DialogResult.Yes)\n{\n    this.Close();\n}</code></pre>\n  </div>\n</div>"
     },
     {
       "id": "SU4",
@@ -109,7 +113,8 @@
         "The Form_Load Event Handler for Pre-population",
         "Defensive Input Validation Loops"
       ],
-      "summary": "Mastery of repetitive logic, counter and accumulator variables, pre-test vs post-test execution mechanics, for loop headers, and dynamic ListBox generation."
+      "summary": "Pre-test (while), post-test (do-while), and count-controlled (for) loops, running total accumulators, ListBox iteration/population, and class-level Random generation.",
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Pre-Test (while), Post-Test (do-while) &amp; Count-Controlled (for) Loops</h4>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>Loop Type</th><th>Evaluation Timing</th><th>Min Executions</th><th>Syntax &amp; Key Rules</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>while (cond) { ... }</code></td><td><strong>Pre-test</strong> (before body)</td><td><strong>0 times</strong> (if initially false)</td><td>Must update loop variable inside body to avoid an infinite loop; no semicolon after <code>while (cond)</code>.</td></tr>\n        <tr><td><code>do { ... } while (cond);</code></td><td><strong>Post-test</strong> (after body)</td><td><strong>1 time</strong> (guaranteed)</td><td>Body always executes at least once; requires a trailing semicolon after <code>while (cond);</code>.</td></tr>\n        <tr><td><code>for (init; cond; update)</code></td><td><strong>Pre-test</strong> (count-controlled)</td><td><strong>0 times</strong> (if initially false)</td><td><code>for (int m = 1; m &lt;= 4; m++)</code> runs for <code>m = 1, 2, 3, 4</code> (exits when <code>m</code> reaches <code>5</code>).</td></tr>\n      </tbody>\n    </table>\n    <ul class=\"cs-list\">\n      <li><strong>Prefix vs Postfix Increment:</strong> <code>++x</code> increments first then evaluates; <code>x++</code> evaluates current value first then increments.</li>\n      <li><strong>Accumulators &amp; Nested Loops:</strong> Initialize running totals (<code>decimal total = 0m;</code>) <em>before</em> the loop and add via <code>total += item;</code> inside. In nested loops, total inner executions = outer count &times; inner count.</li>\n      <li><strong>Random Class:</strong> Declare <code>private Random _rand = new Random();</code> at <strong>class level</strong> to prevent identical clock seeds on rapid clicks. <code>_rand.Next(1000, 10000)</code> generates <code>1000..9999</code> (upper bound is <strong>exclusive</strong>).</li>\n    </ul>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. ListBox Loop Population, Iterating Items &amp; Random Reference Numbers</h4>\n    <pre class=\"cs-code\"><code>// Class-level Random generator (declared inside Form1 class, outside methods):\nprivate Random _rand = new Random();\n\n// 1. Populating a 4-Month Installment Schedule into a ListBox:\nlstInstallments.Items.Clear(); // Prevent duplicate items from previous clicks\ndecimal monthlyInstallment = netTotal / 4m;\nfor (int month = 1; month &lt;= 4; month++)\n{\n    lstInstallments.Items.Add($\"Month {month}: {monthlyInstallment:C}\");\n}\n\n// 2. Summing &amp; Averaging Existing Numeric Items in a ListBox:\ndouble sum = 0.0;\nfor (int i = 0; i &lt; lstMarks.Items.Count; i++)\n{\n    sum += double.Parse(lstMarks.Items[i].ToString());\n}\ndouble avg = lstMarks.Items.Count &gt; 0 ? (sum / lstMarks.Items.Count) : 0.0;\n\n// 3. Generating a 4-Digit Random Confirmation Number (1000 to 9999 inclusive):\nint refNo = _rand.Next(1000, 10000);</code></pre>\n  </div>\n</div>"
     }
   ],
   "officialExams": [
@@ -122,179 +127,7 @@
       "totalMarks": 100,
       "badge": "Dec 2024 Past Paper",
       "scenario": "Car Rental Fleet & Mileage Surcharge Billing System: Counter agents at DriveNow Car Hire calculate vehicle rental charges based on vehicle category selection (Sedan, SUV, Bakkie), daily rental rates, included free mileage allowances with tiered excess surcharges, optional GPS add-on, promotional discount voucher, TryParse input validation, and formatted ListBox invoice statements.",
-      "scenarioHtml": `<div class="scenario-brief-container">
-  <div class="scenario-callout">
-    <strong>📋 Problem Scenario: DriveNow Fleet Car Rental Billing System</strong><br>
-    DriveNow Car Hire operates rental depots across the NWU Potchefstroom and Vanderbijlpark campuses. You have been commissioned to build an interactive Windows Forms desktop billing system in Visual C# for depot service agents. The application processes rental durations, reads odometer usage, determines vehicle category base rates, calculates included free mileage allowances and excess kilometer surcharges, evaluates optional GPS navigation add-ons and promotional discount vouchers, and outputs a formatted itemized invoice to an on-screen summary label and ListBox.
-  </div>
-
-  <div class="scenario-section-header"><span>📊 1. Vehicle Rates, Mileage Allowances &amp; Business Rules Table</span></div>
-  <div class="scenario-table-wrap">
-    <table class="scenario-spec-table">
-      <thead>
-        <tr>
-          <th>Vehicle Category</th>
-          <th>GUI Selector</th>
-          <th>Daily Rental Rate</th>
-          <th>Daily Mileage Allowance</th>
-          <th>Excess Surcharge Rate</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Sedan (Economy)</strong></td>
-          <td><code>rdoSedan</code></td>
-          <td><span class="rate-tag">R450.00 / day</span></td>
-          <td>150 km / day free</td>
-          <td>R3.50 per excess km</td>
-        </tr>
-        <tr>
-          <td><strong>SUV (Touring / Family)</strong></td>
-          <td><code>rdoSuv</code></td>
-          <td><span class="rate-tag">R650.00 / day</span></td>
-          <td>150 km / day free</td>
-          <td>R3.50 per excess km</td>
-        </tr>
-        <tr>
-          <td><strong>Bakkie (Light Commercial)</strong></td>
-          <td><code>rdoBakkie</code></td>
-          <td><span class="rate-tag">R750.00 / day</span></td>
-          <td>150 km / day free</td>
-          <td>R3.50 per excess km</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="scenario-callout" style="border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);">
-    <strong>⚙️ Optional Equipment, Discounts &amp; Mileage Rules:</strong>
-    <ul>
-      <li><strong>GPS Navigation Unit:</strong> CheckBox <code>chkGps</code> adds an optional surcharge of <span class="rate-tag">R80.00 per rental day</span>.</li>
-      <li><strong>Promotional Discount Voucher:</strong> CheckBox <code>chkVoucher</code> deducts a <span class="rate-tag">5% discount</span> (0.05m) from the gross subtotal if checked.</li>
-      <li><strong>Free Mileage Allowance Rule:</strong> Free kilometers allowed = <code>days * 150m</code>. If total kilometers driven exceed free kilometers, excess kilometers = <code>kms - freeKms</code>, billed at <code>excessKms * 3.50m</code>. If kilometers driven are within allowance, excess surcharge is R0.00.</li>
-    </ul>
-  </div>
-
-  <div class="scenario-section-header"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>
-  <div class="scenario-table-wrap">
-    <table class="scenario-spec-table">
-      <thead>
-        <tr>
-          <th>Control Name</th>
-          <th>Control Type</th>
-          <th>Default State / Text</th>
-          <th>Event / Handler</th>
-          <th>Technical Purpose &amp; Validation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>txtDays</code></td>
-          <td>TextBox</td>
-          <td>Empty (TabIndex = 0)</td>
-          <td>Focus target</td>
-          <td>Customer rental days input. Must parse to positive integer (<code>int.TryParse</code>, &gt; 0).</td>
-        </tr>
-        <tr>
-          <td><code>txtKms</code></td>
-          <td>TextBox</td>
-          <td>Empty (TabIndex = 1)</td>
-          <td>Focus target</td>
-          <td>Total kilometers driven. Must parse to non-negative decimal (<code>decimal.TryParse</code>, &gt;= 0).</td>
-        </tr>
-        <tr>
-          <td><code>grpVehicle</code></td>
-          <td>GroupBox</td>
-          <td>Text: "Vehicle Category"</td>
-          <td>Container</td>
-          <td>Enforces mutual exclusion among vehicle category radio buttons.</td>
-        </tr>
-        <tr>
-          <td><code>rdoSedan</code></td>
-          <td>RadioButton</td>
-          <td>Checked = true</td>
-          <td>CheckedChanged</td>
-          <td>Economy Sedan rate selector (R450.00/day). Default vehicle.</td>
-        </tr>
-        <tr>
-          <td><code>rdoSuv</code></td>
-          <td>RadioButton</td>
-          <td>Checked = false</td>
-          <td>CheckedChanged</td>
-          <td>SUV rate selector (R650.00/day).</td>
-        </tr>
-        <tr>
-          <td><code>rdoBakkie</code></td>
-          <td>RadioButton</td>
-          <td>Checked = false</td>
-          <td>CheckedChanged</td>
-          <td>Bakkie rate selector (R750.00/day).</td>
-        </tr>
-        <tr>
-          <td><code>chkGps</code></td>
-          <td>CheckBox</td>
-          <td>Checked = false</td>
-          <td>Click</td>
-          <td>Optional GPS unit add-on (R80.00/day).</td>
-        </tr>
-        <tr>
-          <td><code>chkVoucher</code></td>
-          <td>CheckBox</td>
-          <td>Checked = false</td>
-          <td>Click</td>
-          <td>Promotional 5% discount deduction voucher.</td>
-        </tr>
-        <tr>
-          <td><code>btnCalculate</code></td>
-          <td>Button</td>
-          <td>Text: "&amp;Calculate Bill"</td>
-          <td><code>btnCalculate_Click</code></td>
-          <td>Validates inputs defensively, calculates charges, outputs to label and ListBox.</td>
-        </tr>
-        <tr>
-          <td><code>btnClear</code></td>
-          <td>Button</td>
-          <td>Text: "C&amp;lear"</td>
-          <td><code>btnClear_Click</code></td>
-          <td>Resets all inputs to blank, selects default sedan, unchecks add-ons, clears outputs.</td>
-        </tr>
-        <tr>
-          <td><code>btnExit</code></td>
-          <td>Button</td>
-          <td>Text: "E&amp;xit"</td>
-          <td><code>btnExit_Click</code></td>
-          <td>Prompts confirmation MessageBox (Yes/No); terminates via <code>this.Close();</code> on Yes.</td>
-        </tr>
-        <tr>
-          <td><code>lblTotalDue</code></td>
-          <td>Label</td>
-          <td>Text: "" (Fixed3D, AutoSize=false)</td>
-          <td>Output target</td>
-          <td>Displays final net total due formatted as South African currency (<code>ToString("C")</code>).</td>
-        </tr>
-        <tr>
-          <td><code>lstReceipt</code></td>
-          <td>ListBox</td>
-          <td>Empty (Monospace font)</td>
-          <td>Output target</td>
-          <td>Displays formatted itemized billing invoice breakdown.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="scenario-section-header"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>
-  <div class="scenario-callout">
-    <ol>
-      <li><strong>Defensive Parsing:</strong> Days must be parsed using <code>int.TryParse(txtDays.Text, out days)</code>. If parsing fails or <code>days &lt;= 0</code>, display an informative error dialog via <code>MessageBox.Show</code>, set focus to <code>txtDays.Focus()</code>, select all text via <code>txtDays.SelectAll()</code>, and exit event handler using <code>return;</code>.</li>
-      <li><strong>Odometer Validation:</strong> Kilometers must be parsed via <code>decimal.TryParse(txtKms.Text, out kms)</code> and satisfy <code>kms &gt;= 0</code>. Failure triggers an error message and focus restoration.</li>
-      <li><strong>Base Cost:</strong> Determined by vehicle category: <code>rdoSedan.Checked</code> (R450), <code>rdoSuv.Checked</code> (R650), or <code>rdoBakkie.Checked</code> (R750). <code>baseCost = days * dailyRate</code>.</li>
-      <li><strong>Excess Mileage:</strong> <code>freeKms = days * 150m</code>. If <code>kms &gt; freeKms</code>, <code>excessCharge = (kms - freeKms) * 3.50m</code>; otherwise <code>excessCharge = 0m</code>.</li>
-      <li><strong>Add-ons &amp; Discounts:</strong> <code>gpsCharge = chkGps.Checked ? (days * 80m) : 0m</code>. Gross total = <code>baseCost + excessCharge + gpsCharge</code>. If <code>chkVoucher.Checked</code> is true, discount = <code>grossTotal * 0.05m</code>; final <code>netTotal = grossTotal - discount</code>.</li>
-      <li><strong>Output Formatting:</strong> <code>lblTotalDue.Text = netTotal.ToString("C");</code>. Populate <code>lstReceipt.Items.Add(...)</code> with itemized entries.</li>
-    </ol>
-  </div>
-</div>`,
+      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>📋 Problem Scenario: DriveNow Fleet Car Rental Billing System</strong><br>\n    DriveNow Car Hire operates rental depots across the NWU Potchefstroom and Vanderbijlpark campuses. You have been commissioned to build an interactive Windows Forms desktop billing system in Visual C# for depot service agents. The application processes rental durations, reads odometer usage, determines vehicle category base rates, calculates included free mileage allowances and excess kilometer surcharges, evaluates optional GPS navigation add-ons and promotional discount vouchers, and outputs a formatted itemized invoice to an on-screen summary label and ListBox.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📊 1. Vehicle Rates, Mileage Allowances &amp; Business Rules Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Vehicle Category</th>\n          <th>GUI Selector</th>\n          <th>Daily Rental Rate</th>\n          <th>Daily Mileage Allowance</th>\n          <th>Excess Surcharge Rate</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>Sedan (Economy)</strong></td>\n          <td><code>rdoSedan</code></td>\n          <td><span class=\"rate-tag\">R450.00 / day</span></td>\n          <td>150 km / day free</td>\n          <td>R3.50 per excess km</td>\n        </tr>\n        <tr>\n          <td><strong>SUV (Touring / Family)</strong></td>\n          <td><code>rdoSuv</code></td>\n          <td><span class=\"rate-tag\">R650.00 / day</span></td>\n          <td>150 km / day free</td>\n          <td>R3.50 per excess km</td>\n        </tr>\n        <tr>\n          <td><strong>Bakkie (Light Commercial)</strong></td>\n          <td><code>rdoBakkie</code></td>\n          <td><span class=\"rate-tag\">R750.00 / day</span></td>\n          <td>150 km / day free</td>\n          <td>R3.50 per excess km</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);\">\n    <strong>⚙️ Optional Equipment, Discounts &amp; Mileage Rules:</strong>\n    <ul>\n      <li><strong>GPS Navigation Unit:</strong> CheckBox <code>chkGps</code> adds an optional surcharge of <span class=\"rate-tag\">R80.00 per rental day</span>.</li>\n      <li><strong>Promotional Discount Voucher:</strong> CheckBox <code>chkVoucher</code> deducts a <span class=\"rate-tag\">5% discount</span> (0.05m) from the gross subtotal if checked.</li>\n      <li><strong>Free Mileage Allowance Rule:</strong> Free kilometers allowed = <code>days * 150m</code>. If total kilometers driven exceed free kilometers, excess kilometers = <code>kms - freeKms</code>, billed at <code>excessKms * 3.50m</code>. If kilometers driven are within allowance, excess surcharge is R0.00.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtDays</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Customer rental days input. Must parse to positive integer (<code>int.TryParse</code>, &gt; 0).</td>\n        </tr>\n        <tr>\n          <td><code>txtKms</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 1)</td>\n          <td>Focus target</td>\n          <td>Total kilometers driven. Must parse to non-negative decimal (<code>decimal.TryParse</code>, &gt;= 0).</td>\n        </tr>\n        <tr>\n          <td><code>grpVehicle</code></td>\n          <td>GroupBox</td>\n          <td>Text: \"Vehicle Category\"</td>\n          <td>Container</td>\n          <td>Enforces mutual exclusion among vehicle category radio buttons.</td>\n        </tr>\n        <tr>\n          <td><code>rdoSedan</code></td>\n          <td>RadioButton</td>\n          <td>Checked = true</td>\n          <td>CheckedChanged</td>\n          <td>Economy Sedan rate selector (R450.00/day). Default vehicle.</td>\n        </tr>\n        <tr>\n          <td><code>rdoSuv</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>SUV rate selector (R650.00/day).</td>\n        </tr>\n        <tr>\n          <td><code>rdoBakkie</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Bakkie rate selector (R750.00/day).</td>\n        </tr>\n        <tr>\n          <td><code>chkGps</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Optional GPS unit add-on (R80.00/day).</td>\n        </tr>\n        <tr>\n          <td><code>chkVoucher</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Promotional 5% discount deduction voucher.</td>\n        </tr>\n        <tr>\n          <td><code>btnCalculate</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Calculate Bill\"</td>\n          <td><code>btnCalculate_Click</code></td>\n          <td>Validates inputs defensively, calculates charges, outputs to label and ListBox.</td>\n        </tr>\n        <tr>\n          <td><code>btnClear</code></td>\n          <td>Button</td>\n          <td>Text: \"C&amp;lear\"</td>\n          <td><code>btnClear_Click</code></td>\n          <td>Resets all inputs to blank, selects default sedan, unchecks add-ons, clears outputs.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Prompts confirmation MessageBox (Yes/No); terminates via <code>this.Close();</code> on Yes.</td>\n        </tr>\n        <tr>\n          <td><code>lblTotalDue</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (Fixed3D, AutoSize=false)</td>\n          <td>Output target</td>\n          <td>Displays final net total due formatted as South African currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstReceipt</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Displays formatted itemized billing invoice breakdown.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Defensive Parsing:</strong> Days must be parsed using <code>int.TryParse(txtDays.Text, out days)</code>. If parsing fails or <code>days &lt;= 0</code>, display an informative error dialog via <code>MessageBox.Show</code>, set focus to <code>txtDays.Focus()</code>, select all text via <code>txtDays.SelectAll()</code>, and exit event handler using <code>return;</code>.</li>\n      <li><strong>Odometer Validation:</strong> Kilometers must be parsed via <code>decimal.TryParse(txtKms.Text, out kms)</code> and satisfy <code>kms &gt;= 0</code>. Failure triggers an error message and focus restoration.</li>\n      <li><strong>Base Cost:</strong> Determined by vehicle category: <code>rdoSedan.Checked</code> (R450), <code>rdoSuv.Checked</code> (R650), or <code>rdoBakkie.Checked</code> (R750). <code>baseCost = days * dailyRate</code>.</li>\n      <li><strong>Excess Mileage:</strong> <code>freeKms = days * 150m</code>. If <code>kms &gt; freeKms</code>, <code>excessCharge = (kms - freeKms) * 3.50m</code>; otherwise <code>excessCharge = 0m</code>.</li>\n      <li><strong>Add-ons &amp; Discounts:</strong> <code>gpsCharge = chkGps.Checked ? (days * 80m) : 0m</code>. Gross total = <code>baseCost + excessCharge + gpsCharge</code>. If <code>chkVoucher.Checked</code> is true, discount = <code>grossTotal * 0.05m</code>; final <code>netTotal = grossTotal - discount</code>.</li>\n      <li><strong>Output Formatting:</strong> <code>lblTotalDue.Text = netTotal.ToString(\"C\");</code>. Populate <code>lstReceipt.Items.Add(...)</code> with itemized entries.</li>\n    </ol>\n  </div>\n</div>",
       "subQuestionIds": [
         "q_su-exam_351",
         "q_su-exam_352",
@@ -323,178 +156,7 @@
       "totalMarks": 100,
       "badge": "Dec 2023 Past Paper",
       "scenario": "Student Tuition, Campus Residence & Bursary Assessment System: Visual C# application calculating faculty tuition fees based on credit enrollment, compulsory laboratory levies, residence accommodation meal plans, merit bursary percentage deductions, and a 4-month semester installment schedule.",
-      "scenarioHtml": `<div class="scenario-brief-container">
-  <div class="scenario-callout">
-    <strong>📋 Problem Scenario: Student Tuition, Residence Accommodation &amp; Bursary Assessment System</strong><br>
-    The NWU Student Accounts and Bursaries Office requires a standardized Windows Forms application in Visual C# to compute semester tuition fees for enrolling students. The system captures credit enrollments, determines faculty tuition rates and compulsory laboratory levies, processes optional on-campus residence accommodation and meal plans, applies merit bursary remissions, and projects a 4-month semester installment payment schedule into a ListBox using structured loop repetition.
-  </div>
-
-  <div class="scenario-section-header"><span>📊 1. Faculty Tuition Rates, Facility Levies &amp; Business Rules Table</span></div>
-  <div class="scenario-table-wrap">
-    <table class="scenario-spec-table">
-      <thead>
-        <tr>
-          <th>Faculty / Discipline</th>
-          <th>GUI RadioButton</th>
-          <th>Cost per Enrolled Credit</th>
-          <th>Compulsory Laboratory / IT Levy</th>
-          <th>Max Allowable Credits</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Natural &amp; Agricultural Sciences</strong></td>
-          <td><code>rdoScience</code></td>
-          <td><span class="rate-tag">R850.00 / credit</span></td>
-          <td><span class="rate-tag">R2,500.00</span> science lab levy</td>
-          <td>25 credits / semester</td>
-        </tr>
-        <tr>
-          <td><strong>Economic &amp; Management Sciences</strong></td>
-          <td><code>rdoCommerce</code></td>
-          <td><span class="rate-tag">R750.00 / credit</span></td>
-          <td><span class="rate-tag">R1,000.00</span> IT network levy</td>
-          <td>25 credits / semester</td>
-        </tr>
-        <tr>
-          <td><strong>Humanities &amp; Education</strong></td>
-          <td><code>rdoHumanities</code></td>
-          <td><span class="rate-tag">R650.00 / credit</span></td>
-          <td><span class="rate-tag">R500.00</span> resource levy</td>
-          <td>25 credits / semester</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="scenario-callout" style="border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);">
-    <strong>⚙️ Residence Accommodation, Bursary Remissions &amp; Installment Schedule:</strong>
-    <ul>
-      <li><strong>Campus Residence &amp; Dining Hall Plan:</strong> CheckBox <code>chkResidence</code> adds a flat accommodation and catering fee of <span class="rate-tag">R14,000.00 per semester</span>.</li>
-      <li><strong>Academic Merit Bursary Remission:</strong> CheckBox <code>chkBursary</code> activates the bursary percentage input <code>txtBursaryPercent</code>. Valid bursary percentages range from <span class="rate-tag">5% to 100%</span>. The bursary deduction applies strictly to the academic fees (tuition + faculty levy); residence fees are not discounted.</li>
-      <li><strong>Installment Payment Projection:</strong> Total semester balance is divided across <span class="rate-tag">4 equal monthly installments</span> (Months 1 to 4) populated in <code>lstInstallments</code> using a <code>for</code> loop.</li>
-    </ul>
-  </div>
-
-  <div class="scenario-section-header"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>
-  <div class="scenario-table-wrap">
-    <table class="scenario-spec-table">
-      <thead>
-        <tr>
-          <th>Control Name</th>
-          <th>Control Type</th>
-          <th>Default State / Text</th>
-          <th>Event / Handler</th>
-          <th>Technical Purpose &amp; Validation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>txtCredits</code></td>
-          <td>TextBox</td>
-          <td>Empty (TabIndex = 0)</td>
-          <td>Focus target</td>
-          <td>Academic credits enrolled. Defensive range check: integer between 1 and 25 inclusive.</td>
-        </tr>
-        <tr>
-          <td><code>grpFaculty</code></td>
-          <td>GroupBox</td>
-          <td>Text: "Faculty Selection"</td>
-          <td>Container</td>
-          <td>Mutual exclusion container for faculty radio buttons.</td>
-        </tr>
-        <tr>
-          <td><code>rdoScience</code></td>
-          <td>RadioButton</td>
-          <td>Checked = true</td>
-          <td>CheckedChanged</td>
-          <td>Natural Sciences faculty selector (R850/credit + R2,500 levy).</td>
-        </tr>
-        <tr>
-          <td><code>rdoCommerce</code></td>
-          <td>RadioButton</td>
-          <td>Checked = false</td>
-          <td>CheckedChanged</td>
-          <td>Commerce faculty selector (R750/credit + R1,000 levy).</td>
-        </tr>
-        <tr>
-          <td><code>rdoHumanities</code></td>
-          <td>RadioButton</td>
-          <td>Checked = false</td>
-          <td>CheckedChanged</td>
-          <td>Humanities faculty selector (R650/credit + R500 levy).</td>
-        </tr>
-        <tr>
-          <td><code>chkResidence</code></td>
-          <td>CheckBox</td>
-          <td>Checked = false</td>
-          <td>Click</td>
-          <td>Toggles campus residence and meal plan flat fee (R14,000.00).</td>
-        </tr>
-        <tr>
-          <td><code>chkBursary</code></td>
-          <td>CheckBox</td>
-          <td>Checked = false</td>
-          <td>CheckedChanged</td>
-          <td>Enables or disables <code>txtBursaryPercent</code> depending on checked state.</td>
-        </tr>
-        <tr>
-          <td><code>txtBursaryPercent</code></td>
-          <td>TextBox</td>
-          <td>Text: "0" (Enabled = false)</td>
-          <td>Focus target</td>
-          <td>Bursary percentage (5 to 100). Enabled only when <code>chkBursary.Checked == true</code>.</td>
-        </tr>
-        <tr>
-          <td><code>btnCalculate</code></td>
-          <td>Button</td>
-          <td>Text: "&amp;Calculate Tuition"</td>
-          <td><code>btnCalculate_Click</code></td>
-          <td>Validates inputs, calculates net tuition, generates 4-month installment projection.</td>
-        </tr>
-        <tr>
-          <td><code>btnClear</code></td>
-          <td>Button</td>
-          <td>Text: "&amp;Clear Form"</td>
-          <td><code>btnClear_Click</code></td>
-          <td>Resets all inputs, unchecks add-ons, clears ListBox, restores focus to <code>txtCredits</code>.</td>
-        </tr>
-        <tr>
-          <td><code>btnExit</code></td>
-          <td>Button</td>
-          <td>Text: "E&amp;xit"</td>
-          <td><code>btnExit_Click</code></td>
-          <td>Confirmation dialog and application termination (<code>this.Close();</code>).</td>
-        </tr>
-        <tr>
-          <td><code>lblNetTuition</code></td>
-          <td>Label</td>
-          <td>Text: "" (BorderStyle = Fixed3D)</td>
-          <td>Output target</td>
-          <td>Displays total net semester fees formatted as currency (<code>ToString("C")</code>).</td>
-        </tr>
-        <tr>
-          <td><code>lstInstallments</code></td>
-          <td>ListBox</td>
-          <td>Empty (Monospace font)</td>
-          <td>Output target</td>
-          <td>Itemized ListBox containing the 4 monthly installment projection records.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="scenario-section-header"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>
-  <div class="scenario-callout">
-    <ol>
-      <li><strong>Defensive Parsing &amp; Credit Bounds:</strong> Enrolled credits must be parsed with <code>int.TryParse(txtCredits.Text, out credits)</code>. If parsing fails or <code>credits &lt; 1 || credits &gt; 25</code>, display error message, call <code>txtCredits.Focus()</code> and <code>txtCredits.SelectAll()</code>, and <code>return;</code>.</li>
-      <li><strong>Faculty Tuition Calculation:</strong> Read selected radio button: Science (rate R850, levy R2,500), Commerce (rate R750, levy R1,000), Humanities (rate R650, levy R500). <code>academicTuition = (credits * rate) + levy</code>.</li>
-      <li><strong>Bursary Remission:</strong> If <code>chkBursary.Checked</code>, parse <code>decimal.TryParse(txtBursaryPercent.Text, out bursaryPct)</code>. Validate <code>bursaryPct &gt;= 5 &amp;&amp; bursaryPct &lt;= 100</code>. Calculate <code>bursaryDeduction = academicTuition * (bursaryPct / 100m)</code>. Net academic fee = <code>academicTuition - bursaryDeduction</code>.</li>
-      <li><strong>Residence Fee:</strong> If <code>chkResidence.Checked</code>, add R14,000.00. <code>totalSemesterFee = netAcademicFee + residenceFee</code>.</li>
-      <li><strong>Installment Projection Loop:</strong> <code>monthlyAmount = totalSemesterFee / 4m</code>. Clear <code>lstInstallments.Items.Clear()</code>. Execute loop <code>for (int m = 1; m &lt;= 4; m++)</code> and add <code>lstInstallments.Items.Add($"Month {m}: {monthlyAmount:C}");</code>.</li>
-    </ol>
-  </div>
-</div>`,
+      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>📋 Problem Scenario: Student Tuition, Residence Accommodation &amp; Bursary Assessment System</strong><br>\n    The NWU Student Accounts and Bursaries Office requires a standardized Windows Forms application in Visual C# to compute semester tuition fees for enrolling students. The system captures credit enrollments, determines faculty tuition rates and compulsory laboratory levies, processes optional on-campus residence accommodation and meal plans, applies merit bursary remissions, and projects a 4-month semester installment payment schedule into a ListBox using structured loop repetition.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📊 1. Faculty Tuition Rates, Facility Levies &amp; Business Rules Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Faculty / Discipline</th>\n          <th>GUI RadioButton</th>\n          <th>Cost per Enrolled Credit</th>\n          <th>Compulsory Laboratory / IT Levy</th>\n          <th>Max Allowable Credits</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>Natural &amp; Agricultural Sciences</strong></td>\n          <td><code>rdoScience</code></td>\n          <td><span class=\"rate-tag\">R850.00 / credit</span></td>\n          <td><span class=\"rate-tag\">R2,500.00</span> science lab levy</td>\n          <td>25 credits / semester</td>\n        </tr>\n        <tr>\n          <td><strong>Economic &amp; Management Sciences</strong></td>\n          <td><code>rdoCommerce</code></td>\n          <td><span class=\"rate-tag\">R750.00 / credit</span></td>\n          <td><span class=\"rate-tag\">R1,000.00</span> IT network levy</td>\n          <td>25 credits / semester</td>\n        </tr>\n        <tr>\n          <td><strong>Humanities &amp; Education</strong></td>\n          <td><code>rdoHumanities</code></td>\n          <td><span class=\"rate-tag\">R650.00 / credit</span></td>\n          <td><span class=\"rate-tag\">R500.00</span> resource levy</td>\n          <td>25 credits / semester</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);\">\n    <strong>⚙️ Residence Accommodation, Bursary Remissions &amp; Installment Schedule:</strong>\n    <ul>\n      <li><strong>Campus Residence &amp; Dining Hall Plan:</strong> CheckBox <code>chkResidence</code> adds a flat accommodation and catering fee of <span class=\"rate-tag\">R14,000.00 per semester</span>.</li>\n      <li><strong>Academic Merit Bursary Remission:</strong> CheckBox <code>chkBursary</code> activates the bursary percentage input <code>txtBursaryPercent</code>. Valid bursary percentages range from <span class=\"rate-tag\">5% to 100%</span>. The bursary deduction applies strictly to the academic fees (tuition + faculty levy); residence fees are not discounted.</li>\n      <li><strong>Installment Payment Projection:</strong> Total semester balance is divided across <span class=\"rate-tag\">4 equal monthly installments</span> (Months 1 to 4) populated in <code>lstInstallments</code> using a <code>for</code> loop.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtCredits</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Academic credits enrolled. Defensive range check: integer between 1 and 25 inclusive.</td>\n        </tr>\n        <tr>\n          <td><code>grpFaculty</code></td>\n          <td>GroupBox</td>\n          <td>Text: \"Faculty Selection\"</td>\n          <td>Container</td>\n          <td>Mutual exclusion container for faculty radio buttons.</td>\n        </tr>\n        <tr>\n          <td><code>rdoScience</code></td>\n          <td>RadioButton</td>\n          <td>Checked = true</td>\n          <td>CheckedChanged</td>\n          <td>Natural Sciences faculty selector (R850/credit + R2,500 levy).</td>\n        </tr>\n        <tr>\n          <td><code>rdoCommerce</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Commerce faculty selector (R750/credit + R1,000 levy).</td>\n        </tr>\n        <tr>\n          <td><code>rdoHumanities</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Humanities faculty selector (R650/credit + R500 levy).</td>\n        </tr>\n        <tr>\n          <td><code>chkResidence</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Toggles campus residence and meal plan flat fee (R14,000.00).</td>\n        </tr>\n        <tr>\n          <td><code>chkBursary</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Enables or disables <code>txtBursaryPercent</code> depending on checked state.</td>\n        </tr>\n        <tr>\n          <td><code>txtBursaryPercent</code></td>\n          <td>TextBox</td>\n          <td>Text: \"0\" (Enabled = false)</td>\n          <td>Focus target</td>\n          <td>Bursary percentage (5 to 100). Enabled only when <code>chkBursary.Checked == true</code>.</td>\n        </tr>\n        <tr>\n          <td><code>btnCalculate</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Calculate Tuition\"</td>\n          <td><code>btnCalculate_Click</code></td>\n          <td>Validates inputs, calculates net tuition, generates 4-month installment projection.</td>\n        </tr>\n        <tr>\n          <td><code>btnClear</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Clear Form\"</td>\n          <td><code>btnClear_Click</code></td>\n          <td>Resets all inputs, unchecks add-ons, clears ListBox, restores focus to <code>txtCredits</code>.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Confirmation dialog and application termination (<code>this.Close();</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblNetTuition</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays total net semester fees formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstInstallments</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Itemized ListBox containing the 4 monthly installment projection records.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Defensive Parsing &amp; Credit Bounds:</strong> Enrolled credits must be parsed with <code>int.TryParse(txtCredits.Text, out credits)</code>. If parsing fails or <code>credits &lt; 1 || credits &gt; 25</code>, display error message, call <code>txtCredits.Focus()</code> and <code>txtCredits.SelectAll()</code>, and <code>return;</code>.</li>\n      <li><strong>Faculty Tuition Calculation:</strong> Read selected radio button: Science (rate R850, levy R2,500), Commerce (rate R750, levy R1,000), Humanities (rate R650, levy R500). <code>academicTuition = (credits * rate) + levy</code>.</li>\n      <li><strong>Bursary Remission:</strong> If <code>chkBursary.Checked</code>, parse <code>decimal.TryParse(txtBursaryPercent.Text, out bursaryPct)</code>. Validate <code>bursaryPct &gt;= 5 &amp;&amp; bursaryPct &lt;= 100</code>. Calculate <code>bursaryDeduction = academicTuition * (bursaryPct / 100m)</code>. Net academic fee = <code>academicTuition - bursaryDeduction</code>.</li>\n      <li><strong>Residence Fee:</strong> If <code>chkResidence.Checked</code>, add R14,000.00. <code>totalSemesterFee = netAcademicFee + residenceFee</code>.</li>\n      <li><strong>Installment Projection Loop:</strong> <code>monthlyAmount = totalSemesterFee / 4m</code>. Clear <code>lstInstallments.Items.Clear()</code>. Execute loop <code>for (int m = 1; m &lt;= 4; m++)</code> and add <code>lstInstallments.Items.Add($\"Month {m}: {monthlyAmount:C}\");</code>.</li>\n    </ol>\n  </div>\n</div>",
       "subQuestionIds": [
         "q_su-exam_367",
         "q_su-exam_368",
@@ -523,188 +185,7 @@
       "totalMarks": 100,
       "badge": "Dec 2022 Past Paper",
       "scenario": "Gym & Fitness Club Membership Billing & Class Booking Terminal: Application featuring membership tier radio buttons (Standard, Premium, VIP), personal trainer add-on checkbox, monthly debit order calculation with 15% VAT, and 12-month projection loop in a ListBox.",
-      "scenarioHtml": `<div class="scenario-brief-container">
-  <div class="scenario-callout">
-    <strong>📋 Problem Scenario: FitLife Health &amp; Racquet Club Membership Billing Terminal</strong><br>
-    FitLife Health &amp; Racquet Club (Potchefstroom campus) manages monthly membership subscriptions. Front desk staff record applicant details, select membership tiers, configure optional personal training coaching, calculate monthly debit orders including 15% South African VAT, and populate a 12-month cumulative expenditure forecast in a ListBox.
-  </div>
-
-  <div class="scenario-section-header"><span>📊 1. Membership Subscription Tiers, Add-ons &amp; VAT Table</span></div>
-  <div class="scenario-table-wrap">
-    <table class="scenario-spec-table">
-      <thead>
-        <tr>
-          <th>Membership Tier</th>
-          <th>GUI RadioButton</th>
-          <th>Monthly Base Subscription</th>
-          <th>Included Amenities</th>
-          <th>Private Locker Privileges</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Standard Tier</strong></td>
-          <td><code>rdoStandard</code></td>
-          <td><span class="rate-tag">R350.00 / month</span></td>
-          <td>Cardio floor &amp; weight room access</td>
-          <td>Optional add-on (R100/mo)</td>
-        </tr>
-        <tr>
-          <td><strong>Premium Tier</strong></td>
-          <td><code>rdoPremium</code></td>
-          <td><span class="rate-tag">R500.00 / month</span></td>
-          <td>Standard + sauna &amp; heated pool access</td>
-          <td>Optional add-on (R100/mo)</td>
-        </tr>
-        <tr>
-          <td><strong>VIP All-Access</strong></td>
-          <td><code>rdoVip</code></td>
-          <td><span class="rate-tag">R600.00 / month</span></td>
-          <td>Premium + squash courts &amp; guest passes</td>
-          <td><strong>Included Free (R0.00)</strong></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="scenario-callout" style="border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);">
-    <strong>⚙️ Personal Coaching, Locker Surcharges &amp; Statutory VAT:</strong>
-    <ul>
-      <li><strong>Certified Personal Trainer Add-on:</strong> CheckBox <code>chkTrainer</code> adds a coaching fee of <span class="rate-tag">R250.00 per month</span>.</li>
-      <li><strong>Private Locker Rental:</strong> CheckBox <code>chkLocker</code> adds <span class="rate-tag">R100.00 per month</span> for Standard and Premium tiers. VIP members receive private lockers free of charge.</li>
-      <li><strong>South African Value-Added Tax (VAT):</strong> Statutory VAT rate of <span class="rate-tag">15% (0.15m)</span> must be calculated on the monthly pre-tax subtotal and displayed in <code>lblVat</code>.</li>
-      <li><strong>12-Month Projection Forecast:</strong> <code>lstDebitOrders</code> displays cumulative projected fees for <span class="rate-tag">Months 1 to 12</span> using a count-controlled loop.</li>
-    </ul>
-  </div>
-
-  <div class="scenario-section-header"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>
-  <div class="scenario-table-wrap">
-    <table class="scenario-spec-table">
-      <thead>
-        <tr>
-          <th>Control Name</th>
-          <th>Control Type</th>
-          <th>Default State / Text</th>
-          <th>Event / Handler</th>
-          <th>Technical Purpose &amp; Validation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>txtMemberName</code></td>
-          <td>TextBox</td>
-          <td>Empty (TabIndex = 0)</td>
-          <td>Focus target</td>
-          <td>Applicant full name. Validated non-empty with <code>string.IsNullOrWhiteSpace</code>.</td>
-        </tr>
-        <tr>
-          <td><code>grpTiers</code></td>
-          <td>GroupBox</td>
-          <td>Text: "Membership Tier"</td>
-          <td>Container</td>
-          <td>Enforces mutual exclusion across membership radio buttons.</td>
-        </tr>
-        <tr>
-          <td><code>rdoStandard</code></td>
-          <td>RadioButton</td>
-          <td>Checked = false</td>
-          <td>CheckedChanged</td>
-          <td>Standard tier subscription selector (R350.00/month).</td>
-        </tr>
-        <tr>
-          <td><code>rdoPremium</code></td>
-          <td>RadioButton</td>
-          <td>Checked = false</td>
-          <td>CheckedChanged</td>
-          <td>Premium tier subscription selector (R500.00/month).</td>
-        </tr>
-        <tr>
-          <td><code>rdoVip</code></td>
-          <td>RadioButton</td>
-          <td>Checked = false</td>
-          <td>CheckedChanged</td>
-          <td>VIP All-Access tier selector (R600.00/month).</td>
-        </tr>
-        <tr>
-          <td><code>chkTrainer</code></td>
-          <td>CheckBox</td>
-          <td>Checked = false</td>
-          <td>Click</td>
-          <td>Optional personal trainer coaching package (R250.00/month).</td>
-        </tr>
-        <tr>
-          <td><code>chkLocker</code></td>
-          <td>CheckBox</td>
-          <td>Checked = false</td>
-          <td>Click</td>
-          <td>Private locker rental (R100.00/month; waived for VIP).</td>
-        </tr>
-        <tr>
-          <td><code>btnCalculate</code></td>
-          <td>Button</td>
-          <td>Text: "&amp;Calculate Debit Order"</td>
-          <td><code>btnCalculate_Click</code></td>
-          <td>Validates tier selection, computes subtotal, 15% VAT, total, and 12-mo forecast.</td>
-        </tr>
-        <tr>
-          <td><code>btnClear</code></td>
-          <td>Button</td>
-          <td>Text: "&amp;Clear"</td>
-          <td><code>btnClear_Click</code></td>
-          <td>Clears textboxes, resets radio buttons/checkboxes, clears ListBox.</td>
-        </tr>
-        <tr>
-          <td><code>btnExit</code></td>
-          <td>Button</td>
-          <td>Text: "E&amp;xit"</td>
-          <td><code>btnExit_Click</code></td>
-          <td>Prompts Yes/No confirmation dialog; closes application via <code>this.Close();</code>.</td>
-        </tr>
-        <tr>
-          <td><code>lblSubtotal</code></td>
-          <td>Label</td>
-          <td>Text: "" (BorderStyle = Fixed3D)</td>
-          <td>Output target</td>
-          <td>Displays monthly pre-tax subtotal formatted as currency (<code>ToString("C")</code>).</td>
-        </tr>
-        <tr>
-          <td><code>lblVat</code></td>
-          <td>Label</td>
-          <td>Text: "" (BorderStyle = Fixed3D)</td>
-          <td>Output target</td>
-          <td>Displays 15% VAT amount formatted as currency (<code>ToString("C")</code>).</td>
-        </tr>
-        <tr>
-          <td><code>lblMonthlyTotal</code></td>
-          <td>Label</td>
-          <td>Text: "" (Fixed3D, Bold)</td>
-          <td>Output target</td>
-          <td>Displays total monthly debit order fee formatted as currency (<code>ToString("C")</code>).</td>
-        </tr>
-        <tr>
-          <td><code>lstDebitOrders</code></td>
-          <td>ListBox</td>
-          <td>Empty (Monospace font)</td>
-          <td>Output target</td>
-          <td>Populated with 12 monthly cumulative debit order payment projection lines.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="scenario-section-header"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>
-  <div class="scenario-callout">
-    <ol>
-      <li><strong>Member Name Validation:</strong> Ensure applicant name is entered: <code>if (string.IsNullOrWhiteSpace(txtMemberName.Text)) { MessageBox.Show("Please enter member name.", "Validation Error"); txtMemberName.Focus(); return; }</code>.</li>
-      <li><strong>Tier Selection Validation:</strong> Ensure at least one tier is chosen: <code>if (!rdoStandard.Checked &amp;&amp; !rdoPremium.Checked &amp;&amp; !rdoVip.Checked) { MessageBox.Show("Please select a membership tier.", "Input Error"); return; }</code>.</li>
-      <li><strong>Base Subscription:</strong> <code>baseRate = rdoStandard.Checked ? 350m : (rdoPremium.Checked ? 500m : 600m)</code>.</li>
-      <li><strong>Add-ons:</strong> <code>trainerFee = chkTrainer.Checked ? 250m : 0m</code>. <code>lockerFee = (chkLocker.Checked &amp;&amp; !rdoVip.Checked) ? 100m : 0m</code>.</li>
-      <li><strong>Pre-tax Subtotal:</strong> <code>subtotal = baseRate + trainerFee + lockerFee</code>.</li>
-      <li><strong>15% VAT Calculation:</strong> <code>vatAmount = subtotal * 0.15m</code>. Total monthly debit order = <code>subtotal + vatAmount</code>.</li>
-      <li><strong>12-Month Projection Loop:</strong> Clear <code>lstDebitOrders.Items.Clear()</code>. Iterate <code>for (int month = 1; month &lt;= 12; month++)</code> and add <code>$"Month {month:D2}: Cumulative Total = {(month * totalMonthly):C}"</code>.</li>
-    </ol>
-  </div>
-</div>`,
+      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>📋 Problem Scenario: FitLife Health &amp; Racquet Club Membership Billing Terminal</strong><br>\n    FitLife Health &amp; Racquet Club (Potchefstroom campus) manages monthly membership subscriptions. Front desk staff record applicant details, select membership tiers, configure optional personal training coaching, calculate monthly debit orders including 15% South African VAT, and populate a 12-month cumulative expenditure forecast in a ListBox.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📊 1. Membership Subscription Tiers, Add-ons &amp; VAT Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Membership Tier</th>\n          <th>GUI RadioButton</th>\n          <th>Monthly Base Subscription</th>\n          <th>Included Amenities</th>\n          <th>Private Locker Privileges</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>Standard Tier</strong></td>\n          <td><code>rdoStandard</code></td>\n          <td><span class=\"rate-tag\">R350.00 / month</span></td>\n          <td>Cardio floor &amp; weight room access</td>\n          <td>Optional add-on (R100/mo)</td>\n        </tr>\n        <tr>\n          <td><strong>Premium Tier</strong></td>\n          <td><code>rdoPremium</code></td>\n          <td><span class=\"rate-tag\">R500.00 / month</span></td>\n          <td>Standard + sauna &amp; heated pool access</td>\n          <td>Optional add-on (R100/mo)</td>\n        </tr>\n        <tr>\n          <td><strong>VIP All-Access</strong></td>\n          <td><code>rdoVip</code></td>\n          <td><span class=\"rate-tag\">R600.00 / month</span></td>\n          <td>Premium + squash courts &amp; guest passes</td>\n          <td><strong>Included Free (R0.00)</strong></td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);\">\n    <strong>⚙️ Personal Coaching, Locker Surcharges &amp; Statutory VAT:</strong>\n    <ul>\n      <li><strong>Certified Personal Trainer Add-on:</strong> CheckBox <code>chkTrainer</code> adds a coaching fee of <span class=\"rate-tag\">R250.00 per month</span>.</li>\n      <li><strong>Private Locker Rental:</strong> CheckBox <code>chkLocker</code> adds <span class=\"rate-tag\">R100.00 per month</span> for Standard and Premium tiers. VIP members receive private lockers free of charge.</li>\n      <li><strong>South African Value-Added Tax (VAT):</strong> Statutory VAT rate of <span class=\"rate-tag\">15% (0.15m)</span> must be calculated on the monthly pre-tax subtotal and displayed in <code>lblVat</code>.</li>\n      <li><strong>12-Month Projection Forecast:</strong> <code>lstDebitOrders</code> displays cumulative projected fees for <span class=\"rate-tag\">Months 1 to 12</span> using a count-controlled loop.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtMemberName</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Applicant full name. Validated non-empty with <code>string.IsNullOrWhiteSpace</code>.</td>\n        </tr>\n        <tr>\n          <td><code>grpTiers</code></td>\n          <td>GroupBox</td>\n          <td>Text: \"Membership Tier\"</td>\n          <td>Container</td>\n          <td>Enforces mutual exclusion across membership radio buttons.</td>\n        </tr>\n        <tr>\n          <td><code>rdoStandard</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Standard tier subscription selector (R350.00/month).</td>\n        </tr>\n        <tr>\n          <td><code>rdoPremium</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Premium tier subscription selector (R500.00/month).</td>\n        </tr>\n        <tr>\n          <td><code>rdoVip</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>VIP All-Access tier selector (R600.00/month).</td>\n        </tr>\n        <tr>\n          <td><code>chkTrainer</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Optional personal trainer coaching package (R250.00/month).</td>\n        </tr>\n        <tr>\n          <td><code>chkLocker</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Private locker rental (R100.00/month; waived for VIP).</td>\n        </tr>\n        <tr>\n          <td><code>btnCalculate</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Calculate Debit Order\"</td>\n          <td><code>btnCalculate_Click</code></td>\n          <td>Validates tier selection, computes subtotal, 15% VAT, total, and 12-mo forecast.</td>\n        </tr>\n        <tr>\n          <td><code>btnClear</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Clear\"</td>\n          <td><code>btnClear_Click</code></td>\n          <td>Clears textboxes, resets radio buttons/checkboxes, clears ListBox.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Prompts Yes/No confirmation dialog; closes application via <code>this.Close();</code>.</td>\n        </tr>\n        <tr>\n          <td><code>lblSubtotal</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays monthly pre-tax subtotal formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblVat</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays 15% VAT amount formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblMonthlyTotal</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (Fixed3D, Bold)</td>\n          <td>Output target</td>\n          <td>Displays total monthly debit order fee formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstDebitOrders</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Populated with 12 monthly cumulative debit order payment projection lines.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Member Name Validation:</strong> Ensure applicant name is entered: <code>if (string.IsNullOrWhiteSpace(txtMemberName.Text)) { MessageBox.Show(\"Please enter member name.\", \"Validation Error\"); txtMemberName.Focus(); return; }</code>.</li>\n      <li><strong>Tier Selection Validation:</strong> Ensure at least one tier is chosen: <code>if (!rdoStandard.Checked &amp;&amp; !rdoPremium.Checked &amp;&amp; !rdoVip.Checked) { MessageBox.Show(\"Please select a membership tier.\", \"Input Error\"); return; }</code>.</li>\n      <li><strong>Base Subscription:</strong> <code>baseRate = rdoStandard.Checked ? 350m : (rdoPremium.Checked ? 500m : 600m)</code>.</li>\n      <li><strong>Add-ons:</strong> <code>trainerFee = chkTrainer.Checked ? 250m : 0m</code>. <code>lockerFee = (chkLocker.Checked &amp;&amp; !rdoVip.Checked) ? 100m : 0m</code>.</li>\n      <li><strong>Pre-tax Subtotal:</strong> <code>subtotal = baseRate + trainerFee + lockerFee</code>.</li>\n      <li><strong>15% VAT Calculation:</strong> <code>vatAmount = subtotal * 0.15m</code>. Total monthly debit order = <code>subtotal + vatAmount</code>.</li>\n      <li><strong>12-Month Projection Loop:</strong> Clear <code>lstDebitOrders.Items.Clear()</code>. Iterate <code>for (int month = 1; month &lt;= 12; month++)</code> and add <code>$\"Month {month:D2}: Cumulative Total = {(month * totalMonthly):C}\"</code>.</li>\n    </ol>\n  </div>\n</div>",
       "subQuestionIds": [
         "q_su-exam_383",
         "q_su-exam_384",
@@ -733,194 +214,7 @@
       "totalMarks": 90,
       "badge": "Nov 2021 Past Paper",
       "scenario": "Hotel & Conference Booking Engine: Room tier selection, length of stay calculation, conference package options, TryParse validation, and detailed receipt itemization.",
-      "scenarioHtml": `<div class="scenario-brief-container">
-  <div class="scenario-callout">
-    <strong>📋 Problem Scenario: Riverside Hotel &amp; Conference Centre Reservation Engine</strong><br>
-    Riverside Hotel &amp; Conference Centre (Vanderbijlpark) automates guest reservation billing. Front office staff capture guest particulars, length of stay in nights, room tier selection, optional breakfast catering packages, validate guest capacity, generate a random 4-digit booking reservation reference, and output an itemized billing receipt in a ListBox.
-  </div>
-
-  <div class="scenario-section-header"><span>📊 1. Room Categories, Rates &amp; Guest Capacity Table</span></div>
-  <div class="scenario-table-wrap">
-    <table class="scenario-spec-table">
-      <thead>
-        <tr>
-          <th>Room Category</th>
-          <th>GUI RadioButton</th>
-          <th>Nightly Room Rate</th>
-          <th>Maximum Guest Capacity</th>
-          <th>Included Room Amenities</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Standard Room</strong></td>
-          <td><code>rdoStandard</code></td>
-          <td><span class="rate-tag">R950.00 / night</span></td>
-          <td>Max 2 guests</td>
-          <td>Queen bed, en-suite shower, Wi-Fi</td>
-        </tr>
-        <tr>
-          <td><strong>Deluxe Suite</strong></td>
-          <td><code>rdoDeluxe</code></td>
-          <td><span class="rate-tag">R1,450.00 / night</span></td>
-          <td>Max 3 guests</td>
-          <td>King bed, river view balcony, mini-bar</td>
-        </tr>
-        <tr>
-          <td><strong>Penthouse Executive</strong></td>
-          <td><code>rdoPenthouse</code></td>
-          <td><span class="rate-tag">R2,200.00 / night</span></td>
-          <td>Max 4 guests</td>
-          <td>2 bedrooms, lounge, jacuzzi, butler service</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="scenario-callout" style="border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);">
-    <strong>⚙️ Catering Packages, Airport Transfers &amp; Booking Reference:</strong>
-    <ul>
-      <li><strong>Buffet Breakfast Package:</strong> CheckBox <code>chkBreakfast</code> costs <span class="rate-tag">R120.00 per guest per night</span> (calculated as <code>nights * guests * 120m</code>).</li>
-      <li><strong>Airport Shuttle Transfer:</strong> CheckBox <code>chkShuttle</code> adds a flat transfer surcharge of <span class="rate-tag">R350.00</span> per booking.</li>
-      <li><strong>Random Confirmation Reference:</strong> Class-level <code>Random rand = new Random();</code> generates a 4-digit booking code between <span class="rate-tag">1000 and 9999</span> via <code>rand.Next(1000, 10000)</code>.</li>
-      <li><strong>Defensive Button State Management:</strong> Button <code>btnConfirm</code> remains disabled (<code>Enabled = false</code>) until validation and cost calculation pass successfully.</li>
-    </ul>
-  </div>
-
-  <div class="scenario-section-header"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>
-  <div class="scenario-table-wrap">
-    <table class="scenario-spec-table">
-      <thead>
-        <tr>
-          <th>Control Name</th>
-          <th>Control Type</th>
-          <th>Default State / Text</th>
-          <th>Event / Handler</th>
-          <th>Technical Purpose &amp; Validation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>txtGuestName</code></td>
-          <td>TextBox</td>
-          <td>Empty (TabIndex = 0)</td>
-          <td>Focus target</td>
-          <td>Lead guest name. Validated non-empty using <code>string.IsNullOrWhiteSpace</code>.</td>
-        </tr>
-        <tr>
-          <td><code>txtNights</code></td>
-          <td>TextBox</td>
-          <td>Empty (TabIndex = 1)</td>
-          <td>Focus target</td>
-          <td>Length of stay in nights. Defensive check: integer between 1 and 30 inclusive.</td>
-        </tr>
-        <tr>
-          <td><code>txtGuests</code></td>
-          <td>TextBox</td>
-          <td>Empty (TabIndex = 2)</td>
-          <td>Focus target</td>
-          <td>Guest count. Must not exceed maximum capacity for the selected room tier.</td>
-        </tr>
-        <tr>
-          <td><code>grpRoomType</code></td>
-          <td>GroupBox</td>
-          <td>Text: "Room Category"</td>
-          <td>Container</td>
-          <td>Guarantees mutual exclusion for room category radio buttons.</td>
-        </tr>
-        <tr>
-          <td><code>rdoStandard</code></td>
-          <td>RadioButton</td>
-          <td>Checked = true</td>
-          <td>CheckedChanged</td>
-          <td>Standard Room selector (R950/night, max 2 guests). Default selection.</td>
-        </tr>
-        <tr>
-          <td><code>rdoDeluxe</code></td>
-          <td>RadioButton</td>
-          <td>Checked = false</td>
-          <td>CheckedChanged</td>
-          <td>Deluxe Suite selector (R1,450/night, max 3 guests).</td>
-        </tr>
-        <tr>
-          <td><code>rdoPenthouse</code></td>
-          <td>RadioButton</td>
-          <td>Checked = false</td>
-          <td>CheckedChanged</td>
-          <td>Penthouse Executive selector (R2,200/night, max 4 guests).</td>
-        </tr>
-        <tr>
-          <td><code>chkBreakfast</code></td>
-          <td>CheckBox</td>
-          <td>Checked = false</td>
-          <td>Click</td>
-          <td>Buffet breakfast add-on (R120 per person per night).</td>
-        </tr>
-        <tr>
-          <td><code>chkShuttle</code></td>
-          <td>CheckBox</td>
-          <td>Checked = false</td>
-          <td>Click</td>
-          <td>Airport shuttle transfer add-on (R350 flat fee).</td>
-        </tr>
-        <tr>
-          <td><code>btnCalculate</code></td>
-          <td>Button</td>
-          <td>Text: "&amp;Calculate Quote"</td>
-          <td><code>btnCalculate_Click</code></td>
-          <td>Validates inputs and capacity, calculates charges, enables <code>btnConfirm</code>.</td>
-        </tr>
-        <tr>
-          <td><code>btnConfirm</code></td>
-          <td>Button</td>
-          <td>Text: "C&amp;onfirm Booking" (Enabled=false)</td>
-          <td><code>btnConfirm_Click</code></td>
-          <td>Generates random reference, prints receipt in ListBox, confirms reservation.</td>
-        </tr>
-        <tr>
-          <td><code>btnClear</code></td>
-          <td>Button</td>
-          <td>Text: "&amp;Clear"</td>
-          <td><code>btnClear_Click</code></td>
-          <td>Resets inputs, disables confirm button, clears ListBox, restores focus.</td>
-        </tr>
-        <tr>
-          <td><code>btnExit</code></td>
-          <td>Button</td>
-          <td>Text: "E&amp;xit"</td>
-          <td><code>btnExit_Click</code></td>
-          <td>Closes the reservation system via <code>this.Close();</code>.</td>
-        </tr>
-        <tr>
-          <td><code>lblTotalDue</code></td>
-          <td>Label</td>
-          <td>Text: "" (BorderStyle = Fixed3D)</td>
-          <td>Output target</td>
-          <td>Displays grand total quote formatted as South African currency (<code>ToString("C")</code>).</td>
-        </tr>
-        <tr>
-          <td><code>lstReceipt</code></td>
-          <td>ListBox</td>
-          <td>Empty (Monospace font)</td>
-          <td>Output target</td>
-          <td>Displays itemized reservation receipt and random confirmation reference code.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="scenario-section-header"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>
-  <div class="scenario-callout">
-    <ol>
-      <li><strong>Defensive Duration &amp; Guest Parsing:</strong> Nights must parse to an integer with <code>int.TryParse(txtNights.Text, out nights)</code> satisfying <code>nights &gt;= 1 &amp;&amp; nights &lt;= 30</code>. Guests must parse to integer <code>int.TryParse(txtGuests.Text, out guests)</code> satisfying <code>guests &gt;= 1</code>.</li>
-      <li><strong>Capacity Validation:</strong> Determine max capacity: Standard allows 2; Deluxe allows 3; Penthouse allows 4. If <code>guests &gt; maxCapacity</code>, show <code>MessageBox.Show($"Selected room allows a maximum of {maxCapacity} guests.", "Capacity Exceeded")</code>, focus <code>txtGuests</code>, and <code>return;</code>.</li>
-      <li><strong>Base Room Cost:</strong> <code>roomCharge = nights * roomRate</code>.</li>
-      <li><strong>Breakfast &amp; Shuttle:</strong> <code>breakfastCharge = chkBreakfast.Checked ? (nights * guests * 120m) : 0m</code>. <code>shuttleCharge = chkShuttle.Checked ? 350m : 0m</code>.</li>
-      <li><strong>Grand Total:</strong> <code>totalDue = roomCharge + breakfastCharge + shuttleCharge</code>. Format with <code>lblTotalDue.Text = totalDue.ToString("C");</code>.</li>
-      <li><strong>Confirmation Execution:</strong> On quote success, set <code>btnConfirm.Enabled = true;</code>. When clicked, generate <code>int refCode = rand.Next(1000, 10000);</code> and populate itemized lines in <code>lstReceipt.Items.Add(...)</code>.</li>
-    </ol>
-  </div>
-</div>`,
+      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>📋 Problem Scenario: Riverside Hotel &amp; Conference Centre Reservation Engine</strong><br>\n    Riverside Hotel &amp; Conference Centre (Vanderbijlpark) automates guest reservation billing. Front office staff capture guest particulars, length of stay in nights, room tier selection, optional breakfast catering packages, validate guest capacity, generate a random 4-digit booking reservation reference, and output an itemized billing receipt in a ListBox.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📊 1. Room Categories, Rates &amp; Guest Capacity Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Room Category</th>\n          <th>GUI RadioButton</th>\n          <th>Nightly Room Rate</th>\n          <th>Maximum Guest Capacity</th>\n          <th>Included Room Amenities</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>Standard Room</strong></td>\n          <td><code>rdoStandard</code></td>\n          <td><span class=\"rate-tag\">R950.00 / night</span></td>\n          <td>Max 2 guests</td>\n          <td>Queen bed, en-suite shower, Wi-Fi</td>\n        </tr>\n        <tr>\n          <td><strong>Deluxe Suite</strong></td>\n          <td><code>rdoDeluxe</code></td>\n          <td><span class=\"rate-tag\">R1,450.00 / night</span></td>\n          <td>Max 3 guests</td>\n          <td>King bed, river view balcony, mini-bar</td>\n        </tr>\n        <tr>\n          <td><strong>Penthouse Executive</strong></td>\n          <td><code>rdoPenthouse</code></td>\n          <td><span class=\"rate-tag\">R2,200.00 / night</span></td>\n          <td>Max 4 guests</td>\n          <td>2 bedrooms, lounge, jacuzzi, butler service</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);\">\n    <strong>⚙️ Catering Packages, Airport Transfers &amp; Booking Reference:</strong>\n    <ul>\n      <li><strong>Buffet Breakfast Package:</strong> CheckBox <code>chkBreakfast</code> costs <span class=\"rate-tag\">R120.00 per guest per night</span> (calculated as <code>nights * guests * 120m</code>).</li>\n      <li><strong>Airport Shuttle Transfer:</strong> CheckBox <code>chkShuttle</code> adds a flat transfer surcharge of <span class=\"rate-tag\">R350.00</span> per booking.</li>\n      <li><strong>Random Confirmation Reference:</strong> Class-level <code>Random rand = new Random();</code> generates a 4-digit booking code between <span class=\"rate-tag\">1000 and 9999</span> via <code>rand.Next(1000, 10000)</code>.</li>\n      <li><strong>Defensive Button State Management:</strong> Button <code>btnConfirm</code> remains disabled (<code>Enabled = false</code>) until validation and cost calculation pass successfully.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtGuestName</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Lead guest name. Validated non-empty using <code>string.IsNullOrWhiteSpace</code>.</td>\n        </tr>\n        <tr>\n          <td><code>txtNights</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 1)</td>\n          <td>Focus target</td>\n          <td>Length of stay in nights. Defensive check: integer between 1 and 30 inclusive.</td>\n        </tr>\n        <tr>\n          <td><code>txtGuests</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 2)</td>\n          <td>Focus target</td>\n          <td>Guest count. Must not exceed maximum capacity for the selected room tier.</td>\n        </tr>\n        <tr>\n          <td><code>grpRoomType</code></td>\n          <td>GroupBox</td>\n          <td>Text: \"Room Category\"</td>\n          <td>Container</td>\n          <td>Guarantees mutual exclusion for room category radio buttons.</td>\n        </tr>\n        <tr>\n          <td><code>rdoStandard</code></td>\n          <td>RadioButton</td>\n          <td>Checked = true</td>\n          <td>CheckedChanged</td>\n          <td>Standard Room selector (R950/night, max 2 guests). Default selection.</td>\n        </tr>\n        <tr>\n          <td><code>rdoDeluxe</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Deluxe Suite selector (R1,450/night, max 3 guests).</td>\n        </tr>\n        <tr>\n          <td><code>rdoPenthouse</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Penthouse Executive selector (R2,200/night, max 4 guests).</td>\n        </tr>\n        <tr>\n          <td><code>chkBreakfast</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Buffet breakfast add-on (R120 per person per night).</td>\n        </tr>\n        <tr>\n          <td><code>chkShuttle</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Airport shuttle transfer add-on (R350 flat fee).</td>\n        </tr>\n        <tr>\n          <td><code>btnCalculate</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Calculate Quote\"</td>\n          <td><code>btnCalculate_Click</code></td>\n          <td>Validates inputs and capacity, calculates charges, enables <code>btnConfirm</code>.</td>\n        </tr>\n        <tr>\n          <td><code>btnConfirm</code></td>\n          <td>Button</td>\n          <td>Text: \"C&amp;onfirm Booking\" (Enabled=false)</td>\n          <td><code>btnConfirm_Click</code></td>\n          <td>Generates random reference, prints receipt in ListBox, confirms reservation.</td>\n        </tr>\n        <tr>\n          <td><code>btnClear</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Clear\"</td>\n          <td><code>btnClear_Click</code></td>\n          <td>Resets inputs, disables confirm button, clears ListBox, restores focus.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Closes the reservation system via <code>this.Close();</code>.</td>\n        </tr>\n        <tr>\n          <td><code>lblTotalDue</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays grand total quote formatted as South African currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstReceipt</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Displays itemized reservation receipt and random confirmation reference code.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Defensive Duration &amp; Guest Parsing:</strong> Nights must parse to an integer with <code>int.TryParse(txtNights.Text, out nights)</code> satisfying <code>nights &gt;= 1 &amp;&amp; nights &lt;= 30</code>. Guests must parse to integer <code>int.TryParse(txtGuests.Text, out guests)</code> satisfying <code>guests &gt;= 1</code>.</li>\n      <li><strong>Capacity Validation:</strong> Determine max capacity: Standard allows 2; Deluxe allows 3; Penthouse allows 4. If <code>guests &gt; maxCapacity</code>, show <code>MessageBox.Show($\"Selected room allows a maximum of {maxCapacity} guests.\", \"Capacity Exceeded\")</code>, focus <code>txtGuests</code>, and <code>return;</code>.</li>\n      <li><strong>Base Room Cost:</strong> <code>roomCharge = nights * roomRate</code>.</li>\n      <li><strong>Breakfast &amp; Shuttle:</strong> <code>breakfastCharge = chkBreakfast.Checked ? (nights * guests * 120m) : 0m</code>. <code>shuttleCharge = chkShuttle.Checked ? 350m : 0m</code>.</li>\n      <li><strong>Grand Total:</strong> <code>totalDue = roomCharge + breakfastCharge + shuttleCharge</code>. Format with <code>lblTotalDue.Text = totalDue.ToString(\"C\");</code>.</li>\n      <li><strong>Confirmation Execution:</strong> On quote success, set <code>btnConfirm.Enabled = true;</code>. When clicked, generate <code>int refCode = rand.Next(1000, 10000);</code> and populate itemized lines in <code>lstReceipt.Items.Add(...)</code>.</li>\n    </ol>\n  </div>\n</div>",
       "subQuestionIds": [
         "q_su-exam_399",
         "q_su-exam_400",
@@ -949,181 +243,7 @@
       "totalMarks": 100,
       "badge": "PEC 2024 Exam",
       "scenario": "Retail Inventory, Tiered Volume Discounts & POS Cash Register: Point-of-sale terminal calculating subtotal, quantity tiered discounts, loyalty points, accumulator loop for cart items, and formatted receipt output.",
-      "scenarioHtml": `<div class="scenario-brief-container">
-  <div class="scenario-callout">
-    <strong>📋 Problem Scenario: Campus Superstore POS Cash Register &amp; Loyalty Rewards Terminal</strong><br>
-    The NWU Student Centre Campus Superstore operates a point-of-sale desktop cash register. Cashiers record retail merchandise, enter unit prices and quantities, calculate tiered quantity volume discounts, evaluate gold customer loyalty membership discounts, accumulate running session revenue totals across customer transactions using class-level field variables, calculate loyalty rewards points, and output itemized till receipts to a ListBox.
-  </div>
-
-  <div class="scenario-section-header"><span>📊 1. Tiered Volume Discounts &amp; Loyalty Rewards Table</span></div>
-  <div class="scenario-table-wrap">
-    <table class="scenario-spec-table">
-      <thead>
-        <tr>
-          <th>Purchased Quantity Band</th>
-          <th>Pricing Tier</th>
-          <th>Volume Discount Rate</th>
-          <th>Condition Evaluated in C#</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>1 to 4 units</strong></td>
-          <td>Standard / Single</td>
-          <td><span class="rate-tag">0% (No discount)</span></td>
-          <td><code>qty &lt; 5</code></td>
-        </tr>
-        <tr>
-          <td><strong>5 to 9 units</strong></td>
-          <td>Bulk Pack Tier</td>
-          <td><span class="rate-tag">5% volume discount (0.05m)</span></td>
-          <td><code>qty &gt;= 5 &amp;&amp; qty &lt;= 9</code></td>
-        </tr>
-        <tr>
-          <td><strong>10 or more units</strong></td>
-          <td>Wholesale Volume Tier</td>
-          <td><span class="rate-tag">15% volume discount (0.15m)</span></td>
-          <td><code>qty &gt;= 10</code></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="scenario-callout" style="border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);">
-    <strong>⚙️ Gold Membership, Loyalty Points &amp; Accumulator Variables:</strong>
-    <ul>
-      <li><strong>Gold Customer Loyalty Card:</strong> CheckBox <code>chkGoldCard</code> applies an <span class="rate-tag">additional 5% discount (0.05m)</span> on the post-volume-discount subtotal.</li>
-      <li><strong>Customer Loyalty Rewards Points:</strong> Customers earn <span class="rate-tag">1 point for every complete R50.00</span> spent on net sale total (<code>(int)(netTotal / 50m)</code>). Formatted as 5 digits with leading zeros (e.g., <code>points.ToString("D5")</code>).</li>
-      <li><strong>Session Grand Total Accumulator:</strong> Private class-level field variable <code>private decimal _sessionRevenue = 0m;</code> accumulates gross revenue across all sales in the cashier shift.</li>
-      <li><strong>Cart Modification:</strong> Cashiers can delete an item from <code>lstReceipt</code> via <code>lstReceipt.Items.RemoveAt(lstReceipt.SelectedIndex)</code> after confirming <code>lstReceipt.SelectedIndex != -1</code>.</li>
-    </ul>
-  </div>
-
-  <div class="scenario-section-header"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>
-  <div class="scenario-table-wrap">
-    <table class="scenario-spec-table">
-      <thead>
-        <tr>
-          <th>Control Name</th>
-          <th>Control Type</th>
-          <th>Default State / Text</th>
-          <th>Event / Handler</th>
-          <th>Technical Purpose &amp; Validation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>txtItemName</code></td>
-          <td>TextBox</td>
-          <td>Empty (TabIndex = 0)</td>
-          <td>Focus target</td>
-          <td>Product description. Validated non-empty with <code>string.IsNullOrWhiteSpace</code>.</td>
-        </tr>
-        <tr>
-          <td><code>txtPrice</code></td>
-          <td>TextBox</td>
-          <td>Empty (TabIndex = 1)</td>
-          <td>Focus target</td>
-          <td>Item unit price. Defensive check: positive decimal (<code>decimal.TryParse</code>, &gt; 0).</td>
-        </tr>
-        <tr>
-          <td><code>txtQuantity</code></td>
-          <td>TextBox</td>
-          <td>Empty (TabIndex = 2)</td>
-          <td>Focus target</td>
-          <td>Units purchased. Defensive check: positive integer (<code>int.TryParse</code>, &gt;= 1).</td>
-        </tr>
-        <tr>
-          <td><code>chkGoldCard</code></td>
-          <td>CheckBox</td>
-          <td>Checked = false</td>
-          <td>Click</td>
-          <td>Toggles additional 5% gold member loyalty card discount.</td>
-        </tr>
-        <tr>
-          <td><code>btnAddItem</code></td>
-          <td>Button</td>
-          <td>Text: "&amp;Add Line Item"</td>
-          <td><code>btnAddItem_Click</code></td>
-          <td>Validates line, applies volume tier discount, appends to ListBox, updates cart total.</td>
-        </tr>
-        <tr>
-          <td><code>btnRemoveItem</code></td>
-          <td>Button</td>
-          <td>Text: "&amp;Remove Selected"</td>
-          <td><code>btnRemoveItem_Click</code></td>
-          <td>Validates <code>SelectedIndex != -1</code>, removes selected line item from ListBox cart.</td>
-        </tr>
-        <tr>
-          <td><code>btnCheckout</code></td>
-          <td>Button</td>
-          <td>Text: "&amp;Checkout"</td>
-          <td><code>btnCheckout_Click</code></td>
-          <td>Calculates loyalty points, adds to shift session revenue accumulator, displays confirmation.</td>
-        </tr>
-        <tr>
-          <td><code>btnNewSale</code></td>
-          <td>Button</td>
-          <td>Text: "&amp;New Customer Sale"</td>
-          <td><code>btnNewSale_Click</code></td>
-          <td>Clears cart ListBox and current cart totals while preserving session shift accumulator.</td>
-        </tr>
-        <tr>
-          <td><code>btnExit</code></td>
-          <td>Button</td>
-          <td>Text: "E&amp;xit"</td>
-          <td><code>btnExit_Click</code></td>
-          <td>Confirmation dialog and form closure via <code>this.Close();</code>.</td>
-        </tr>
-        <tr>
-          <td><code>lblCurrentTotal</code></td>
-          <td>Label</td>
-          <td>Text: "" (Fixed3D, Bold)</td>
-          <td>Output target</td>
-          <td>Displays current customer transaction subtotal formatted as currency (<code>ToString("C")</code>).</td>
-        </tr>
-        <tr>
-          <td><code>lblSessionTotal</code></td>
-          <td>Label</td>
-          <td>Text: "" (BorderStyle = Fixed3D)</td>
-          <td>Output target</td>
-          <td>Displays shift session revenue accumulator formatted as currency (<code>ToString("C")</code>).</td>
-        </tr>
-        <tr>
-          <td><code>lblLoyaltyPoints</code></td>
-          <td>Label</td>
-          <td>Text: "" (BorderStyle = Fixed3D)</td>
-          <td>Output target</td>
-          <td>Displays 5-digit formatted loyalty points earned (e.g. <code>00125</code>).</td>
-        </tr>
-        <tr>
-          <td><code>lstReceipt</code></td>
-          <td>ListBox</td>
-          <td>Empty (Monospace font)</td>
-          <td>Output target</td>
-          <td>Itemized sales till receipt showing item name, quantity, unit price, discount, and line total.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="scenario-section-header"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>
-  <div class="scenario-callout">
-    <ol>
-      <li><strong>Defensive Parsing:</strong> Price must be parsed with <code>decimal.TryParse(txtPrice.Text, out price)</code> and satisfy <code>price &gt; 0</code>. Quantity must parse with <code>int.TryParse(txtQuantity.Text, out qty)</code> and satisfy <code>qty &gt;= 1</code>. On error, display message box, set focus, select all, and return.</li>
-      <li><strong>Gross Line Subtotal:</strong> <code>grossLine = qty * price</code>.</li>
-      <li><strong>Volume Discount Tier:</strong>
-        <code>if (qty &gt;= 10) volumeDiscount = grossLine * 0.15m;</code><br>
-        <code>else if (qty &gt;= 5) volumeDiscount = grossLine * 0.05m;</code><br>
-        <code>else volumeDiscount = 0m;</code><br>
-        <code>netLine = grossLine - volumeDiscount;</code>
-      </li>
-      <li><strong>Gold Member Surcharge / Discount:</strong> If <code>chkGoldCard.Checked</code>, <code>goldDiscount = netLine * 0.05m;</code> final line total = <code>netLine - goldDiscount</code>.</li>
-      <li><strong>Cart Accumulation:</strong> <code>_currentCartTotal += finalLineTotal;</code>. Update <code>lblCurrentTotal.Text = _currentCartTotal.ToString("C");</code>. Add line item to <code>lstReceipt.Items.Add(...)</code>.</li>
-      <li><strong>Checkout Execution:</strong> In <code>btnCheckout_Click</code>, calculate <code>int points = (int)(_currentCartTotal / 50m);</code>. Format points with <code>lblLoyaltyPoints.Text = points.ToString("D5");</code>. Add to session grand total: <code>_sessionRevenue += _currentCartTotal;</code> and update <code>lblSessionTotal.Text = _sessionRevenue.ToString("C");</code>.</li>
-    </ol>
-  </div>
-</div>`,
+      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>📋 Problem Scenario: Campus Superstore POS Cash Register &amp; Loyalty Rewards Terminal</strong><br>\n    The NWU Student Centre Campus Superstore operates a point-of-sale desktop cash register. Cashiers record retail merchandise, enter unit prices and quantities, calculate tiered quantity volume discounts, evaluate gold customer loyalty membership discounts, accumulate running session revenue totals across customer transactions using class-level field variables, calculate loyalty rewards points, and output itemized till receipts to a ListBox.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📊 1. Tiered Volume Discounts &amp; Loyalty Rewards Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Purchased Quantity Band</th>\n          <th>Pricing Tier</th>\n          <th>Volume Discount Rate</th>\n          <th>Condition Evaluated in C#</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>1 to 4 units</strong></td>\n          <td>Standard / Single</td>\n          <td><span class=\"rate-tag\">0% (No discount)</span></td>\n          <td><code>qty &lt; 5</code></td>\n        </tr>\n        <tr>\n          <td><strong>5 to 9 units</strong></td>\n          <td>Bulk Pack Tier</td>\n          <td><span class=\"rate-tag\">5% volume discount (0.05m)</span></td>\n          <td><code>qty &gt;= 5 &amp;&amp; qty &lt;= 9</code></td>\n        </tr>\n        <tr>\n          <td><strong>10 or more units</strong></td>\n          <td>Wholesale Volume Tier</td>\n          <td><span class=\"rate-tag\">15% volume discount (0.15m)</span></td>\n          <td><code>qty &gt;= 10</code></td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);\">\n    <strong>⚙️ Gold Membership, Loyalty Points &amp; Accumulator Variables:</strong>\n    <ul>\n      <li><strong>Gold Customer Loyalty Card:</strong> CheckBox <code>chkGoldCard</code> applies an <span class=\"rate-tag\">additional 5% discount (0.05m)</span> on the post-volume-discount subtotal.</li>\n      <li><strong>Customer Loyalty Rewards Points:</strong> Customers earn <span class=\"rate-tag\">1 point for every complete R50.00</span> spent on net sale total (<code>(int)(netTotal / 50m)</code>). Formatted as 5 digits with leading zeros (e.g., <code>points.ToString(\"D5\")</code>).</li>\n      <li><strong>Session Grand Total Accumulator:</strong> Private class-level field variable <code>private decimal _sessionRevenue = 0m;</code> accumulates gross revenue across all sales in the cashier shift.</li>\n      <li><strong>Cart Modification:</strong> Cashiers can delete an item from <code>lstReceipt</code> via <code>lstReceipt.Items.RemoveAt(lstReceipt.SelectedIndex)</code> after confirming <code>lstReceipt.SelectedIndex != -1</code>.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtItemName</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Product description. Validated non-empty with <code>string.IsNullOrWhiteSpace</code>.</td>\n        </tr>\n        <tr>\n          <td><code>txtPrice</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 1)</td>\n          <td>Focus target</td>\n          <td>Item unit price. Defensive check: positive decimal (<code>decimal.TryParse</code>, &gt; 0).</td>\n        </tr>\n        <tr>\n          <td><code>txtQuantity</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 2)</td>\n          <td>Focus target</td>\n          <td>Units purchased. Defensive check: positive integer (<code>int.TryParse</code>, &gt;= 1).</td>\n        </tr>\n        <tr>\n          <td><code>chkGoldCard</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Toggles additional 5% gold member loyalty card discount.</td>\n        </tr>\n        <tr>\n          <td><code>btnAddItem</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Add Line Item\"</td>\n          <td><code>btnAddItem_Click</code></td>\n          <td>Validates line, applies volume tier discount, appends to ListBox, updates cart total.</td>\n        </tr>\n        <tr>\n          <td><code>btnRemoveItem</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Remove Selected\"</td>\n          <td><code>btnRemoveItem_Click</code></td>\n          <td>Validates <code>SelectedIndex != -1</code>, removes selected line item from ListBox cart.</td>\n        </tr>\n        <tr>\n          <td><code>btnCheckout</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Checkout\"</td>\n          <td><code>btnCheckout_Click</code></td>\n          <td>Calculates loyalty points, adds to shift session revenue accumulator, displays confirmation.</td>\n        </tr>\n        <tr>\n          <td><code>btnNewSale</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;New Customer Sale\"</td>\n          <td><code>btnNewSale_Click</code></td>\n          <td>Clears cart ListBox and current cart totals while preserving session shift accumulator.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Confirmation dialog and form closure via <code>this.Close();</code>.</td>\n        </tr>\n        <tr>\n          <td><code>lblCurrentTotal</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (Fixed3D, Bold)</td>\n          <td>Output target</td>\n          <td>Displays current customer transaction subtotal formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblSessionTotal</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays shift session revenue accumulator formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblLoyaltyPoints</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays 5-digit formatted loyalty points earned (e.g. <code>00125</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstReceipt</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Itemized sales till receipt showing item name, quantity, unit price, discount, and line total.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Defensive Parsing:</strong> Price must be parsed with <code>decimal.TryParse(txtPrice.Text, out price)</code> and satisfy <code>price &gt; 0</code>. Quantity must parse with <code>int.TryParse(txtQuantity.Text, out qty)</code> and satisfy <code>qty &gt;= 1</code>. On error, display message box, set focus, select all, and return.</li>\n      <li><strong>Gross Line Subtotal:</strong> <code>grossLine = qty * price</code>.</li>\n      <li><strong>Volume Discount Tier:</strong>\n        <code>if (qty &gt;= 10) volumeDiscount = grossLine * 0.15m;</code><br>\n        <code>else if (qty &gt;= 5) volumeDiscount = grossLine * 0.05m;</code><br>\n        <code>else volumeDiscount = 0m;</code><br>\n        <code>netLine = grossLine - volumeDiscount;</code>\n      </li>\n      <li><strong>Gold Member Surcharge / Discount:</strong> If <code>chkGoldCard.Checked</code>, <code>goldDiscount = netLine * 0.05m;</code> final line total = <code>netLine - goldDiscount</code>.</li>\n      <li><strong>Cart Accumulation:</strong> <code>_currentCartTotal += finalLineTotal;</code>. Update <code>lblCurrentTotal.Text = _currentCartTotal.ToString(\"C\");</code>. Add line item to <code>lstReceipt.Items.Add(...)</code>.</li>\n      <li><strong>Checkout Execution:</strong> In <code>btnCheckout_Click</code>, calculate <code>int points = (int)(_currentCartTotal / 50m);</code>. Format points with <code>lblLoyaltyPoints.Text = points.ToString(\"D5\");</code>. Add to session grand total: <code>_sessionRevenue += _currentCartTotal;</code> and update <code>lblSessionTotal.Text = _sessionRevenue.ToString(\"C\");</code>.</li>\n    </ol>\n  </div>\n</div>",
       "subQuestionIds": [
         "q_su-exam_415",
         "q_su-exam_416",
@@ -2713,8 +1833,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "According to Shneiderman's 8 Golden Rules, why is 'Consistency' considered the first and most fundamental rule?",
-      "title": "According to Shneiderman's 8 Golden Rules, why is 'Consistency' considered the first and most fundamental rule?",
+      "q": "Why is 'Strive for consistency' considered the first and most fundamental of Shneiderman's 8 Golden Rules?",
+      "title": "Why is 'Strive for consistency' considered the first and most fundamental of Shneiderman's 8 Golden Rules?",
       "options": [
         "It requires all buttons to be bright red",
         "Consistent terminology, color schemes, layouts, and input patterns enable users to transfer learned knowledge effortlessly",
@@ -2947,8 +2067,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "When a user enters an invalid number in a TextBox, which feedback mechanism is most effective according to HCI error handling principles?",
-      "title": "When a user enters an invalid number in a TextBox, which feedback mechanism is most effective according to HCI error handling principles?",
+      "q": "When a user enters an invalid number in a TextBox, which error feedback mechanism is most effective under HCI design principles?",
+      "title": "When a user enters an invalid number in a TextBox, which error feedback mechanism is most effective under HCI design principles?",
       "options": [
         "Crashing the application immediately with an unhandled exception",
         "Displaying a polite, constructive error message explaining the valid range and placing focus back on the offending control",
@@ -3025,8 +2145,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "When designing for elderly users, which interface adjustment is most critical according to Universal Usability guidelines?",
-      "title": "When designing for elderly users, which interface adjustment is most critical according to Universal Usability guidelines?",
+      "q": "When designing interfaces for elderly users, which Universal Usability adjustment is most critical?",
+      "title": "When designing interfaces for elderly users, which Universal Usability adjustment is most critical?",
       "options": [
         "Smaller fonts and low-contrast grayscale colors",
         "Higher contrast ratios, adjustable font sizes, and larger click targets",
@@ -3519,8 +2639,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "In Practical 1 (Racing Light Trainer), the form uses red, amber, and green light images but ALSO updates lblInstruction with 'STOP', 'GET READY', and 'GO'. Why is this redundant coding vital for universal usability?",
-      "title": "In Practical 1 (Racing Light Trainer), the form uses red, amber, and green light images but ALSO updates lblInstruction with 'STOP', 'GET READY', and 'GO'. Why is this redundant coding vital for universal usability?",
+      "q": "On a traffic signal trainer form, red, amber, and green light PictureBoxes are paired with a Label (lblInstruction) displaying 'STOP', 'GET READY', and 'GO'. Why is this redundant coding vital for universal usability?",
+      "title": "On a traffic signal trainer form, red, amber, and green light PictureBoxes are paired with a Label (lblInstruction) displaying 'STOP', 'GET READY', and 'GO'. Why is this redundant coding vital for universal usability?",
       "options": [
         "It forces the C# compiler to allocate double the graphics memory",
         "It is a required syntax requirement of .NET Framework 4.8",
@@ -3753,8 +2873,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "According to Shneiderman's 3rd Golden Rule ('Offer informative feedback'), how should the interface respond when a user clicks 'Add Item' to insert a product into a shopping cart ListBox?",
-      "title": "According to Shneiderman's 3rd Golden Rule ('Offer informative feedback'), how should the interface respond when a user clicks 'Add Item' to insert a product into a shopping cart ListBox?",
+      "q": "Under Shneiderman's 3rd Golden Rule ('Offer informative feedback'), how should an interface respond when a user clicks 'Add Item' to insert a product into a shopping cart ListBox?",
+      "title": "Under Shneiderman's 3rd Golden Rule ('Offer informative feedback'), how should an interface respond when a user clicks 'Add Item' to insert a product into a shopping cart ListBox?",
       "options": [
         "Immediately append the item to the ListBox and update the running total label",
         "Give no visual response until the entire application is closed",
@@ -3805,8 +2925,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "Which design technique best embodies Shneiderman's 4th Golden Rule ('Design dialogs to yield closure') upon completing a multi-step booking process in Practical 5 (Vaal River Cruises)?",
-      "title": "Which design technique best embodies Shneiderman's 4th Golden Rule ('Design dialogs to yield closure') upon completing a multi-step booking process in Practical 5 (Vaal River Cruises)?",
+      "q": "Which design technique best embodies Shneiderman's 4th Golden Rule ('Design dialogs to yield closure') upon completing a multi-step booking process?",
+      "title": "Which design technique best embodies Shneiderman's 4th Golden Rule ('Design dialogs to yield closure') upon completing a multi-step booking process?",
       "options": [
         "Abruptly closing the form without any message",
         "Leaving input fields filled with no indication whether the booking was registered",
@@ -3857,8 +2977,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "In Practical 2 (Braai Master 3000), using decimal.TryParse() to guard text inputs instead of raw decimal.Parse() satisfies which Golden Rule?",
-      "title": "In Practical 2 (Braai Master 3000), using decimal.TryParse() to guard text inputs instead of raw decimal.Parse() satisfies which Golden Rule?",
+      "q": "Using decimal.TryParse() to guard numeric text inputs instead of raw decimal.Parse() satisfies which of Shneiderman's 8 Golden Rules?",
+      "title": "Using decimal.TryParse() to guard numeric text inputs instead of raw decimal.Parse() satisfies which of Shneiderman's 8 Golden Rules?",
       "options": [
         "Rule 5: Prevent errors (and handle them gracefully when they occur)",
         "Rule 8: Reduce short-term memory load only",
@@ -3909,8 +3029,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "What is the HCI justification for providing a dedicated 'Clear' button (btnClear) in Practical 2 and Practical 4?",
-      "title": "What is the HCI justification for providing a dedicated 'Clear' button (btnClear) in Practical 2 and Practical 4?",
+      "q": "What is the HCI justification for providing a dedicated 'Clear' button (btnClear) on a data-entry form?",
+      "title": "What is the HCI justification for providing a dedicated 'Clear' button (btnClear) on a data-entry form?",
       "options": [
         "It is mandatory to free RAM from Windows OS paging",
         "It forces the garbage collector to immediately purge all controls",
@@ -3935,8 +3055,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "When a user clicks 'btnExit', Practical 4 requires displaying a MessageBox asking 'Are you sure you want to exit?' with Yes and No buttons. Which usability rule does this enforce?",
-      "title": "When a user clicks 'btnExit', Practical 4 requires displaying a MessageBox asking 'Are you sure you want to exit?' with Yes and No buttons. Which usability rule does this enforce?",
+      "q": "When a user clicks 'btnExit', displaying a MessageBox asking 'Are you sure you want to exit?' with Yes and No buttons enforces which usability rule?",
+      "title": "When a user clicks 'btnExit', displaying a MessageBox asking 'Are you sure you want to exit?' with Yes and No buttons enforces which usability rule?",
       "options": [
         "Rule 1: Strive for consistency only",
         "Rule 2: Cater to universal usability only",
@@ -4060,13 +3180,13 @@
       "provenance": "Shneiderman §2.3.1",
       "marks": 2
     },
-        {
+    {
       "id": "q_su7_058",
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "According to Shneiderman's 5th Golden Rule ('Prevent errors'), why is wrapping user input conversion in a `try-catch (FormatException)` block or using `double.TryParse` considered superior interface design in Practical 29?",
-      "title": "According to Shneiderman's 5th Golden Rule ('Prevent errors'), why is wrapping user input conversion in a `try-catch (FormatException)` block or using `double.TryParse` considered superior interface design in Practical 29?",
+      "q": "Under Shneiderman's 5th Golden Rule ('Prevent errors'), why is wrapping user input conversion in a try-catch (FormatException) block or using double.TryParse superior interface design?",
+      "title": "Under Shneiderman's 5th Golden Rule ('Prevent errors'), why is wrapping user input conversion in a try-catch (FormatException) block or using double.TryParse superior interface design?",
       "options": [
         "It suppresses all compiler errors at build time so the project compiles regardless of syntax mistakes",
         "It forces the operating system to automatically retry the parse using a default value of 0.0 without notifying the user",
@@ -4086,13 +3206,13 @@
       "provenance": "Shneiderman Ch 2 / Practical 29 HCI Alignment",
       "marks": 2
     },
-        {
+    {
       "id": "q_su7_059",
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "In Practical 29, when a student clicks 'btnCalculate' and `lblAverage.Text` immediately displays 'Average: 82.50%', which of Don Norman's conceptual user interface gulfs is bridged for the student?",
-      "title": "In Practical 29, when a student clicks 'btnCalculate' and `lblAverage.Text` immediately displays 'Average: 82.50%', which of Don Norman's conceptual user interface gulfs is bridged for the student?",
+      "q": "When a user clicks 'btnCalculate' and lblAverage.Text immediately displays 'Average: 82.50%', which of Don Norman's conceptual user interface gulfs is bridged?",
+      "title": "When a user clicks 'btnCalculate' and lblAverage.Text immediately displays 'Average: 82.50%', which of Don Norman's conceptual user interface gulfs is bridged?",
       "options": [
         "The Gulf of Execution (determining how to formulate and perform the physical actions required by the system)",
         "The Gulf of Affordance (perceiving what physical manipulations are possible on form controls)",
@@ -4117,8 +3237,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "In Practical 1 (Racing Light Trainer), when a user clicks 'btnGo', the application immediately displays the green light (picGreen.Visible = true) and sets lblInstruction.Text = 'GO'. Which gulf does this immediate visual response bridge?",
-      "title": "In Practical 1 (Racing Light Trainer), when a user clicks 'btnGo', the application immediately displays the green light (picGreen.Visible = true) and sets lblInstruction.Text = 'GO'. Which gulf does this immediate visual response bridge?",
+      "q": "When a user clicks 'btnGo' and the form immediately displays the green light (picGreen.Visible = true) and sets lblInstruction.Text = 'GO', which of Don Norman's gulfs is bridged?",
+      "title": "When a user clicks 'btnGo' and the form immediately displays the green light (picGreen.Visible = true) and sets lblInstruction.Text = 'GO', which of Don Norman's gulfs is bridged?",
       "options": [
         "The Gulf of Execution only",
         "The Gulf of Compilation",
@@ -4169,8 +3289,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "According to Fitts' Law in Human-Computer Interaction, what factors determine the time required to rapidly move to and click a target control?",
-      "title": "According to Fitts' Law in Human-Computer Interaction, what factors determine the time required to rapidly move to and click a target control?",
+      "q": "In Fitts' Law, what two physical factors determine the time required to rapidly move to and click a target control?",
+      "title": "In Fitts' Law, what two physical factors determine the time required to rapidly move to and click a target control?",
       "options": [
         "The distance to the target and the physical width/size of the target",
         "The color depth of the monitor and the RAM capacity",
@@ -4195,8 +3315,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "How does Fitts' Law practically advise a CMPG122 student when designing the 'Calculate' button on a data-entry form?",
-      "title": "How does Fitts' Law practically advise a CMPG122 student when designing the 'Calculate' button on a data-entry form?",
+      "q": "How does Fitts' Law guide the sizing and placement of the primary 'Calculate' button on a data-entry form?",
+      "title": "How does Fitts' Law guide the sizing and placement of the primary 'Calculate' button on a data-entry form?",
       "options": [
         "Make the button tiny and hide it in the top corner of the screen",
         "Make the primary action button sufficiently large and place it directly adjacent to the input fields in the user's natural scanning path",
@@ -4221,8 +3341,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "According to Hick-Hyman Law, what happens to user decision time as the number of unorganized choices on an interface increases?",
-      "title": "According to Hick-Hyman Law, what happens to user decision time as the number of unorganized choices on an interface increases?",
+      "q": "Under the Hick-Hyman Law, what happens to user decision time as the number of unorganized choices on an interface increases?",
+      "title": "Under the Hick-Hyman Law, what happens to user decision time as the number of unorganized choices on an interface increases?",
       "options": [
         "Decision time drops to zero immediately",
         "Users always choose the first option without thinking",
@@ -4247,8 +3367,8 @@
       "ch": "SU7",
       "su": "SU7",
       "type": "mcq",
-      "q": "Why is it superior usability practice to use RadioButtons grouped in a GroupBox (as in Practical 5 for Cruise Time: Daytime vs Sunset) rather than letting users type 'day' or 'sunset' into a TextBox?",
-      "title": "Why is it superior usability practice to use RadioButtons grouped in a GroupBox (as in Practical 5 for Cruise Time: Daytime vs Sunset) rather than letting users type 'day' or 'sunset' into a TextBox?",
+      "q": "Why is it superior usability practice to use RadioButtons grouped in a GroupBox (e.g., Daytime vs Sunset) rather than letting users type 'day' or 'sunset' into a TextBox?",
+      "title": "Why is it superior usability practice to use RadioButtons grouped in a GroupBox (e.g., Daytime vs Sunset) rather than letting users type 'day' or 'sunset' into a TextBox?",
       "options": [
         "It makes the C# source code twice as long",
         "RadioButtons consume less power on mobile batteries",
@@ -4320,7 +3440,7 @@
       "provenance": "Gaddis 4th Ed §1.8",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_068",
       "ch": "SU1",
       "su": "SU1",
@@ -4403,8 +3523,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "According to NWU CMPG122 Hungarian naming standards, what prefix must be assigned to a button control?",
-      "title": "According to NWU CMPG122 Hungarian naming standards, what prefix must be assigned to a button control?",
+      "q": "What standard Hungarian naming prefix must be assigned to a Button control?",
+      "title": "What standard Hungarian naming prefix must be assigned to a Button control?",
       "options": [
         "btn",
         "btn_",
@@ -4502,13 +3622,13 @@
       "provenance": "Gaddis 4th Ed §1.8",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_075",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "In Visual C#, what is the formal textbook term (Tony Gaddis Chapter 1) for a comment that begins with two forward slashes (`//`) and appears on only one line, as opposed to a multi-line block comment enclosed between `/*` and `*/`?",
-      "title": "In Visual C#, what is the formal textbook term (Tony Gaddis Chapter 1) for a comment that begins with two forward slashes (`//`) and appears on only one line, as opposed to a multi-line block comment enclosed between `/*` and `*/`?",
+      "q": "In Visual C#, what is the standard term for a comment that begins with two forward slashes (`//`) and appears on a single line, as opposed to a multi-line comment enclosed between `/*` and `*/`?",
+      "title": "In Visual C#, what is the standard term for a comment that begins with two forward slashes (`//`) and appears on a single line, as opposed to a multi-line comment enclosed between `/*` and `*/`?",
       "options": [
         "Block comment (/* */)",
         "Inline documentation comment (///)",
@@ -4606,7 +3726,7 @@
       "provenance": "Gaddis 4th Ed §1.8",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_079",
       "ch": "SU1",
       "su": "SU1",
@@ -4637,8 +3757,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "What NWU Hungarian control prefix is prescribed for a TextBox control?",
-      "title": "What NWU Hungarian control prefix is prescribed for a TextBox control?",
+      "q": "What standard Hungarian control prefix is prescribed for a TextBox control?",
+      "title": "What standard Hungarian control prefix is prescribed for a TextBox control?",
       "options": [
         "txt",
         "tb",
@@ -4663,8 +3783,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "When creating a new Visual Studio project for NWU CMPG122 practicals (such as Practical 1: Racing Light Trainer), why must students select 'Windows Forms App (.NET Framework)' tagged C# rather than 'Windows Forms App' without .NET Framework?",
-      "title": "When creating a new Visual Studio project for NWU CMPG122 practicals (such as Practical 1: Racing Light Trainer), why must students select 'Windows Forms App (.NET Framework)' tagged C# rather than 'Windows Forms App' without .NET Framework?",
+      "q": "When creating a traditional Windows Forms project in Visual Studio, why select 'Windows Forms App (.NET Framework)' (C#) rather than the non-Framework template?",
+      "title": "When creating a traditional Windows Forms project in Visual Studio, why select 'Windows Forms App (.NET Framework)' (C#) rather than the non-Framework template?",
       "options": [
         "The non-framework template targets .NET Core where the visual form designer behaves differently and is incompatible with the prescribed module grading environment",
         ".NET Core does not allow creating buttons or picture boxes in Visual Studio",
@@ -4689,8 +3809,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "In the Visual Studio 'Configure your new project' dialog for Practical 1, why is it critical to check 'Place solution and project in the same directory'?",
-      "title": "In the Visual Studio 'Configure your new project' dialog for Practical 1, why is it critical to check 'Place solution and project in the same directory'?",
+      "q": "In the Visual Studio 'Configure your new project' dialog, why is it recommended to check 'Place solution and project in the same directory'?",
+      "title": "In the Visual Studio 'Configure your new project' dialog, why is it recommended to check 'Place solution and project in the same directory'?",
       "options": [
         "It enables automatic hardware acceleration for graphics",
         "It prevents an extra nested folder level, keeping the .sln and project files together for clean zipping and submission",
@@ -4715,8 +3835,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "In Practical 1, four PictureBoxes (Off.png, Red.png, Amber.png, Green.png) represent a single traffic signal. What designer technique ensures the traffic light does not visibly jump or shift when changing colours?",
-      "title": "In Practical 1, four PictureBoxes (Off.png, Red.png, Amber.png, Green.png) represent a single traffic signal. What designer technique ensures the traffic light does not visibly jump or shift when changing colours?",
+      "q": "When four PictureBoxes (Off.png, Red.png, Amber.png, Green.png) are stacked to represent a single traffic signal, what designer technique ensures the traffic light does not visibly jump when switching colours?",
+      "title": "When four PictureBoxes (Off.png, Red.png, Amber.png, Green.png) are stacked to represent a single traffic signal, what designer technique ensures the traffic light does not visibly jump when switching colours?",
       "options": [
         "Setting the opacity of the form to 50%",
         "Placing them on four separate tabs in a TabControl",
@@ -4741,8 +3861,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Once four PictureBoxes are stacked at identical coordinates on the form in Practical 1, only the top control can be clicked on the canvas. How can a developer select one of the PictureBoxes underneath?",
-      "title": "Once four PictureBoxes are stacked at identical coordinates on the form in Practical 1, only the top control can be clicked on the canvas. How can a developer select one of the PictureBoxes underneath?",
+      "q": "Once four PictureBoxes are stacked at identical coordinates on a Windows Form, only the top control can be clicked on the canvas. How can a developer select one of the PictureBoxes underneath?",
+      "title": "Once four PictureBoxes are stacked at identical coordinates on a Windows Form, only the top control can be clicked on the canvas. How can a developer select one of the PictureBoxes underneath?",
       "options": [
         "Delete the top PictureBox, modify the lower one, and then undo",
         "Hold Shift while clicking the Windows desktop wallpaper",
@@ -4767,8 +3887,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Which PictureBox SizeMode property setting must be selected in Practical 1 to ensure traffic light graphics scale proportionally without being cropped or distorted?",
-      "title": "Which PictureBox SizeMode property setting must be selected in Practical 1 to ensure traffic light graphics scale proportionally without being cropped or distorted?",
+      "q": "Which PictureBox SizeMode property setting ensures graphics scale proportionally to fit the control without being cropped or distorted?",
+      "title": "Which PictureBox SizeMode property setting ensures graphics scale proportionally to fit the control without being cropped or distorted?",
       "options": [
         "Zoom",
         "Normal",
@@ -4793,8 +3913,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "Why does setting a PictureBox's SizeMode to 'StretchImage' often cause mark deductions in NWU Practical 1?",
-      "title": "Why does setting a PictureBox's SizeMode to 'StretchImage' often cause mark deductions in NWU Practical 1?",
+      "q": "Why does setting a PictureBox's SizeMode to 'StretchImage' often distort the displayed image?",
+      "title": "Why does setting a PictureBox's SizeMode to 'StretchImage' often distort the displayed image?",
       "options": [
         "It causes a runtime crash if the image is in PNG format",
         "It forces the image to distort its aspect ratio to match the box dimensions, resulting in a squashed or stretched graphic",
@@ -4819,8 +3939,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "When Practical 1 starts, the dark traffic light (Off.png) must be visible and the other three lamps hidden. How should this be configured at design time?",
-      "title": "When Practical 1 starts, the dark traffic light (Off.png) must be visible and the other three lamps hidden. How should this be configured at design time?",
+      "q": "When a traffic light form launches, the dark traffic light (Off.png) must be visible and the other three lamps (picRed, picAmber, picGreen) hidden. How should this be configured at design time?",
+      "title": "When a traffic light form launches, the dark traffic light (Off.png) must be visible and the other three lamps (picRed, picAmber, picGreen) hidden. How should this be configured at design time?",
       "options": [
         "Delete picRed, picAmber, and picGreen from the project until needed",
         "Set Form1.Enabled to false",
@@ -4892,7 +4012,7 @@
       "provenance": "NWU Practical 1: Racing Light Trainer Part D",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_090",
       "ch": "SU1",
       "su": "SU1",
@@ -4923,8 +4043,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "In Practical 1, the window must be a fixed size that the user cannot resize or maximize. Which two Form properties control this?",
-      "title": "In Practical 1, the window must be a fixed size that the user cannot resize or maximize. Which two Form properties control this?",
+      "q": "Which two Form properties ensure a window has a fixed size that the user cannot resize or maximize?",
+      "title": "Which two Form properties ensure a window has a fixed size that the user cannot resize or maximize?",
       "options": [
         "WindowState = Minimized and ControlBox = false",
         "AutoSize = true and AutoSizeMode = GrowOnly",
@@ -4975,8 +4095,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "According to NWU CMPG122 Hungarian naming standards, which identifier is properly named for a Button that prompts the driver to get ready?",
-      "title": "According to NWU CMPG122 Hungarian naming standards, which identifier is properly named for a Button that prompts the driver to get ready?",
+      "q": "Under standard Hungarian naming conventions, which identifier is properly named for a Button that prompts a driver to get ready?",
+      "title": "Under standard Hungarian naming conventions, which identifier is properly named for a Button that prompts a driver to get ready?",
       "options": [
         "btnReady",
         "Button_Ready",
@@ -5048,7 +4168,7 @@
       "provenance": "Gaddis 4th Ed §2.3 & Practical Four",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_096",
       "ch": "SU1",
       "su": "SU1",
@@ -5105,8 +4225,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "In Practical 1, lblInstruction displays words of differing lengths ('STOP', 'GET READY', 'GO'). Why should AutoSize be set to false and TextAlign to MiddleCenter?",
-      "title": "In Practical 1, lblInstruction displays words of differing lengths ('STOP', 'GET READY', 'GO'). Why should AutoSize be set to false and TextAlign to MiddleCenter?",
+      "q": "When a Label (lblInstruction) displays strings of differing lengths ('STOP', 'GET READY', 'GO'), why should AutoSize be set to false and TextAlign to MiddleCenter?",
+      "title": "When a Label (lblInstruction) displays strings of differing lengths ('STOP', 'GET READY', 'GO'), why should AutoSize be set to false and TextAlign to MiddleCenter?",
       "options": [
         "To allow the label to act as a button",
         "To prevent the label boundary from shifting unpredictably and keep each instruction centered in its display area",
@@ -5131,8 +4251,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "In Practical 1, what complete code block should execute inside btnStop_Click when the driver clicks Stop?",
-      "title": "In Practical 1, what complete code block should execute inside btnStop_Click when the driver clicks Stop?",
+      "q": "On a traffic light form with picRed, picAmber, picGreen, picDark, and lblInstruction, what code block should execute inside btnStop_Click when the user clicks Stop?",
+      "title": "On a traffic light form with picRed, picAmber, picGreen, picDark, and lblInstruction, what code block should execute inside btnStop_Click when the user clicks Stop?",
       "options": [
         "picRed.Visible = false; picAmber.Visible = true; lblInstruction.Text = \"GO\";",
         "lblInstruction.Text = \"STOP\"; this.Close();",
@@ -5157,8 +4277,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "In Practical 1, why is btnExit formatted with BackColor set to Red according to user interface design standards?",
-      "title": "In Practical 1, why is btnExit formatted with BackColor set to Red according to user interface design standards?",
+      "q": "Why is an Exit button (btnExit) often styled with BackColor set to Red under GUI design principles?",
+      "title": "Why is an Exit button (btnExit) often styled with BackColor set to Red under GUI design principles?",
       "options": [
         "To satisfy a compiler requirement for closing forms",
         "Because red buttons process code faster",
@@ -5230,13 +4350,13 @@
       "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_103",
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "In a Windows Form class (such as Practical 29), a student defines two event handlers with the identical header `private void btnClear_Click(object sender, EventArgs e)` (one intended to clear TextBoxes and one intended to close the form). What compiler error does Roslyn report?",
-      "title": "In a Windows Form class (such as Practical 29), a student defines two event handlers with the identical header `private void btnClear_Click(object sender, EventArgs e)` (one intended to clear TextBoxes and one intended to close the form). What compiler error does Roslyn report?",
+      "q": "In a Windows Form class, a developer defines two event handlers with the identical signature `private void btnClear_Click(object sender, EventArgs e)`. What compiler error does Roslyn report?",
+      "title": "In a Windows Form class, a developer defines two event handlers with the identical signature `private void btnClear_Click(object sender, EventArgs e)`. What compiler error does Roslyn report?",
       "options": [
         "CS0029: Cannot implicitly convert type 'void' to 'method'",
         "CS1002: ; expected",
@@ -5360,7 +4480,7 @@
       "provenance": "Gaddis 4th Ed §1.5",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_108",
       "ch": "SU1",
       "su": "SU1",
@@ -5386,7 +4506,7 @@
       "provenance": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_109",
       "ch": "SU1",
       "su": "SU1",
@@ -5469,8 +4589,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "According to the NWU practical marking rubric, what happens if controls are left with default names like 'button1' or 'pictureBox3'?",
-      "title": "According to the NWU practical marking rubric, what happens if controls are left with default names like 'button1' or 'pictureBox3'?",
+      "q": "What is the consequence of leaving controls with default Visual Studio names like 'button1' or 'pictureBox3' instead of using descriptive Hungarian identifiers?",
+      "title": "What is the consequence of leaving controls with default Visual Studio names like 'button1' or 'pictureBox3' instead of using descriptive Hungarian identifiers?",
       "options": [
         "The program crashes on launch",
         "Visual Studio refuses to save the files",
@@ -5547,8 +4667,8 @@
       "ch": "SU1",
       "su": "SU1",
       "type": "mcq",
-      "q": "How does Shneiderman's 3rd Golden Rule ('Offer informative feedback') apply when the user clicks 'btnGo' in Practical 1?",
-      "title": "How does Shneiderman's 3rd Golden Rule ('Offer informative feedback') apply when the user clicks 'btnGo' in Practical 1?",
+      "q": "How does Shneiderman's 3rd Golden Rule ('Offer informative feedback') apply when the user clicks 'btnGo' on a traffic signal form?",
+      "title": "How does Shneiderman's 3rd Golden Rule ('Offer informative feedback') apply when the user clicks 'btnGo' on a traffic signal form?",
       "options": [
         "The program should remain silent and wait for the user to guess if it worked",
         "The form minimizes to the Windows taskbar",
@@ -5620,7 +4740,7 @@
       "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_118",
       "ch": "SU1",
       "su": "SU1",
@@ -5672,7 +4792,7 @@
       "provenance": "Gaddis 4th Ed §2.2",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_120",
       "ch": "SU1",
       "su": "SU1",
@@ -5698,7 +4818,7 @@
       "provenance": "NWU Test 1 (SU1) Gaddis Chapter 2 Step",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_121",
       "ch": "SU1",
       "su": "SU1",
@@ -5776,7 +4896,7 @@
       "provenance": "Gaddis 4th Ed §2.3",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_124",
       "ch": "SU1",
       "su": "SU1",
@@ -5932,7 +5052,7 @@
       "provenance": "NWU Practical 1 Part D",
       "marks": 2
     },
-        {
+    {
       "id": "q_su1_130",
       "ch": "SU1",
       "su": "SU1",
@@ -6270,13 +5390,13 @@
       "provenance": "Gaddis 4th Ed §3.11",
       "marks": 2
     },
-        {
+    {
       "id": "q_su2_143",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In the C# statement `answerLabel.Text = \"Theodore Roosevelt\";`, what is the formal textbook name (Tony Gaddis Chapter 1 & 2) of the `=` symbol?",
-      "title": "In the C# statement `answerLabel.Text = \"Theodore Roosevelt\";`, what is the formal textbook name (Tony Gaddis Chapter 1 & 2) of the `=` symbol?",
+      "q": "In the C# statement `answerLabel.Text = \"Theodore Roosevelt\";`, what is the formal name of the `=` symbol?",
+      "title": "In the C# statement `answerLabel.Text = \"Theodore Roosevelt\";`, what is the formal name of the `=` symbol?",
       "options": [
         "Equality comparison operator (==)",
         "Variable binder",
@@ -6353,8 +5473,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In Practical 2 (Braai Master 3000), why is 'decimal' the required and justified data type for butcher prices (pricePerKg, pricePerRoll) and total costs, rather than 'float' or 'double'?",
-      "title": "In Practical 2 (Braai Master 3000), why is 'decimal' the required and justified data type for butcher prices (pricePerKg, pricePerRoll) and total costs, rather than 'float' or 'double'?",
+      "q": "Why is 'decimal' the required C# data type for unit prices (pricePerKg, pricePerRoll) and total monetary costs, rather than 'float' or 'double'?",
+      "title": "Why is 'decimal' the required C# data type for unit prices (pricePerKg, pricePerRoll) and total monetary costs, rather than 'float' or 'double'?",
       "options": [
         "The double type is too large to fit into computer RAM",
         "The decimal type uses 128-bit base-10 fixed-point representation, eliminating binary floating-point rounding errors in monetary calculations",
@@ -6379,8 +5499,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In Practical 2, why must the number of bread rolls needed to serve the wors be declared as an 'int' rather than a 'decimal'?",
-      "title": "In Practical 2, why must the number of bread rolls needed to serve the wors be declared as an 'int' rather than a 'decimal'?",
+      "q": "Why must a variable storing the number of whole bread rolls needed for an order be declared as an 'int' rather than a 'decimal'?",
+      "title": "Why must a variable storing the number of whole bread rolls needed for an order be declared as an 'int' rather than a 'decimal'?",
       "options": [
         "C# does not allow dividing decimals",
         "The int type automatically rounds numbers to four decimal places",
@@ -6405,8 +5525,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In Practical 2, a user enters 2.5 in txtWorsKg (kilograms) and a roll holds 120 grams. What unit conversion must be performed before calculating how many rolls can be filled?",
-      "title": "In Practical 2, a user enters 2.5 in txtWorsKg (kilograms) and a roll holds 120 grams. What unit conversion must be performed before calculating how many rolls can be filled?",
+      "q": "If a user enters 2.5 in txtWorsKg (kilograms) and each bread roll holds 120 grams, what unit conversion must be performed before calculating how many rolls can be filled?",
+      "title": "If a user enters 2.5 in txtWorsKg (kilograms) and each bread roll holds 120 grams, what unit conversion must be performed before calculating how many rolls can be filled?",
       "options": [
         "Divide kilograms by 1000",
         "Add 120 to kilograms directly",
@@ -6431,8 +5551,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In Practical 2, one roll holds 120 grams of wors. Why does writing 'int rolls = (int)(grams / 120);' directly in code violate NWU code standards?",
-      "title": "In Practical 2, one roll holds 120 grams of wors. Why does writing 'int rolls = (int)(grams / 120);' directly in code violate NWU code standards?",
+      "q": "If one bread roll holds a fixed 120 grams of wors, why does writing `int rolls = (int)(grams / 120);` directly in calculation code violate C# coding standards?",
+      "title": "If one bread roll holds a fixed 120 grams of wors, why does writing `int rolls = (int)(grams / 120);` directly in calculation code violate C# coding standards?",
       "options": [
         "120 is a magic number; fixed domain rules must be declared as a named constant (e.g. const decimal GRAMS_PER_ROLL = 120m;)",
         "C# does not allow the number 120 in expressions",
@@ -6535,8 +5655,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In Practical 2, what is the exact logical sequence required to calculate the total braai cost?",
-      "title": "In Practical 2, what is the exact logical sequence required to calculate the total braai cost?",
+      "q": "Given wors weight in kg, wors price/kg, and roll price/roll (where 1 roll holds 120g of wors), what is the logical sequence required to calculate the total braai cost?",
+      "title": "Given wors weight in kg, wors price/kg, and roll price/roll (where 1 roll holds 120g of wors), what is the logical sequence required to calculate the total braai cost?",
       "options": [
         "1. Wors cost = kg * price/kg; 2. Total grams = kg * 1000; 3. Rolls = grams / 120; 4. Rolls cost = rolls * price/roll; 5. Total = wors cost + rolls cost",
         "Calculate total cost first, then divide by rolls",
@@ -6639,8 +5759,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Which C# format string formats a decimal variable as South African Rand (e.g. 'R 282.50') matching the Practical 2 rubric?",
-      "title": "Which C# format string formats a decimal variable as South African Rand (e.g. 'R 282.50') matching the Practical 2 rubric?",
+      "q": "Which C# expression formats a decimal variable `totalCost` as South African Rand currency (e.g., 'R 282.50')?",
+      "title": "Which C# expression formats a decimal variable `totalCost` as South African Rand currency (e.g., 'R 282.50')?",
       "options": [
         "totalCost.ToString(\"C\")",
         "totalCost.ToString(\"R\")",
@@ -6712,7 +5832,7 @@
       "provenance": "Gaddis 4th Ed §3.5",
       "marks": 2
     },
-        {
+    {
       "id": "q_su2_160",
       "ch": "SU2",
       "su": "SU2",
@@ -6873,8 +5993,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In Practical 2, which statements in btnClear_Click correctly reset the form controls and ready the interface for another calculation?",
-      "title": "In Practical 2, which statements in btnClear_Click correctly reset the form controls and ready the interface for another calculation?",
+      "q": "On a form with inputs txtName, txtWorsKg, txtPricePerKg, txtPricePerRoll and output lblTotalResult, which statements in btnClear_Click reset the form for another calculation?",
+      "title": "On a form with inputs txtName, txtWorsKg, txtPricePerKg, txtPricePerRoll and output lblTotalResult, which statements in btnClear_Click reset the form for another calculation?",
       "options": [
         "this.Close();",
         "txtName.Clear(); txtWorsKg.Clear(); txtPricePerKg.Clear(); txtPricePerRoll.Clear(); lblTotalResult.Text = \"\"; txtName.Focus();",
@@ -6925,8 +6045,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "During practical marking at NWU, why is replying 'because it compiled' rejected by demonstrators when asked to justify choosing a variable's data type?",
-      "title": "During practical marking at NWU, why is replying 'because it compiled' rejected by demonstrators when asked to justify choosing a variable's data type?",
+      "q": "When justifying the choice of a variable's C# data type, why is replying 'because it compiled' an invalid engineering justification?",
+      "title": "When justifying the choice of a variable's C# data type, why is replying 'because it compiled' an invalid engineering justification?",
       "options": [
         "Compilers never check data types",
         "All variables must be strings in C#",
@@ -7024,7 +6144,7 @@
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
-        {
+    {
       "id": "q_su2_172",
       "ch": "SU2",
       "su": "SU2",
@@ -7076,13 +6196,13 @@
       "provenance": "Gaddis 4th Ed §3.5",
       "marks": 2
     },
-        {
+    {
       "id": "q_su2_174",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "To convert a string representation of a whole number directly to an integer in Visual C#, which built-in method is prescribed in Tony Gaddis (Chapters 2–3) before introducing `int.TryParse()`?",
-      "title": "To convert a string representation of a whole number directly to an integer in Visual C#, which built-in method is prescribed in Tony Gaddis (Chapters 2–3) before introducing `int.TryParse()`?",
+      "q": "To convert a string representation of a whole number directly to an int in Visual C# (throwing a FormatException if invalid), which built-in method is used?",
+      "title": "To convert a string representation of a whole number directly to an int in Visual C# (throwing a FormatException if invalid), which built-in method is used?",
       "options": [
         "int.Parse()",
         ".toInt()",
@@ -7102,13 +6222,13 @@
       "provenance": "NWU Test 1 (SU2) Gaddis Chapter 2 Step",
       "marks": 2
     },
-        {
+    {
       "id": "q_su2_175",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In Practical 29 (Student Test Average Calculator), user input from `txtTest1` is converted using `double.Parse(txtTest1.Text)`. What is the syntactically correct C# `try-catch` construct to intercept invalid non-numeric inputs?",
-      "title": "In Practical 29 (Student Test Average Calculator), user input from `txtTest1` is converted using `double.Parse(txtTest1.Text)`. What is the syntactically correct C# `try-catch` construct to intercept invalid non-numeric inputs?",
+      "q": "When user input from `txtTest1` is converted using `double.Parse(txtTest1.Text)`, what is the syntactically correct C# `catch` clause to intercept invalid non-numeric inputs?",
+      "title": "When user input from `txtTest1` is converted using `double.Parse(txtTest1.Text)`, what is the syntactically correct C# `catch` clause to intercept invalid non-numeric inputs?",
       "options": [
         "catch except(ex e) { ... }",
         "catch (FormatException ex) { ... }",
@@ -7206,13 +6326,13 @@
       "provenance": "Gaddis 4th Ed §3.4",
       "marks": 2
     },
-        {
+    {
       "id": "q_su2_179",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In Practical 29, a student wrote: `lblAverage.Text = dblAverage.toString(''n2'');` to display an average mark of 84.5. Why does this line fail to compile in Visual C#?",
-      "title": "In Practical 29, a student wrote: `lblAverage.Text = dblAverage.toString(''n2'');` to display an average mark of 84.5. Why does this line fail to compile in Visual C#?",
+      "q": "Why does the statement `lblAverage.Text = dblAverage.toString(''n2'');` fail to compile in Visual C#?",
+      "title": "Why does the statement `lblAverage.Text = dblAverage.toString(''n2'');` fail to compile in Visual C#?",
       "options": [
         "The 'n2' specifier is only valid for integers, not doubles",
         "The ToString method cannot accept format strings without passing a CultureInfo object",
@@ -7232,13 +6352,13 @@
       "provenance": "NWU Practical 29 Assessment Rubric Step",
       "marks": 2
     },
-        {
+    {
       "id": "q_su2_180",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In Practical 29, a student wrote:\n```csharp\ndouble dblAverage = ((dblTest1 + dblTest2) / 2.0).ToString(\"n2\");\n```\nWhat compiler error does the Roslyn C# compiler raise for this statement?",
-      "title": "In Practical 29, a student wrote:\n```csharp\ndouble dblAverage = ((dblTest1 + dblTest2) / 2.0).ToString(\"n2\");\n```\nWhat compiler error does the Roslyn C# compiler raise for this statement?",
+      "q": "What compiler error does the Roslyn C# compiler raise for the statement `double dblAverage = ((dblTest1 + dblTest2) / 2.0).ToString(\"n2\");`?",
+      "title": "What compiler error does the Roslyn C# compiler raise for the statement `double dblAverage = ((dblTest1 + dblTest2) / 2.0).ToString(\"n2\");`?",
       "options": [
         "CS0103: The name 'dblAverage' does not exist in the current context",
         "CS0266: Cannot implicitly convert type 'double' to 'int'",
@@ -7258,13 +6378,13 @@
       "provenance": "NWU Practical 29 Assessment Rubric Step",
       "marks": 2
     },
-        {
+    {
       "id": "q_su2_181",
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In Practical 29, when a user enters non-numeric text in `txtTest1`, the application catches `FormatException`. According to NWU practical marking rubrics and Shneiderman Rule 5 (Prevent errors), what pair of method calls should be executed to return focus and prepare the input field for immediate re-entry?",
-      "title": "In Practical 29, when a user enters non-numeric text in `txtTest1`, the application catches `FormatException`. According to NWU practical marking rubrics and Shneiderman Rule 5 (Prevent errors), what pair of method calls should be executed to return focus and prepare the input field for immediate re-entry?",
+      "q": "When catching a `FormatException` for non-numeric text in `txtTest1`, what pair of method calls returns keyboard focus and highlights the invalid text for immediate replacement?",
+      "title": "When catching a `FormatException` for non-numeric text in `txtTest1`, what pair of method calls returns keyboard focus and highlights the invalid text for immediate replacement?",
       "options": [
         "txtTest1.Focus(); txtTest1.SelectAll();",
         "txtTest1.Clear(); txtTest1.Dispose();",
@@ -7315,8 +6435,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Under NWU Hungarian naming standards, what is the correct control prefix and identifier for a TextBox accepting a student's surname?",
-      "title": "Under NWU Hungarian naming standards, what is the correct control prefix and identifier for a TextBox accepting a student's surname?",
+      "q": "Under standard Hungarian naming conventions, what is the control identifier for a TextBox accepting a student's surname?",
+      "title": "Under standard Hungarian naming conventions, what is the control identifier for a TextBox accepting a student's surname?",
       "options": [
         "tb_Surname",
         "SurnameTextBox",
@@ -7341,8 +6461,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Under NWU Hungarian naming standards, what is the correct control identifier for a Label displaying calculated gross pay?",
-      "title": "Under NWU Hungarian naming standards, what is the correct control identifier for a Label displaying calculated gross pay?",
+      "q": "Under standard Hungarian naming conventions, what is the control identifier for a Label displaying calculated gross pay?",
+      "title": "Under standard Hungarian naming conventions, what is the control identifier for a Label displaying calculated gross pay?",
       "options": [
         "lbl_pay",
         "GrossPayLabel",
@@ -7575,8 +6695,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In Practical 2, how should the greeting line for the braai master (e.g. 'Braai master: Andre') be generated?",
-      "title": "In Practical 2, how should the greeting line for the braai master (e.g. 'Braai master: Andre') be generated?",
+      "q": "Which C# statement formats a greeting label (`lblGreeting`) to display `'Braai master: '` followed by the trimmed name entered in `txtName`?",
+      "title": "Which C# statement formats a greeting label (`lblGreeting`) to display `'Braai master: '` followed by the trimmed name entered in `txtName`?",
       "options": [
         "lblGreeting.Text = $\"Braai master: {txtName.Text.Trim()}\";",
         "lblGreeting.Text = \"Braai master: user\";",
@@ -7705,8 +6825,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "According to Practical 2 Code Standards, why should blank lines be used between input parsing, calculations, and output display?",
-      "title": "According to Practical 2 Code Standards, why should blank lines be used between input parsing, calculations, and output display?",
+      "q": "Why should blank lines be used to separate input parsing, arithmetic calculations, and output display inside an event handler?",
+      "title": "Why should blank lines be used to separate input parsing, arithmetic calculations, and output display inside an event handler?",
       "options": [
         "Visual Studio requires blank lines to compile",
         "Blank lines visually structure code into logical paragraphs, improving readability and maintainability",
@@ -7783,8 +6903,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "In Practical 2, if wors costs R85.00/kg and rolls cost R3.50 each, what is the cost of 1.5 kg of wors (1500g / 120g = 12 rolls)?",
-      "title": "In Practical 2, if wors costs R85.00/kg and rolls cost R3.50 each, what is the cost of 1.5 kg of wors (1500g / 120g = 12 rolls)?",
+      "q": "If wors costs R85.00/kg and bread rolls cost R3.50 each (at 120g of wors per roll), what is the cost breakdown for 1.5 kg of wors (1500g / 120g = 12 rolls)?",
+      "title": "If wors costs R85.00/kg and bread rolls cost R3.50 each (at 120g of wors per roll), what is the cost breakdown for 1.5 kg of wors (1500g / 120g = 12 rolls)?",
       "options": [
         "Wors: R 127.50, Rolls: R 42.00, Total: R 169.50",
         "Wors: R 100.00, Rolls: R 35.00, Total: R 135.00",
@@ -7887,8 +7007,8 @@
       "ch": "SU2",
       "su": "SU2",
       "type": "mcq",
-      "q": "Why must students use 'File -> Save All' (Ctrl+Shift+S) rather than 'File -> Save' (Ctrl+S) before submitting Practical 2?",
-      "title": "Why must students use 'File -> Save All' (Ctrl+Shift+S) rather than 'File -> Save' (Ctrl+S) before submitting Practical 2?",
+      "q": "In Visual Studio, why should you use 'File -> Save All' (Ctrl+Shift+S) rather than 'File -> Save' (Ctrl+S) before packaging a Windows Forms project?",
+      "title": "In Visual Studio, why should you use 'File -> Save All' (Ctrl+Shift+S) rather than 'File -> Save' (Ctrl+S) before packaging a Windows Forms project?",
       "options": [
         "Ctrl+S saves only the active code tab, leaving designer layout modifications unsaved on disk",
         "Ctrl+S corrupts the project file",
@@ -8303,8 +7423,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4 (SpeedTrap Potchefstroom R30), what initial subtraction determines how far over the legal speed limit a vehicle was traveling?",
-      "title": "In Practical 4 (SpeedTrap Potchefstroom R30), what initial subtraction determines how far over the legal speed limit a vehicle was traveling?",
+      "q": "In a speed trap calculator, what initial subtraction determines how far over the legal speed limit (`limit`) a vehicle (`recordedSpeed`) was traveling?",
+      "title": "In a speed trap calculator, what initial subtraction determines how far over the legal speed limit (`limit`) a vehicle (`recordedSpeed`) was traveling?",
       "options": [
         "int speedOver = limit - recordedSpeed;",
         "decimal speedOver = recordedSpeed / limit;",
@@ -8329,8 +7449,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4, what exact outputs must be displayed if the driver was traveling at or below the legal limit (speedOver <= 0)?",
-      "title": "In Practical 4, what exact outputs must be displayed if the driver was traveling at or below the legal limit (speedOver <= 0)?",
+      "q": "In a speed trap calculator where `speedOver <= 0` indicates legal driving, what exact outputs are assigned to `lblKmOver`, `lblCategory`, and `lblFine`?",
+      "title": "In a speed trap calculator where `speedOver <= 0` indicates legal driving, what exact outputs are assigned to `lblKmOver`, `lblCategory`, and `lblFine`?",
       "options": [
         "lblKmOver.Text = \"-5 km/h\"; lblCategory.Text = \"Legal\"; lblFine.Text = \"R 0.00\";",
         "lblKmOver.Text = \"OK\"; lblCategory.Text = \"Pass\"; lblFine.Text = \"None\";",
@@ -8355,8 +7475,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Why is the speeding fine band assessment in Practical 4 engineered as a connected 'if-else-if' chain rather than separate unchained 'if' statements?",
-      "title": "Why is the speeding fine band assessment in Practical 4 engineered as a connected 'if-else-if' chain rather than separate unchained 'if' statements?",
+      "q": "Why should a multi-band speeding fine assessment (1-10, 11-20, 21-30, 31+ km/h over) be engineered as a connected `if-else-if` chain rather than separate unchained `if` statements?",
+      "title": "Why should a multi-band speeding fine assessment (1-10, 11-20, 21-30, 31+ km/h over) be engineered as a connected `if-else-if` chain rather than separate unchained `if` statements?",
       "options": [
         "In a connected chain, once a test evaluates to true, remaining branches are skipped, allowing each condition to test only its upper boundary because lower values were already filtered out",
         "C# does not allow writing more than one independent if statement in the same method",
@@ -8381,8 +7501,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4, what fine and category apply for a vehicle traveling at 85 km/h against a 60 km/h limit (25 km/h over) on a Highway for a first-time offender?",
-      "title": "In Practical 4, what fine and category apply for a vehicle traveling at 85 km/h against a 60 km/h limit (25 km/h over) on a Highway for a first-time offender?",
+      "q": "Given speed fine bands (1-10: R250 Minor; 11-20: R750 Serious; 21-30: R1500 Severe; 31+: R3000 Court), what fine and category apply for traveling at 85 km/h in a 60 km/h Highway zone (25 km/h over) for a first-time offender?",
+      "title": "Given speed fine bands (1-10: R250 Minor; 11-20: R750 Serious; 21-30: R1500 Severe; 31+: R3000 Court), what fine and category apply for traveling at 85 km/h in a 60 km/h Highway zone (25 km/h over) for a first-time offender?",
       "options": [
         "Fine: R 750, Category: \"Serious\"",
         "Fine: R 1500, Category: \"Severe\"",
@@ -8407,8 +7527,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4, which two speed trap zones are classified as built-up areas?",
-      "title": "In Practical 4, which two speed trap zones are classified as built-up areas?",
+      "q": "In a municipal speed trap system with zones 'Highway', 'Rural', 'Town', and 'School', which two zones are classified as built-up areas?",
+      "title": "In a municipal speed trap system with zones 'Highway', 'Rural', 'Town', and 'School', which two zones are classified as built-up areas?",
       "options": [
         "\"Highway\" and \"Town\"",
         "\"School\" and \"Highway\"",
@@ -8433,8 +7553,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4, what exact condition triggers doubling of the fine and appending ' - built-up area' to the category?",
-      "title": "In Practical 4, what exact condition triggers doubling of the fine and appending ' - built-up area' to the category?",
+      "q": "When fine doubling applies in built-up zones ('School' or 'Town') for speeds strictly exceeding 20 km/h over the limit, what exact compound condition triggers doubling and appending ' - built-up area'?",
+      "title": "When fine doubling applies in built-up zones ('School' or 'Town') for speeds strictly exceeding 20 km/h over the limit, what exact compound condition triggers doubling and appending ' - built-up area'?",
       "options": [
         "The zone is a Highway and speedOver >= 20",
         "Whenever the driver was traveling at more than 10 km/h over the limit in any zone",
@@ -8459,8 +7579,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4, if a vehicle travels at 80 km/h in a 60 km/h School zone (exactly 20 km/h over), what happens to the fine?",
-      "title": "In Practical 4, if a vehicle travels at 80 km/h in a 60 km/h School zone (exactly 20 km/h over), what happens to the fine?",
+      "q": "If a fine doubles in a built-up zone only when `speedOver > 20` (strictly more than 20 km/h over), what happens when a vehicle travels at 80 km/h in a 60 km/h School zone (exactly 20 km/h over, base fine R750)?",
+      "title": "If a fine doubles in a built-up zone only when `speedOver > 20` (strictly more than 20 km/h over), what happens when a vehicle travels at 80 km/h in a 60 km/h School zone (exactly 20 km/h over, base fine R750)?",
       "options": [
         "The fine does NOT double because the specification requires MORE than 20 km/h over; exactly 20 km/h over remains at R750 (Serious)",
         "The fine doubles to R1500 immediately",
@@ -8485,8 +7605,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4, what suffix string must be appended to the category when a fine doubles in a built-up area?",
-      "title": "In Practical 4, what suffix string must be appended to the category when a fine doubles in a built-up area?",
+      "q": "When a traffic fine doubles in a built-up area, what suffix string is appended to the offense category (e.g., turning 'Severe' into 'Severe - built-up area')?",
+      "title": "When a traffic fine doubles in a built-up area, what suffix string is appended to the offense category (e.g., turning 'Severe' into 'Severe - built-up area')?",
       "options": [
         "\" (DOUBLED)\"",
         "\" - built-up area\"",
@@ -8511,8 +7631,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4, where and how must the R500 repeat offender fine be declared according to coding standards?",
-      "title": "In Practical 4, where and how must the R500 repeat offender fine be declared according to coding standards?",
+      "q": "Where and how should a fixed R500.00 repeat offender surcharge constant be declared in a Windows Form class?",
+      "title": "Where and how should a fixed R500.00 repeat offender surcharge constant be declared in a Windows Form class?",
       "options": [
         "Inside btnCheck_Click as a local int variable",
         "Inside txtRepeat.Text property window",
@@ -8532,13 +7652,13 @@
       "provenance": "NWU Practical Four Part C (A named constant)",
       "marks": 2
     },
-        {
+    {
       "id": "q_su3_230",
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 29, a student validates that two test marks (`dblTest1` and `dblTest2`) are within the valid academic bounds of 0 to 100 inclusive. Which `if` condition correctly triggers an error message if EITHER mark is out of bounds?",
-      "title": "In Practical 29, a student validates that two test marks (`dblTest1` and `dblTest2`) are within the valid academic bounds of 0 to 100 inclusive. Which `if` condition correctly triggers an error message if EITHER mark is out of bounds?",
+      "q": "To validate that two test marks (`dblTest1` and `dblTest2`) are within the valid bounds of 0 to 100 inclusive, which `if` condition triggers an error message if EITHER mark is out of bounds?",
+      "title": "To validate that two test marks (`dblTest1` and `dblTest2`) are within the valid bounds of 0 to 100 inclusive, which `if` condition triggers an error message if EITHER mark is out of bounds?",
       "options": [
         "if (dblTest1 < 0 && dblTest1 > 100 && dblTest2 < 0 && dblTest2 > 100)",
         "if (dblTest1 < 0 || dblTest1 > 100 || dblTest2 < 0 || dblTest2 > 100)",
@@ -8589,8 +7709,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "Why does Practical 4 instruct students: 'Do not write an empty else just to have one' when checking repeat offender status?",
-      "title": "Why does Practical 4 instruct students: 'Do not write an empty else just to have one' when checking repeat offender status?",
+      "q": "Why should you avoid writing an empty `else { }` block when checking an optional condition such as repeat offender status (`if (isRepeat) fine += REPEAT_FINE;`)?",
+      "title": "Why should you avoid writing an empty `else { }` block when checking an optional condition such as repeat offender status (`if (isRepeat) fine += REPEAT_FINE;`)?",
       "options": [
         "Empty else blocks cause compiler error CS0101",
         "Writing empty 'else { }' blocks is poor coding style that clutters code and adds zero functional value; a single-alternative if is correct",
@@ -8615,8 +7735,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4, why is a GroupBox control chosen for the 'Finding' container rather than a Panel control?",
-      "title": "In Practical 4, why is a GroupBox control chosen for the 'Finding' container rather than a Panel control?",
+      "q": "Why is a GroupBox control chosen over a Panel control when grouping output labels under a visible titled frame (such as 'Finding')?",
+      "title": "Why is a GroupBox control chosen over a Panel control when grouping output labels under a visible titled frame (such as 'Finding')?",
       "options": [
         "Panels cannot hold Label controls",
         "GroupBoxes automatically calculate speeding fines",
@@ -8797,8 +7917,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5 (Vaal River Cruises), which GUI control is used to present the three available cruise route options for selection?",
-      "title": "In Practical 5 (Vaal River Cruises), which GUI control is used to present the three available cruise route options for selection?",
+      "q": "Which GUI control displays a list of selectable route options (`lstRoutes`) where the active selection index is read via `SelectedIndex`?",
+      "title": "Which GUI control displays a list of selectable route options (`lstRoutes`) where the active selection index is read via `SelectedIndex`?",
       "options": [
         "TextBox (txtRoutes)",
         "ListBox (lstRoutes)",
@@ -8823,8 +7943,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5, what C# condition verifies that the user has selected at least one cruise route from lstRoutes before processing a booking?",
-      "title": "In Practical 5, what C# condition verifies that the user has selected at least one cruise route from lstRoutes before processing a booking?",
+      "q": "What C# condition verifies that the user has selected an item from the ListBox `lstRoutes` before processing a booking?",
+      "title": "What C# condition verifies that the user has selected an item from the ListBox `lstRoutes` before processing a booking?",
       "options": [
         "lstRoutes.Items.Count > 0",
         "lstRoutes.Text == \"Selected\"",
@@ -8875,8 +7995,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5, what is the base ticket price per person for 'Sunset Leisure Cruise' (ListBox index 0)?",
-      "title": "In Practical 5, what is the base ticket price per person for 'Sunset Leisure Cruise' (ListBox index 0)?",
+      "q": "In a cruise booking ListBox (`lstRoutes`) where index 0 is 'Sunset Leisure Cruise' (R250), index 1 is 'Speedboat Adventure' (R400), and index 2 is 'Private Pontoon Charter' (R800), what is the base ticket price per person for index 0?",
+      "title": "In a cruise booking ListBox (`lstRoutes`) where index 0 is 'Sunset Leisure Cruise' (R250), index 1 is 'Speedboat Adventure' (R400), and index 2 is 'Private Pontoon Charter' (R800), what is the base ticket price per person for index 0?",
       "options": [
         "R 250",
         "R 400",
@@ -8901,8 +8021,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5, what is the base ticket price per person for 'Speedboat Adventure' (ListBox index 1)?",
-      "title": "In Practical 5, what is the base ticket price per person for 'Speedboat Adventure' (ListBox index 1)?",
+      "q": "In a cruise booking ListBox (`lstRoutes`) where index 0 is 'Sunset Leisure Cruise' (R250), index 1 is 'Speedboat Adventure' (R400), and index 2 is 'Private Pontoon Charter' (R800), what is the base ticket price per person for index 1?",
+      "title": "In a cruise booking ListBox (`lstRoutes`) where index 0 is 'Sunset Leisure Cruise' (R250), index 1 is 'Speedboat Adventure' (R400), and index 2 is 'Private Pontoon Charter' (R800), what is the base ticket price per person for index 1?",
       "options": [
         "R 250",
         "R 400",
@@ -8927,8 +8047,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5, what is the base ticket price per person for 'Private Pontoon Charter' (ListBox index 2)?",
-      "title": "In Practical 5, what is the base ticket price per person for 'Private Pontoon Charter' (ListBox index 2)?",
+      "q": "In a cruise booking ListBox (`lstRoutes`) where index 0 is 'Sunset Leisure Cruise' (R250), index 1 is 'Speedboat Adventure' (R400), and index 2 is 'Private Pontoon Charter' (R800), what is the base ticket price per person for index 2?",
+      "title": "In a cruise booking ListBox (`lstRoutes`) where index 0 is 'Sunset Leisure Cruise' (R250), index 1 is 'Speedboat Adventure' (R400), and index 2 is 'Private Pontoon Charter' (R800), what is the base ticket price per person for index 2?",
       "options": [
         "R 250",
         "R 400",
@@ -8953,8 +8073,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5, how should the base ticket price be determined using a switch statement on the selected route?",
-      "title": "In Practical 5, how should the base ticket price be determined using a switch statement on the selected route?",
+      "q": "Given `lstRoutes` with index 0 = R250, index 1 = R400, and index 2 = R800, how should the base ticket price be assigned using a `switch` statement on the selected index?",
+      "title": "Given `lstRoutes` with index 0 = R250, index 1 = R400, and index 2 = R800, how should the base ticket price be assigned using a `switch` statement on the selected index?",
       "options": [
         "switch (txtPassengers.Text) { case \"1\": price = 250m; break; }",
         "switch (btnBook.Text) { case \"Book\": price = 250m; break; }",
@@ -9005,8 +8125,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5, what discount rule is applied to passenger group bookings?",
-      "title": "In Practical 5, what discount rule is applied to passenger group bookings?",
+      "q": "In a group booking rule where 6 or more passengers qualify for a 10% discount on the total bill, which condition and discount apply?",
+      "title": "In a group booking rule where 6 or more passengers qualify for a 10% discount on the total bill, which condition and discount apply?",
       "options": [
         "If passenger count is 10 or more, apply a 20% discount",
         "If the validated passenger count is 6 or more, apply a 10% discount to the total bill",
@@ -9031,8 +8151,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5, what visual GUI modification is wired to the CheckedChanged event of the time slot RadioButtons?",
-      "title": "In Practical 5, what visual GUI modification is wired to the CheckedChanged event of the time slot RadioButtons?",
+      "q": "In a CheckedChanged event handler for time-slot RadioButtons, which logic sets the form background color to Orange when Sunset is selected and PowderBlue otherwise?",
+      "title": "In a CheckedChanged event handler for time-slot RadioButtons, which logic sets the form background color to Orange when Sunset is selected and PowderBlue otherwise?",
       "options": [
         "The form minimizes immediately",
         "All textboxes are disabled",
@@ -9135,8 +8255,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5, what input validation rule must be enforced on txtPassengers before calculating ticket totals?",
-      "title": "In Practical 5, what input validation rule must be enforced on txtPassengers before calculating ticket totals?",
+      "q": "What defensive input validation rule must be enforced on a passenger count TextBox (`txtPassengers`) before calculating ticket totals?",
+      "title": "What defensive input validation rule must be enforced on a passenger count TextBox (`txtPassengers`) before calculating ticket totals?",
       "options": [
         "It must be an even number",
         "It cannot exceed 2 passengers",
@@ -9161,8 +8281,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5, why is 'txtPassengers.Focus();' called immediately after displaying an error message for invalid passenger count?",
-      "title": "In Practical 5, why is 'txtPassengers.Focus();' called immediately after displaying an error message for invalid passenger count?",
+      "q": "Why is `txtPassengers.Focus();` called immediately after displaying an error message for an invalid passenger count?",
+      "title": "Why is `txtPassengers.Focus();` called immediately after displaying an error message for an invalid passenger count?",
       "options": [
         "To erase the hard drive",
         "To print the error message on paper",
@@ -9213,8 +8333,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4, if a vehicle was recorded traveling at 105 km/h against an 80 km/h Highway limit (25 km/h over) and the driver is a repeat offender ('yes'), what is the total fine?",
-      "title": "In Practical 4, if a vehicle was recorded traveling at 105 km/h against an 80 km/h Highway limit (25 km/h over) and the driver is a repeat offender ('yes'), what is the total fine?",
+      "q": "Given speed fine bands (21-30 km/h over = R1500 Severe; Highway does not double; repeat offender adds R500), what is the total fine for traveling at 105 km/h against an 80 km/h Highway limit (25 km/h over) as a repeat offender?",
+      "title": "Given speed fine bands (21-30 km/h over = R1500 Severe; Highway does not double; repeat offender adds R500), what is the total fine for traveling at 105 km/h against an 80 km/h Highway limit (25 km/h over) as a repeat offender?",
       "options": [
         "R 1500",
         "R 2000 (Base R1500 + R500 repeat fine)",
@@ -9239,8 +8359,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4, if a driver was recorded at 85 km/h in a 60 km/h School zone (25 km/h over) and is a repeat offender ('yes'), what is the total fine?",
-      "title": "In Practical 4, if a driver was recorded at 85 km/h in a 60 km/h School zone (25 km/h over) and is a repeat offender ('yes'), what is the total fine?",
+      "q": "Given speed fine bands (21-30 km/h over = R1500 Severe; School built-up zone > 20 km/h over doubles the base fine; repeat offender adds R500), what is the total fine for traveling at 85 km/h in a 60 km/h School zone (25 km/h over) as a repeat offender?",
+      "title": "Given speed fine bands (21-30 km/h over = R1500 Severe; School built-up zone > 20 km/h over doubles the base fine; repeat offender adds R500), what is the total fine for traveling at 85 km/h in a 60 km/h School zone (25 km/h over) as a repeat offender?",
       "options": [
         "R 2000",
         "R 4000",
@@ -9442,7 +8562,7 @@
       "provenance": "Gaddis 4th Ed §4.5",
       "marks": 2
     },
-        {
+    {
       "id": "q_su3_265",
       "ch": "SU3",
       "su": "SU3",
@@ -9499,8 +8619,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5, if 8 passengers book 'Speedboat Adventure' (R400 per person), what is the calculated total after applying the 10% group discount?",
-      "title": "In Practical 5, if 8 passengers book 'Speedboat Adventure' (R400 per person), what is the calculated total after applying the 10% group discount?",
+      "q": "If 8 passengers book 'Speedboat Adventure' (R400.00 per person) and bookings of 6 or more passengers receive a 10% group discount, what is the calculated final total?",
+      "title": "If 8 passengers book 'Speedboat Adventure' (R400.00 per person) and bookings of 6 or more passengers receive a 10% group discount, what is the calculated final total?",
       "options": [
         "R 2880 (Subtotal R3200 minus R320 discount)",
         "R 3200",
@@ -9525,8 +8645,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5, what C# statement in btnClear_Click deselects any currently selected item in lstRoutes?",
-      "title": "In Practical 5, what C# statement in btnClear_Click deselects any currently selected item in lstRoutes?",
+      "q": "What C# statement in `btnClear_Click` deselects any currently highlighted item in the ListBox `lstRoutes`?",
+      "title": "What C# statement in `btnClear_Click` deselects any currently highlighted item in the ListBox `lstRoutes`?",
       "options": [
         "lstRoutes.SelectedItem = \"None\";",
         "lstRoutes.SelectedIndex = -1;",
@@ -9681,8 +8801,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 4, if a vehicle is recorded traveling at exactly 60 km/h in a 60 km/h zone, what band and fine apply?",
-      "title": "In Practical 4, if a vehicle is recorded traveling at exactly 60 km/h in a 60 km/h zone, what band and fine apply?",
+      "q": "In a speed trap calculator where `speedOver = recordedSpeed - limit`, what `speedOver` value, category, and fine apply when a vehicle travels at 60 km/h in a 60 km/h zone?",
+      "title": "In a speed trap calculator where `speedOver = recordedSpeed - limit`, what `speedOver` value, category, and fine apply when a vehicle travels at 60 km/h in a 60 km/h zone?",
       "options": [
         "speedOver is 0; category is \"Minor\" and fine is R250",
         "speedOver is 1; category is \"Serious\"",
@@ -9785,8 +8905,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In Practical 5, how does the Clear button reset the form background color back to its standard Windows theme color?",
-      "title": "In Practical 5, how does the Clear button reset the form background color back to its standard Windows theme color?",
+      "q": "In `btnClear_Click`, which C# statement resets the Form's background color back to its default Windows system control color?",
+      "title": "In `btnClear_Click`, which C# statement resets the Form's background color back to its default Windows system control color?",
       "options": [
         "this.BackColor = Color.White;",
         "this.BackColor = Color.None;",
@@ -9811,8 +8931,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "According to De Morgan's Laws, what is the logical equivalent of '!(A && B)'?",
-      "title": "According to De Morgan's Laws, what is the logical equivalent of '!(A && B)'?",
+      "q": "By De Morgan's Laws, what is the logical equivalent of `!(A && B)`?",
+      "title": "By De Morgan's Laws, what is the logical equivalent of `!(A && B)`?",
       "options": [
         "!A || !B",
         "!A && !B",
@@ -9837,8 +8957,8 @@
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "According to De Morgan's Laws, what is the logical equivalent of '!(A || B)'?",
-      "title": "According to De Morgan's Laws, what is the logical equivalent of '!(A || B)'?",
+      "q": "By De Morgan's Laws, what is the logical equivalent of `!(A || B)`?",
+      "title": "By De Morgan's Laws, what is the logical equivalent of `!(A || B)`?",
       "options": [
         "!A || !B",
         "!A && !B",
@@ -10404,7 +9524,7 @@
       "provenance": "Gaddis 4th Ed §5.1",
       "marks": 2
     },
-        {
+    {
       "id": "q_su4_302",
       "ch": "SU4",
       "su": "SU4",
@@ -10456,7 +9576,7 @@
       "provenance": "Gaddis 4th Ed §5.5",
       "marks": 2
     },
-        {
+    {
       "id": "q_su4_304",
       "ch": "SU4",
       "su": "SU4",
@@ -11236,7 +10356,7 @@
       "provenance": "Gaddis 4th Ed §5.2 & §5.3",
       "marks": 2
     },
-        {
+    {
       "id": "q_su4_334",
       "ch": "SU4",
       "su": "SU4",
@@ -11683,8 +10803,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] According to the DriveNow Car Rental specification, why must the vehicle selection controls (rdoSedan, rdoSuv, rdoBakkie) be placed inside a GroupBox (grpVehicle)?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] According to the DriveNow Car Rental specification, why must the vehicle selection controls (rdoSedan, rdoSuv, rdoBakkie) be placed inside a GroupBox (grpVehicle)?",
+      "q": "Why must the vehicle selection RadioButtons (rdoSedan, rdoSuv, rdoBakkie) be placed inside a GroupBox (grpVehicle)?",
+      "title": "Why must the vehicle selection RadioButtons (rdoSedan, rdoSuv, rdoBakkie) be placed inside a GroupBox (grpVehicle)?",
       "options": [
         "To ensure mutual exclusion so that selecting one vehicle category automatically unchecks any other category.",
         "To allow multiple vehicle categories to be checked simultaneously for a single rental contract.",
@@ -11709,8 +10829,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] Following NWU Hungarian naming conventions and GUI keyboard access standards, what name and TabIndex property should be assigned to the rental days input TextBox?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] Following NWU Hungarian naming conventions and GUI keyboard access standards, what name and TabIndex property should be assigned to the rental days input TextBox?",
+      "q": "What standard Hungarian control name and TabIndex property should be assigned to the primary rental days input TextBox?",
+      "title": "What standard Hungarian control name and TabIndex property should be assigned to the primary rental days input TextBox?",
       "options": [
         "Name: tbDays, TabIndex: 1",
         "Name: txtDays, TabIndex: 0",
@@ -11735,8 +10855,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] To defensively read the rental days input from txtDays without risking an unhandled FormatException crash on invalid text, which C# construct must be implemented?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] To defensively read the rental days input from txtDays without risking an unhandled FormatException crash on invalid text, which C# construct must be implemented?",
+      "q": "To defensively read the rental days input from txtDays without risking an unhandled FormatException crash on invalid text, which C# construct must be implemented?",
+      "title": "To defensively read the rental days input from txtDays without risking an unhandled FormatException crash on invalid text, which C# construct must be implemented?",
       "options": [
         "days = int.Parse(txtDays.Text);",
         "days = (int)txtDays.Text;",
@@ -11761,8 +10881,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] According to the Vehicle Rates Table in the specification, what is the base rental charge for a customer renting an SUV for 4 days?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] According to the Vehicle Rates Table in the specification, what is the base rental charge for a customer renting an SUV for 4 days?",
+      "q": "At an SUV daily rental rate of R650.00/day, what is the base rental charge for a customer renting an SUV for 4 days?",
+      "title": "At an SUV daily rental rate of R650.00/day, what is the base rental charge for a customer renting an SUV for 4 days?",
       "options": [
         "R 1,800.00",
         "R 3,000.00",
@@ -11777,8 +10897,8 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "From the rates table, the SUV daily rate is R650.00/day. Base charge = 4 days * R650.00/day = R2,600.00.",
-      "explanation": "From the rates table, the SUV daily rate is R650.00/day. Base charge = 4 days * R650.00/day = R2,600.00.",
+      "exp": "At an SUV daily rate of R650.00/day, the base charge for 4 days is 4 * R650.00 = R2,600.00.",
+      "explanation": "At an SUV daily rate of R650.00/day, the base charge for 4 days is 4 * R650.00 = R2,600.00.",
       "provenance": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "marks": 2
     },
@@ -11787,8 +10907,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] Based on the business rules in the specification, how should the included free mileage allowance (freeKms) be calculated for 'days' rented?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] Based on the business rules in the specification, how should the included free mileage allowance (freeKms) be calculated for 'days' rented?",
+      "q": "With an included free mileage allowance of 150 km per rental day, how should freeKms be calculated for 'days' rented?",
+      "title": "With an included free mileage allowance of 150 km per rental day, how should freeKms be calculated for 'days' rented?",
       "options": [
         "decimal freeKms = days * 150m;",
         "decimal freeKms = days * 100m;",
@@ -11803,8 +10923,8 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "The specification explicitly defines the included allowance as 150 km per day: freeKms = days * 150m (Gaddis Ch 3.5).",
-      "explanation": "The specification explicitly defines the included allowance as 150 km per day: freeKms = days * 150m (Gaddis Ch 3.5).",
+      "exp": "With an included allowance of 150 km per day, freeKms is calculated as days * 150m (Gaddis Ch 3.5).",
+      "explanation": "With an included allowance of 150 km per day, freeKms is calculated as days * 150m (Gaddis Ch 3.5).",
       "provenance": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "marks": 2
     },
@@ -11813,8 +10933,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] According to the pricing specification, if a customer drives 500 total kilometers on a 2-day rental (where the free allowance is 300 km), what is the calculated excess mileage surcharge?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] According to the pricing specification, if a customer drives 500 total kilometers on a 2-day rental (where the free allowance is 300 km), what is the calculated excess mileage surcharge?",
+      "q": "If excess mileage is billed at R3.50/km and a customer drives 500 total kilometers on a 2-day rental (300 km free allowance), what is the calculated excess mileage surcharge?",
+      "title": "If excess mileage is billed at R3.50/km and a customer drives 500 total kilometers on a 2-day rental (300 km free allowance), what is the calculated excess mileage surcharge?",
       "options": [
         "R 1,750.00",
         "R 700.00",
@@ -11829,8 +10949,8 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Excess kilometers = 500 km - 300 km = 200 km. From the rates table, excess kilometers are billed at R3.50/km: 200 * R3.50 = R700.00.",
-      "explanation": "Excess kilometers = 500 km - 300 km = 200 km. From the rates table, excess kilometers are billed at R3.50/km: 200 * R3.50 = R700.00.",
+      "exp": "Excess kilometers = 500 km - 300 km = 200 km. At R3.50/km, the excess surcharge is 200 * R3.50 = R700.00.",
+      "explanation": "Excess kilometers = 500 km - 300 km = 200 km. At R3.50/km, the excess surcharge is 200 * R3.50 = R700.00.",
       "provenance": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "marks": 2
     },
@@ -11839,8 +10959,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] How should the optional GPS navigation add-on (chkGps) be tested in the calculation event handler according to the specification rates?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] How should the optional GPS navigation add-on (chkGps) be tested in the calculation event handler according to the specification rates?",
+      "q": "How should an optional GPS navigation add-on (chkGps) costing R80.00 per rental day be tested and added in the calculation event handler?",
+      "title": "How should an optional GPS navigation add-on (chkGps) costing R80.00 per rental day be tested and added in the calculation event handler?",
       "options": [
         "if (chkGps.Text == \"true\") { total += days * 80m; }",
         "if (chkGps.Selected) { total += 80m; }",
@@ -11855,8 +10975,8 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "CheckBox controls provide a boolean Checked property. The specification states GPS is R80.00 per day: if (chkGps.Checked) total += days * 80m; (Gaddis Ch 4.10).",
-      "explanation": "CheckBox controls provide a boolean Checked property. The specification states GPS is R80.00 per day: if (chkGps.Checked) total += days * 80m; (Gaddis Ch 4.10).",
+      "exp": "CheckBox controls provide a boolean Checked property. At R80.00 per day: if (chkGps.Checked) total += days * 80m; (Gaddis Ch 4.10).",
+      "explanation": "CheckBox controls provide a boolean Checked property. At R80.00 per day: if (chkGps.Checked) total += days * 80m; (Gaddis Ch 4.10).",
       "provenance": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "marks": 2
     },
@@ -11865,8 +10985,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] When displaying the calculated final total due in lblTotalDue, which C# statement correctly formats the decimal value with South African currency representation?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] When displaying the calculated final total due in lblTotalDue, which C# statement correctly formats the decimal value with South African currency representation?",
+      "q": "When displaying the calculated final total due in lblTotalDue, which C# statement formats the decimal value with South African currency representation?",
+      "title": "When displaying the calculated final total due in lblTotalDue, which C# statement formats the decimal value with South African currency representation?",
       "options": [
         "lblTotalDue.Text = totalDue.ToString(\"F2\");",
         "lblTotalDue.Text = totalDue.ToString(\"N\");",
@@ -11891,8 +11011,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] What is the correct standard C# method signature for the Reset button's click event handler?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] What is the correct standard C# method signature for the Reset button's click event handler?",
+      "q": "What is the standard C# method signature for the Reset/Clear button's Click event handler?",
+      "title": "What is the standard C# method signature for the Reset/Clear button's Click event handler?",
       "options": [
         "private void btnClear_Click(object sender, EventArgs e)",
         "public void btnClear_Click()",
@@ -11917,8 +11037,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] When btnClear is clicked, which code block correctly restores the car rental form to its default initial state as specified?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] When btnClear is clicked, which code block correctly restores the car rental form to its default initial state as specified?",
+      "q": "When btnClear is clicked, which code block restores the car rental form to its default initial state (Sedan selected, add-ons unchecked, inputs and receipt cleared)?",
+      "title": "When btnClear is clicked, which code block restores the car rental form to its default initial state (Sedan selected, add-ons unchecked, inputs and receipt cleared)?",
       "options": [
         "this.Close(); Application.Restart();",
         "txtDays.Clear(); txtKms.Clear(); rdoSedan.Checked = true; chkGps.Checked = false; chkVoucher.Checked = false; lblTotalDue.Text = \"\"; lstReceipt.Items.Clear(); txtDays.Focus();",
@@ -11943,8 +11063,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] What statement closes the current form instance when the user confirms exit in btnExit_Click?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] What statement closes the current form instance when the user confirms exit in btnExit_Click?",
+      "q": "What C# statement closes the current form instance when the user confirms exit in btnExit_Click?",
+      "title": "What C# statement closes the current form instance when the user confirms exit in btnExit_Click?",
       "options": [
         "Application.Halt();",
         "Close.This();",
@@ -11969,8 +11089,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] Which defensive programming structure correctly validates that the parsed 'days' value is valid and halts event execution if invalid?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] Which defensive programming structure correctly validates that the parsed 'days' value is valid and halts event execution if invalid?",
+      "q": "Which defensive programming structure validates that the parsed 'days' value is positive (> 0) and halts event execution if invalid?",
+      "title": "Which defensive programming structure validates that the parsed 'days' value is positive (> 0) and halts event execution if invalid?",
       "options": [
         "while (days <= 0) { days++; }",
         "if (days == 0) { lblTotalDue.Text = \"0\"; }",
@@ -11995,8 +11115,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] If a user leaves txtKms blank and clicks Calculate, what is the boolean return value of decimal.TryParse(txtKms.Text, out kms)?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] If a user leaves txtKms blank and clicks Calculate, what is the boolean return value of decimal.TryParse(txtKms.Text, out kms)?",
+      "q": "If a user leaves txtKms blank and clicks Calculate, what is the boolean return value of decimal.TryParse(txtKms.Text, out kms)?",
+      "title": "If a user leaves txtKms blank and clicks Calculate, what is the boolean return value of decimal.TryParse(txtKms.Text, out kms)?",
       "options": [
         "false, preventing an unhandled FormatException crash",
         "true, setting kms to 1.0m",
@@ -12021,8 +11141,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] According to software engineering principles taught in CMPG122 (SU2), why should the daily rates (450m, 650m, 750m) and excess rate (3.50m) be declared as named constants?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] According to software engineering principles taught in CMPG122 (SU2), why should the daily rates (450m, 650m, 750m) and excess rate (3.50m) be declared as named constants?",
+      "q": "Why should fixed daily rental rates (450m, 650m, 750m) and the excess kilometer rate (3.50m) be declared as named constants (const)?",
+      "title": "Why should fixed daily rental rates (450m, 650m, 750m) and the excess kilometer rate (3.50m) be declared as named constants (const)?",
       "options": [
         "Because C# does not allow literal numbers in arithmetic expressions",
         "To prevent magic numbers, improve code readability, and allow rates to be updated in a single declaration location",
@@ -12047,8 +11167,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] Which statement correctly appends a formatted line showing the vehicle base charge of 'baseCost' to the invoice ListBox (lstReceipt)?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] Which statement correctly appends a formatted line showing the vehicle base charge of 'baseCost' to the invoice ListBox (lstReceipt)?",
+      "q": "Which statement appends a formatted line showing the vehicle base charge ('baseCost') to the invoice ListBox (lstReceipt)?",
+      "title": "Which statement appends a formatted line showing the vehicle base charge ('baseCost') to the invoice ListBox (lstReceipt)?",
       "options": [
         "lstReceipt.Text = \"Base Rental: \" + baseCost.ToString(\"C\");",
         "lstReceipt.Items = \"Base Rental: \" + baseCost.ToString(\"C\");",
@@ -12073,8 +11193,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2024 Exam (Car Rental Billing)] Prompting the user with a confirmation dialog (MessageBoxButtons.YesNo) before terminating the application in btnExit_Click satisfies which of Ben Shneiderman's 8 Golden Rules of Interface Design?",
-      "title": "[NWU Dec 2024 Exam (Car Rental Billing)] Prompting the user with a confirmation dialog (MessageBoxButtons.YesNo) before terminating the application in btnExit_Click satisfies which of Ben Shneiderman's 8 Golden Rules of Interface Design?",
+      "q": "Prompting the user with a confirmation dialog (MessageBoxButtons.YesNo) before terminating the application in btnExit_Click satisfies which of Ben Shneiderman's 8 Golden Rules of Interface Design?",
+      "title": "Prompting the user with a confirmation dialog (MessageBoxButtons.YesNo) before terminating the application in btnExit_Click satisfies which of Ben Shneiderman's 8 Golden Rules of Interface Design?",
       "options": [
         "Rule 8: Reduce short-term memory load",
         "Rule 2: Cater to universal usability",
@@ -12099,8 +11219,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] According to NWU Hungarian naming standards, what prefix and identifier should be assigned to the academic credit count input control?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] According to NWU Hungarian naming standards, what prefix and identifier should be assigned to the academic credit count input control?",
+      "q": "Under Hungarian naming conventions, what prefix and identifier should be assigned to the academic credit count input TextBox?",
+      "title": "Under Hungarian naming conventions, what prefix and identifier should be assigned to the academic credit count input TextBox?",
       "options": [
         "txtCredits",
         "tbCredits",
@@ -12125,8 +11245,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] According to the Faculty Rates Table in the specification, if a student enrolls for 12 credits in the Faculty of Natural & Agricultural Sciences, what is the tuition charge before the laboratory levy?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] According to the Faculty Rates Table in the specification, if a student enrolls for 12 credits in the Faculty of Natural & Agricultural Sciences, what is the tuition charge before the laboratory levy?",
+      "q": "At a Natural & Agricultural Sciences rate of R850.00 per credit, what is the tuition charge before levies for a student enrolling in 12 credits?",
+      "title": "At a Natural & Agricultural Sciences rate of R850.00 per credit, what is the tuition charge before levies for a student enrolling in 12 credits?",
       "options": [
         "R 9,000.00",
         "R 10,200.00",
@@ -12141,8 +11261,8 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "From the specification table, Natural Sciences costs R850.00 per credit. 12 credits * R850.00 = R10,200.00.",
-      "explanation": "From the specification table, Natural Sciences costs R850.00 per credit. 12 credits * R850.00 = R10,200.00.",
+      "exp": "At R850.00 per credit for Natural & Agricultural Sciences, 12 credits * R850.00 = R10,200.00.",
+      "explanation": "At R850.00 per credit for Natural & Agricultural Sciences, 12 credits * R850.00 = R10,200.00.",
       "provenance": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "marks": 2
     },
@@ -12151,8 +11271,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] Based on the specification table, what compulsory facility levy must be added if the student selects the Faculty of Natural & Agricultural Sciences (rdoScience)?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] Based on the specification table, what compulsory facility levy must be added if the student selects the Faculty of Natural & Agricultural Sciences (rdoScience)?",
+      "q": "Given faculty levies (Natural Sciences: R2,500.00 science lab levy; Commerce: R1,000.00 IT network levy; Humanities: R500.00 resource levy), which compulsory levy applies when rdoScience is selected?",
+      "title": "Given faculty levies (Natural Sciences: R2,500.00 science lab levy; Commerce: R1,000.00 IT network levy; Humanities: R500.00 resource levy), which compulsory levy applies when rdoScience is selected?",
       "options": [
         "R 1,000.00 IT network levy",
         "R 500.00 resource levy",
@@ -12167,8 +11287,8 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "The specification table explicitly defines a R2,500.00 laboratory levy for Natural & Agricultural Sciences.",
-      "explanation": "The specification table explicitly defines a R2,500.00 laboratory levy for Natural & Agricultural Sciences.",
+      "exp": "Natural & Agricultural Sciences carries a compulsory R2,500.00 science laboratory levy.",
+      "explanation": "Natural & Agricultural Sciences carries a compulsory R2,500.00 science laboratory levy.",
       "provenance": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "marks": 2
     },
@@ -12177,8 +11297,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] According to the business rules, if academic tuition plus levy totals R12,000.00 and the student is awarded a 25% merit bursary, how should the net academic tuition be calculated?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] According to the business rules, if academic tuition plus levy totals R12,000.00 and the student is awarded a 25% merit bursary, how should the net academic tuition be calculated?",
+      "q": "If academic tuition plus levy totals R12,000.00 and the student is awarded a 25% merit bursary remission, how should the net academic tuition be calculated?",
+      "title": "If academic tuition plus levy totals R12,000.00 and the student is awarded a 25% merit bursary remission, how should the net academic tuition be calculated?",
       "options": [
         "netTuition = tuition - 25m;",
         "netTuition = tuition / 0.25m;",
@@ -12203,8 +11323,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] Based on the specification's installment payment plan rules, how many monthly installment records should be generated in lstInstallments?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] Based on the specification's installment payment plan rules, how many monthly installment records should be generated in lstInstallments?",
+      "q": "When dividing a semester fee balance equally across a 4-month semester payment plan (Months 1 through 4), how many monthly installment records are generated in lstInstallments?",
+      "title": "When dividing a semester fee balance equally across a 4-month semester payment plan (Months 1 through 4), how many monthly installment records are generated in lstInstallments?",
       "options": [
         "Exactly 4 monthly installment items",
         "12 monthly installment items",
@@ -12219,8 +11339,8 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "The specification states the semester fee is divided into 4 equal monthly installments for Months 1 through 4 (Gaddis Ch 5).",
-      "explanation": "The specification states the semester fee is divided into 4 equal monthly installments for Months 1 through 4 (Gaddis Ch 5).",
+      "exp": "A 4-month semester payment plan divides the balance into 4 monthly installments for Months 1 through 4 (Gaddis Ch 5).",
+      "explanation": "A 4-month semester payment plan divides the balance into 4 monthly installments for Months 1 through 4 (Gaddis Ch 5).",
       "provenance": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "marks": 2
     },
@@ -12229,8 +11349,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] Which count-controlled loop header correctly iterates through the fixed 4 semester installment months (Month 1 through Month 4)?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] Which count-controlled loop header correctly iterates through the fixed 4 semester installment months (Month 1 through Month 4)?",
+      "q": "Which count-controlled loop header iterates through the 4 semester installment months (Month 1 through Month 4)?",
+      "title": "Which count-controlled loop header iterates through the 4 semester installment months (Month 1 through Month 4)?",
       "options": [
         "while (true)",
         "for (int month = 1; month <= 4; month++)",
@@ -12255,8 +11375,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] Inside the installment loop, which statement correctly adds a formatted installment line for month 'm' and decimal amount 'monthlyAmount' to lstInstallments?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] Inside the installment loop, which statement correctly adds a formatted installment line for month 'm' and decimal amount 'monthlyAmount' to lstInstallments?",
+      "q": "Inside the installment loop, which statement adds a formatted installment line for month 'm' and decimal amount 'monthlyAmount' to lstInstallments?",
+      "title": "Inside the installment loop, which statement adds a formatted installment line for month 'm' and decimal amount 'monthlyAmount' to lstInstallments?",
       "options": [
         "lstInstallments.Add($\"Month {m}: {monthlyAmount:C}\");",
         "lstInstallments.Items = $\"Month {m}: {monthlyAmount:C}\";",
@@ -12281,8 +11401,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] According to the business rules, full-time semester registration permits between 1 and 25 credits. Which conditional statement correctly enforces this boundary condition?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] According to the business rules, full-time semester registration permits between 1 and 25 credits. Which conditional statement correctly enforces this boundary condition?",
+      "q": "Full-time semester registration permits between 1 and 25 credits inclusive. Which conditional statement enforces this boundary validation?",
+      "title": "Full-time semester registration permits between 1 and 25 credits inclusive. Which conditional statement enforces this boundary validation?",
       "options": [
         "if (credits > 25)",
         "if (credits == 0 || credits == 25)",
@@ -12307,8 +11427,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] When credit input validation fails, what C# method call returns the keyboard input cursor directly to the credit input TextBox?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] When credit input validation fails, what C# method call returns the keyboard input cursor directly to the credit input TextBox?",
+      "q": "When credit input validation fails, what C# method call returns the keyboard input cursor directly to the credit input TextBox (txtCredits)?",
+      "title": "When credit input validation fails, what C# method call returns the keyboard input cursor directly to the credit input TextBox (txtCredits)?",
       "options": [
         "txtCredits.Focus();",
         "txtCredits.Select();",
@@ -12333,8 +11453,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] Following NWU usability guidelines, which method should be called immediately after txtCredits.Focus() so that the user can immediately overwrite the invalid entry without manual backspacing?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] Following NWU usability guidelines, which method should be called immediately after txtCredits.Focus() so that the user can immediately overwrite the invalid entry without manual backspacing?",
+      "q": "Which TextBox method should be called immediately after txtCredits.Focus() so that the user can immediately overwrite the invalid entry without manual backspacing?",
+      "title": "Which TextBox method should be called immediately after txtCredits.Focus() so that the user can immediately overwrite the invalid entry without manual backspacing?",
       "options": [
         "txtCredits.ResetText();",
         "txtCredits.SelectAll();",
@@ -12359,8 +11479,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] If integer conversion is attempted using int.Parse(txtCredits.Text) instead of int.TryParse, what specific exception is thrown when the TextBox contains non-numeric text like 'twelve'?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] If integer conversion is attempted using int.Parse(txtCredits.Text) instead of int.TryParse, what specific exception is thrown when the TextBox contains non-numeric text like 'twelve'?",
+      "q": "If integer conversion is attempted using int.Parse(txtCredits.Text) instead of int.TryParse, what specific exception is thrown when the TextBox contains non-numeric text like 'twelve'?",
+      "title": "If integer conversion is attempted using int.Parse(txtCredits.Text) instead of int.TryParse, what specific exception is thrown when the TextBox contains non-numeric text like 'twelve'?",
       "options": [
         "DivideByZeroException",
         "OverflowException",
@@ -12385,8 +11505,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] What boolean property indicates whether the user has ticked the residence accommodation CheckBox (chkResidence)?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] What boolean property indicates whether the user has ticked the residence accommodation CheckBox (chkResidence)?",
+      "q": "What boolean property indicates whether the user has ticked the residence accommodation CheckBox (chkResidence)?",
+      "title": "What boolean property indicates whether the user has ticked the residence accommodation CheckBox (chkResidence)?",
       "options": [
         "chkResidence.Selected",
         "chkResidence.Value == 1",
@@ -12411,8 +11531,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] In the chkBursary_CheckedChanged event handler, what statement ensures that the bursary percentage TextBox (txtBursaryPercent) is only editable when the bursary CheckBox is ticked?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] In the chkBursary_CheckedChanged event handler, what statement ensures that the bursary percentage TextBox (txtBursaryPercent) is only editable when the bursary CheckBox is ticked?",
+      "q": "In the chkBursary_CheckedChanged event handler, what statement ensures that the bursary percentage TextBox (txtBursaryPercent) is only editable when the bursary CheckBox is ticked?",
+      "title": "In the chkBursary_CheckedChanged event handler, what statement ensures that the bursary percentage TextBox (txtBursaryPercent) is only editable when the bursary CheckBox is ticked?",
       "options": [
         "txtBursaryPercent.Enabled = chkBursary.Checked;",
         "txtBursaryPercent.Visible = false;",
@@ -12437,8 +11557,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] If a report requires the bursary discount percentage to be displayed as a fixed decimal number with 2 decimal places without currency symbols (e.g. '25.00'), which format string must be passed to .ToString()?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] If a report requires the bursary discount percentage to be displayed as a fixed decimal number with 2 decimal places without currency symbols (e.g. '25.00'), which format string must be passed to .ToString()?",
+      "q": "To display a bursary discount percentage as a fixed decimal number with 2 decimal places and no currency or percent symbol (e.g., '25.00'), which format string must be passed to .ToString()?",
+      "title": "To display a bursary discount percentage as a fixed decimal number with 2 decimal places and no currency or percent symbol (e.g., '25.00'), which format string must be passed to .ToString()?",
       "options": [
         "\"C2\"",
         "\"F2\"",
@@ -12463,8 +11583,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] In a standard Windows Forms architecture, where should the credit parsing, fee calculation, and installment generation code be placed?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] In a standard Windows Forms architecture, where should the credit parsing, fee calculation, and installment generation code be placed?",
+      "q": "In a standard Windows Forms architecture, where should the credit parsing, fee calculation, and installment generation code be placed?",
+      "title": "In a standard Windows Forms architecture, where should the credit parsing, fee calculation, and installment generation code be placed?",
       "options": [
         "Inside the Form1_Load event handler",
         "Inside the txtCredits_TextChanged event handler",
@@ -12489,8 +11609,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2023 Exam (Student Tuition Assessment)] Displaying the complete breakdown of tuition, levies, bursary deductions, residence fees, and a 4-month installment schedule satisfies which of Shneiderman's 8 Golden Rules of Interface Design?",
-      "title": "[NWU Dec 2023 Exam (Student Tuition Assessment)] Displaying the complete breakdown of tuition, levies, bursary deductions, residence fees, and a 4-month installment schedule satisfies which of Shneiderman's 8 Golden Rules of Interface Design?",
+      "q": "Displaying a complete breakdown of tuition, levies, bursary deductions, residence fees, and a 4-month installment schedule satisfies which of Shneiderman's 8 Golden Rules of Interface Design?",
+      "title": "Displaying a complete breakdown of tuition, levies, bursary deductions, residence fees, and a 4-month installment schedule satisfies which of Shneiderman's 8 Golden Rules of Interface Design?",
       "options": [
         "Rule 1: Strive for consistency only",
         "Rule 5: Prevent errors only",
@@ -12515,8 +11635,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] What standard Hungarian notation prefix should be used when naming the radio button for the Gym Standard membership tier?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] What standard Hungarian notation prefix should be used when naming the radio button for the Gym Standard membership tier?",
+      "q": "What standard Hungarian notation prefix and identifier should be used when naming the RadioButton for the Standard membership tier?",
+      "title": "What standard Hungarian notation prefix and identifier should be used when naming the RadioButton for the Standard membership tier?",
       "options": [
         "rdoStandard (or radStandard)",
         "btnStandard",
@@ -12541,8 +11661,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] According to the Membership Rates Table in the specification, if a member chooses VIP All-Access and adds a Personal Trainer, what is the monthly subtotal before VAT?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] According to the Membership Rates Table in the specification, if a member chooses VIP All-Access and adds a Personal Trainer, what is the monthly subtotal before VAT?",
+      "q": "If VIP All-Access membership costs R600.00/month (with free private locker) and a Personal Trainer add-on costs R250.00/month, what is the monthly subtotal before VAT?",
+      "title": "If VIP All-Access membership costs R600.00/month (with free private locker) and a Personal Trainer add-on costs R250.00/month, what is the monthly subtotal before VAT?",
       "options": [
         "R 600.00",
         "R 850.00",
@@ -12557,8 +11677,8 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "From the rates table, VIP tier is R600.00/month. Personal trainer coaching is R250.00/month. VIP members receive private lockers free of charge. Subtotal = 600 + 250 = R850.00.",
-      "explanation": "From the rates table, VIP tier is R600.00/month. Personal trainer coaching is R250.00/month. VIP members receive private lockers free of charge. Subtotal = 600 + 250 = R850.00.",
+      "exp": "VIP membership is R600.00/month (with free private locker) and Personal Trainer coaching is R250.00/month. Subtotal = 600 + 250 = R850.00.",
+      "explanation": "VIP membership is R600.00/month (with free private locker) and Personal Trainer coaching is R250.00/month. Subtotal = 600 + 250 = R850.00.",
       "provenance": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "marks": 2
     },
@@ -12567,8 +11687,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] Based on the 15% statutory VAT rate stated in the specification, which C# statement correctly calculates the tax amount from a 'subtotal' decimal variable?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] Based on the 15% statutory VAT rate stated in the specification, which C# statement correctly calculates the tax amount from a 'subtotal' decimal variable?",
+      "q": "At a 15% statutory VAT rate, which C# statement calculates the tax amount from a 'subtotal' decimal variable?",
+      "title": "At a 15% statutory VAT rate, which C# statement calculates the tax amount from a 'subtotal' decimal variable?",
       "options": [
         "decimal vat = subtotal * 15;",
         "decimal vat = subtotal / 0.15m;",
@@ -12593,8 +11713,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] What is the final monthly debit order amount including 15% VAT for a member whose pre-tax subtotal is R850.00?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] What is the final monthly debit order amount including 15% VAT for a member whose pre-tax subtotal is R850.00?",
+      "q": "What is the final monthly debit order amount including 15% VAT for a member whose pre-tax subtotal is R850.00?",
+      "title": "What is the final monthly debit order amount including 15% VAT for a member whose pre-tax subtotal is R850.00?",
       "options": [
         "R 850.00",
         "R 127.50",
@@ -12619,8 +11739,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which loop statement correctly accumulates and populates the 12-month cumulative debit order projection into lstDebitOrders?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which loop statement correctly accumulates and populates the 12-month cumulative debit order projection into lstDebitOrders?",
+      "q": "Which loop statement accumulates and populates a 12-month cumulative debit order projection into lstDebitOrders?",
+      "title": "Which loop statement accumulates and populates a 12-month cumulative debit order projection into lstDebitOrders?",
       "options": [
         "for (int m = 1; m <= 12; m++) { lstDebitOrders.Items.Add($\"Month {m:D2}: Cumulative Total = {(m * monthlyTotal):C}\"); }",
         "while (m <= 12) { lstDebitOrders.Items.Add(monthlyTotal); }",
@@ -12645,8 +11765,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] What defensive validation check should be performed if a user clicks Calculate Debit Order without selecting any membership tier radio button?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] What defensive validation check should be performed if a user clicks Calculate Debit Order without selecting any membership tier radio button?",
+      "q": "What defensive validation check should be performed if a user clicks Calculate Debit Order without selecting any membership tier RadioButton?",
+      "title": "What defensive validation check should be performed if a user clicks Calculate Debit Order without selecting any membership tier RadioButton?",
       "options": [
         "Silently default to the VIP tier without notifying the user",
         "Display a MessageBox prompting the user to select a tier and halt execution (return;)",
@@ -12671,8 +11791,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which boolean expression correctly determines that NO membership tier radio button has been selected in grpTiers?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which boolean expression correctly determines that NO membership tier radio button has been selected in grpTiers?",
+      "q": "Which boolean expression determines that NO membership tier RadioButton (rdoStandard, rdoPremium, rdoVip) has been selected in grpTiers?",
+      "title": "Which boolean expression determines that NO membership tier RadioButton (rdoStandard, rdoPremium, rdoVip) has been selected in grpTiers?",
       "options": [
         "if (rdoStandard.Checked && rdoPremium.Checked && rdoVip.Checked)",
         "if (grpTiers.Text == \"\")",
@@ -12697,8 +11817,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] Before generating a new 12-month projection in btnCalculate_Click, which method must be called to ensure previous records are not duplicated?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] Before generating a new 12-month projection in btnCalculate_Click, which method must be called to ensure previous records are not duplicated?",
+      "q": "Before generating a new 12-month projection in btnCalculate_Click, which method must be called on lstDebitOrders to ensure previous records are not duplicated?",
+      "title": "Before generating a new 12-month projection in btnCalculate_Click, which method must be called on lstDebitOrders to ensure previous records are not duplicated?",
       "options": [
         "lstDebitOrders.Clear();",
         "lstDebitOrders.ResetText();",
@@ -12723,8 +11843,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] In Visual C# Windows Forms development, why must monetary values (subtotal, VAT, monthly debit order) be declared as 'decimal' rather than 'double' or 'float'?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] In Visual C# Windows Forms development, why must monetary values (subtotal, VAT, monthly debit order) be declared as 'decimal' rather than 'double' or 'float'?",
+      "q": "In Visual C# Windows Forms development, why must monetary values (subtotal, VAT, monthly debit order) be declared as 'decimal' rather than 'double' or 'float'?",
+      "title": "In Visual C# Windows Forms development, why must monetary values (subtotal, VAT, monthly debit order) be declared as 'decimal' rather than 'double' or 'float'?",
       "options": [
         "decimal offers 128-bit precision and eliminates binary floating-point rounding errors inherent to financial calculations",
         "double cannot be displayed in a Label control",
@@ -12749,8 +11869,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which C# format string formats the tax rate value 0.15m as '15.0%'?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which C# format string formats the tax rate value 0.15m as '15.0%'?",
+      "q": "Which C# format expression formats the decimal tax rate value 0.15m as '15.0%'?",
+      "title": "Which C# format expression formats the decimal tax rate value 0.15m as '15.0%'?",
       "options": [
         "(0.15m).ToString(\"C1\")",
         "(0.15m).ToString(\"P1\")",
@@ -12775,8 +11895,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which property on Form1 sets the overall background color of the graphical user interface window?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which property on Form1 sets the overall background color of the graphical user interface window?",
+      "q": "Which property on Form1 sets the overall background color of the graphical user interface window?",
+      "title": "Which property on Form1 sets the overall background color of the graphical user interface window?",
       "options": [
         "ForeColor",
         "Background",
@@ -12801,8 +11921,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which property is used to change the font color of output text inside a Label control (e.g. setting an overdue balance to Red)?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which property is used to change the font color of output text inside a Label control (e.g. setting an overdue balance to Red)?",
+      "q": "Which property is used to change the font color of output text inside a Label control (e.g., setting an overdue balance to Red)?",
+      "title": "Which property is used to change the font color of output text inside a Label control (e.g., setting an overdue balance to Red)?",
       "options": [
         "TextColor",
         "FontColor",
@@ -12827,8 +11947,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] In professional Windows Forms applications, what is the effect of setting FormBorderStyle = FormBorderStyle.FixedSingle?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] In professional Windows Forms applications, what is the effect of setting FormBorderStyle = FormBorderStyle.FixedSingle?",
+      "q": "In Windows Forms applications, what is the effect of setting FormBorderStyle = FormBorderStyle.FixedSingle?",
+      "title": "In Windows Forms applications, what is the effect of setting FormBorderStyle = FormBorderStyle.FixedSingle?",
       "options": [
         "It prevents the user from resizing the window by dragging its border edges",
         "It removes the window title bar completely",
@@ -12853,8 +11973,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which Form property should be configured so that the FitLife application window launches centered on the computer monitor?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which Form property should be configured so that the FitLife application window launches centered on the computer monitor?",
+      "q": "Which Form property configures the application window to launch centered on the computer monitor?",
+      "title": "Which Form property configures the application window to launch centered on the computer monitor?",
       "options": [
         "CenterToScreen = true;",
         "StartPosition = FormStartPosition.CenterScreen;",
@@ -12879,8 +11999,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which code snippet correctly displays a confirmation dialog with Yes/No buttons and only closes the form if the user clicks Yes?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] Which code snippet correctly displays a confirmation dialog with Yes/No buttons and only closes the form if the user clicks Yes?",
+      "q": "Which code snippet displays a confirmation dialog with Yes/No buttons and only closes the form if the user clicks Yes?",
+      "title": "Which code snippet displays a confirmation dialog with Yes/No buttons and only closes the form if the user clicks Yes?",
       "options": [
         "MessageBox.Show(\"Exit?\", \"Confirm\", MessageBoxButtons.YesNo); this.Close();",
         "if (MessageBox.Show(\"Exit\") == true) this.Close();",
@@ -12905,8 +12025,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Dec 2022 Exam (Gym Membership Billing)] Validating that a membership tier is selected before proceeding with debit order calculations adheres to which of Shneiderman's 8 Golden Rules?",
-      "title": "[NWU Dec 2022 Exam (Gym Membership Billing)] Validating that a membership tier is selected before proceeding with debit order calculations adheres to which of Shneiderman's 8 Golden Rules?",
+      "q": "Validating that a membership tier is selected before proceeding with debit order calculations adheres to which of Shneiderman's 8 Golden Rules?",
+      "title": "Validating that a membership tier is selected before proceeding with debit order calculations adheres to which of Shneiderman's 8 Golden Rules?",
       "options": [
         "Rule 8: Reduce short-term memory load",
         "Rule 4: Design dialogs to yield closure",
@@ -12931,8 +12051,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Following NWU standard naming conventions, what identifier should be assigned to the TextBox used for entering the number of booking nights?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Following NWU standard naming conventions, what identifier should be assigned to the TextBox used for entering the number of booking nights?",
+      "q": "Under standard Hungarian naming conventions, what identifier should be assigned to the TextBox used for entering the number of booking nights?",
+      "title": "Under standard Hungarian naming conventions, what identifier should be assigned to the TextBox used for entering the number of booking nights?",
       "options": [
         "txtNights",
         "tbNights",
@@ -12957,8 +12077,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] According to the Room Rates Table in the specification, what is the room charge for a guest staying 3 nights in a Standard Room?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] According to the Room Rates Table in the specification, what is the room charge for a guest staying 3 nights in a Standard Room?",
+      "q": "At a Standard Room rate of R950.00 per night, what is the room charge for a guest staying 3 nights?",
+      "title": "At a Standard Room rate of R950.00 per night, what is the room charge for a guest staying 3 nights?",
       "options": [
         "R 1,900.00",
         "R 2,850.00",
@@ -12973,8 +12093,8 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "From the rates table, Standard Room is R950.00 per night. 3 nights * R950.00 = R2,850.00.",
-      "explanation": "From the rates table, Standard Room is R950.00 per night. 3 nights * R950.00 = R2,850.00.",
+      "exp": "At R950.00 per night for a Standard Room, 3 nights * R950.00 = R2,850.00.",
+      "explanation": "At R950.00 per night for a Standard Room, 3 nights * R950.00 = R2,850.00.",
       "provenance": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "marks": 2
     },
@@ -12983,8 +12103,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Based on the specification rules, how is the optional buffet breakfast charge calculated for 2 guests staying 3 nights?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Based on the specification rules, how is the optional buffet breakfast charge calculated for 2 guests staying 3 nights?",
+      "q": "If optional buffet breakfast costs R120.00 per guest per night, how is the breakfast charge calculated for 2 guests staying 3 nights?",
+      "title": "If optional buffet breakfast costs R120.00 per guest per night, how is the breakfast charge calculated for 2 guests staying 3 nights?",
       "options": [
         "3 * 120m = R360.00",
         "2 * 120m = R240.00",
@@ -12999,8 +12119,8 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "The specification sets breakfast at R120.00 per guest per night. 3 nights * 2 guests * R120.00 = R720.00.",
-      "explanation": "The specification sets breakfast at R120.00 per guest per night. 3 nights * 2 guests * R120.00 = R720.00.",
+      "exp": "At R120.00 per guest per night, 3 nights * 2 guests * R120.00 = R720.00.",
+      "explanation": "At R120.00 per guest per night, 3 nights * 2 guests * R120.00 = R720.00.",
       "provenance": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "marks": 2
     },
@@ -13009,8 +12129,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] According to GUI design principles in CMPG122, which control structure should be used to allow guests to choose between Standard, Deluxe, and Penthouse rooms?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] According to GUI design principles in CMPG122, which control structure should be used to allow guests to choose between Standard, Deluxe, and Penthouse rooms?",
+      "q": "Which GUI control structure should be used to allow guests to choose mutually exclusively between Standard, Deluxe, and Penthouse rooms?",
+      "title": "Which GUI control structure should be used to allow guests to choose mutually exclusively between Standard, Deluxe, and Penthouse rooms?",
       "options": [
         "CheckBoxes placed directly on the form",
         "A single multiline TextBox",
@@ -13035,8 +12155,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] The specification states that bookings must be between 1 and 30 nights inclusive. Which conditional statement correctly enforces this range?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] The specification states that bookings must be between 1 and 30 nights inclusive. Which conditional statement correctly enforces this range?",
+      "q": "Hotel bookings must be between 1 and 30 nights inclusive. Which conditional expression verifies that 'nights' falls within this valid range?",
+      "title": "Hotel bookings must be between 1 and 30 nights inclusive. Which conditional expression verifies that 'nights' falls within this valid range?",
       "options": [
         "if (nights >= 1 && nights <= 30)",
         "if (nights < 1 || nights > 30)",
@@ -13061,8 +12181,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Which C# statement safely parses the text in txtGuests into an integer variable 'guests' without throwing a FormatException on invalid input?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Which C# statement safely parses the text in txtGuests into an integer variable 'guests' without throwing a FormatException on invalid input?",
+      "q": "Which C# statement safely parses the text in txtGuests into an integer variable 'guests' without throwing a FormatException on invalid input?",
+      "title": "Which C# statement safely parses the text in txtGuests into an integer variable 'guests' without throwing a FormatException on invalid input?",
       "options": [
         "guests = int.Parse(txtGuests.Text);",
         "int.TryParse(txtGuests.Text, out guests)",
@@ -13087,8 +12207,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] According to the specification, the system must generate a random 4-digit booking confirmation reference between 1000 and 9999. Which statement implements this correctly?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] According to the specification, the system must generate a random 4-digit booking confirmation reference between 1000 and 9999. Which statement implements this correctly?",
+      "q": "Which C# statement generates a random 4-digit booking confirmation reference number between 1000 and 9999 inclusive?",
+      "title": "Which C# statement generates a random 4-digit booking confirmation reference number between 1000 and 9999 inclusive?",
       "options": [
         "int refNo = rand.Next(1000, 9999);",
         "int refNo = Math.Random(1000, 9999);",
@@ -13113,8 +12233,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] In Visual C# Windows Forms, why should the Random object instance (rand) be declared as a private class-level field rather than instantiated locally inside btnConfirm_Click?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] In Visual C# Windows Forms, why should the Random object instance (rand) be declared as a private class-level field rather than instantiated locally inside btnConfirm_Click?",
+      "q": "In Visual C# Windows Forms, why should a Random object instance (rand) be declared as a private class-level field rather than instantiated locally inside btnConfirm_Click?",
+      "title": "In Visual C# Windows Forms, why should a Random object instance (rand) be declared as a private class-level field rather than instantiated locally inside btnConfirm_Click?",
       "options": [
         "Because local variables cannot be accessed by methods in the same class",
         "Because C# disallows new Random() inside event handlers",
@@ -13139,8 +12259,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] What format specifier must be passed to .ToString() to display the total booking cost formatted with currency symbol and 2 decimal places in lblTotalDue?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] What format specifier must be passed to .ToString() to display the total booking cost formatted with currency symbol and 2 decimal places in lblTotalDue?",
+      "q": "Which statement formats the decimal total booking cost ('total') with a currency symbol and 2 decimal places in lblTotalDue?",
+      "title": "Which statement formats the decimal total booking cost ('total') with a currency symbol and 2 decimal places in lblTotalDue?",
       "options": [
         "lblTotalDue.Text = total.ToString(\"C\");",
         "lblTotalDue.Text = total.ToString(\"D\");",
@@ -13165,8 +12285,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Which method call clears all booking details and previous receipts from lstReceipt?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Which method call clears all booking details and previous receipts from lstReceipt?",
+      "q": "Which method call clears all booking details and previous receipt lines from lstReceipt?",
+      "title": "Which method call clears all booking details and previous receipt lines from lstReceipt?",
       "options": [
         "lstReceipt.Clear();",
         "lstReceipt.Items.Clear();",
@@ -13191,8 +12311,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Before attempting to remove an item or read a selection from a ListBox (lstRooms), which condition safely verifies that the user has selected an item?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Before attempting to remove an item or read a selection from a ListBox (lstRooms), which condition safely verifies that the user has selected an item?",
+      "q": "Before attempting to remove an item or read a selection from a ListBox (lstRooms), which condition safely verifies that the user has selected an item?",
+      "title": "Before attempting to remove an item or read a selection from a ListBox (lstRooms), which condition safely verifies that the user has selected an item?",
       "options": [
         "if (lstRooms.SelectedIndex == 0)",
         "if (lstRooms.Items.Count > 0)",
@@ -13217,8 +12337,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] If code attempts to access lstRooms.Items[5] when the ListBox contains only 3 items, which runtime exception is thrown?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] If code attempts to access lstRooms.Items[5] when the ListBox contains only 3 items, which runtime exception is thrown?",
+      "q": "If code attempts to access lstRooms.Items[5] when the ListBox contains only 3 items, which runtime exception is thrown?",
+      "title": "If code attempts to access lstRooms.Items[5] when the ListBox contains only 3 items, which runtime exception is thrown?",
       "options": [
         "NullReferenceException",
         "FormatException",
@@ -13243,8 +12363,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Which property setting ensures that btnConfirm is disabled upon form load until calculation validation passes?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Which property setting ensures that btnConfirm is disabled upon form load until calculation validation passes?",
+      "q": "Which property setting ensures that btnConfirm is disabled upon form load until calculation validation passes?",
+      "title": "Which property setting ensures that btnConfirm is disabled upon form load until calculation validation passes?",
       "options": [
         "btnConfirm.Enabled = false;",
         "btnConfirm.Visible = false;",
@@ -13269,8 +12389,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] What visual feedback is rendered by the Windows Forms engine when a button's Enabled property is set to false?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] What visual feedback is rendered by the Windows Forms engine when a button's Enabled property is set to false?",
+      "q": "What visual feedback is rendered by the Windows Forms engine when a Button's Enabled property is set to false?",
+      "title": "What visual feedback is rendered by the Windows Forms engine when a Button's Enabled property is set to false?",
       "options": [
         "The button becomes invisible and transparent",
         "The button text and border appear dimmed/grayed-out and do not respond to mouse clicks or hover events",
@@ -13295,8 +12415,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Keeping the 'Confirm Booking' button disabled until the user has successfully validated room capacity and calculated the total demonstrates which Shneiderman Golden Rule?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Keeping the 'Confirm Booking' button disabled until the user has successfully validated room capacity and calculated the total demonstrates which Shneiderman Golden Rule?",
+      "q": "Keeping the 'Confirm Booking' button disabled until the user has validated room capacity and calculated the total demonstrates which of Shneiderman's 8 Golden Rules?",
+      "title": "Keeping the 'Confirm Booking' button disabled until the user has validated room capacity and calculated the total demonstrates which of Shneiderman's 8 Golden Rules?",
       "options": [
         "Rule 8: Reduce short-term memory load",
         "Rule 6: Permit easy reversal of actions",
@@ -13321,8 +12441,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Which C# statement properly closes the hotel reservation form when btnExit is clicked?",
-      "title": "[NWU Nov 2021 Exam (Hotel Booking Engine)] Which C# statement properly closes the hotel reservation form when btnExit is clicked?",
+      "q": "Which C# statement properly closes the hotel reservation form when btnExit is clicked?",
+      "title": "Which C# statement properly closes the hotel reservation form when btnExit is clicked?",
       "options": [
         "Form.Exit();",
         "Application.Halt();",
@@ -13347,8 +12467,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] According to NWU Hungarian naming conventions, what name should be assigned to the TextBox used for entering the item unit price?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] According to NWU Hungarian naming conventions, what name should be assigned to the TextBox used for entering the item unit price?",
+      "q": "Under Hungarian naming conventions, what name should be assigned to the TextBox used for entering an item's unit price?",
+      "title": "Under Hungarian naming conventions, what name should be assigned to the TextBox used for entering an item's unit price?",
       "options": [
         "txtPrice",
         "tbPrice",
@@ -13373,8 +12493,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] Which statement safely parses the quantity entered in txtQuantity into integer variable 'qty'?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] Which statement safely parses the quantity entered in txtQuantity into integer variable 'qty'?",
+      "q": "Which C# statement safely parses the quantity entered in txtQuantity into an integer variable 'qty'?",
+      "title": "Which C# statement safely parses the quantity entered in txtQuantity into an integer variable 'qty'?",
       "options": [
         "qty = int.Parse(txtQuantity.Text);",
         "int.TryParse(txtQuantity.Text, out qty)",
@@ -13399,8 +12519,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] If a cashier enters an item priced at R150.00 with a quantity of 3 units, what is the gross line subtotal before any discounts?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] If a cashier enters an item priced at R150.00 with a quantity of 3 units, what is the gross line subtotal before any discounts?",
+      "q": "If a cashier enters an item priced at R150.00 with a quantity of 3 units, what is the gross line subtotal before any discounts?",
+      "title": "If a cashier enters an item priced at R150.00 with a quantity of 3 units, what is the gross line subtotal before any discounts?",
       "options": [
         "R 300.00",
         "R 150.00",
@@ -13425,8 +12545,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] According to the Volume Discounts Table in the specification, if a customer purchases 10 or more units of an item, how is the wholesale discount evaluated and calculated?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] According to the Volume Discounts Table in the specification, if a customer purchases 10 or more units of an item, how is the wholesale discount evaluated and calculated?",
+      "q": "If purchasing 10 or more units of an item qualifies for a 15% wholesale volume discount on 'subtotal', how is the discount evaluated and calculated?",
+      "title": "If purchasing 10 or more units of an item qualifies for a 15% wholesale volume discount on 'subtotal', how is the discount evaluated and calculated?",
       "options": [
         "if (qty > 15) { discount = subtotal * 0.10m; }",
         "if (qty == 10) { discount = 10m; }",
@@ -13441,8 +12561,8 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "The table specifies 10 or more units receives a 15% discount: if (qty >= 10) discount = subtotal * 0.15m; (Gaddis Ch 4.5).",
-      "explanation": "The table specifies 10 or more units receives a 15% discount: if (qty >= 10) discount = subtotal * 0.15m; (Gaddis Ch 4.5).",
+      "exp": "Purchasing 10 or more units qualifies for a 15% discount: if (qty >= 10) discount = subtotal * 0.15m; (Gaddis Ch 4.5).",
+      "explanation": "Purchasing 10 or more units qualifies for a 15% discount: if (qty >= 10) discount = subtotal * 0.15m; (Gaddis Ch 4.5).",
       "provenance": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "marks": 2
     },
@@ -13451,8 +12571,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] Based on the specification rule awarding 1 loyalty point for every complete R50.00 spent on net sales, which C# expression correctly calculates whole points earned from 'netTotal'?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] Based on the specification rule awarding 1 loyalty point for every complete R50.00 spent on net sales, which C# expression correctly calculates whole points earned from 'netTotal'?",
+      "q": "If 1 loyalty point is awarded for every complete R50.00 spent on net sales ('netTotal'), which C# expression calculates the whole integer points earned?",
+      "title": "If 1 loyalty point is awarded for every complete R50.00 spent on net sales ('netTotal'), which C# expression calculates the whole integer points earned?",
       "options": [
         "int points = (int)(netTotal / 50m);",
         "int points = netTotal * 50;",
@@ -13477,8 +12597,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] Which Windows Forms control is designed to display multiple scrollable itemized receipt lines in a point-of-sale terminal?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] Which Windows Forms control is designed to display multiple scrollable itemized receipt lines in a point-of-sale terminal?",
+      "q": "Which Windows Forms control is designed to display multiple scrollable itemized receipt lines in a point-of-sale terminal?",
+      "title": "Which Windows Forms control is designed to display multiple scrollable itemized receipt lines in a point-of-sale terminal?",
       "options": [
         "Label with AutoSize=true",
         "ListBox (lstReceipt)",
@@ -13503,8 +12623,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] Which C# statement correctly appends an itemized till line displaying product description, quantity, and line total to lstReceipt?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] Which C# statement correctly appends an itemized till line displaying product description, quantity, and line total to lstReceipt?",
+      "q": "Which C# statement appends an itemized till line displaying product description, quantity, and formatted line total to lstReceipt?",
+      "title": "Which C# statement appends an itemized till line displaying product description, quantity, and formatted line total to lstReceipt?",
       "options": [
         "lstReceipt.Text = item + \" x \" + qty + \" = \" + lineTotal.ToString(\"C\");",
         "lstReceipt.Items = item + \" x \" + qty + \" = \" + lineTotal.ToString(\"C\");",
@@ -13529,8 +12649,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] In the POS application, which variable declaration correctly maintains the cumulative session sales revenue across multiple customer checkouts?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] In the POS application, which variable declaration correctly maintains the cumulative session sales revenue across multiple customer checkouts?",
+      "q": "In a point-of-sale form, which variable declaration maintains cumulative session sales revenue across multiple customer checkouts?",
+      "title": "In a point-of-sale form, which variable declaration maintains cumulative session sales revenue across multiple customer checkouts?",
       "options": [
         "A local variable declared inside btnAddItem_Click",
         "A const variable declared inside Form1",
@@ -13555,8 +12675,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] What happens to a local variable declared inside an event handler method when the method finishes executing?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] What happens to a local variable declared inside an event handler method when the method finishes executing?",
+      "q": "What happens to a local variable declared inside an event handler method when the method finishes executing?",
+      "title": "What happens to a local variable declared inside an event handler method when the method finishes executing?",
       "options": [
         "It is destroyed and its memory is deallocated; its value does not persist to the next event invocation",
         "It is automatically converted into a permanent field variable",
@@ -13581,8 +12701,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] In btnNewSale_Click, which statement correctly resets the current transaction accumulator without erasing the shift session revenue?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] In btnNewSale_Click, which statement correctly resets the current transaction accumulator without erasing the shift session revenue?",
+      "q": "In btnNewSale_Click, which statement resets the class-level transaction accumulator (_currentCartTotal) without shadowing it or erasing shift revenue?",
+      "title": "In btnNewSale_Click, which statement resets the class-level transaction accumulator (_currentCartTotal) without shadowing it or erasing shift revenue?",
       "options": [
         "const _currentCartTotal = 0m;",
         "_currentCartTotal = 0m;",
@@ -13607,8 +12727,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] Which defensive method call correctly verifies that the product name entered in txtItemName is not empty and does not contain only spaces?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] Which defensive method call correctly verifies that the product name entered in txtItemName is not empty and does not contain only spaces?",
+      "q": "Which defensive condition verifies that the product name entered in txtItemName is neither empty nor composed only of whitespace characters?",
+      "title": "Which defensive condition verifies that the product name entered in txtItemName is neither empty nor composed only of whitespace characters?",
       "options": [
         "if (txtItemName.Text == null)",
         "if (txtItemName.Text.Length == 0)",
@@ -13633,8 +12753,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] What format specifier formats an integer loyalty points count of 125 into a 5-digit string with leading zeros ('00125')?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] What format specifier formats an integer loyalty points count of 125 into a 5-digit string with leading zeros ('00125')?",
+      "q": "What format expression formats an integer loyalty points count of 125 into a 5-digit string with leading zeros ('00125')?",
+      "title": "What format expression formats an integer loyalty points count of 125 into a 5-digit string with leading zeros ('00125')?",
       "options": [
         "(125).ToString(\"C5\")",
         "(125).ToString(\"F5\")",
@@ -13659,8 +12779,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] What boolean property indicates whether the customer has presented a Gold Loyalty Card (chkGoldCard)?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] What boolean property indicates whether the customer has presented a Gold Loyalty Card (chkGoldCard)?",
+      "q": "What boolean property indicates whether the customer has ticked the Gold Loyalty Card CheckBox (chkGoldCard)?",
+      "title": "What boolean property indicates whether the customer has ticked the Gold Loyalty Card CheckBox (chkGoldCard)?",
       "options": [
         "chkGoldCard.Checked",
         "chkGoldCard.Selected",
@@ -13685,8 +12805,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] According to the specification, if a customer possesses a Gold Loyalty Card, an additional 5% discount applies to the post-volume-discount subtotal (subtotal). How is the net line total computed?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] According to the specification, if a customer possesses a Gold Loyalty Card, an additional 5% discount applies to the post-volume-discount subtotal (subtotal). How is the net line total computed?",
+      "q": "If a Gold Loyalty Card grants an additional 5% discount on the post-volume-discount 'subtotal', how is the net line total ('netTotal') computed?",
+      "title": "If a Gold Loyalty Card grants an additional 5% discount on the post-volume-discount 'subtotal', how is the net line total ('netTotal') computed?",
       "options": [
         "netTotal = subtotal - 5m;",
         "netTotal = subtotal * 0.95m;",
@@ -13711,8 +12831,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] What MessageBoxButtons enum values should be passed to prompt the cashier with a standard OK/Cancel or Yes/No transaction confirmation dialog?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] What MessageBoxButtons enum values should be passed to prompt the cashier with a standard OK/Cancel or Yes/No transaction confirmation dialog?",
+      "q": "Which MessageBoxButtons enum values prompt the cashier with a standard two-button confirmation dialog (Yes/No or OK/Cancel)?",
+      "title": "Which MessageBoxButtons enum values prompt the cashier with a standard two-button confirmation dialog (Yes/No or OK/Cancel)?",
       "options": [
         "MessageBoxButtons.AbortRetryIgnore",
         "MessageBoxButtons.None",
@@ -13737,8 +12857,8 @@
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] Displaying the completed till receipt, net total, discount savings, and points earned on checkout satisfies which of Shneiderman's 8 Golden Rules?",
-      "title": "[NWU PEC 2024 Exam (Retail POS & Loyalty Register)] Displaying the completed till receipt, net total, discount savings, and points earned on checkout satisfies which of Shneiderman's 8 Golden Rules?",
+      "q": "Displaying the completed till receipt, net total, discount savings, and loyalty points earned on checkout satisfies which of Shneiderman's 8 Golden Rules?",
+      "title": "Displaying the completed till receipt, net total, discount savings, and loyalty points earned on checkout satisfies which of Shneiderman's 8 Golden Rules?",
       "options": [
         "Rule 8: Reduce short-term memory load only",
         "Rule 1: Strive for consistency only",

@@ -86,6 +86,7 @@
       },
       // Units
       unitsGrid: document.getElementById('unitsGrid'),
+      cheatSheetsGrid: document.getElementById('cheatSheetsGrid'),
       statTotalQs: document.getElementById('statTotalQs'),
       statMastery: document.getElementById('statMastery'),
       statStreak: document.getElementById('statStreak'),
@@ -397,7 +398,7 @@
             </div>
             <div style="display:flex; gap:0.4rem;">
               <button class="action-btn" onclick="CMPG122_APP.showUnitSummary('${unit.id}')" style="padding:0.4rem 0.65rem;">
-                📖 Summary
+                📖 Cheat Sheet
               </button>
               <button class="btn-practice" onclick="CMPG122_APP.startUnitPractice('${unit.id}')" style="padding:0.4rem 0.85rem;">
                 ⚡ Practice
@@ -409,6 +410,49 @@
     });
 
     dom.unitsGrid.innerHTML = html;
+    renderCheatSheets('ALL');
+  }
+
+  function renderCheatSheets(filterUnitId = 'ALL') {
+    const grid = dom.cheatSheetsGrid || document.getElementById('cheatSheetsGrid');
+    if (!grid) return;
+
+    const unitsToShow = filterUnitId === 'ALL'
+      ? DATA.units
+      : DATA.units.filter(u => u.id === filterUnitId);
+
+    let html = '';
+    unitsToShow.forEach(unit => {
+      if (!unit.cheatSheetHtml) return;
+      html += `
+        <div class="cs-card" style="border-top: 4px solid ${unit.color};">
+          <div class="cs-card-header">
+            <div>
+              <span class="unit-badge" style="background: rgba(255,255,255,0.05); color: ${unit.color}; border: 1px solid ${unit.color}40; margin-bottom:0.35rem;">
+                ${unit.icon} ${unit.code} • ${unit.weeks} • ${unit.badge}
+              </span>
+              <h3 class="cs-card-title">${unit.title} — Study Summary &amp; Cheat Sheet</h3>
+            </div>
+            <button class="btn-practice" onclick="CMPG122_APP.startUnitPractice('${unit.id}')" style="padding:0.45rem 0.95rem;">
+              ⚡ Practice ${unit.code}
+            </button>
+          </div>
+          <div class="cs-card-body">
+            ${unit.cheatSheetHtml}
+          </div>
+        </div>
+      `;
+    });
+
+    grid.innerHTML = html;
+  }
+
+  function filterCheatSheets(unitId) {
+    const btns = document.querySelectorAll('.cs-filter-btn');
+    btns.forEach(b => {
+      b.classList.toggle('active', b.getAttribute('data-cs-unit') === unitId);
+    });
+    renderCheatSheets(unitId);
   }
 
   function renderExamsList() {
@@ -2133,15 +2177,15 @@
     const unit = DATA.units.find(u => u.id === unitId);
     if (!unit) return;
 
-    if (dom.summaryModalTitle) dom.summaryModalTitle.textContent = `${unit.code}: Key Takeaways & Exam Checklist`;
+    if (dom.summaryModalTitle) dom.summaryModalTitle.textContent = `${unit.code}: Study Summary & C# Cheat Sheet`;
     if (dom.summaryModalBody) {
       dom.summaryModalBody.innerHTML = `
         <div style="margin-bottom:1rem;">
-          <h4 style="color:var(--accent-blue); margin-bottom:0.4rem;">Overview:</h4>
           <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6;">${unit.summary}</p>
         </div>
+        ${unit.cheatSheetHtml ? `<div style="margin-bottom:1.25rem;">${unit.cheatSheetHtml}</div>` : ''}
         <div style="margin-bottom:1rem;">
-          <h4 style="color:var(--accent-purple); margin-bottom:0.4rem;">Prescribed Curriculum Topics:</h4>
+          <h4 style="color:var(--accent-purple); margin-bottom:0.4rem;">Curriculum Checklist:</h4>
           <ul style="padding-left:1.25rem; font-size:0.88rem; line-height:1.8;">
             ${unit.topics.map(t => `<li>${t}</li>`).join('')}
           </ul>
@@ -2207,6 +2251,7 @@
     startUnitPractice: startUnitPractice,
     startExam: startExam,
     showUnitSummary: showUnitSummary,
+    filterCheatSheets: filterCheatSheets,
     closeModal: closeModal,
     selectAnswer: selectAnswer,
     submitClozeAnswer: submitClozeAnswer,
