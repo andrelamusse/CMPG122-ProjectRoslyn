@@ -2461,7 +2461,29 @@ body {
   margin-top: 0.6rem;
 }
 
+.cs-card .scenario-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 0.5rem;
+}
+
+.cs-card .test-table {
+  min-width: 520px;
+}
+
 #summaryModal .modal-card {
   max-width: 860px;
 }
+
+@media (max-width: 600px) {
+  .cs-card {
+    padding: 1rem;
+  }
+  .cs-code {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.75rem;
+  }
+}
+
 

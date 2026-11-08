@@ -2468,9 +2468,31 @@ body {
   margin-top: 0.6rem;
 }
 
+.cs-card .scenario-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 0.5rem;
+}
+
+.cs-card .test-table {
+  min-width: 520px;
+}
+
 #summaryModal .modal-card {
   max-width: 860px;
 }
+
+@media (max-width: 600px) {
+  .cs-card {
+    padding: 1rem;
+  }
+  .cs-code {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.75rem;
+  }
+}
+
 
 
 </style>
@@ -3130,7 +3152,7 @@ body {
         "Norman's 7 Stages of Action & Gulf of Execution/Evaluation"
       ],
       "summary": "Usability metrics, Shneiderman's 8 Golden Rules of Interface Design, universal accessibility, Norman's Execution/Evaluation gulfs, Fitts' Law, and Hick's Law.",
-      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. 5 Measurable Human Factors (Usability Goals) &amp; 5 Motivations</h4>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>5 Measurable Usability Goals</th><th>Core Evaluation Question</th><th>5 System Motivations &amp; Priority</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>1. Time to learn</strong></td><td>How long for a typical user to reach proficiency?</td><td><strong>Life-Critical</strong> (ATC, medical, nuclear): Zero errors &amp; reliability above all.</td></tr>\n        <tr><td><strong>2. Speed of performance</strong></td><td>How fast can benchmark tasks be carried out?</td><td><strong>Industrial / Commercial</strong> (banking, POS): Speed, low error rate, reduced training cost.</td></tr>\n        <tr><td><strong>3. Rate of errors by users</strong></td><td>How many and what kinds of errors occur?</td><td><strong>Office / Home / Entertainment</strong>: Ease of learning, low cognitive load, high satisfaction.</td></tr>\n        <tr><td><strong>4. Retention over time</strong></td><td>How well do users maintain knowledge after non-use?</td><td><strong>Exploratory / Creative / Collaborative</strong>: Transparent interface, rich workflow support.</td></tr>\n        <tr><td><strong>5. Subjective satisfaction</strong></td><td>Do users like using various aspects of the system?</td><td><strong>Socio-Technical Systems</strong> (voting, healthcare, ID): Trust, privacy, universal access.</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Shneiderman's 8 Golden Rules of Interface Design</h4>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>Golden Rule</th><th>Exact Definition</th><th>Visual C# Windows Forms Implementation</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>Rule 1: Strive for consistency</strong></td><td>Identical terminology, colours, layout, and naming across prompts and forms.</td><td>Standard Hungarian prefixes (<code>btn</code>, <code>txt</code>, <code>lbl</code>), consistent button placement and fonts.</td></tr>\n        <tr><td><strong>Rule 2: Cater to universal usability</strong></td><td>Recognize diverse needs (novice vs expert, elderly, disabled, colour-blind).</td><td>Access keys (<code>&amp;Calculate</code>), <code>AcceptButton</code>, redundant text + colour cues (<code>STOP</code> + red lamp).</td></tr>\n        <tr><td><strong>Rule 3: Offer informative feedback</strong></td><td>Every user action must produce an immediate, clear visual response.</td><td>Updating <code>lblTotal.Text</code> or appending to <code>lstReceipt.Items</code> immediately on button click.</td></tr>\n        <tr><td><strong>Rule 4: Design dialogs to yield closure</strong></td><td>Action sequences must have a beginning, middle, and end with final confirmation.</td><td>Displaying a completed receipt breakdown or confirmation <code>MessageBox</code> after checkout.</td></tr>\n        <tr><td><strong>Rule 5: Prevent errors</strong></td><td>Design the system so users cannot make serious errors; handle bad input gracefully.</td><td>Disable premature buttons (<code>Enabled = false</code>), use <code>RadioButton</code>/<code>ListBox</code>, validate with <code>TryParse</code>, restore <code>.Focus()</code> and <code>.SelectAll()</code>.</td></tr>\n        <tr><td><strong>Rule 6: Permit easy reversal of actions</strong></td><td>Allow actions to be undone to relieve user anxiety and encourage exploration.</td><td>Provide <code>btnClear</code> to reset inputs/outputs; prompt <code>MessageBoxButtons.YesNo</code> before exiting.</td></tr>\n        <tr><td><strong>Rule 7: Support internal locus of control</strong></td><td>Users must feel they are the initiators of actions, not controlled by the system.</td><td>Run logic inside explicit user events (<code>btnCalculate_Click</code>); avoid unsolicited pop-ups or forced cursor jumps.</td></tr>\n        <tr><td><strong>Rule 8: Reduce short-term memory load</strong></td><td>Human working memory holds <strong>7 &plusmn; 2 chunks</strong> (Miller's Law); keep state visible.</td><td>Display running item history and subtotals in a <code>ListBox</code> instead of forcing users to remember inputs.</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">3. Norman's Action Gulfs, Fitts' Law &amp; Hick-Hyman Law</h4>\n    <ul class=\"cs-list\">\n      <li><strong>Gulf of Execution:</strong> Difference between the user's intentions and the allowable actions provided by the interface (bridged by clear affordances, visible labels, and logical control grouping).</li>\n      <li><strong>Gulf of Evaluation:</strong> Effort required to interpret the physical state of the system and determine how well expectations were met (bridged by immediate, formatted output in Labels/ListBoxes).</li>\n      <li><strong>Fitts' Law (<code>MT = a + b * log2(2D / W)</code>):</strong> Movement time depends on distance (<code>D</code>) and target width (<code>W</code>). Primary action buttons (<code>btnCalculate</code>) should be large and placed close to input controls.</li>\n      <li><strong>Hick-Hyman Law (<code>T = b * log2(n + 1)</code>):</strong> Decision time increases logarithmically with the number of choices (<code>n</code>). Group related options into <code>GroupBox</code> containers.</li>\n    </ul>\n  </div>\n</div>"
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. 5 Measurable Human Factors (Usability Goals) &amp; 5 Motivations</h4>\n    <div class=\"scenario-table-wrap\"><table class=\"test-table\">\n      <thead>\n        <tr><th>5 Measurable Usability Goals</th><th>Core Evaluation Question</th><th>5 System Motivations &amp; Priority</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>1. Time to learn</strong></td><td>How long for a typical user to reach proficiency?</td><td><strong>Life-Critical</strong> (ATC, medical, nuclear): Zero errors &amp; reliability above all.</td></tr>\n        <tr><td><strong>2. Speed of performance</strong></td><td>How fast can benchmark tasks be carried out?</td><td><strong>Industrial / Commercial</strong> (banking, POS): Speed, low error rate, reduced training cost.</td></tr>\n        <tr><td><strong>3. Rate of errors by users</strong></td><td>How many and what kinds of errors occur?</td><td><strong>Office / Home / Entertainment</strong>: Ease of learning, low cognitive load, high satisfaction.</td></tr>\n        <tr><td><strong>4. Retention over time</strong></td><td>How well do users maintain knowledge after non-use?</td><td><strong>Exploratory / Creative / Collaborative</strong>: Transparent interface, rich workflow support.</td></tr>\n        <tr><td><strong>5. Subjective satisfaction</strong></td><td>Do users like using various aspects of the system?</td><td><strong>Socio-Technical Systems</strong> (voting, healthcare, ID): Trust, privacy, universal access.</td></tr>\n      </tbody>\n    </table></div>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Shneiderman's 8 Golden Rules of Interface Design</h4>\n    <div class=\"scenario-table-wrap\"><table class=\"test-table\">\n      <thead>\n        <tr><th>Golden Rule</th><th>Exact Definition</th><th>Visual C# Windows Forms Implementation</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>Rule 1: Strive for consistency</strong></td><td>Identical terminology, colours, layout, and naming across prompts and forms.</td><td>Standard Hungarian prefixes (<code>btn</code>, <code>txt</code>, <code>lbl</code>), consistent button placement and fonts.</td></tr>\n        <tr><td><strong>Rule 2: Cater to universal usability</strong></td><td>Recognize diverse needs (novice vs expert, elderly, disabled, colour-blind).</td><td>Access keys (<code>&amp;Calculate</code>), <code>AcceptButton</code>, redundant text + colour cues (<code>STOP</code> + red lamp).</td></tr>\n        <tr><td><strong>Rule 3: Offer informative feedback</strong></td><td>Every user action must produce an immediate, clear visual response.</td><td>Updating <code>lblTotal.Text</code> or appending to <code>lstReceipt.Items</code> immediately on button click.</td></tr>\n        <tr><td><strong>Rule 4: Design dialogs to yield closure</strong></td><td>Action sequences must have a beginning, middle, and end with final confirmation.</td><td>Displaying a completed receipt breakdown or confirmation <code>MessageBox</code> after checkout.</td></tr>\n        <tr><td><strong>Rule 5: Prevent errors</strong></td><td>Design the system so users cannot make serious errors; handle bad input gracefully.</td><td>Disable premature buttons (<code>Enabled = false</code>), use <code>RadioButton</code>/<code>ListBox</code>, validate with <code>TryParse</code>, restore <code>.Focus()</code> and <code>.SelectAll()</code>.</td></tr>\n        <tr><td><strong>Rule 6: Permit easy reversal of actions</strong></td><td>Allow actions to be undone to relieve user anxiety and encourage exploration.</td><td>Provide <code>btnClear</code> to reset inputs/outputs; prompt <code>MessageBoxButtons.YesNo</code> before exiting.</td></tr>\n        <tr><td><strong>Rule 7: Support internal locus of control</strong></td><td>Users must feel they are the initiators of actions, not controlled by the system.</td><td>Run logic inside explicit user events (<code>btnCalculate_Click</code>); avoid unsolicited pop-ups or forced cursor jumps.</td></tr>\n        <tr><td><strong>Rule 8: Reduce short-term memory load</strong></td><td>Human working memory holds <strong>7 &plusmn; 2 chunks</strong> (Miller's Law); keep state visible.</td><td>Display running item history and subtotals in a <code>ListBox</code> instead of forcing users to remember inputs.</td></tr>\n      </tbody>\n    </table></div>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">3. Norman's Action Gulfs, Fitts' Law &amp; Hick-Hyman Law</h4>\n    <ul class=\"cs-list\">\n      <li><strong>Gulf of Execution:</strong> Difference between the user's intentions and the allowable actions provided by the interface (bridged by clear affordances, visible labels, and logical control grouping).</li>\n      <li><strong>Gulf of Evaluation:</strong> Effort required to interpret the physical state of the system and determine how well expectations were met (bridged by immediate, formatted output in Labels/ListBoxes).</li>\n      <li><strong>Fitts' Law (<code>MT = a + b * log2(2D / W)</code>):</strong> Movement time depends on distance (<code>D</code>) and target width (<code>W</code>). Primary action buttons (<code>btnCalculate</code>) should be large and placed close to input controls.</li>\n      <li><strong>Hick-Hyman Law (<code>T = b * log2(n + 1)</code>):</strong> Decision time increases logarithmically with the number of choices (<code>n</code>). Group related options into <code>GroupBox</code> containers.</li>\n    </ul>\n  </div>\n</div>"
     },
     {
       "id": "SU1",
@@ -3149,7 +3171,7 @@ body {
         "NWU Hungarian Control Naming Prefixes (btn, txt, lbl, pic, grp)"
       ],
       "summary": "Visual Studio IDE, 6-phase development cycle, Windows Forms controls (Button, Label, TextBox, PictureBox), Hungarian prefixes, and event-driven C# syntax.",
-      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Gaddis 6-Phase Program Development Cycle &amp; Hungarian Prefixes</h4>\n    <p class=\"cs-note\"><strong>6 Phases in Order:</strong> 1. Understand the program's purpose &rarr; 2. Design the GUI on paper/designer &rarr; 3. Design the program's logic (pseudocode/flowcharts) &rarr; 4. Write the C# code &rarr; 5. Correct syntax errors (compile time) &rarr; 6. Test the program and correct logic errors (runtime).</p>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>Control Type</th><th>Prefix</th><th>Example Identifier</th><th>Essential Properties &amp; Behaviour</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>Button</strong></td><td><code>btn</code></td><td><code>btnCalculate</code>, <code>btnExit</code></td><td><code>Text = \"&amp;Calculate\"</code> (creates <code>Alt+C</code> access key); triggers <code>Click</code> event.</td></tr>\n        <tr><td><strong>TextBox</strong></td><td><code>txt</code></td><td><code>txtDays</code>, <code>txtPrice</code></td><td><code>Text</code> stores user input as <code>string</code>; <code>Clear()</code>, <code>Focus()</code>, <code>SelectAll()</code>.</td></tr>\n        <tr><td><strong>Label</strong></td><td><code>lbl</code></td><td><code>lblTotalDue</code></td><td>Output labels: <code>AutoSize = false</code>, <code>BorderStyle = BorderStyle.Fixed3D</code>, <code>TabStop = false</code>.</td></tr>\n        <tr><td><strong>PictureBox</strong></td><td><code>pic</code></td><td><code>picGreen</code>, <code>picLogo</code></td><td><code>SizeMode = PictureBoxSizeMode.Zoom</code> (proportional scaling); <code>StretchImage</code> distorts aspect ratio.</td></tr>\n        <tr><td><strong>ListBox</strong></td><td><code>lst</code></td><td><code>lstReceipt</code>, <code>lstRoutes</code></td><td><code>Items.Add(...)</code>, <code>Items.Clear()</code>, <code>Items.Count</code>, <code>SelectedIndex</code> (<code>-1</code> if none).</td></tr>\n        <tr><td><strong>RadioButton</strong></td><td><code>rdo</code> / <code>rad</code></td><td><code>rdoSedan</code>, <code>rdoSuv</code></td><td><code>Checked</code> (<code>bool</code>); mutually exclusive when placed inside the same <code>GroupBox</code>.</td></tr>\n        <tr><td><strong>CheckBox</strong></td><td><code>chk</code></td><td><code>chkGps</code>, <code>chkBursary</code></td><td><code>Checked</code> (<code>bool</code>); independent multi-select options.</td></tr>\n        <tr><td><strong>GroupBox</strong></td><td><code>grp</code></td><td><code>grpVehicle</code></td><td>Framed container with a visible <code>Text</code> caption (unlike <code>Panel</code>, which has no caption).</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Form Properties &amp; Standard Event Handler Templates</h4>\n    <ul class=\"cs-list\">\n      <li><strong>Fixed Window &amp; Centering:</strong> <code>FormBorderStyle = FormBorderStyle.FixedSingle;</code>, <code>MaximizeBox = false;</code>, <code>StartPosition = FormStartPosition.CenterScreen;</code></li>\n      <li><strong>Keyboard Enter / Esc Bindings:</strong> <code>AcceptButton = btnCalculate;</code> (Enter key), <code>CancelButton = btnExit;</code> (Esc key), <code>TabIndex = 0</code> on first input TextBox.</li>\n      <li><strong>Saving All Files:</strong> Always use <code>File &rarr; Save All</code> (<code>Ctrl+Shift+S</code>) so both <code>Form1.cs</code> and <code>Form1.Designer.cs</code> changes are written to disk.</li>\n    </ul>\n    <pre class=\"cs-code\"><code>// Standard Event Handler Signature:\nprivate void btnClear_Click(object sender, EventArgs e)\n{\n    txtDays.Clear();                        // Empty input TextBox\n    lblTotalDue.Text = \"\";                  // Clear output Label\n    this.BackColor = SystemColors.Control;  // Restore default Windows form colour\n    txtDays.Focus();                        // Return cursor to first input\n}\n\nprivate void btnExit_Click(object sender, EventArgs e)\n{\n    this.Close();                           // Close active Form instance\n}</code></pre>\n  </div>\n</div>"
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Gaddis 6-Phase Program Development Cycle &amp; Hungarian Prefixes</h4>\n    <p class=\"cs-note\"><strong>6 Phases in Order:</strong> 1. Understand the program's purpose &rarr; 2. Design the GUI on paper/designer &rarr; 3. Design the program's logic (pseudocode/flowcharts) &rarr; 4. Write the C# code &rarr; 5. Correct syntax errors (compile time) &rarr; 6. Test the program and correct logic errors (runtime).</p>\n    <div class=\"scenario-table-wrap\"><table class=\"test-table\">\n      <thead>\n        <tr><th>Control Type</th><th>Prefix</th><th>Example Identifier</th><th>Essential Properties &amp; Behaviour</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>Button</strong></td><td><code>btn</code></td><td><code>btnCalculate</code>, <code>btnExit</code></td><td><code>Text = \"&amp;Calculate\"</code> (creates <code>Alt+C</code> access key); triggers <code>Click</code> event.</td></tr>\n        <tr><td><strong>TextBox</strong></td><td><code>txt</code></td><td><code>txtDays</code>, <code>txtPrice</code></td><td><code>Text</code> stores user input as <code>string</code>; <code>Clear()</code>, <code>Focus()</code>, <code>SelectAll()</code>.</td></tr>\n        <tr><td><strong>Label</strong></td><td><code>lbl</code></td><td><code>lblTotalDue</code></td><td>Output labels: <code>AutoSize = false</code>, <code>BorderStyle = BorderStyle.Fixed3D</code>, <code>TabStop = false</code>.</td></tr>\n        <tr><td><strong>PictureBox</strong></td><td><code>pic</code></td><td><code>picGreen</code>, <code>picLogo</code></td><td><code>SizeMode = PictureBoxSizeMode.Zoom</code> (proportional scaling); <code>StretchImage</code> distorts aspect ratio.</td></tr>\n        <tr><td><strong>ListBox</strong></td><td><code>lst</code></td><td><code>lstReceipt</code>, <code>lstRoutes</code></td><td><code>Items.Add(...)</code>, <code>Items.Clear()</code>, <code>Items.Count</code>, <code>SelectedIndex</code> (<code>-1</code> if none).</td></tr>\n        <tr><td><strong>RadioButton</strong></td><td><code>rdo</code> / <code>rad</code></td><td><code>rdoSedan</code>, <code>rdoSuv</code></td><td><code>Checked</code> (<code>bool</code>); mutually exclusive when placed inside the same <code>GroupBox</code>.</td></tr>\n        <tr><td><strong>CheckBox</strong></td><td><code>chk</code></td><td><code>chkGps</code>, <code>chkBursary</code></td><td><code>Checked</code> (<code>bool</code>); independent multi-select options.</td></tr>\n        <tr><td><strong>GroupBox</strong></td><td><code>grp</code></td><td><code>grpVehicle</code></td><td>Framed container with a visible <code>Text</code> caption (unlike <code>Panel</code>, which has no caption).</td></tr>\n      </tbody>\n    </table></div>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Form Properties &amp; Standard Event Handler Templates</h4>\n    <ul class=\"cs-list\">\n      <li><strong>Fixed Window &amp; Centering:</strong> <code>FormBorderStyle = FormBorderStyle.FixedSingle;</code>, <code>MaximizeBox = false;</code>, <code>StartPosition = FormStartPosition.CenterScreen;</code></li>\n      <li><strong>Keyboard Enter / Esc Bindings:</strong> <code>AcceptButton = btnCalculate;</code> (Enter key), <code>CancelButton = btnExit;</code> (Esc key), <code>TabIndex = 0</code> on first input TextBox.</li>\n      <li><strong>Saving All Files:</strong> Always use <code>File &rarr; Save All</code> (<code>Ctrl+Shift+S</code>) so both <code>Form1.cs</code> and <code>Form1.Designer.cs</code> changes are written to disk.</li>\n    </ul>\n    <pre class=\"cs-code\"><code>// Standard Event Handler Signature:\nprivate void btnClear_Click(object sender, EventArgs e)\n{\n    txtDays.Clear();                        // Empty input TextBox\n    lblTotalDue.Text = \"\";                  // Clear output Label\n    this.BackColor = SystemColors.Control;  // Restore default Windows form colour\n    txtDays.Focus();                        // Return cursor to first input\n}\n\nprivate void btnExit_Click(object sender, EventArgs e)\n{\n    this.Close();                           // Close active Form instance\n}</code></pre>\n  </div>\n</div>"
     },
     {
       "id": "SU2",
@@ -3171,7 +3193,7 @@ body {
         "GUI Polish (Focus(), TabIndex, TabStop, AcceptButton, CancelButton)"
       ],
       "summary": "Variables, numeric data types (int, double, decimal), arithmetic precedence, Parse conversions, ToString format specifiers (C, F, N, P, D), try-catch, and Math methods.",
-      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. C# Data Types, Literal Suffixes, Scope &amp; Arithmetic Rules</h4>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>C# Type</th><th>Size / Precision</th><th>Literal Suffix</th><th>Domain Use Case &amp; Rules</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>int</code></td><td>32-bit whole integer</td><td>None (<code>42</code>)</td><td>Discrete whole counts (days, items, credits, bread rolls). <code>int / int</code> truncates fractional part (<code>7 / 2 == 3</code>).</td></tr>\n        <tr><td><code>double</code></td><td>64-bit binary float</td><td><code>d</code> / <code>D</code> (<code>3.5</code>)</td><td>Scientific/continuous measurements (weight, distance, test averages). Never use for money.</td></tr>\n        <tr><td><code>decimal</code></td><td>128-bit base-10 financial</td><td><code>m</code> / <code>M</code> (<code>450.00m</code>)</td><td><strong>Mandatory for all currency, prices, VAT, and financial totals</strong> (eliminates base-2 rounding error).</td></tr>\n        <tr><td><code>string</code> / <code>bool</code></td><td>UTF-16 text / Boolean</td><td><code>\"text\"</code> / <code>true</code></td><td>Text uses double quotes <code>\"...\"</code>; single characters (<code>char</code>) use single quotes <code>'A'</code>.</td></tr>\n      </tbody>\n    </table>\n    <ul class=\"cs-list\">\n      <li><strong>Operator Precedence:</strong> <code>()</code> highest &rarr; unary <code>+ -</code> &rarr; <code>* / %</code> &rarr; binary <code>+ -</code> lowest (evaluated left-to-right).</li>\n      <li><strong>Named Constants vs Fields vs Local Variables:</strong>\n        <code>const decimal VAT_RATE = 0.15m;</code> (immutable, prevents magic numbers);\n        <code>private decimal _sessionTotal = 0m;</code> (class-level field: persists across multiple button clicks);\n        local variables inside an event handler are destroyed when the method finishes executing.</li>\n    </ul>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Standard .ToString() Format Specifiers &amp; Math Library</h4>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>Specifier</th><th>Meaning</th><th>Code Example</th><th>Formatted Output</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>\"C\"</code> or <code>\"C2\"</code></td><td>Currency (Rand symbol, commas, 2 decimals)</td><td><code>(1250.5m).ToString(\"C\")</code></td><td><code>\"R 1,250.50\"</code></td></tr>\n        <tr><td><code>\"F2\"</code></td><td>Fixed-point (2 decimals, no comma separator)</td><td><code>(1250.5m).ToString(\"F2\")</code></td><td><code>\"1250.50\"</code></td></tr>\n        <tr><td><code>\"N2\"</code></td><td>Number (thousands separator + 2 decimals)</td><td><code>(1250.5m).ToString(\"N2\")</code></td><td><code>\"1,250.50\"</code></td></tr>\n        <tr><td><code>\"P1\"</code></td><td>Percentage (multiplies by 100 and adds <code>%</code>)</td><td><code>(0.15m).ToString(\"P1\")</code></td><td><code>\"15.0%\"</code></td></tr>\n        <tr><td><code>\"D5\"</code></td><td>Decimal integer (pads with leading zeros)</td><td><code>(125).ToString(\"D5\")</code></td><td><code>\"00125\"</code></td></tr>\n      </tbody>\n    </table>\n    <pre class=\"cs-code\"><code>// Parsing, Math Methods &amp; try-catch Exception Handling:\ntry\n{\n    decimal price = decimal.Parse(txtPrice.Text);\n    int qty = int.Parse(txtQuantity.Text);\n    decimal subtotal = Math.Round(price * qty, 2);\n    lblTotal.Text = subtotal.ToString(\"C\");\n}\ncatch (FormatException)\n{\n    MessageBox.Show(\"Please enter valid numeric values.\", \"Input Error\",\n        MessageBoxButtons.OK, MessageBoxIcon.Error);\n    txtPrice.Focus();\n    txtPrice.SelectAll();\n}</code></pre>\n  </div>\n</div>"
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. C# Data Types, Literal Suffixes, Scope &amp; Arithmetic Rules</h4>\n    <div class=\"scenario-table-wrap\"><table class=\"test-table\">\n      <thead>\n        <tr><th>C# Type</th><th>Size / Precision</th><th>Literal Suffix</th><th>Domain Use Case &amp; Rules</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>int</code></td><td>32-bit whole integer</td><td>None (<code>42</code>)</td><td>Discrete whole counts (days, items, credits, bread rolls). <code>int / int</code> truncates fractional part (<code>7 / 2 == 3</code>).</td></tr>\n        <tr><td><code>double</code></td><td>64-bit binary float</td><td><code>d</code> / <code>D</code> (<code>3.5</code>)</td><td>Scientific/continuous measurements (weight, distance, test averages). Never use for money.</td></tr>\n        <tr><td><code>decimal</code></td><td>128-bit base-10 financial</td><td><code>m</code> / <code>M</code> (<code>450.00m</code>)</td><td><strong>Mandatory for all currency, prices, VAT, and financial totals</strong> (eliminates base-2 rounding error).</td></tr>\n        <tr><td><code>string</code> / <code>bool</code></td><td>UTF-16 text / Boolean</td><td><code>\"text\"</code> / <code>true</code></td><td>Text uses double quotes <code>\"...\"</code>; single characters (<code>char</code>) use single quotes <code>'A'</code>.</td></tr>\n      </tbody>\n    </table></div>\n    <ul class=\"cs-list\">\n      <li><strong>Operator Precedence:</strong> <code>()</code> highest &rarr; unary <code>+ -</code> &rarr; <code>* / %</code> &rarr; binary <code>+ -</code> lowest (evaluated left-to-right).</li>\n      <li><strong>Named Constants vs Fields vs Local Variables:</strong>\n        <code>const decimal VAT_RATE = 0.15m;</code> (immutable, prevents magic numbers);\n        <code>private decimal _sessionTotal = 0m;</code> (class-level field: persists across multiple button clicks);\n        local variables inside an event handler are destroyed when the method finishes executing.</li>\n    </ul>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Standard .ToString() Format Specifiers &amp; Math Library</h4>\n    <div class=\"scenario-table-wrap\"><table class=\"test-table\">\n      <thead>\n        <tr><th>Specifier</th><th>Meaning</th><th>Code Example</th><th>Formatted Output</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>\"C\"</code> or <code>\"C2\"</code></td><td>Currency (Rand symbol, commas, 2 decimals)</td><td><code>(1250.5m).ToString(\"C\")</code></td><td><code>\"R 1,250.50\"</code></td></tr>\n        <tr><td><code>\"F2\"</code></td><td>Fixed-point (2 decimals, no comma separator)</td><td><code>(1250.5m).ToString(\"F2\")</code></td><td><code>\"1250.50\"</code></td></tr>\n        <tr><td><code>\"N2\"</code></td><td>Number (thousands separator + 2 decimals)</td><td><code>(1250.5m).ToString(\"N2\")</code></td><td><code>\"1,250.50\"</code></td></tr>\n        <tr><td><code>\"P1\"</code></td><td>Percentage (multiplies by 100 and adds <code>%</code>)</td><td><code>(0.15m).ToString(\"P1\")</code></td><td><code>\"15.0%\"</code></td></tr>\n        <tr><td><code>\"D5\"</code></td><td>Decimal integer (pads with leading zeros)</td><td><code>(125).ToString(\"D5\")</code></td><td><code>\"00125\"</code></td></tr>\n      </tbody>\n    </table></div>\n    <pre class=\"cs-code\"><code>// Parsing, Math Methods &amp; try-catch Exception Handling:\ntry\n{\n    decimal price = decimal.Parse(txtPrice.Text);\n    int qty = int.Parse(txtQuantity.Text);\n    decimal subtotal = Math.Round(price * qty, 2);\n    lblTotal.Text = subtotal.ToString(\"C\");\n}\ncatch (FormatException)\n{\n    MessageBox.Show(\"Please enter valid numeric values.\", \"Input Error\",\n        MessageBoxButtons.OK, MessageBoxIcon.Error);\n    txtPrice.Focus();\n    txtPrice.SelectAll();\n}</code></pre>\n  </div>\n</div>"
     },
     {
       "id": "SU3",
@@ -3192,7 +3214,7 @@ body {
         "ListBox Basics (Items.Add, Clear, Count, SelectedIndex, SelectedItem)"
       ],
       "summary": "Relational and logical operators, if-else chains, switch statements, defensive TryParse validation, RadioButtons, CheckBoxes, GroupBoxes, MessageBox, and ListBox selection.",
-      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Relational &amp; Logical Operators, De Morgan's Laws &amp; Range Checks</h4>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>Construct</th><th>C# Syntax</th><th>Critical Exam Rules &amp; Traps</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>Equality vs Assignment</strong></td><td><code>==</code> vs <code>=</code>, <code>!=</code></td><td><code>if (x = 5)</code> is a compiler error (<code>CS0029</code>); always use <code>==</code> for equality comparison.</td></tr>\n        <tr><td><strong>Logical Precedence</strong></td><td><code>!</code> &rarr; <code>&amp;&amp;</code> &rarr; <code>||</code></td><td><code>&amp;&amp;</code> (AND: both true) and <code>||</code> (OR: either true) use short-circuit evaluation.</td></tr>\n        <tr><td><strong>Inclusive Valid Range</strong></td><td><code>credits &gt;= 1 &amp;&amp; credits &lt;= 25</code></td><td>Chained comparisons like <code>1 &lt;= credits &lt;= 25</code> are illegal in C# (<code>CS0019</code>).</td></tr>\n        <tr><td><strong>Out-of-Bounds Trap</strong></td><td><code>credits &lt; 1 || credits &gt; 25</code></td><td>Use logical OR (<code>||</code>) to detect when a value violates either boundary.</td></tr>\n        <tr><td><strong>De Morgan's Laws</strong></td><td><code>!(A &amp;&amp; B) &equiv; !A || !B</code></td><td>Also: <code>!(A || B) &equiv; !A &amp;&amp; !B</code>.</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Defensive TryParse Validation, switch, RadioButton &amp; ListBox Guards</h4>\n    <pre class=\"cs-code\"><code>// 1. Defensive Input Validation with TryParse &amp; Range Guard:\nif (!int.TryParse(txtDays.Text, out int days) || days &lt;= 0)\n{\n    MessageBox.Show(\"Rental days must be a positive whole number.\", \"Validation Error\",\n        MessageBoxButtons.OK, MessageBoxIcon.Warning);\n    txtDays.Focus();\n    txtDays.SelectAll();\n    return;\n}\n\n// 2. ListBox Selection Guard &amp; switch Statement (break; required on every case):\nif (lstRoutes.SelectedIndex == -1)\n{\n    MessageBox.Show(\"Please select a route.\", \"Selection Required\");\n    return;\n}\ndecimal basePrice = 0m;\nswitch (lstRoutes.SelectedIndex)\n{\n    case 0: basePrice = 250m; break;\n    case 1: basePrice = 400m; break;\n    case 2: basePrice = 800m; break;\n    default: basePrice = 0m; break;\n}\n\n// 3. Confirmation Dialog Before Closing:\nDialogResult res = MessageBox.Show(\"Are you sure you want to exit?\", \"Confirm Exit\",\n    MessageBoxButtons.YesNo, MessageBoxIcon.Question);\nif (res == DialogResult.Yes)\n{\n    this.Close();\n}</code></pre>\n  </div>\n</div>"
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Relational &amp; Logical Operators, De Morgan's Laws &amp; Range Checks</h4>\n    <div class=\"scenario-table-wrap\"><table class=\"test-table\">\n      <thead>\n        <tr><th>Construct</th><th>C# Syntax</th><th>Critical Exam Rules &amp; Traps</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>Equality vs Assignment</strong></td><td><code>==</code> vs <code>=</code>, <code>!=</code></td><td><code>if (x = 5)</code> is a compiler error (<code>CS0029</code>); always use <code>==</code> for equality comparison.</td></tr>\n        <tr><td><strong>Logical Precedence</strong></td><td><code>!</code> &rarr; <code>&amp;&amp;</code> &rarr; <code>||</code></td><td><code>&amp;&amp;</code> (AND: both true) and <code>||</code> (OR: either true) use short-circuit evaluation.</td></tr>\n        <tr><td><strong>Inclusive Valid Range</strong></td><td><code>credits &gt;= 1 &amp;&amp; credits &lt;= 25</code></td><td>Chained comparisons like <code>1 &lt;= credits &lt;= 25</code> are illegal in C# (<code>CS0019</code>).</td></tr>\n        <tr><td><strong>Out-of-Bounds Trap</strong></td><td><code>credits &lt; 1 || credits &gt; 25</code></td><td>Use logical OR (<code>||</code>) to detect when a value violates either boundary.</td></tr>\n        <tr><td><strong>De Morgan's Laws</strong></td><td><code>!(A &amp;&amp; B) &equiv; !A || !B</code></td><td>Also: <code>!(A || B) &equiv; !A &amp;&amp; !B</code>.</td></tr>\n      </tbody>\n    </table></div>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Defensive TryParse Validation, switch, RadioButton &amp; ListBox Guards</h4>\n    <pre class=\"cs-code\"><code>// 1. Defensive Input Validation with TryParse &amp; Range Guard:\nif (!int.TryParse(txtDays.Text, out int days) || days &lt;= 0)\n{\n    MessageBox.Show(\"Rental days must be a positive whole number.\", \"Validation Error\",\n        MessageBoxButtons.OK, MessageBoxIcon.Warning);\n    txtDays.Focus();\n    txtDays.SelectAll();\n    return;\n}\n\n// 2. ListBox Selection Guard &amp; switch Statement (break; required on every case):\nif (lstRoutes.SelectedIndex == -1)\n{\n    MessageBox.Show(\"Please select a route.\", \"Selection Required\");\n    return;\n}\ndecimal basePrice = 0m;\nswitch (lstRoutes.SelectedIndex)\n{\n    case 0: basePrice = 250m; break;\n    case 1: basePrice = 400m; break;\n    case 2: basePrice = 800m; break;\n    default: basePrice = 0m; break;\n}\n\n// 3. Confirmation Dialog Before Closing:\nDialogResult res = MessageBox.Show(\"Are you sure you want to exit?\", \"Confirm Exit\",\n    MessageBoxButtons.YesNo, MessageBoxIcon.Question);\nif (res == DialogResult.Yes)\n{\n    this.Close();\n}</code></pre>\n  </div>\n</div>"
     },
     {
       "id": "SU4",
@@ -3213,7 +3235,7 @@ body {
         "Defensive Input Validation Loops"
       ],
       "summary": "Pre-test (while), post-test (do-while), and count-controlled (for) loops, running total accumulators, ListBox iteration/population, and class-level Random generation.",
-      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Pre-Test (while), Post-Test (do-while) &amp; Count-Controlled (for) Loops</h4>\n    <table class=\"test-table\">\n      <thead>\n        <tr><th>Loop Type</th><th>Evaluation Timing</th><th>Min Executions</th><th>Syntax &amp; Key Rules</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>while (cond) { ... }</code></td><td><strong>Pre-test</strong> (before body)</td><td><strong>0 times</strong> (if initially false)</td><td>Must update loop variable inside body to avoid an infinite loop; no semicolon after <code>while (cond)</code>.</td></tr>\n        <tr><td><code>do { ... } while (cond);</code></td><td><strong>Post-test</strong> (after body)</td><td><strong>1 time</strong> (guaranteed)</td><td>Body always executes at least once; requires a trailing semicolon after <code>while (cond);</code>.</td></tr>\n        <tr><td><code>for (init; cond; update)</code></td><td><strong>Pre-test</strong> (count-controlled)</td><td><strong>0 times</strong> (if initially false)</td><td><code>for (int m = 1; m &lt;= 4; m++)</code> runs for <code>m = 1, 2, 3, 4</code> (exits when <code>m</code> reaches <code>5</code>).</td></tr>\n      </tbody>\n    </table>\n    <ul class=\"cs-list\">\n      <li><strong>Prefix vs Postfix Increment:</strong> <code>++x</code> increments first then evaluates; <code>x++</code> evaluates current value first then increments.</li>\n      <li><strong>Accumulators &amp; Nested Loops:</strong> Initialize running totals (<code>decimal total = 0m;</code>) <em>before</em> the loop and add via <code>total += item;</code> inside. In nested loops, total inner executions = outer count &times; inner count.</li>\n      <li><strong>Random Class:</strong> Declare <code>private Random _rand = new Random();</code> at <strong>class level</strong> to prevent identical clock seeds on rapid clicks. <code>_rand.Next(1000, 10000)</code> generates <code>1000..9999</code> (upper bound is <strong>exclusive</strong>).</li>\n    </ul>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. ListBox Loop Population, Iterating Items &amp; Random Reference Numbers</h4>\n    <pre class=\"cs-code\"><code>// Class-level Random generator (declared inside Form1 class, outside methods):\nprivate Random _rand = new Random();\n\n// 1. Populating a 4-Month Installment Schedule into a ListBox:\nlstInstallments.Items.Clear(); // Prevent duplicate items from previous clicks\ndecimal monthlyInstallment = netTotal / 4m;\nfor (int month = 1; month &lt;= 4; month++)\n{\n    lstInstallments.Items.Add($\"Month {month}: {monthlyInstallment:C}\");\n}\n\n// 2. Summing &amp; Averaging Existing Numeric Items in a ListBox:\ndouble sum = 0.0;\nfor (int i = 0; i &lt; lstMarks.Items.Count; i++)\n{\n    sum += double.Parse(lstMarks.Items[i].ToString());\n}\ndouble avg = lstMarks.Items.Count &gt; 0 ? (sum / lstMarks.Items.Count) : 0.0;\n\n// 3. Generating a 4-Digit Random Confirmation Number (1000 to 9999 inclusive):\nint refNo = _rand.Next(1000, 10000);</code></pre>\n  </div>\n</div>"
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Pre-Test (while), Post-Test (do-while) &amp; Count-Controlled (for) Loops</h4>\n    <div class=\"scenario-table-wrap\"><table class=\"test-table\">\n      <thead>\n        <tr><th>Loop Type</th><th>Evaluation Timing</th><th>Min Executions</th><th>Syntax &amp; Key Rules</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>while (cond) { ... }</code></td><td><strong>Pre-test</strong> (before body)</td><td><strong>0 times</strong> (if initially false)</td><td>Must update loop variable inside body to avoid an infinite loop; no semicolon after <code>while (cond)</code>.</td></tr>\n        <tr><td><code>do { ... } while (cond);</code></td><td><strong>Post-test</strong> (after body)</td><td><strong>1 time</strong> (guaranteed)</td><td>Body always executes at least once; requires a trailing semicolon after <code>while (cond);</code>.</td></tr>\n        <tr><td><code>for (init; cond; update)</code></td><td><strong>Pre-test</strong> (count-controlled)</td><td><strong>0 times</strong> (if initially false)</td><td><code>for (int m = 1; m &lt;= 4; m++)</code> runs for <code>m = 1, 2, 3, 4</code> (exits when <code>m</code> reaches <code>5</code>).</td></tr>\n      </tbody>\n    </table></div>\n    <ul class=\"cs-list\">\n      <li><strong>Prefix vs Postfix Increment:</strong> <code>++x</code> increments first then evaluates; <code>x++</code> evaluates current value first then increments.</li>\n      <li><strong>Accumulators &amp; Nested Loops:</strong> Initialize running totals (<code>decimal total = 0m;</code>) <em>before</em> the loop and add via <code>total += item;</code> inside. In nested loops, total inner executions = outer count &times; inner count.</li>\n      <li><strong>Random Class:</strong> Declare <code>private Random _rand = new Random();</code> at <strong>class level</strong> to prevent identical clock seeds on rapid clicks. <code>_rand.Next(1000, 10000)</code> generates <code>1000..9999</code> (upper bound is <strong>exclusive</strong>).</li>\n    </ul>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. ListBox Loop Population, Iterating Items &amp; Random Reference Numbers</h4>\n    <pre class=\"cs-code\"><code>// Class-level Random generator (declared inside Form1 class, outside methods):\nprivate Random _rand = new Random();\n\n// 1. Populating a 4-Month Installment Schedule into a ListBox:\nlstInstallments.Items.Clear(); // Prevent duplicate items from previous clicks\ndecimal monthlyInstallment = netTotal / 4m;\nfor (int month = 1; month &lt;= 4; month++)\n{\n    lstInstallments.Items.Add($\"Month {month}: {monthlyInstallment:C}\");\n}\n\n// 2. Summing &amp; Averaging Existing Numeric Items in a ListBox:\ndouble sum = 0.0;\nfor (int i = 0; i &lt; lstMarks.Items.Count; i++)\n{\n    sum += double.Parse(lstMarks.Items[i].ToString());\n}\ndouble avg = lstMarks.Items.Count &gt; 0 ? (sum / lstMarks.Items.Count) : 0.0;\n\n// 3. Generating a 4-Digit Random Confirmation Number (1000 to 9999 inclusive):\nint refNo = _rand.Next(1000, 10000);</code></pre>\n  </div>\n</div>"
     }
   ],
   "officialExams": [
@@ -5832,8 +5854,8 @@ body {
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Using .ToString(\"C\") automatically formats monetary values according to the host system's culture settings, correctly rendering South African Rand ('R') without hardcoded symbols.",
-      "explanation": "Using .ToString(\"C\") automatically formats monetary values according to the host system's culture settings, correctly rendering South African Rand ('R') without hardcoded symbols.",
+      "exp": "Using .ToString(\"C\") automatically formats monetary values using the host system's regional culture settings, rendering South African Rand ('R') without hardcoded symbols.",
+      "explanation": "Using .ToString(\"C\") automatically formats monetary values using the host system's regional culture settings, rendering South African Rand ('R') without hardcoded symbols.",
       "provenance": "Shneiderman 5th Ed §1.4.4 & Gaddis Ch 3",
       "marks": 2
     },
@@ -6742,8 +6764,8 @@ body {
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "According to Tony Gaddis Chapter 1, a comment that begins with '//' and spans only to the end of that single line is formally termed a 'line comment', whereas a comment enclosed between '/*' and '*/' is a 'block comment'.",
-      "explanation": "According to Tony Gaddis Chapter 1, a comment that begins with '//' and spans only to the end of that single line is formally termed a 'line comment', whereas a comment enclosed between '/*' and '*/' is a 'block comment'.",
+      "exp": "A comment that begins with '//' and spans only to the end of that single line is formally termed a 'line comment', whereas a comment enclosed between '/*' and '*/' is a 'block comment'.",
+      "explanation": "A comment that begins with '//' and spans only to the end of that single line is formally termed a 'line comment', whereas a comment enclosed between '/*' and '*/' is a 'block comment'.",
       "provenance": "NWU Quiz 1 (SU1) Gaddis Chapter 1 Step",
       "marks": 2
     },
@@ -6898,8 +6920,8 @@ body {
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "NWU CMPG122 requires the traditional .NET Framework Windows Forms template. The modern .NET (Core) template uses an out-of-process designer that behaves differently and can break module rubrics.",
-      "explanation": "NWU CMPG122 requires the traditional .NET Framework Windows Forms template. The modern .NET (Core) template uses an out-of-process designer that behaves differently and can break module rubrics.",
+      "exp": "The traditional .NET Framework Windows Forms template uses the classic in-process Windows Forms designer, whereas the .NET (Core) template uses an out-of-process designer with different project structures.",
+      "explanation": "The traditional .NET Framework Windows Forms template uses the classic in-process Windows Forms designer, whereas the .NET (Core) template uses an out-of-process designer with different project structures.",
       "provenance": "NWU Practical 1: Racing Light Trainer Part A",
       "marks": 2
     },
@@ -7548,8 +7570,8 @@ body {
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Ctrl+Shift+S triggers 'Save All'. Ctrl+S saves only the current active document, which often leads to lost designer changes in practical submissions.",
-      "explanation": "Ctrl+Shift+S triggers 'Save All'. Ctrl+S saves only the current active document, which often leads to lost designer changes in practical submissions.",
+      "exp": "Ctrl+Shift+S triggers 'Save All', saving all modified code, designer, and project files simultaneously, whereas Ctrl+S saves only the currently active document.",
+      "explanation": "Ctrl+Shift+S triggers 'Save All', saving all modified code, designer, and project files simultaneously, whereas Ctrl+S saves only the currently active document.",
       "provenance": "NWU Practical 1 & 2 Submission Instructions",
       "marks": 2
     },
@@ -7600,8 +7622,8 @@ body {
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "According to Tony Gaddis (Chapter 1), objects in an application possess properties (which store data about the object) and methods (which define actions or operations the object can perform).",
-      "explanation": "According to Tony Gaddis (Chapter 1), objects in an application possess properties (which store data about the object) and methods (which define actions or operations the object can perform).",
+      "exp": "In object-oriented programming, objects encapsulate properties (which store data about the object) and methods (which define actions or operations the object can perform).",
+      "explanation": "In object-oriented programming, objects encapsulate properties (which store data about the object) and methods (which define actions or operations the object can perform).",
       "provenance": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
       "marks": 2
     },
@@ -7694,18 +7716,18 @@ body {
         "The program crashes on launch",
         "Visual Studio refuses to save the files",
         "The project is automatically converted to Visual Basic",
-        "Marks are deducted under the Naming Conventions and Code Standards criterion"
+        "Code readability and maintainability degrade, violating Hungarian naming conventions and code standards"
       ],
       "opts": [
         "The program crashes on launch",
         "Visual Studio refuses to save the files",
         "The project is automatically converted to Visual Basic",
-        "Marks are deducted under the Naming Conventions and Code Standards criterion"
+        "Code readability and maintainability degrade, violating Hungarian naming conventions and code standards"
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "Leaving default control names violates naming standards and results in mark deductions during practical marking.",
-      "explanation": "Leaving default control names violates naming standards and results in mark deductions during practical marking.",
+      "exp": "Leaving default control names obscures control purpose in event handlers and violates Hungarian naming standards.",
+      "explanation": "Leaving default control names obscures control purpose in event handlers and violates Hungarian naming standards.",
       "provenance": "NWU Practical 1 & Naming Conventions Guide",
       "marks": 2
     },
@@ -8302,8 +8324,8 @@ body {
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "The \"C\" format specifier formats the number as currency based on the computer's culture settings (e.g. R 1,250.00).",
-      "explanation": "The \"C\" format specifier formats the number as currency based on the computer's culture settings (e.g. R 1,250.00).",
+      "exp": "The \"C\" format specifier formats the number as currency using the computer's regional culture settings (e.g. R 1,250.00).",
+      "explanation": "The \"C\" format specifier formats the number as currency using the computer's regional culture settings (e.g. R 1,250.00).",
       "provenance": "Gaddis 4th Ed §3.6",
       "marks": 2
     },
@@ -8770,8 +8792,8 @@ body {
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Practical 2 Part C prescribes the exact calculation pipeline: compute meat cost, convert meat to grams, determine rolls filled, calculate bread cost, and sum both costs.",
-      "explanation": "Practical 2 Part C prescribes the exact calculation pipeline: compute meat cost, convert meat to grams, determine rolls filled, calculate bread cost, and sum both costs.",
+      "exp": "The calculation pipeline computes the meat cost, converts weight from kilograms to grams, determines whole rolls filled, calculates the bread cost, and sums both costs.",
+      "explanation": "The calculation pipeline computes the meat cost, converts weight from kilograms to grams, determines whole rolls filled, calculates the bread cost, and sums both costs.",
       "provenance": "NWU Practical 2 Part C",
       "marks": 2
     },
@@ -9810,8 +9832,8 @@ body {
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "String interpolation or concatenation with txtName.Text dynamically formats the personalized greeting required by Practical 2.",
-      "explanation": "String interpolation or concatenation with txtName.Text dynamically formats the personalized greeting required by Practical 2.",
+      "exp": "String interpolation or concatenation with txtName.Text.Trim() dynamically formats the personalized greeting in lblGreeting.Text.",
+      "explanation": "String interpolation or concatenation with txtName.Text.Trim() dynamically formats the personalized greeting in lblGreeting.Text.",
       "provenance": "NWU Practical 2 Part C",
       "marks": 2
     },
@@ -10538,8 +10560,8 @@ body {
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "The practical requires one simple subtraction: recorded speed minus the zone speed limit. A positive result indicates speeding, while zero or negative means within the limit.",
-      "explanation": "The practical requires one simple subtraction: recorded speed minus the zone speed limit. A positive result indicates speeding, while zero or negative means within the limit.",
+      "exp": "Subtracting the zone speed limit from the recorded speed (recordedSpeed - limit) yields a positive integer when speeding and zero or negative when within the limit.",
+      "explanation": "Subtracting the zone speed limit from the recorded speed (recordedSpeed - limit) yields a positive integer when speeding and zero or negative when within the limit.",
       "provenance": "NWU Practical Four Part C (How far over)",
       "marks": 2
     },
@@ -10564,8 +10586,8 @@ body {
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "The Practical 4 specification mandates exact character-for-character output for legal driving: '0 km/h', category 'Within the limit', and fine line 'No fine. Safe driving.'.",
-      "explanation": "The Practical 4 specification mandates exact character-for-character output for legal driving: '0 km/h', category 'Within the limit', and fine line 'No fine. Safe driving.'.",
+      "exp": "When speedOver <= 0, the driver is within the speed limit, so the labels display '0 km/h', 'Within the limit', and 'No fine. Safe driving.'.",
+      "explanation": "When speedOver <= 0, the driver is within the speed limit, so the labels display '0 km/h', 'Within the limit', and 'No fine. Safe driving.'.",
       "provenance": "NWU Practical Four Part B & Part D",
       "marks": 2
     },
@@ -10642,8 +10664,8 @@ body {
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Practical 4 defines: 'A School zone and a Town zone are both built-up areas. In a built-up area, being more than 20 km/h over the limit doubles the fine.'",
-      "explanation": "Practical 4 defines: 'A School zone and a Town zone are both built-up areas. In a built-up area, being more than 20 km/h over the limit doubles the fine.'",
+      "exp": "Both 'School' and 'Town' zones represent high-pedestrian built-up municipal areas where speeding penalties are stricter than on open highways or rural roads.",
+      "explanation": "Both 'School' and 'Town' zones represent high-pedestrian built-up municipal areas where speeding penalties are stricter than on open highways or rural roads.",
       "provenance": "NWU Practical Four Part B",
       "marks": 2
     },
@@ -10681,21 +10703,21 @@ body {
       "q": "If a fine doubles in a built-up zone only when `speedOver > 20` (strictly more than 20 km/h over), what happens when a vehicle travels at 80 km/h in a 60 km/h School zone (exactly 20 km/h over, base fine R750)?",
       "title": "If a fine doubles in a built-up zone only when `speedOver > 20` (strictly more than 20 km/h over), what happens when a vehicle travels at 80 km/h in a 60 km/h School zone (exactly 20 km/h over, base fine R750)?",
       "options": [
-        "The fine does NOT double because the specification requires MORE than 20 km/h over; exactly 20 km/h over remains at R750 (Serious)",
+        "The fine does NOT double because speedOver > 20 requires strictly MORE than 20 km/h over; exactly 20 km/h over remains at R750 (Serious)",
         "The fine doubles to R1500 immediately",
         "The driver receives a court appearance summons",
         "The fine is reduced to R250"
       ],
       "opts": [
-        "The fine does NOT double because the specification requires MORE than 20 km/h over; exactly 20 km/h over remains at R750 (Serious)",
+        "The fine does NOT double because speedOver > 20 requires strictly MORE than 20 km/h over; exactly 20 km/h over remains at R750 (Serious)",
         "The fine doubles to R1500 immediately",
         "The driver receives a court appearance summons",
         "The fine is reduced to R250"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Edge case test from rubric: 'a School zone at exactly 20 over must not double.' The rule specifies 'more than 20', so speedOver > 20 evaluates to false when speedOver == 20.",
-      "explanation": "Edge case test from rubric: 'a School zone at exactly 20 over must not double.' The rule specifies 'more than 20', so speedOver > 20 evaluates to false when speedOver == 20.",
+      "exp": "Because the doubling condition uses the strict inequality operator (speedOver > 20), an exact value of 20 km/h over evaluates to false and remains at the R750 Serious band.",
+      "explanation": "Because the doubling condition uses the strict inequality operator (speedOver > 20), an exact value of 20 km/h over evaluates to false and remains at the R750 Serious band.",
       "provenance": "NWU Practical Four Part D (Test the edges)",
       "marks": 2
     },
@@ -10720,8 +10742,8 @@ body {
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "The rubric requires appending exactly ' - built-up area' to the category string (e.g. 'Severe - built-up area').",
-      "explanation": "The rubric requires appending exactly ' - built-up area' to the category string (e.g. 'Severe - built-up area').",
+      "exp": "Appending ' - built-up area' to the category string (e.g. 'Severe - built-up area') clearly indicates why the base fine was doubled.",
+      "explanation": "Appending ' - built-up area' to the category string (e.g. 'Severe - built-up area') clearly indicates why the base fine was doubled.",
       "provenance": "NWU Practical Four Part B & Part D",
       "marks": 2
     },
@@ -10746,8 +10768,8 @@ body {
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "The practical specifies: 'The R500 that a repeat offender pays is written down once, at class level, outside every method. There is a keyword for this (const) and a naming tradition (UPPERCASE) that goes with it.'",
-      "explanation": "The practical specifies: 'The R500 that a repeat offender pays is written down once, at class level, outside every method. There is a keyword for this (const) and a naming tradition (UPPERCASE) that goes with it.'",
+      "exp": "Class-level constants are declared outside all methods using the 'const' keyword and UPPER_SNAKE_CASE naming (const decimal REPEAT_FINE = 500m;).",
+      "explanation": "Class-level constants are declared outside all methods using the 'const' keyword and UPPER_SNAKE_CASE naming (const decimal REPEAT_FINE = 500m;).",
       "provenance": "NWU Practical Four Part C (A named constant)",
       "marks": 2
     },
@@ -11032,8 +11054,8 @@ body {
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Practical 5 GUI requirements mandate a ListBox (lstRoutes) displaying Sunset Leisure Cruise (R250), Speedboat Adventure (R400), and Private Pontoon Charter (R800).",
-      "explanation": "Practical 5 GUI requirements mandate a ListBox (lstRoutes) displaying Sunset Leisure Cruise (R250), Speedboat Adventure (R400), and Private Pontoon Charter (R800).",
+      "exp": "A ListBox control (lstRoutes) displays a selectable list of items where the active zero-based selection index is read via SelectedIndex.",
+      "explanation": "A ListBox control (lstRoutes) displays a selectable list of items where the active zero-based selection index is read via SelectedIndex.",
       "provenance": "NWU Practical 5 GUI Requirements",
       "marks": 2
     },
@@ -11094,8 +11116,8 @@ body {
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In a cruise booking ListBox (`lstRoutes`) where index 0 is 'Sunset Leisure Cruise' (R250), index 1 is 'Speedboat Adventure' (R400), and index 2 is 'Private Pontoon Charter' (R800), what is the base ticket price per person for index 0?",
-      "title": "In a cruise booking ListBox (`lstRoutes`) where index 0 is 'Sunset Leisure Cruise' (R250), index 1 is 'Speedboat Adventure' (R400), and index 2 is 'Private Pontoon Charter' (R800), what is the base ticket price per person for index 0?",
+      "q": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the first item in `lstRoutes` ('Sunset Leisure Cruise') is selected?",
+      "title": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the first item in `lstRoutes` ('Sunset Leisure Cruise') is selected?",
       "options": [
         "R 250",
         "R 400",
@@ -11110,8 +11132,8 @@ body {
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "The Practical 5 scenario specifies: Sunset Leisure Cruise = R250 per person.",
-      "explanation": "The Practical 5 scenario specifies: Sunset Leisure Cruise = R250 per person.",
+      "exp": "ListBox items are 0-indexed, so selecting the first item sets SelectedIndex to 0, matching case 0 and assigning 250m (R 250).",
+      "explanation": "ListBox items are 0-indexed, so selecting the first item sets SelectedIndex to 0, matching case 0 and assigning 250m (R 250).",
       "provenance": "NWU Practical 5 GUI Requirements",
       "marks": 2
     },
@@ -11120,8 +11142,8 @@ body {
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In a cruise booking ListBox (`lstRoutes`) where index 0 is 'Sunset Leisure Cruise' (R250), index 1 is 'Speedboat Adventure' (R400), and index 2 is 'Private Pontoon Charter' (R800), what is the base ticket price per person for index 1?",
-      "title": "In a cruise booking ListBox (`lstRoutes`) where index 0 is 'Sunset Leisure Cruise' (R250), index 1 is 'Speedboat Adventure' (R400), and index 2 is 'Private Pontoon Charter' (R800), what is the base ticket price per person for index 1?",
+      "q": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the second item in `lstRoutes` ('Speedboat Adventure') is selected?",
+      "title": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the second item in `lstRoutes` ('Speedboat Adventure') is selected?",
       "options": [
         "R 250",
         "R 400",
@@ -11136,8 +11158,8 @@ body {
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "The Practical 5 scenario specifies: Speedboat Adventure = R400 per person.",
-      "explanation": "The Practical 5 scenario specifies: Speedboat Adventure = R400 per person.",
+      "exp": "Because ListBox items are 0-indexed, selecting the second item sets SelectedIndex to 1, matching case 1 and assigning 400m (R 400).",
+      "explanation": "Because ListBox items are 0-indexed, selecting the second item sets SelectedIndex to 1, matching case 1 and assigning 400m (R 400).",
       "provenance": "NWU Practical 5 GUI Requirements",
       "marks": 2
     },
@@ -11146,8 +11168,8 @@ body {
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In a cruise booking ListBox (`lstRoutes`) where index 0 is 'Sunset Leisure Cruise' (R250), index 1 is 'Speedboat Adventure' (R400), and index 2 is 'Private Pontoon Charter' (R800), what is the base ticket price per person for index 2?",
-      "title": "In a cruise booking ListBox (`lstRoutes`) where index 0 is 'Sunset Leisure Cruise' (R250), index 1 is 'Speedboat Adventure' (R400), and index 2 is 'Private Pontoon Charter' (R800), what is the base ticket price per person for index 2?",
+      "q": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the third item in `lstRoutes` ('Private Pontoon Charter') is selected?",
+      "title": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the third item in `lstRoutes` ('Private Pontoon Charter') is selected?",
       "options": [
         "R 250",
         "R 400",
@@ -11162,8 +11184,8 @@ body {
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "The Practical 5 scenario specifies: Private Pontoon Charter = R800 per person.",
-      "explanation": "The Practical 5 scenario specifies: Private Pontoon Charter = R800 per person.",
+      "exp": "Because ListBox items are 0-indexed, selecting the third item sets SelectedIndex to 2, matching case 2 and assigning 800m (R 800).",
+      "explanation": "Because ListBox items are 0-indexed, selecting the third item sets SelectedIndex to 2, matching case 2 and assigning 800m (R 800).",
       "provenance": "NWU Practical 5 GUI Requirements",
       "marks": 2
     },
@@ -11188,8 +11210,8 @@ body {
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "Practical 5 explicitly requires a switch statement evaluating the ListBox route selection to assign the base ticket price per person.",
-      "explanation": "Practical 5 explicitly requires a switch statement evaluating the ListBox route selection to assign the base ticket price per person.",
+      "exp": "A switch statement on lstRoutes.SelectedIndex branches on the zero-based item indices (0, 1, 2) to assign the corresponding decimal ticket price.",
+      "explanation": "A switch statement on lstRoutes.SelectedIndex branches on the zero-based item indices (0, 1, 2) to assign the corresponding decimal ticket price.",
       "provenance": "NWU Practical 5 Technical Requirements §2",
       "marks": 2
     },
@@ -11224,24 +11246,24 @@ body {
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In a group booking rule where 6 or more passengers qualify for a 10% discount on the total bill, which condition and discount apply?",
-      "title": "In a group booking rule where 6 or more passengers qualify for a 10% discount on the total bill, which condition and discount apply?",
+      "q": "Which C# `if` statement applies a 10% group discount to `totalBill` when the validated integer `passengers` is 6 or more?",
+      "title": "Which C# `if` statement applies a 10% group discount to `totalBill` when the validated integer `passengers` is 6 or more?",
       "options": [
-        "If passenger count is 10 or more, apply a 20% discount",
-        "If the validated passenger count is 6 or more, apply a 10% discount to the total bill",
-        "All bookings on weekends receive 50% discount",
-        "Only children receive discounts"
+        "if (passengers > 6) { totalBill = totalBill * 0.10m; }",
+        "if (passengers >= 6) { totalBill -= totalBill * 0.10m; }",
+        "if (passengers == 6) { totalBill = totalBill - 10m; }",
+        "if (passengers <= 6) { totalBill *= 1.10m; }"
       ],
       "opts": [
-        "If passenger count is 10 or more, apply a 20% discount",
-        "If the validated passenger count is 6 or more, apply a 10% discount to the total bill",
-        "All bookings on weekends receive 50% discount",
-        "Only children receive discounts"
+        "if (passengers > 6) { totalBill = totalBill * 0.10m; }",
+        "if (passengers >= 6) { totalBill -= totalBill * 0.10m; }",
+        "if (passengers == 6) { totalBill = totalBill - 10m; }",
+        "if (passengers <= 6) { totalBill *= 1.10m; }"
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Practical 5 requirement §4 states: 'Group Discount: If the validated passenger count is 6 or more, apply a 10% discount to the total bill.'",
-      "explanation": "Practical 5 requirement §4 states: 'Group Discount: If the validated passenger count is 6 or more, apply a 10% discount to the total bill.'",
+      "exp": "The relational operator >= includes 6 ('6 or more'), and subtracting totalBill * 0.10m (or multiplying by 0.90m) reduces totalBill by 10%.",
+      "explanation": "The relational operator >= includes 6 ('6 or more'), and subtracting totalBill * 0.10m (or multiplying by 0.90m) reduces totalBill by 10%.",
       "provenance": "NWU Practical 5 Technical Requirements §4",
       "marks": 2
     },
@@ -11250,24 +11272,24 @@ body {
       "ch": "SU3",
       "su": "SU3",
       "type": "mcq",
-      "q": "In a CheckedChanged event handler for time-slot RadioButtons, which logic sets the form background color to Orange when Sunset is selected and PowderBlue otherwise?",
-      "title": "In a CheckedChanged event handler for time-slot RadioButtons, which logic sets the form background color to Orange when Sunset is selected and PowderBlue otherwise?",
+      "q": "Inside a `CheckedChanged` event handler, which C# code sets the Form background color to `Orange` when `radSunset` is selected and `PowderBlue` otherwise?",
+      "title": "Inside a `CheckedChanged` event handler, which C# code sets the Form background color to `Orange` when `radSunset` is selected and `PowderBlue` otherwise?",
       "options": [
-        "The form minimizes immediately",
-        "All textboxes are disabled",
-        "If Sunset is checked, set this.BackColor = Color.Orange; otherwise set it to Color.PowderBlue",
-        "The ListBox font changes to Comic Sans"
+        "if (radSunset.Selected) { Form.BackColor = \"Orange\"; } else { Form.BackColor = \"PowderBlue\"; }",
+        "if (radSunset.Text == \"Checked\") { this.Color = Color.Orange; }",
+        "if (radSunset.Checked) { this.BackColor = Color.Orange; } else { this.BackColor = Color.PowderBlue; }",
+        "switch (radSunset) { case true: BackColor = Orange; break; }"
       ],
       "opts": [
-        "The form minimizes immediately",
-        "All textboxes are disabled",
-        "If Sunset is checked, set this.BackColor = Color.Orange; otherwise set it to Color.PowderBlue",
-        "The ListBox font changes to Comic Sans"
+        "if (radSunset.Selected) { Form.BackColor = \"Orange\"; } else { Form.BackColor = \"PowderBlue\"; }",
+        "if (radSunset.Text == \"Checked\") { this.Color = Color.Orange; }",
+        "if (radSunset.Checked) { this.BackColor = Color.Orange; } else { this.BackColor = Color.PowderBlue; }",
+        "switch (radSunset) { case true: BackColor = Orange; break; }"
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Practical 5 requirement §3 mandates: 'If Sunset / Evening is selected, the form background colour must change to orange otherwise powdered blue.'",
-      "explanation": "Practical 5 requirement §3 mandates: 'If Sunset / Evening is selected, the form background colour must change to orange otherwise powdered blue.'",
+      "exp": "RadioButton selection is tested via the boolean Checked property, and the current form's background color is updated via this.BackColor = Color.Orange / Color.PowderBlue.",
+      "explanation": "RadioButton selection is tested via the boolean Checked property, and the current form's background color is updated via this.BackColor = Color.Orange / Color.PowderBlue.",
       "provenance": "NWU Practical 5 Technical Requirements §3",
       "marks": 2
     },
@@ -11370,8 +11392,8 @@ body {
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Requirement §1 mandates: 'Read passenger count from TextBox. If parsing fails or the value is less than 1, display an error message using MessageBox.Show() and set focus back.'",
-      "explanation": "Requirement §1 mandates: 'Read passenger count from TextBox. If parsing fails or the value is less than 1, display an error message using MessageBox.Show() and set focus back.'",
+      "exp": "Defensive validation requires parsing txtPassengers.Text with int.TryParse and verifying that the resulting passenger count is at least 1 (passengers >= 1).",
+      "explanation": "Defensive validation requires parsing txtPassengers.Text with int.TryParse and verifying that the resulting passenger count is at least 1 (passengers >= 1).",
       "provenance": "NWU Practical 5 Technical Requirements §1",
       "marks": 2
     },
@@ -11864,8 +11886,8 @@ body {
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Switch statements are designed for multi-way branching based on equality testing of a single selector expression against discrete constant values.",
-      "explanation": "Switch statements are designed for multi-way branching based on equality testing of a single selector expression against discrete constant values.",
+      "exp": "Switch statements are ideal for multi-way branching when comparing a single discrete selector expression against constant case values.",
+      "explanation": "Switch statements are ideal for multi-way branching when comparing a single discrete selector expression against constant case values.",
       "provenance": "Gaddis 4th Ed §4.8",
       "marks": 2
     },
@@ -14370,24 +14392,24 @@ body {
       "ch": "SU-EXAM",
       "su": "SU-EXAM",
       "type": "mcq",
-      "q": "Given faculty levies (Natural Sciences: R2,500.00 science lab levy; Commerce: R1,000.00 IT network levy; Humanities: R500.00 resource levy), which compulsory levy applies when rdoScience is selected?",
-      "title": "Given faculty levies (Natural Sciences: R2,500.00 science lab levy; Commerce: R1,000.00 IT network levy; Humanities: R500.00 resource levy), which compulsory levy applies when rdoScience is selected?",
+      "q": "Given faculty levies (Natural Sciences: R2,500.00; Commerce: R1,000.00; Humanities: R500.00), which C# conditional block assigns the compulsory `levy` from the selected faculty RadioButton?",
+      "title": "Given faculty levies (Natural Sciences: R2,500.00; Commerce: R1,000.00; Humanities: R500.00), which C# conditional block assigns the compulsory `levy` from the selected faculty RadioButton?",
       "options": [
-        "R 1,000.00 IT network levy",
-        "R 500.00 resource levy",
-        "R 2,500.00 science laboratory levy",
-        "R 0.00 (levies are optional)"
+        "if (rdoScience.Selected) levy = 2500m; else if (rdoCommerce.Selected) levy = 1000m; else levy = 500m;",
+        "if (rdoScience == true) levy = 2500m; else levy = 0m;",
+        "if (rdoScience.Checked) levy = 2500m; else if (rdoCommerce.Checked) levy = 1000m; else levy = 500m;",
+        "switch (rdoScience.Text) { case \"Checked\": levy = 2500m; break; }"
       ],
       "opts": [
-        "R 1,000.00 IT network levy",
-        "R 500.00 resource levy",
-        "R 2,500.00 science laboratory levy",
-        "R 0.00 (levies are optional)"
+        "if (rdoScience.Selected) levy = 2500m; else if (rdoCommerce.Selected) levy = 1000m; else levy = 500m;",
+        "if (rdoScience == true) levy = 2500m; else levy = 0m;",
+        "if (rdoScience.Checked) levy = 2500m; else if (rdoCommerce.Checked) levy = 1000m; else levy = 500m;",
+        "switch (rdoScience.Text) { case \"Checked\": levy = 2500m; break; }"
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Natural & Agricultural Sciences carries a compulsory R2,500.00 science laboratory levy.",
-      "explanation": "Natural & Agricultural Sciences carries a compulsory R2,500.00 science laboratory levy.",
+      "exp": "RadioButtons expose the boolean Checked property, so an if-else-if chain testing rdoScience.Checked and rdoCommerce.Checked assigns the corresponding faculty levy (Gaddis Ch 4.10).",
+      "explanation": "RadioButtons expose the boolean Checked property, so an if-else-if chain testing rdoScience.Checked and rdoCommerce.Checked assigns the corresponding faculty levy (Gaddis Ch 4.10).",
       "provenance": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "marks": 2
     },
