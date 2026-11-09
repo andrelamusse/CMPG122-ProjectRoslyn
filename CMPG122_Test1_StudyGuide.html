@@ -2536,12 +2536,12 @@ body {
         <div class="hero-text">
           <h2>CMPG 122 Visual C# &amp; HCI Study &amp; Exam Suite</h2>
           <p>
-            Direct Study Summaries, C# Syntax &amp; Control Cheat Sheets, Practice Questions, Past Exam Papers, and Code Lab (SU1–SU4 &amp; SU7).
+            Direct Study Summaries, C# Syntax &amp; Control Cheat Sheets, Practice Questions, Past Exam Papers, and Code Lab (Weeks 1–12 • SU1–SU7).
           </p>
         </div>
         <div class="hero-stats">
           <div class="stat-pill">
-            <div class="stat-num" id="statTotalQs">430</div>
+            <div class="stat-num" id="statTotalQs">500</div>
             <div class="stat-label">Exam Questions</div>
           </div>
           <div class="stat-pill">
@@ -2557,8 +2557,8 @@ body {
 
       <!-- Units Grid -->
       <div class="section-header">
-        <h3 class="section-title">📖 Study Units (SU7 &amp; SU1–SU4)</h3>
-        <span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">Weeks 1–7 • Visual C# &amp; HCI</span>
+        <h3 class="section-title">📖 Study Units (SU7 &amp; SU1–SU6)</h3>
+        <span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">Weeks 1–12 • Visual C# &amp; HCI</span>
       </div>
       <div class="units-grid" id="unitsGrid">
         <!-- Rendered dynamically by app.js -->
@@ -2566,14 +2566,16 @@ body {
 
       <!-- Direct Study Summaries & C# Cheat Sheets -->
       <div class="section-header" style="margin-top:2.25rem; flex-wrap:wrap; gap:0.75rem;">
-        <h3 class="section-title">⚡ Study Summaries &amp; C# Cheat Sheets (SU7, SU1–SU4)</h3>
+        <h3 class="section-title">⚡ Study Summaries &amp; C# Cheat Sheets (SU7, SU1–SU6)</h3>
         <div class="cs-filter-bar" id="cheatSheetFilters">
           <button type="button" class="action-btn cs-filter-btn active" data-cs-unit="ALL" onclick="CMPG122_APP.filterCheatSheets('ALL')">All Units</button>
           <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU7" onclick="CMPG122_APP.filterCheatSheets('SU7')">SU7: HCI</button>
           <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU1" onclick="CMPG122_APP.filterCheatSheets('SU1')">SU1: GUI &amp; IDE</button>
           <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU2" onclick="CMPG122_APP.filterCheatSheets('SU2')">SU2: Data &amp; Math</button>
           <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU3" onclick="CMPG122_APP.filterCheatSheets('SU3')">SU3: Decisions</button>
-          <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU4" onclick="CMPG122_APP.filterCheatSheets('SU4')">SU4: Loops &amp; ListBox</button>
+          <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU4" onclick="CMPG122_APP.filterCheatSheets('SU4')">SU4: Loops &amp; Files</button>
+          <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU5" onclick="CMPG122_APP.filterCheatSheets('SU5')">SU5: Methods (ref/out)</button>
+          <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU6" onclick="CMPG122_APP.filterCheatSheets('SU6')">SU6: Multiforms</button>
         </div>
       </div>
       <div id="cheatSheetsGrid" class="cheatsheets-grid">
@@ -2707,11 +2709,11 @@ body {
       <div class="section-header" style="align-items:flex-start; margin-bottom:1.25rem;">
         <div>
           <h3 class="section-title">🔍 Spot &amp; Fix the Bugs Gym</h3>
-          <span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">SU1–SU4 &amp; SU7 • C# Syntax, Runtime &amp; Logic Debugging</span>
+          <span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">SU1–SU7 • C# Syntax, Runtime &amp; Logic Debugging</span>
         </div>
         <div class="audit-mode-selector">
           <button class="audit-mode-btn active" id="btnAuditModeStudio" data-mode="studio">⚡ Code Audit Studio</button>
-          <button class="audit-mode-btn" id="btnAuditModeMcq" data-mode="mcq">📝 Rapid Exam MCQs (15 Bugs)</button>
+          <button class="audit-mode-btn" id="btnAuditModeMcq" data-mode="mcq">📝 Rapid Exam MCQs (20 Bugs)</button>
         </div>
       </div>
 
@@ -2859,7 +2861,7 @@ body {
       <div class="q-card" style="max-width:720px; margin:0 auto;">
         <h3 style="font-size:1.3rem; font-weight:800; margin-bottom:0.5rem;">⚙️ Multi-Unit Custom Practice Builder</h3>
         <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">
-          Select any combination of Study Units (SU7 HCI, SU1 Fundamentals, SU2 Data, SU3 Decisions, SU4 Loops) to build a custom quiz session.
+          Select any combination of Study Units (SU7 HCI, SU1 Fundamentals, SU2 Data, SU3 Decisions, SU4 Loops &amp; Files, SU5 Methods, SU6 Multiforms) to build a custom quiz session.
         </p>
         <div style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:1.5rem;" id="customUnitChecks">
           <!-- Checkboxes injected dynamically -->
@@ -3219,23 +3221,60 @@ body {
     {
       "id": "SU4",
       "code": "SU4",
-      "title": "Study Unit 4: Loops, Accumulators & ListBoxes",
-      "weeks": "Weeks 6 & 7",
+      "title": "Study Unit 4: Loops, Files, Dialogs & Random Numbers",
+      "weeks": "Weeks 7–9",
       "icon": "🔁",
       "color": "#ec4899",
       "badge": "Gaddis Ch 5",
       "topics": [
-        "Pre-Test Loops: The while Loop (condition evaluated first)",
-        "Increment (++) & Decrement (--) Operators: Postfix vs Prefix Evaluation",
-        "Counters, Running Total Accumulators & Sentinel Values",
-        "Post-Test Loops: The do-while Loop (guaranteed >= 1 execution)",
-        "Count-Controlled Loops: The for Loop (init, condition, update)",
-        "Populating & Iterating ListBoxes in Loops",
-        "The Form_Load Event Handler for Pre-population",
-        "Defensive Input Validation Loops"
+        "Pre-Test Loops (while), Post-Test Loops (do-while) & Count-Controlled Loops (for)",
+        "Increment (++) & Decrement (--) Operators: Prefix vs Postfix Mode",
+        "Counters, Running Total Accumulators & ListBox Iteration",
+        "Random Numbers (Random class, Next, NextDouble) & Form1_Load Event Handler",
+        "Using Text Files for Data Storage (using System.IO; StreamWriter & StreamReader)",
+        "File.CreateText, File.AppendText, File.OpenText, ReadLine & EndOfStream",
+        "OpenFileDialog & SaveFileDialog Controls (Component Tray, ShowDialog, Filename)"
       ],
-      "summary": "Pre-test (while), post-test (do-while), and count-controlled (for) loops, running total accumulators, ListBox iteration/population, and class-level Random generation.",
-      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Pre-Test (while), Post-Test (do-while) &amp; Count-Controlled (for) Loops</h4>\n    <div class=\"scenario-table-wrap\"><table class=\"test-table\">\n      <thead>\n        <tr><th>Loop Type</th><th>Evaluation Timing</th><th>Min Executions</th><th>Syntax &amp; Key Rules</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>while (cond) { ... }</code></td><td><strong>Pre-test</strong> (before body)</td><td><strong>0 times</strong> (if initially false)</td><td>Must update loop variable inside body to avoid an infinite loop; no semicolon after <code>while (cond)</code>.</td></tr>\n        <tr><td><code>do { ... } while (cond);</code></td><td><strong>Post-test</strong> (after body)</td><td><strong>1 time</strong> (guaranteed)</td><td>Body always executes at least once; requires a trailing semicolon after <code>while (cond);</code>.</td></tr>\n        <tr><td><code>for (init; cond; update)</code></td><td><strong>Pre-test</strong> (count-controlled)</td><td><strong>0 times</strong> (if initially false)</td><td><code>for (int m = 1; m &lt;= 4; m++)</code> runs for <code>m = 1, 2, 3, 4</code> (exits when <code>m</code> reaches <code>5</code>).</td></tr>\n      </tbody>\n    </table></div>\n    <ul class=\"cs-list\">\n      <li><strong>Prefix vs Postfix Increment:</strong> <code>++x</code> increments first then evaluates; <code>x++</code> evaluates current value first then increments.</li>\n      <li><strong>Accumulators &amp; Nested Loops:</strong> Initialize running totals (<code>decimal total = 0m;</code>) <em>before</em> the loop and add via <code>total += item;</code> inside. In nested loops, total inner executions = outer count &times; inner count.</li>\n      <li><strong>Random Class:</strong> Declare <code>private Random _rand = new Random();</code> at <strong>class level</strong> to prevent identical clock seeds on rapid clicks. <code>_rand.Next(1000, 10000)</code> generates <code>1000..9999</code> (upper bound is <strong>exclusive</strong>).</li>\n    </ul>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. ListBox Loop Population, Iterating Items &amp; Random Reference Numbers</h4>\n    <pre class=\"cs-code\"><code>// Class-level Random generator (declared inside Form1 class, outside methods):\nprivate Random _rand = new Random();\n\n// 1. Populating a 4-Month Installment Schedule into a ListBox:\nlstInstallments.Items.Clear(); // Prevent duplicate items from previous clicks\ndecimal monthlyInstallment = netTotal / 4m;\nfor (int month = 1; month &lt;= 4; month++)\n{\n    lstInstallments.Items.Add($\"Month {month}: {monthlyInstallment:C}\");\n}\n\n// 2. Summing &amp; Averaging Existing Numeric Items in a ListBox:\ndouble sum = 0.0;\nfor (int i = 0; i &lt; lstMarks.Items.Count; i++)\n{\n    sum += double.Parse(lstMarks.Items[i].ToString());\n}\ndouble avg = lstMarks.Items.Count &gt; 0 ? (sum / lstMarks.Items.Count) : 0.0;\n\n// 3. Generating a 4-Digit Random Confirmation Number (1000 to 9999 inclusive):\nint refNo = _rand.Next(1000, 10000);</code></pre>\n  </div>\n</div>"
+      "summary": "Loops (while, do-while, for), ListBoxes, Random numbers, Form_Load, text file I/O (StreamWriter, StreamReader, EndOfStream), and OpenFileDialog/SaveFileDialog.",
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Pre-Test (while), Post-Test (do-while) &amp; Count-Controlled (for) Loops (Weeks 7–8)</h4>\n    <div class=\"scenario-table-wrap\"><table class=\"test-table\">\n      <thead>\n        <tr><th>Loop Type</th><th>Evaluation Timing</th><th>Min Executions</th><th>Syntax &amp; Key Rules</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>while (cond) { ... }</code></td><td><strong>Pre-test</strong> (before body)</td><td><strong>0 times</strong> (if initially false)</td><td>Must update counter/control variable inside body to prevent an infinite loop; no semicolon after <code>while (cond)</code>.</td></tr>\n        <tr><td><code>do { ... } while (cond);</code></td><td><strong>Post-test</strong> (after body)</td><td><strong>1 time</strong> (guaranteed)</td><td>Body always executes at least once; requires a trailing semicolon after <code>while (cond);</code>.</td></tr>\n        <tr><td><code>for (init; cond; update)</code></td><td><strong>Pre-test</strong> (count-controlled)</td><td><strong>0 times</strong> (if initially false)</td><td><code>for (int i = 1; i &lt;= 5; i++)</code> runs 5 times; can count backward (<code>i--</code>) or step (<code>i += 10</code>).</td></tr>\n      </tbody>\n    </table></div>\n    <ul class=\"cs-list\">\n      <li><strong>Prefix vs Postfix Increment:</strong> <code>++x</code> (prefix mode) increments first then uses the new value; <code>x++</code> (postfix mode) uses the current value first then increments.</li>\n      <li><strong>Random Class (5.8) &amp; Form Load Event (5.9):</strong> <code>Random rand = new Random();</code> &mdash; <code>rand.Next()</code> returns <code>0..2,147,483,647</code>; <code>rand.Next(10)</code> returns <code>0..9</code> (upper bound exclusive); <code>rand.Next(1, 7)</code> returns <code>1..6</code>; <code>rand.NextDouble()</code> returns a <code>double</code> in <code>[0.0, 1.0)</code>. <code>private void Form1_Load(object sender, EventArgs e)</code> executes automatically when the form loads into memory before appearing on screen.</li>\n    </ul>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Using Files for Data Storage (5.6 System.IO) &amp; File Dialog Controls (5.7) (Week 9)</h4>\n    <p class=\"cs-note\"><strong>3 Mandatory File Steps:</strong> 1. Open the file &rarr; 2. Process the file (read/write) &rarr; 3. Close the file (<code>.Close()</code>). Always add <code>using System.IO;</code> at the top of <code>Form1.cs</code>.</p>\n    <div class=\"scenario-table-wrap\"><table class=\"test-table\">\n      <thead>\n        <tr><th>Class / Control</th><th>Method / Property</th><th>Exact Behaviour &amp; Exam Rules</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>StreamWriter</code></td><td><code>File.CreateText(\"data.txt\")</code></td><td>Creates a text file and returns a <code>StreamWriter</code>. <strong>If the file already exists, its contents are erased!</strong></td></tr>\n        <tr><td><code>StreamWriter</code></td><td><code>File.AppendText(\"data.txt\")</code></td><td>Opens an existing text file (or creates it) and writes new data at the end <strong>without erasing existing contents</strong>.</td></tr>\n        <tr><td><code>StreamWriter</code></td><td><code>WriteLine(val)</code> vs <code>Write(val)</code></td><td><code>WriteLine</code> writes data followed by a newline character; <code>Write</code> writes data without a newline.</td></tr>\n        <tr><td><code>StreamReader</code></td><td><code>File.OpenText(\"data.txt\")</code></td><td>Opens an existing text file for reading and returns a <code>StreamReader</code> object (throws <code>FileNotFoundException</code> if missing).</td></tr>\n        <tr><td><code>StreamReader</code></td><td><code>ReadLine()</code> &amp; <code>EndOfStream</code></td><td><code>ReadLine()</code> reads the next line as a <code>string</code>. Loop until EOF using <code>while (!inputFile.EndOfStream)</code>.</td></tr>\n        <tr><td><code>OpenFileDialog</code> / <code>SaveFileDialog</code></td><td><code>ShowDialog()</code>, <code>Filename</code>, <code>InitialDirectory</code></td><td>Invisible controls placed in the <strong>component tray</strong>. <code>if (openFile.ShowDialog() == DialogResult.OK)</code> opens <code>openFile.Filename</code>.</td></tr>\n      </tbody>\n    </table></div>\n    <pre class=\"cs-code\"><code>// Populating a 4-Month Installment Schedule into a ListBox:\nlstInstallments.Items.Clear();\nfor (int month = 1; month <= 4; month++)\n{\n    lstInstallments.Items.Add($\"Month {month}: {monthlyInstallment:C}\");\n}\n\n// Required directive at top of file for File I/O:\nusing System.IO;\n\n// 1. Writing to a File with SaveFileDialog &amp; StreamWriter:\nif (saveFile.ShowDialog() == DialogResult.OK)\n{\n    StreamWriter outputFile = File.CreateText(saveFile.Filename);\n    outputFile.WriteLine(\"Introduction to Computer Science\");\n    outputFile.Close(); // Always close connection to flush buffer\n}\n\n// 2. Reading All Lines from a File with OpenFileDialog, StreamReader &amp; EndOfStream:\nif (openFile.ShowDialog() == DialogResult.OK)\n{\n    StreamReader inputFile = File.OpenText(openFile.Filename);\n    lstCourses.Items.Clear();\n    while (!inputFile.EndOfStream)\n    {\n        string line = inputFile.ReadLine();\n        lstCourses.Items.Add(line);\n    }\n    inputFile.Close();\n}</code></pre>\n  </div>\n</div>"
+    },
+    {
+      "id": "SU5",
+      "code": "SU5",
+      "title": "Study Unit 5: Modularizing Your Code with Methods",
+      "weeks": "Weeks 10–11",
+      "icon": "🧩",
+      "color": "#3b82f6",
+      "badge": "Gaddis Ch 6",
+      "topics": [
+        "Void Methods vs Value-Returning Methods (int, double, decimal, string, bool)",
+        "Method Header Anatomy (Access Modifier, Return Type, PascalCase Name, Parameters)",
+        "Parameters (in Method Header) vs Arguments (in Method Call)",
+        "Passing Arguments by Value vs by Reference (ref Parameters)",
+        "Output Parameters (out Parameters) & Input Validation Methods",
+        "Debugging Methods (Step Into, Step Over, Step Out)"
+      ],
+      "summary": "Custom void and value-returning methods, method headers and calls, passing arguments by value vs by reference (ref and out parameters), and method debugging.",
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Modularizing with Methods: Void vs Value-Returning &amp; Parameter Passing (Weeks 10–11)</h4>\n    <p class=\"cs-note\"><strong>Method Header Anatomy:</strong> <code>[AccessModifier] [ReturnType] [PascalCaseName]([ParameterList])</code> &mdash; e.g., <code>private string FormatTime(int totalSeconds)</code>. A <strong>parameter</strong> is the variable declared in the method header; an <strong>argument</strong> is the value or variable passed in the method call.</p>\n    <div class=\"scenario-table-wrap\"><table class=\"test-table\">\n      <thead>\n        <tr><th>Passing Mode</th><th>Header &amp; Call Syntax</th><th>Caller Initialization Rule</th><th>Inside-Method Rule &amp; Effect on Caller</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>By Value</strong> (Default)</td><td>Header: <code>(int seconds)</code><br>Call: <code> MyMethod(sec)</code></td><td>Must be initialized before call.</td><td>Receives a <strong>copy</strong> only. Changing the parameter inside the method does <strong>not</strong> change the caller's variable.</td></tr>\n        <tr><td><strong>By Reference (<code>ref</code>)</strong></td><td>Header: <code>(ref int total)</code><br>Call: <code>MyMethod(ref totalSeconds)</code></td><td><strong>Must be initialized</strong> before being passed to the method.</td><td>Passes a reference to the caller's variable. Any change to the <code>ref</code> parameter directly updates the caller's variable.</td></tr>\n        <tr><td><strong>Output (<code>out</code>)</strong></td><td>Header: <code>(out int seconds)</code><br>Call: <code>ReadSeconds(txt, out sec)</code></td><td>Does <strong>not</strong> need to be initialized before the call.</td><td>The method <strong>must assign a value</strong> to the <code>out</code> parameter before returning on every code path (or compiler error <code>CS0177</code>).</td></tr>\n      </tbody>\n    </table></div>\n    <ul class=\"cs-list\">\n      <li><strong>Void vs Value-Returning Methods:</strong> A <code>void</code> method performs an action and returns no value. A value-returning method specifies a return type (<code>int</code>, <code>double</code>, <code>decimal</code>, <code>string</code>, <code>bool</code>) and must execute <code>return expression;</code> on every path.</li>\n      <li><strong>Debugger Stepping Commands:</strong> <strong>Step Into (F11)</strong> enters the called method line-by-line; <strong>Step Over (F10)</strong> executes the whole method call as a single step without entering it; <strong>Step Out (Shift+F11)</strong> finishes the current method and returns to the caller.</li>\n    </ul>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Complete Method Patterns: out Validation, String Formatting &amp; ref Running Totals</h4>\n    <pre class=\"cs-code\"><code>// 1. Method with an out Parameter (Validates whole number in 1..3600):\nprivate bool ReadSeconds(string text, out int seconds)\n{\n    if (int.TryParse(text, out seconds) &amp;&amp; seconds &gt;= 1 &amp;&amp; seconds &lt;= 3600)\n    {\n        return true;\n    }\n    seconds = 0; // Mandatory assignment before returning false!\n    return false;\n}\n\n// 2. Value-Returning Method (Formats totalSeconds as mm:ss, e.g. 65 -> \"1:05\"):\nprivate string FormatTime(int totalSeconds)\n{\n    int minutes = totalSeconds / 60;\n    int seconds = totalSeconds % 60;\n    return (seconds &lt; 10) ? (minutes + \":0\" + seconds) : (minutes + \":\" + seconds);\n}\n\n// 3. Void Method with ref Parameters (Updates running fastest lap and total):\nprivate void RecordLap(int seconds, ref int fastest, ref int total)\n{\n    total += seconds;\n    if (fastest == 0 || seconds &lt; fastest)\n    {\n        fastest = seconds;\n    }\n}</code></pre>\n  </div>\n</div>"
+    },
+    {
+      "id": "SU6",
+      "code": "SU6",
+      "title": "Study Unit 6: Multiform Projects",
+      "weeks": "Weeks 11–12",
+      "icon": "🪟",
+      "color": "#10b981",
+      "badge": "Gaddis Ch 10 / SU6",
+      "topics": [
+        "Adding & Managing Multiple Windows Forms in a Visual Studio Project",
+        "Startup Form Configuration in Program.cs (Application.Run)",
+        "Instantiating & Displaying Forms: Modal (ShowDialog) vs Modeless (Show)",
+        "Accessing Controls on Another Form (Modifiers Property: Private vs Public)",
+        "Closing vs Hiding Forms (this.Close() vs this.Hide())",
+        "Form Lifecycle Events (Load, Activated, FormClosing, FormClosed)"
+      ],
+      "summary": "Creating multiple forms in a project, modal (ShowDialog) vs modeless (Show) display, cross-form control access via Public Modifiers, and form lifecycle events.",
+      "cheatSheetHtml": "<div class=\"cheatsheet-unit-block\">\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">1. Multiform Projects: Modal vs Modeless Forms &amp; Cross-Form Control Access (Weeks 11–12)</h4>\n    <p class=\"cs-note\"><strong>3 Steps to Display Another Form:</strong> 1. Declare &amp; instantiate the form object (<code>Form2 frm = new Form2();</code>) &rarr; 2. Pass data or set public properties/controls &rarr; 3. Call <code>frm.ShowDialog();</code> (modal) or <code>frm.Show();</code> (modeless).</p>\n    <div class=\"scenario-table-wrap\"><table class=\"test-table\">\n      <thead>\n        <tr><th>Concept / Method</th><th>C# Syntax</th><th>Execution Behaviour &amp; Exam Rules</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>Modal Form</strong></td><td><code>frm.ShowDialog();</code></td><td>Blocks interaction with all other forms in the application until <code>frm</code> is closed. Statements after <code>ShowDialog()</code> pause and execute <strong>only after</strong> the modal form closes.</td></tr>\n        <tr><td><strong>Modeless Form</strong></td><td><code>frm.Show();</code></td><td>Allows the user to switch focus freely between forms. Statements after <code>Show()</code> execute <strong>immediately</strong> without waiting for <code>frm</code> to close.</td></tr>\n        <tr><td><strong>Control Access Across Forms</strong></td><td><code>Modifiers = Public</code></td><td>Controls on a form have <code>Modifiers = Private</code> by default. Change <code>Modifiers</code> to <code>Public</code> in the Properties window to access <code>frm.lblOutput.Text</code> from another form.</td></tr>\n        <tr><td><strong>Close vs Hide</strong></td><td><code>this.Close();</code> vs <code>this.Hide();</code></td><td><code>Close()</code> closes the form and releases resources (terminates the app if called on the startup form). <code>Hide()</code> makes the form invisible while keeping its object in memory.</td></tr>\n        <tr><td><strong>Startup Form</strong></td><td><code>Application.Run(new Form1());</code></td><td>Located inside the <code>Main</code> method in <code>Program.cs</code>; determines which form launches first when the program starts.</td></tr>\n      </tbody>\n    </table></div>\n  </div>\n  <div class=\"cs-section\">\n    <h4 class=\"cs-heading\">2. Multiform Instantiation &amp; Data Passing Code Template</h4>\n    <pre class=\"cs-code\"><code>// Inside MainForm (Form1.cs) - Opening SummaryForm and passing calculated output:\nprivate void btnViewSummary_Click(object sender, EventArgs e)\n{\n    SummaryForm frmSummary = new SummaryForm();\n    // Requires lblCustomerTotal on SummaryForm to have Modifiers = Public:\n    frmSummary.lblCustomerTotal.Text = totalAmount.ToString(\"C\");\n    frmSummary.ShowDialog(); // Displays as a modal dialog box\n    // Code here runs only AFTER the user closes frmSummary:\n    lblStatus.Text = \"Summary reviewed.\";\n}</code></pre>\n  </div>\n</div>"
     }
   ],
   "officialExams": [
@@ -3623,6 +3662,54 @@ body {
       ],
       "answer": 1,
       "explanation": "Line 6 violates C# PascalCase naming (must be ToString) and uses two single quotes (''n2'') instead of double quotes (\"n2\"). Line 8 has invalid catch syntax; C# requires 'catch (FormatException ex)' or 'catch (Exception ex)'."
+    },
+    {
+      "id": "err_18",
+      "title": "Bug #18: StreamWriter Overwrite & Missing Close() (SU4 Week 9)",
+      "unit": "SU4",
+      "question": "This handler is meant to append a new student name to the end of `Names.txt` without erasing existing entries and ensure the buffer is saved to disk. What two defects exist?",
+      "options": [
+        "`File.CreateText` erases the existing file contents (should be `File.AppendText(\"Names.txt\")`), and `outputFile.Close();` is missing at the end.",
+        "`StreamWriter` must be replaced with `StreamReader`, and `WriteLine` must be replaced with `ReadLine`.",
+        "`txtStudentName.Text` must be parsed with `int.TryParse` before calling `WriteLine`.",
+        "`Names.txt` must be passed to `MessageBox.Show` before opening."
+      ],
+      "answer": 0,
+      "fix": "StreamWriter outputFile = File.AppendText(\"Names.txt\");\noutputFile.WriteLine(txtStudentName.Text);\noutputFile.Close();",
+      "explanation": "`File.CreateText` overwrites any existing file and erases its contents; `File.AppendText` preserves existing lines and writes at the end. Additionally, `outputFile.Close();` is required to flush the buffer and release the file lock.",
+      "code": "private void btnSaveLog_Click(object sender, EventArgs e)\n{\n    // Append new student name to existing Names.txt log without erasing old names:\n    StreamWriter outputFile = File.CreateText(\"Names.txt\");\n    outputFile.WriteLine(txtStudentName.Text);\n}"
+    },
+    {
+      "id": "err_19",
+      "title": "Bug #19: Unassigned out Parameter (CS0177) & Missing ref Keyword (CS1620) (SU5 Week 10)",
+      "unit": "SU5",
+      "question": "Why does the C# compiler reject `return false;` with error `CS0177: The out parameter 'seconds' must be assigned to before control leaves the current method`?",
+      "options": [
+        "Because `ReadSeconds` must have a `void` return type when using `out`.",
+        "Because when the `if` condition is false, execution reaches `return false;` without ever assigning a value to the `out` parameter `seconds` (must add `seconds = 0;` before `return false;`).",
+        "Because `int.TryParse` does not work inside custom methods.",
+        "Because `3600` exceeds the maximum value of an `int`."
+      ],
+      "answer": 1,
+      "fix": "seconds = 0;\nreturn false;",
+      "explanation": "Every code path in a method with an `out` parameter must assign a value to that parameter before returning. Assigning `seconds = 0;` before `return false;` (or passing `out seconds` directly to `int.TryParse`) satisfies the compiler.",
+      "code": "private bool ReadSeconds(string text, out int seconds)\n{\n    int parsed;\n    if (int.TryParse(text, out parsed) && parsed >= 1 && parsed <= 3600)\n    {\n        seconds = parsed;\n        return true;\n    }\n    return false; // Compiler Error CS0177!\n}"
+    },
+    {
+      "id": "err_20",
+      "title": "Bug #20: Multiform Post-ShowDialog Assignment & Private Control Access (SU6 Week 12)",
+      "unit": "SU6",
+      "question": "Assume `lblFinalTotal` on `SummaryForm` has `Modifiers = Public`. Why does `lblFinalTotal` appear empty while the user is looking at `SummaryForm`?",
+      "options": [
+        "Because `new SummaryForm()` deletes `totalDue`.",
+        "Because `ToString(\"C\")` cannot be used in multiform projects.",
+        "Because `frmSummary.ShowDialog()` blocks execution until the user closes `SummaryForm`, so `frmSummary.lblFinalTotal.Text` is assigned *after* the form has already been closed.",
+        "Because `SummaryForm` must be opened with `this.Close()`."
+      ],
+      "answer": 2,
+      "fix": "SummaryForm frmSummary = new SummaryForm();\nfrmSummary.lblFinalTotal.Text = totalDue.ToString(\"C\");\nfrmSummary.ShowDialog();",
+      "explanation": "A modal `ShowDialog()` call pauses the calling event handler until the modal form is closed. Any data or control text must be assigned to `frmSummary` **before** calling `frmSummary.ShowDialog()`.",
+      "code": "private void btnShowSummary_Click(object sender, EventArgs e)\n{\n    SummaryForm frmSummary = new SummaryForm();\n    frmSummary.ShowDialog();\n    frmSummary.lblFinalTotal.Text = totalDue.ToString(\"C\");\n}"
     }
   ],
   "auditScenarios": [
@@ -15998,6 +16085,1336 @@ body {
       "explanation": "Rule 4 states sequences of actions should be organized into groups with a beginning, middle, and end, yielding closure upon completion; Rule 3 offers informative feedback (Shneiderman Ch 2).",
       "provenance": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "marks": 2
+    },
+    {
+      "id": "q_su4_351",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which directive must be placed at the top of a C# source file to use the `StreamWriter`, `StreamReader`, and `File` classes?",
+      "q": "Which directive must be placed at the top of a C# source file to use the `StreamWriter`, `StreamReader`, and `File` classes?",
+      "options": [
+        "using System.IO;",
+        "using System.Files;",
+        "using System.Data.Streams;",
+        "using System.Windows.Storage;"
+      ],
+      "answer": 0,
+      "explanation": "The `System.IO` namespace provides the `.NET` classes required for file input and output, including `StreamWriter`, `StreamReader`, and `File`."
+    },
+    {
+      "id": "q_su4_352",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "What happens when `outputFile = File.CreateText(\"courses.txt\");` executes and `courses.txt` already exists on disk?",
+      "q": "What happens when `outputFile = File.CreateText(\"courses.txt\");` executes and `courses.txt` already exists on disk?",
+      "options": [
+        "A runtime exception is thrown because the file already exists.",
+        "Its existing contents are erased and replaced with a new empty text file.",
+        "New data written to `outputFile` is added to the end of the existing file.",
+        "Windows automatically renames the new file to `courses(1).txt`."
+      ],
+      "answer": 1,
+      "explanation": "`File.CreateText` creates a text file with the given name; if the file already exists, its previous contents are erased. Use `File.AppendText` to preserve existing contents."
+    },
+    {
+      "id": "q_su4_353",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which method opens an existing text file for writing and places new data at the end without erasing the current contents?",
+      "q": "Which method opens an existing text file for writing and places new data at the end without erasing the current contents?",
+      "options": [
+        "File.OpenText(\"Names.txt\")",
+        "File.CreateText(\"Names.txt\")",
+        "File.AppendText(\"Names.txt\")",
+        "File.WriteEnd(\"Names.txt\")"
+      ],
+      "answer": 2,
+      "explanation": "`File.AppendText` opens a text file (or creates it if it does not exist) and returns a `StreamWriter` that appends new data to the end of the file."
+    },
+    {
+      "id": "q_su4_354",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "How does `outputFile.WriteLine(\"Calculus I\");` differ from `outputFile.Write(\"Calculus I\");`?",
+      "q": "How does `outputFile.WriteLine(\"Calculus I\");` differ from `outputFile.Write(\"Calculus I\");`?",
+      "options": [
+        "`WriteLine` erases the previous line before writing, whereas `Write` appends.",
+        "`Write` only accepts numeric values, whereas `WriteLine` accepts strings.",
+        "`WriteLine` closes the file automatically after writing, whereas `Write` keeps it open.",
+        "`WriteLine` appends a newline character after the data, whereas `Write` does not."
+      ],
+      "answer": 3,
+      "explanation": "`StreamWriter.WriteLine` writes the data to the file followed by a newline character, whereas `StreamWriter.Write` writes the item without a trailing newline."
+    },
+    {
+      "id": "q_su4_355",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which statement properly uses a verbatim string literal to create a file at `C:\\Users\\chris\\Names.txt` without escaping backslashes?",
+      "q": "Which statement properly uses a verbatim string literal to create a file at `C:\\Users\\chris\\Names.txt` without escaping backslashes?",
+      "options": [
+        "outputFile = File.CreateText(@\"C:\\Users\\chris\\Names.txt\");",
+        "outputFile = File.CreateText($\"C:\\Users\\chris\\Names.txt\");",
+        "outputFile = File.CreateText(#\"C:\\Users\\chris\\Names.txt\");",
+        "outputFile = File.CreateText(&\"C:\\Users\\chris\\Names.txt\");"
+      ],
+      "answer": 0,
+      "explanation": "Prefixing a string literal with `@` tells the C# compiler to treat backslashes literally as path separators rather than escape sequences."
+    },
+    {
+      "id": "q_su4_356",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which statement opens an existing text file named `students.txt` and assigns the resulting object to `StreamReader inputFile;`?",
+      "q": "Which statement opens an existing text file named `students.txt` and assigns the resulting object to `StreamReader inputFile;`?",
+      "options": [
+        "inputFile = File.ReadText(\"students.txt\");",
+        "inputFile = File.OpenText(\"students.txt\");",
+        "inputFile = File.CreateText(\"students.txt\");",
+        "inputFile = new File(\"students.txt\");"
+      ],
+      "answer": 1,
+      "explanation": "`File.OpenText(\"students.txt\")` opens an existing UTF-8 text file for reading and returns a `StreamReader` reference."
+    },
+    {
+      "id": "q_su4_357",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which `while` loop header reads every line from a `StreamReader` named `inputFile` until the end of the file is reached?",
+      "q": "Which `while` loop header reads every line from a `StreamReader` named `inputFile` until the end of the file is reached?",
+      "options": [
+        "while (inputFile.EndOfStream == true)",
+        "while (inputFile.ReadLine() == false)",
+        "while (!inputFile.EndOfStream)",
+        "while (inputFile.Length > 0)"
+      ],
+      "answer": 2,
+      "explanation": "`StreamReader.EndOfStream` is a `bool` property that is `false` while unread data remains and becomes `true` at the end of the file. Therefore `while (!inputFile.EndOfStream)` (or `while (inputFile.EndOfStream == false)`) loops until all lines are read."
+    },
+    {
+      "id": "q_su4_358",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which `StreamReader` method reads a complete line of characters from the current stream and returns it as a `string`?",
+      "q": "Which `StreamReader` method reads a complete line of characters from the current stream and returns it as a `string`?",
+      "options": [
+        "inputFile.Read()",
+        "inputFile.GetLine()",
+        "inputFile.NextLine()",
+        "inputFile.ReadLine()"
+      ],
+      "answer": 3,
+      "explanation": "`StreamReader.ReadLine()` reads a line of characters from the current stream and returns the data as a `string`, whereas `Read()` reads only the next character."
+    },
+    {
+      "id": "q_su4_359",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "When you add an `OpenFileDialog` or `SaveFileDialog` control to a form in Visual Studio, where does it appear at design time?",
+      "q": "When you add an `OpenFileDialog` or `SaveFileDialog` control to a form in Visual Studio, where does it appear at design time?",
+      "options": [
+        "In the component tray at the bottom of the Designer window.",
+        "In the top-left corner of the form's title bar.",
+        "Inside the Solution Explorer folder tree.",
+        "Directly in the center of the Windows Form canvas."
+      ],
+      "answer": 0,
+      "explanation": "Because `OpenFileDialog` and `SaveFileDialog` are invisible controls that do not appear on the form surface at runtime, Visual Studio places them in the component tray below the Form Designer."
+    },
+    {
+      "id": "q_su4_360",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which `if` statement verifies that the user clicked the **Open** button (rather than **Cancel**) in an `OpenFileDialog` named `openFile`?",
+      "q": "Which `if` statement verifies that the user clicked the **Open** button (rather than **Cancel**) in an `OpenFileDialog` named `openFile`?",
+      "options": [
+        "if (openFile.ShowDialog() == true)",
+        "if (openFile.ShowDialog() == DialogResult.OK)",
+        "if (openFile.Clicked == DialogResult.Open)",
+        "if (openFile.Filename != \"\")"
+      ],
+      "answer": 1,
+      "explanation": "`ShowDialog()` displays the dialog box and returns `DialogResult.OK` if the user clicks Open/Save, or `DialogResult.Cancel` if the user clicks Cancel."
+    },
+    {
+      "id": "q_su4_361",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "After `openFile.ShowDialog()` returns `DialogResult.OK`, which property of `openFile` holds the selected file's path and name?",
+      "q": "After `openFile.ShowDialog()` returns `DialogResult.OK`, which property of `openFile` holds the selected file's path and name?",
+      "options": [
+        "openFile.Path",
+        "openFile.SelectedFile",
+        "openFile.Filename",
+        "openFile.Text"
+      ],
+      "answer": 2,
+      "explanation": "When a user selects a file in an `OpenFileDialog` or `SaveFileDialog`, the full path and filename are stored in the control's `Filename` (or `FileName`) property."
+    },
+    {
+      "id": "q_su4_362",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which property of an `OpenFileDialog` control specifies the folder that is initially displayed when the dialog opens?",
+      "q": "Which property of an `OpenFileDialog` control specifies the folder that is initially displayed when the dialog opens?",
+      "options": [
+        "openFile.StartFolder",
+        "openFile.DefaultPath",
+        "openFile.DirectoryName",
+        "openFile.InitialDirectory"
+      ],
+      "answer": 3,
+      "explanation": "The `InitialDirectory` property (e.g., `openFile.InitialDirectory = @\"C:\\Data\";`) sets the initial directory displayed by the file dialog box."
+    },
+    {
+      "id": "q_su4_363",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 8",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Given `Random rand = new Random();`, what is the exact range of possible integers returned by `rand.Next(10);`?",
+      "q": "Given `Random rand = new Random();`, what is the exact range of possible integers returned by `rand.Next(10);`?",
+      "options": [
+        "0 through 9 inclusive",
+        "1 through 10 inclusive",
+        "0 through 10 inclusive",
+        "1 through 9 inclusive"
+      ],
+      "answer": 0,
+      "explanation": "When passing a single upper bound `max` to `rand.Next(max)`, the generated integer ranges from `0` up to `max - 1`. Thus `rand.Next(10)` produces a number from `0` to `9`."
+    },
+    {
+      "id": "q_su4_364",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 8",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Given `Random rand = new Random();`, what type and range of value does `rand.NextDouble()` return?",
+      "q": "Given `Random rand = new Random();`, what type and range of value does `rand.NextDouble()` return?",
+      "options": [
+        "An `int` between `0` and `100`.",
+        "A `double` floating-point number between `0.0` and `1.0`.",
+        "A `decimal` currency value between `0.0m` and `10.0m`.",
+        "A `double` floating-point number between `-1.0` and `1.0`."
+      ],
+      "answer": 1,
+      "explanation": "`Random.NextDouble()` returns a random `double` floating-point number in the range `0.0` up to (but not including) `1.0`."
+    },
+    {
+      "id": "q_su4_365",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 8",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Given `Random rand = new Random();`, which expression generates a random integer from `1` to `6` inclusive?",
+      "q": "Given `Random rand = new Random();`, which expression generates a random integer from `1` to `6` inclusive?",
+      "options": [
+        "rand.Next(6)",
+        "rand.Next(1, 6)",
+        "rand.Next(1, 7)",
+        "rand.Next(0, 6)"
+      ],
+      "answer": 2,
+      "explanation": "In `rand.Next(min, max)`, the lower bound `min` is inclusive and the upper bound `max` is exclusive (or `rand.Next(6) + 1`). Therefore `rand.Next(1, 7)` yields integers from `1` through `6`."
+    },
+    {
+      "id": "q_su4_366",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 8",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "When does the code inside `private void Form1_Load(object sender, EventArgs e)` execute?",
+      "q": "When does the code inside `private void Form1_Load(object sender, EventArgs e)` execute?",
+      "options": [
+        "Every time the user clicks any button on the form.",
+        "Only when the user closes the form.",
+        "Whenever a text box on the form receives keyboard focus.",
+        "Automatically when the form is loaded into memory at startup before it is displayed."
+      ],
+      "answer": 3,
+      "explanation": "When a Windows Forms application launches, the form is loaded into memory and the `Load` event fires before the form becomes visible on screen."
+    },
+    {
+      "id": "q_su4_367",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 8",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "What is the last value displayed by `MessageBox.Show(count.ToString());` in `for (int count = 10; count >= 0; count--)`?",
+      "q": "What is the last value displayed by `MessageBox.Show(count.ToString());` in `for (int count = 10; count >= 0; count--)`?",
+      "options": [
+        "0",
+        "1",
+        "10",
+        "-1"
+      ],
+      "answer": 0,
+      "explanation": "The loop starts at `10` and decrements `count` by `1` after each iteration while `count >= 0` is true. The last iteration executes with `count == 0`, after which `count` becomes `-1` and the loop terminates."
+    },
+    {
+      "id": "q_su4_368",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 8",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "How many times does the body of `for (int count = 0; count <= 30; count += 10)` execute?",
+      "q": "How many times does the body of `for (int count = 0; count <= 30; count += 10)` execute?",
+      "options": [
+        "3 times",
+        "4 times",
+        "30 times",
+        "31 times"
+      ],
+      "answer": 1,
+      "explanation": "`count` takes the values `0`, `10`, `20`, and `30` — executing the loop body 4 times before `count` becomes `40` and fails `count <= 30`."
+    },
+    {
+      "id": "q_su4_369",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "What are the three steps that every program must follow when working with a file for data storage?",
+      "q": "What are the three steps that every program must follow when working with a file for data storage?",
+      "options": [
+        "Compile the file, execute the file, delete the file.",
+        "Declare the file, format the file, print the file.",
+        "Open the file, process the file, close the file.",
+        "Copy the file, parse the file, archive the file."
+      ],
+      "answer": 2,
+      "explanation": "File processing always requires three steps: (1) Open the file to create a connection, (2) Process the file by reading or writing data, and (3) Close the file to disconnect it from the program."
+    },
+    {
+      "id": "q_su4_370",
+      "ch": "SU4",
+      "su": "SU4",
+      "week": "Week 9",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Why is it important to call `outputFile.Close();` after writing data to a `StreamWriter`?",
+      "q": "Why is it important to call `outputFile.Close();` after writing data to a `StreamWriter`?",
+      "options": [
+        "It automatically deletes temporary variables from the form.",
+        "It converts the text file into an encrypted binary file.",
+        "It clears all items from the form's ListBox control.",
+        "It flushes any buffered data to disk and disconnects the file from the program."
+      ],
+      "answer": 3,
+      "explanation": "Failing to call `outputFile.Close()` can leave unwritten data sitting in the memory buffer, resulting in an incomplete or locked file on disk."
+    },
+    {
+      "id": "q_su5_001",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "What is the key difference between a `void` method and a value-returning method in C#?",
+      "q": "What is the key difference between a `void` method and a value-returning method in C#?",
+      "options": [
+        "A `void` method performs an action without returning a value, whereas a value-returning method returns a value of its declared type to the caller.",
+        "A `void` method cannot accept any parameters, whereas a value-returning method must accept at least one parameter.",
+        "A `void` method can only be called once per program run, whereas a value-returning method can be called inside loops.",
+        "A `void` method must be declared `public`, whereas a value-returning method must be declared `private`."
+      ],
+      "answer": 0,
+      "explanation": "A `void` method executes statements and returns nothing, whereas a value-returning method declares a return type (`int`, `string`, `bool`, etc.) and uses a `return` statement to send a result back to the calling statement."
+    },
+    {
+      "id": "q_su5_002",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "In C#, what is the distinction between a **parameter** and an **argument**?",
+      "q": "In C#, what is the distinction between a **parameter** and an **argument**?",
+      "options": [
+        "A parameter is always a `string`, whereas an argument is always an `int`.",
+        "A parameter is the variable declared in the method header, whereas an argument is the value or variable passed when the method is called.",
+        "An argument is declared in the method header, whereas a parameter is passed inside the method call.",
+        "Parameters are used only with `void` methods, whereas arguments are used only with value-returning methods."
+      ],
+      "answer": 1,
+      "explanation": "A parameter is the receiving variable declared inside the method header's parentheses (e.g., `int totalSeconds`), whereas an argument is the actual value or variable supplied in the method call (e.g., `FormatTime(65)`)."
+    },
+    {
+      "id": "q_su5_003",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "What happens to the caller's variable `num` after executing the following code?\n```csharp\nint num = 10;\nDoubleValue(num);\nlblOut.Text = num.ToString();\n\nprivate void DoubleValue(int val)\n{\n    val = val * 2;\n}\n```",
+      "q": "What happens to the caller's variable `num` after executing the following code?\n```csharp\nint num = 10;\nDoubleValue(num);\nlblOut.Text = num.ToString();\n\nprivate void DoubleValue(int val)\n{\n    val = val * 2;\n}\n```",
+      "options": [
+        "`lblOut` displays `20` because `val` doubles `num`.",
+        "The code fails to compile because `DoubleValue` is `void`.",
+        "`lblOut` displays `10` because `num` was passed by value (only a copy was modified).",
+        "`lblOut` displays `0` because `val` goes out of scope."
+      ],
+      "answer": 2,
+      "explanation": "When an argument is passed by value (without `ref` or `out`), the parameter `val` receives a separate copy of `num`. Modifying `val` inside `DoubleValue` has no effect on `num` in the caller."
+    },
+    {
+      "id": "q_su5_004",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "What does `lblOut` display after the following code runs?\n```csharp\nint total = 100;\nAddBonus(ref total);\nlblOut.Text = total.ToString();\n\nprivate void AddBonus(ref int amount)\n{\n    amount += 25;\n}\n```",
+      "q": "What does `lblOut` display after the following code runs?\n```csharp\nint total = 100;\nAddBonus(ref total);\nlblOut.Text = total.ToString();\n\nprivate void AddBonus(ref int amount)\n{\n    amount += 25;\n}\n```",
+      "options": [
+        "100",
+        "25",
+        "0",
+        "125"
+      ],
+      "answer": 3,
+      "explanation": "Because `amount` is a `ref` parameter, it refers directly to the caller's `total` variable in memory. Adding `25` to `amount` changes `total` from `100` to `125`."
+    },
+    {
+      "id": "q_su5_005",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "How do `ref` and `out` parameters differ regarding variable initialization and assignment?",
+      "q": "How do `ref` and `out` parameters differ regarding variable initialization and assignment?",
+      "options": [
+        "A `ref` argument must be initialized before the call; an `out` argument does not need to be initialized before the call, but the method must assign it a value before returning.",
+        "An `out` argument must be initialized before the call; a `ref` argument cannot be initialized before the call.",
+        "Neither `ref` nor `out` arguments need to be initialized or assigned inside the method.",
+        "`ref` is only required in the method header, whereas `out` is only required in the method call."
+      ],
+      "answer": 0,
+      "explanation": "A variable passed as a `ref` argument must be assigned a value before calling the method. A variable passed as an `out` argument need not be initialized prior to the call, but the called method is required by the compiler (`CS0177`) to assign it a value before returning."
+    },
+    {
+      "id": "q_su5_006",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Given the method header `private void RecordLap(int seconds, ref int fastest, ref int total)`, which call statement is valid?",
+      "q": "Given the method header `private void RecordLap(int seconds, ref int fastest, ref int total)`, which call statement is valid?",
+      "options": [
+        "RecordLap(enteredSeconds, fastestSeconds, totalSeconds);",
+        "RecordLap(enteredSeconds, ref fastestSeconds, ref totalSeconds);",
+        "RecordLap(ref enteredSeconds, ref fastestSeconds, ref totalSeconds);",
+        "RecordLap(int enteredSeconds, ref int fastestSeconds, ref int totalSeconds);"
+      ],
+      "answer": 1,
+      "explanation": "In C#, the `ref` keyword must match between the method header and the method call (`ref fastestSeconds, ref totalSeconds`), and data types (`int`) are never repeated inside the call statement."
+    },
+    {
+      "id": "q_su5_007",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Given `private bool ReadSeconds(string text, out int seconds)`, how should `btnAddLap_Click` call this method to validate `txtSeconds.Text`?",
+      "q": "Given `private bool ReadSeconds(string text, out int seconds)`, how should `btnAddLap_Click` call this method to validate `txtSeconds.Text`?",
+      "options": [
+        "if (!ReadSeconds(txtSeconds.Text, enteredSeconds))",
+        "if (!ReadSeconds(out txtSeconds.Text, out enteredSeconds))",
+        "if (!ReadSeconds(txtSeconds.Text, out enteredSeconds))",
+        "if (ReadSeconds(string txtSeconds.Text, out int enteredSeconds) == false)"
+      ],
+      "answer": 2,
+      "explanation": "The first argument (`txtSeconds.Text`) is passed by value and the second argument (`out enteredSeconds`) must include the `out` keyword to match the parameter declaration."
+    },
+    {
+      "id": "q_su5_008",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Hard",
+      "marks": 3,
+      "type": "mcq",
+      "title": "Why does the following method fail to compile?\n```csharp\nprivate bool ReadSeconds(string text, out int seconds)\n{\n    if (int.TryParse(text, out seconds) && seconds >= 1 && seconds <= 3600)\n    {\n        return true;\n    }\n    return false;\n}\n```",
+      "q": "Why does the following method fail to compile?\n```csharp\nprivate bool ReadSeconds(string text, out int seconds)\n{\n    if (int.TryParse(text, out seconds) && seconds >= 1 && seconds <= 3600)\n    {\n        return true;\n    }\n    return false;\n}\n```",
+      "options": [
+        "It compiles without any error because `int.TryParse(text, out seconds)` already assigns `seconds` before the `&&` check.",
+        "`out` parameters cannot be used inside a method that returns `bool`.",
+        "`int.TryParse` requires `ref seconds` instead of `out seconds`.",
+        "A method with an `out` parameter must have a `void` return type."
+      ],
+      "answer": 0,
+      "explanation": "Because `int.TryParse(text, out seconds)` executes first in the `if` condition, `seconds` is definitely assigned (to the parsed integer on success, or `0` on failure) before either `return` statement is reached, so it compiles cleanly! Setting `seconds = 0;` before `return false;` is also good practice to guarantee `0` when out of range."
+    },
+    {
+      "id": "q_su5_009",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Hard",
+      "marks": 3,
+      "type": "mcq",
+      "title": "Given `private string FormatTime(int totalSeconds)` which converts `65` to `\"1:05\"` and `59` to `\"0:59\"`, which expressions calculate `minutes` and `seconds`?",
+      "q": "Given `private string FormatTime(int totalSeconds)` which converts `65` to `\"1:05\"` and `59` to `\"0:59\"`, which expressions calculate `minutes` and `seconds`?",
+      "options": [
+        "int minutes = totalSeconds * 60; int seconds = totalSeconds / 60;",
+        "int minutes = totalSeconds / 60; int seconds = totalSeconds % 60;",
+        "int minutes = totalSeconds % 60; int seconds = totalSeconds / 60;",
+        "int minutes = totalSeconds / 100; int seconds = totalSeconds % 100;"
+      ],
+      "answer": 1,
+      "explanation": "Integer division `totalSeconds / 60` gives the whole number of minutes (`65 / 60 == 1`), and the remainder operator `totalSeconds % 60` gives the leftover seconds (`65 % 60 == 5`)."
+    },
+    {
+      "id": "q_su5_010",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "In `FormatTime(int totalSeconds)`, after computing `int minutes = totalSeconds / 60;` and `int seconds = totalSeconds % 60;`, why is `if (seconds < 10)` checked?",
+      "q": "In `FormatTime(int totalSeconds)`, after computing `int minutes = totalSeconds / 60;` and `int seconds = totalSeconds % 60;`, why is `if (seconds < 10)` checked?",
+      "options": [
+        "Because seconds cannot exceed `10` in a minute.",
+        "To round the seconds up to the nearest multiple of `10`.",
+        "To insert a leading zero (`minutes + \":0\" + seconds`) so `65` seconds formats as `\"1:05\"` instead of `\"1:5\"`.",
+        "To prevent a division-by-zero exception when `seconds` is `0`."
+      ],
+      "answer": 2,
+      "explanation": "When `seconds` is `0` through `9`, concatenating `minutes + \":\" + seconds` would produce `\"1:5\"`. Checking `if (seconds < 10)` and returning `minutes + \":0\" + seconds` ensures two-digit seconds (`\"1:05\"`)."
+    },
+    {
+      "id": "q_su5_011",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Hard",
+      "marks": 3,
+      "type": "mcq",
+      "title": "In `private void RecordLap(int seconds, ref int fastest, ref int total)`, why is the condition written as `if (fastest == 0 || seconds < fastest)` before setting `fastest = seconds;`?",
+      "q": "In `private void RecordLap(int seconds, ref int fastest, ref int total)`, why is the condition written as `if (fastest == 0 || seconds < fastest)` before setting `fastest = seconds;`?",
+      "options": [
+        "Because a lap of `0` seconds is the fastest possible lap.",
+        "Because `fastest` must be reset to `0` on every click.",
+        "Because `ref` parameters are automatically reset to `0` when a method starts.",
+        "Because `fastest` starts at `0` before the first lap is recorded, so the first lap must become `fastest` even though `seconds > 0`."
+      ],
+      "answer": 3,
+      "explanation": "When `fastestSeconds` is initialized to `0` at class level, checking only `if (seconds < fastest)` would never be true for positive lap times! Checking `fastest == 0 || seconds < fastest` ensures the first lap sets the initial benchmark."
+    },
+    {
+      "id": "q_su5_012",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Suppose `fastest` is `62` and `total` is `127`. After calling `RecordLap(58, ref fastest, ref total);` where `RecordLap` adds `seconds` to `total` and updates `fastest` if `seconds < fastest`, what are the values of `fastest` and `total`?",
+      "q": "Suppose `fastest` is `62` and `total` is `127`. After calling `RecordLap(58, ref fastest, ref total);` where `RecordLap` adds `seconds` to `total` and updates `fastest` if `seconds < fastest`, what are the values of `fastest` and `total`?",
+      "options": [
+        "fastest is 58 and total is 185",
+        "fastest is 62 and total is 185",
+        "fastest is 58 and total is 127",
+        "fastest is 62 and total is 69"
+      ],
+      "answer": 0,
+      "explanation": "`total` increases by `58` (`127 + 58 = 185`), and because `58 < 62`, `fastest` is updated to `58`."
+    },
+    {
+      "id": "q_su5_013",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Three laps of `62`, `65`, and `58` seconds have been recorded (`totalSeconds = 185`, `lapCount = 3`). What does `FormatTime(totalSeconds / lapCount)` return?",
+      "q": "Three laps of `62`, `65`, and `58` seconds have been recorded (`totalSeconds = 185`, `lapCount = 3`). What does `FormatTime(totalSeconds / lapCount)` return?",
+      "options": [
+        "\"1:02\"",
+        "\"1:01\"",
+        "\"0:61\"",
+        "\"1:10\""
+      ],
+      "answer": 1,
+      "explanation": "Integer division `185 / 3` truncates the fractional part to `61` seconds. Passing `61` to `FormatTime` computes `61 / 60 = 1` minute and `61 % 60 = 1` second, formatted with a leading zero as `\"1:01\"`."
+    },
+    {
+      "id": "q_su5_014",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Why must `lapCount`, `fastestSeconds`, and `totalSeconds` be declared inside the `Form1` class outside any method rather than inside `btnAddLap_Click`?",
+      "q": "Why must `lapCount`, `fastestSeconds`, and `totalSeconds` be declared inside the `Form1` class outside any method rather than inside `btnAddLap_Click`?",
+      "options": [
+        "Because local variables cannot be passed as `ref` arguments.",
+        "Because C# does not allow `int` variables inside event handlers.",
+        "So that they retain their values from one click of `btnAddLap` to the next.",
+        "Because `InitializeComponent()` requires at least three class-level fields."
+      ],
+      "answer": 2,
+      "explanation": "Local variables declared inside `btnAddLap_Click` are recreated on every click and destroyed when the handler ends. Class-level fields persist in memory for the lifetime of the form across multiple button clicks."
+    },
+    {
+      "id": "q_su5_015",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which method identifier follows the C# naming convention for a custom method that calculates a discount?",
+      "q": "Which method identifier follows the C# naming convention for a custom method that calculates a discount?",
+      "options": [
+        "calculate_discount",
+        "calculateDiscount",
+        "mthCalculateDiscount",
+        "CalculateDiscount"
+      ],
+      "answer": 3,
+      "explanation": "In C# and `.NET` naming standards, method names use **PascalCase** (`UpperCamelCase`), starting with a capital letter for each word (`CalculateDiscount`, `ReadSeconds`, `FormatTime`)."
+    },
+    {
+      "id": "q_su5_016",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "What is wrong with the following method definition?\n```csharp\nprivate void CalculateVat(decimal price)\n{\n    return price * 0.15m;\n}\n```",
+      "q": "What is wrong with the following method definition?\n```csharp\nprivate void CalculateVat(decimal price)\n{\n    return price * 0.15m;\n}\n```",
+      "options": [
+        "The method header specifies `void`, but the body returns a `decimal` value (should be `private decimal CalculateVat(decimal price)`).",
+        "A method parameter cannot have the `decimal` data type.",
+        "`0.15m` must be cast to `int` before multiplying.",
+        "The `return` keyword can only be used inside event handlers."
+      ],
+      "answer": 0,
+      "explanation": "A method declared with a `void` return type cannot return a value (`CS0127`). To return `price * 0.15m`, the return type in the method header must be `decimal`."
+    },
+    {
+      "id": "q_su5_017",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Given `private decimal CalcTotal(decimal sub, decimal tax) { return sub + tax; }`, which statement properly calls `CalcTotal` and displays the result as currency?",
+      "q": "Given `private decimal CalcTotal(decimal sub, decimal tax) { return sub + tax; }`, which statement properly calls `CalcTotal` and displays the result as currency?",
+      "options": [
+        "CalcTotal(100m, 15m).lblTotal.Text;",
+        "lblTotal.Text = CalcTotal(100m, 15m).ToString(\"C\");",
+        "lblTotal.Text = void CalcTotal(100m, 15m);",
+        "decimal CalcTotal(100m, 15m) = lblTotal.Text;"
+      ],
+      "answer": 1,
+      "explanation": "Because `CalcTotal(100m, 15m)` evaluates to a `decimal` value (`115m`), you can assign its return value to a `decimal` variable or call `.ToString(\"C\")` directly on the returned result."
+    },
+    {
+      "id": "q_su5_018",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "What does `IsValidAge(16)` return given the method below?\n```csharp\nprivate bool IsValidAge(int age)\n{\n    return age >= 18 && age <= 65;\n}\n```",
+      "q": "What does `IsValidAge(16)` return given the method below?\n```csharp\nprivate bool IsValidAge(int age)\n{\n    return age >= 18 && age <= 65;\n}\n```",
+      "options": [
+        "16",
+        "true",
+        "false",
+        "18"
+      ],
+      "answer": 2,
+      "explanation": "The relational expression `16 >= 18 && 16 <= 65` evaluates to `false`, which the `return` statement sends back as a `bool`."
+    },
+    {
+      "id": "q_su5_019",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 11",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "While debugging at a breakpoint on a line that calls `RecordLap(...)`, which debugger command enters `RecordLap` so you can trace its statements line by line?",
+      "q": "While debugging at a breakpoint on a line that calls `RecordLap(...)`, which debugger command enters `RecordLap` so you can trace its statements line by line?",
+      "options": [
+        "Step Out (Shift+F11)",
+        "Step Over (F10)",
+        "Continue (F5)",
+        "Step Into (F11)"
+      ],
+      "answer": 3,
+      "explanation": "**Step Into (F11)** moves execution into the called method's body, whereas **Step Over (F10)** executes the entire method call as a single step and stops on the next line in the caller."
+    },
+    {
+      "id": "q_su5_020",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which method header is valid in C# for a method that accepts a customer's name and two `decimal` amounts?",
+      "q": "Which method header is valid in C# for a method that accepts a customer's name and two `decimal` amounts?",
+      "options": [
+        "private void PrintReceipt(string name, decimal sub, decimal vat)",
+        "private void PrintReceipt(string name, decimal sub, vat)",
+        "private void PrintReceipt(name: string, sub: decimal, vat: decimal)",
+        "private void PrintReceipt(string name; decimal sub; decimal vat)"
+      ],
+      "answer": 0,
+      "explanation": "In a C# parameter list, parameters are separated by commas, and **every** parameter must have its own explicit data type (`string name, decimal sub, decimal vat`)."
+    },
+    {
+      "id": "q_su5_021",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Given `private double CalcArea(double radius)`, what happens if you call `CalcArea(5)` with an `int` argument `5`?",
+      "q": "Given `private double CalcArea(double radius)`, what happens if you call `CalcArea(5)` with an `int` argument `5`?",
+      "options": [
+        "The program crashes at runtime with an `InvalidCastException`.",
+        "C# automatically widens the `int` value `5` to `double` (`5.0`) and executes the method.",
+        "The compiler rejects the call because `int` can never be converted to `double`.",
+        "The argument `5` is truncated to `0.0`."
+      ],
+      "answer": 1,
+      "explanation": "C# automatically performs a widening conversion from `int` to `double` when passing an `int` argument to a `double` by-value parameter because no precision is lost."
+    },
+    {
+      "id": "q_su5_022",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 11",
+      "difficulty": "Hard",
+      "marks": 3,
+      "type": "mcq",
+      "title": "Given `private void UpdateTotal(ref double total)` and `int score = 50;`, why does `UpdateTotal(ref score);` cause a compiler error?",
+      "q": "Given `private void UpdateTotal(ref double total)` and `int score = 50;`, why does `UpdateTotal(ref score);` cause a compiler error?",
+      "options": [
+        "`ref` parameters can only be used with `string` variables.",
+        "`UpdateTotal` must return a `double` instead of `void`.",
+        "A `ref` or `out` argument must match the parameter's data type (`double`) exactly; implicit widening from `int` to `double` is not allowed.",
+        "`score` must be declared as a `const` before passing by reference."
+      ],
+      "answer": 2,
+      "explanation": "Unlike pass-by-value parameters, `ref` and `out` parameters pass the memory address of the caller's variable, so the variable's type must match the parameter type identically (`double`)."
+    },
+    {
+      "id": "q_su5_023",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "What does `lblOut` display after the following code executes?\n```csharp\nint q, r;\nDivideWithRemainder(17, 5, out q, out r);\nlblOut.Text = q + \" R \" + r;\n\nprivate void DivideWithRemainder(int dividend, int divisor, out int quotient, out int remainder)\n{\n    quotient = dividend / divisor;\n    remainder = dividend % divisor;\n}\n```",
+      "q": "What does `lblOut` display after the following code executes?\n```csharp\nint q, r;\nDivideWithRemainder(17, 5, out q, out r);\nlblOut.Text = q + \" R \" + r;\n\nprivate void DivideWithRemainder(int dividend, int divisor, out int quotient, out int remainder)\n{\n    quotient = dividend / divisor;\n    remainder = dividend % divisor;\n}\n```",
+      "options": [
+        "3.4 R 2",
+        "2 R 3",
+        "5 R 17",
+        "3 R 2"
+      ],
+      "answer": 3,
+      "explanation": "`17 / 5` using integer division assigns `3` to `quotient` (`q`), and `17 % 5` assigns `2` to `remainder` (`r`). Therefore `lblOut.Text` becomes `\"3 R 2\"`."
+    },
+    {
+      "id": "q_su5_024",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Where is a parameter declared in `private string FormatTime(int totalSeconds)` accessible?",
+      "q": "Where is a parameter declared in `private string FormatTime(int totalSeconds)` accessible?",
+      "options": [
+        "Only inside the body of the `FormatTime` method.",
+        "Inside every method in the `Form1` class.",
+        "Only inside `btnAddLap_Click`.",
+        "Across all forms in the Visual Studio project."
+      ],
+      "answer": 0,
+      "explanation": "A parameter's scope is limited strictly to the body of the method in which it is declared."
+    },
+    {
+      "id": "q_su5_025",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "How can a `void` method terminate its execution early (for example, when validation fails) and return control immediately to the caller?",
+      "q": "How can a `void` method terminate its execution early (for example, when validation fails) and return control immediately to the caller?",
+      "options": [
+        "By executing `break;` outside any loop or switch.",
+        "By executing `return;` with no value after the keyword.",
+        "By executing `return false;`.",
+        "By executing `continue;`."
+      ],
+      "answer": 1,
+      "explanation": "In a `void` method, a standalone `return;` statement immediately exits the method and returns control to the caller without returning a value."
+    },
+    {
+      "id": "q_su5_026",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Why does the compiler report error `CS0161 ('not all code paths return a value')` on the method below?\n```csharp\nprivate string GetStatus(int mark)\n{\n    if (mark >= 50)\n    {\n        return \"Pass\";\n    }\n}\n```",
+      "q": "Why does the compiler report error `CS0161 ('not all code paths return a value')` on the method below?\n```csharp\nprivate string GetStatus(int mark)\n{\n    if (mark >= 50)\n    {\n        return \"Pass\";\n    }\n}\n```",
+      "options": [
+        "`string` methods cannot accept `int` parameters.",
+        "`\"Pass\"` must be enclosed in single quotes.",
+        "If `mark < 50`, the `if` condition is false and the method reaches the closing brace without executing a `return` statement.",
+        "`GetStatus` must be declared `public`."
+      ],
+      "answer": 2,
+      "explanation": "A value-returning method must guarantee a `return` statement on **every** possible execution path. Adding `else { return \"Fail\"; }` or `return \"Fail\";` after the `if` block resolves `CS0161`."
+    },
+    {
+      "id": "q_su5_027",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 10",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which of the following is a primary software engineering benefit of breaking a large program into smaller methods?",
+      "q": "Which of the following is a primary software engineering benefit of breaking a large program into smaller methods?",
+      "options": [
+        "It eliminates the need to declare variables with data types.",
+        "It allows controls to work without event handlers.",
+        "It bypasses C# compiler type checking.",
+        "It reduces code duplication (reuse), simplifies debugging, and makes the program easier to read and maintain."
+      ],
+      "answer": 3,
+      "explanation": "Modularizing code into focused methods promotes code reuse, isolates logic for easier testing/debugging, and improves readability."
+    },
+    {
+      "id": "q_su5_028",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Given `private string FormatTime(int totalSeconds)`, is `FormatTime(totalSeconds / lapCount)` a valid method call?",
+      "q": "Given `private string FormatTime(int totalSeconds)`, is `FormatTime(totalSeconds / lapCount)` a valid method call?",
+      "options": [
+        "Yes; for a pass-by-value parameter, C# evaluates the arithmetic expression `totalSeconds / lapCount` first and passes the resulting `int` value.",
+        "No; method arguments must always be single variable names, never arithmetic expressions.",
+        "No; `totalSeconds / lapCount` requires the `ref` keyword.",
+        "Yes, but only if `totalSeconds` and `lapCount` are `string` variables."
+      ],
+      "answer": 0,
+      "explanation": "Pass-by-value parameters accept any expression that evaluates to a compatible data type, whereas `ref` and `out` parameters require an actual variable."
+    },
+    {
+      "id": "q_su5_029",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Given `private void AddTax(ref decimal amount)`, why does `AddTax(ref 100.00m);` fail to compile?",
+      "q": "Given `private void AddTax(ref decimal amount)`, why does `AddTax(ref 100.00m);` fail to compile?",
+      "options": [
+        "`100.00m` is a `double` literal rather than a `decimal` literal.",
+        "A `ref` or `out` argument must be a variable with a memory location that the method can modify, not a constant literal.",
+        "`AddTax` must be called inside a `while` loop.",
+        "The `ref` keyword must be placed after `100.00m`."
+      ],
+      "answer": 1,
+      "explanation": "Because `ref` and `out` parameters write back to the caller's storage location in memory, the argument passed must be a modifiable variable, not a literal or constant."
+    },
+    {
+      "id": "q_su5_030",
+      "ch": "SU5",
+      "su": "SU5",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "In a Lap Timer form that stores `lapCount`, `fastestSeconds`, and `totalSeconds` as class-level fields, what must `btnClear_Click` do in addition to clearing `txtSeconds`, `lstLaps`, `lblFastest`, and `lblAverage`?",
+      "q": "In a Lap Timer form that stores `lapCount`, `fastestSeconds`, and `totalSeconds` as class-level fields, what must `btnClear_Click` do in addition to clearing `txtSeconds`, `lstLaps`, `lblFastest`, and `lblAverage`?",
+      "options": [
+        "Call `InitializeComponent();` a second time.",
+        "Call `this.Close();` to restart the application.",
+        "Reset `lapCount = 0;`, `fastestSeconds = 0;`, and `totalSeconds = 0;` so the next lap starts a fresh session at Lap 1.",
+        "Delete the `ReadSeconds`, `FormatTime`, and `RecordLap` methods."
+      ],
+      "answer": 2,
+      "explanation": "Clearing only the visual controls leaves the old running values in the class-level fields. Resetting `lapCount`, `fastestSeconds`, and `totalSeconds` to `0` ensures the next session starts cleanly at `Lap 1`."
+    },
+    {
+      "id": "q_su6_001",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 11",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Before displaying a second form class named `ResultsForm` in a Windows Forms project, which statement creates an instance of it in memory?",
+      "q": "Before displaying a second form class named `ResultsForm` in a Windows Forms project, which statement creates an instance of it in memory?",
+      "options": [
+        "ResultsForm frmResults = Form.Create(\"ResultsForm\");",
+        "Form.Open(ResultsForm);",
+        "ResultsForm frmResults = ResultsForm.Show();",
+        "ResultsForm frmResults = new ResultsForm();"
+      ],
+      "answer": 3,
+      "explanation": "Each form in a project is a class. Just like any other class object, you must instantiate it using the `new` operator (`ResultsForm frmResults = new ResultsForm();`) before calling `ShowDialog()` or `Show()`."
+    },
+    {
+      "id": "q_su6_002",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "How does displaying a form with `frmResults.ShowDialog();` (modal) differ from `frmResults.Show();` (modeless)?",
+      "q": "How does displaying a form with `frmResults.ShowDialog();` (modal) differ from `frmResults.Show();` (modeless)?",
+      "options": [
+        "`ShowDialog()` prevents the user from clicking on any other form in the application until `frmResults` is closed, whereas `Show()` allows the user to switch focus freely between forms.",
+        "`Show()` blocks all other forms, whereas `ShowDialog()` allows switching between forms.",
+        "`ShowDialog()` can only display message boxes, not custom Windows Forms.",
+        "`Show()` automatically closes the startup form, whereas `ShowDialog()` hides it."
+      ],
+      "answer": 0,
+      "explanation": "A **modal** form (`ShowDialog()`) retains exclusive focus until closed, whereas a **modeless** form (`Show()`) permits the user to interact with other open forms at the same time."
+    },
+    {
+      "id": "q_su6_003",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Consider the two statements below inside a button's `Click` event handler:\n```csharp\nfrmResults.ShowDialog();\nlblStatus.Text = \"Done\";\n```\nWhen does `lblStatus.Text = \"Done\";` execute?",
+      "q": "Consider the two statements below inside a button's `Click` event handler:\n```csharp\nfrmResults.ShowDialog();\nlblStatus.Text = \"Done\";\n```\nWhen does `lblStatus.Text = \"Done\";` execute?",
+      "options": [
+        "Immediately before `frmResults` appears on screen.",
+        "Only after the user closes `frmResults`.",
+        "At the exact same millisecond that `frmResults` opens.",
+        "Never, because `ShowDialog()` terminates the event handler."
+      ],
+      "answer": 1,
+      "explanation": "When `ShowDialog()` is called, execution of the calling method pauses at that line and only resumes with the statements following `ShowDialog()` after the modal form is closed."
+    },
+    {
+      "id": "q_su6_004",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 11",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Consider the two statements below inside a button's `Click` event handler:\n```csharp\nfrmResults.Show();\nlblStatus.Text = \"Done\";\n```\nWhen does `lblStatus.Text = \"Done\";` execute?",
+      "q": "Consider the two statements below inside a button's `Click` event handler:\n```csharp\nfrmResults.Show();\nlblStatus.Text = \"Done\";\n```\nWhen does `lblStatus.Text = \"Done\";` execute?",
+      "options": [
+        "Only after the user closes `frmResults`.",
+        "Only when the application exits.",
+        "Immediately after `frmResults` is displayed, while `frmResults` is still open on screen.",
+        "Only if the user clicks Cancel on `frmResults`."
+      ],
+      "answer": 2,
+      "explanation": "Because `Show()` displays a modeless form, it does not pause the calling method. The statement `lblStatus.Text = \"Done\";` runs immediately after `Show()` opens the form."
+    },
+    {
+      "id": "q_su6_005",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "By default, why does `frmResults.lblTotal.Text = \"R 500.00\";` written inside `Form1` cause a compiler protection-level error (`CS0122`)?",
+      "q": "By default, why does `frmResults.lblTotal.Text = \"R 500.00\";` written inside `Form1` cause a compiler protection-level error (`CS0122`)?",
+      "options": [
+        "Labels on a second form do not have a `Text` property.",
+        "Controls placed on a form have their `Modifiers` property set to `Static` by default.",
+        "`Form1` must inherit from `ResultsForm` to access its labels.",
+        "Controls placed on a form have their `Modifiers` property set to `Private` by default; changing `lblTotal`'s `Modifiers` property to `Public` allows `Form1` to access it."
+      ],
+      "answer": 3,
+      "explanation": "Visual Studio declares form controls as `private` fields by default (`Modifiers = Private`). Setting a control's `Modifiers` property to `Public` changes its declaration to `public`, making `frmResults.lblTotal.Text` accessible from `Form1`."
+    },
+    {
+      "id": "q_su6_006",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "In a Visual C# Windows Forms project, which file and statement specify the startup form that launches when the application begins?",
+      "q": "In a Visual C# Windows Forms project, which file and statement specify the startup form that launches when the application begins?",
+      "options": [
+        "`Program.cs` via `Application.Run(new Form1());`",
+        "`Form1.Designer.cs` via `this.StartPosition = FormStartPosition.CenterScreen;`",
+        "`App.config` via `<startupForm name=\"Form1\" />`",
+        "`AssemblyInfo.cs` via `[assembly: StartupForm(Form1)]`"
+      ],
+      "answer": 0,
+      "explanation": "The `Main` method inside `Program.cs` is the application's entry point and calls `Application.Run(new Form1());` to launch the startup form."
+    },
+    {
+      "id": "q_su6_007",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which statement makes the current form invisible on screen without closing it or destroying its object in memory?",
+      "q": "Which statement makes the current form invisible on screen without closing it or destroying its object in memory?",
+      "options": [
+        "this.Close();",
+        "this.Hide();",
+        "this.Dispose();",
+        "this.Minimize();"
+      ],
+      "answer": 1,
+      "explanation": "`this.Hide();` hides the form from view (setting its `Visible` property to `false`) while preserving the form instance in memory, whereas `this.Close();` closes the form."
+    },
+    {
+      "id": "q_su6_008",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "In a multiform project where `Form1` is the startup form and `Form2` is currently open as a modeless window, what happens if `this.Close();` is executed inside `Form1`?",
+      "q": "In a multiform project where `Form1` is the startup form and `Form2` is currently open as a modeless window, what happens if `this.Close();` is executed inside `Form1`?",
+      "options": [
+        "Only `Form1` closes and `Form2` becomes the new startup form.",
+        "A runtime exception is thrown because `Form2` is still open.",
+        "The entire application terminates and `Form2` is closed as well.",
+        "`Form1` is minimized to the taskbar."
+      ],
+      "answer": 2,
+      "explanation": "Because the application's message loop in `Program.cs` is bound to the startup form (`Application.Run(new Form1())`), closing the startup form ends the entire application."
+    },
+    {
+      "id": "q_su6_009",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "How does a form's `Activated` event differ from its `Load` event in a multiform application?",
+      "q": "How does a form's `Activated` event differ from its `Load` event in a multiform application?",
+      "options": [
+        "`Activated` fires only once when the form is created, whereas `Load` fires every time the user clicks the form.",
+        "`Activated` fires only when the form is closed.",
+        "There is no difference; both fire at the exact same times.",
+        "`Load` fires only once when the form is first loaded into memory, whereas `Activated` fires every time the form becomes the active window (including when switching back from another form)."
+      ],
+      "answer": 3,
+      "explanation": "The `Load` event occurs once per form instance when it is loaded into memory. The `Activated` event occurs every time the form receives focus from another form or application."
+    },
+    {
+      "id": "q_su6_010",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which form event occurs *just before* a form closes and allows you to prompt the user or cancel the close operation?",
+      "q": "Which form event occurs *just before* a form closes and allows you to prompt the user or cancel the close operation?",
+      "options": [
+        "FormClosing",
+        "FormClosed",
+        "Deactivate",
+        "Disposed"
+      ],
+      "answer": 0,
+      "explanation": "`FormClosing` fires while the form is in the process of closing (allowing cancellation via `e.Cancel = true;`), whereas `FormClosed` fires after the form has already closed."
+    },
+    {
+      "id": "q_su6_011",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 11",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Which menu command in Visual Studio adds a second Windows Form to your current project?",
+      "q": "Which menu command in Visual Studio adds a second Windows Form to your current project?",
+      "options": [
+        "File -> New -> Solution",
+        "Project -> Add Form (Windows Forms)...",
+        "Build -> Add Second Form",
+        "Debug -> New Window"
+      ],
+      "answer": 1,
+      "explanation": "Selecting `Project -> Add Form (Windows Forms)...` (or right-clicking the project in Solution Explorer and choosing `Add -> Form (Windows Forms)...`) adds a new form class to the project."
+    },
+    {
+      "id": "q_su6_012",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Why does `lblGreeting` on `GreetingForm` appear blank while the user is viewing `frmGreet` in the code below?\n```csharp\nGreetingForm frmGreet = new GreetingForm();\nfrmGreet.ShowDialog();\nfrmGreet.lblGreeting.Text = \"Welcome, \" + txtName.Text;\n```",
+      "q": "Why does `lblGreeting` on `GreetingForm` appear blank while the user is viewing `frmGreet` in the code below?\n```csharp\nGreetingForm frmGreet = new GreetingForm();\nfrmGreet.ShowDialog();\nfrmGreet.lblGreeting.Text = \"Welcome, \" + txtName.Text;\n```",
+      "options": [
+        "Because `new GreetingForm()` automatically clears all public labels.",
+        "Because `ShowDialog()` does not support Label controls.",
+        "Because `ShowDialog()` pauses execution until `frmGreet` is closed, so the assignment to `lblGreeting.Text` happens *after* the user has already closed the form.",
+        "Because `txtName.Text` cannot be concatenated with a string literal."
+      ],
+      "answer": 2,
+      "explanation": "To display data on a modal form, you must assign `frmGreet.lblGreeting.Text` **before** calling `frmGreet.ShowDialog();`, because lines after `ShowDialog()` do not run until the modal form closes."
+    },
+    {
+      "id": "q_su6_013",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "A user types a discount code into a public TextBox `txtPromo` on a modal form `PromoForm` and closes the modal form. Why can `Form1` still read `frmPromo.txtPromo.Text` on the line immediately after `frmPromo.ShowDialog();`?",
+      "q": "A user types a discount code into a public TextBox `txtPromo` on a modal form `PromoForm` and closes the modal form. Why can `Form1` still read `frmPromo.txtPromo.Text` on the line immediately after `frmPromo.ShowDialog();`?",
+      "options": [
+        "Because Visual Studio saves all TextBoxes to a text file automatically.",
+        "It cannot; `frmPromo` is erased from memory the instant it closes.",
+        "Because `txtPromo` is a `static` keyword.",
+        "Because closing a modal form hides it and returns from `ShowDialog()`, while the `frmPromo` object still exists in memory until `frmPromo` goes out of scope."
+      ],
+      "answer": 3,
+      "explanation": "When a form displayed via `ShowDialog()` is closed, `ShowDialog()` returns control to the caller while the `frmPromo` object and its public controls/properties remain accessible in memory."
+    },
+    {
+      "id": "q_su6_014",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "When you add a new form named `InvoiceForm` to a project, which two C# code files are created for that form?",
+      "q": "When you add a new form named `InvoiceForm` to a project, which two C# code files are created for that form?",
+      "options": [
+        "`InvoiceForm.cs` (event handlers and custom logic) and `InvoiceForm.Designer.cs` (auto-generated control declarations and `InitializeComponent()`)",
+        "`InvoiceForm.exe` and `InvoiceForm.dll`",
+        "`InvoiceForm.html` and `InvoiceForm.css`",
+        "`InvoiceForm.main` and `InvoiceForm.sub`"
+      ],
+      "answer": 0,
+      "explanation": "Every Windows Form is split across two partial class files: `FormName.cs` for developer code and `FormName.Designer.cs` for the Visual Studio Designer's `InitializeComponent()` layout code."
+    },
+    {
+      "id": "q_su6_015",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Why is a Windows Form class declared as `public partial class Form1 : Form`?",
+      "q": "Why is a Windows Form class declared as `public partial class Form1 : Form`?",
+      "options": [
+        "Because the form only occupies part of the computer's screen.",
+        "Because the `Form1` class definition is split across two source files (`Form1.cs` and `Form1.Designer.cs`) that the compiler merges into one class.",
+        "Because the form cannot be instantiated with `new`.",
+        "Because the form has no event handlers."
+      ],
+      "answer": 1,
+      "explanation": "The `partial` keyword allows a single class (`Form1`) to be divided across multiple `.cs` files (`Form1.cs` and `Form1.Designer.cs`) so designer-generated code stays separate from your event handler code."
+    },
+    {
+      "id": "q_su6_016",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "In `ReceiptForm`, you declare `public decimal TotalDue;` at class level. How can `MainForm` pass `450.00m` into `TotalDue` before showing `ReceiptForm`?",
+      "q": "In `ReceiptForm`, you declare `public decimal TotalDue;` at class level. How can `MainForm` pass `450.00m` into `TotalDue` before showing `ReceiptForm`?",
+      "options": [
+        "ReceiptForm.TotalDue = 450.00m; ReceiptForm.ShowDialog();",
+        "this.TotalDue = 450.00m;",
+        "ReceiptForm frmReceipt = new ReceiptForm(); frmReceipt.TotalDue = 450.00m; frmReceipt.ShowDialog();",
+        "new ReceiptForm(450.00m).Close();"
+      ],
+      "answer": 2,
+      "explanation": "Because `TotalDue` is an instance field on `ReceiptForm`, you first instantiate `ReceiptForm frmReceipt = new ReceiptForm();`, assign `frmReceipt.TotalDue = 450.00m;`, and then call `frmReceipt.ShowDialog();`."
+    },
+    {
+      "id": "q_su6_017",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Suppose `MainForm` sets `frmReceipt.TotalDue = 450.00m;` and then calls `frmReceipt.ShowDialog();`. Inside `ReceiptForm`, which event handler is ideal for copying `TotalDue.ToString(\"C\")` into `lblTotal.Text` just before `ReceiptForm` appears?",
+      "q": "Suppose `MainForm` sets `frmReceipt.TotalDue = 450.00m;` and then calls `frmReceipt.ShowDialog();`. Inside `ReceiptForm`, which event handler is ideal for copying `TotalDue.ToString(\"C\")` into `lblTotal.Text` just before `ReceiptForm` appears?",
+      "options": [
+        "ReceiptForm_FormClosed",
+        "ReceiptForm_Deactivate",
+        "btnClose_Click",
+        "ReceiptForm_Load"
+      ],
+      "answer": 3,
+      "explanation": "`ReceiptForm_Load` executes when `ShowDialog()` or `Show()` loads `ReceiptForm` for display — after `frmReceipt.TotalDue = 450.00m;` has already been assigned by `MainForm`."
+    },
+    {
+      "id": "q_su6_018",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 11",
+      "difficulty": "Easy",
+      "marks": 2,
+      "type": "mcq",
+      "title": "Why does `SummaryForm.ShowDialog();` cause compiler error `CS0120 ('An object reference is required for the non-static field, method, or property')`?",
+      "q": "Why does `SummaryForm.ShowDialog();` cause compiler error `CS0120 ('An object reference is required for the non-static field, method, or property')`?",
+      "options": [
+        "Because `ShowDialog()` is an instance method that must be called on an instantiated form object (`SummaryForm frm = new SummaryForm(); frm.ShowDialog();`), not on the class name `SummaryForm`.",
+        "Because `ShowDialog()` requires a `string` filename argument.",
+        "Because `SummaryForm` must be renamed to `Form2`.",
+        "Because `ShowDialog()` can only be called inside `Program.cs`."
+      ],
+      "answer": 0,
+      "explanation": "`SummaryForm` is a class type, not an instance. You must create an object with `new SummaryForm()` and call `.ShowDialog()` on that object variable."
+    },
+    {
+      "id": "q_su6_019",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "In a multiform project, what does the keyword `this` refer to when `this.Close();` executes inside `SummaryForm`?",
+      "q": "In a multiform project, what does the keyword `this` refer to when `this.Close();` executes inside `SummaryForm`?",
+      "options": [
+        "The startup form (`Form1`).",
+        "The current instance of `SummaryForm` in which the code is executing.",
+        "Every open form in the application.",
+        "The button control that was clicked."
+      ],
+      "answer": 1,
+      "explanation": "Inside any form class method, `this` refers to the currently executing form instance. Calling `this.Close();` inside `SummaryForm` closes only that `SummaryForm` window."
+    },
+    {
+      "id": "q_su6_020",
+      "ch": "SU6",
+      "su": "SU6",
+      "week": "Week 12",
+      "difficulty": "Medium",
+      "marks": 2,
+      "type": "mcq",
+      "title": "On a modal form `ConfirmForm`, if you set a button `btnOk`'s `DialogResult` property to `DialogResult.OK` in the Properties window, what happens when the user clicks `btnOk` at runtime?",
+      "q": "On a modal form `ConfirmForm`, if you set a button `btnOk`'s `DialogResult` property to `DialogResult.OK` in the Properties window, what happens when the user clicks `btnOk` at runtime?",
+      "options": [
+        "The application crashes unless you write a `btnOk_Click` event handler.",
+        "It opens an `OpenFileDialog` control.",
+        "It automatically closes the modal `ConfirmForm` and causes `frmConfirm.ShowDialog()` to return `DialogResult.OK` to the calling form.",
+        "It clears all TextBoxes on the startup form."
+      ],
+      "answer": 2,
+      "explanation": "Setting a button's `DialogResult` property on a modal form causes clicking that button to close the modal dialog automatically and return that `DialogResult` value from `ShowDialog()`."
     }
   ]
 };
@@ -17752,7 +19169,9 @@ body {
         SU1: { total: 0, correct: 0 },
         SU2: { total: 0, correct: 0 },
         SU3: { total: 0, correct: 0 },
-        SU4: { total: 0, correct: 0 }
+        SU4: { total: 0, correct: 0 },
+        SU5: { total: 0, correct: 0 },
+        SU6: { total: 0, correct: 0 }
       }
     }))
   };

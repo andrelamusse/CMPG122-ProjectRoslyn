@@ -45,7 +45,9 @@
         SU1: { total: 0, correct: 0 },
         SU2: { total: 0, correct: 0 },
         SU3: { total: 0, correct: 0 },
-        SU4: { total: 0, correct: 0 }
+        SU4: { total: 0, correct: 0 },
+        SU5: { total: 0, correct: 0 },
+        SU6: { total: 0, correct: 0 }
       }
     }))
   };
