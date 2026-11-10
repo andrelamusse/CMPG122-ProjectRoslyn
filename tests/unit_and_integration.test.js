@@ -609,6 +609,15 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
     assert.equal(pm.getState().activePracticeSession, null, 'Completed Custom Quiz should clear activePracticeSession');
     assert.equal(pm.getState().activeExamSession?.id, 'paused_exam_1', 'Paused Past Exam must NOT be wiped by Custom Quiz completion');
   });
+
+  it('activates updated Service Worker via skipWaiting, scopes fetch to CACHE_NAME, and posts SKIP_WAITING when no live exam is active', () => {
+    const fs = require('node:fs');
+    const path = require('node:path');
+    const swSrc = fs.readFileSync(path.join(__dirname, '..', 'sw.js'), 'utf8');
+    const appSrc = fs.readFileSync(path.join(__dirname, '..', 'js', 'app.js'), 'utf8');
+    assert.ok(swSrc.includes("const CACHE_NAME = 'cmpg122-shell-v9.2.1';"), 'sw.js must define cmpg122-shell-v9.2.1');
+    assert.ok(swSrc.includes('.then(() => self.skipWaiting())'), 'sw.js install handler must chain self.skipWaiting()');
+    assert.ok(swSrc.includes('caches.open(CACHE_NAME).then((cache) =>'), 'sw.js fetch handler must scope lookups to caches.open(CACHE_NAME)');
+    assert.ok(appSrc.includes("postMessage({ type: 'SKIP_WAITING' })"), 'app.js must post SKIP_WAITING to waiting/installed workers');
+  });
 });
-
-

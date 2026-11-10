@@ -2934,13 +2934,17 @@
       if (!('serviceWorker' in navigator)) return;
       if (!window.location.protocol.startsWith('http')) return;
       navigator.serviceWorker.register('./sw.js').then((reg) => {
+        const hasLiveExam = () => Boolean(this.examSession && !this.examSession.isCompleted);
+        if (reg.waiting && !hasLiveExam()) {
+          reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+        }
         reg.addEventListener('updatefound', () => {
           const worker = reg.installing;
           if (!worker) return;
           worker.addEventListener('statechange', () => {
             // Never interrupt an active examination session with a forced reload
-            const hasLiveExam = Boolean(this.examSession && !this.examSession.isCompleted);
-            if (worker.state === 'installed' && navigator.serviceWorker.controller && !hasLiveExam) {
+            if (worker.state === 'installed' && navigator.serviceWorker.controller && !hasLiveExam()) {
+              worker.postMessage({ type: 'SKIP_WAITING' });
               this.showToast('Offline cache updated for next launch.');
             }
           });

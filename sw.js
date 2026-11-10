@@ -27,7 +27,9 @@ const APP_SHELL_ASSETS = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL_ASSETS))
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(APP_SHELL_ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
@@ -53,33 +55,34 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.match(event.request, { ignoreSearch: true }).then((cached) => {
-      if (cached) {
-        // Stale-while-revalidate background refresh for local shell files
-        fetch(event.request)
+    caches.open(CACHE_NAME).then((cache) =>
+      cache.match(event.request, { ignoreSearch: true }).then((cached) => {
+        if (cached) {
+          // Stale-while-revalidate background refresh for local shell files
+          fetch(event.request)
+            .then((resp) => {
+              if (resp && resp.status === 200 && resp.type === 'basic') {
+                cache.put(event.request, resp.clone());
+              }
+            })
+            .catch(() => {});
+          return cached;
+        }
+
+        return fetch(event.request)
           .then((resp) => {
             if (resp && resp.status === 200 && resp.type === 'basic') {
-              caches.open(CACHE_NAME).then((c) => c.put(event.request, resp.clone()));
+              cache.put(event.request, resp.clone());
             }
+            return resp;
           })
-          .catch(() => {});
-        return cached;
-      }
-
-      return fetch(event.request)
-        .then((resp) => {
-          if (resp && resp.status === 200 && resp.type === 'basic') {
-            const copy = resp.clone();
-            caches.open(CACHE_NAME).then((c) => c.put(event.request, copy));
-          }
-          return resp;
-        })
-        .catch(() => {
-          if (event.request.mode === 'navigate') {
-            return caches.match('./index.html');
-          }
-          return new Response('Offline', { status: 503, statusText: 'Offline' });
-        });
-    })
+          .catch(() => {
+            if (event.request.mode === 'navigate') {
+              return cache.match('./index.html');
+            }
+            return new Response('Offline', { status: 503, statusText: 'Offline' });
+          });
+      })
+    )
   );
 });
