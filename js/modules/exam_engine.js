@@ -66,6 +66,101 @@
     };
   }
 
+  const UNIT_ORDER = ['SU7', 'SU1', 'SU2', 'SU3', 'SU4', 'SU5', 'SU6'];
+
+  /**
+   * Proportional largest-remainder (Hamilton) integer allocator with optional per-key caps and minimum floor.
+   */
+  function allocateProportionalCounts(weightEntries, totalTarget, capsByKey = null, minPerActive = 0) {
+    const active = (weightEntries || []).filter(([k, w]) => w > 0 && (!capsByKey || (capsByKey[k] || 0) > 0));
+    const result = {};
+    if (active.length === 0 || totalTarget <= 0) return result;
+
+    const maxPossible = capsByKey
+      ? active.reduce((s, [k]) => s + (capsByKey[k] || 0), 0)
+      : Infinity;
+    const target = Math.min(totalTarget, maxPossible);
+    const weightSum = active.reduce((s, [, w]) => s + w, 0) || 1;
+
+    const items = active.map(([k, w], idx) => {
+      const exact = (w / weightSum) * target;
+      const cap = capsByKey ? (capsByKey[k] || 0) : Infinity;
+      const floorVal = Math.min(cap, Math.floor(exact));
+      return { key: k, weight: w, idx, exact, cap, count: floorVal, rem: exact - Math.floor(exact) };
+    });
+
+    // Enforce minPerActive when total budget can accommodate at least minPerActive per active unit
+    if (minPerActive > 0 && target >= items.length * minPerActive) {
+      for (const it of items) {
+        const minWanted = Math.min(it.cap, minPerActive);
+        if (it.count < minWanted) it.count = minWanted;
+      }
+      // If raising floors pushed sum above target, trim from units that exceed minPerActive with lowest exact surplus
+      let currentSum = items.reduce((s, it) => s + it.count, 0);
+      while (currentSum > target) {
+        const trimmable = items
+          .filter(it => it.count > Math.min(it.cap, minPerActive))
+          .sort((a, b) => (a.exact - a.count) - (b.exact - b.count));
+        if (trimmable.length === 0) break;
+        trimmable[0].count -= 1;
+        currentSum -= 1;
+      }
+    }
+
+    let assigned = items.reduce((s, it) => s + it.count, 0);
+    while (assigned < target) {
+      const eligible = items
+        .filter(it => it.count < it.cap)
+        .sort((a, b) => (b.rem - a.rem) || (b.weight - a.weight) || (a.idx - b.idx));
+      if (eligible.length === 0) break;
+      let progressed = false;
+      for (const it of eligible) {
+        if (assigned >= target) break;
+        if (it.count < it.cap) {
+          it.count += 1;
+          assigned += 1;
+          progressed = true;
+        }
+      }
+      if (!progressed) break;
+    }
+
+    for (const it of items) {
+      result[it.key] = it.count;
+    }
+    return result;
+  }
+
+  /**
+   * Interleaves grouped question arrays round-robin across Study Units so non-randomized
+   * multi-unit sessions represent every selected Study Unit evenly from Question 1 onward.
+   */
+  function interleaveByUnit(questions, unitOrder = UNIT_ORDER) {
+    const buckets = new Map();
+    for (const u of unitOrder) buckets.set(u, []);
+    for (const q of questions) {
+      if (!buckets.has(q.su)) buckets.set(q.su, []);
+      buckets.get(q.su).push(q);
+    }
+    const activeBuckets = [...buckets.values()].filter(arr => arr.length > 0);
+    if (activeBuckets.length <= 1) return questions.slice();
+
+    const out = [];
+    let depth = 0;
+    let added = true;
+    while (added) {
+      added = false;
+      for (const arr of activeBuckets) {
+        if (depth < arr.length) {
+          out.push(arr[depth]);
+          added = true;
+        }
+      }
+      depth += 1;
+    }
+    return out;
+  }
+
   /**
    * Selects questions so each Study Unit contributes marks matching `allocations`
    * (e.g. 100-mark Full Exam -> SU7:10, SU1:10, SU2:15, SU3:20, SU4:20, SU5:15, SU6:10).
@@ -77,15 +172,26 @@
     const fallbackPool = (allQuestions || []).filter(q => !excludeSet.has(q.id));
     const activePool = pool.length >= 30 ? pool : fallbackPool;
 
-    const weightEntries = Object.entries(allocations).filter(([, w]) => w > 0);
-    const weightSum = weightEntries.reduce((s, [, w]) => s + w, 0) || 100;
+    const availMarksBySu = {};
+    for (const q of activePool) {
+      availMarksBySu[q.su] = (availMarksBySu[q.su] || 0) + (Number(q.marks) || 2);
+    }
+    const weightEntries = Object.entries(allocations).filter(([su, w]) => w > 0 && (availMarksBySu[su] || 0) > 0);
+    const targetBySu = allocateProportionalCounts(
+      weightEntries,
+      targetMarks,
+      availMarksBySu,
+      targetMarks >= weightEntries.length * 2 ? 2 : 0
+    );
 
     const selected = [];
     const usedIds = new Set();
 
-    for (const [su, weight] of weightEntries) {
-      const unitTargetMarks = Math.max(2, Math.round((weight / weightSum) * targetMarks));
-      const candidates = shuffleArray(activePool.filter(q => q.su === su), rng);
+    for (const [su] of weightEntries) {
+      const unitTargetMarks = targetBySu[su] || 0;
+      if (unitTargetMarks <= 0) continue;
+      const suPool = activePool.filter(q => q.su === su);
+      const candidates = options.randomize === false ? suPool.slice() : shuffleArray(suPool, rng);
       let unitMarks = 0;
 
       // Greedily pick questions to match unitTargetMarks closely
@@ -128,7 +234,9 @@
       }
     }
 
-    return options.preserveUnitOrder ? selected : shuffleArray(selected, rng);
+    if (options.preserveUnitOrder) return selected;
+    if (options.randomize === false) return interleaveByUnit(selected);
+    return shuffleArray(selected, rng);
   }
 
   /**
@@ -137,6 +245,9 @@
    */
   function generateCustomExam(allQuestions, config = {}) {
     const rng = createRng(config.seed);
+    const orderedUnits = Array.isArray(config.units) && config.units.length > 0
+      ? config.units.slice()
+      : UNIT_ORDER.slice();
     const units = Array.isArray(config.units) && config.units.length > 0 ? new Set(config.units) : null;
     const topics = Array.isArray(config.topics) && config.topics.length > 0 ? new Set(config.topics) : null;
     const difficulties = Array.isArray(config.difficulties) && config.difficulties.length > 0 ? new Set(config.difficulties) : null;
@@ -161,23 +272,66 @@
       });
     }
 
-    if (config.useWeightedDistribution && (!topics || topics.size === 0)) {
+    if (candidates.length === 0) return [];
+
+    const hasTopicFilter = Boolean(topics && topics.size > 0);
+    const targetM = Number(config.targetMarks) || 0;
+
+    if (config.useWeightedDistribution && !hasTopicFilter) {
       const subWeights = {};
-      for (const [su, w] of Object.entries(DEFAULT_WEIGHTS)) {
-        if (!units || units.has(su)) subWeights[su] = w;
+      for (const su of orderedUnits) {
+        if (DEFAULT_WEIGHTS[su]) subWeights[su] = DEFAULT_WEIGHTS[su];
       }
-      if (config.targetMarks && Number(config.targetMarks) >= 10) {
-        return generateWeightedExam(candidates, subWeights, Number(config.targetMarks), {
+      for (const [su, w] of Object.entries(DEFAULT_WEIGHTS)) {
+        if ((!units || units.has(su)) && !subWeights[su]) subWeights[su] = w;
+      }
+
+      if (targetM >= 10) {
+        return generateWeightedExam(candidates, subWeights, targetM, {
           seed: config.seed,
-          preserveUnitOrder: !randomize
+          randomize,
+          preserveUnitOrder: Boolean(config.preserveUnitOrder)
         });
       }
+
+      // Question-count mode (e.g. targetMarks === 0) with weighted curriculum distribution!
+      const desiredCount = Math.max(1, Math.min(candidates.length, Number(config.questionCount) || 15));
+      const bySu = {};
+      const caps = {};
+      for (const q of candidates) {
+        if (!bySu[q.su]) bySu[q.su] = [];
+        bySu[q.su].push(q);
+      }
+      for (const [su, list] of Object.entries(bySu)) {
+        caps[su] = list.length;
+      }
+
+      const weightEntries = Object.entries(subWeights).filter(([su, w]) => w > 0 && (caps[su] || 0) > 0);
+      const activeUnitCount = weightEntries.length;
+      const quotas = allocateProportionalCounts(
+        weightEntries,
+        desiredCount,
+        caps,
+        desiredCount >= activeUnitCount ? 1 : 0
+      );
+
+      const picked = [];
+      for (const [su] of weightEntries) {
+        const need = quotas[su] || 0;
+        if (need <= 0) continue;
+        const unitPool = randomize ? shuffleArray(bySu[su] || [], rng) : (bySu[su] || []).slice();
+        picked.push(...unitPool.slice(0, need));
+      }
+
+      if (config.preserveUnitOrder) return picked;
+      return randomize ? shuffleArray(picked, rng) : interleaveByUnit(picked, orderedUnits);
     }
 
-    const ordered = randomize ? shuffleArray(candidates, rng) : candidates.slice();
+    const ordered = randomize
+      ? shuffleArray(candidates, rng)
+      : interleaveByUnit(candidates, orderedUnits);
 
-    if (config.targetMarks && Number(config.targetMarks) > 0 && !config.questionCount) {
-      const targetM = Number(config.targetMarks);
+    if (targetM > 0 && !config.questionCount) {
       const picked = [];
       let sum = 0;
       for (const q of ordered) {

@@ -457,5 +457,100 @@ describe('9. Markdown Emphasis Rendering, Unanswered Review Queue & Answer-Key C
     DATA.spotErrors.forEach(s => spotDist[s.answer]++);
     assert.deepEqual(spotDist, [6, 6, 6, 6]);
   });
+
+  it('preserves C# multiplication (*), wildcard filters (*.txt, *.*), standalone ** tokens, and bold-wrapped `backticks`', () => {
+    const eng = new DefsMod.DefinitionsEngine(DATA.definitions);
+
+    // 1. Multiplication operators must never be swallowed into <em>
+    const multHtml = eng.renderTextWithInlineLinks('Evaluating 3 * 2 * 2 yields 12, whereas a++ * 2 uses the post-increment value.');
+    assert.ok(multHtml.includes('3 * 2 * 2'), `Expected literal 3 * 2 * 2 in: ${multHtml}`);
+    assert.ok(multHtml.includes('a++ * 2'), `Expected literal a++ * 2 in: ${multHtml}`);
+    assert.ok(!multHtml.includes('<em>'), `Must not convert C# * into <em>: ${multHtml}`);
+
+    // 2. OpenFileDialog / SaveFileDialog wildcard filters must keep every * intact
+    const filterRaw = '"Text Files (*.txt)|*.txt|All Files (*.*)|*.*"';
+    const filterHtml = eng.renderTextWithInlineLinks(filterRaw);
+    assert.ok(filterHtml.includes('(*.txt)|*.txt|All Files (*.*)|*.*'), `Wildcard corrupted: ${filterHtml}`);
+    assert.ok(!filterHtml.includes('<em>'), `Wildcard must not produce <em>: ${filterHtml}`);
+
+    // 3. Bold wrapping inline backtick code spans (e.g. **Step Into (`F11`)** and **`Load`**)
+    const boldCodeNoLinks = eng.renderTextWithInlineLinks('Press **Step Into (`F11`)** before the **`Load`** event fires.', { maxLinks: 0 });
+    assert.ok(boldCodeNoLinks.includes('<strong>Step Into (<code class="inline-code">F11</code>)</strong>'), `Failed bold+code (no links): ${boldCodeNoLinks}`);
+    assert.ok(boldCodeNoLinks.includes('<strong><code class="inline-code">Load</code></strong>'), `Failed bold-only code: ${boldCodeNoLinks}`);
+
+    const boldCodeLinked = eng.renderTextWithInlineLinks('Press **Step Into (`F11`)** before the **`Load`** event fires.');
+    assert.ok(boldCodeLinked.includes('data-def-id="def_debugger_stepping"'), `Expected Step Into inline link inside bold: ${boldCodeLinked}`);
+    assert.ok(boldCodeLinked.includes('(<code class="inline-code">F11</code>)</strong>'), `Failed bold+code (linked): ${boldCodeLinked}`);
+    assert.ok(!boldCodeLinked.includes('**'), `Raw ** leaked: ${boldCodeLinked}`);
+
+    // 4. Standalone ** operator distractor token must remain literal **
+    assert.equal(eng.renderTextWithInlineLinks('**'), '**');
+  });
 });
+
+describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code Lab Signatures', () => {
+  it('applies Study Unit weights when targetMarks is 0 and interleaves multi-unit pools when randomize is false', () => {
+    const allUnits = ['SU7', 'SU1', 'SU2', 'SU3', 'SU4', 'SU5', 'SU6'];
+
+    // Default Custom Quiz UI state: targetMarks = 0 ("0 = use count"), useWeightedDistribution = true
+    const weighted20 = ExamMod.generateCustomExam(DATA.questions, {
+      units: allUnits,
+      questionCount: 20,
+      targetMarks: 0,
+      useWeightedDistribution: true,
+      allocations: DATA.examWeightingModel.allocations,
+      seed: 2026
+    });
+    assert.equal(weighted20.length, 20);
+    const countsBySu = {};
+    weighted20.forEach(q => { countsBySu[q.su] = (countsBySu[q.su] || 0) + 1; });
+    assert.deepEqual(countsBySu, { SU7: 2, SU1: 2, SU2: 3, SU3: 4, SU4: 4, SU5: 3, SU6: 2 });
+
+    // Unweighted deterministic multi-unit selection (randomize: false) must cover all 7 units, not 20x SU7
+    const deterministic20 = ExamMod.generateCustomExam(DATA.questions, {
+      units: allUnits,
+      questionCount: 20,
+      targetMarks: 0,
+      useWeightedDistribution: false,
+      randomize: false
+    });
+    assert.equal(deterministic20.length, 20);
+    const detUnits = new Set(deterministic20.map(q => q.su));
+    assert.equal(detUnits.size, 7, `Expected all 7 SUs represented, got: ${[...detUnits]}`);
+  });
+
+  it('enforces numeric estimatedDifficulty, unique distractorRationale, and zero textbook citations across all 585 questions', () => {
+    assert.equal(DATA.questions.length, 585);
+    const citationRe = /\bch(?:apters?|\.)?\s+\d|\bch\.\d|\bshneiderman\s+ch\b|\bvisual\s+c#\s+ch\b/i;
+    const rationales = new Set();
+
+    for (const q of DATA.questions) {
+      assert.equal(typeof q.estimatedDifficulty, 'number', `${q.id} missing numeric estimatedDifficulty`);
+      assert.ok(q.estimatedDifficulty >= 0.15 && q.estimatedDifficulty <= 0.95, `${q.id} out-of-range estimatedDifficulty`);
+      assert.equal(typeof q.distractorRationale, 'string', `${q.id} missing distractorRationale`);
+      assert.ok(q.distractorRationale.trim().length >= 25, `${q.id} distractorRationale too short`);
+      const normDr = q.distractorRationale.trim().toLowerCase();
+      assert.equal(rationales.has(normDr), false, `${q.id} has duplicate distractorRationale`);
+      rationales.add(normDr);
+
+      const textBlob = [q.stem, q.explanation, q.distractorRationale, ...(q.options || [])].join(' ');
+      assert.equal(citationRe.test(textBlob), false, `${q.id} still contains textbook chapter citation`);
+    }
+  });
+
+  it('defines matching methodSignature and methodHeader across all 15 CodeGrade scenarios', () => {
+    const keys = Object.keys(DATA.codeScenarios || {});
+    assert.equal(keys.length, 15);
+    const norm = s => String(s || '').replace(/\s*\{\s*$/, '').trim();
+    for (const key of keys) {
+      const sc = DATA.codeScenarios[key];
+      assert.ok(sc.methodSignature && sc.methodHeader, `${key} missing signature/header`);
+      assert.equal(norm(sc.methodSignature), norm(sc.methodHeader), `${key} signature/header mismatch`);
+    }
+    assert.match(DATA.codeScenarios.scenario_racing_light.methodSignature, /btnStop_Click/);
+    assert.match(DATA.codeScenarios.scenario_file_sales.methodSignature, /btnSaveSale_Click/);
+    assert.match(DATA.codeScenarios.scenario_multiform_dispatch.methodSignature, /btnShowSummary_Click/);
+  });
+});
+
 

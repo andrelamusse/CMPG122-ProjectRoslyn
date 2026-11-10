@@ -80,7 +80,7 @@
       : escapeHtml(question.explanation || question.exp || '');
 
     const distractorHtml = question.distractorRationale
-      ? `<details class="distractor-details">
+      ? `<details class="distractor-details" data-panel-id="distractor_${escapeHtml(question.id)}">
           <summary>Why other options are incorrect</summary>
           <p>${defsEngine ? defsEngine.renderTextWithInlineLinks(question.distractorRationale, { maxLinks: 2 }) : escapeHtml(question.distractorRationale)}</p>
         </details>`

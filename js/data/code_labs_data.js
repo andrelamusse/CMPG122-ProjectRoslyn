@@ -45,7 +45,7 @@
         "tests": 35,
         "gui": 15
       },
-      "classScaffolding": "// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations (Practical 1)\n// (Students are only assessed on the inside logic of the event handler)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Controls: PictureBox picRed, picAmber, picGreen, picDark; Label lblInstruction; Button btnStop;\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    private void btnStop_Click(object sender, EventArgs e)\n    {",
+      "classScaffolding": "// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations\n// (Students are only assessed on the inside logic of the event handler)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Controls: PictureBox picRed, picAmber, picGreen, picDark; Label lblInstruction; Button btnStop;\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    private void btnStop_Click(object sender, EventArgs e)\n    {",
       "methodHeader": "private void btnStop_Click(object sender, EventArgs e)\n{",
       "methodFooter": "    }\n}",
       "modelSolution": "picRed.Visible = true;\npicAmber.Visible = false;\npicGreen.Visible = false;\npicDark.Visible = false;\nlblInstruction.Text = \"STOP\";",
@@ -84,7 +84,8 @@
             "picDark": false
           }
         }
-      ]
+      ],
+      "methodSignature": "private void btnStop_Click(object sender, EventArgs e)"
     },
     "scenario_braai_master": {
       "id": "scenario_braai_master",
@@ -113,7 +114,7 @@
         "tests": 35,
         "gui": 15
       },
-      "classScaffolding": "// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations (Practical 2)\n// (Students are only assessed on the inside logic of the event handler)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Controls: TextBox txtName, txtWorsKg, txtPricePerKg, txtPricePerRoll; Label lblTotalCost; Button btnCalculate;\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    private void btnCalculate_Click(object sender, EventArgs e)\n    {",
+      "classScaffolding": "// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations\n// (Students are only assessed on the inside logic of the event handler)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Controls: TextBox txtName, txtWorsKg, txtPricePerKg, txtPricePerRoll; Label lblTotalCost; Button btnCalculate;\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    private void btnCalculate_Click(object sender, EventArgs e)\n    {",
       "methodHeader": "private void btnCalculate_Click(object sender, EventArgs e)\n{",
       "methodFooter": "    }\n}",
       "modelSolution": "decimal worsKg;\ndecimal pricePerKg;\ndecimal pricePerRoll;\nconst decimal GRAMS_PER_ROLL = 120m;\n\nif (decimal.TryParse(txtWorsKg.Text, out worsKg) &&\n    decimal.TryParse(txtPricePerKg.Text, out pricePerKg) &&\n    decimal.TryParse(txtPricePerRoll.Text, out pricePerRoll))\n{\n    if (worsKg <= 0m || pricePerKg <= 0m || pricePerRoll <= 0m)\n    {\n        MessageBox.Show(\"Please enter valid positive numbers.\", \"Input Error\");\n        return;\n    }\n\n    decimal worsCost = worsKg * pricePerKg;\n    decimal totalGrams = worsKg * 1000m;\n    int rollsNeeded = (int)(totalGrams / GRAMS_PER_ROLL);\n    decimal rollsCost = rollsNeeded * pricePerRoll;\n    decimal totalCost = worsCost + rollsCost;\n\n    lblTotalCost.Text = totalCost.ToString(\"C\");\n}\nelse\n{\n    MessageBox.Show(\"Please enter valid positive numbers.\", \"Input Error\");\n}",
@@ -166,7 +167,8 @@
             "_messages": "Please enter valid positive numbers."
           }
         }
-      ]
+      ],
+      "methodSignature": "private void btnCalculate_Click(object sender, EventArgs e)"
     },
     "scenario_speedtrap": {
       "id": "scenario_speedtrap",
@@ -178,7 +180,7 @@
       ],
       "requiresCurrency": true,
       "requiresValidation": true,
-      "description": "Develop btnCheck_Click for Practical 4 (SpeedTrap R30). Parse recorded speed from txtSpeed and limit from txtLimit using int.TryParse(). If invalid, display an error message with MessageBox.Show(). Calculate speedOver = speed - limit. If speedOver <= 0, set lblKmOver to '0 km/h', lblCategory to 'Within the limit', and lblFine to 'No fine. Safe driving.'. Otherwise, set lblKmOver to speedOver.ToString() + ' km/h' and evaluate the band: 1-10 is R250 ('Minor'), 11-20 is R750 ('Serious'), 21-30 is R1500 ('Severe'), >30 is R2500 ('Court appearance'). If zone (txtZone.Text) is 'School' or 'Town' AND speedOver > 20, double the fine and append ' - built-up area' to the category. If txtRepeat.Text is 'yes', add class constant REPEAT_FINE (500m) to the fine. Output category to lblCategory and fine formatted with .ToString('C') to lblFine.",
+      "description": "Develop btnCheck_Click (SpeedTrap R30). Parse recorded speed from txtSpeed and limit from txtLimit using int.TryParse(). If invalid, display an error message with MessageBox.Show(). Calculate speedOver = speed - limit. If speedOver <= 0, set lblKmOver to '0 km/h', lblCategory to 'Within the limit', and lblFine to 'No fine. Safe driving.'. Otherwise, set lblKmOver to speedOver.ToString() + ' km/h' and evaluate the band: 1-10 is R250 ('Minor'), 11-20 is R750 ('Serious'), 21-30 is R1500 ('Severe'), >30 is R2500 ('Court appearance'). If zone (txtZone.Text) is 'School' or 'Town' AND speedOver > 20, double the fine and append ' - built-up area' to the category. If txtRepeat.Text is 'yes', add class constant REPEAT_FINE (500m) to the fine. Output category to lblCategory and fine formatted with .ToString('C') to lblFine.",
       "controls": [
         "txtSpeed",
         "txtLimit",
@@ -200,7 +202,7 @@
         "tests": 35,
         "gui": 15
       },
-      "classScaffolding": "// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations (Practical 4)\n// (Students are only assessed on the inside logic of the event handler)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Controls: TextBox txtSpeed, txtLimit, txtZone, txtRepeat; Label lblKmOver, lblCategory, lblFine; Button btnCheck;\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    private void btnCheck_Click(object sender, EventArgs e)\n    {",
+      "classScaffolding": "// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations\n// (Students are only assessed on the inside logic of the event handler)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Controls: TextBox txtSpeed, txtLimit, txtZone, txtRepeat; Label lblKmOver, lblCategory, lblFine; Button btnCheck;\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    private void btnCheck_Click(object sender, EventArgs e)\n    {",
       "methodHeader": "private void btnCheck_Click(object sender, EventArgs e)\n{",
       "methodFooter": "    }\n}",
       "modelSolution": "int speed;\nint limit;\nconst decimal REPEAT_FINE = 500m;\n\nif (int.TryParse(txtSpeed.Text, out speed) && int.TryParse(txtLimit.Text, out limit))\n{\n    int speedOver = speed - limit;\n    if (speedOver <= 0)\n    {\n        lblKmOver.Text = \"0 km/h\";\n        lblCategory.Text = \"Within the limit\";\n        lblFine.Text = \"No fine. Safe driving.\";\n        return;\n    }\n\n    lblKmOver.Text = speedOver.ToString() + \" km/h\";\n    decimal fine = 0m;\n    string category = \"\";\n\n    if (speedOver <= 10)\n    {\n        fine = 250m;\n        category = \"Minor\";\n    }\n    else if (speedOver <= 20)\n    {\n        fine = 750m;\n        category = \"Serious\";\n    }\n    else if (speedOver <= 30)\n    {\n        fine = 1500m;\n        category = \"Severe\";\n    }\n    else\n    {\n        fine = 2500m;\n        category = \"Court appearance\";\n    }\n\n    string zone = txtZone.Text;\n    bool isBuiltUp = (zone == \"School\" || zone == \"Town\");\n    if (isBuiltUp && speedOver > 20)\n    {\n        fine *= 2m;\n        category += \" - built-up area\";\n    }\n\n    if (txtRepeat.Text.CompareTo(\"yes\") == 0)\n    {\n        fine += REPEAT_FINE;\n    }\n\n    lblCategory.Text = category;\n    lblFine.Text = fine.ToString(\"C\");\n}\nelse\n{\n    MessageBox.Show(\"Please enter valid integers for speed and limit.\", \"Input Error\");\n}",
@@ -259,7 +261,8 @@
             "_messages": "Please enter valid integers for speed and limit."
           }
         }
-      ]
+      ],
+      "methodSignature": "private void btnCheck_Click(object sender, EventArgs e)"
     },
     "scenario_vaal_cruise": {
       "id": "scenario_vaal_cruise",
@@ -272,7 +275,7 @@
       ],
       "requiresCurrency": true,
       "requiresValidation": true,
-      "description": "Develop btnBook_Click for Practical 5 (Vaal River Cruises). Validate that a cruise route is selected from lstRoutes (lstRoutes.SelectedIndex != -1). If none selected, show 'Please select a cruise route.' using MessageBox.Show() and exit. Validate passenger count from txtPassengers using int.TryParse(); if invalid or < 1, display 'Please enter a valid passenger count of at least 1.' and return. Use a switch statement on lstRoutes.SelectedIndex: 0 is R250 (Sunset Leisure Cruise), 1 is R400 (Speedboat Adventure), 2 is R800 (Private Pontoon Charter). Subtotal = passengers * ticketPrice. If passengers >= 6, apply a 10% group discount. Final due = subtotal - discount. Display final due formatted with .ToString('C') in lblTotalDue.",
+      "description": "Develop btnBook_Click (Vaal River Cruises). Validate that a cruise route is selected from lstRoutes (lstRoutes.SelectedIndex != -1). If none selected, show 'Please select a cruise route.' using MessageBox.Show() and exit. Validate passenger count from txtPassengers using int.TryParse(); if invalid or < 1, display 'Please enter a valid passenger count of at least 1.' and return. Use a switch statement on lstRoutes.SelectedIndex: 0 is R250 (Sunset Leisure Cruise), 1 is R400 (Speedboat Adventure), 2 is R800 (Private Pontoon Charter). Subtotal = passengers * ticketPrice. If passengers >= 6, apply a 10% group discount. Final due = subtotal - discount. Display final due formatted with .ToString('C') in lblTotalDue.",
       "controls": [
         "lstRoutes",
         "txtPassengers",
@@ -290,7 +293,7 @@
         "tests": 35,
         "gui": 15
       },
-      "classScaffolding": "// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations (Practical 5)\n// (Students are only assessed on the inside logic of the event handler)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Controls: ListBox lstRoutes; TextBox txtPassengers; RadioButton radDaytime, radSunset; Label lblTotalDue; Button btnBook;\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    private void btnBook_Click(object sender, EventArgs e)\n    {",
+      "classScaffolding": "// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations\n// (Students are only assessed on the inside logic of the event handler)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Controls: ListBox lstRoutes; TextBox txtPassengers; RadioButton radDaytime, radSunset; Label lblTotalDue; Button btnBook;\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    private void btnBook_Click(object sender, EventArgs e)\n    {",
       "methodHeader": "private void btnBook_Click(object sender, EventArgs e)\n{",
       "methodFooter": "    }\n}",
       "modelSolution": "if (lstRoutes.SelectedIndex == -1)\n{\n    MessageBox.Show(\"Please select a cruise route.\", \"Selection Error\");\n    return;\n}\n\nint passengers;\nif (int.TryParse(txtPassengers.Text, out passengers) && passengers >= 1)\n{\n    decimal ticketPrice = 0m;\n    switch (lstRoutes.SelectedIndex)\n    {\n        case 0:\n            ticketPrice = 250m;\n            break;\n        case 1:\n            ticketPrice = 400m;\n            break;\n        case 2:\n            ticketPrice = 800m;\n            break;\n        default:\n            ticketPrice = 250m;\n            break;\n    }\n\n    decimal subtotal = passengers * ticketPrice;\n    decimal discount = 0m;\n    if (passengers >= 6)\n    {\n        discount = subtotal * 0.10m;\n    }\n\n    decimal finalDue = subtotal - discount;\n    lblTotalDue.Text = finalDue.ToString(\"C\");\n}\nelse\n{\n    MessageBox.Show(\"Please enter a valid passenger count of at least 1.\", \"Input Error\");\n}",
@@ -363,7 +366,8 @@
             "_messages": "Please select a cruise route."
           }
         }
-      ]
+      ],
+      "methodSignature": "private void btnBook_Click(object sender, EventArgs e)"
     },
     "scenario_wages": {
       "id": "scenario_wages",
@@ -427,7 +431,8 @@
           },
           "expectedDescription": "Displays Input Error MessageBox without crashing"
         }
-      ]
+      ],
+      "methodSignature": "private void btnCalculate_Click(object sender, EventArgs e)"
     },
     "scenario_grades": {
       "id": "scenario_grades",
@@ -493,7 +498,8 @@
             "_messages": "Range Error"
           }
         }
-      ]
+      ],
+      "methodSignature": "private void btnClassify_Click(object sender, EventArgs e)"
     },
     "scenario_investment": {
       "id": "scenario_investment",
@@ -541,7 +547,8 @@
             }
           }
         }
-      ]
+      ],
+      "methodSignature": "private void btnCalculate_Click(object sender, EventArgs e)"
     },
     "scenario_pos": {
       "id": "scenario_pos",
@@ -597,7 +604,8 @@
             "lblTotal": "250"
           }
         }
-      ]
+      ],
+      "methodSignature": "private void btnAddItem_Click(object sender, EventArgs e)"
     },
     "scenario_temperature": {
       "id": "scenario_temperature",
@@ -651,7 +659,8 @@
             "lblResult": "100.0"
           }
         }
-      ]
+      ],
+      "methodSignature": "private void btnConvert_Click(object sender, EventArgs e)"
     },
     "scenario_accumulator": {
       "id": "scenario_accumulator",
@@ -695,7 +704,8 @@
             "lblAverage": "80.00"
           }
         }
-      ]
+      ],
+      "methodSignature": "private void btnAddScore_Click(object sender, EventArgs e)"
     },
     "scenario_car_rental": {
       "id": "scenario_car_rental",
@@ -706,7 +716,7 @@
         "SU3"
       ],
       "requiresCurrency": true,
-      "description": "From NWU Dec 2024 Exam Paper 1: Calculate car rental bill. Read rental days from txtDays (int.TryParse) and total kilometers driven from txtKms (decimal.TryParse). Base rate determined by vehicle radio button: rdoSedan (R450/day), rdoSuv (R650/day), rdoBakkie (R750/day). Mileage allowance is 150 km per day included free. Any excess kilometers driven over (days * 150) are billed at R3.50 per km. If chkGps.Checked is true, add R80 per day. Calculate total, format and output to lblTotalDue with .ToString('C').",
+      "description": "Calculate car rental bill. Read rental days from txtDays (int.TryParse) and total kilometers driven from txtKms (decimal.TryParse). Base rate determined by vehicle radio button: rdoSedan (R450/day), rdoSuv (R650/day), rdoBakkie (R750/day). Mileage allowance is 150 km per day included free. Any excess kilometers driven over (days * 150) are billed at R3.50 per km. If chkGps.Checked is true, add R80 per day. Calculate total, format and output to lblTotalDue with .ToString('C').",
       "controls": [
         "txtDays",
         "txtKms",
@@ -758,7 +768,8 @@
             "lblTotalDue": "2540"
           }
         }
-      ]
+      ],
+      "methodSignature": "private void btnCalculate_Click(object sender, EventArgs e)"
     },
     "scenario_tuition": {
       "id": "scenario_tuition",
@@ -769,7 +780,7 @@
         "SU3"
       ],
       "requiresCurrency": true,
-      "description": "From NWU Dec 2023 Exam Paper 1: Read credit count from txtCredits (int.TryParse). Cost per credit is R850.00. Faculty radio buttons: rdoScience (add R2,500 lab levy), rdoCommerce (add R1,000 IT levy). If chkBursary.Checked is true, read bursary percentage from txtBursaryPercent and deduct from total. Display final net tuition in lblNetTuition formatted with .ToString('C').",
+      "description": "Read credit count from txtCredits (int.TryParse). Cost per credit is R850.00. Faculty radio buttons: rdoScience (add R2,500 lab levy), rdoCommerce (add R1,000 IT levy). If chkBursary.Checked is true, read bursary percentage from txtBursaryPercent and deduct from total. Display final net tuition in lblNetTuition formatted with .ToString('C').",
       "controls": [
         "txtCredits",
         "rdoScience",
@@ -818,7 +829,8 @@
             "lblNetTuition": "4750"
           }
         }
-      ]
+      ],
+      "methodSignature": "private void btnCompute_Click(object sender, EventArgs e)"
     },
     "scenario_file_sales": {
       "id": "scenario_file_sales",
@@ -857,7 +869,8 @@
           },
           "expectedDescription": "Displays validation MessageBox without crashing"
         }
-      ]
+      ],
+      "methodHeader": "private void btnSaveSale_Click(object sender, EventArgs e)\n{"
     },
     "scenario_methods_ref_out": {
       "id": "scenario_methods_ref_out",
@@ -899,7 +912,8 @@
           },
           "expectedDescription": "1000 * 1.15 = R 1,150.00"
         }
-      ]
+      ],
+      "methodHeader": "private void btnQuote_Click(object sender, EventArgs e)\n{"
     },
     "scenario_multiform_dispatch": {
       "id": "scenario_multiform_dispatch",
@@ -938,7 +952,8 @@
           },
           "expectedDescription": "Displays validation MessageBox"
         }
-      ]
+      ],
+      "methodHeader": "private void btnShowSummary_Click(object sender, EventArgs e)\n{"
     }
   },
   "spotErrors": [
@@ -1074,7 +1089,7 @@
         "label1.Text only accepts integers"
       ],
       "answer": 0,
-      "explanation": "The official NWU CMPG122 naming conventions strictly mandate Hungarian prefixes: 'btn' for buttons, 'txt' for textboxes, 'lbl' for labels, and meaningful descriptive identifiers. Using default control names incurs penalties in practical examinations.",
+      "explanation": "The official NWU CMPG122 naming conventions strictly mandate Hungarian prefixes: 'btn' for buttons, 'txt' for textboxes, 'lbl' for labels, and meaningful descriptive identifiers. Using default control names incurs penalties in Windows Forms development.",
       "su": "SU3"
     },
     {
@@ -1620,7 +1635,7 @@
     },
     {
       "id": "audit_bursary",
-      "title": "Scenario 6: Tuition Bursary & Surcharge Terminal (NWU Official Exam)",
+      "title": "Scenario 6: Tuition Bursary & Surcharge Terminal",
       "unit": "Comprehensive Weeks 1–7 (Official Exam)",
       "badge": "Official Exam Paper",
       "filename": "TuitionBursaryTerminal.cs",

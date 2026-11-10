@@ -44,6 +44,7 @@
       this.activeAuditIndex = 0;
 
       this._timerInterval = null;
+      this._practiceTimerInterval = null;
       this._studyTicker = null;
       this._paperScrollObserver = null;
       this._lastUnansweredJumpIdx = -1;
@@ -143,14 +144,16 @@
 
     _initHomeQuickSession() {
       const qs = this.data.questions || [];
-      // Curated balanced 10-question starter deck across units (starting with a decimal currency item if found)
+      // Curated balanced 10-question starter deck across all 7 Study Units (starting with a decimal currency item)
       const decStarter = qs.find(q => q.su === 'SU2' && /decimal/i.test(q.q) && (q.options || []).length >= 4);
       const rest = ExamMod.generateCustomExam(qs, {
-        questionCount: 10,
+        units: ['SU7', 'SU1', 'SU3', 'SU4', 'SU5', 'SU6', 'SU2'],
+        questionCount: decStarter ? 9 : 10,
+        useWeightedDistribution: true,
         randomize: false,
         excludeIds: decStarter ? [decStarter.id] : []
       });
-      const deck = decStarter ? [decStarter, ...rest.slice(0, 9)] : rest.slice(0, 10);
+      const deck = decStarter ? [decStarter, ...rest] : rest.slice(0, 10);
       this.homeSession = new ExamMod.ExamSession({
         id: 'home_quick_practice',
         mode: 'practice',
@@ -161,10 +164,12 @@
     }
 
     _initDefaultPracticeSession(su = 'ALL', topic = '') {
+      const isMixedAll = (!su || su === 'ALL') && !topic;
       const qs = ExamMod.generateCustomExam(this.data.questions || [], {
         units: su && su !== 'ALL' ? [su] : [],
         topics: topic ? [topic] : [],
         questionCount: 20,
+        useWeightedDistribution: isMixedAll,
         randomize: false
       });
       this.practiceSession = new ExamMod.ExamSession({
@@ -467,6 +472,10 @@
       const stats = AnalyticsMod.computeAnalytics(state, this.data);
       const us = stats.unitStats[unit.id] || { completedTopics: 0, totalTopics: 0, progressPct: 0 };
       const expSet = restoreExpandedPanels ? new Set(restoreExpandedPanels) : null;
+      const openAttr = (pId, defaultOpen) => {
+        if (expSet) return expSet.has(pId) ? ' open' : '';
+        return defaultOpen ? ' open' : '';
+      };
 
       const topicsHtml = (unit.structuredTopics || []).map((t, idx) => {
         const isDone = Boolean(state.completedTopics[t.id]);
@@ -474,11 +483,6 @@
         const p2 = `${t.id}_example`;
         const p3 = `${t.id}_mistakes`;
         const p4 = `${t.id}_exam`;
-
-        const openAttr = (pId, defaultOpen) => {
-          if (expSet) return expSet.has(pId) ? ' open' : '';
-          return defaultOpen ? ' open' : '';
-        };
 
         return `<article class="topic-card ${isDone ? 'completed' : ''}" id="topicCard_${esc(t.id)}">
           <div class="topic-header">
@@ -563,7 +567,7 @@
               <div class="progress-track"><div class="progress-fill" style="width:${us.progressPct}%;"></div></div>
             </div>
           </div>
-          <details class="topic-details" data-panel-id="${esc(unit.id)}_objectives" style="margin-top:0.9rem;">
+          <details class="topic-details" data-panel-id="${esc(unit.id)}_objectives" style="margin-top:0.9rem;"${openAttr(`${unit.id}_objectives`, false)}>
             <summary>Official Learning Objectives (${(unit.learningObjectives || []).length})</summary>
             <ul class="objectives-list">
               ${(unit.learningObjectives || []).map(o => `<li>${esc(o)}</li>`).join('')}
@@ -679,8 +683,11 @@
 
       if (this.practiceSubTab === 'session') {
         this.setViewMode(this.practiceViewMode);
-      } else if (this.practiceSubTab === 'codelab') {
-        this._renderCodeLabView();
+      } else {
+        this._stopPracticeTimerLoop();
+        if (this.practiceSubTab === 'codelab') {
+          this._renderCodeLabView();
+        }
       }
     }
 
@@ -689,33 +696,51 @@
       const sess = this.practiceSession;
       if (!sess || sess.questions.length === 0) return;
 
+      const timerBarHtml = sess.timed
+        ? `<div style="display:inline-flex;align-items:center;gap:0.45rem;flex-wrap:wrap;">
+            <span class="timer-badge" id="practiceTimerBadge" style="font-size:0.86rem;padding:0.2rem 0.55rem;">${ExamMod.formatCountdown(sess.getRemainingSeconds())}</span>
+            ${!sess.isCompleted ? `<button type="button" class="btn-ghost btn-sm" id="btnPauseResumePracticeTimer">${sess.pausedAtMs ? 'Resume' : 'Pause'}</button>` : ''}
+            ${!sess.isCompleted ? `<button type="button" class="btn-secondary btn-sm" id="btnFinishTimedQuiz">Finish Quiz</button>` : ''}
+          </div>`
+        : '';
+
+      const quizDoneBanner = (sess.isCompleted && sess.finalResult)
+        ? this._renderExamResultsBannerHtml(sess.finalResult)
+        : '';
+
       if (this.practiceViewMode === 'continuous') {
         const contArea = document.getElementById('practiceContinuousArea');
         if (!contArea) return;
-        contArea.innerHTML = sess.questions.map((q, idx) => {
-          const st = sess.getQuestionState(q.id);
-          const canSub = st && typeof st.selectedAnswer === 'number' && st.status !== 'submitted';
-          return `
-            <div>
-              ${Renderer.renderQuestionCard(q, st, {
-                index: idx,
-                total: sess.questions.length,
-                csharpEngine: CSharpEngine,
-                defsEngine: this.defsEngine,
-                icons: Icons,
-                continuousMode: true,
-                allowInstantSubmit: true,
-                isFlagged: this.persistence.isQuestionFlagged(q.id),
-                isUnderstood: Boolean(this.persistence.getState().understoodQuestions[q.id])
-              })}
-              ${st && st.status !== 'submitted' ? `
-                <div style="margin:-0.5rem 0 1.25rem;display:flex;justify-content:flex-end;">
-                  <button type="button" class="btn-primary btn-sm" data-submit-sheet-q="${esc(q.id)}" ${!canSub ? 'disabled' : ''}>Check Answer</button>
-                </div>
-              ` : ''}
-            </div>
-          `;
-        }).join('');
+        contArea.innerHTML = `
+          ${timerBarHtml ? `<div style="margin-bottom:0.75rem;display:flex;justify-content:space-between;align-items:center;gap:0.5rem;flex-wrap:wrap;"><strong>${esc(sess.title)}</strong>${timerBarHtml}</div>` : ''}
+          ${quizDoneBanner}
+          ${sess.questions.map((q, idx) => {
+            const st = sess.getQuestionState(q.id);
+            const canSub = !sess.isCompleted && st && typeof st.selectedAnswer === 'number' && st.status !== 'submitted';
+            return `
+              <div>
+                ${Renderer.renderQuestionCard(q, st, {
+                  index: idx,
+                  total: sess.questions.length,
+                  csharpEngine: CSharpEngine,
+                  defsEngine: this.defsEngine,
+                  icons: Icons,
+                  continuousMode: true,
+                  allowInstantSubmit: true,
+                  isCompleted: sess.isCompleted,
+                  isFlagged: this.persistence.isQuestionFlagged(q.id),
+                  isUnderstood: Boolean(this.persistence.getState().understoodQuestions[q.id])
+                })}
+                ${!sess.isCompleted && st && st.status !== 'submitted' ? `
+                  <div style="margin:-0.5rem 0 1.25rem;display:flex;justify-content:flex-end;">
+                    <button type="button" class="btn-primary btn-sm" data-submit-sheet-q="${esc(q.id)}" ${!canSub ? 'disabled' : ''}>Check Answer</button>
+                  </div>
+                ` : ''}
+              </div>
+            `;
+          }).join('')}
+        `;
+        this._startPracticeTimerLoop();
         return;
       }
 
@@ -723,12 +748,16 @@
       if (!singleArea) return;
       const q = sess.getCurrentQuestion();
       const qState = sess.getQuestionState(q.id);
-      const isGraded = qState && qState.status === 'submitted';
-      const canSubmit = qState && typeof qState.selectedAnswer === 'number' && !isGraded;
+      const isGraded = sess.isCompleted || (qState && qState.status === 'submitted');
+      const canSubmit = !sess.isCompleted && qState && typeof qState.selectedAnswer === 'number' && !isGraded;
 
       singleArea.innerHTML = `
+        ${quizDoneBanner}
         <div style="margin-bottom:0.75rem;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;flex-wrap:wrap;">
-          <strong style="font-size:0.95rem;">${esc(sess.title)}</strong>
+          <div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;">
+            <strong style="font-size:0.95rem;">${esc(sess.title)}</strong>
+            ${timerBarHtml}
+          </div>
           <span style="font-size:0.8rem;color:var(--text-muted);">
             Shortcuts: <span class="kbd-tag">1–5</span> Select • <span class="kbd-tag">A–E</span> Select &amp; Submit • <span class="kbd-tag">Enter</span> Submit/Next
           </span>
@@ -740,6 +769,7 @@
           defsEngine: this.defsEngine,
           icons: Icons,
           allowInstantSubmit: true,
+          isCompleted: sess.isCompleted,
           isFlagged: this.persistence.isQuestionFlagged(q.id),
           isUnderstood: Boolean(this.persistence.getState().understoodQuestions[q.id])
         })}
@@ -755,6 +785,63 @@
           </button>
         </div>
       `;
+      this._startPracticeTimerLoop();
+    }
+
+    _startPracticeTimerLoop() {
+      this._stopPracticeTimerLoop();
+      if (typeof document === 'undefined' || !this.practiceSession || !this.practiceSession.timed || this.practiceSession.isCompleted) {
+        return;
+      }
+      const tick = () => {
+        const sess = this.practiceSession;
+        if (!sess || !sess.timed || sess.isCompleted || this.currentRoute !== 'practice' || this.practiceSubTab !== 'session') {
+          this._stopPracticeTimerLoop();
+          return;
+        }
+        const badge = document.getElementById('practiceTimerBadge');
+        const rem = sess.getRemainingSeconds();
+        if (badge) {
+          badge.textContent = ExamMod.formatCountdown(rem);
+          badge.classList.toggle('timer-urgent', rem <= 120);
+        }
+        if (rem <= 0) {
+          this._finalizeTimedPracticeQuiz(true);
+        }
+      };
+      tick();
+      this._practiceTimerInterval = setInterval(tick, 1000);
+    }
+
+    _stopPracticeTimerLoop() {
+      if (this._practiceTimerInterval) {
+        clearInterval(this._practiceTimerInterval);
+        this._practiceTimerInterval = null;
+      }
+    }
+
+    _finalizeTimedPracticeQuiz(autoExpired = false) {
+      const sess = this.practiceSession;
+      if (!sess || sess.isCompleted) return;
+      // Track which questions weren't already recorded individually
+      const unsubmittedAnswered = sess.questions.filter(q => {
+        const st = sess.getQuestionState(q.id);
+        return st && st.status !== 'submitted' && typeof st.selectedAnswer === 'number';
+      });
+      const result = sess.submitExamination();
+      unsubmittedAnswered.forEach(q => {
+        const st = sess.getQuestionState(q.id);
+        this.persistence.recordQuestionAttempt(q, st.selectedAnswer, st.outcome === 'correct', 0);
+      });
+      this.persistence.recordExamResult(result);
+      this._stopPracticeTimerLoop();
+      this._updateSidebarBadges();
+      this._renderPracticeSessionArea();
+      this.showToast(
+        autoExpired
+          ? `Time expired — Custom Quiz graded: ${result.rawMarks}/${result.totalMarks} (${result.percentage}%)`
+          : `Custom Quiz completed: ${result.rawMarks}/${result.totalMarks} (${result.percentage}%)`
+      );
     }
 
     /* ==================== C# CODE LAB, SPOT-THE-ERROR & CODE AUDITOR ==================== */
@@ -781,9 +868,13 @@
       const inputEl = document.getElementById('studentCodeInput');
       const outEl = document.getElementById('codeGradeOutputHost');
 
+      const normalizedSig = String(
+        sc.methodSignature || sc.methodHeader || 'private void btnCalculate_Click(object sender, EventArgs e)'
+      ).replace(/\s*\{\s*$/, '').trim();
+
       if (titleEl) titleEl.textContent = sc.title;
       if (descEl) descEl.textContent = sc.description;
-      if (sigEl) sigEl.textContent = `${sc.methodSignature || 'private void btnCalculate_Click(object sender, EventArgs e)'} {`;
+      if (sigEl) sigEl.textContent = `${normalizedSig} {`;
       if (ctrlsEl) {
         ctrlsEl.innerHTML = (sc.controls || []).map(c => `<span class="inline-code">${esc(c)}</span>`).join('');
       }
@@ -898,7 +989,7 @@
           <div class="panel-card">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:0.75rem;">
               <label style="font-weight:700;font-size:0.88rem;">Code Audit File:
-                <select id="auditScenarioSelect" class="select-input" style="width:auto;display:inline-block;margin-left:0.5rem;">
+                <select id="auditScenarioSelect" class="select-input" style="width:auto;max-width:100%;display:inline-block;margin-left:0.5rem;">
                   ${scenarios.map((a, idx) => `<option value="${idx}" ${idx === this.activeAuditIndex ? 'selected' : ''}>${esc(a.filename || a.fileName || a.title)}</option>`).join('')}
                 </select>
               </label>
@@ -1060,7 +1151,7 @@
           : '';
 
         const scenarioInlineCard = sess.scenarioHtml
-          ? `<details class="topic-details" style="margin-bottom:1rem;" open>
+          ? `<details class="topic-details" data-panel-id="exam_scenario_${esc(sess.id)}" style="margin-bottom:1rem;" open>
               <summary>Examination Scenario, Control Matrix &amp; Rates Reference</summary>
               <div class="topic-details-body">${sess.scenarioHtml}</div>
             </details>`
@@ -1316,27 +1407,38 @@
       if (this.currentRoute !== 'definitions') {
         const expandedPanels = [];
         if (typeof document !== 'undefined') {
-          document.querySelectorAll('details.topic-details[open][data-panel-id]').forEach(el => {
+          document.querySelectorAll('.view-section.active details[open][data-panel-id]').forEach(el => {
             expandedPanels.push(el.getAttribute('data-panel-id'));
           });
         }
 
-        let targetQId = extraSource.questionId || null;
+        const clickedQuestionId = extraSource.questionId || null;
+        let targetQId = clickedQuestionId;
         let qState = null;
         let sourceLabel = 'Previous View';
 
         if (this.currentRoute === 'study') {
           sourceLabel = `Study Note (${this.activeStudyUnit})`;
-        } else if (this.currentRoute === 'home' && this.homeSession) {
-          const activeQ = this.homeSession.getCurrentQuestion();
-          targetQId = targetQId || (activeQ ? activeQ.id : null);
-          qState = targetQId ? this.homeSession.getQuestionState(targetQId) : null;
-          sourceLabel = 'Practice Question';
-        } else if (this.currentRoute === 'practice' && this.practiceSession) {
-          const activeQ = this.practiceSession.getCurrentQuestion();
-          targetQId = targetQId || (activeQ ? activeQ.id : null);
-          qState = targetQId ? this.practiceSession.getQuestionState(targetQId) : null;
-          sourceLabel = 'Question';
+        } else if (this.currentRoute === 'home') {
+          if (this.homeSession) {
+            const activeQ = this.homeSession.getCurrentQuestion();
+            targetQId = targetQId || (activeQ ? activeQ.id : null);
+            qState = targetQId ? this.homeSession.getQuestionState(targetQId) : null;
+          }
+          sourceLabel = clickedQuestionId ? 'Practice Question' : 'Home Dashboard';
+        } else if (this.currentRoute === 'practice') {
+          if (this.practiceSubTab === 'codelab') {
+            sourceLabel = 'C# Code Lab';
+          } else {
+            if (this.practiceSession) {
+              const activeQ = this.practiceSession.getCurrentQuestion();
+              targetQId = targetQId || (activeQ ? activeQ.id : null);
+              qState = targetQId ? this.practiceSession.getQuestionState(targetQId) : null;
+            }
+            sourceLabel = (this.practiceSession && this.practiceSession.mode === 'custom_quiz')
+              ? 'Custom Quiz'
+              : 'Question';
+          }
         } else if (this.currentRoute === 'exams' && this.examSession) {
           qState = targetQId ? this.examSession.getQuestionState(targetQId) : null;
           sourceLabel = 'Examination Question';
@@ -1377,6 +1479,15 @@
       }
     }
 
+    _restoreExpandedPanelsInActiveView(expandedPanels) {
+      if (typeof document === 'undefined' || !Array.isArray(expandedPanels)) return;
+      const openSet = new Set(expandedPanels);
+      document.querySelectorAll('.view-section.active details[data-panel-id]').forEach(el => {
+        const pId = el.getAttribute('data-panel-id');
+        el.open = openSet.has(pId);
+      });
+    }
+
     returnFromDefinition() {
       const ctx = this.defsEngine.popReturnContext();
       if (!ctx) {
@@ -1402,7 +1513,7 @@
 
       // Restore exact question selection/index if applicable
       const targetSession = ctx.route === 'home' ? this.homeSession
-        : (ctx.route === 'practice' ? this.practiceSession : null);
+        : (ctx.route === 'practice' && this.practiceSubTab === 'session' ? this.practiceSession : null);
       if (targetSession && ctx.questionId) {
         if (ctx.route !== 'practice' || this.practiceViewMode === 'card') {
           const qIdx = targetSession.questions.findIndex(q => q.id === ctx.questionId);
@@ -1414,6 +1525,11 @@
           st.status = 'answered_unsubmitted';
         }
         this.renderCurrentRoute();
+      }
+
+      // Universally restore expanded <details> panels (topic-details & distractor-details) in active view
+      if (Array.isArray(ctx.expandedPanels)) {
+        this._restoreExpandedPanelsInActiveView(ctx.expandedPanels);
       }
 
       if (typeof window !== 'undefined') {
@@ -1742,7 +1858,7 @@
           <div class="panel-card">
             <h3 class="panel-title">About &amp; Offline Status</h3>
             <ul style="margin:0;padding-left:1.2rem;font-size:0.85rem;color:var(--text-secondary);display:flex;flex-direction:column;gap:0.35rem;">
-              <li><strong>Application:</strong> CMPG122 Visual C# UI Programming v${esc(this.data.version || '9.0.0')}</li>
+              <li><strong>Application:</strong> CMPG122 Visual C# UI Programming v${esc(this.data.version || '9.2.0')}</li>
               <li><strong>Connectivity:</strong> ${esc(onlineState)}</li>
               <li><strong>Question Bank:</strong> ${(this.data.questions || []).length} calibrated questions • ${(this.data.definitions || []).length} definitions</li>
               <li><strong>Curriculum Weighting:</strong> SU7 (10%), SU1 (10%), SU2 (15%), SU3 (20%), SU4 (20%), SU5 (15%), SU6 (10%)</li>
@@ -1764,7 +1880,7 @@
 
     _getActiveCardQuestionContext() {
       const sess = this._getActiveCardSession();
-      if (!sess) return null;
+      if (!sess || sess.isCompleted) return null;
       const q = sess.getCurrentQuestion();
       if (!q) return null;
       const st = sess.getQuestionState(q.id);
@@ -1776,20 +1892,37 @@
       };
     }
 
+    _focusPracticeSurfaceSafely(optionIdx = null) {
+      if (typeof document === 'undefined') return;
+      const hostSelector = this.currentRoute === 'home' ? '#homeQuickPracticeHost' : '#singleCardArea';
+      if (typeof optionIdx === 'number') {
+        const optBtn = document.querySelector(`${hostSelector} .q-option-btn[data-option-idx="${optionIdx}"]`);
+        if (optBtn && typeof optBtn.focus === 'function') {
+          optBtn.focus({ preventScroll: true });
+          return;
+        }
+      }
+      const ws = document.getElementById('mainWorkspace');
+      if (ws && typeof ws.focus === 'function') {
+        ws.focus({ preventScroll: true });
+      }
+    }
+
     _handleShortcutSelect(optionIndex) {
       const sess = this._getActiveCardSession();
-      if (!sess) return;
+      if (!sess || sess.isCompleted) return;
       const q = sess.getCurrentQuestion();
       if (!q) return;
       if (sess.selectOption(q.id, optionIndex)) {
         if (this.currentRoute === 'home') this._renderHomeQuickPracticeCard();
         else this._renderPracticeSessionArea();
+        this._focusPracticeSurfaceSafely(optionIndex);
       }
     }
 
     _handleShortcutSubmit() {
       const sess = this._getActiveCardSession();
-      if (!sess) return;
+      if (!sess || sess.isCompleted) return;
       const q = sess.getCurrentQuestion();
       if (!q) return;
       const res = sess.submitSingleQuestion(q.id);
@@ -1798,6 +1931,7 @@
         this._updateSidebarBadges();
         if (this.currentRoute === 'home') this.renderHomeView();
         else this._renderPracticeSessionArea();
+        this._focusPracticeSurfaceSafely(null);
       }
     }
 
@@ -1808,6 +1942,7 @@
         sess.goToIndex(sess.currentIndex + 1);
         if (this.currentRoute === 'home') this._renderHomeQuickPracticeCard();
         else this._renderPracticeSessionArea();
+        this._focusPracticeSurfaceSafely(null);
       }
     }
 
@@ -2087,6 +2222,19 @@
           const u = document.getElementById('practiceUnitSelect')?.value || 'ALL';
           const t = document.getElementById('practiceTopicSelect')?.value || '';
           this.startUnitPractice(u, t);
+          this._focusPracticeSurfaceSafely(null);
+          return;
+        }
+        if (target.closest('#btnPauseResumePracticeTimer')) {
+          if (this.practiceSession && this.practiceSession.timed && !this.practiceSession.isCompleted) {
+            if (this.practiceSession.pausedAtMs) this.practiceSession.resumeTimer();
+            else this.practiceSession.pauseTimer();
+            this._renderPracticeSessionArea();
+          }
+          return;
+        }
+        if (target.closest('#btnFinishTimedQuiz')) {
+          this._finalizeTimedPracticeQuiz(false);
           return;
         }
         const vmBtn = target.closest('[data-view-mode]');
@@ -2582,11 +2730,13 @@
         return;
       }
 
-      if (timeLimit > 0) {
+      const deliveryMode = document.getElementById('customDeliveryMode')?.value || 'quiz';
+
+      if (deliveryMode === 'exam') {
         this.examSession = new ExamMod.ExamSession({
           id: `custom_exam_${Date.now()}`,
           mode: 'custom_quiz',
-          title: `Custom Timed Assessment (${generated.length} Questions)`,
+          title: `Custom Examination (${generated.length} Questions)`,
           layout: 'continuous',
           allowInstantSubmit: false,
           questions: generated,
@@ -2598,13 +2748,17 @@
         this.practiceSession = new ExamMod.ExamSession({
           id: `custom_prac_${Date.now()}`,
           mode: 'custom_quiz',
-          title: `Custom Quiz (${generated.length} Questions)`,
+          title: timeLimit > 0
+            ? `Custom Timed Quiz (${generated.length} Questions)`
+            : `Custom Quiz (${generated.length} Questions)`,
           questions: generated,
-          allowInstantSubmit: true
+          allowInstantSubmit: true,
+          durationMinutes: timeLimit
         });
         this.practiceSubTab = 'session';
         this.practiceViewMode = 'card';
         this.renderPracticeView();
+        this._focusPracticeSurfaceSafely(null);
       }
     }
 

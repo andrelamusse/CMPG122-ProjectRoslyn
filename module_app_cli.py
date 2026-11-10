@@ -170,12 +170,55 @@ learnerRelFiles.forEach(rel => {
   }
 });
 
+// 1b. Version Sync Check across DATA, sw.js, and Audit_Report_CMPG122.md (Section 23)
+const swTxt = fs.readFileSync(path.join(appDir, 'sw.js'), 'utf8');
+if (!swTxt.includes(`v${DATA.version}`)) {
+  fail('VERSION_SYNC_SW', `sw.js cache version does not match DATA.version (${DATA.version})`);
+}
+const mdReportPath = path.join(appDir, 'Audit_Report_CMPG122.md');
+if (fs.existsSync(mdReportPath)) {
+  const mdTxt = fs.readFileSync(mdReportPath, 'utf8');
+  if (!mdTxt.includes(DATA.version)) {
+    fail('VERSION_SYNC_MD', `Audit_Report_CMPG122.md does not match DATA.version (${DATA.version})`);
+  }
+}
+
 // 2. Provenance Separation Check (Section 18 & 21)
 const provPath = path.join(appDir, 'audit', 'provenance_registry.json');
 if (!fs.existsSync(provPath)) {
   fail('AUDIT_PROVENANCE_MISSING', 'Missing audit/provenance_registry.json');
 }
 const provData = fs.existsSync(provPath) ? JSON.parse(fs.readFileSync(provPath, 'utf8')) : { records: {} };
+
+const crossRefRe = /\bas calculated above\b|\brefer to question\b|\busing the previous\b|\bbased on the preceding\b|\bin the previous question\b/i;
+const roboticFluffRe = /according to the specification|based on the specification|\bin practical\s*\d|\(practical\s*\d|\bfor practical\s*\d|\[nwu|as stated in the textbook|the examiner expects|based on the provided source|\befundi\b|\bgaddis\b|\bshneiderman\s+ch\b|\bvisual\s+c#\s+ch\b|\bch(?:apters?|\.)?\s+\d|\bch\.\d|\b(?:in|for|semester)\s+test\s*[123]\b/i;
+const roboticDrRe = /violate C# type, operator, control property, or HCI semantics/i;
+const outOfScopeRe = /\b(SqlConnection|SqlCommand|BinaryReader|BinaryWriter|async|await)\b/;
+const nonAsciiCodeRe = /[\u2013\u2014\u2018\u2019\u201C\u201D]/;
+
+const defsEng = new DefsMod.DefinitionsEngine(DATA.definitions || []);
+function verifyRenderedTextIntegrity(ownerId, fieldName, rawText) {
+  const raw = String(rawText || '');
+  if (!raw) return;
+  const html = defsEng.renderTextWithInlineLinks(raw);
+  const withoutCode = html.replace(/<code\b[^>]*>[\s\S]*?<\/code>/gi, '');
+  const rawDoubleStars = (raw.match(/\*\*/g) || []).length;
+  if (rawDoubleStars >= 2 && withoutCode.includes('**')) {
+    fail(ownerId, `Unparsed raw '**' leaked into rendered ${fieldName}`);
+  }
+  const wildcardMatches = raw.match(/\*\.[a-zA-Z0-9*]+/g) || [];
+  for (const wc of wildcardMatches) {
+    if (!html.includes(wc)) {
+      fail(ownerId, `Wildcard token '${wc}' corrupted during inline rendering in ${fieldName}`);
+    }
+  }
+  const multMatches = raw.match(/\b\d+\s*\*\s*\d+\b/g) || [];
+  for (const mm of multMatches) {
+    if (!html.includes(mm)) {
+      fail(ownerId, `Multiplication expression '${mm}' corrupted during inline rendering in ${fieldName}`);
+    }
+  }
+}
 
 // 3. Curriculum & Definitions Validation
 const validUnits = new Set(['SU7', 'SU1', 'SU2', 'SU3', 'SU4', 'SU5', 'SU6']);
@@ -193,11 +236,27 @@ const validTopics = new Set();
         fail(t.id, `Topic missing required field: ${rf}`);
       }
     });
+    if (nonAsciiCodeRe.test(t.syntax || '') || nonAsciiCodeRe.test(t.minimalExample || '')) {
+      fail(t.id, 'Topic C# syntax or minimalExample contains non-ASCII dash or smart quote characters');
+    }
+    const topicProse = [t.plainEnglish, t.howItWorks, ...(t.commonMistakes || []), t.importantDistinctions, t.examExample];
+    topicProse.forEach((txt, pIdx) => {
+      if (roboticFluffRe.test(txt || '')) {
+        fail(t.id, `Topic prose contains prohibited meta-citation: ${(txt || '').match(roboticFluffRe)[0]}`);
+      }
+      verifyRenderedTextIntegrity(t.id, `prose[${pIdx}]`, txt);
+    });
   });
 });
 
 const validDefs = new Set((DATA.definitions || []).map(d => d.id));
 if (validDefs.size < 45) fail('DEFINITIONS_COUNT', `Expected comprehensive definitions library, found ${validDefs.size}`);
+(DATA.definitions || []).forEach(d => {
+  const defBlob = [d.term, d.concise, d.detailed, ...(d.commonMistakes || [])].join(' | ');
+  if (roboticFluffRe.test(defBlob)) {
+    fail(d.id, `Definition contains prohibited meta-citation: ${defBlob.match(roboticFluffRe)[0]}`);
+  }
+});
 
 // 4. Comprehensive Question-Bank Audit (Structural, Educational, Answer-Balance, Near-Duplicate & Presentation Integrity)
 const validDiffs = new Set(['Foundational', 'Intermediate', 'Advanced']);
@@ -210,15 +269,11 @@ const validTypes = new Set([
 
 const seenIds = new Set();
 const seenStems = new Map();
+const seenRationales = new Map();
 const suDist = {};
 const suAnsDist = {};
 const diffDist = {};
 const qTypeDist = {};
-
-const crossRefRe = /\bas calculated above\b|\brefer to question\b|\busing the previous\b|\bbased on the preceding\b|\bin the previous question\b/i;
-const roboticFluffRe = /according to the specification|based on the specification|in practical \d|\[nwu|as stated in the textbook|the examiner expects|based on the provided source|\befundi\b|\bgaddis\b|\bchapters?\s*\d|\b(?:in|for|semester)\s+test\s*[123]\b/i;
-const roboticDrRe = /violate C# type, operator, control property, or HCI semantics/i;
-const outOfScopeRe = /\b(SqlConnection|SqlCommand|BinaryReader|BinaryWriter|async|await)\b/;
 
 function normDupTokens(s) {
   const norm = String(s || '')
@@ -245,12 +300,22 @@ const standaloneTokenCache = [];
   if (!validTopics.has(q.topic)) fail(qId, `Invalid or unlinked topic: ${q.topic}`);
   if (!validTypes.has(q.questionType)) fail(qId, `Invalid questionType: ${q.questionType}`);
   if (!validDiffs.has(q.difficulty)) fail(qId, `Invalid difficulty: ${q.difficulty}`);
+  if (typeof q.estimatedDifficulty !== 'number' || Number.isNaN(q.estimatedDifficulty) || q.estimatedDifficulty < 0.15 || q.estimatedDifficulty > 0.95) {
+    fail(qId, `Invalid or missing numeric estimatedDifficulty: ${q.estimatedDifficulty}`);
+  } else {
+    if (q.difficulty === 'Foundational' && q.estimatedDifficulty > 0.45) fail(qId, `Foundational estimatedDifficulty too high (${q.estimatedDifficulty})`);
+    if (q.difficulty === 'Intermediate' && (q.estimatedDifficulty < 0.40 || q.estimatedDifficulty > 0.72)) fail(qId, `Intermediate estimatedDifficulty out of band (${q.estimatedDifficulty})`);
+    if (q.difficulty === 'Advanced' && q.estimatedDifficulty < 0.68) fail(qId, `Advanced estimatedDifficulty too low (${q.estimatedDifficulty})`);
+  }
   if (typeof q.marks !== 'number' || q.marks < 1 || q.marks > 20) fail(qId, `Invalid mark allocation: ${q.marks}`);
   if ('provenance' in q) fail(qId, 'Internal provenance leaked onto learner-facing question record');
   if (!provData.records || !provData.records[qId]) fail(qId, 'Missing internal provenance entry in audit/provenance_registry.json');
 
   const stem = String(q.stem || q.q || '').trim();
   if (stem.length < 12) fail(qId, 'Question stem is missing or too short');
+  if (q.code && nonAsciiCodeRe.test(q.code)) {
+    fail(qId, 'Question C# code snippet contains non-ASCII dash or smart quote');
+  }
 
   const normStem = `${stem}::${q.code || ''}`.toLowerCase().replace(/\s+/g, ' ');
   if (seenStems.has(normStem)) {
@@ -272,9 +337,24 @@ const standaloneTokenCache = [];
 
   const exp = String(q.explanation || q.exp || '').trim();
   if (exp.length < 15) fail(qId, 'Explanation missing or too brief');
-  if (q.distractorRationale && roboticDrRe.test(q.distractorRationale)) {
+  const dr = String(q.distractorRationale || '').trim();
+  if (dr.length < 25) {
+    fail(qId, 'distractorRationale missing or too brief');
+  } else if (roboticDrRe.test(dr)) {
     fail(qId, 'Contains robotic boilerplate distractorRationale filler');
+  } else {
+    const normDr = dr.toLowerCase().replace(/\s+/g, ' ');
+    if (seenRationales.has(normDr)) {
+      fail(qId, `Duplicate boilerplate distractorRationale shared with ${seenRationales.get(normDr)}`);
+    } else {
+      seenRationales.set(normDr, qId);
+    }
   }
+
+  verifyRenderedTextIntegrity(qId, 'stem', stem);
+  (opts || []).forEach((o, oi) => verifyRenderedTextIntegrity(qId, `options[${oi}]`, o));
+  verifyRenderedTextIntegrity(qId, 'explanation', exp);
+  verifyRenderedTextIntegrity(qId, 'distractorRationale', dr);
 
   if (!Array.isArray(q.definitions) || q.definitions.length === 0) {
     fail(qId, 'Missing linked technical definitions');
@@ -284,7 +364,7 @@ const standaloneTokenCache = [];
     });
   }
 
-  const combinedText = [stem, q.code || '', ...(opts || []), exp, q.distractorRationale || ''].join(' | ');
+  const combinedText = [stem, q.code || '', ...(opts || []), exp, dr].join(' | ');
   if (crossRefRe.test(combinedText)) fail(qId, 'Contains prohibited cross-question dependency wording');
   if (roboticFluffRe.test(combinedText)) fail(qId, `Contains prohibited meta-fluff: ${combinedText.match(roboticFluffRe)[0]}`);
   if (outOfScopeRe.test(combinedText)) fail(qId, `Contains excluded out-of-scope C# API: ${combinedText.match(outOfScopeRe)[0]}`);
@@ -326,7 +406,7 @@ Object.entries(suAnsDist).forEach(([su, counts]) => {
   });
 });
 
-// 5. Exam Integrity Audit (Official Past Papers + Weighted Generator)
+// 5. Exam Integrity Audit (Official Past Papers + Weighted Generator + Custom Count/Order Balance)
 const qMap = new Map((DATA.questions || []).map(q => [q.id, q]));
 (DATA.officialExams || []).forEach(ex => {
   if (!Array.isArray(ex.subQuestionIds) || ex.subQuestionIds.length < 10) {
@@ -360,17 +440,61 @@ Object.entries(DATA.examWeightingModel.allocations).forEach(([su, expectedMarks]
   }
 });
 
-// 6. CSharpEngine & CodeAuditor Verification (All 15 CodeGrade + 6 CodeAudit Scenarios)
+const allUnitsList = ['SU7', 'SU1', 'SU2', 'SU3', 'SU4', 'SU5', 'SU6'];
+const customWeightedCount = ExamEngine.generateCustomExam(DATA.questions, {
+  units: allUnitsList,
+  questionCount: 20,
+  targetMarks: 0,
+  useWeightedDistribution: true,
+  allocations: DATA.examWeightingModel.allocations,
+  seed: 42
+});
+const customWeightedUnits = new Set(customWeightedCount.map(q => q.su));
+if (customWeightedCount.length !== 20 || customWeightedUnits.size !== 7) {
+  fail('CUSTOM_EXAM_WEIGHTED_COUNT', `Expected 20 questions across all 7 SUs when targetMarks=0 & useWeightedDistribution=true, got ${customWeightedCount.length} across ${customWeightedUnits.size} SUs`);
+}
+const customUnrandomAll = ExamEngine.generateCustomExam(DATA.questions, {
+  units: allUnitsList,
+  questionCount: 20,
+  targetMarks: 0,
+  useWeightedDistribution: false,
+  randomize: false
+});
+const customUnrandomUnits = new Set(customUnrandomAll.map(q => q.su));
+if (customUnrandomAll.length !== 20 || customUnrandomUnits.size !== 7) {
+  fail('CUSTOM_EXAM_INTERLEAVED', `Expected 20 questions interleaved across all 7 SUs when randomize=false, got ${customUnrandomAll.length} across ${customUnrandomUnits.size} SUs`);
+}
+
+// 6. CSharpEngine & CodeAuditor Verification (All 15 CodeGrade + 6 CodeAudit + 24 SpotError Scenarios)
 const scenarioKeys = Object.keys(DATA.codeScenarios || {});
 if (scenarioKeys.length < 15) fail('CODELAB_COUNT', `Expected >=15 CodeGrade scenarios across SU1-SU6, found ${scenarioKeys.length}`);
+const normSig = s => String(s || '').replace(/\s*\{\s*$/, '').trim();
 scenarioKeys.forEach(scKey => {
   const sc = DATA.codeScenarios[scKey];
+  if (!sc.methodSignature || !sc.methodHeader || normSig(sc.methodSignature) !== normSig(sc.methodHeader)) {
+    fail(scKey, 'CodeGrade scenario missing matching methodSignature and methodHeader');
+  }
+  const scText = [sc.title, sc.description, sc.classScaffolding, sc.methodSignature].join(' | ');
+  if (roboticFluffRe.test(scText)) {
+    fail(scKey, `CodeGrade scenario contains prohibited meta-fluff: ${scText.match(roboticFluffRe)[0]}`);
+  }
   const res = CSharpEngine.evaluateCodeGrade(sc.modelSolution, sc);
   if (res.percentage !== 100) {
     fail(scKey, `CodeGrade modelSolution scored ${res.percentage}% instead of 100%`);
   }
 });
+(DATA.spotErrors || []).forEach(se => {
+  const seBlob = [se.prompt, ...(se.options || []), se.explanation].join(' | ');
+  if (roboticFluffRe.test(seBlob)) {
+    fail(se.id, `SpotError contains prohibited meta-fluff: ${seBlob.match(roboticFluffRe)[0]}`);
+  }
+  verifyRenderedTextIntegrity(se.id, 'explanation', se.explanation);
+});
 (DATA.auditScenarios || []).forEach(asc => {
+  const ascBlob = [asc.title, asc.description].join(' | ');
+  if (roboticFluffRe.test(ascBlob)) {
+    fail(asc.id || asc.filename || asc.fileName, `CodeAuditor scenario contains prohibited meta-fluff: ${ascBlob.match(roboticFluffRe)[0]}`);
+  }
   const res = CSharpEngine.CSharpCodeAuditor.audit(asc.canonicalSolution || asc.canonicalCode, asc);
   if (res.score !== 100) {
     fail(asc.id || asc.filename || asc.fileName, `CodeAuditor canonicalSolution scored ${res.score}% instead of 100%`);

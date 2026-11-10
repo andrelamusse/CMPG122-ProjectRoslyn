@@ -21,5 +21,6 @@
   "standaloneFileBundle": true,
   "consoleErrors": [],
   "pageErrors": [],
+  "customQuizShortcutsAndWeights": true,
   "edgeCrossBrowser": true
 }

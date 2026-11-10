@@ -17,7 +17,7 @@
   "moduleCode": "CMPG122",
   "moduleTitle": "User Interface Programming in Visual C#",
   "institution": "North-West University",
-  "version": "9.0.0",
+  "version": "9.2.0",
   "examWeightingModel": {
     "verifiedAgainst": [
       "CMPG 122 Module Outline Document (SU1–SU7, 12-week 120-hour curriculum)",
@@ -90,7 +90,7 @@
           "terminology": "Consistency, Universal Usability, Informative Feedback, Closure, Error Prevention, Easy Reversal of Actions, Internal Locus of Control, and Reducing Short-Term Memory Load.",
           "syntax": "// Rule 5 (Prevent Errors) + Rule 6 (Easy Reversal):\n// Constrain choices with RadioButtons & provide btnClear",
           "exampleScope": "fragment",
-          "minimalExample": "private void btnSubmitOrder_Click(object sender, EventArgs e)\n{\n    if (lstItems.Items.Count == 0)\n    {\n        MessageBox.Show(\"Add at least one item before submitting.\", \"Order Empty\");\n        return;\n    }\n    lblStatus.Text = \"Order confirmed — Reference #1042.\"; // Closure + Feedback\n}",
+          "minimalExample": "private void btnSubmitOrder_Click(object sender, EventArgs e)\n{\n    if (lstItems.Items.Count == 0)\n    {\n        MessageBox.Show(\"Add at least one item before submitting.\", \"Order Empty\");\n        return;\n    }\n    lblStatus.Text = \"Order confirmed - Reference #1042.\"; // Closure + Feedback\n}",
           "howItWorks": "Every Golden Rule corresponds to concrete C# UI behaviour: consistent button placement/terminology (Rule 1), Alt shortcuts (Rule 2), output labels (Rule 3), confirmation summaries (Rule 4), RadioButtons/TryParse (Rule 5), Clear/Cancel buttons (Rule 6), user-driven Click events (Rule 7), and visible rate tables/ListBoxes so users never memorize codes (Rule 8).",
           "commonMistakes": [
             "Requiring users to type raw category codes (\"1\", \"2\", \"3\") into a TextBox instead of displaying named RadioButtons or a ListBox (violates Rules 5 & 8).",
@@ -202,7 +202,7 @@
           "title": "Visual Studio IDE Windows & Six-Phase Development Cycle",
           "plainEnglish": "Visual Studio organises visual design, files, and properties into dedicated windows, supporting a disciplined six-step path from problem analysis to debugging.",
           "terminology": "Form Designer, Toolbox, Solution Explorer, Properties Window, Error List, IntelliSense, Syntax Error, Logic Error.",
-          "syntax": "// Phase 4–5: Write C# statements terminated by semicolons\nMessageBox.Show(\"Welcome to CMPG122!\");",
+          "syntax": "// Phase 4-5: Write C# statements terminated by semicolons\nMessageBox.Show(\"Welcome to CMPG122!\");",
           "exampleScope": "fragment",
           "minimalExample": "// Complete minimal Form1.cs structure:\nusing System;\nusing System.Windows.Forms;\n\nnamespace CampusApp\n{\n    public partial class Form1 : Form\n    {\n        public Form1()\n        {\n            InitializeComponent();\n        }\n    }\n}",
           "howItWorks": "You drag controls from the Toolbox onto the Form Designer, configure (Name) and Text in the Properties Window (saved into Form1.Designer.cs), manage project files in Solution Explorer, and write event logic in Form1.cs.",

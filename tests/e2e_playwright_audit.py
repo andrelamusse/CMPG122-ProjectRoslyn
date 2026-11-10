@@ -95,6 +95,16 @@ def run_suite():
             assert_true(page.locator('.su-ring-card').count() == 7, 'Home must display all 7 Study Unit progress ring cards')
             assert_true(page.locator('.csharp-shield-svg').count() == 1, 'C# Hexagon SVG emblem must render')
 
+            # 1b. Verify Home Quick Practice 7-SU balance & Home Quick Definition return banner label ("Back to Home Dashboard")
+            home_su_count = page.evaluate('new Set(window.CMPG122_APP.homeSession.questions.map(q => q.su)).size')
+            assert_true(home_su_count == 7, f'Expected Home Quick Practice pool to cover all 7 SUs, got {home_su_count}')
+            page.locator('#homeQuickDefsList [data-def-id]').first.click()
+            assert_true(page.locator('#viewDefinitions.active').count() == 1, 'Clicking Home quick definition must open Definitions')
+            home_ret_text = page.locator('#btnReturnFromDef').inner_text()
+            assert_true('Back to Home Dashboard' in home_ret_text, f'Expected Back to Home Dashboard banner, got: {home_ret_text}')
+            page.locator('#btnReturnFromDef').click()
+            assert_true(page.locator('#viewHome.active').count() == 1, 'Return from Home quick definition must restore Home Dashboard')
+
             # Wait briefly for Service Worker registration & initial shell cache on localhost
             page.wait_for_timeout(800)
 
@@ -142,7 +152,12 @@ def run_suite():
             results_summary['contextPreservingDefs'] = True
             print('[+] Verified Study Unit 10-part notes & exact context-preserving Definition return.')
 
-            # 6–9. Start Practice, test Keyboard Shortcuts (1-5, Enter, A-E) & Question Flagging
+            # 6–9. Start Practice, verify Mixed Curriculum 7-SU balance, test Keyboard Shortcuts (1-5, Enter, A-E) & Question Flagging
+            page.evaluate('window.CMPG122_APP.startUnitPractice("ALL", "")')
+            mixed_su_count = page.evaluate('new Set(window.CMPG122_APP.practiceSession.questions.map(q => q.su)).size')
+            assert_true(mixed_su_count == 7, f'Mixed Curriculum Practice must span all 7 SUs, got {mixed_su_count}')
+
+            page.evaluate('window.CMPG122_APP.selectStudyUnit("SU5")')
             page.locator('#btnPractiseActiveUnit').click()
             assert_true(page.locator('#viewPractice.active').count() == 1, 'Practice view must open')
 
@@ -204,6 +219,28 @@ def run_suite():
             page.locator('.sidebar-link[data-route="definitions"]').click()
             assert_true(page.locator('#btnReturnFromDef').count() == 0, 'Direct sidebar navigation to Definitions must not show stale return banner')
 
+            # 9b. Verify Custom Examination / Quiz Builder weighted 7-SU selection & Custom Quiz Keyboard Shortcuts (1-5, Enter, A-E)
+            page.locator('.sidebar-link[data-route="exams"]').click()
+            page.locator('#btnJumpCustomBuilder').click()
+            assert_true(page.locator('#practiceSubCustom').is_visible(), 'Custom Quiz Builder pane must open')
+            page.locator('#btnGenerateCustomExam').click()
+            assert_true(page.locator('#viewPractice.active').count() == 1, 'Default Custom Quiz must open in Interactive Quiz mode')
+            assert_true(page.locator('#practiceTimerBadge').is_visible(), 'Timed Custom Quiz must display live countdown badge in Practice toolbar')
+            custom_su_count = page.evaluate('new Set(window.CMPG122_APP.practiceSession.questions.map(q => q.su)).size')
+            assert_true(custom_su_count == 7, f'Default weighted 15-question Custom Quiz must span all 7 SUs, got {custom_su_count}')
+
+            # Immediately press '1', 'Enter', 'Enter', 'b' in Custom Quiz without manual click (verifies focus handoff + shortcuts)
+            page.keyboard.press('1')
+            assert_true(page.locator('#singleCardArea .q-option-btn.opt-selected').count() == 1, 'Custom Quiz key 1 must select option A')
+            page.keyboard.press('Enter')
+            assert_true(page.locator('#singleCardArea .q-feedback-panel').count() == 1, 'Custom Quiz Enter must submit selected option')
+            page.keyboard.press('Enter')
+            assert_true('Question 2 of' in page.locator('#singleCardArea').inner_text(), 'Custom Quiz second Enter must advance to Question 2')
+            page.keyboard.press('b')
+            assert_true(page.locator('#singleCardArea .q-feedback-panel').count() == 1, 'Custom Quiz key b must immediately select & submit option B')
+            results_summary['customQuizShortcutsAndWeights'] = True
+            print('[+] Verified Custom Quiz Builder weighted 7-SU distribution & keyboard shortcuts (1-5, Enter, A-E).')
+
             # 10–12. Complete a Continuous Single-Sheet Past Examination Paper & Review Results
             page.locator('.sidebar-link[data-route="exams"]').click()
             page.locator('[data-start-paper="exam_2024_dec"][data-paper-timed="true"]').click()
@@ -232,13 +269,43 @@ def run_suite():
 
             assert_true(page.locator('.exam-results-banner').is_visible(), 'Exam results banner must appear after submission')
             assert_true('/ 100' in page.locator('.exam-results-banner').inner_text(), 'Total marks must equal 100 in Dec 2024 paper')
-            results_summary['continuousPastExam'] = True
-            print('[+] Verified Continuous Past Exam Paper, Circular Unanswered Jump, Pre-Submit Modal, and 100-Mark Grading.')
 
-            # 13. Open Progress / Unanswered & Flagged Review -> Verify honest states & Switch Theme -> Reload
+            # Verify expanding <details class="distractor-details"> in Exam Review persists across Definition return!
+            exam_q0 = page.locator('#continuousPaperArea .paper-q-card').first
+            exam_dist_details = exam_q0.locator('details.distractor-details')
+            exam_dist_details.locator('summary').click()
+            assert_true(exam_dist_details.evaluate('el => el.open') is True, 'Exam Review distractor-details should expand')
+            exam_q0.locator('.def-chip-btn').first.click()
+            assert_true(page.locator('#viewDefinitions.active').count() == 1, 'Definitions must open from Exam Review')
+            assert_true('Back to Examination Question' in page.locator('#btnReturnFromDef').inner_text(), 'Expected Back to Examination Question banner')
+            page.locator('#btnReturnFromDef').click()
+            assert_true(page.locator('#viewExams.active').count() == 1, 'Must return to Exam Review')
+            assert_true(
+                page.locator('#continuousPaperArea .paper-q-card').first.locator('details.distractor-details').evaluate('el => el.open') is True,
+                'Expanded distractor-details inside Exam Review must stay open after returning from Definition'
+            )
+
+            results_summary['continuousPastExam'] = True
+            print('[+] Verified Continuous Past Exam Paper, Circular Unanswered Jump, Pre-Submit Modal, 100-Mark Grading & Distractor Details Return.')
+
+            # 13. Open Progress / Unanswered & Flagged Review -> Verify honest states, Distractor Details Return & Switch Theme -> Reload
             page.locator('.sidebar-link[data-route="progress"]').click()
             assert_true(page.locator('#analyticsHost').is_visible(), 'Analytics & Review view must render')
             assert_true('Unanswered (13)' in page.locator('#analyticsHost').inner_text(), 'Unanswered review tab must track 13 blank exam items')
+            page.locator('[data-review-tab="unanswered"]').click()
+            rev_dist_details = page.locator('#analyticsHost details.distractor-details').first
+            rev_dist_details.locator('summary').click()
+            assert_true(rev_dist_details.evaluate('el => el.open') is True, 'Question Review distractor-details should expand')
+            page.locator('#analyticsHost .def-chip-btn').first.click()
+            assert_true(page.locator('#viewDefinitions.active').count() == 1, 'Definitions must open from Question Review')
+            assert_true('Back to Question Review' in page.locator('#btnReturnFromDef').inner_text(), 'Expected Back to Question Review banner')
+            page.locator('#btnReturnFromDef').click()
+            assert_true(page.locator('#viewProgress.active').count() == 1, 'Must return to Question Review')
+            assert_true(
+                page.locator('#analyticsHost details.distractor-details').first.evaluate('el => el.open') is True,
+                'Expanded distractor-details inside Question Review must stay open after returning from Definition'
+            )
+
             page.locator('[data-review-tab="flagged"]').click()
             flagged_text = page.locator('#analyticsHost').inner_text()
             assert_true('Flagged for Review (Not Yet Attempted)' in flagged_text, 'Unattempted flagged bookmark must not fake a Correct score')
@@ -351,18 +418,77 @@ def run_suite():
             page.locator('#btnThemeDark').click()
             dark_a11y = page.evaluate(a11y_check_js)
             assert_true(len(dark_a11y['issues']) == 0, f"Dark theme accessibility issues: {dark_a11y['issues']}")
-            results_summary['accessibilityChecks'] = True
-            print(f"[+] Verified WCAG Landmarks, Heading Order, Pill & SVG Diagram Contrast (Light={light_a11y['bodyContrast']:.1f}:1, Dark={dark_a11y['bodyContrast']:.1f}:1).")
 
-            # 16–17. Disable Internet Connectivity & Verify Full Offline Functionality (PWA + Code Lab + Multi-Bug Auditor)
+            # Also verify .scenario-brief-container, .scenario-callout, .scenario-section-header, .scenario-spec-table & .rate-tag in BOTH Light and Dark!
+            page.evaluate('window.CMPG122_APP.startOfficialExam("exam_2024_dec", false)')
+            scenario_contrast_js = """
+            () => {
+              const issues = [];
+              function parseRgba(s) {
+                const m = s && s.match(/rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)(?:,\\s*([0-9.]+))?\\)/);
+                return m ? [Number(m[1]), Number(m[2]), Number(m[3]), m[4] !== undefined ? Number(m[4]) : 1] : null;
+              }
+              function blend(fg, bg) {
+                const a = fg[3];
+                return [
+                  Math.round(fg[0] * a + bg[0] * (1 - a)),
+                  Math.round(fg[1] * a + bg[1] * (1 - a)),
+                  Math.round(fg[2] * a + bg[2] * (1 - a)),
+                  1
+                ];
+              }
+              function lum([r, g, b]) {
+                const f = c => { const v = c / 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+                return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+              }
+              function ratio(c1, c2) {
+                const l1 = lum(c1), l2 = lum(c2);
+                return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+              }
+              const bodyBg = parseRgba(getComputedStyle(document.body).backgroundColor) || [15, 23, 42, 1];
+              for (const sel of ['.scenario-brief-container', '.scenario-callout', '.scenario-section-header', '.scenario-spec-table', '.rate-tag']) {
+                const el = document.querySelector(`#continuousPaperArea ${sel}`);
+                if (!el) { issues.push(`Missing ${sel} in active past paper`); continue; }
+              }
+              const rateTag = document.querySelector('#continuousPaperArea .rate-tag');
+              if (rateTag) {
+                const rtStyle = getComputedStyle(rateTag);
+                const rtFg = parseRgba(rtStyle.color);
+                const rtBgRaw = parseRgba(rtStyle.backgroundColor);
+                const rtBg = rtBgRaw ? blend(rtBgRaw, bodyBg) : bodyBg;
+                const rtRatio = ratio(rtFg, rtBg);
+                if (rtRatio < 4.5) issues.push(`Low .rate-tag contrast: ${rtRatio.toFixed(2)}:1`);
+              }
+              return issues;
+            }
+            """
+            assert_true(len(page.evaluate(scenario_contrast_js)) == 0, f"Dark theme scenario brief issues: {page.evaluate(scenario_contrast_js)}")
+            page.locator('#btnThemeLight').click()
+            assert_true(len(page.evaluate(scenario_contrast_js)) == 0, f"Light theme scenario brief issues: {page.evaluate(scenario_contrast_js)}")
+            page.locator('#btnThemeDark').click()
+
+            results_summary['accessibilityChecks'] = True
+            print(f"[+] Verified WCAG Landmarks, Heading Order, Pill, SVG Diagram & Past-Paper Scenario Brief Contrast (Light={light_a11y['bodyContrast']:.1f}:1, Dark={dark_a11y['bodyContrast']:.1f}:1).")
+
+            # 16–17. Disable Internet Connectivity & Verify Full Offline Functionality (PWA + Code Lab Dynamic Signatures + Multi-Bug Auditor)
             page.locator('.sidebar-link[data-route="home"]').click()
             context.set_offline(True)
             page.reload(wait_until='domcontentloaded')
             page.wait_for_timeout(300)
             assert_true(page.locator('.su-ring-card').count() == 7, 'Offline reload via Service Worker must render full dashboard')
 
-            # Navigate to C# Code Lab while offline and run BOTH CodeGrade AND Multi-Bug Code Auditor
+            # Navigate to C# Code Lab while offline, verify dynamic event-handler signatures across scenarios, and run CodeGrade + Auditor
             page.locator('#qaCodeLab').click()
+            sig_initial = page.locator('#cgMethodHeader').inner_text().strip()
+            assert_true('btnStop_Click' in sig_initial, f'Expected Racing Light Trainer btnStop_Click signature, got: {sig_initial}')
+            page.locator('#codeScenarioSelect').select_option('scenario_file_sales')
+            sig_file = page.locator('#cgMethodHeader').inner_text().strip()
+            assert_true('btnSaveSale_Click' in sig_file, f'Expected btnSaveSale_Click signature, got: {sig_file}')
+            page.locator('#codeScenarioSelect').select_option('scenario_multiform_dispatch')
+            sig_multi = page.locator('#cgMethodHeader').inner_text().strip()
+            assert_true('btnShowSummary_Click' in sig_multi, f'Expected btnShowSummary_Click signature, got: {sig_multi}')
+            page.locator('#codeScenarioSelect').select_option('scenario_racing_light')
+
             page.locator('#btnShowSolution').click()
             page.locator('#btnRunCodeGrade').click()
             assert_true('100%' in page.locator('#codeGradeOutputHost').inner_text(), 'Offline C# CodeGrade evaluation must score 100% on model solution')
@@ -377,9 +503,40 @@ def run_suite():
             context.set_offline(False)
             results_summary['offlineServiceWorker'] = True
             results_summary['e2eLearnerPath'] = True
-            print('[+] Verified 100% Offline PWA Startup, Navigation, CodeGrade & Multi-Bug Code Auditor Execution.')
+            print('[+] Verified 100% Offline PWA Startup, Dynamic Code Lab Signatures, CodeGrade & Multi-Bug Code Auditor Execution.')
 
-            # Responsive Verification Across All 10 Required Viewports (320x568 -> 1920x1080)
+            # Keep an active Past Exam Paper open on #viewExams so the 10-viewport responsive sweep verifies active exam non-clipping!
+            page.evaluate('window.CMPG122_APP.startOfficialExam("exam_2024_dec", false)')
+
+            # Responsive & Bounding-Box Non-Clipping Verification Across All 10 Required Viewports (320x568 -> 1920x1080)
+            bbox_check_js = """
+            () => {
+              const vw = window.innerWidth;
+              const selectors = [
+                '#continuousPaperArea',
+                '#continuousPaperArea .paper-q-card',
+                '#continuousPaperArea .scenario-brief-container',
+                '#continuousPaperArea .scenario-callout',
+                '#continuousPaperArea .scenario-table-wrap',
+                '.view-section.active .panel-card',
+                '.view-section.active .single-q-card',
+                '.view-section.active .study-unit-banner',
+                '.view-section.active .topic-card',
+                '.view-section.active .def-card'
+              ];
+              for (const sel of selectors) {
+                for (const el of document.querySelectorAll(sel)) {
+                  if (el.offsetParent === null) continue;
+                  const r = el.getBoundingClientRect();
+                  if (r.width === 0 && r.height === 0) continue;
+                  if (r.right > vw + 1.5 || r.left < -1.5) {
+                    return `${sel} clipped viewport ${vw}px (left=${r.left.toFixed(1)}, right=${r.right.toFixed(1)}, width=${r.width.toFixed(1)})`;
+                  }
+                }
+              }
+              return null;
+            }
+            """
             shot_dir = os.environ.get('CMPG122_SCREENSHOT_DIR')
             for (vw, vh) in REQUIRED_VIEWPORTS:
                 page.set_viewport_size({'width': vw, 'height': vh})
@@ -391,12 +548,24 @@ def run_suite():
                         overflow <= 1,
                         f'Horizontal overflow ({overflow}px) detected on route "{route}" at viewport {vw}x{vh}'
                     )
+                    clip_err = page.evaluate(bbox_check_js)
+                    assert_true(
+                        clip_err is None,
+                        f'Bounding-box clipping on route "{route}" at viewport {vw}x{vh}: {clip_err}'
+                    )
+                    if route == 'exams':
+                        assert_true(
+                            page.locator('#continuousPaperArea .paper-q-card').count() == 16,
+                            f'Active exam paper cards must remain mounted on exams route at {vw}x{vh}'
+                        )
                 if vw == 320:
                     # Also verify every single one of the 7 Study Units at 320px
                     for su in ['SU7', 'SU1', 'SU2', 'SU3', 'SU4', 'SU5', 'SU6']:
                         page.evaluate(f'window.CMPG122_APP.selectStudyUnit("{su}")')
                         ov_su = page.evaluate('document.documentElement.scrollWidth - window.innerWidth')
                         assert_true(ov_su <= 1, f'Horizontal overflow ({ov_su}px) on {su} at 320x568')
+                        su_clip = page.evaluate(bbox_check_js)
+                        assert_true(su_clip is None, f'Bounding-box clipping on {su} at 320x568: {su_clip}')
 
                 if shot_dir and (vw, vh) in [(1440, 900), (768, 1024), (375, 812)]:
                     page.evaluate('window.CMPG122_APP.navigate("home")')
@@ -417,7 +586,7 @@ def run_suite():
             page.set_viewport_size({'width': 1024, 'height': 768})
             assert_true(page.locator('#singleCardArea .q-option-btn.opt-selected').count() == 1, 'Resizing must not destroy selected question state')
 
-            print(f"[+] Verified Zero Horizontal Overflow & Adaptive Navigation across all {len(REQUIRED_VIEWPORTS)} viewports (all 7 routes + all 7 SUs at 320px).")
+            print(f"[+] Verified Zero Horizontal Overflow & Zero Bounding-Box Clipping (including Active Past Exam Paper) across all {len(REQUIRED_VIEWPORTS)} viewports.")
 
             # Standalone Mobile/Offline Bundle Verification on file://
             assert_true(STANDALONE_HTML.exists(), f'Missing standalone bundle {STANDALONE_HTML}')

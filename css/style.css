@@ -76,7 +76,7 @@
   --accent-primary-hover: #4327c7;
   --accent-primary-soft: rgba(91, 61, 245, 0.11);
   --accent-secondary: #0284c7;
-  --accent-tertiary: #6d28d9;
+  --accent-tertiary: #5b21b6;
 
   --bg-app: #f1f5f9;
   --bg-shell: #f8fafc;
@@ -474,6 +474,8 @@ button {
 
 .view-section {
   display: none;
+  min-width: 0;
+  max-width: 100%;
 }
 .view-section.active {
   display: block;
@@ -865,6 +867,9 @@ button:disabled {
   line-height: 1.6;
   margin-bottom: var(--space-3);
   white-space: pre-line;
+  overflow-wrap: anywhere;
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* Subtle Inline Definition Links (Section 12.2) */
@@ -907,6 +912,8 @@ button:disabled {
   border-radius: var(--radius-md);
   margin: var(--space-3) 0 var(--space-4);
   overflow: hidden;
+  min-width: 0;
+  max-width: 100%;
 }
 .code-block-bar {
   display: flex;
@@ -941,6 +948,7 @@ button:disabled {
   margin: 0;
   padding: var(--space-3) var(--space-4);
   overflow-x: auto;
+  max-width: 100%;
   font-family: var(--font-mono);
   font-size: 0.86rem;
   line-height: 1.55;
@@ -959,9 +967,13 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
+  min-width: 0;
+  max-width: 100%;
 }
 .q-option-btn {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 46px;
   display: flex;
   align-items: center;
@@ -1026,12 +1038,14 @@ button:disabled {
   flex: 1;
   font-size: 0.91rem;
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 .opt-code-pre {
   margin: 0;
   font-family: var(--font-mono);
   font-size: 0.82rem;
   overflow-x: auto;
+  max-width: 100%;
   white-space: pre;
 }
 
@@ -1068,6 +1082,8 @@ button:disabled {
   border-radius: var(--radius-md);
   border: 1px solid var(--border-subtle);
   background: var(--surface-2);
+  min-width: 0;
+  max-width: 100%;
 }
 .q-feedback-panel.feedback-correct {
   border-color: var(--status-success-border);
@@ -1100,11 +1116,16 @@ button:disabled {
   font-size: 0.9rem;
   color: var(--text-primary);
   line-height: 1.55;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 .distractor-details {
   margin-top: var(--space-3);
   font-size: 0.85rem;
   color: var(--text-secondary);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 .distractor-details summary {
   cursor: pointer;
@@ -1313,17 +1334,23 @@ button:disabled {
   border-radius: var(--radius-md);
   padding: 0.65rem 0.9rem;
   margin-top: var(--space-2);
+  min-width: 0;
+  max-width: 100%;
 }
 .topic-details summary {
   cursor: pointer;
   font-weight: var(--fw-semibold);
   font-size: 0.88rem;
   color: var(--text-primary);
+  overflow-wrap: anywhere;
 }
 .topic-details-body {
   margin-top: var(--space-3);
   font-size: 0.88rem;
   color: var(--text-secondary);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .callout-box {
@@ -1331,6 +1358,9 @@ button:disabled {
   border-radius: var(--radius-sm);
   margin-top: var(--space-2);
   font-size: 0.86rem;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 .callout-warning {
   background: var(--status-warning-bg);
@@ -1343,25 +1373,88 @@ button:disabled {
   color: var(--text-primary);
 }
 
+/* Examination Scenario Brief, Callouts, Section Headers, Spec Tables & Rate Tags */
+.scenario-brief-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+  max-width: 100%;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+.scenario-callout {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  color: var(--text-primary);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.scenario-callout ul,
+.scenario-callout ol {
+  margin: var(--space-2) 0 0;
+  padding-left: 1.25rem;
+}
+.scenario-callout li + li {
+  margin-top: 0.3rem;
+}
+.scenario-section-header {
+  font-size: 0.88rem;
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-top: var(--space-1);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.rate-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: var(--fw-bold);
+  padding: 0.12rem 0.45rem;
+  border-radius: var(--radius-xs);
+  background: var(--accent-primary-soft);
+  color: var(--accent-tertiary);
+  border: 1px solid var(--border-subtle);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
 /* Responsive Tables inside Study Notes & Scenarios */
 .cheatsheet-host {
   width: 100%;
   max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .scenario-table-wrap {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   margin: var(--space-3) 0;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
 }
+.scenario-spec-table,
 .scenario-table-wrap table,
 .data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
 }
+.scenario-spec-table th,
+.scenario-spec-table td,
 .scenario-table-wrap th,
 .scenario-table-wrap td,
 .data-table th,
@@ -1369,7 +1462,9 @@ button:disabled {
   padding: 0.6rem 0.8rem;
   border-bottom: 1px solid var(--border-subtle);
   text-align: left;
+  vertical-align: top;
 }
+.scenario-spec-table th,
 .scenario-table-wrap th,
 .data-table th {
   background: var(--surface-2);
@@ -1480,10 +1575,12 @@ button:disabled {
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   margin-bottom: var(--space-5);
+  min-width: 0;
+  max-width: 100%;
 }
 .results-kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
   gap: var(--space-3);
   margin: var(--space-4) 0;
 }
@@ -1493,6 +1590,7 @@ button:disabled {
   border-radius: var(--radius-md);
   padding: var(--space-3);
   text-align: center;
+  min-width: 0;
 }
 .kpi-val {
   font-size: 1.35rem;
@@ -1534,6 +1632,8 @@ button:disabled {
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
   overflow: hidden;
+  min-width: 0;
+  max-width: 100%;
 }
 .code-sig-line {
   padding: 0.55rem 1rem;
@@ -1541,6 +1641,8 @@ button:disabled {
   font-size: 0.84rem;
   color: var(--text-muted);
   background: var(--surface-2);
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 .code-textarea {
   width: 100%;
@@ -1575,6 +1677,23 @@ button:disabled {
   box-shadow: var(--shadow-md);
 }
 
+#continuousPaperArea,
+#activeExamWorkspace,
+#examsLobbyPane,
+#examNavigatorBar,
+#singleCardArea,
+#practiceContinuousArea,
+#practiceSubSession,
+#practiceSubCustom,
+#practiceSubCodelab,
+#codelabSandboxPane,
+#codelabSpotPane,
+#auditStudioContainer,
+#studyUnitContentHost,
+#analyticsHost,
+#settingsHost,
+#defsCardsHost,
+.exam-workspace-shell,
 .def-card,
 .panel-card,
 .topic-card,
@@ -1584,6 +1703,7 @@ button:disabled {
 .dashboard-col-center,
 .dashboard-col-right {
   min-width: 0;
+  max-width: 100%;
 }
 
 .def-card {
@@ -1682,7 +1802,7 @@ button:disabled {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   .dashboard-lower-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .dashboard-col-center {
     grid-column: 1 / -1;
@@ -1693,7 +1813,7 @@ button:disabled {
 /* Tablet Portrait & Landscape (<= 1024px) */
 @media (max-width: 1024px) {
   .exam-workspace-shell {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .exam-sticky-sidebar {
     position: fixed;
@@ -1720,7 +1840,7 @@ button:disabled {
     display: inline-flex;
   }
   .app-shell {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .app-sidebar {
     position: fixed;
@@ -1772,7 +1892,7 @@ button:disabled {
     padding: var(--space-4);
   }
   .dashboard-lower-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .su-rings-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1845,7 +1965,7 @@ button:disabled {
     padding: 0;
   }
   .su-rings-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .hero-brand-cluster {
     flex-direction: column;

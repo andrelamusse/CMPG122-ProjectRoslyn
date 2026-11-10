@@ -1755,17 +1755,20 @@
     "q_su-exam_351": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 4.10"
     },
     "q_su-exam_352": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 2 & Ch 3"
     },
     "q_su-exam_353": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 4.9"
     },
     "q_su-exam_354": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
@@ -1775,7 +1778,8 @@
     "q_su-exam_355": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 3.5"
     },
     "q_su-exam_356": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
@@ -1785,57 +1789,68 @@
     "q_su-exam_357": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 4.10"
     },
     "q_su-exam_358": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 3.5"
     },
     "q_su-exam_359": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 2.4"
     },
     "q_su-exam_360": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 2 & Ch 3"
     },
     "q_su-exam_361": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 2.4"
     },
     "q_su-exam_362": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 4.9"
     },
     "q_su-exam_363": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 4.9"
     },
     "q_su-exam_364": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 3.6"
     },
     "q_su-exam_365": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Visual C# Ch 4.11"
     },
     "q_su-exam_366": {
       "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "sourceCitation": "Shneiderman Ch 2"
     },
     "q_su-exam_367": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 2"
     },
     "q_su-exam_368": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
@@ -1845,77 +1860,92 @@
     "q_su-exam_369": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 4.10"
     },
     "q_su-exam_370": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 3.4"
     },
     "q_su-exam_371": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 5"
     },
     "q_su-exam_372": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 5.5"
     },
     "q_su-exam_373": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 4.11"
     },
     "q_su-exam_374": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 4.9"
     },
     "q_su-exam_375": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 3.8"
     },
     "q_su-exam_376": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 3.8"
     },
     "q_su-exam_377": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 3.7"
     },
     "q_su-exam_378": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 4.10"
     },
     "q_su-exam_379": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 4.10"
     },
     "q_su-exam_380": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 3.5"
     },
     "q_su-exam_381": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Visual C# Ch 2.4"
     },
     "q_su-exam_382": {
       "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "sourceCitation": "Shneiderman Ch 2"
     },
     "q_su-exam_383": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 4.10"
     },
     "q_su-exam_384": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
@@ -1925,7 +1955,8 @@
     "q_su-exam_385": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 3.4"
     },
     "q_su-exam_386": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
@@ -1935,67 +1966,80 @@
     "q_su-exam_387": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 5.5"
     },
     "q_su-exam_388": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 4.10"
     },
     "q_su-exam_389": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 4.6"
     },
     "q_su-exam_390": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 4.11"
     },
     "q_su-exam_391": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 3.2"
     },
     "q_su-exam_392": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 3.5"
     },
     "q_su-exam_393": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 3.8"
     },
     "q_su-exam_394": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 3.8"
     },
     "q_su-exam_395": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 2.3"
     },
     "q_su-exam_396": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 2.3"
     },
     "q_su-exam_397": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Visual C# Ch 4.9"
     },
     "q_su-exam_398": {
       "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "sourceCitation": "Shneiderman Ch 2"
     },
     "q_su-exam_399": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 2"
     },
     "q_su-exam_400": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
@@ -2010,77 +2054,92 @@
     "q_su-exam_402": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 4.10"
     },
     "q_su-exam_403": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 4.6"
     },
     "q_su-exam_404": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 4.9"
     },
     "q_su-exam_405": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 5.7"
     },
     "q_su-exam_406": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 5.7"
     },
     "q_su-exam_407": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 3.5"
     },
     "q_su-exam_408": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 4.11"
     },
     "q_su-exam_409": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 4.11"
     },
     "q_su-exam_410": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 4.11"
     },
     "q_su-exam_411": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 4.10"
     },
     "q_su-exam_412": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 4.10"
     },
     "q_su-exam_413": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Shneiderman Ch 2"
     },
     "q_su-exam_414": {
       "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "sourceCitation": "Visual C# Ch 2.4"
     },
     "q_su-exam_415": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 2"
     },
     "q_su-exam_416": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 4.9"
     },
     "q_su-exam_417": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
@@ -2090,67 +2149,80 @@
     "q_su-exam_418": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 4.5"
     },
     "q_su-exam_419": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 3.3"
     },
     "q_su-exam_420": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 4.11"
     },
     "q_su-exam_421": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 4.11"
     },
     "q_su-exam_422": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 3.6"
     },
     "q_su-exam_423": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 3.6"
     },
     "q_su-exam_424": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 3.6"
     },
     "q_su-exam_425": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 4.9"
     },
     "q_su-exam_426": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 3.5"
     },
     "q_su-exam_427": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 4.10"
     },
     "q_su-exam_428": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 3.4"
     },
     "q_su-exam_429": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Visual C# Ch 4.9"
     },
     "q_su-exam_430": {
       "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
       "verifiedStage": "Stage C Schema & C# Syntax Audit",
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "sourceCitation": "Shneiderman Ch 2"
     },
     "q_su4_351": {
       "source": "SU4 Curriculum Objective",

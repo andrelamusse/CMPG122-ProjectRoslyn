@@ -3,7 +3,7 @@
  * Versioned app-shell cache with safe non-disruptive update handling
  * (never forces reloads during active examination sessions).
  */
-const CACHE_NAME = 'cmpg122-shell-v9.1.0';
+const CACHE_NAME = 'cmpg122-shell-v9.2.0';
 const APP_SHELL_ASSETS = [
   './',
   './index.html',

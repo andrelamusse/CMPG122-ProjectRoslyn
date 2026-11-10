@@ -1,5 +1,5 @@
 /**
- * NWU CMPG122 — Calibrated Question Bank Module (585 Verified Questions)
+ * NWU CMPG122 â€” Calibrated Question Bank Module (585 Verified Questions)
  * Strictly learner-facing (internal provenance isolated in audit/provenance_registry.json).
  */
 (function (root, factory) {
@@ -196,7 +196,7 @@
       "ans": 2,
       "exp": "The 5 measurable usability goals are: 1. Time to learn, 2. Speed of performance, 3. Rate of errors by users, 4. Retention over time, and 5. Subjective satisfaction. Hardware manufacturing cost is an engineering/financial metric.",
       "explanation": "The 5 measurable usability goals are: 1. Time to learn, 2. Speed of performance, 3. Rate of errors by users, 4. Retention over time, and 5. Subjective satisfaction. Hardware manufacturing cost is an engineering/financial metric.",
-      "distractorRationale": "",
+      "distractorRationale": "Time to learn, Speed of performance, Rate of errors by users, and Subjective satisfaction (along with Retention over time) are Shneiderman's five human usability factors, whereas hardware manufacturing cost is a supply-chain metric.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -204,7 +204,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su7_002",
@@ -238,7 +239,7 @@
       "ans": 0,
       "exp": "Retention over time measures how well users maintain their operational knowledge of the interface after days, weeks, or months without using the system.",
       "explanation": "Retention over time measures how well users maintain their operational knowledge of the interface after days, weeks, or months without using the system.",
-      "distractorRationale": "",
+      "distractorRationale": "Speed of performance measures task duration once proficient, Time to learn measures initial onboarding effort, and Universal usability addresses user/device diversity rather than memory decay over time.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -246,7 +247,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su7_003",
@@ -280,7 +282,7 @@
       "ans": 1,
       "exp": "For life-critical systems, high reliability and zero/near-zero error rates are supreme because human lives depend on system accuracy and fault prevention.",
       "explanation": "For life-critical systems, high reliability and zero/near-zero error rates are supreme because human lives depend on system accuracy and fault prevention.",
-      "distractorRationale": "",
+      "distractorRationale": "Playfulness, low training cost, and casual subjective comfort are secondary in life-critical domains where a single operator error can endanger human life.",
       "definitions": [
         "def_error_prevention",
         "def_tryparse",
@@ -288,7 +290,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su7_004",
@@ -322,7 +325,7 @@
       "ans": 2,
       "exp": "Industrial and commercial systems focus on reducing operator transaction time, lowering training costs, and speeding up repetitive data entry tasks.",
       "explanation": "Industrial and commercial systems focus on reducing operator transaction time, lowering training costs, and speeding up repetitive data entry tasks.",
-      "distractorRationale": "",
+      "distractorRationale": "Life-critical systems cover aviation/medical control, Socio-technical systems cover civic/public-trust infrastructure, and Exploratory systems cover creative authoring tools.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -330,7 +333,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su7_005",
@@ -364,7 +368,7 @@
       "ans": 3,
       "exp": "Universal usability means designing systems that can be successfully used by a broad spectrum of human users (including elderly, children, disabled) across diverse hardware.",
       "explanation": "Universal usability means designing systems that can be successfully used by a broad spectrum of human users (including elderly, children, disabled) across diverse hardware.",
-      "distractorRationale": "",
+      "distractorRationale": "Restricting an app to high-end PCs, forcing command-line syntax, or removing graphical controls excludes novice, disabled, and diverse hardware users.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -372,7 +376,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su7_006",
@@ -406,7 +411,7 @@
       "ans": 0,
       "exp": "Rule 1: Strive for consistency. Consistent sequences of actions, identical terminology in prompts/menus, and consistent fonts and colors reduce cognitive load.",
       "explanation": "Rule 1: Strive for consistency. Consistent sequences of actions, identical terminology in prompts/menus, and consistent fonts and colors reduce cognitive load.",
-      "distractorRationale": "",
+      "distractorRationale": "Consistency does not excuse mindless copy-pasting, never replaces software testing, and never forces inappropriate colours like painting every button red.",
       "definitions": [
         "def_eight_golden_rules",
         "def_radiobutton_checkbox_groupbox",
@@ -414,7 +419,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_007",
@@ -448,7 +454,7 @@
       "ans": 1,
       "exp": "Rule 5: Prevent errors. Graying out or disabling buttons that cannot be legally clicked prevents users from making fatal input errors before they happen.",
       "explanation": "Rule 5: Prevent errors. Graying out or disabling buttons that cannot be legally clicked prevents users from making fatal input errors before they happen.",
-      "distractorRationale": "",
+      "distractorRationale": "Easy reversal undoes an action after execution, Locus of control concerns user-initiated flow, and Memory load concerns keeping data visibleâ€”disabling Submit beforehand prevents invalid submission from occurring.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -456,7 +462,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su7_008",
@@ -490,7 +497,7 @@
       "ans": 2,
       "exp": "Rule 4: Design dialogs to yield closure. Sequences of action should have a beginning, middle, and end, with informative feedback indicating task completion so users feel closure.",
       "explanation": "Rule 4: Design dialogs to yield closure. Sequences of action should have a beginning, middle, and end, with informative feedback indicating task completion so users feel closure.",
-      "distractorRationale": "",
+      "distractorRationale": "Consistency standardizes layout/terminology, Universal usability accommodates diverse users, and Memory load minimizes recall; confirming a finished R1,500 transaction specifically provides task-end closure.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -498,7 +505,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_009",
@@ -532,7 +540,7 @@
       "ans": 3,
       "exp": "Rule 6: Permit easy reversal of actions. When users know errors can be undone, it relieves anxiety and encourages exploration of unfamiliar options.",
       "explanation": "Rule 6: Permit easy reversal of actions. When users know errors can be undone, it relieves anxiety and encourages exploration of unfamiliar options.",
-      "distractorRationale": "",
+      "distractorRationale": "Memory load keeps reference values visible, Informative feedback reports current state, and Consistency unifies styling; Undo and Clear specifically let users reverse unwanted actions safely.",
       "definitions": [
         "def_error_prevention",
         "def_tryparse",
@@ -540,7 +548,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su7_010",
@@ -574,7 +583,7 @@
       "ans": 0,
       "exp": "Rule 8 is grounded in Miller's Law (7 ± 2 chunks). Interfaces must avoid requiring users to remember numbers or codes from one screen to the next.",
       "explanation": "Rule 8 is grounded in Miller's Law (7 ± 2 chunks). Interfaces must avoid requiring users to remember numbers or codes from one screen to the next.",
-      "distractorRationale": "",
+      "distractorRationale": "Human working memory is strictly bounded (~7 Â± 2 chunks), never limitless, and users should recognize displayed options rather than memorize raw codes.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -582,7 +591,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_011",
@@ -616,7 +626,7 @@
       "ans": 1,
       "exp": "The Gulf of Execution is the psychological gap between what a user wants to achieve and the physical input mechanisms the interface provides to accomplish it.",
       "explanation": "The Gulf of Execution is the psychological gap between what a user wants to achieve and the physical input mechanisms the interface provides to accomplish it.",
-      "distractorRationale": "",
+      "distractorRationale": "Viewing distance, network latency, and C# build times are physical or engineering metrics unrelated to Norman's psychological gap between user intention and available interface controls.",
       "definitions": [
         "def_gulf_of_execution",
         "def_gulf_of_evaluation",
@@ -624,7 +634,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_012",
@@ -658,7 +669,7 @@
       "ans": 2,
       "exp": "The Gulf of Evaluation is the difficulty of assessing the state of the system and deciding whether the intended goal was achieved through the feedback provided.",
       "explanation": "The Gulf of Evaluation is the difficulty of assessing the state of the system and deciding whether the intended goal was achieved through the feedback provided.",
-      "distractorRationale": "",
+      "distractorRationale": "Software licensing cost, exam grading time, and source-code line count have nothing to do with perceiving and interpreting visual feedback after an action.",
       "definitions": [
         "def_gulf_of_execution",
         "def_gulf_of_evaluation",
@@ -666,7 +677,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_013",
@@ -700,7 +712,7 @@
       "ans": 3,
       "exp": "Rule 7: Support internal locus of control. Experienced operators strongly desire the feeling that they are in charge of the interface and that the system responds to their commands.",
       "explanation": "Rule 7: Support internal locus of control. Experienced operators strongly desire the feeling that they are in charge of the interface and that the system responds to their commands.",
-      "distractorRationale": "",
+      "distractorRationale": "Arbitrary delays, unsolicited loud sounds, and unprompted form closures make the computer feel erratic and strip control away from the user.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -708,7 +720,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_014",
@@ -742,7 +755,7 @@
       "ans": 0,
       "exp": "Rule 2: Cater to universal usability. Keyboard shortcuts allow expert power users to execute commands rapidly and support users with motor impairments.",
       "explanation": "Rule 2: Cater to universal usability. Keyboard shortcuts allow expert power users to execute commands rapidly and support users with motor impairments.",
-      "distractorRationale": "",
+      "distractorRationale": "The Windows kernel does not mandate mnemonics, access keys do not shrink `.exe` binaries, and UI shortcuts have no effect on C# syntax checking.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -750,7 +763,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_015",
@@ -784,7 +798,7 @@
       "ans": 1,
       "exp": "HCI principles dictate that error messages must be specific, polite, informative, and provide clear instructions on how to correct the problem.",
       "explanation": "HCI principles dictate that error messages must be specific, polite, informative, and provide clear instructions on how to correct the problem.",
-      "distractorRationale": "",
+      "distractorRationale": "Harsh alarms, unhandled exception crashes, or silent failures either punish, halt, or confuse the user instead of guiding recovery.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -792,7 +806,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su7_016",
@@ -826,7 +841,7 @@
       "ans": 2,
       "exp": "Home, entertainment, and consumer systems prioritize user engagement, ease of adoption, and subjective enjoyment.",
       "explanation": "Home, entertainment, and consumer systems prioritize user engagement, ease of adoption, and subjective enjoyment.",
-      "distractorRationale": "",
+      "distractorRationale": "Industrial process control, military infrastructure, and life-critical systems prioritize operational safety or throughput rather than leisure enjoyment and voluntary engagement.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -834,7 +849,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su7_017",
@@ -868,7 +884,7 @@
       "ans": 3,
       "exp": "The GOMS model is an engineering model of human cognitive performance used to predict execution times.",
       "explanation": "The GOMS model is an engineering model of human cognitive performance used to predict execution times.",
-      "distractorRationale": "",
+      "distractorRationale": "Relational database theory models tables/keys, Ohm's Law relates voltage/current/resistance, and Boolean logic evaluates truth values rather than human Goals, Operators, Methods, and Selection rules.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -876,7 +892,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su7_018",
@@ -910,7 +927,7 @@
       "ans": 0,
       "exp": "Aging users experience reduced visual acuity, motor precision, and contrast sensitivity. Larger targets and high contrast accommodate these changes.",
       "explanation": "Aging users experience reduced visual acuity, motor precision, and contrast sensitivity. Larger targets and high contrast accommodate these changes.",
-      "distractorRationale": "",
+      "distractorRationale": "Faster animations, unlabeled icon buttons, and tiny low-contrast text worsen visual and motor barriers for older adults.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -918,7 +935,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su7_019",
@@ -952,7 +970,7 @@
       "ans": 1,
       "exp": "George Miller (1956) established that working memory holds roughly 5 to 9 chunks of information simultaneously.",
       "explanation": "George Miller (1956) established that working memory holds roughly 5 to 9 chunks of information simultaneously.",
-      "distractorRationale": "",
+      "distractorRationale": "C# projects allow any number of forms, mice do not have 7 Â± 2 buttons, and sleep recommendations are unrelated to Miller's working-memory span.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -960,7 +978,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su7_020",
@@ -994,7 +1013,7 @@
       "ans": 2,
       "exp": "The sequence is: Goal -> Intention -> Action specification -> Execution.",
       "explanation": "The sequence is: Goal -> Intention -> Action specification -> Execution.",
-      "distractorRationale": "",
+      "distractorRationale": "Forming the goal comes first, while Perception of state and Evaluation of outcome occur on the evaluation side *after* physical execution.",
       "definitions": [
         "def_gulf_of_execution",
         "def_gulf_of_evaluation",
@@ -1002,7 +1021,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su7_021",
@@ -1036,7 +1056,7 @@
       "ans": 3,
       "exp": "Affordance (Norman) refers to the perceived and actual properties of an object that suggest how it should be used (e.g. 3D button invites clicking).",
       "explanation": "Affordance (Norman) refers to the perceived and actual properties of an object that suggest how it should be used (e.g. 3D button invites clicking).",
-      "distractorRationale": "",
+      "distractorRationale": "Download speed, license pricing, and bitmap RAM footprint are technical/commercial attributes rather than visual cues showing how a control is operated.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1044,7 +1064,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su7_022",
@@ -1078,7 +1099,7 @@
       "ans": 0,
       "exp": "Rule 3: Offer informative feedback. For prolonged tasks, progress bars or hour-glass cursors reassure users that processing is continuing normally.",
       "explanation": "Rule 3: Offer informative feedback. For prolonged tasks, progress bars or hour-glass cursors reassure users that processing is continuing normally.",
-      "distractorRationale": "",
+      "distractorRationale": "Progress indicators do not generate unit tests, accelerate CPU clock speed, or flush RAMâ€”they reassure the user that work is underway so they do not click repeatedly.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -1086,7 +1107,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su7_023",
@@ -1120,7 +1142,7 @@
       "ans": 1,
       "exp": "Consistency in spatial layout helps users build muscle memory and predictable expectations.",
       "explanation": "Consistency in spatial layout helps users build muscle memory and predictable expectations.",
-      "distractorRationale": "",
+      "distractorRationale": "Randomizing button positions, swapping colour schemes per tab, or mixing font families breaks user spatial memory and violates visual consistency.",
       "definitions": [
         "def_eight_golden_rules",
         "def_radiobutton_checkbox_groupbox",
@@ -1128,7 +1150,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su7_024",
@@ -1162,7 +1185,7 @@
       "ans": 2,
       "exp": "When an interface is unpredictable or takes initiative without user consent, users feel anxious and dissatisfied.",
       "explanation": "When an interface is unpredictable or takes initiative without user consent, users feel anxious and dissatisfied.",
-      "distractorRationale": "",
+      "distractorRationale": "Poor locus of control does not corrupt C# variables, block compilation, or fill disk space; its harm is user anxiety, frustration, and abandonment.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -1170,7 +1193,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su7_025",
@@ -1204,7 +1228,7 @@
       "ans": 3,
       "exp": "Confirmation dialogs on destructive actions prevent accidental data loss and allow users to reverse unintentional exit commands.",
       "explanation": "Confirmation dialogs on destructive actions prevent accidental data loss and allow users to reverse unintentional exit commands.",
-      "distractorRationale": "",
+      "distractorRationale": "Prompting before discarding unsaved work specifically prevents accidental data loss (Rule 5) and lets the user cancel the close action (Rule 6), rather than testing consistency or memory load.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -1212,7 +1236,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su7_026",
@@ -1246,7 +1271,7 @@
       "ans": 0,
       "exp": "Time to learn measures how long it takes for users from the target audience to acquire the knowledge needed to carry out interface tasks successfully.",
       "explanation": "Time to learn measures how long it takes for users from the target audience to acquire the knowledge needed to carry out interface tasks successfully.",
-      "distractorRationale": "",
+      "distractorRationale": "Subjective satisfaction gauges user attitude, Speed of performance measures proficient task speed, and Retention over time measures recall after a breakâ€”not initial learning duration.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1254,7 +1279,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_027",
@@ -1288,7 +1314,7 @@
       "ans": 1,
       "exp": "Speed of performance measures how quickly routine tasks are completed once learned. Access keys and default enter keys allow expert operators to execute transactions rapidly without reaching for the mouse.",
       "explanation": "Speed of performance measures how quickly routine tasks are completed once learned. Access keys and default enter keys allow expert operators to execute transactions rapidly without reaching for the mouse.",
-      "distractorRationale": "",
+      "distractorRationale": "Keyboard mnemonics and Tab order optimize operator task speed (`Speed of performance`), not server hardware scalability or OS boot latency.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1296,7 +1322,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su7_028",
@@ -1330,7 +1357,7 @@
       "ans": 2,
       "exp": "Rate of errors by users measures how many and what kinds of mistakes users make. Constraining choices to valid items in a ListBox eliminates typing mistakes, misspellings, and out-of-range errors.",
       "explanation": "Rate of errors by users measures how many and what kinds of mistakes users make. Constraining choices to valid items in a ListBox eliminates typing mistakes, misspellings, and out-of-range errors.",
-      "distractorRationale": "",
+      "distractorRationale": "Constrained selection in a `ListBox` prevents invalid typos (`Rate of errors by users`) and has no impact on network bandwidth or C# compile speed.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1338,7 +1365,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_029",
@@ -1372,7 +1400,7 @@
       "ans": 3,
       "exp": "Retention over time evaluates how well users preserve their interface operating skills after prolonged periods without using the system. Consistent layouts and clear visual cues facilitate high retention.",
       "explanation": "Retention over time evaluates how well users preserve their interface operating skills after prolonged periods without using the system. Consistent layouts and clear visual cues facilitate high retention.",
-      "distractorRationale": "",
+      "distractorRationale": "When users return only twice a year, `Retention over time` governs whether they still remember the workflow; compiler throughput and recursion speed are developer concerns.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1380,7 +1408,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_030",
@@ -1414,7 +1443,7 @@
       "ans": 0,
       "exp": "Subjective satisfaction measures users' personal perception, comfort, and enjoyment of the system, determined via questionnaires (such as QUIS), interviews, and rating scales.",
       "explanation": "Subjective satisfaction measures users' personal perception, comfort, and enjoyment of the system, determined via questionnaires (such as QUIS), interviews, and rating scales.",
-      "distractorRationale": "",
+      "distractorRationale": "Garbage-collection latency, compiler warning counts, and monitor weight are hardware/build metrics that cannot measure how satisfied human users feel.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1422,7 +1451,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_031",
@@ -1456,7 +1486,7 @@
       "ans": 1,
       "exp": "In life-critical applications, the cost of human error is fatal. Lengthy training is acceptable if it guarantees near-zero operating errors, fail-safe confirmations, and rapid emergency intervention.",
       "explanation": "In life-critical applications, the cost of human error is fatal. Lengthy training is acceptable if it guarantees near-zero operating errors, fail-safe confirmations, and rapid emergency intervention.",
-      "distractorRationale": "",
+      "distractorRationale": "Life-critical operators undergo extensive training (never rushed under 5 minutes), visual displays remain vital alongside alerts, and decorative animations must never distract from safety.",
       "definitions": [
         "def_error_prevention",
         "def_tryparse",
@@ -1464,7 +1494,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_032",
@@ -1498,7 +1529,7 @@
       "ans": 2,
       "exp": "In commercial settings, reducing repetitive transaction times by even seconds across thousands of daily operations dramatically reduces labor costs and costly operational mistakes.",
       "explanation": "In commercial settings, reducing repetitive transaction times by even seconds across thousands of daily operations dramatically reduces labor costs and costly operational mistakes.",
-      "distractorRationale": "",
+      "distractorRationale": "Commercial apps run atop standard operating systems, rely heavily on fast keyboard data entry, and avoid distracting playful animations.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1506,7 +1537,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_033",
@@ -1540,7 +1572,7 @@
       "ans": 3,
       "exp": "Consumers in home and office settings will quickly abandon or reject software that causes frustration, confusion, or steep learning curves.",
       "explanation": "Consumers in home and office settings will quickly abandon or reject software that causes frustration, confusion, or steep learning curves.",
-      "distractorRationale": "",
+      "distractorRationale": "Command-line flags, deeply nested menus, and forced password hurdles alienate everyday home and entertainment users.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1548,7 +1580,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_034",
@@ -1582,7 +1615,7 @@
       "ans": 0,
       "exp": "Creative applications encourage innovation by enabling users to explore alternative ideas freely, supported by robust, multi-level Undo/Redo mechanisms.",
       "explanation": "Creative applications encourage innovation by enabling users to explore alternative ideas freely, supported by robust, multi-level Undo/Redo mechanisms.",
-      "distractorRationale": "",
+      "distractorRationale": "Blocking shortcuts, forcing irreversible saves on every click, or trapping users in modal dialogs stifles creative experimentation.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1590,7 +1623,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_035",
@@ -1624,7 +1658,7 @@
       "ans": 1,
       "exp": "Socio-technical systems serve diverse citizen populations; they must ensure equal accessibility, unambiguous comprehension, verifiable trust, and zero disenfranchisement.",
       "explanation": "Socio-technical systems serve diverse citizen populations; they must ensure equal accessibility, unambiguous comprehension, verifiable trust, and zero disenfranchisement.",
-      "distractorRationale": "",
+      "distractorRationale": "Expert-only hotkeys, VR headsets, or skipping ballot confirmation screens would disenfranchise citizens and cause irreversible voting mistakes.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1632,7 +1666,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su7_036",
@@ -1666,7 +1701,7 @@
       "ans": 2,
       "exp": "Users with motor challenges require larger interactive targets and sufficient spacing to prevent accidental mis-clicks, alongside complete keyboard alternatives.",
       "explanation": "Users with motor challenges require larger interactive targets and sufficient spacing to prevent accidental mis-clicks, alongside complete keyboard alternatives.",
-      "distractorRationale": "",
+      "distractorRationale": "Tiny 12Ã—12 targets, borderless invisible hit areas, and rapid 100 ms double-click demands make accurate pointing nearly impossible for users with tremors.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1674,7 +1709,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su7_037",
@@ -1708,7 +1744,7 @@
       "ans": 3,
       "exp": "Never rely solely on color to convey meaning or state. Color-blind users depend on secondary cues such as text labels, shapes, or spatial positions to interpret system states accurately.",
       "explanation": "Never rely solely on color to convey meaning or state. Color-blind users depend on secondary cues such as text labels, shapes, or spatial positions to interpret system states accurately.",
-      "distractorRationale": "",
+      "distractorRationale": "Text labels alongside coloured lamps do not speed up JPEG decoding, double GPU memory, or satisfy a `.NET` compiler ruleâ€”they provide redundant non-colour cues for colour-blind users.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1716,7 +1752,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su7_038",
@@ -1750,7 +1787,7 @@
       "ans": 0,
       "exp": "Visual chunking via GroupBoxes organizes complex form layouts into digestible semantic units, reducing visual search time and user cognitive load.",
       "explanation": "Visual chunking via GroupBoxes organizes complex form layouts into digestible semantic units, reducing visual search time and user cognitive load.",
-      "distractorRationale": "",
+      "distractorRationale": "A `GroupBox` does not alter monitor resolution, encrypt variables, or change `TextBox` data types; it visually chunks related inputs to lower cognitive load.",
       "definitions": [
         "def_eight_golden_rules",
         "def_radiobutton_checkbox_groupbox",
@@ -1758,7 +1795,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su7_039",
@@ -1792,7 +1830,7 @@
       "ans": 1,
       "exp": "Elderly users benefit from higher visual contrast, larger font sizes, clear button boundaries that look clickable, and generous spatial separation between interactive elements.",
       "explanation": "Elderly users benefit from higher visual contrast, larger font sizes, clear button boundaries that look clickable, and generous spatial separation between interactive elements.",
-      "distractorRationale": "",
+      "distractorRationale": "Right-click hidden menus, low-contrast grey-on-grey text, and removing safety confirmations increase error rates and visual strain.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1800,7 +1838,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su7_040",
@@ -1834,7 +1873,7 @@
       "ans": 2,
       "exp": "Using .ToString(\"C\") automatically formats monetary values using the host system's regional culture settings, rendering South African Rand ('R') without hardcoded symbols.",
       "explanation": "Using .ToString(\"C\") automatically formats monetary values using the host system's regional culture settings, rendering South African Rand ('R') without hardcoded symbols.",
-      "distractorRationale": "",
+      "distractorRationale": "Manual string-replacement loops, raw unformatted floats, and hardcoded `\"$\"` signs break regional currency formatting that `.ToString(\"C\")` handles automatically.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1842,7 +1881,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su7_041",
@@ -1876,7 +1916,7 @@
       "ans": 3,
       "exp": "Assistive technologies like Windows Narrator read AccessibleName and AccessibleDescription aloud to convey the purpose and state of UI controls to visually impaired users.",
       "explanation": "Assistive technologies like Windows Narrator read AccessibleName and AccessibleDescription aloud to convey the purpose and state of UI controls to visually impaired users.",
-      "distractorRationale": "",
+      "distractorRationale": "`AccessibleName` and `AccessibleDescription` do not set SQL permissions, C# variable names, or image file pathsâ€”they expose semantic labels to screen readers.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1884,7 +1924,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su7_042",
@@ -1918,7 +1959,7 @@
       "ans": 0,
       "exp": "Consistent naming conventions (Hungarian prefixes) reduce cognitive friction for software engineers by making control types self-evident during development and code review.",
       "explanation": "Consistent naming conventions (Hungarian prefixes) reduce cognitive friction for software engineers by making control types self-evident during development and code review.",
-      "distractorRationale": "",
+      "distractorRationale": "The C# compiler allows any valid identifier, prefix length does not shrink `.exe` size, and variable names never auto-format numbers; Hungarian prefixes aid human code consistency.",
       "definitions": [
         "def_eight_golden_rules",
         "def_radiobutton_checkbox_groupbox",
@@ -1926,7 +1967,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su7_043",
@@ -1960,7 +2002,7 @@
       "ans": 1,
       "exp": "Inconsistent terminology ('Exit' vs 'Quit' vs 'Close Window') and shifting button coordinates confuse users and destroy mental predictability.",
       "explanation": "Inconsistent terminology ('Exit' vs 'Quit' vs 'Close Window') and shifting button coordinates confuse users and destroy mental predictability.",
-      "distractorRationale": "",
+      "distractorRationale": "Uniform fonts, consistent bottom-right primary button placement, and top-to-bottom `TabIndex` order all *uphold* Rule 1 rather than violating it.",
       "definitions": [
         "def_eight_golden_rules",
         "def_radiobutton_checkbox_groupbox",
@@ -1968,7 +2010,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su7_044",
@@ -2002,7 +2045,7 @@
       "ans": 2,
       "exp": "The ampersand '&' underlines the subsequent letter ('C') and binds the Alt+C keyboard accelerator, providing rapid navigation for power users (Rule 2).",
       "explanation": "The ampersand '&' underlines the subsequent letter ('C') and binds the Alt+C keyboard accelerator, providing rapid navigation for power users (Rule 2).",
-      "distractorRationale": "",
+      "distractorRationale": "An `&` mnemonic on `&Calculate` binds `Alt+C` (Universal Usability, Rule 2), never `Ctrl+Alt+Delete`, `Shift+F12`, or `Esc`.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2010,7 +2053,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su7_045",
@@ -2044,7 +2088,7 @@
       "ans": 3,
       "exp": "Binding AcceptButton to Enter and CancelButton to Escape honors universal usability and user expectations by enabling standard, effortless keyboard control.",
       "explanation": "Binding AcceptButton to Enter and CancelButton to Escape honors universal usability and user expectations by enabling standard, effortless keyboard control.",
-      "distractorRationale": "",
+      "distractorRationale": "`AcceptButton` and `CancelButton` neither silence compiler diagnostics nor encrypt keystrokes, and they supportâ€”rather than violateâ€”predictable keyboard control.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2052,7 +2096,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su7_046",
@@ -2086,7 +2131,7 @@
       "ans": 0,
       "exp": "Frequent, minor actions require modest, immediate visual feedback: seeing the item appear in the list and watching the total update acknowledges the action without disruption.",
       "explanation": "Frequent, minor actions require modest, immediate visual feedback: seeing the item appear in the list and watching the total update acknowledges the action without disruption.",
-      "distractorRationale": "",
+      "distractorRationale": "Wiping the form, staying completely silent until exit, or interrupting every single item scan with a modal popup disrupts POS checkout feedback.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2094,7 +2139,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su7_047",
@@ -2128,7 +2174,7 @@
       "ans": 1,
       "exp": "Without visual feedback during lengthy operations, users lose confidence, suspect system lockup, and frequently re-click buttons or terminate the application prematurely.",
       "explanation": "Without visual feedback during lengthy operations, users lose confidence, suspect system lockup, and frequently re-click buttons or terminate the application prematurely.",
-      "distractorRationale": "",
+      "distractorRationale": "A long synchronous task does not delete `.exe` files or break naming rules; it freezes the UI message pump so users think the app crashed.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2136,7 +2182,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su7_048",
@@ -2170,7 +2217,7 @@
       "ans": 2,
       "exp": "Rule 4 states that sequences of action should have an organized beginning, middle, and end. A clear confirmation screen delivers closure, satisfaction, and peace of mind.",
       "explanation": "Rule 4 states that sequences of action should have an organized beginning, middle, and end. A clear confirmation screen delivers closure, satisfaction, and peace of mind.",
-      "distractorRationale": "",
+      "distractorRationale": "Turning the screen black, abruptly closing without notice, or leaving inputs ambiguous denies the user confirmation that the booking succeeded.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2178,7 +2225,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_049",
@@ -2212,7 +2260,7 @@
       "ans": 3,
       "exp": "Closure provides users with the satisfaction of accomplishment and frees their short-term working memory to focus on subsequent tasks.",
       "explanation": "Closure provides users with the satisfaction of accomplishment and frees their short-term working memory to focus on subsequent tasks.",
-      "distractorRationale": "",
+      "distractorRationale": "Clear task closure relieves uncertainty and signals readiness for the next task, rather than causing helplessness or payment confusion.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2220,7 +2268,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_050",
@@ -2254,7 +2303,7 @@
       "ans": 0,
       "exp": "Rule 5 mandates designing systems so users make fewer errors and handling mistakes gracefully with non-destructive, friendly alerts rather than unhandled exception crashes.",
       "explanation": "Rule 5 mandates designing systems so users make fewer errors and handling mistakes gracefully with non-destructive, friendly alerts rather than unhandled exception crashes.",
-      "distractorRationale": "",
+      "distractorRationale": "Guarding input with `decimal.TryParse()` specifically prevents format-crash errors (Rule 5), rather than signalling dialog closure (Rule 4) or reducing memory load (Rule 8).",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2262,7 +2311,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_051",
@@ -2296,7 +2346,7 @@
       "ans": 1,
       "exp": "Effective error messages are polite, specific, avoid technical jargon, do not blame the user, and offer constructive guidance on how to rectify the problem.",
       "explanation": "Effective error messages are polite, specific, avoid technical jargon, do not blame the user, and offer constructive guidance on how to rectify the problem.",
-      "distractorRationale": "",
+      "distractorRationale": "Insulting the user (`\"stupid mistake\"`), vague messages (`\"Error!\"`), or raw hex stack traces (`0x80004005`) violate constructive, plain-language error guidance.",
       "definitions": [
         "def_error_prevention",
         "def_tryparse",
@@ -2304,7 +2354,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_052",
@@ -2338,7 +2389,7 @@
       "ans": 2,
       "exp": "Easy reversal relieves anxiety, since users know that mistakes can be painlessly cleared and undone without consequences.",
       "explanation": "Easy reversal relieves anxiety, since users know that mistakes can be painlessly cleared and undone without consequences.",
-      "distractorRationale": "",
+      "distractorRationale": "`btnClear` neither manages OS RAM paging nor forces `.NET` garbage collection, and C# imposes no five-button quota; it lets users easily reset mistaken entries (Rule 6).",
       "definitions": [
         "def_error_prevention",
         "def_tryparse",
@@ -2346,7 +2397,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su7_053",
@@ -2380,7 +2432,7 @@
       "ans": 3,
       "exp": "Confirmation before potentially destructive actions (like exiting or deleting) allows users to cancel accidental clicks, supporting easy error reversal.",
       "explanation": "Confirmation before potentially destructive actions (like exiting or deleting) allows users to cancel accidental clicks, supporting easy error reversal.",
-      "distractorRationale": "",
+      "distractorRationale": "A `Yes/No` exit confirmation specifically prevents accidental termination and lets the user cancel (Rules 5 & 6), rather than testing memory load or consistency.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2388,7 +2440,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su7_054",
@@ -2422,7 +2475,7 @@
       "ans": 0,
       "exp": "Internal locus of control means users feel like initiators rather than responders. Unexpected behaviors, modal lockouts, or automated unsolicited pop-ups strip this control and cause dissatisfaction.",
       "explanation": "Internal locus of control means users feel like initiators rather than responders. Unexpected behaviors, modal lockouts, or automated unsolicited pop-ups strip this control and cause dissatisfaction.",
-      "distractorRationale": "",
+      "distractorRationale": "Monitor refresh sync, self-deleting database rows, and autonomous overrides have nothing to do with keeping the human operator in control (Rule 7).",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2430,7 +2483,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su7_055",
@@ -2464,7 +2518,7 @@
       "ans": 1,
       "exp": "Unsolicited automatic submissions or involuntary cursor shifts make users feel manipulated and powerless, severely violating internal locus of control.",
       "explanation": "Unsolicited automatic submissions or involuntary cursor shifts make users feel manipulated and powerless, severely violating internal locus of control.",
-      "distractorRationale": "",
+      "distractorRationale": "Providing `btnClear`, offering route choices, and formatting currency to two decimals are good UI practices, whereas hijacking cursor focus mid-typing violates Rule 7.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2472,7 +2526,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su7_056",
@@ -2506,7 +2561,7 @@
       "ans": 2,
       "exp": "Displaying current state, previous entries, and running totals externally on the screen frees the user from having to remember details in short-term memory (Miller's Rule of 7 ± 2).",
       "explanation": "Displaying current state, previous entries, and running totals externally on the screen frees the user from having to remember details in short-term memory (Miller's Rule of 7 ± 2).",
-      "distractorRationale": "",
+      "distractorRationale": "A `ListBox` neither accelerates CPU arithmetic nor uses zero GPU memory, nor does it expand human memory to 50 itemsâ€”it offloads recall onto visible screen history.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2514,7 +2569,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su7_057",
@@ -2548,7 +2604,7 @@
       "ans": 3,
       "exp": "Presenting dozens of raw inputs at once overwhelms working memory and visual attention. Dividing forms into tabs, wizards, or logical group boxes keeps cognitive load within human limits.",
       "explanation": "Presenting dozens of raw inputs at once overwhelms working memory and visual attention. Dividing forms into tabs, wizards, or logical group boxes keeps cognitive load within human limits.",
-      "distractorRationale": "",
+      "distractorRationale": "Dumping 45 ungrouped `TextBox`es onto one screen overwhelms working-memory chunking (`7 Â± 2`, Rule 8) rather than testing undo or feedback.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2556,7 +2612,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su7_058",
@@ -2590,7 +2647,7 @@
       "ans": 0,
       "exp": "Rule 5 states that system design should prevent users from making serious errors, and when errors do occur, detect them gracefully and offer clear, constructive guidance without terminating the application.",
       "explanation": "Rule 5 states that system design should prevent users from making serious errors, and when errors do occur, detect them gracefully and offer clear, constructive guidance without terminating the application.",
-      "distractorRationale": "",
+      "distractorRationale": "`try-catch` never hides compile-time syntax errors, auto-retries OS operations, or disables Windows securityâ€”it catches runtime exceptions so the UI stays responsive.",
       "definitions": [
         "def_error_prevention",
         "def_tryparse",
@@ -2598,7 +2655,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su7_059",
@@ -2632,7 +2690,7 @@
       "ans": 1,
       "exp": "Don Norman's Gulf of Evaluation represents the difficulty users experience in assessing the system's state and determining if their intentions were met. Immediate, clear visual feedback bridges this gulf.",
       "explanation": "Don Norman's Gulf of Evaluation represents the difficulty users experience in assessing the system's state and determining if their intentions were met. Immediate, clear visual feedback bridges this gulf.",
-      "distractorRationale": "",
+      "distractorRationale": "`Gulf of Intention` and `Gulf of Affordance` are not Norman's terms, and `Gulf of Execution` precedes the click; displaying `R 282.50` bridges the `Gulf of Evaluation`.",
       "definitions": [
         "def_gulf_of_execution",
         "def_gulf_of_evaluation",
@@ -2640,7 +2698,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su7_060",
@@ -2674,7 +2733,7 @@
       "ans": 2,
       "exp": "Immediate, unmistakable visual feedback bridges the Gulf of Evaluation by making the system's updated internal state transparent and easy to interpret.",
       "explanation": "Immediate, unmistakable visual feedback bridges the Gulf of Evaluation by making the system's updated internal state transparent and easy to interpret.",
-      "distractorRationale": "",
+      "distractorRationale": "`Gulf of Compilation` and `Gulf of Hardware Paging` are fictional, and `Gulf of Execution` concerns finding `btnGo`â€”seeing the green lamp and `\"GO!\"` bridges Evaluation.",
       "definitions": [
         "def_gulf_of_execution",
         "def_gulf_of_evaluation",
@@ -2682,7 +2741,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su7_061",
@@ -2716,7 +2776,7 @@
       "ans": 3,
       "exp": "Clear visual affordances (buttons that look clickable) paired with explicit verbs tell the user exactly what physical action will achieve their intended goal, narrowing the Gulf of Execution.",
       "explanation": "Clear visual affordances (buttons that look clickable) paired with explicit verbs tell the user exactly what physical action will achieve their intended goal, narrowing the Gulf of Execution.",
-      "distractorRationale": "",
+      "distractorRationale": "Cryptic captions (`btnX1`), missing `Click` handlers, or hidden hover-only buttons widen the Gulf of Execution by hiding how to act.",
       "definitions": [
         "def_gulf_of_execution",
         "def_gulf_of_evaluation",
@@ -2724,7 +2784,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su7_062",
@@ -2758,7 +2819,7 @@
       "ans": 0,
       "exp": "Fitts' Law models pointing time: MT = a + b * log2(2D / W), meaning larger targets (W) located closer to the pointer (D) are acquired significantly faster and with fewer errors.",
       "explanation": "Fitts' Law models pointing time: MT = a + b * log2(2D / W), meaning larger targets (W) located closer to the pointer (D) are acquired significantly faster and with fewer errors.",
-      "distractorRationale": "",
+      "distractorRationale": "C# identifier length, internet speed, and monitor colour depth have zero effect on physical pointing time (`MT = a + b log2(2D/W)`).",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2766,7 +2827,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su7_063",
@@ -2800,7 +2862,7 @@
       "ans": 1,
       "exp": "Larger target dimensions and closer spatial proximity minimize pointer acquisition time and reduce accidental misclicks.",
       "explanation": "Larger target dimensions and closer spatial proximity minimize pointer acquisition time and reduce accidental misclicks.",
-      "distractorRationale": "",
+      "distractorRationale": "Dragging buttons, shrinking primary actions into distant corners, or randomizing positions maximizes distance `D` and shrinks width `W`, violating Fitts' Law.",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2808,7 +2870,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su7_064",
@@ -2842,7 +2905,7 @@
       "ans": 2,
       "exp": "Hick's Law: T = b * log2(n + 1). As the number of choices (n) increases, cognitive selection time grows. Structuring choices into logical groups or categories speeds decision-making.",
       "explanation": "Hick's Law: T = b * log2(n + 1). As the number of choices (n) increases, cognitive selection time grows. Structuring choices into logical groups or categories speeds decision-making.",
-      "distractorRationale": "",
+      "distractorRationale": "More choices never leave decision time unchanged or reduce it to zero, nor do users blindly pick option 1; choice reaction time grows logarithmically (`log2(n + 1)`).",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2850,7 +2913,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su7_065",
@@ -2884,7 +2948,7 @@
       "ans": 3,
       "exp": "Recognizing a choice among visible RadioButtons requires far less cognitive effort than recalling terms and typing free text, while eliminating input validation failures (Rule 5 & 8).",
       "explanation": "Recognizing a choice among visible RadioButtons requires far less cognitive effort than recalling terms and typing free text, while eliminating input validation failures (Rule 5 & 8).",
-      "distractorRationale": "",
+      "distractorRationale": "`TextBox`es handle strings fine and battery draw is irrelevant; `RadioButton`s in a `GroupBox` prevent invalid codes and eliminate memorization.",
       "definitions": [
         "def_eight_golden_rules",
         "def_radiobutton_checkbox_groupbox",
@@ -2892,7 +2956,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_066",
@@ -2926,7 +2991,7 @@
       "ans": 0,
       "exp": "The Solution Explorer displays the hierarchical tree of project files (e.g. Form1.cs, Form1.Designer.cs, Program.cs).",
       "explanation": "The Solution Explorer displays the hierarchical tree of project files (e.g. Form1.cs, Form1.Designer.cs, Program.cs).",
-      "distractorRationale": "",
+      "distractorRationale": "`Error List` shows compiler diagnostics, `Properties Window` edits control attributes, and `Toolbox` holds draggable controlsâ€”only `Solution Explorer` lists project files and references.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -2934,7 +2999,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_067",
@@ -2968,7 +3034,7 @@
       "ans": 1,
       "exp": "The Properties Window lists properties (Text, Name, Size, BackColor, etc.) of the currently selected component.",
       "explanation": "The Properties Window lists properties (Text, Name, Size, BackColor, etc.) of the currently selected component.",
-      "distractorRationale": "",
+      "distractorRationale": "`Solution Explorer` manages project files, `Output Window` logs build/debug text, and `Server Explorer` manages data connectionsâ€”none edit control properties.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -2976,7 +3042,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_068",
@@ -3010,7 +3077,7 @@
       "ans": 2,
       "exp": "The Form Designer (or Designer) is the visual design surface in Visual Studio where developers visually place and configure Windows Forms controls.",
       "explanation": "The Form Designer (or Designer) is the visual design surface in Visual Studio where developers visually place and configure Windows Forms controls.",
-      "distractorRationale": "",
+      "distractorRationale": "`Document Outline` shows a control tree, `Solution Explorer` lists files, and `Properties Window` edits attributesâ€”visual form layout happens in the `Form Designer`.",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -3018,7 +3085,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_069",
@@ -3052,7 +3120,7 @@
       "ans": 3,
       "exp": "Visual C# specifies 6 distinct phases: Understand Purpose -> Design GUI -> Design Logic -> Write Code -> Correct Syntax Errors -> Test and Correct Logic Errors.",
       "explanation": "Visual C# specifies 6 distinct phases: Understand Purpose -> Design GUI -> Design Logic -> Write Code -> Correct Syntax Errors -> Test and Correct Logic Errors.",
-      "distractorRationale": "",
+      "distractorRationale": "Designing the GUI or writing/testing C# code before understanding the program's purpose and planning its logic reverses the disciplined six-phase lifecycle.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3060,7 +3128,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_070",
@@ -3094,14 +3163,15 @@
       "ans": 0,
       "exp": "The 'Text' property controls the display string on controls and the form's title bar caption. The 'Name' property is the code identifier.",
       "explanation": "The 'Text' property controls the display string on controls and the form's title bar caption. The 'Name' property is the code identifier.",
-      "distractorRationale": "",
+      "distractorRationale": "WinForms controls have no `Caption` property, `Name` sets the C# variable identifier in code, and `Tag` stores hidden developer metadata.",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_071",
@@ -3135,7 +3205,7 @@
       "ans": 1,
       "exp": "The official NWU CMPG122 naming standard prescribes the three-letter prefix 'btn' (e.g. btnCalculate, btnExit).",
       "explanation": "The official NWU CMPG122 naming standard prescribes the three-letter prefix 'btn' (e.g. btnCalculate, btnExit).",
-      "distractorRationale": "",
+      "distractorRationale": "Single-letter `b`, full word `button`, or underscore `btn_` violate CMPG122 camelCase Hungarian naming (`btn` + PascalCase noun, e.g. `btnCalculate`).",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -3143,7 +3213,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_072",
@@ -3177,7 +3248,7 @@
       "ans": 2,
       "exp": "'this.Close();' executes the Close method on the current Form instance, terminating the form.",
       "explanation": "'this.Close();' executes the Close method on the current Form instance, terminating the form.",
-      "distractorRationale": "",
+      "distractorRationale": "`Application.Halt()`, `Close.Form()`, and `Form.End()` do not exist in `System.Windows.Forms`; `this.Close();` closes the active form.",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -3185,7 +3256,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_073",
@@ -3219,14 +3291,15 @@
       "ans": 3,
       "exp": "Zoom proportionally scales the image up or down to fit inside the PictureBox while preserving its aspect ratio. StretchImage distorts the ratio.",
       "explanation": "Zoom proportionally scales the image up or down to fit inside the PictureBox while preserving its aspect ratio. StretchImage distorts the ratio.",
-      "distractorRationale": "",
+      "distractorRationale": "`Normal` and `CenterImage` do not scale the image, while `StretchImage` fills the box without preserving aspect ratio (causing distortion).",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_074",
@@ -3260,14 +3333,15 @@
       "ans": 0,
       "exp": "AutoSize causes the control itself to resize to match the loaded image dimensions.",
       "explanation": "AutoSize causes the control itself to resize to match the loaded image dimensions.",
-      "distractorRationale": "",
+      "distractorRationale": "`StretchImage` and `Zoom` scale the image inside fixed control bounds, while `Normal` clips at top-left; only `AutoSize` resizes the `PictureBox` itself to match the image.",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_075",
@@ -3301,7 +3375,7 @@
       "ans": 1,
       "exp": "A comment that begins with '//' and spans only to the end of that single line is formally termed a 'line comment', whereas a comment enclosed between '/*' and '*/' is a 'block comment'.",
       "explanation": "A comment that begins with '//' and spans only to the end of that single line is formally termed a 'line comment', whereas a comment enclosed between '/*' and '*/' is a 'block comment'.",
-      "distractorRationale": "",
+      "distractorRationale": "`/* ... */` is a multi-line block comment, `///` is an XML documentation comment, and \"directive comment\" is not a C# comment category.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3309,7 +3383,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_076",
@@ -3343,7 +3418,7 @@
       "ans": 2,
       "exp": "Syntax errors violate C# grammar/spelling rules and are caught at compile time before execution begins.",
       "explanation": "Syntax errors violate C# grammar/spelling rules and are caught at compile time before execution begins.",
-      "distractorRationale": "",
+      "distractorRationale": "Hardware failures are physical issues, logic errors compile cleanly but compute wrong results, and runtime exceptions occur during executionâ€”grammar violations are syntax errors.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3351,7 +3426,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_077",
@@ -3385,7 +3461,7 @@
       "ans": 3,
       "exp": "A logic error produces incorrect results despite syntactically valid code and clean compilation.",
       "explanation": "A logic error produces incorrect results despite syntactically valid code and clean compilation.",
-      "distractorRationale": "",
+      "distractorRationale": "Compilation, lexical, and syntax errors prevent building the `.exe` altogether; a running program that computes `R 0.00` instead of `R 1,200.00` has a logic error.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3393,7 +3469,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_078",
@@ -3427,7 +3504,7 @@
       "ans": 0,
       "exp": "Non-visual controls do not have a visual form presence and reside in the Component Tray below the form.",
       "explanation": "Non-visual controls do not have a visual form presence and reside in the Component Tray below the form.",
-      "distractorRationale": "",
+      "distractorRationale": "Non-visual components like `Timer` and `OpenFileDialog` have no runtime UI surface on the Form title bar, Solution Explorer toolbar, or Properties headerâ€”they sit in the Component Tray.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3435,7 +3512,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.82
     },
     {
       "id": "q_su1_079",
@@ -3469,7 +3547,7 @@
       "ans": 1,
       "exp": "In the Visual Studio Designer, the eight small squares on a selected control's perimeter are called sizing handles.",
       "explanation": "In the Visual Studio Designer, the eight small squares on a selected control's perimeter are called sizing handles.",
-      "distractorRationale": "",
+      "distractorRationale": "The eight small squares around a selected control in the Designer are officially called `Sizing handles` (not alignment grips, border anchors, or docking margins).",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3477,7 +3555,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_080",
@@ -3511,7 +3590,7 @@
       "ans": 2,
       "exp": "The official NWU prefix for TextBox controls is 'txt' (e.g. txtHours, txtPrice, txtSurname).",
       "explanation": "The official NWU prefix for TextBox controls is 'txt' (e.g. txtHours, txtPrice, txtSurname).",
-      "distractorRationale": "",
+      "distractorRationale": "`text`, `tb`, and `tBox` deviate from the standard three-letter `txt` prefix required for `TextBox` identifiers (e.g. `txtAmount`).",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -3519,7 +3598,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_081",
@@ -3561,7 +3641,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_082",
@@ -3595,7 +3676,7 @@
       "ans": 0,
       "exp": "Checking this box places the solution file (.sln) and project contents into a single folder (e.g. 12345678_Prac1), making it simple to zip and preventing missing project file errors during grading.",
       "explanation": "Checking this box places the solution file (.sln) and project contents into a single folder (e.g. 12345678_Prac1), making it simple to zip and preventing missing project file errors during grading.",
-      "distractorRationale": "",
+      "distractorRationale": "Placing solution and project in the same directory has no effect on GPU acceleration, runtime speed, or control namingâ€”it simply avoids redundant nested folders.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3603,7 +3684,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_083",
@@ -3637,14 +3719,15 @@
       "ans": 1,
       "exp": "Dragging controls by mouse cannot reliably align them to the exact pixel. Typing the exact same Location (X, Y) and Size (Width, Height) in the Properties window guarantees seamless stacking.",
       "explanation": "Dragging controls by mouse cannot reliably align them to the exact pixel. Typing the exact same Location (X, Y) and Size (Width, Height) in the Properties window guarantees seamless stacking.",
-      "distractorRationale": "",
+      "distractorRationale": "Separate tabs, restarting the app, or 50% form opacity will not overlay traffic lamps cleanly at one spot; identical `Location` and `Size` coordinates align them.",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_084",
@@ -3678,14 +3761,15 @@
       "ans": 2,
       "exp": "The drop-down object list at the top of the Visual Studio Properties window lists every control on the form by name, allowing instant selection of any layered or hidden control.",
       "explanation": "The drop-down object list at the top of the Visual Studio Properties window lists every control on the form by name, allowing instant selection of any layered or hidden control.",
-      "distractorRationale": "",
+      "distractorRationale": "Deleting top controls, Shift-clicking the Windows desktop, or hand-editing `.csproj` is unnecessary and risky when the Properties Window's top control drop-down selects any stacked control directly.",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_085",
@@ -3719,14 +3803,15 @@
       "ans": 3,
       "exp": "PictureBoxSizeMode.Zoom scales the whole image up or down to fit the control while maintaining its correct aspect ratio, preventing a squashed or cropped traffic light.",
       "explanation": "PictureBoxSizeMode.Zoom scales the whole image up or down to fit the control while maintaining its correct aspect ratio, preventing a squashed or cropped traffic light.",
-      "distractorRationale": "",
+      "distractorRationale": "`AutoSize` changes the control dimensions, `Normal` leaves large images clipped, and `StretchImage` warps proportions; `Zoom` scales proportionally inside the box.",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_086",
@@ -3760,14 +3845,15 @@
       "ans": 0,
       "exp": "StretchImage stretches the width and height independently to fill the control bounds, distorting the original image proportions unless the control has the exact same aspect ratio.",
       "explanation": "StretchImage stretches the width and height independently to fill the control bounds, distorting the original image proportions unless the control has the exact same aspect ratio.",
-      "distractorRationale": "",
+      "distractorRationale": "`StretchImage` neither hides the control, desaturates colours, nor crashes on PNGsâ€”it stretches width and height independently, warping circles into ovals.",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_087",
@@ -3801,14 +3887,15 @@
       "ans": 1,
       "exp": "Setting the Visible property to false in the Properties window ensures the red, amber, and green PictureBoxes are hidden when the form initializes, showing only the off lamp.",
       "explanation": "Setting the Visible property to false in the Properties window ensures the red, amber, and green PictureBoxes are hidden when the form initializes, showing only the off lamp.",
-      "distractorRationale": "",
+      "distractorRationale": "WinForms `PictureBox` has no per-control `Opacity` property, deleting controls removes them permanently, and `Form1.Enabled = false` freezes the entire window.",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_088",
@@ -3842,7 +3929,7 @@
       "ans": 2,
       "exp": "Double-clicking adds an event handler in Form1.cs and wires it up in Form1.Designer.cs ('this.Load += ...'). Deleting the method in Form1.cs leaves a broken reference in the designer, causing compiler errors.",
       "explanation": "Double-clicking adds an event handler in Form1.cs and wires it up in Form1.Designer.cs ('this.Load += ...'). Deleting the method in Form1.cs leaves a broken reference in the designer, causing compiler errors.",
-      "distractorRationale": "",
+      "distractorRationale": "Deleting `Form1_Load` from `Form1.cs` while `this.Load += new EventHandler(this.Form1_Load);` remains in `Form1.Designer.cs` causes compiler error `CS1061`.",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -3850,7 +3937,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_089",
@@ -3884,7 +3972,7 @@
       "ans": 3,
       "exp": "Leaving an empty event handler method does no harm and keeps the build intact. Alternatively, remove the wireup from the Properties window Events tab first.",
       "explanation": "Leaving an empty event handler method does no harm and keeps the build intact. Alternatively, remove the wireup from the Properties window Events tab first.",
-      "distractorRationale": "",
+      "distractorRationale": "Renaming files, rebooting Windows, or switching languages will not fix a dangling event wire-up; either keep the empty stub or unhook the `Load` event in the Properties Events view.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3892,7 +3980,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_090",
@@ -3926,7 +4015,7 @@
       "ans": 0,
       "exp": "The .NET Framework is Microsoft's collection of classes and runtime environment upon which Visual C# Windows Forms applications are built and executed.",
       "explanation": "The .NET Framework is Microsoft's collection of classes and runtime environment upon which Visual C# Windows Forms applications are built and executed.",
-      "distractorRationale": "",
+      "distractorRationale": "BIOS is motherboard firmware, the raw Win32 kernel API is unmanaged C, and the CIL compiler is just the build toolâ€”the `.NET` class library & CLR form the managed framework.",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -3934,7 +4023,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_091",
@@ -3968,7 +4058,7 @@
       "ans": 1,
       "exp": "Setting FormBorderStyle to FixedSingle prevents border dragging, and setting MaximizeBox to false disables the maximize button on the title bar.",
       "explanation": "Setting FormBorderStyle to FixedSingle prevents border dragging, and setting MaximizeBox to false disables the maximize button on the title bar.",
-      "distractorRationale": "",
+      "distractorRationale": "`Locked` only affects the Visual Studio Designer, `Minimized` hides the window on the taskbar, and `AutoSize = true` lets the form change size rather than locking it.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3976,7 +4066,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_092",
@@ -4010,7 +4101,7 @@
       "ans": 2,
       "exp": "In Windows Forms, the 'Text' property of the Form controls the string rendered in the title bar.",
       "explanation": "In Windows Forms, the 'Text' property of the Form controls the string rendered in the title bar.",
-      "distractorRationale": "",
+      "distractorRationale": "`Form` has no `Caption` or `Title` property in Windows Forms, and `Name` changes the C# class/instance identifier rather than the title-bar text.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4018,7 +4109,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_093",
@@ -4052,7 +4144,7 @@
       "ans": 3,
       "exp": "NWU CMPG122 standards require a 3-letter lowercase prefix indicating control type ('btn') followed by a descriptive PascalCase name ('Ready').",
       "explanation": "NWU CMPG122 standards require a 3-letter lowercase prefix indicating control type ('btn') followed by a descriptive PascalCase name ('Ready').",
-      "distractorRationale": "",
+      "distractorRationale": "`ReadyButton` omits the prefix, while `ready_btn` and `Button_Ready` use underscores and wrong prefix order instead of `btnReady`.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4060,7 +4152,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_094",
@@ -4094,7 +4187,7 @@
       "ans": 0,
       "exp": "C# identifiers must begin with an alphabetic character or underscore; they cannot start with a numeric digit (e.g. '3rdLight').",
       "explanation": "C# identifiers must begin with an alphabetic character or underscore; they cannot start with a numeric digit (e.g. '3rdLight').",
-      "distractorRationale": "",
+      "distractorRationale": "`lblResult`, `picRedLamp`, and `_tempValue` start with a letter or underscore, whereas `3rdLight` is illegal because C# identifiers cannot begin with a digit.",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -4102,7 +4195,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_095",
@@ -4136,7 +4230,7 @@
       "ans": 1,
       "exp": "In Windows Forms, placing an ampersand ('&') immediately before a character in a Button's Text property (e.g. '&Stop') creates a keyboard mnemonic (Alt+S).",
       "explanation": "In Windows Forms, placing an ampersand ('&') immediately before a character in a Button's Text property (e.g. '&Stop') creates a keyboard mnemonic (Alt+S).",
-      "distractorRationale": "",
+      "distractorRationale": "WinForms `Button` has no `AccessKey` property, naming prefixes do not create shortcuts, and `KeyPreview` is a `bool` on `Form`â€”`&Stop` in `Text` binds `Alt+S`.",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -4144,7 +4238,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_096",
@@ -4178,7 +4273,7 @@
       "ans": 2,
       "exp": "The TabIndex property stores an integer specifying the order in which controls receive focus upon pressing Tab. The TabStop boolean property determines whether the control can receive focus via Tab at all.",
       "explanation": "The TabIndex property stores an integer specifying the order in which controls receive focus upon pressing Tab. The TabStop boolean property determines whether the control can receive focus via Tab at all.",
-      "distractorRationale": "",
+      "distractorRationale": "`Name` sets the identifier, `FocusOrder` does not exist, and `TabStop` is a `bool` (`true`/`false`) rather than the numeric `0, 1, 2...` sequence.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4186,7 +4281,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_097",
@@ -4220,7 +4316,7 @@
       "ans": 3,
       "exp": "Labels are purely informational display controls; their TabStop property is false by default, so Tab navigation skips them.",
       "explanation": "Labels are purely informational display controls; their TabStop property is false by default, so Tab navigation skips them.",
-      "distractorRationale": "",
+      "distractorRationale": "Labels are rendered by Windows, do possess a `TabIndex` property, and never close formsâ€”they are skipped because `Label.TabStop` defaults to `false`.",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -4228,7 +4324,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_098",
@@ -4262,7 +4359,7 @@
       "ans": 0,
       "exp": "With AutoSize set to false, the label has fixed dimensions. Combined with TextAlign = MiddleCenter, messages of varying character length remain perfectly centered without resizing the label.",
       "explanation": "With AutoSize set to false, the label has fixed dimensions. Combined with TextAlign = MiddleCenter, messages of varying character length remain perfectly centered without resizing the label.",
-      "distractorRationale": "",
+      "distractorRationale": "Setting `AutoSize = false` does not translate text, turn a `Label` into a `Button`, or enable keyboard typing; it keeps the label's box width/alignment fixed.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4270,7 +4367,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_099",
@@ -4304,7 +4402,7 @@
       "ans": 1,
       "exp": "Clicking Stop must show only the red light, hide the amber, green, and dark lamps, and update the instruction label text to 'STOP'.",
       "explanation": "Clicking Stop must show only the red light, hide the amber, green, and dark lamps, and update the instruction label text to 'STOP'.",
-      "distractorRationale": "",
+      "distractorRationale": "Option A closes the entire app (`this.Close()`), Option C overwrites `picRed.Image` and hides the label, and Option D turns on the amber lamp instead of red.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4312,7 +4410,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_100",
@@ -4346,7 +4445,7 @@
       "ans": 2,
       "exp": "In GUI design, high-consequence actions like exiting or deleting are highlighted in warning colors (such as red) to provide clear visual affordance and prevent accidental triggering.",
       "explanation": "In GUI design, high-consequence actions like exiting or deleting are highlighted in warning colors (such as red) to provide clear visual affordance and prevent accidental triggering.",
-      "distractorRationale": "",
+      "distractorRationale": "The C# compiler does not care about button colours, red paint never speeds up execution, and red background with contrasting text keeps the caption visible as a warning cue.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4354,7 +4453,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_101",
@@ -4388,7 +4488,7 @@
       "ans": 3,
       "exp": "InitializeComponent() is auto-generated by Visual Studio in Form1.Designer.cs to create controls, assign their initial properties, and bind event delegates.",
       "explanation": "InitializeComponent() is auto-generated by Visual Studio in Form1.Designer.cs to create controls, assign their initial properties, and bind event delegates.",
-      "distractorRationale": "",
+      "distractorRationale": "`InitializeComponent()` never closes Visual Studio, contacts servers, or formats currencyâ€”it instantiates and positions all Designer-configured controls.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4396,7 +4496,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_102",
@@ -4430,7 +4531,7 @@
       "ans": 0,
       "exp": "The 'partial' keyword allows a single C# class definition to be partitioned across multiple source files, keeping designer-generated plumbing separate from human-written code.",
       "explanation": "The 'partial' keyword allows a single C# class definition to be partitioned across multiple source files, keeping designer-generated plumbing separate from human-written code.",
-      "distractorRationale": "",
+      "distractorRationale": "`partial` has no effect on threading, return types, or incomplete compilation; it lets `Form1.cs` and `Form1.Designer.cs` compile into one unified `Form1` class.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4438,7 +4539,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_103",
@@ -4472,7 +4574,7 @@
       "ans": 1,
       "exp": "In C#, two methods in the same class cannot share the identical identifier and parameter list (CS0111). The exit button handler must have a unique identifier, such as btnExit_Click.",
       "explanation": "In C#, two methods in the same class cannot share the identical identifier and parameter list (CS0111). The exit button handler must have a unique identifier, such as btnExit_Click.",
-      "distractorRationale": "",
+      "distractorRationale": "Duplicate method names with identical parameter lists trigger `CS0111` (duplicate member definition), never `CS0029`, `CS1002`, or sequential execution.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4480,7 +4582,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.29
     },
     {
       "id": "q_su1_104",
@@ -4514,7 +4617,7 @@
       "ans": 2,
       "exp": "The 'sender' parameter contains a reference to the specific object/control that triggered the event notification.",
       "explanation": "The 'sender' parameter contains a reference to the specific object/control that triggered the event notification.",
-      "distractorRationale": "",
+      "distractorRationale": "`sender` holds a reference to the UI object that raised the event (e.g. `btnGo`), not elapsed time, prior math results, or user email.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4522,7 +4625,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_105",
@@ -4556,7 +4660,7 @@
       "ans": 3,
       "exp": "Program.cs contains the static void Main() entry point method that calls Application.Run(new Form1()).",
       "explanation": "Program.cs contains the static void Main() entry point method that calls Application.Run(new Form1()).",
-      "distractorRationale": "",
+      "distractorRationale": "`Form1.cs` holds event handlers, `Form1.Designer.cs` holds control initialization, and `App.config` is XMLâ€”`Main()` lives in `Program.cs`.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4564,7 +4668,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_106",
@@ -4598,7 +4703,7 @@
       "ans": 0,
       "exp": "Ctrl+Shift+S triggers 'Save All', saving all modified code, designer, and project files simultaneously, whereas Ctrl+S saves only the currently active document.",
       "explanation": "Ctrl+Shift+S triggers 'Save All', saving all modified code, designer, and project files simultaneously, whereas Ctrl+S saves only the currently active document.",
-      "distractorRationale": "",
+      "distractorRationale": "`F5` starts debugging, `Ctrl+S` saves only the currently active file, and `Alt+F4` closes the windowâ€”`Ctrl+Shift+S` saves all project files.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4606,7 +4711,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_107",
@@ -4640,7 +4746,7 @@
       "ans": 1,
       "exp": "The C# compiler compiles source code into Common Intermediate Language (CIL/MSIL), which the Common Language Runtime (CLR) JIT compiler translates to native machine code at runtime.",
       "explanation": "The C# compiler compiles source code into Common Intermediate Language (CIL/MSIL), which the Common Language Runtime (CLR) JIT compiler translates to native machine code at runtime.",
-      "distractorRationale": "",
+      "distractorRationale": "C# compiles to `.NET` Common Intermediate Language (`CIL`/`MSIL`), not Java bytecode, plain ASCII source, or ahead-of-time raw x86 assembly.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4648,7 +4754,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_108",
@@ -4682,7 +4789,7 @@
       "ans": 2,
       "exp": "In object-oriented programming, objects encapsulate properties (which store data about the object) and methods (which define actions or operations the object can perform).",
       "explanation": "In object-oriented programming, objects encapsulate properties (which store data about the object) and methods (which define actions or operations the object can perform).",
-      "distractorRationale": "",
+      "distractorRationale": "Data attributes encapsulating state on GUI objects are `properties` (spelled `properties`, not `propertys`), and actions performed on them are `methods`.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4690,7 +4797,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_109",
@@ -4724,7 +4832,7 @@
       "ans": 3,
       "exp": "Visual Studio highlights syntax and grammatical errors dynamically in the code editor with a red jagged (squiggly) line, indicating that compilation will fail unless resolved.",
       "explanation": "Visual Studio highlights syntax and grammatical errors dynamically in the code editor with a red jagged (squiggly) line, indicating that compilation will fail unless resolved.",
-      "distractorRationale": "",
+      "distractorRationale": "Green wavy underlines indicate compiler warnings, yellow highlights mark the current debugger statement, and syntax errors use a red squiggly underline.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4732,7 +4840,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su1_110",
@@ -4766,7 +4875,7 @@
       "ans": 0,
       "exp": "The 'Common Controls' category in the Visual Studio Toolbox houses the most frequently used Windows Forms controls.",
       "explanation": "The 'Common Controls' category in the Visual Studio Toolbox houses the most frequently used Windows Forms controls.",
-      "distractorRationale": "",
+      "distractorRationale": "`Button`, `Label`, `TextBox`, `PictureBox`, `ListBox`, `CheckBox`, and `RadioButton` all reside under `Common Controls`, not `WPF Interop`, `Printing`, or `Data`.",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -4774,7 +4883,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_111",
@@ -4808,7 +4918,7 @@
       "ans": 1,
       "exp": "ForeColor controls the text/foreground color of a control, whereas BackColor controls its background fill color.",
       "explanation": "ForeColor controls the text/foreground color of a control, whereas BackColor controls its background fill color.",
-      "distractorRationale": "",
+      "distractorRationale": "`BackColor` changes the background fill behind the label, while `TextColor` and `FontColor` do not exist on `System.Windows.Forms.Label`.",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -4816,7 +4926,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_112",
@@ -4850,14 +4961,15 @@
       "ans": 2,
       "exp": "Leaving default control names obscures control purpose in event handlers and violates Hungarian naming standards.",
       "explanation": "Leaving default control names obscures control purpose in event handlers and violates Hungarian naming standards.",
-      "distractorRationale": "",
+      "distractorRationale": "Visual Studio still saves and runs `button1`/`textBox1` without converting to VB; the problem is unreadable, unmaintainable event-handler code.",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_113",
@@ -4891,7 +5003,7 @@
       "ans": 3,
       "exp": "MessageBox.Show() is the standard method in Windows Forms to present modal pop-up messages.",
       "explanation": "MessageBox.Show() is the standard method in Windows Forms to present modal pop-up messages.",
-      "distractorRationale": "",
+      "distractorRationale": "`Window.Prompt` and `Form.Alert` do not exist in WinForms, and `Console.WriteLine` writes to standard output rather than popping up a GUI dialog (`MessageBox.Show(text, caption)`).",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4899,7 +5011,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_114",
@@ -4933,7 +5046,7 @@
       "ans": 0,
       "exp": "Consistency in fonts, sizing, terminology, and naming reduces cognitive load and allows users to predict interface behavior.",
       "explanation": "Consistency in fonts, sizing, terminology, and naming reduces cognitive load and allows users to predict interface behavior.",
-      "distractorRationale": "",
+      "distractorRationale": "Painting every form red, banning the mouse, or randomizing control colours destroys usability; Rule 1 calls for uniform fonts, colours, and layouts across forms.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4941,7 +5054,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_115",
@@ -4975,7 +5089,7 @@
       "ans": 1,
       "exp": "Informative feedback requires that every user action receives an immediate, clear visual confirmation (green lamp lit, instruction updated).",
       "explanation": "Informative feedback requires that every user action receives an immediate, clear visual confirmation (green lamp lit, instruction updated).",
-      "distractorRationale": "",
+      "distractorRationale": "Minimizing the window, running hidden audio diagnostics, or staying silent fails to inform the user; illuminating the green lamp and updating `lblInstruction` gives immediate feedback.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4983,7 +5097,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su1_116",
@@ -5017,7 +5132,7 @@
       "ans": 2,
       "exp": "In event-driven applications, user actions (button clicks, text inputs, form loading) fire events that trigger registered event handler methods.",
       "explanation": "In event-driven applications, user actions (button clicks, text inputs, form loading) fire events that trigger registered event handler methods.",
-      "distractorRationale": "",
+      "distractorRationale": "GUI apps do not run top-to-bottom once like batch scripts or restrict usage to once a day; they wait in an event loop for user/system events.",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -5025,7 +5140,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_117",
@@ -5059,7 +5175,7 @@
       "ans": 3,
       "exp": "Setting StartPosition to FormStartPosition.CenterScreen ensures the form appears neatly centered on the primary display upon opening.",
       "explanation": "Setting StartPosition to FormStartPosition.CenterScreen ensures the form appears neatly centered on the primary display upon opening.",
-      "distractorRationale": "",
+      "distractorRationale": "`CenterToScreen` is a protected method (not a boolean property), `Point(0, 0)` places the form at top-left, and `FormWindowState.Normal` only sets non-maximized window state.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5067,7 +5183,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_118",
@@ -5101,7 +5218,7 @@
       "ans": 0,
       "exp": "A breakpoint (represented by a red dot in the left margin) pauses program execution right before the marked line executes, allowing the developer to examine memory and step through statements.",
       "explanation": "A breakpoint (represented by a red dot in the left margin) pauses program execution right before the marked line executes, allowing the developer to examine memory and step through statements.",
-      "distractorRationale": "",
+      "distractorRationale": "`Auto-complete` assists typing, `sizing handles` resize controls in the Designer, and the `Locals` window inspects variables *after* a `breakpoint` pauses execution.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5109,7 +5226,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su1_119",
@@ -5143,7 +5261,7 @@
       "ans": 1,
       "exp": "Setting Enabled to false disables user interaction and renders the control in a grayed-out inactive state.",
       "explanation": "Setting Enabled to false disables user interaction and renders the control in a grayed-out inactive state.",
-      "distractorRationale": "",
+      "distractorRationale": "`Locked` is design-time only, `Visible = false` hides the button completely, and `Button` has no `ReadOnly` propertyâ€”`Enabled = false` grays it out.",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -5151,7 +5269,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su1_120",
@@ -5185,7 +5304,7 @@
       "ans": 2,
       "exp": "Pressing F11 in Visual Studio activates 'single-stepping' (Step Into), which advances program execution one statement at a time, entering into called methods for granular inspection.",
       "explanation": "Pressing F11 in Visual Studio activates 'single-stepping' (Step Into), which advances program execution one statement at a time, entering into called methods for granular inspection.",
-      "distractorRationale": "",
+      "distractorRationale": "In Visual Studio terminology, executing one statement at a time in the debugger is called `single-stepping` (via Step Into / Step Over).",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5193,7 +5312,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su1_121",
@@ -5227,7 +5347,7 @@
       "ans": 3,
       "exp": "Pseudocode (single word, no space) is an informal natural language description of an algorithm. A flowchart is its standardized graphical representation using geometric symbols.",
       "explanation": "Pseudocode (single word, no space) is an informal natural language description of an algorithm. A flowchart is its standardized graphical representation using geometric symbols.",
-      "distractorRationale": "",
+      "distractorRationale": "Informal English step-by-step logic is `pseudocode` (one word) and graphical symbol diagrams are `flowcharts`, rather than wireframes, schemas, or storyboards.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5235,7 +5355,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_122",
@@ -5269,7 +5390,7 @@
       "ans": 0,
       "exp": "The BringToFront() method moves the target control to the front of the z-order layering stack.",
       "explanation": "The BringToFront() method moves the target control to the front of the z-order layering stack.",
-      "distractorRationale": "",
+      "distractorRationale": "`SendToBack()` moves the control behind others, `SetTopLevel` is for top-level windows, and `ShowAbove()` does not exist on `Control`.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5277,7 +5398,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_123",
@@ -5311,7 +5433,7 @@
       "ans": 1,
       "exp": "Pressing an access key combination (Alt + mnemonic) fires that button's Click event, facilitating rapid keyboard-only navigation.",
       "explanation": "Pressing an access key combination (Alt + mnemonic) fires that button's Click event, facilitating rapid keyboard-only navigation.",
-      "distractorRationale": "",
+      "distractorRationale": "Pressing `Alt` + access key never closes the form, uppercases captions, or moves controlsâ€”it invokes the button's `Click` event.",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -5319,7 +5441,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_124",
@@ -5353,7 +5476,7 @@
       "ans": 2,
       "exp": " contrasts Graphical User Interfaces (GUIs), which allow users to interact via graphical elements, with Command Line Interfaces (CLIs), where users interact purely by typing text commands.",
       "explanation": " contrasts Graphical User Interfaces (GUIs), which allow users to interact via graphical elements, with Command Line Interfaces (CLIs), where users interact purely by typing text commands.",
-      "distractorRationale": "",
+      "distractorRationale": "Alongside the command-line interface (CLI), the primary visual window/icon/button paradigm is the `graphical user interface (GUI)`.",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -5361,7 +5484,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_125",
@@ -5395,14 +5519,15 @@
       "ans": 3,
       "exp": "'using System.Windows.Forms;' imports the Windows Forms control class hierarchy into the source file.",
       "explanation": "'using System.Windows.Forms;' imports the Windows Forms control class hierarchy into the source file.",
-      "distractorRationale": "",
+      "distractorRationale": "`Microsoft.VisualBasic` is VB runtime helpers, `System.Web.UI` is legacy ASP.NET web forms, and `System.Console.Graphics` does not exist.",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su1_126",
@@ -5436,14 +5561,15 @@
       "ans": 0,
       "exp": "Setting Visible = false hides the control from the user interface while preserving its state and properties in memory.",
       "explanation": "Setting Visible = false hides the control from the user interface while preserving its state and properties in memory.",
-      "distractorRationale": "",
+      "distractorRationale": "Setting `picAmber.Visible = false;` never deletes disk files, frees the control variable, or recolours pixelsâ€”it simply hides the control on the form.",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_127",
@@ -5477,7 +5603,7 @@
       "ans": 1,
       "exp": "The lightning bolt icon switches the Properties window to show all events (e.g. Click, TextChanged, KeyPress) supported by the control.",
       "explanation": "The lightning bolt icon switches the Properties window to show all events (e.g. Click, TextChanged, KeyPress) supported by the control.",
-      "distractorRationale": "",
+      "distractorRationale": "The lightning-bolt button in the `Properties` window switches from the Properties view to the **Events** view for wiring handlers like `Click` or `CheckedChanged`.",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -5485,7 +5611,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_128",
@@ -5519,7 +5646,7 @@
       "ans": 2,
       "exp": "The default event for a TextBox in Visual Studio is TextChanged, which fires whenever the text inside the box is altered.",
       "explanation": "The default event for a TextBox in Visual Studio is TextChanged, which fires whenever the text inside the box is altered.",
-      "distractorRationale": "",
+      "distractorRationale": "Double-clicking a `TextBox` in the Designer scaffolds its default event `TextChanged`, not `Click`, `Enter`, or `Leave`.",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -5527,7 +5654,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_129",
@@ -5561,7 +5689,7 @@
       "ans": 3,
       "exp": "Setting MaximizeBox = false prevents the user from expanding the form to fill the entire desktop screen.",
       "explanation": "Setting MaximizeBox = false prevents the user from expanding the form to fill the entire desktop screen.",
-      "distractorRationale": "",
+      "distractorRationale": "`MaximizeBox = false` neither closes the form, blocks closing, nor hides the minimize buttonâ€”it disables the title-bar Maximize button.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5569,7 +5697,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su1_130",
@@ -5603,7 +5732,7 @@
       "ans": 0,
       "exp": "IntelliSense is Microsoft's trademarked code-completion technology in Visual Studio that displays matching methods, properties, and parameters as you type.",
       "explanation": "IntelliSense is Microsoft's trademarked code-completion technology in Visual Studio that displays matching methods, properties, and parameters as you type.",
-      "distractorRationale": "",
+      "distractorRationale": "Visual Studio's built-in completion, parameter info, and member-list engine is officially named `IntelliSense` (`Live Share` is collaborative editing, `CodeDOM` generates code trees).",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5611,7 +5740,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_131",
@@ -5645,7 +5775,7 @@
       "ans": 0,
       "exp": "The 'decimal' type is a 128-bit fixed-point type tailored for monetary calculations to eliminate floating-point representation anomalies.",
       "explanation": "The 'decimal' type is a 128-bit fixed-point type tailored for monetary calculations to eliminate floating-point representation anomalies.",
-      "distractorRationale": "",
+      "distractorRationale": "`float` and `double` use binary floating-point (causing cent-rounding errors like `0.1 + 0.2 != 0.3`), while `int` discards fractional cents entirely.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -5653,7 +5783,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_132",
@@ -5687,7 +5818,7 @@
       "ans": 1,
       "exp": "Decimal literals require the 'm' or 'M' suffix (e.g. 199.99m, 0.15m). Without a suffix, real numbers default to 'double'.",
       "explanation": "Decimal literals require the 'm' or 'M' suffix (e.g. 199.99m, 0.15m). Without a suffix, real numbers default to 'double'.",
-      "distractorRationale": "",
+      "distractorRationale": "`f`/`F` creates a `float`, `d`/`D` creates a `double`, and `l`/`L` creates a `long` integer; only `m`/`M` denotes a `decimal` literal.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -5695,7 +5826,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_133",
@@ -5729,7 +5861,7 @@
       "ans": 2,
       "exp": "When both operands in division are integers, C# performs integer division and truncates the fractional part, resulting in 3.",
       "explanation": "When both operands in division are integers, C# performs integer division and truncates the fractional part, resulting in 3.",
-      "distractorRationale": "",
+      "distractorRationale": "Because both `7` and `2` are `int` literals, C# performs integer division and truncates `.5` toward zero to yield `3` (never `3.5`, `3.0`, or rounded `4`).",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -5737,7 +5869,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_134",
@@ -5771,7 +5904,7 @@
       "ans": 3,
       "exp": "Explicitly casting at least one operand to double (e.g. (double)total / count) forces floating-point division.",
       "explanation": "Explicitly casting at least one operand to double (e.g. (double)total / count) forces floating-point division.",
-      "distractorRationale": "",
+      "distractorRationale": "`//` starts a C# comment, while `total / count / 1.0` and `Convert.ToInt32(total / count)` evaluate `total / count` as truncated `int` division *before* any conversion.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -5779,7 +5912,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_135",
@@ -5813,7 +5947,7 @@
       "ans": 0,
       "exp": "The \"C\" format specifier formats the number as currency using the computer's regional culture settings (e.g. R 1,250.00).",
       "explanation": "The \"C\" format specifier formats the number as currency using the computer's regional culture settings (e.g. R 1,250.00).",
-      "distractorRationale": "",
+      "distractorRationale": "`\"P\"` formats percentages (`Ã— 100%`), `\"F\"` formats fixed-point without thousands separators or currency symbols, and `\"N\"` omits the currency symbol.",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -5821,7 +5955,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_136",
@@ -5855,7 +5990,7 @@
       "ans": 1,
       "exp": "The \"P\" format specifier multiplies the number by 100, appends '%', and \"P1\" formats with 1 decimal place: 17.5%.",
       "explanation": "The \"P\" format specifier multiplies the number by 100, appends '%', and \"P1\" formats with 1 decimal place: 17.5%.",
-      "distractorRationale": "",
+      "distractorRationale": "`\"P1\"` multiplies `0.175` by `100` and keeps `1` decimal place (`\"17.5%\"`); `\"0.175%\"` forgets the `Ã— 100`, `\"0.2%\"` both forgets `Ã— 100` and over-rounds, and `\"17.50%\"` corresponds to `\"P2\"`.",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -5863,7 +5998,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_137",
@@ -5897,14 +6033,15 @@
       "ans": 2,
       "exp": "FormatException is thrown when the string format does not conform to the expected numeric pattern.",
       "explanation": "FormatException is thrown when the string format does not conform to the expected numeric pattern.",
-      "distractorRationale": "",
+      "distractorRationale": "`DivideByZeroException` requires `/ 0`, `NullReferenceException` requires a `null` reference (`TextBox.Text` is `\"abc\"`, not `null`), and `OverflowException` requires an out-of-range number.",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_138",
@@ -5938,7 +6075,7 @@
       "ans": 3,
       "exp": "The 'const' keyword creates a named constant whose value is immutable at compile time (e.g. const decimal VAT_RATE = 0.15m;).",
       "explanation": "The 'const' keyword creates a named constant whose value is immutable at compile time (e.g. const decimal VAT_RATE = 0.15m;).",
-      "distractorRationale": "",
+      "distractorRationale": "`static` shares a mutable field across instances, `fixed` pins unmanaged pointers, and `readonly` is evaluated at runtime construction rather than compile-time `const`.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -5946,7 +6083,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_139",
@@ -5980,14 +6118,15 @@
       "ans": 0,
       "exp": "Local variables have method scope and lifetime. Field variables have class scope and exist as long as the form instance exists.",
       "explanation": "Local variables have method scope and lifetime. Field variables have class scope and exist as long as the form instance exists.",
-      "distractorRationale": "",
+      "distractorRationale": "Local variables are invisible outside their method (never accessible across forms), can hold any C# type including `decimal`, and differ sharply in lifetime from class fields.",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su2_140",
@@ -6021,7 +6160,7 @@
       "ans": 1,
       "exp": "The .Focus() method sets the active keyboard input focus to the specified control.",
       "explanation": "The .Focus() method sets the active keyboard input focus to the specified control.",
-      "distractorRationale": "",
+      "distractorRationale": "`Focus.Set(...)` and `.Active = true` do not exist in WinForms, while `txtHours.SelectAll()` highlights text without moving focus from another control.",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -6029,7 +6168,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su2_141",
@@ -6071,7 +6211,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_142",
@@ -6105,7 +6246,7 @@
       "ans": 3,
       "exp": "Setting TabStop = false prevents the control from receiving focus via the Tab key.",
       "explanation": "Setting TabStop = false prevents the control from receiving focus via the Tab key.",
-      "distractorRationale": "",
+      "distractorRationale": "`Visible = false` hides the control, `Enabled = false` dims it, and `TabIndex` only reorders Tab stopsâ€”setting `TabStop = false` keeps it normal while skipping Tab focus.",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -6113,7 +6254,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_143",
@@ -6147,7 +6289,7 @@
       "ans": 0,
       "exp": "The '=' sign in C# is the assignment operator. It copies the expression on its right-hand side into the variable or property on its left-hand side. The '==' operator is used for equality comparison.",
       "explanation": "The '=' sign in C# is the assignment operator. It copies the expression on its right-hand side into the variable or property on its left-hand side. The '==' operator is used for equality comparison.",
-      "distractorRationale": "",
+      "distractorRationale": "Single `=` assigns the right-hand string into `answerLabel.Text`; `==` is equality comparison, relational operators compare magnitude, and \"variable binder\" is not a C# operator.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6155,7 +6297,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_144",
@@ -6189,7 +6332,7 @@
       "ans": 1,
       "exp": "CancelButton specifies the button automatically activated when the Esc key is pressed.",
       "explanation": "CancelButton specifies the button automatically activated when the Esc key is pressed.",
-      "distractorRationale": "",
+      "distractorRationale": "`AcceptButton` fires on `Enter`, whereas `ExitButton` and `CloseButton` do not exist on `Form`; `CancelButton` maps `Esc`.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6197,7 +6340,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_145",
@@ -6231,7 +6375,7 @@
       "ans": 2,
       "exp": "Math.Sqrt(value) returns the positive square root of the specified number.",
       "explanation": "Math.Sqrt(value) returns the positive square root of the specified number.",
-      "distractorRationale": "",
+      "distractorRationale": "`Math.Square()` and `Math.Root()` do not exist on `System.Math`, while `Math.Pow(x, y)` raises `x` to power `y` rather than taking a single-argument square root.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6239,7 +6383,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_146",
@@ -6273,7 +6418,7 @@
       "ans": 3,
       "exp": "Financial calculations demand exact precision. Binary floating-point types (float and double) suffer from representation errors with base-10 fractions (like 0.10), whereas decimal uses base-10 representation tailored for currency.",
       "explanation": "Financial calculations demand exact precision. Binary floating-point types (float and double) suffer from representation errors with base-10 fractions (like 0.10), whereas decimal uses base-10 representation tailored for currency.",
-      "distractorRationale": "",
+      "distractorRationale": "Visual Studio allows `double` anywhere, `double` uses *less* RAM (8 bytes vs 16 bytes for `decimal`), and `decimal` is slower than `int`â€”`decimal` is chosen to eliminate base-2 rounding errors.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6281,7 +6426,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_147",
@@ -6315,7 +6461,7 @@
       "ans": 0,
       "exp": "Choosing data types requires domain justification: rolls are discrete whole items (you cannot buy 0.3 of a roll), making int the only conceptually sound choice.",
       "explanation": "Choosing data types requires domain justification: rolls are discrete whole items (you cannot buy 0.3 of a roll), making int the only conceptually sound choice.",
-      "distractorRationale": "",
+      "distractorRationale": "C# divides `decimal`s freely, `int` never stores decimal places, and `int` uses 4 bytes (less than `decimal`'s 16 bytes)â€”`int` models discrete whole rolls.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6323,7 +6469,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_148",
@@ -6357,7 +6504,7 @@
       "ans": 1,
       "exp": "Because roll capacity is measured in grams (120g) while butcher purchases are entered in kilograms, kilograms must be converted to grams by multiplying by 1000 before dividing.",
       "explanation": "Because roll capacity is measured in grams (120g) while butcher purchases are entered in kilograms, kilograms must be converted to grams by multiplying by 1000 before dividing.",
-      "distractorRationale": "",
+      "distractorRationale": "Dividing by `1000` turns kg into metric tonnes, adding `120` mixes incompatible units (`kg + g`), and pounds are imperial rather than grams (`1 kg = 1000 g`).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6365,7 +6512,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_149",
@@ -6399,7 +6547,7 @@
       "ans": 2,
       "exp": "Hardcoding unexplained numeric literals ('magic numbers') loses marks. Coding standards require declaring fixed problem domain constants with descriptive names.",
       "explanation": "Hardcoding unexplained numeric literals ('magic numbers') loses marks. Coding standards require declaring fixed problem domain constants with descriptive names.",
-      "distractorRationale": "",
+      "distractorRationale": "Division never requires a loop, parentheses and `120` are syntactically legal, and the real issue is maintainability: unnamed magic literals should be `const` identifiers.",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -6407,7 +6555,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_150",
@@ -6441,7 +6590,7 @@
       "ans": 3,
       "exp": "Named constants in C# use the 'const' keyword followed by the data type, an uppercase identifier, and an initialization value: 'const decimal GRAMS_PER_ROLL = 120m;'.",
       "explanation": "Named constants in C# use the 'const' keyword followed by the data type, an uppercase identifier, and an initialization value: 'const decimal GRAMS_PER_ROLL = 120m;'.",
-      "distractorRationale": "",
+      "distractorRationale": "`var ... = const`, `decimal constant`, and `readonly 120 = ...` are all syntax errors; C# requires `const <type> <IDENTIFIER> = <value>;` with `m` on `decimal`.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6449,7 +6598,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su2_151",
@@ -6483,7 +6633,7 @@
       "ans": 0,
       "exp": "2500 / 120 equals 20.833... Explicitly casting to (int) truncates the decimal fraction towards zero, leaving exactly 20 whole rolls filled.",
       "explanation": "2500 / 120 equals 20.833... Explicitly casting to (int) truncates the decimal fraction towards zero, leaving exactly 20 whole rolls filled.",
-      "distractorRationale": "",
+      "distractorRationale": "`2500m / 120m` equals `20.8333...m`, and explicit `(int)` cast truncates the `.8333` fraction toward zero to `20` (never rounding up to `21`, keeping `20.83`, or miscomputing `25`).",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -6491,7 +6641,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_152",
@@ -6525,7 +6676,7 @@
       "ans": 1,
       "exp": "Real number literals with decimal points are treated as double by default in C#. Converting double to decimal requires an explicit 'm' suffix or cast.",
       "explanation": "Real number literals with decimal points are treated as double by default in C#. Converting double to decimal requires an explicit 'm' suffix or cast.",
-      "distractorRationale": "",
+      "distractorRationale": "Without the `m` suffix, `85.50` is typed as `double`, and C# forbids implicit narrowing from `double` to `decimal` (`CS0664`), never auto-inserting `m` or converting to `int`.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6533,7 +6684,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_153",
@@ -6567,7 +6719,7 @@
       "ans": 2,
       "exp": "The calculation pipeline computes the meat cost, converts weight from kilograms to grams, determines whole rolls filled, calculates the bread cost, and sums both costs.",
       "explanation": "The calculation pipeline computes the meat cost, converts weight from kilograms to grams, determines whole rolls filled, calculates the bread cost, and sums both costs.",
-      "distractorRationale": "",
+      "distractorRationale": "You cannot compute total cost before knowing roll count, multiply a customer's `string` name, or divide unit prices by each otherâ€”weight converts to grams (`kg * 1000`) to find whole rolls first.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6575,7 +6727,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su2_154",
@@ -6609,14 +6762,15 @@
       "ans": 3,
       "exp": "TryParse provides defensive input parsing: if the user enters letters or leaves the box blank, TryParse simply returns false rather than throwing a crashing FormatException.",
       "explanation": "TryParse provides defensive input parsing: if the user enters letters or leaves the box blank, TryParse simply returns false rather than throwing a crashing FormatException.",
-      "distractorRationale": "",
+      "distractorRationale": "`TryParse` never flips negative signs, prints to hardware, or uppercases stringsâ€”it prevents `FormatException` crashes by returning `bool` `false` on bad text.",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.55
     },
     {
       "id": "q_su2_155",
@@ -6650,14 +6804,15 @@
       "ans": 0,
       "exp": "The 'out' parameter modifier allows a method to return multiple values by writing results directly into the caller's variable.",
       "explanation": "The 'out' parameter modifier allows a method to return multiple values by writing results directly into the caller's variable.",
-      "distractorRationale": "",
+      "distractorRationale": "`out` does not print to console, delete memory, or create a GUI `Label`; it passes `worsKg` by reference so `TryParse` can store the parsed number into it.",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.82
     },
     {
       "id": "q_su2_156",
@@ -6691,14 +6846,15 @@
       "ans": 1,
       "exp": "When TryParse fails to parse an invalid or empty string, it returns false and populates the out variable with its type default (0m for decimal).",
       "explanation": "When TryParse fails to parse an invalid or empty string, it returns false and populates the out variable with its type default (0m for decimal).",
-      "distractorRationale": "",
+      "distractorRationale": "`TryParse` never throws `StackOverflowException`, shuts down the PC, or assigns `null` to a value-type `decimal`â€”it returns `false` and sets `worsKg` to `0m`.",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.82
     },
     {
       "id": "q_su2_157",
@@ -6732,7 +6888,7 @@
       "ans": 2,
       "exp": "The 'C' (Currency) format specifier formats a numeric value with the regional currency symbol (Rand in South Africa) and 2 decimal places.",
       "explanation": "The 'C' (Currency) format specifier formats a numeric value with the regional currency symbol (Rand in South Africa) and 2 decimal places.",
-      "distractorRationale": "",
+      "distractorRationale": "`\"M\"` formats month/day dates, `ToRand()` does not exist on `decimal`, and `\"R\"` is round-trip float format (invalid on `decimal`, throwing `FormatException`).",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -6740,7 +6896,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_158",
@@ -6774,7 +6931,7 @@
       "ans": 3,
       "exp": "The South African 'C' currency format formats the number with the 'R' prefix, space separator, and two fractional digits: 'R 282.50' (or 'R 282,50').",
       "explanation": "The South African 'C' currency format formats the number with the 'R' prefix, space separator, and two fractional digits: 'R 282.50' (or 'R 282,50').",
-      "distractorRationale": "",
+      "distractorRationale": "Under `en-ZA` culture, `282.5m.ToString(\"C\")` formats to two decimal places with prefix `R` (`R 282.50`), not `\"Rand\"` suffix, single decimal `R282.5`, or US `$`.",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -6782,7 +6939,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_159",
@@ -6816,7 +6974,7 @@
       "ans": 0,
       "exp": "\"C\" formats as regional currency with a symbol, while \"F\" (Fixed-point) formats purely as digits without currency indicators.",
       "explanation": "\"C\" formats as regional currency with a symbol, while \"F\" (Fixed-point) formats purely as digits without currency indicators.",
-      "distractorRationale": "",
+      "distractorRationale": "Both `\"C\"` and `\"F2\"` round to two decimal places and work on `double`/`decimal`; the difference is that `\"C\"` adds the currency symbol and group separators whereas `\"F2\"` outputs plain digits.",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -6824,7 +6982,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su2_160",
@@ -6858,7 +7017,7 @@
       "ans": 1,
       "exp": "Notice the double quotation marks around \"g1\" and \"g2\". Because they are enclosed in quotes, they are string literals, not the variables g1 and g2. The + operator simply concatenates the letters together, producing \"g1g2\". The integer variables g1 and g2 are ignored completely.",
       "explanation": "Notice the double quotation marks around \"g1\" and \"g2\". Because they are enclosed in quotes, they are string literals, not the variables g1 and g2. The + operator simply concatenates the letters together, producing \"g1g2\". The integer variables g1 and g2 are ignored completely.",
-      "distractorRationale": "",
+      "distractorRationale": "Because `\"g1\"` and `\"g2\"` are `string` literals (not variables `g1`/`g2`), `+` concatenates them into `\"g1g2\"` instead of adding `2 + 3 = 5` or concatenating `\"23\"`.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6866,7 +7025,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.87
     },
     {
       "id": "q_su2_161",
@@ -6900,7 +7060,7 @@
       "ans": 2,
       "exp": "Casting at least one operand to double (or decimal) forces C# to evaluate the expression using floating-point division: (double)7 / 2 evaluates to 3.5.",
       "explanation": "Casting at least one operand to double (or decimal) forces C# to evaluate the expression using floating-point division: (double)7 / 2 evaluates to 3.5.",
-      "distractorRationale": "",
+      "distractorRationale": "In `a / b`, `Math.Floor(a / b)`, and `int.Parse(a / b)`, integer division `a / b` already truncates before the outer expression runs (and `int.Parse` expects a `string`).",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -6908,7 +7068,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_162",
@@ -6942,7 +7103,7 @@
       "ans": 3,
       "exp": "The modulus operator (%) calculates the integer division remainder: 17 divided by 5 is 3 with a remainder of 2.",
       "explanation": "The modulus operator (%) calculates the integer division remainder: 17 divided by 5 is 3 with a remainder of 2.",
-      "distractorRationale": "",
+      "distractorRationale": "`17 / 5` is quotient `3` (Option A) or `3.4` in floating-point (Option C), whereas `%` returns the remainder after `3 * 5 = 15` is subtracted from `17`, leaving `2`.",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -6950,7 +7111,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_163",
@@ -6984,14 +7146,15 @@
       "ans": 0,
       "exp": "Local variables are created on method entry and destroyed on exit. Class-level fields persist across multiple events and can be shared among handlers.",
       "explanation": "Local variables are created on method entry and destroyed on exit. Class-level fields persist across multiple events and can be shared among handlers.",
-      "distractorRationale": "",
+      "distractorRationale": "Local variables are mutable unless `const`, are strictly private to their method (never OS-wide), and class fields can hold any data type (`int`, `decimal`, `Random`, etc.).",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su2_164",
@@ -7025,14 +7188,15 @@
       "ans": 1,
       "exp": "C# enforces definite assignment for local variables. Reading an uninitialized local variable generates compiler error CS0165.",
       "explanation": "C# enforces definite assignment for local variables. Reading an uninitialized local variable generates compiler error CS0165.",
-      "distractorRationale": "",
+      "distractorRationale": "Reading a local variable before assigning it triggers definite-assignment error `CS0165`, not missing semicolon (`CS1002`), undeclared name (`CS0103`), or type mismatch (`CS0029`).",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.29
     },
     {
       "id": "q_su2_165",
@@ -7066,14 +7230,15 @@
       "ans": 2,
       "exp": "Class-level fields in C# are automatically initialized to their type's default value (0 for integers, 0.0 for floating-point, 0m for decimal, false for bool).",
       "explanation": "Class-level fields in C# are automatically initialized to their type's default value (0 for integers, 0.0 for floating-point, 0m for decimal, false for bool).",
-      "distractorRationale": "",
+      "distractorRationale": "Numeric value-type class fields (`int`, `double`, `decimal`) are zero-initialized (`0` / `0m`) by the CLRâ€”never `undefined`, `-1`, or `null`.",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_166",
@@ -7107,7 +7272,7 @@
       "ans": 3,
       "exp": "A proper Clear routine empties all input textboxes, clears output result labels, and returns keyboard focus to the first input field (txtName.Focus()).",
       "explanation": "A proper Clear routine empties all input textboxes, clears output result labels, and returns keyboard focus to the first input field (txtName.Focus()).",
-      "distractorRationale": "",
+      "distractorRationale": "`Application.Restart()` and `this.Close()` terminate the window, while setting `txtName.Text = \"0\"` puts literal zero text into a person's name box instead of clearing inputs and outputs.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7115,7 +7280,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su2_167",
@@ -7149,7 +7315,7 @@
       "ans": 0,
       "exp": "The Focus() method programmatically assigns keyboard focus to the specified control, optimizing usability and reducing mouse actions.",
       "explanation": "The Focus() method programmatically assigns keyboard focus to the specified control, optimizing usability and reducing mouse actions.",
-      "distractorRationale": "",
+      "distractorRationale": "`Focus()` does not resize controls, change `BackColor`, or query databasesâ€”it moves the active keyboard caret into `txtName`.",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -7157,7 +7323,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_168",
@@ -7199,7 +7366,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_169",
@@ -7233,7 +7401,7 @@
       "ans": 2,
       "exp": "The 'double' keyword represents 64-bit IEEE 754 double-precision floating-point numbers, offering 15-17 digits of precision.",
       "explanation": "The 'double' keyword represents 64-bit IEEE 754 double-precision floating-point numbers, offering 15-17 digits of precision.",
-      "distractorRationale": "",
+      "distractorRationale": "`float` is 4 bytes (32-bit), `decimal` is 16 bytes (128-bit base-10), and `long` is an 8-byte whole integerâ€”8-byte IEEE 754 floating-point is `double`.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7241,7 +7409,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_170",
@@ -7275,14 +7444,15 @@
       "ans": 3,
       "exp": "'const decimal VAT_RATE = 0.15m;' follows C# syntax: const keyword, type, uppercase identifier, and literal with 'm' suffix.",
       "explanation": "'const decimal VAT_RATE = 0.15m;' follows C# syntax: const keyword, type, uppercase identifier, and literal with 'm' suffix.",
-      "distractorRationale": "",
+      "distractorRationale": "`readonly` omits the type, `static const` and `:=` are illegal in C#, and `15%` is a syntax error (`%` is remainder, not percent literal).",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su2_171",
@@ -7316,7 +7486,7 @@
       "ans": 0,
       "exp": "Constants are read-only and immutable by definition. Attempting to reassign a const variable produces a compile-time error.",
       "explanation": "Constants are read-only and immutable by definition. Attempting to reassign a const variable produces a compile-time error.",
-      "distractorRationale": "",
+      "distractorRationale": "Event handlers can modify any mutable variable or field; `const` identifiers fail reassignment (`CS0131`) because their values are baked in as compile-time constants.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7324,7 +7494,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_172",
@@ -7358,7 +7529,7 @@
       "ans": 1,
       "exp": "String interpolation expressions prefixed with '$' evaluate expressions inside curly braces. The ':C' format specifier formats the decimal as currency with the regional symbol (R) and two decimal places.",
       "explanation": "String interpolation expressions prefixed with '$' evaluate expressions inside curly braces. The ':C' format specifier formats the decimal as currency with the regional symbol (R) and two decimal places.",
-      "distractorRationale": "",
+      "distractorRationale": "With the `$` prefix on `$\"Total Due: {450.75m:C}\"`, `{450.75m:C}` is evaluated using South African currency (`R 450.75`), rather than literal braces, `m` suffix, or `$`.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7366,7 +7537,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_173",
@@ -7400,14 +7572,15 @@
       "ans": 2,
       "exp": "The ':C' format specifier inside the interpolation hole formats the decimal literal 25.5m as South African Rand: 'Cost: R 25.50'.",
       "explanation": "The ':C' format specifier inside the interpolation hole formats the decimal literal 25.5m as South African Rand: 'Cost: R 25.50'.",
-      "distractorRationale": "",
+      "distractorRationale": "`:C` formats `25.5m` to two decimal places with currency symbol (`R 25.50`), never leaving one decimal (`R25.5`), raw `25.5m`, or US `$25.50` under ZA locale.",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_174",
@@ -7441,14 +7614,15 @@
       "ans": 3,
       "exp": "String-to-integer conversion is performed via int.Parse(string). defensive parsing with int.TryParse(string, out int) is taught to prevent runtime exceptions.",
       "explanation": "String-to-integer conversion is performed via int.Parse(string). defensive parsing with int.TryParse(string, out int) is taught to prevent runtime exceptions.",
-      "distractorRationale": "",
+      "distractorRationale": "`.toInt()`, `int.Convert()`, and Java's `Integer.ValueOf()` do not exist in C#; `int.Parse(str)` (or `int.TryParse`) parses a `string` to `int`.",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.55
     },
     {
       "id": "q_su2_175",
@@ -7482,14 +7656,15 @@
       "ans": 0,
       "exp": "In C#, exception handling syntax requires 'catch (ExceptionType identifier)' such as 'catch (FormatException ex)'. Writing 'catch except(ex e)' is invalid C# syntax and causes compiler errors.",
       "explanation": "In C#, exception handling syntax requires 'catch (ExceptionType identifier)' such as 'catch (FormatException ex)'. Writing 'catch except(ex e)' is invalid C# syntax and causes compiler errors.",
-      "distractorRationale": "",
+      "distractorRationale": "C# `catch` syntax is `catch (ExceptionType identifier)`â€”`as`, Python-style `except`, and colon `Exception: FormatException` are invalid C# grammar.",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_176",
@@ -7523,7 +7698,7 @@
       "ans": 1,
       "exp": "Multiplication has higher precedence than addition: 5m * 2m evaluates to 10m, and 10m + 10m equals 20m.",
       "explanation": "Multiplication has higher precedence than addition: 5m * 2m evaluates to 10m, and 10m + 10m equals 20m.",
-      "distractorRationale": "",
+      "distractorRationale": "Multiplication `*` has higher precedence than `+`, so `5m * 2m = 10m` runs first, then `10m + 10m = 20m` (`30m` wrongly adds `10m + 5m` first).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7531,7 +7706,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_177",
@@ -7565,7 +7741,7 @@
       "ans": 2,
       "exp": "Parentheses have the highest precedence: (10m + 5m) evaluates to 15m, which is then multiplied by 2m to yield 30m.",
       "explanation": "Parentheses have the highest precedence: (10m + 5m) evaluates to 15m, which is then multiplied by 2m to yield 30m.",
-      "distractorRationale": "",
+      "distractorRationale": "Parentheses override default precedence, forcing `10m + 5m = 15m` first, then `15m * 2m = 30m` (`20m` ignores the parentheses).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7573,7 +7749,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_178",
@@ -7607,7 +7784,7 @@
       "ans": 3,
       "exp": "An implicit conversion exists from int to decimal because no magnitude or precision is lost (widening conversion).",
       "explanation": "An implicit conversion exists from int to decimal because no magnitude or precision is lost (widening conversion).",
-      "distractorRationale": "",
+      "distractorRationale": "Every 32-bit `int` fits losslessly inside 128-bit `decimal`, so C# widens `int` to `decimal` implicitly regardless of sign and without requiring a cast.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7615,7 +7792,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_179",
@@ -7649,7 +7827,7 @@
       "ans": 0,
       "exp": "C# is strictly case-sensitive: toString() causes CS1061 ('double does not contain a definition for toString'). Furthermore, string literals require double quotes (\"n2\"); paired single quotes (''n2'') create an invalid character literal syntax error.",
       "explanation": "C# is strictly case-sensitive: toString() causes CS1061 ('double does not contain a definition for toString'). Furthermore, string literals require double quotes (\"n2\"); paired single quotes (''n2'') create an invalid character literal syntax error.",
-      "distractorRationale": "",
+      "distractorRationale": "`double.ToString(\"N2\")` is completely valid when capitalized (`ToString`) and passed double quotes `\"n2\"`; single quotes denote `char` literals and lowercase `toString` fails case-sensitive lookup.",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -7657,7 +7835,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su2_180",
@@ -7691,7 +7870,7 @@
       "ans": 1,
       "exp": "Calling .ToString(\"n2\") returns a formatted string object. In C#, a string cannot be assigned to a double variable, producing compiler error CS0029. The formatted string should be assigned to lblAverage.Text.",
       "explanation": "Calling .ToString(\"n2\") returns a formatted string object. In C#, a string cannot be assigned to a double variable, producing compiler error CS0029. The formatted string should be assigned to lblAverage.Text.",
-      "distractorRationale": "",
+      "distractorRationale": "`txtTest1.Text` is a `string`, and C# never auto-parses strings into `double`â€”assigning `string` to `double` raises `CS0029`.",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -7699,7 +7878,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su2_181",
@@ -7733,7 +7913,7 @@
       "ans": 2,
       "exp": "Calling txtTest1.Focus() places the insertion cursor into the control, and txtTest1.SelectAll() selects the entire erroneous string so the student can immediately overwrite it without manual backspacing.",
       "explanation": "Calling txtTest1.Focus() places the insertion cursor into the control, and txtTest1.SelectAll() selects the entire erroneous string so the student can immediately overwrite it without manual backspacing.",
-      "distractorRationale": "",
+      "distractorRationale": "`Dispose()` destroys the TextBox control permanently, `Hide()/Show()` flickers visibility uselessly, and `ResetText()/Undo()` erases input without highlighting it for easy replacement.",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -7741,7 +7921,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.28
     },
     {
       "id": "q_su2_182",
@@ -7775,7 +7956,7 @@
       "ans": 3,
       "exp": "In C#, boolean variables are declared with the 'bool' keyword and take literal values 'true' or 'false'.",
       "explanation": "In C#, boolean variables are declared with the 'bool' keyword and take literal values 'true' or 'false'.",
-      "distractorRationale": "",
+      "distractorRationale": "`bit` and `boolean` are not C# keywords, and `int` cannot be assigned `false`; C# uses `bool isValid = false;`.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7783,7 +7964,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su2_183",
@@ -7817,7 +7999,7 @@
       "ans": 0,
       "exp": "NWU standard prefixes mandate 'txt' for TextBox controls, followed by PascalCase: 'txtSurname'.",
       "explanation": "NWU standard prefixes mandate 'txt' for TextBox controls, followed by PascalCase: 'txtSurname'.",
-      "distractorRationale": "",
+      "distractorRationale": "`textSurname`, `tb_Surname`, and `SurnameTextBox` violate CMPG122 Hungarian naming, which requires `txt` + PascalCase (`txtSurname`).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7825,7 +8007,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_184",
@@ -7859,7 +8042,7 @@
       "ans": 1,
       "exp": "Labels use the 'lbl' prefix followed by descriptive PascalCase naming: 'lblGrossPay'.",
       "explanation": "Labels use the 'lbl' prefix followed by descriptive PascalCase naming: 'lblGrossPay'.",
-      "distractorRationale": "",
+      "distractorRationale": "`GrossPayLabel`, `labelGrossPay`, and `lbl_pay` violate CMPG122 Hungarian naming, which requires `lbl` + PascalCase (`lblGrossPay`).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7867,7 +8050,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.29
     },
     {
       "id": "q_su2_185",
@@ -7901,7 +8085,7 @@
       "ans": 2,
       "exp": "MidpointRounding.AwayFromZero implements traditional arithmetic rounding (e.g. 2.5 rounds to 3), which matches standard commercial practice.",
       "explanation": "MidpointRounding.AwayFromZero implements traditional arithmetic rounding (e.g. 2.5 rounds to 3), which matches standard commercial practice.",
-      "distractorRationale": "",
+      "distractorRationale": "`Round(..., 2, MidpointRounding.AwayFromZero)` keeps 2 decimals (does not strip all decimals, flip signs, or add VAT) and avoids default banker's rounding (`ToEven`) on midpoint `.005` values.",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -7909,7 +8093,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_186",
@@ -7943,7 +8128,7 @@
       "ans": 3,
       "exp": "The 'N0' format specifier formats a number with digit group separators (commas) and zero fractional decimal places: '15,000'.",
       "explanation": "The 'N0' format specifier formats a number with digit group separators (commas) and zero fractional decimal places: '15,000'.",
-      "distractorRationale": "",
+      "distractorRationale": "`\"N0\"` inserts thousands separators with `0` decimal places (`15,000`); `15000.00` is `\"F2\"`, `R 15000` includes currency, and `1.50E+04` is scientific (`\"E2\"`).",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -7951,7 +8136,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_187",
@@ -7985,7 +8171,7 @@
       "ans": 0,
       "exp": "When either operand of '+' is a string, C# treats '+' as the string concatenation operator, converting the other operand to its string representation.",
       "explanation": "When either operand of '+' is a string, C# treats '+' as the string concatenation operator, converting the other operand to its string representation.",
-      "distractorRationale": "",
+      "distractorRationale": "In C#, `+` with a `string` and a number never parses the string or throws an errorâ€”it converts the number to text and concatenates them.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7993,7 +8179,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_188",
@@ -8027,7 +8214,7 @@
       "ans": 1,
       "exp": "Evaluation proceeds left-to-right: '\"Subtotal: \" + 50' produces '\"Subtotal: 50\"', and concatenating 20 yields '\"Subtotal: 5020\"'.",
       "explanation": "Evaluation proceeds left-to-right: '\"Subtotal: \" + 50' produces '\"Subtotal: 50\"', and concatenating 20 yields '\"Subtotal: 5020\"'.",
-      "distractorRationale": "",
+      "distractorRationale": "Left-to-right evaluation computes `\"Subtotal: \" + 50` -> `\"Subtotal: 50\"`, then concatenates `20` -> `\"Subtotal: 5020\"` (`\"Subtotal: 70\"` requires `(50 + 20)`).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8035,7 +8222,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_189",
@@ -8069,7 +8257,7 @@
       "ans": 2,
       "exp": "Enclosing the numbers in parentheses '(50 + 20)' forces arithmetic addition first before string concatenation.",
       "explanation": "Enclosing the numbers in parentheses '(50 + 20)' forces arithmetic addition first before string concatenation.",
-      "distractorRationale": "",
+      "distractorRationale": "Operators `*` and `-` are illegal on `string` operands (`CS0019`); wrapping `(50 + 20)` in parentheses forces integer addition `70` before string concatenation.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8077,7 +8265,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_190",
@@ -8111,7 +8300,7 @@
       "ans": 3,
       "exp": "Because 4.0 is a double literal, C# performs floating-point division, producing the exact double result 2.5.",
       "explanation": "Because 4.0 is a double literal, C# performs floating-point division, producing the exact double result 2.5.",
-      "distractorRationale": "",
+      "distractorRationale": "Because `4.0` is a `double`, `10` is implicitly promoted to `10.0` and floating-point division yields `2.5` (not truncated `2` or rounded `3`).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8119,7 +8308,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_191",
@@ -8153,7 +8343,7 @@
       "ans": 0,
       "exp": "String.IsNullOrWhiteSpace() evaluates whether a string is null, empty (\"\"), or consists entirely of whitespace characters.",
       "explanation": "String.IsNullOrWhiteSpace() evaluates whether a string is null, empty (\"\"), or consists entirely of whitespace characters.",
-      "distractorRationale": "",
+      "distractorRationale": "`HasNoText()`, `IsEmpty()`, and `CheckEmpty()` do not exist on `System.String`; `string.IsNullOrWhiteSpace(str)` checks `null`, `\"\"`, and whitespace.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8161,7 +8351,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_192",
@@ -8195,14 +8386,15 @@
       "ans": 1,
       "exp": "Decimal.Parse cannot parse an empty string and throws an unhandled FormatException, causing a program crash.",
       "explanation": "Decimal.Parse cannot parse an empty string and throws an unhandled FormatException, causing a program crash.",
-      "distractorRationale": "",
+      "distractorRationale": "`decimal.Parse(\"\")` neither reloads the form, colours controls, nor returns `0m`â€”an empty string is invalid numeric text and throws `FormatException`.",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_193",
@@ -8236,7 +8428,7 @@
       "ans": 2,
       "exp": "String interpolation or concatenation with txtName.Text.Trim() dynamically formats the personalized greeting in lblGreeting.Text.",
       "explanation": "String interpolation or concatenation with txtName.Text.Trim() dynamically formats the personalized greeting in lblGreeting.Text.",
-      "distractorRationale": "",
+      "distractorRationale": "Option A hardcodes literal `\"user\"` instead of the typed name, Option B overwrites the user's `TextBox` with the label, and Option D attempts to rename `Name` properties.",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -8244,7 +8436,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_194",
@@ -8278,7 +8471,7 @@
       "ans": 3,
       "exp": "The cast operator (parentheses enclosing a type name) explicitly instructs the compiler to convert a value to the specified type.",
       "explanation": "The cast operator (parentheses enclosing a type name) explicitly instructs the compiler to convert a value to the specified type.",
-      "distractorRationale": "",
+      "distractorRationale": "`??` (null-coalescing) handles `null` defaults, `?:` (ternary) chooses between two expressions based on a `bool`, and `%` computes division remainderâ€”`(type)expr` is the cast operator.",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -8286,7 +8479,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su2_195",
@@ -8320,7 +8514,7 @@
       "ans": 0,
       "exp": "A signed 32-bit integer ranges from -2,147,483,648 to +2,147,483,647 (int.MaxValue).",
       "explanation": "A signed 32-bit integer ranges from -2,147,483,648 to +2,147,483,647 (int.MaxValue).",
-      "distractorRationale": "",
+      "distractorRationale": "`32,767` is `short.MaxValue` (16-bit signed), `65,535` is `ushort.MaxValue` (16-bit unsigned), and `int` is finite at `2^31 - 1 = 2,147,483,647`.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8328,7 +8522,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_196",
@@ -8362,7 +8557,7 @@
       "ans": 1,
       "exp": "The 'char' type represents a single 16-bit Unicode character (e.g. 'A', '7', '$') written in single quotes.",
       "explanation": "The 'char' type represents a single 16-bit Unicode character (e.g. 'A', '7', '$') written in single quotes.",
-      "distractorRationale": "",
+      "distractorRationale": "`string` holds character sequences in double quotes, `byte` holds unsigned 8-bit integers (`0..255`), and `character` is not a C# keyword (`char` is).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8370,7 +8565,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_197",
@@ -8404,14 +8600,15 @@
       "ans": 2,
       "exp": "Variables declared within a code block (inside curly braces) have block scope and cannot be referenced outside those braces.",
       "explanation": "Variables declared within a code block (inside curly braces) have block scope and cannot be referenced outside those braces.",
-      "distractorRationale": "",
+      "distractorRationale": "A variable declared inside `{ ... }` of an `if` block goes out of scope at that closing `}`, so it is inaccessible to the rest of the method or class.",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_198",
@@ -8445,7 +8642,7 @@
       "ans": 3,
       "exp": "Using blank lines to visually decouple reading input, processing calculations, and writing output makes code legible and aligns with NWU code standards.",
       "explanation": "Using blank lines to visually decouple reading input, processing calculations, and writing output makes code legible and aligns with NWU code standards.",
-      "distractorRationale": "",
+      "distractorRationale": "Whitespace is ignored by the C# compiler after lexing, so blank lines neither speed up code, clear RAM, nor affect compilationâ€”they improve human readability.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8453,7 +8650,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_199",
@@ -8487,7 +8685,7 @@
       "ans": 0,
       "exp": "The .Length property returns the number of characters in a string as an integer.",
       "explanation": "The .Length property returns the number of characters in a string as an integer.",
-      "distractorRationale": "",
+      "distractorRationale": "`Size` and `TotalChars` do not exist on `string`, and `Length` is a property (`str.Length`), not a zero-arg method (unless using LINQ).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8495,7 +8693,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_200",
@@ -8529,7 +8728,7 @@
       "ans": 1,
       "exp": "The increment operator (++) increases the numeric value of its operand by 1.",
       "explanation": "The increment operator (++) increases the numeric value of its operand by 1.",
-      "distractorRationale": "",
+      "distractorRationale": "`**` is not a C# operator, `--` decrements by `1`, and `+=` is a binary compound operator requiring a right-hand operand (e.g. `x += 1`).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8537,7 +8736,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su2_201",
@@ -8571,7 +8771,7 @@
       "ans": 2,
       "exp": "1.5 kg * R85 = R127.50. 1500g / 120g = 12 rolls. 12 rolls * R3.50 = R42.00. Total = R127.50 + R42.00 = R169.50.",
       "explanation": "1.5 kg * R85 = R127.50. 1500g / 120g = 12 rolls. 12 rolls * R3.50 = R42.00. Total = R127.50 + R42.00 = R169.50.",
-      "distractorRationale": "",
+      "distractorRationale": "`1.5 kg * R85 = R127.50` (Option A uses 1 kg = R85), and `1500g / 120g = 12` whole rolls (truncated from `12.5`) `* R3.50 = R42.00`, giving `R169.50`.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8579,7 +8779,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_202",
@@ -8613,7 +8814,7 @@
       "ans": 3,
       "exp": "The escape sequence '\\n' inserts a linefeed (newline) character into a string.",
       "explanation": "The escape sequence '\\n' inserts a linefeed (newline) character into a string.",
-      "distractorRationale": "",
+      "distractorRationale": "`\\t` inserts a horizontal tab, `\\r` is carriage return alone, and `\\b` is backspace; `\\n` advances to a new line.",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -8621,7 +8822,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_203",
@@ -8655,7 +8857,7 @@
       "ans": 0,
       "exp": "The escape sequence '\\t' inserts a horizontal tab character.",
       "explanation": "The escape sequence '\\t' inserts a horizontal tab character.",
-      "distractorRationale": "",
+      "distractorRationale": "`\\n` inserts a line break, `\\s` is a regex class (invalid C# string escape `CS1009`), and `\\a` triggers an alert bell character.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8663,7 +8865,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su2_204",
@@ -8697,7 +8900,7 @@
       "ans": 1,
       "exp": "The 'return;' statement immediately terminates execution of a void method, preventing subsequent calculations from running with invalid data.",
       "explanation": "The 'return;' statement immediately terminates execution of a void method, preventing subsequent calculations from running with invalid data.",
-      "distractorRationale": "",
+      "distractorRationale": "`stop;` and `exit;` are not C# keywords, and `break;` is valid only inside a `loop` or `switch`â€”`return;` exits a `void` event handler immediately.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8705,7 +8908,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.28
     },
     {
       "id": "q_su2_205",
@@ -8739,7 +8943,7 @@
       "ans": 2,
       "exp": "Ctrl+S saves only the currently viewed file. If Form1.cs is open, recent Designer changes are not saved unless Save All (Ctrl+Shift+S) is used.",
       "explanation": "Ctrl+S saves only the currently viewed file. If Form1.cs is open, recent Designer changes are not saved unless Save All (Ctrl+Shift+S) is used.",
-      "distractorRationale": "",
+      "distractorRationale": "`Ctrl+S` never corrupts files, and `Ctrl+Shift+S` neither zips folders nor uploads assignmentsâ€”it writes unsaved `.Designer.cs`, `.csproj`, and `.cs` buffers to disk together.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8747,7 +8951,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su3_206",
@@ -8781,7 +8986,7 @@
       "ans": 0,
       "exp": "Decimal.TryParse returns true if parsing succeeds and false if it fails, safely populating the 'out' variable without crashing.",
       "explanation": "Decimal.TryParse returns true if parsing succeeds and false if it fails, safely populating the 'out' variable without crashing.",
-      "distractorRationale": "",
+      "distractorRationale": "`decimal.Convert` does not exist, while `decimal.Parse` and `Convert.ToDecimal` both throw `FormatException` when given non-numeric text.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -8789,7 +8994,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_207",
@@ -8823,7 +9029,7 @@
       "ans": 1,
       "exp": "TryParse returns boolean false upon failure and assigns 0 to the target out parameter.",
       "explanation": "TryParse returns boolean false upon failure and assigns 0 to the target out parameter.",
-      "distractorRationale": "",
+      "distractorRationale": "`TryParse` returns a `bool` (`false`, never `null` or `true` on bad input) and specifically avoids throwing `FormatException`.",
       "definitions": [
         "def_tryparse",
         "def_parse_methods",
@@ -8831,7 +9037,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.55
     },
     {
       "id": "q_su3_208",
@@ -8865,7 +9072,7 @@
       "ans": 2,
       "exp": "In C#, '!=' is the inequality operator. ('<>' is used in SQL or Basic, not C#).",
       "explanation": "In C#, '!=' is the inequality operator. ('<>' is used in SQL or Basic, not C#).",
-      "distractorRationale": "",
+      "distractorRationale": "`<>` is SQL/VB syntax, `!==` is JavaScript strict inequality, and `NOT =` is invalid in C#â€”inequality in C# is `!=`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -8873,7 +9080,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_209",
@@ -8907,7 +9115,7 @@
       "ans": 3,
       "exp": "'&&' is the short-circuit conditional AND operator. If the left operand is false, the right operand is not evaluated.",
       "explanation": "'&&' is the short-circuit conditional AND operator. If the left operand is false, the right operand is not evaluated.",
-      "distractorRationale": "",
+      "distractorRationale": "`AND` is not a C# keyword, `||` is logical OR, and single `&` evaluates both operands without short-circuiting.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -8915,7 +9123,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_210",
@@ -8949,7 +9158,7 @@
       "ans": 0,
       "exp": "'||' is the conditional OR operator. If the left operand is true, evaluation short-circuits to true.",
       "explanation": "'||' is the conditional OR operator. If the left operand is true, evaluation short-circuits to true.",
-      "distractorRationale": "",
+      "distractorRationale": "`OR` is not a C# keyword, `!` is unary logical NOT, and single `|` evaluates both operands without short-circuiting.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -8957,7 +9166,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_211",
@@ -8991,7 +9201,7 @@
       "ans": 1,
       "exp": "Short-circuit evaluation stops evaluating as soon as the outcome is guaranteed (false && anything is false).",
       "explanation": "Short-circuit evaluation stops evaluating as soon as the outcome is guaranteed (false && anything is false).",
-      "distractorRationale": "",
+      "distractorRationale": "With `a = 5`, `a > 10` is `false`; `&&` cannot be `true`, compiles cleanly, and short-circuits by skipping `b < 20` completely.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -8999,7 +9209,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_212",
@@ -9033,14 +9244,15 @@
       "ans": 2,
       "exp": "Radio buttons within the same container provide mutually exclusive selection: exactly one can be selected at a time.",
       "explanation": "Radio buttons within the same container provide mutually exclusive selection: exactly one can be selected at a time.",
-      "distractorRationale": "",
+      "distractorRationale": "Only `CheckBox`es allow simultaneous multi-selection; `RadioButton`s in one container automatically uncheck siblings when another is clicked.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_213",
@@ -9074,14 +9286,15 @@
       "ans": 3,
       "exp": "CheckBoxes represent independent yes/no choices. Checking one does not affect any other checkbox.",
       "explanation": "CheckBoxes represent independent yes/no choices. Checking one does not affect any other checkbox.",
-      "distractorRationale": "",
+      "distractorRationale": "`CheckBox`es do have `.Checked` and `CheckedChanged`/`Click` events, and unlike `RadioButton`s they are *not* mutually exclusive.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_214",
@@ -9115,14 +9328,15 @@
       "ans": 0,
       "exp": "The 'Checked' property holds a boolean value: True if selected, false if unselected.",
       "explanation": "The 'Checked' property holds a boolean value: True if selected, false if unselected.",
-      "distractorRationale": "",
+      "distractorRationale": "WinForms `RadioButton` and `CheckBox` expose `.Checked` (`bool`); `.Selected`, `.Value`, and `.State` do not exist on standard `RadioButton`.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_215",
@@ -9156,14 +9370,15 @@
       "ans": 1,
       "exp": "GroupBox acts as a container control. Placing radio buttons inside different group boxes creates independent selection groups.",
       "explanation": "GroupBox acts as a container control. Placing radio buttons inside different group boxes creates independent selection groups.",
-      "distractorRationale": "",
+      "distractorRationale": "A `GroupBox` performs no input validation, math acceleration, or animationâ€”it visually frames controls and isolates `RadioButton` mutual-exclusion groups.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_216",
@@ -9197,14 +9412,15 @@
       "ans": 2,
       "exp": "C# enforces the 'no fall-through' rule: non-empty case blocks must terminate with a jump statement such as 'break;'.",
       "explanation": "C# enforces the 'no fall-through' rule: non-empty case blocks must terminate with a jump statement such as 'break;'.",
-      "distractorRationale": "",
+      "distractorRationale": "`stop;` and `exit;` are not C# statements, and `continue;` applies only to loopsâ€”each non-empty `switch` case requires `break;` (or `return;`).",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_217",
@@ -9238,14 +9454,15 @@
       "ans": 3,
       "exp": "The 'default:' section acts as the catch-all fallback if no case matches.",
       "explanation": "The 'default:' section acts as the catch-all fallback if no case matches.",
-      "distractorRationale": "",
+      "distractorRationale": "`else` belongs to `if`, while `catch` and `finally` belong to `try` exception blocksâ€”unmatched `switch` values route to `default:`.",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_218",
@@ -9279,14 +9496,15 @@
       "ans": 0,
       "exp": "SelectedIndex returns the integer index of the selected item (0 to Count-1), or -1 if no item is selected.",
       "explanation": "SelectedIndex returns the integer index of the selected item (0 to Count-1), or -1 if no item is selected.",
-      "distractorRationale": "",
+      "distractorRationale": "`SelectedItem` returns the selected `object` itself rather than its `int` position, while `Index` and `CurrentItem` do not exist on `ListBox`.",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_219",
@@ -9320,14 +9538,15 @@
       "ans": 1,
       "exp": "When nothing is selected, SelectedIndex equals -1.",
       "explanation": "When nothing is selected, SelectedIndex equals -1.",
-      "distractorRationale": "",
+      "distractorRationale": "`SelectedIndex` is an `int` (so it cannot be `null`), `0` refers to the *first* item in the `ListBox`, and no exception is thrown when nothing is selected (`-1`).",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_220",
@@ -9361,7 +9580,7 @@
       "ans": 2,
       "exp": "MessageBox.Show() is the standard .NET Windows Forms method for displaying dialog boxes.",
       "explanation": "MessageBox.Show() is the standard .NET Windows Forms method for displaying dialog boxes.",
-      "distractorRationale": "",
+      "distractorRationale": "`Form.Message`, `Alert.Show`, and `Dialog.Display` do not exist in `System.Windows.Forms`; modal alerts use `MessageBox.Show(...)`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9369,7 +9588,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_221",
@@ -9403,7 +9623,7 @@
       "ans": 3,
       "exp": "Subtracting the zone speed limit from the recorded speed (recordedSpeed - limit) yields a positive integer when speeding and zero or negative when within the limit.",
       "explanation": "Subtracting the zone speed limit from the recorded speed (recordedSpeed - limit) yields a positive integer when speeding and zero or negative when within the limit.",
-      "distractorRationale": "",
+      "distractorRationale": "`limit - recordedSpeed` flips the sign (making speeding negative), while division `/` and `(a + b) % 2` do not measure km/h above the limit.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9411,7 +9631,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su3_222",
@@ -9445,7 +9666,7 @@
       "ans": 0,
       "exp": "When speedOver <= 0, the driver is within the speed limit, so the labels display '0 km/h', 'Within the limit', and 'No fine. Safe driving.'.",
       "explanation": "When speedOver <= 0, the driver is within the speed limit, so the labels display '0 km/h', 'Within the limit', and 'No fine. Safe driving.'.",
-      "distractorRationale": "",
+      "distractorRationale": "Displaying negative `\"-5 km/h\"`, `\"Warning: drive faster\"`, or non-standard `\"OK\"`/`\"Pass\"` violates the clean `0 km/h` / `Within the limit` / `No fine. Safe driving.` output rules.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9453,7 +9674,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su3_223",
@@ -9487,7 +9709,7 @@
       "ans": 1,
       "exp": "A connected chain ensures mutually exclusive execution. Anyone reaching 'else if (speedOver <= 20)' has already failed '<= 10', so the lower bound is implicitly guaranteed.",
       "explanation": "A connected chain ensures mutually exclusive execution. Anyone reaching 'else if (speedOver <= 20)' has already failed '<= 10', so the lower bound is implicitly guaranteed.",
-      "distractorRationale": "",
+      "distractorRationale": "C# allows any number of independent `if`s, scope is unaffected, and speed difference is negligible; the real reason for `if-else if` is mutually exclusive band matching so later bands do not overwrite or double-trigger.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9495,7 +9717,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su3_224",
@@ -9529,7 +9752,7 @@
       "ans": 2,
       "exp": "25 km/h over falls into the 21-30 band (R1500, 'Severe'). Highway is not a built-up area, and repeat offender is false, so no doubling or surcharge applies.",
       "explanation": "25 km/h over falls into the 21-30 band (R1500, 'Severe'). Highway is not a built-up area, and repeat offender is false, so no doubling or surcharge applies.",
-      "distractorRationale": "",
+      "distractorRationale": "`95 - 70 = 25 km/h` over falls in `21â€“30` (`R 1,500 Severe`); Rural is *not* a built-up zone so it does not double to `R 3,000`, nor is it `11â€“20` (`R 750`) or `> 30` (`R 2,500`).",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9537,7 +9760,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su3_225",
@@ -9571,7 +9795,7 @@
       "ans": 3,
       "exp": "Both 'School' and 'Town' zones represent high-pedestrian built-up municipal areas where speeding penalties are stricter than on open highways or rural roads.",
       "explanation": "Both 'School' and 'Town' zones represent high-pedestrian built-up municipal areas where speeding penalties are stricter than on open highways or rural roads.",
-      "distractorRationale": "",
+      "distractorRationale": "`Highway` and `Rural` are open-road zones; only `\"School\"` and `\"Town\"` are built-up zones where severe speeding fines double.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9579,7 +9803,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su3_226",
@@ -9613,7 +9838,7 @@
       "ans": 0,
       "exp": "Both conditions must hold: isBuiltUp must be true AND the vehicle must exceed the limit by strictly more than 20 km/h.",
       "explanation": "Both conditions must hold: isBuiltUp must be true AND the vehicle must exceed the limit by strictly more than 20 km/h.",
-      "distractorRationale": "",
+      "distractorRationale": "Doubling requires *both* a built-up zone (`School` or `Town`, never `Highway`) *and* `speedOver > 20` (not `> 10` or `>= 20`), whereas `'yes'` adds the flat R500 repeat surcharge.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9621,7 +9846,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_227",
@@ -9655,7 +9881,7 @@
       "ans": 1,
       "exp": "Because the doubling condition uses the strict inequality operator (speedOver > 20), an exact value of 20 km/h over evaluates to false and remains at the R750 Serious band.",
       "explanation": "Because the doubling condition uses the strict inequality operator (speedOver > 20), an exact value of 20 km/h over evaluates to false and remains at the R750 Serious band.",
-      "distractorRationale": "",
+      "distractorRationale": "Because the rule is strictly `speedOver > 20`, `20 > 20` is `false`: the fine stays at the `11â€“20` Serious band (`R 750`) without doubling to `R 1,500` or dropping to `R 250`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9663,7 +9889,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_228",
@@ -9697,7 +9924,7 @@
       "ans": 2,
       "exp": "Appending ' - built-up area' to the category string (e.g. 'Severe - built-up area') clearly indicates why the base fine was doubled.",
       "explanation": "Appending ' - built-up area' to the category string (e.g. 'Severe - built-up area') clearly indicates why the base fine was doubled.",
-      "distractorRationale": "",
+      "distractorRationale": "The specification appends exact lowercase `\" - built-up area\"` to the category label, not `\" *BUILT UP*\"`, `\" [ZONE 1]\"`, or `\" (DOUBLED)\"`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9705,7 +9932,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_229",
@@ -9739,7 +9967,7 @@
       "ans": 3,
       "exp": "Class-level constants are declared outside all methods using the 'const' keyword and UPPER_SNAKE_CASE naming (const decimal REPEAT_FINE = 500m;).",
       "explanation": "Class-level constants are declared outside all methods using the 'const' keyword and UPPER_SNAKE_CASE naming (const decimal REPEAT_FINE = 500m;).",
-      "distractorRationale": "",
+      "distractorRationale": "Storing a monetary surcharge as a `string` in `Program.cs`, inside a `TextBox.Text`, or as a mutable local `int` violates class-level `const decimal REPEAT_FINE = 500m;` design.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9747,7 +9975,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su3_230",
@@ -9781,7 +10010,7 @@
       "ans": 0,
       "exp": "To detect if either mark is invalid, each boundary condition is evaluated with the logical OR operator '||'. Chained relational comparisons like '0 <= dblTest1 <= 100' are illegal in C# (CS0019).",
       "explanation": "To detect if either mark is invalid, each boundary condition is evaluated with the logical OR operator '||'. Chained relational comparisons like '0 <= dblTest1 <= 100' are illegal in C# (CS0019).",
-      "distractorRationale": "",
+      "distractorRationale": "Option B uses `&&` (`x < 0 && x > 100` is impossible, always `false`), Option C chains `0 <= x <= 100` (illegal `bool <= int` in C#), and Option D mixes bitwise `|`/`&`.",
       "definitions": [
         "def_tryparse",
         "def_parse_methods",
@@ -9789,7 +10018,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.55
     },
     {
       "id": "q_su3_231",
@@ -9823,7 +10053,7 @@
       "ans": 1,
       "exp": "String.CompareTo returns 0 if two strings are identical in value and case, a negative integer if the caller precedes the argument, and positive if it follows.",
       "explanation": "String.CompareTo returns 0 if two strings are identical in value and case, a negative integer if the caller precedes the argument, and positive if it follows.",
-      "distractorRationale": "",
+      "distractorRationale": "`CompareTo` returns an `int` (`< 0`, `0`, or `> 0`), never a `bool` or `FormatException`, and `0` means the two strings are equal (not empty).",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9831,7 +10061,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su3_232",
@@ -9865,7 +10096,7 @@
       "ans": 2,
       "exp": "A single-alternative if statement ('if (isRepeat) fine += REPEAT_FINE;') is the cleanest construct when no action is needed on false. An empty else block loses marks.",
       "explanation": "A single-alternative if statement ('if (isRepeat) fine += REPEAT_FINE;') is the cleanest construct when no action is needed on false. An empty else block loses marks.",
-      "distractorRationale": "",
+      "distractorRationale": "Empty `else { }` blocks compile without error and are not restricted to numbers, but they add dead visual noise when no alternative action is needed.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9873,7 +10104,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_233",
@@ -9907,14 +10139,15 @@
       "ans": 3,
       "exp": "GroupBox controls provide a visible boundary with an integrated title text caption ('Finding'). Panels do not support header text captions.",
       "explanation": "GroupBox controls provide a visible boundary with an integrated title text caption ('Finding'). Panels do not support header text captions.",
-      "distractorRationale": "",
+      "distractorRationale": "`Panel`s hold `Label`s on all Windows versions and neither container does math; `GroupBox` is chosen because it renders a titled border caption (`Text`).",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_234",
@@ -9956,7 +10189,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su3_235",
@@ -9998,7 +10232,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.82
     },
     {
       "id": "q_su3_236",
@@ -10032,7 +10267,7 @@
       "ans": 2,
       "exp": "Short-circuit evaluation stops evaluating composite boolean expressions as soon as the outcome is guaranteed, preventing runtime errors (e.g. division by zero or null dereferences).",
       "explanation": "Short-circuit evaluation stops evaluating composite boolean expressions as soon as the outcome is guaranteed, preventing runtime errors (e.g. division by zero or null dereferences).",
-      "distractorRationale": "",
+      "distractorRationale": "Short-circuiting never shuts down hardware, runs conditions in parallel, or masks errors into `true`â€”it skips the right-hand operand once the left operand decides `&&` (`false`) or `||` (`true`).",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10040,7 +10275,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_237",
@@ -10074,7 +10310,7 @@
       "ans": 3,
       "exp": "10 > 4 is true. The logical NOT operator (!) reverses the truth value, resulting in false.",
       "explanation": "10 > 4 is true. The logical NOT operator (!) reverses the truth value, resulting in false.",
-      "distractorRationale": "",
+      "distractorRationale": "`10 > 4` evaluates to `true`, and unary `!` negates `true` to `false` (C# `bool` is never `1` or `null`).",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10082,7 +10318,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_238",
@@ -10124,7 +10361,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.82
     },
     {
       "id": "q_su3_239",
@@ -10158,7 +10396,7 @@
       "ans": 1,
       "exp": "'=' is the assignment operator. 'speed = 80' returns an int (80), which cannot be implicitly converted to the bool required by an if statement.",
       "explanation": "'=' is the assignment operator. 'speed = 80' returns an int (80), which cannot be implicitly converted to the bool required by an if statement.",
-      "distractorRationale": "",
+      "distractorRationale": "In C#, `if (speed = 60)` assigns `int` `60` instead of comparing `==`, producing an `int` expression where `if` requires `bool` (`CS0029`).",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10166,7 +10404,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_240",
@@ -10200,14 +10439,15 @@
       "ans": 2,
       "exp": "A ListBox control (lstRoutes) displays a selectable list of items where the active zero-based selection index is read via SelectedIndex.",
       "explanation": "A ListBox control (lstRoutes) displays a selectable list of items where the active zero-based selection index is read via SelectedIndex.",
-      "distractorRationale": "",
+      "distractorRationale": "`Timer` is invisible, `PictureBox` displays images, and a single-line `TextBox` requires manual typing instead of presenting a selectable route list (`ListBox`).",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_241",
@@ -10241,14 +10481,15 @@
       "ans": 3,
       "exp": "When no item is selected in a ListBox, SelectedIndex is -1. Checking 'SelectedIndex != -1' ensures a valid item has been picked.",
       "explanation": "When no item is selected in a ListBox, SelectedIndex is -1. Checking 'SelectedIndex != -1' ensures a valid item has been picked.",
-      "distractorRationale": "",
+      "distractorRationale": "`Items.Count > 0` only checks that the list is populated (even when no row is clicked), `Focused` checks keyboard focus, and `Text == \"Selected\"` checks for literal word `\"Selected\"`.",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su3_242",
@@ -10289,7 +10530,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su3_243",
@@ -10330,7 +10572,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.34
     },
     {
       "id": "q_su3_244",
@@ -10371,7 +10614,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.34
     },
     {
       "id": "q_su3_245",
@@ -10412,7 +10656,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.32
     },
     {
       "id": "q_su3_246",
@@ -10446,14 +10691,15 @@
       "ans": 0,
       "exp": "A switch statement on lstRoutes.SelectedIndex branches on the zero-based item indices (0, 1, 2) to assign the corresponding decimal ticket price.",
       "explanation": "A switch statement on lstRoutes.SelectedIndex branches on the zero-based item indices (0, 1, 2) to assign the corresponding decimal ticket price.",
-      "distractorRationale": "",
+      "distractorRationale": "Switching on `btnBook.Text`, `this.BackColor`, or `txtPassengers.Text` ignores which route row (`0`, `1`, `2`) the user chose in `lstRoutes.SelectedIndex`.",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_247",
@@ -10487,14 +10733,15 @@
       "ans": 1,
       "exp": "Unlike C/C++, C# enforces strict no-fall-through semantics. Every non-empty case block must end with a jump statement like break or return.",
       "explanation": "Unlike C/C++, C# enforces strict no-fall-through semantics. Every non-empty case block must end with a jump statement like break or return.",
-      "distractorRationale": "",
+      "distractorRationale": "Unlike C/C++, C# forbids implicit fall-through between non-empty `case` blocks at compile time (`CS0163`), never inserting `break;` or waiting until runtime.",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_248",
@@ -10528,7 +10775,7 @@
       "ans": 2,
       "exp": "The relational operator >= includes 6 ('6 or more'), and subtracting totalBill * 0.10m (or multiplying by 0.90m) reduces totalBill by 10%.",
       "explanation": "The relational operator >= includes 6 ('6 or more'), and subtracting totalBill * 0.10m (or multiplying by 0.90m) reduces totalBill by 10%.",
-      "distractorRationale": "",
+      "distractorRationale": "Option A only discounts exact `6` by flat `R10`, Option B *increases* bills for `<= 6` by 10%, and Option D misses `6` (`> 6`) while setting the bill to 10% instead of deducting 10%.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10536,7 +10783,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.55
     },
     {
       "id": "q_su3_249",
@@ -10570,14 +10818,15 @@
       "ans": 3,
       "exp": "RadioButton selection is tested via the boolean Checked property, and the current form's background color is updated via this.BackColor = Color.Orange / Color.PowderBlue.",
       "explanation": "RadioButton selection is tested via the boolean Checked property, and the current form's background color is updated via this.BackColor = Color.Orange / Color.PowderBlue.",
-      "distractorRationale": "",
+      "distractorRationale": "`switch (radSunset)` fails on a `RadioButton` object, `.Selected` and `this.Color` do not exist, and `BackColor` takes a `Color` struct (not `\"Orange\"` string).",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_250",
@@ -10611,14 +10860,15 @@
       "ans": 0,
       "exp": "RadioButtons represent mutually exclusive choices: selecting one unselects all sibling RadioButtons sharing the same parent container.",
       "explanation": "RadioButtons represent mutually exclusive choices: selecting one unselects all sibling RadioButtons sharing the same parent container.",
-      "distractorRationale": "",
+      "distractorRationale": "`RadioButton`s never delete controls, store numbers only, or hide siblingsâ€”Windows Forms automatically unchecks other `RadioButton`s sharing the same parent container.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_251",
@@ -10652,14 +10902,15 @@
       "ans": 1,
       "exp": "Placing RadioButton sets into distinct container controls (like GroupBoxes) isolates their mutual exclusivity to that container.",
       "explanation": "Placing RadioButton sets into distinct container controls (like GroupBoxes) isolates their mutual exclusivity to that container.",
-      "distractorRationale": "",
+      "distractorRationale": "Separate monitors or spacer labels leave all `RadioButton`s on the same `Form` parent (still mutually exclusive with each other), while `CheckBox`es lose single-choice enforcement.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_252",
@@ -10693,14 +10944,15 @@
       "ans": 2,
       "exp": "RadioButtons force a 1-of-N mutually exclusive choice; CheckBoxes represent independent binary (on/off) toggles allowing 0, 1, or many selections.",
       "explanation": "RadioButtons force a 1-of-N mutually exclusive choice; CheckBoxes represent independent binary (on/off) toggles allowing 0, 1, or many selections.",
-      "distractorRationale": "",
+      "distractorRationale": "Both controls have `.Checked` and mouse support, and `RadioButton`s are circular while `CheckBox`es are square (Option B states the exact reverse).",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su3_253",
@@ -10734,7 +10986,7 @@
       "ans": 3,
       "exp": "Defensive validation requires parsing txtPassengers.Text with int.TryParse and verifying that the resulting passenger count is at least 1 (passengers >= 1).",
       "explanation": "Defensive validation requires parsing txtPassengers.Text with int.TryParse and verifying that the resulting passenger count is at least 1 (passengers >= 1).",
-      "distractorRationale": "",
+      "distractorRationale": "Bookings allow 1 or more passengers (including odd counts and groups `>= 6`), and numeric digits (`\"8\"`) are parsed with `int.TryParse` rather than English words (`\"two\"`).",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10742,7 +10994,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.55
     },
     {
       "id": "q_su3_254",
@@ -10784,7 +11037,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_255",
@@ -10818,7 +11072,7 @@
       "ans": 1,
       "exp": "SelectAll() highlights all text in the textbox, allowing instant replacement without manually pressing backspace.",
       "explanation": "SelectAll() highlights all text in the textbox, allowing instant replacement without manually pressing backspace.",
-      "distractorRationale": "",
+      "distractorRationale": "`txtPassengers.SelectAll()` affects only `txtPassengers` (not other textboxes), never deletes controls, and does not overwrite the user's clipboard.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10826,7 +11080,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.82
     },
     {
       "id": "q_su3_256",
@@ -10860,7 +11115,7 @@
       "ans": 2,
       "exp": "25 km/h over lands in the 21-30 band (Severe = R1500). Highway is not built-up, so fine does not double. Repeat offender adds R500: R1500 + R500 = R2000.",
       "explanation": "25 km/h over lands in the 21-30 band (Severe = R1500). Highway is not built-up, so fine does not double. Repeat offender adds R500: R1500 + R500 = R2000.",
-      "distractorRationale": "",
+      "distractorRationale": "At `25 km/h` over on a `Highway`, base fine is `R 1,500` (Highway does *not* double to `R 3,000`), plus `R 500` repeat offender surcharge = `R 2,000` (`R 3,500` wrongly doubles Highway; `R 1,500` forgets repeat fine).",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10868,7 +11123,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_257",
@@ -10902,7 +11158,7 @@
       "ans": 3,
       "exp": "25 over in School (built-up > 20) doubles base R1500 to R3000. Repeat offender adds R500 on top: R3000 + R500 = R3500.",
       "explanation": "25 over in School (built-up > 20) doubles base R1500 to R3000. Repeat offender adds R500 on top: R3000 + R500 = R3500.",
-      "distractorRationale": "",
+      "distractorRationale": "At `25 km/h` over (`> 20`) in a `School` zone, `R 1,500` doubles first to `R 3,000`, then adds `R 500` repeat fine = `R 3,500` (`R 4,000` adds `R 500` *before* doubling; `R 2,000` forgets School doubling).",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10910,7 +11166,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_258",
@@ -10944,7 +11201,7 @@
       "ans": 0,
       "exp": "In C#, range boundary checks must be joined by the '&&' operator: 'mark >= 0 && mark <= 100'.",
       "explanation": "In C#, range boundary checks must be joined by the '&&' operator: 'mark >= 0 && mark <= 100'.",
-      "distractorRationale": "",
+      "distractorRationale": "`BETWEEN` is SQL syntax, `0 <= mark <= 100` fails to compile in C#, and `mark >= 0 || mark <= 100` is a tautology that evaluates `true` for every integer (including `-50` and `500`).",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10952,7 +11209,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_259",
@@ -10986,7 +11244,7 @@
       "ans": 1,
       "exp": "Binary relational operators evaluate from left to right yielding a bool. C# does not support chained mathematical inequalities.",
       "explanation": "Binary relational operators evaluate from left to right yielding a bool. C# does not support chained mathematical inequalities.",
-      "distractorRationale": "",
+      "distractorRationale": "C# allows multiple `<=` operators when joined by `&&` and allows comparing to `0`; `0 <= mark <= 100` fails because `(0 <= mark)` yields a `bool`, and `bool <= int` is illegal.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10994,7 +11252,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_260",
@@ -11028,7 +11287,7 @@
       "ans": 2,
       "exp": "'&&' is the short-circuit logical AND operator, whereas '&' is the logical/bitwise AND operator that evaluates both operands unconditionally.",
       "explanation": "'&&' is the short-circuit logical AND operator, whereas '&' is the logical/bitwise AND operator that evaluates both operands unconditionally.",
-      "distractorRationale": "",
+      "distractorRationale": "`&&` can chain any number of `bool` operands and `&` works on `bool`/integers (not strings); the key distinction is that `&&` short-circuits when the left operand is `false`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11036,7 +11295,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su3_261",
@@ -11070,7 +11330,7 @@
       "ans": 3,
       "exp": "'||' skips evaluation of the second operand if the first is true. '|' always evaluates both sides unconditionally.",
       "explanation": "'||' skips evaluation of the second operand if the first is true. '|' always evaluates both sides unconditionally.",
-      "distractorRationale": "",
+      "distractorRationale": "`|` is bitwise/eager OR (not division) and `||` operates on `bool` expressions (not numbers); `||` short-circuits as soon as its left operand is `true`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11078,7 +11338,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su3_262",
@@ -11112,14 +11373,15 @@
       "ans": 0,
       "exp": "The 'dangling else' rule in C# matches an else with the nearest preceding unmatched if in the same lexical scope.",
       "explanation": "The 'dangling else' rule in C# matches an else with the nearest preceding unmatched if in the same lexical scope.",
-      "distractorRationale": "",
+      "distractorRationale": "C# ignores Python-style indentation and does not pair `else` with the outer `if` unless braces force it; an unbraced `else` binds to the nearest preceding unmatched `if`.",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su3_263",
@@ -11153,7 +11415,7 @@
       "ans": 1,
       "exp": "Explicit curly braces establish clear block boundaries, leaving no ambiguity about which if statement owns the else.",
       "explanation": "Explicit curly braces establish clear block boundaries, leaving no ambiguity about which if statement owns the else.",
-      "distractorRationale": "",
+      "distractorRationale": "Comments and Tab indentation are ignored by the C# parser, and `static` changes storage lifetimeâ€”only curly braces `{ ... }` alter `if-else` block grouping.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11161,7 +11423,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su3_264",
@@ -11175,27 +11438,27 @@
       "difficulty": "Foundational",
       "marks": 2,
       "estimatedMinutes": 2,
-      "q": "What happens when 'bool ok = (10 > 2) || (5 / 0 == 1);' is evaluated in C#?",
-      "title": "What happens when 'bool ok = (10 > 2) || (5 / 0 == 1);' is evaluated in C#?",
-      "stem": "What happens when 'bool ok = (10 > 2) || (5 / 0 == 1);' is evaluated in C#?",
+      "q": "Given `int d = 0;`, what happens when `bool ok = (10 > 2) || (5 / d == 1);` is evaluated in C#?",
+      "title": "Given `int d = 0;`, what happens when `bool ok = (10 > 2) || (5 / d == 1);` is evaluated in C#?",
+      "stem": "Given `int d = 0;`, what happens when `bool ok = (10 > 2) || (5 / d == 1);` is evaluated in C#?",
       "code": "",
       "options": [
         "Compiler error CS0020 occurs",
         "A DivideByZeroException crashes the application",
-        "'ok' becomes true without error because short-circuit evaluation skips '(5 / 0 == 1)'",
+        "`ok` becomes `true` without error because short-circuit evaluation skips `(5 / d == 1)`",
         "The expression evaluates to false"
       ],
       "opts": [
         "Compiler error CS0020 occurs",
         "A DivideByZeroException crashes the application",
-        "'ok' becomes true without error because short-circuit evaluation skips '(5 / 0 == 1)'",
+        "`ok` becomes `true` without error because short-circuit evaluation skips `(5 / d == 1)`",
         "The expression evaluates to false"
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Because 10 > 2 is true, the '||' short-circuits immediately, never evaluating the illegal division by zero.",
-      "explanation": "Because 10 > 2 is true, the '||' short-circuits immediately, never evaluating the illegal division by zero.",
-      "distractorRationale": "",
+      "exp": "Because `10 > 2` is `true` and `d` is a runtime variable (not a compile-time constant `0`), `||` short-circuits immediately without evaluating `5 / d`.",
+      "explanation": "Because `10 > 2` is `true` and `d` is a runtime variable (not a compile-time constant `0`), `||` short-circuits immediately without evaluating `5 / d`.",
+      "distractorRationale": "`CS0020` only triggers on compile-time constant `5 / 0` (not runtime variable `d`), and `DivideByZeroException` never occurs because `10 > 2` short-circuits `||` before `5 / d` executes.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11203,7 +11466,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su3_265",
@@ -11237,7 +11501,7 @@
       "ans": 3,
       "exp": "Logical AND ('&&') performs short-circuit evaluation. If the first operand evaluates to false (as when TryParse fails), evaluation terminates immediately, ensuring the uninitialized or default value of m1 is never erroneously validated.",
       "explanation": "Logical AND ('&&') performs short-circuit evaluation. If the first operand evaluates to false (as when TryParse fails), evaluation terminates immediately, ensuring the uninitialized or default value of m1 is never erroneously validated.",
-      "distractorRationale": "",
+      "distractorRationale": "`TryParse` sets failed `out` variables to `0` (never `1`), `out` does not skip `bool` logic, and no background thread is createdâ€”`&&` short-circuits before checking `val > 0`.",
       "definitions": [
         "def_tryparse",
         "def_parse_methods",
@@ -11245,7 +11509,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.31
     },
     {
       "id": "q_su3_266",
@@ -11279,7 +11544,7 @@
       "ans": 0,
       "exp": "A flag is a boolean variable whose value (true/false) indicates whether a condition has occurred or an option is active.",
       "explanation": "A flag is a boolean variable whose value (true/false) indicates whether a condition has occurred or an option is active.",
-      "distractorRationale": "",
+      "distractorRationale": "A `bool` holds strictly two states (`true`/`false`), persists for its normal scope lifetime, and signals program state rather than drawing graphics.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11287,7 +11552,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_267",
@@ -11321,7 +11587,7 @@
       "ans": 1,
       "exp": "Subtotal = 8 * R400 = R3200. Because passengers >= 6, a 10% discount applies (R320). Final = R3200 - R320 = R2880.",
       "explanation": "Subtotal = 8 * R400 = R3200. Because passengers >= 6, a 10% discount applies (R320). Final = R3200 - R320 = R2880.",
-      "distractorRationale": "",
+      "distractorRationale": "`8 * R400 = R3,200` pre-discount (`Option C` forgets the 10% group discount for `>= 6` passengers), and deducting `10%` (`R320`) yields `R2,880` (`R3,000` and `R2,500` miscompute 10%).",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11329,7 +11595,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su3_268",
@@ -11363,14 +11630,15 @@
       "ans": 2,
       "exp": "Setting SelectedIndex to -1 removes any active highlighting, leaving no item selected in the ListBox.",
       "explanation": "Setting SelectedIndex to -1 removes any active highlighting, leaving no item selected in the ListBox.",
-      "distractorRationale": "",
+      "distractorRationale": "`ClearSelectedItems` and `Items.Delete()` do not exist, and assigning `SelectedItem = \"None\"` does nothing unless `\"None\"` is an itemâ€”`SelectedIndex = -1` clears selection.",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_269",
@@ -11404,14 +11672,15 @@
       "ans": 3,
       "exp": "The Items collection of a ListBox exposes Clear() to remove all member objects.",
       "explanation": "The Items collection of a ListBox exposes Clear() to remove all member objects.",
-      "distractorRationale": "",
+      "distractorRationale": "`lstRoutes.Clear()`, `Items.RemoveAll()`, and `lstRoutes.Reset()` do not exist on `System.Windows.Forms.ListBox`; `lstRoutes.Items.Clear()` empties the collection.",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_270",
@@ -11445,14 +11714,15 @@
       "ans": 0,
       "exp": "The 'Checked' property of a RadioButton is a boolean returning true if selected, false otherwise.",
       "explanation": "The 'Checked' property of a RadioButton is a boolean returning true if selected, false otherwise.",
-      "distractorRationale": "",
+      "distractorRationale": "`RadioButton.Text` holds the visible caption (e.g. `\"Sunset\"`), while `.Value` and `.Selected` do not exist on `RadioButton`â€”selection state is `.Checked`.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_271",
@@ -11486,7 +11756,7 @@
       "ans": 1,
       "exp": "The BackColor property determines the background color of forms and controls in Windows Forms.",
       "explanation": "The BackColor property determines the background color of forms and controls in Windows Forms.",
-      "distractorRationale": "",
+      "distractorRationale": "`this.Color`, `this.BackgroundFill`, and `this.CanvasColor` do not exist on `Form`; the background colour property is `this.BackColor`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11494,7 +11764,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_272",
@@ -11528,14 +11799,15 @@
       "ans": 2,
       "exp": "Switch statements are ideal for multi-way branching when comparing a single discrete selector expression against constant case values.",
       "explanation": "Switch statements are ideal for multi-way branching when comparing a single discrete selector expression against constant case values.",
-      "distractorRationale": "",
+      "distractorRationale": "File I/O uses `StreamReader`/`StreamWriter`, multi-variable range inequalities require `if-else if`, and repetition uses loopsâ€”`switch` suits discrete equality branches on one expression.",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_273",
@@ -11569,14 +11841,15 @@
       "ans": 3,
       "exp": "The default section is the fallback branch in a switch statement, analogous to the trailing else in an if-else-if chain.",
       "explanation": "The default section is the fallback branch in a switch statement, analogous to the trailing else in an if-else-if chain.",
-      "distractorRationale": "",
+      "distractorRationale": "`default:` does not catch exceptions, style forms, or run firstâ€”it acts as the fallback branch when no `case` constant matches.",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_274",
@@ -11610,7 +11883,7 @@
       "ans": 0,
       "exp": "60 - 60 = 0. When speedOver <= 0, the driver is within the limit, incurring no fine.",
       "explanation": "60 - 60 = 0. When speedOver <= 0, the driver is within the limit, incurring no fine.",
-      "distractorRationale": "",
+      "distractorRationale": "When `recordedSpeed == limit`, `speedOver` is `0` (`<= 0`), which falls into `\"Within the limit\"` with `No fine` rather than triggering the `1â€“10` `Minor` R250 band.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11618,7 +11891,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su3_275",
@@ -11652,14 +11926,15 @@
       "ans": 1,
       "exp": "String equality in C# compares characters by their exact Unicode/ASCII values; 'S' (ASCII 83) does not equal 's' (ASCII 115).",
       "explanation": "String equality in C# compares characters by their exact Unicode/ASCII values; 'S' (ASCII 83) does not equal 's' (ASCII 115).",
-      "distractorRationale": "",
+      "distractorRationale": "`TextBox`es accept lowercase freely, Visual Studio never auto-capitalizes input, and `==` works on `string`s by comparing exact ordinal UTF-16 code units (`'S' != 's'`).",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_276",
@@ -11693,14 +11968,15 @@
       "ans": 2,
       "exp": "Converting both strings to lower case (using .ToLower()) normalizes character casing, allowing reliable case-insensitive equality comparison.",
       "explanation": "Converting both strings to lower case (using .ToLower()) normalizes character casing, allowing reliable case-insensitive equality comparison.",
-      "distractorRationale": "",
+      "distractorRationale": "Single `=` overwrites `txtZone.Text` instead of comparing it, while `.NoCase()` and `.IgnoreCaps()` do not exist on `System.String`.",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_277",
@@ -11734,7 +12010,7 @@
       "ans": 3,
       "exp": "The conditional ternary operator (?:) provides a concise single-line expression alternative to a dual-alternative if-else statement.",
       "explanation": "The conditional ternary operator (?:) provides a concise single-line expression alternative to a dual-alternative if-else statement.",
-      "distractorRationale": "",
+      "distractorRationale": "The ternary `?:` operator neither prints both branches, loops like `while`, nor declares arraysâ€”it evaluates the `bool` condition and returns `expr1` or `expr2`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11742,7 +12018,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_278",
@@ -11776,14 +12053,15 @@
       "ans": 0,
       "exp": "SystemColors.Control represents the standard default background color of Windows Forms surfaces.",
       "explanation": "SystemColors.Control represents the standard default background color of Windows Forms surfaces.",
-      "distractorRationale": "",
+      "distractorRationale": "`this.ResetColor()` and `Color.None` do not exist, and `Color.White` hardcodes pure white instead of the OS theme's standard `SystemColors.Control` surface.",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_279",
@@ -11817,7 +12095,7 @@
       "ans": 1,
       "exp": "De Morgan's Laws state: the negation of a conjunction '!(A && B)' is logically equivalent to the disjunction of the negations '!A || !B'.",
       "explanation": "De Morgan's Laws state: the negation of a conjunction '!(A && B)' is logically equivalent to the disjunction of the negations '!A || !B'.",
-      "distractorRationale": "",
+      "distractorRationale": "Negating a conjunction `!(A && B)` flips *both* operands AND changes `&&` to `||` (`!A || !B`); `!A && !B` is `!(A || B)`, while `!A && B` fails to flip the operator and `B`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11825,7 +12103,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su3_280",
@@ -11859,7 +12138,7 @@
       "ans": 2,
       "exp": "De Morgan's Laws state: the negation of a disjunction '!(A || B)' is logically equivalent to the conjunction of the negations '!A && !B'.",
       "explanation": "De Morgan's Laws state: the negation of a disjunction '!(A || B)' is logically equivalent to the conjunction of the negations '!A && !B'.",
-      "distractorRationale": "",
+      "distractorRationale": "Negating a disjunction `!(A || B)` flips *both* operands AND changes `||` to `&&` (`!A && !B`); `!A || !B` is `!(A && B)`, while `!A || B` leaves `||` and `B` un-negated.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11867,7 +12146,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su4_281",
@@ -11901,7 +12181,7 @@
       "ans": 0,
       "exp": "A while loop is pre-test: it tests the condition prior to each iteration. If false on entry, body executes zero times.",
       "explanation": "A while loop is pre-test: it tests the condition prior to each iteration. If false on entry, body executes zero times.",
-      "distractorRationale": "",
+      "distractorRationale": "A `while` loop can stop whenever its condition turns `false`, runs inside whichever method calls it, and executes `0` times (not at least once) if initially `false`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -11909,7 +12189,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_282",
@@ -11943,7 +12224,7 @@
       "ans": 1,
       "exp": "A do-while loop is post-test: the body executes first, then the condition is tested at the bottom.",
       "explanation": "A do-while loop is post-test: the body executes first, then the condition is tested at the bottom.",
-      "distractorRationale": "",
+      "distractorRationale": "`Post-test` refers strictly to evaluating `while (condition);` *after* each body executionâ€”not dates, form closing, or execution speed.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -11951,7 +12232,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_283",
@@ -11985,7 +12267,7 @@
       "ans": 2,
       "exp": "Syntax rule: do { ... } while (condition); requires a terminating semicolon.",
       "explanation": "Syntax rule: do { ... } while (condition); requires a terminating semicolon.",
-      "distractorRationale": "",
+      "distractorRationale": "Omitting punctuation, or placing `.` or `:`, after `do { ... } while (cond)` causes compiler error `CS1002` (`;` expected).",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -11993,7 +12275,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_284",
@@ -12027,7 +12310,7 @@
       "ans": 3,
       "exp": "In postfix (count++), value is evaluated first, then incremented. In prefix (++count), value is incremented first, then evaluated.",
       "explanation": "In postfix (count++), value is evaluated first, then incremented. In prefix (++count), value is incremented first, then evaluated.",
-      "distractorRationale": "",
+      "distractorRationale": "Both `++count` and `count++` add `1` (never `Ã— 2`) and work on numeric types; they differ only when embedded inside a larger expression.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12035,7 +12318,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su4_285",
@@ -12069,7 +12353,7 @@
       "ans": 0,
       "exp": "An infinite loop occurs when the condition never evaluates to false, causing the UI thread to hang.",
       "explanation": "An infinite loop occurs when the condition never evaluates to false, causing the UI thread to hang.",
-      "distractorRationale": "",
+      "distractorRationale": "An unending `while` loop neither shuts down Windows, reverses direction, nor gets an auto-inserted `break;`â€”it blocks the UI thread indefinitely.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12077,7 +12361,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_286",
@@ -12111,7 +12396,7 @@
       "ans": 1,
       "exp": "The for loop header consists of: 1. Initialization, 2. Boolean test condition, 3. Update expression.",
       "explanation": "The for loop header consists of: 1. Initialization, 2. Boolean test condition, 3. Update expression.",
-      "distractorRationale": "",
+      "distractorRationale": "A `for` header contains `(initialization; booleanCondition; update)`, not media words (`Start; Stop; Pause`) or IPO stages.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12119,7 +12404,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_287",
@@ -12161,7 +12447,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_288",
@@ -12195,7 +12482,7 @@
       "ans": 3,
       "exp": "LstSummary.Items.Add() adds an item to the ListBox collection.",
       "explanation": "LstSummary.Items.Add() adds an item to the ListBox collection.",
-      "distractorRationale": "",
+      "distractorRationale": "`lstSummary.Add` and `lstSummary.Append` do not exist, while `Items.Insert(index, item)` requires two arguments including an index.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12203,7 +12490,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_289",
@@ -12237,7 +12525,7 @@
       "ans": 0,
       "exp": "The Load event occurs before a form is displayed for the first time; ideal for prepopulating controls.",
       "explanation": "The Load event occurs before a form is displayed for the first time; ideal for prepopulating controls.",
-      "distractorRationale": "",
+      "distractorRationale": "`Paint` fires on screen redraws, `FormClosed` fires on teardown, and `Click` requires a mouse clickâ€”initial startup preparation runs in `Form_Load`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12245,7 +12533,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_290",
@@ -12279,7 +12568,7 @@
       "ans": 1,
       "exp": "An accumulator accumulates numbers into a running total (e.g. total += amount;) and must be initialized to 0.",
       "explanation": "An accumulator accumulates numbers into a running total (e.g. total += amount;) and must be initialized to 0.",
-      "distractorRationale": "",
+      "distractorRationale": "Counting by `1` describes a *counter* (Option C) and unchanging values are *constants* (Option D); an *accumulator* sums variable amounts into a running total.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12287,7 +12576,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_291",
@@ -12321,7 +12611,7 @@
       "ans": 2,
       "exp": "A sentinel value is a distinct dummy value that signals loop termination when the exact quantity of inputs is unknown.",
       "explanation": "A sentinel value is a distinct dummy value that signals loop termination when the exact quantity of inputs is unknown.",
-      "distractorRationale": "",
+      "distractorRationale": "A sentinel is a distinct stop marker value (such as `-1` when scores are non-negative), not a screen lock, error code, or password.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12329,7 +12619,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_292",
@@ -12363,7 +12654,7 @@
       "ans": 3,
       "exp": "ListBox items are zero-indexed from 0 to Items.Count - 1. Loop header is 'for (int i = 0; i < lstItems.Items.Count; i++)'.",
       "explanation": "ListBox items are zero-indexed from 0 to Items.Count - 1. Loop header is 'for (int i = 0; i < lstItems.Items.Count; i++)'.",
-      "distractorRationale": "",
+      "distractorRationale": "Starting at `1` with `<= Count` misses index `0` and crashes at `Items[Count]`, while `lstItems.Length` and `lstItems.Next()` do not exist.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12371,7 +12662,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_293",
@@ -12405,7 +12697,7 @@
       "ans": 0,
       "exp": "Variables declared in the for loop initialization header have block scope limited to the loop.",
       "explanation": "Variables declared in the for loop initialization header have block scope limited to the loop.",
-      "distractorRationale": "",
+      "distractorRationale": "A variable declared inside `for (int i = 0; ...)` has block scope confined to that `for` statementâ€”not method, class, or project scope.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12413,7 +12705,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_294",
@@ -12447,7 +12740,7 @@
       "ans": 1,
       "exp": "'total += price;' is equivalent to 'total = total + price;'.",
       "explanation": "'total += price;' is equivalent to 'total = total + price;'.",
-      "distractorRationale": "",
+      "distractorRationale": "`total =+ price;` assigns positive `+price` (overwriting `total`!), `total ++ price;` is a syntax error, and `:=` is not C#.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12455,7 +12748,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_295",
@@ -12489,7 +12783,7 @@
       "ans": 2,
       "exp": "The Items collection provides the '.Count' integer property indicating the number of items.",
       "explanation": "The Items collection provides the '.Count' integer property indicating the number of items.",
-      "distractorRationale": "",
+      "distractorRationale": "`lstBox.Size` returns pixel `Width`/`Height`, while `Items.Length` and `lstBox.Length` do not existâ€”item count is `lstBox.Items.Count`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12497,7 +12791,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su4_296",
@@ -12531,7 +12826,7 @@
       "ans": 3,
       "exp": "Pre-test loops (while, for) evaluate conditions prior to body entry; post-test loops (do-while) evaluate after body execution, guaranteeing at least one run.",
       "explanation": "Pre-test loops (while, for) evaluate conditions prior to body entry; post-test loops (do-while) evaluate after body execution, guaranteeing at least one run.",
-      "distractorRationale": "",
+      "distractorRationale": "`do-while` can contain `if` statements, `while` needs no array, and both can count up or down; `while` is pretest (`0+`) whereas `do-while` is posttest (`1+`).",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12539,7 +12834,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su4_297",
@@ -12573,7 +12869,7 @@
       "ans": 0,
       "exp": "Because the loop condition appears at the bottom of the block, C# syntax mandates a semicolon to terminate the do-while statement.",
       "explanation": "Because the loop condition appears at the bottom of the block, C# syntax mandates a semicolon to terminate the do-while statement.",
-      "distractorRationale": "",
+      "distractorRationale": "The trailing `;` on `do { ... } while (cond);` never causes infinite looping, delays, or variable resetsâ€”it disambiguates the end of `do-while` in C# grammar.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12581,7 +12877,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su4_298",
@@ -12615,7 +12912,7 @@
       "ans": 1,
       "exp": "The for loop header consists of: initialization (runs once), test condition (checked before each iteration), and update (executed after each iteration).",
       "explanation": "The for loop header consists of: initialization (runs once), test condition (checked before each iteration), and update (executed after each iteration).",
-      "distractorRationale": "",
+      "distractorRationale": "File attributes, font styling, and GUI controls are unrelated to the three semicolon-separated `for (init; test; update)` expressions.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12623,7 +12920,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su4_299",
@@ -12657,7 +12955,7 @@
       "ans": 2,
       "exp": "Initialization runs first. The condition is evaluated; if true, the body executes, followed by the update expression.",
       "explanation": "Initialization runs first. The condition is evaluated; if true, the body executes, followed by the update expression.",
-      "distractorRationale": "",
+      "distractorRationale": "Update never runs before the first body pass, and the condition test always precedes the first `for` body execution (`Init -> Test -> Body -> Update`).",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12665,7 +12963,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su4_300",
@@ -12699,7 +12998,7 @@
       "ans": 3,
       "exp": "After iteration 1, initialization never runs again. Each subsequent cycle runs: condition check, loop body (if true), and update expression.",
       "explanation": "After iteration 1, initialization never runs again. Each subsequent cycle runs: condition check, loop body (if true), and update expression.",
-      "distractorRationale": "",
+      "distractorRationale": "`Initialization` runs *only once* before the very first iterationâ€”on the second and subsequent passes, only `Condition test -> Body -> Update` repeats.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12707,7 +13006,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su4_301",
@@ -12749,7 +13049,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.34
     },
     {
       "id": "q_su4_302",
@@ -12783,7 +13084,7 @@
       "ans": 1,
       "exp": "The loop accumulates all 3 items: total = 0 + 70 + 80 + 90 = 240.0. After the loop, average = 240.0 / 3 = 80.0.",
       "explanation": "The loop accumulates all 3 items: total = 0 + 70 + 80 + 90 = 240.0. After the loop, average = 240.0 / 3 = 80.0.",
-      "distractorRationale": "",
+      "distractorRationale": "`70 + 80 + 90 = 240.0` divided by `3` items equals `80.0`; Option A fails to compute `average`, Option C only keeps the last item `90`, and Option D omits one score.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12791,7 +13092,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.32
     },
     {
       "id": "q_su4_303",
@@ -12825,7 +13127,7 @@
       "ans": 2,
       "exp": "C# requires local variables to be assigned before reading. An accumulator must be initialized (e.g. 'decimal total = 0m;') prior to entering the loop.",
       "explanation": "C# requires local variables to be assigned before reading. An accumulator must be initialized (e.g. 'decimal total = 0m;') prior to entering the loop.",
-      "distractorRationale": "",
+      "distractorRationale": "`total += x` reads `total` (`total = total + x`), so an uninitialized local `decimal total;` triggers `CS0165` (unassigned local variable).",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12833,7 +13135,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.29
     },
     {
       "id": "q_su4_304",
@@ -12867,7 +13170,7 @@
       "ans": 3,
       "exp": "In a count-controlled for loop, 'count' is the loop control variable (counter). It increments after each iteration body executes, and when count reaches 11, the condition 'count <= 10' becomes false, exiting the loop.",
       "explanation": "In a count-controlled for loop, 'count' is the loop control variable (counter). It increments after each iteration body executes, and when count reaches 11, the condition 'count <= 10' becomes false, exiting the loop.",
-      "distractorRationale": "",
+      "distractorRationale": "`count` increases by `1` up to `10` (a counter, not a sum accumulator or user-input sentinel, and `<= 10` stops at `10`, not `9`).",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12875,7 +13178,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.29
     },
     {
       "id": "q_su4_305",
@@ -12917,7 +13221,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.32
     },
     {
       "id": "q_su4_306",
@@ -12951,7 +13256,7 @@
       "ans": 1,
       "exp": "An infinite loop occurs when the loop condition remains perpetually true, typically because the code fails to modify the loop control variable inside the body.",
       "explanation": "An infinite loop occurs when the loop condition remains perpetually true, typically because the code fails to modify the loop control variable inside the body.",
-      "distractorRationale": "",
+      "distractorRationale": "Hidden buttons, minimized windows, and disk space do not cause infinite `while` loopsâ€”failing to update variables toward making the condition `false` does.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12959,7 +13264,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_307",
@@ -12993,7 +13299,7 @@
       "ans": 2,
       "exp": "An off-by-one bug occurs when the loop boundary condition is misconfigured, causing the loop body to execute N+1 or N-1 times instead of N.",
       "explanation": "An off-by-one bug occurs when the loop boundary condition is misconfigured, causing the loop body to execute N+1 or N-1 times instead of N.",
-      "distractorRationale": "",
+      "distractorRationale": "Missing quotes and bad addition are syntax/arithmetic bugs, not boundary bugs; off-by-one (`<` vs `<=`) runs a loop `N - 1` or `N + 1` times instead of `N`.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13001,7 +13307,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_308",
@@ -13035,7 +13342,7 @@
       "ans": 3,
       "exp": "The loop executes for i = 0, 1, 2, 3, and 4 (exactly 5 times). When i reaches 5, the condition '5 < 5' is false and the loop terminates.",
       "explanation": "The loop executes for i = 0, 1, 2, 3, and 4 (exactly 5 times). When i reaches 5, the condition '5 < 5' is false and the loop terminates.",
-      "distractorRationale": "",
+      "distractorRationale": "Values `0, 1, 2, 3, 4` give `5` iterations; `4` forgets `i = 0`, `6` confuses `< 5` with `<= 5`, and `0 < 5` is initially `true` so it cannot be `0`.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13043,7 +13350,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_309",
@@ -13077,7 +13385,7 @@
       "ans": 0,
       "exp": "The loop executes for i = 1, 2, 3, 4, and 5 (5 times total). When i reaches 6, '6 <= 5' is false and the loop terminates.",
       "explanation": "The loop executes for i = 1, 2, 3, 4, and 5 (5 times total). When i reaches 6, '6 <= 5' is false and the loop terminates.",
-      "distractorRationale": "",
+      "distractorRationale": "Inclusive `1..5` executes for `1, 2, 3, 4, 5` (`5` times); `4` confuses `<= 5` with `< 5`, `6` assumes `0`-based start, and `i++` terminates cleanly.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13085,7 +13393,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_310",
@@ -13119,7 +13428,7 @@
       "ans": 1,
       "exp": "The loop increments i to 5, at which point '5 < 5' is false, causing loop termination with i retaining the value 5.",
       "explanation": "The loop increments i to 5, at which point '5 < 5' is false, causing loop termination with i retaining the value 5.",
-      "distractorRationale": "",
+      "distractorRationale": "The loop increments `i` from `4` to `5`, sees `5 < 5` is `false`, and exits with `i == 5` (`4` was the last value *inside* the body, not after exit).",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13127,7 +13436,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_311",
@@ -13161,7 +13471,7 @@
       "ans": 2,
       "exp": "Variables declared in the initialization section of a for loop header have scope confined to the loop construct itself.",
       "explanation": "Variables declared in the initialization section of a for loop header have scope confined to the loop construct itself.",
-      "distractorRationale": "",
+      "distractorRationale": "Even if the loop runs many times, `int count` declared inside `for (...)` is scoped strictly to the `for` header and bodyâ€”never visible afterward.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13169,7 +13479,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_312",
@@ -13203,7 +13514,7 @@
       "ans": 3,
       "exp": "Counting down starts at 10, tests that i >= 1, and decrements with i-- after each iteration.",
       "explanation": "Counting down starts at 10, tests that i >= 1, and decrements with i-- after each iteration.",
-      "distractorRationale": "",
+      "distractorRationale": "Option A (`i = 1; i <= 10; i--`) loops downward into negative numbers infinitely, Option B (`10 < 1`) runs `0` times, and Option C (`i++`) increments upward infinitely.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13211,7 +13522,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_313",
@@ -13245,7 +13557,7 @@
       "ans": 0,
       "exp": "Starting at 2, terminating when i exceeds 20, and stepping by 2 ('i += 2') yields 2, 4, 6, ..., 20.",
       "explanation": "Starting at 2, terminating when i exceeds 20, and stepping by 2 ('i += 2') yields 2, 4, 6, ..., 20.",
-      "distractorRationale": "",
+      "distractorRationale": "`i == 20` is `false` at `i = 2` (runs `0` times!), `i < 20; i++` includes odd numbers and stops at `19`, and `i * 2` neither reassigns `i` nor advances from `0`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13253,7 +13565,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_314",
@@ -13287,7 +13600,7 @@
       "ans": 1,
       "exp": "The 'break' statement immediately exits the innermost enclosing loop, bypassing any remaining iterations.",
       "explanation": "The 'break' statement immediately exits the innermost enclosing loop, bypassing any remaining iterations.",
-      "distractorRationale": "",
+      "distractorRationale": "Skipping only the current iteration describes `continue;` (Option A); `break;` exits the enclosing loop immediately without resetting variables or rebooting.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13295,7 +13608,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_315",
@@ -13329,7 +13643,7 @@
       "ans": 2,
       "exp": "The 'continue' statement bypasses any statements remaining in the current iteration and advances to the next loop iteration.",
       "explanation": "The 'continue' statement bypasses any statements remaining in the current iteration and advances to the next loop iteration.",
-      "distractorRationale": "",
+      "distractorRationale": "Exiting the loop completely describes `break;` (Option A); `continue;` jumps straight to the loop's update/condition step for the next iteration.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13337,7 +13651,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su4_316",
@@ -13371,7 +13686,7 @@
       "ans": 3,
       "exp": "Items are appended to a ListBox through its Items collection using 'lstResults.Items.Add(...)'.",
       "explanation": "Items are appended to a ListBox through its Items collection using 'lstResults.Items.Add(...)'.",
-      "distractorRationale": "",
+      "distractorRationale": "`lstResults.Text += ...` does not add list rows, while `lstResults.Add` and `Items.InsertItem` do not exist on `ListBox`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13379,7 +13694,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su4_317",
@@ -13421,7 +13737,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.86
     },
     {
       "id": "q_su4_318",
@@ -13455,7 +13772,7 @@
       "ans": 1,
       "exp": "The .Count property on the Items collection returns an integer indicating how many items the ListBox contains.",
       "explanation": "The .Count property on the Items collection returns an integer indicating how many items the ListBox contains.",
-      "distractorRationale": "",
+      "distractorRationale": "`Items.Size`, `TotalItems`, and `lstResults.Length` do not exist on `System.Windows.Forms.ListBox`; item count is `lstResults.Items.Count`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13463,7 +13780,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su4_319",
@@ -13497,7 +13815,7 @@
       "ans": 2,
       "exp": "ListBox collections are 0-indexed in C#; the first element resides at index 0.",
       "explanation": "ListBox collections are 0-indexed in C#; the first element resides at index 0.",
-      "distractorRationale": "",
+      "distractorRationale": "`1` is the *second* item, `-1` indicates *no selection* (`SelectedIndex`), and `int` indices cannot be `null`â€”the first item is at index `0`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13505,7 +13823,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su4_320",
@@ -13539,7 +13858,7 @@
       "ans": 3,
       "exp": "Because indexing begins at 0, the final element in an N-item collection is located at index N - 1.",
       "explanation": "Because indexing begins at 0, the final element in an N-item collection is located at index N - 1.",
-      "distractorRationale": "",
+      "distractorRationale": "Because indexing starts at `0`, `N` items occupy `0` through `N - 1`; index `N` and `N + 1` are out of bounds.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13547,7 +13866,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su4_321",
@@ -13581,7 +13901,7 @@
       "ans": 0,
       "exp": "Accessing an index outside the valid range [0, Count-1] throws an ArgumentOutOfRangeException.",
       "explanation": "Accessing an index outside the valid range [0, Count-1] throws an ArgumentOutOfRangeException.",
-      "distractorRationale": "",
+      "distractorRationale": "Valid indices are `0 .. Count - 1`, so indexing `Items[Items.Count]` throws `ArgumentOutOfRangeException` (not `NullReference`, `Format`, or `DivideByZero`).",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13589,7 +13909,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_322",
@@ -13623,7 +13944,7 @@
       "ans": 1,
       "exp": "Checking SelectedIndex != -1 verifies an item is selected before calling SelectedItem.ToString(), preventing NullReferenceExceptions.",
       "explanation": "Checking SelectedIndex != -1 verifies an item is selected before calling SelectedItem.ToString(), preventing NullReferenceExceptions.",
-      "distractorRationale": "",
+      "distractorRationale": "Calling `SelectedItem.ToString()` when nothing is selected throws `NullReferenceException`, `Substring(0, 5)` fails on short strings, and `Items[-1]` throws `ArgumentOutOfRangeException`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13631,7 +13952,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_323",
@@ -13665,7 +13987,7 @@
       "ans": 2,
       "exp": "Valid indices range from 0 to Count - 1. Using 'i = 0; i < lstScores.Items.Count; i++' visits each valid element safely.",
       "explanation": "Valid indices range from 0 to Count - 1. Using 'i = 0; i < lstScores.Items.Count; i++' visits each valid element safely.",
-      "distractorRationale": "",
+      "distractorRationale": "`i <= Count` (Options A & D) crashes on `Items[Count]`, Option D also skips index `0`, and `i = Count; i > 0; i++` increments out of bounds.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13673,7 +13995,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_324",
@@ -13707,7 +14030,7 @@
       "ans": 3,
       "exp": "Initialize total to 0m, iterate through items from 0 to Count-1, extract each item as a string, parse it to decimal, and add to total.",
       "explanation": "Initialize total to 0m, iterate through items from 0 to Count-1, extract each item as a string, parse it to decimal, and add to total.",
-      "distractorRationale": "",
+      "distractorRationale": "`ObjectCollection` has no `.Sum()`, Option B uses uninitialized `total` and sums indices instead of values, and `Count * 100` ignores actual scores.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13715,7 +14038,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_325",
@@ -13749,7 +14073,7 @@
       "ans": 0,
       "exp": "If the ListBox is empty (Count == 0), dividing by Count throws a DivideByZeroException for integers or produces NaN for floating point.",
       "explanation": "If the ListBox is empty (Count == 0), dividing by Count throws a DivideByZeroException for integers or produces NaN for floating point.",
-      "distractorRationale": "",
+      "distractorRationale": "Dividing `total / count` when `lstScores.Items.Count == 0` causes `DivideByZeroException` (for `int`/`decimal`) or `NaN` (for `double`).",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13757,7 +14081,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_326",
@@ -13791,7 +14116,7 @@
       "ans": 1,
       "exp": "A semicolon after while(...) creates an empty statement as the loop body. The loop endlessly tests 'count < 10' without ever incrementing count.",
       "explanation": "A semicolon after while(...) creates an empty statement as the loop body. The loop endlessly tests 'count < 10' without ever incrementing count.",
-      "distractorRationale": "",
+      "distractorRationale": "A stray `;` after `while (count < 10);` is syntactically legal empty-statement codeâ€”if `count < 10`, `count` never reaches `{ count++; }` and hangs forever.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13799,7 +14124,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_327",
@@ -13833,7 +14159,7 @@
       "ans": 2,
       "exp": "The semicolon acts as an empty loop body, cycling i from 0 to 5. The following block executes as normal sequential code exactly once.",
       "explanation": "The semicolon acts as an empty loop body, cycling i from 0 to 5. The following block executes as normal sequential code exactly once.",
-      "distractorRationale": "",
+      "distractorRationale": "In `for (int i = 0; i < 5; i++);`, the empty `;` runs 5 times, and the following `{ lst.Items.Add(\"Hi\"); }` block executes once unconditionally.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13841,7 +14167,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_328",
@@ -13875,7 +14202,7 @@
       "ans": 3,
       "exp": "Clearing the ListBox ensures no residual items or prices from a prior transaction contaminate the new transaction.",
       "explanation": "Clearing the ListBox ensures no residual items or prices from a prior transaction contaminate the new transaction.",
-      "distractorRationale": "",
+      "distractorRationale": "`Items.Clear()` neither prints receipts, calculates VAT, nor triggers hardwareâ€”it wipes the previous customer's line items before a new sale.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13883,7 +14210,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_329",
@@ -13917,7 +14245,7 @@
       "ans": 0,
       "exp": "A for loop counting from 1 to 10 dynamically evaluates and appends each formatted multiplication product.",
       "explanation": "A for loop counting from 1 to 10 dynamically evaluates and appends each formatted multiplication product.",
-      "distractorRationale": "",
+      "distractorRationale": "Option B (`10 < 1`) runs `0` times, Option C forgets to increment `i` (infinite loop), and Option D adds only `50` once instead of `1..10`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13925,7 +14253,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_330",
@@ -13959,7 +14288,7 @@
       "ans": 1,
       "exp": "Compound growth is an iterative accumulation: each period's interest increases the base principal for subsequent calculations.",
       "explanation": "Compound growth is an iterative accumulation: each period's interest increases the base principal for subsequent calculations.",
-      "distractorRationale": "",
+      "distractorRationale": "C# supports `*` on `decimal` anywhere and needs no loops for `> 1000`; loops are used in compound interest to display and roll forward each year's updated balance.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13967,7 +14296,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_331",
@@ -14001,7 +14331,7 @@
       "ans": 2,
       "exp": "String interpolation with the tab escape sequence '\\t' and currency specifier ':C' formats tabular monetary output cleanly.",
       "explanation": "String interpolation with the tab escape sequence '\\t' and currency specifier ':C' formats tabular monetary output cleanly.",
-      "distractorRationale": "",
+      "distractorRationale": "`Items.Insert(year, ...)` throws `ArgumentOutOfRangeException` when `year = 1` on an empty list, `year + balance` adds the year number to the money, and `.Text =` does not populate rows.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14009,7 +14339,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_332",
@@ -14043,7 +14374,7 @@
       "ans": 3,
       "exp": "The count-controlled for loop is ideal when the iteration count is predetermined (e.g. iterating N times or over an array).",
       "explanation": "The count-controlled for loop is ideal when the iteration count is predetermined (e.g. iterating N times or over an array).",
-      "distractorRationale": "",
+      "distractorRationale": "`infinite` loops hang, while `while`/`do-while` shine for sentinel or unknown-count conditions; `for` cleanly bundles known count initialization, test, and step.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14051,7 +14382,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_333",
@@ -14085,7 +14417,7 @@
       "ans": 0,
       "exp": "Condition-controlled loops (while and do-while) are designed for situations where the number of attempts is indeterminate.",
       "explanation": "Condition-controlled loops (while and do-while) are designed for situations where the number of attempts is indeterminate.",
-      "distractorRationale": "",
+      "distractorRationale": "`if` and `switch` do not repeat at all, and a fixed `for (... 100)` stops at 100 or forces unneeded runs when user termination is event/sentinel-driven.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14093,7 +14425,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_334",
@@ -14127,7 +14460,7 @@
       "ans": 1,
       "exp": "In a nested loop, for every single iteration of the outer loop, the inner loop executes its full cycle from start to finish. With 3 outer iterations and 2 inner iterations, the inner statement executes 3 * 2 = 6 times.",
       "explanation": "In a nested loop, for every single iteration of the outer loop, the inner loop executes its full cycle from start to finish. With 3 outer iterations and 2 inner iterations, the inner statement executes 3 * 2 = 6 times.",
-      "distractorRationale": "",
+      "distractorRationale": "Outer (`3`) Ã— Inner (`2`) = `6` executions; `2` counts only one pass of the inner loop, `5` adds `3 + 2` instead of multiplying, and `12` doubles without cause.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -14135,7 +14468,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.59
     },
     {
       "id": "q_su4_335",
@@ -14169,7 +14503,7 @@
       "ans": 2,
       "exp": "The inner loop runs 3 times on each of the outer loop's 5 iterations, totaling 5 * 3 = 15 executions.",
       "explanation": "The inner loop runs 3 times on each of the outer loop's 5 iterations, totaling 5 * 3 = 15 executions.",
-      "distractorRationale": "",
+      "distractorRationale": "Nested independent loops multiply iteration counts (`5 * 3 = 15`), rather than adding (`5 + 3 = 8`) or running only outer (`5`) or inner (`3`) counts.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14177,7 +14511,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su4_336",
@@ -14211,7 +14546,7 @@
       "ans": 3,
       "exp": "The '+=' operator adds the right-hand value to the variable on the left and reassigns the sum to that variable.",
       "explanation": "The '+=' operator adds the right-hand value to the variable on the left and reassigns the sum to that variable.",
-      "distractorRationale": "",
+      "distractorRationale": "`=+` is assignment of unary `+`, `++` increments only by `1`, and `&&` is logical AND; compound addition assignment is `+=`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14219,7 +14554,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su4_337",
@@ -14253,7 +14589,7 @@
       "ans": 0,
       "exp": "The '*=' operator performs in-place multiplication on the target variable.",
       "explanation": "The '*=' operator performs in-place multiplication on the target variable.",
-      "distractorRationale": "",
+      "distractorRationale": "`^=` is bitwise XOR assignment, `=*` is invalid syntax, and `**` does not exist in C#; compound multiplication assignment is `*=`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14261,7 +14597,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su4_338",
@@ -14295,7 +14632,7 @@
       "ans": 1,
       "exp": "The standard linear search algorithm initializes the extreme value candidate with element 0, then updates candidate whenever a larger value is found.",
       "explanation": "The standard linear search algorithm initializes the extreme value candidate with element 0, then updates candidate whenever a larger value is found.",
-      "distractorRationale": "",
+      "distractorRationale": "`Items.Clear()` deletes the data, forms cannot be sorted alphabetically, and summing/halving computes half the total rather than the maximum element.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14303,7 +14640,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su4_339",
@@ -14337,7 +14675,7 @@
       "ans": 2,
       "exp": "Initializing with 0 or the first actual score ensures that any valid positive score will be equal to or greater than the initial candidate.",
       "explanation": "Initializing with 0 or the first actual score ensures that any valid positive score will be equal to or greater than the initial candidate.",
-      "distractorRationale": "",
+      "distractorRationale": "Initializing `highest` to `int.MaxValue` or `100` means no actual test score is ever `> highest`, while `-999999` is an arbitrary magic number when `0` (or item `0`) fits `[0..100]`.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -14345,7 +14683,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.81
     },
     {
       "id": "q_su4_340",
@@ -14387,7 +14726,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su4_341",
@@ -14421,7 +14761,7 @@
       "ans": 0,
       "exp": "Post-test do-while loops execute the body unconditionally on the first pass before evaluating the test expression.",
       "explanation": "Post-test do-while loops execute the body unconditionally on the first pass before evaluating the test expression.",
-      "distractorRationale": "",
+      "distractorRationale": "Because `do-while` checks `while (false);` *after* executing the body, it compiles cleanly, runs the body **once**, and then stops.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14429,7 +14769,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.29
     },
     {
       "id": "q_su4_342",
@@ -14463,7 +14804,7 @@
       "ans": 1,
       "exp": "For loops are designed for predictable iteration managed by their header. Modifying the counter inside the body compromises readability and predictability.",
       "explanation": "For loops are designed for predictable iteration managed by their header. Modifying the counter inside the body compromises readability and predictability.",
-      "distractorRationale": "",
+      "distractorRationale": "Mutating the `for` counter inside the body still compiles and does not delete variables, but it fights the header's update clause and causes off-by-one or infinite-loop bugs.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14471,7 +14812,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_343",
@@ -14505,7 +14847,7 @@
       "ans": 2,
       "exp": "Items.Remove(object) searches for and removes the first matching item object from the collection.",
       "explanation": "Items.Remove(object) searches for and removes the first matching item object from the collection.",
-      "distractorRationale": "",
+      "distractorRationale": "`RemoveAt` expects an `int` index (passing a `string` fails compilation), `lstItems.Delete` does not exist, and `lstItems.Text = \"\"` does not delete collection items.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14513,7 +14855,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_344",
@@ -14547,7 +14890,7 @@
       "ans": 3,
       "exp": "Items.RemoveAt(int index) removes the item occupying the specified index location.",
       "explanation": "Items.RemoveAt(int index) removes the item occupying the specified index location.",
-      "distractorRationale": "",
+      "distractorRationale": "`DeleteIndex` does not exist, assigning `null` throws `ArgumentNullException`, and `Items.Remove(index)` searches for boxed `int` value `index` instead of removing position `index`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14555,7 +14898,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_345",
@@ -14589,7 +14933,7 @@
       "ans": 0,
       "exp": "Items.Insert(index, item) inserts an element at the specified position, shifting existing items downwards.",
       "explanation": "Items.Insert(index, item) inserts an element at the specified position, shifting existing items downwards.",
-      "distractorRationale": "",
+      "distractorRationale": "`Prepend` and `AddTop` do not exist on `ObjectCollection`, and `Items[0] = ...` overwrites item `0` (or crashes if empty) instead of inserting.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14597,7 +14941,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_346",
@@ -14631,7 +14976,7 @@
       "ans": 1,
       "exp": "Setting the 'Sorted' property to true automatically sorts text entries alphabetically as they are added.",
       "explanation": "Setting the 'Sorted' property to true automatically sorts text entries alphabetically as they are added.",
-      "distractorRationale": "",
+      "distractorRationale": "`AutoSort`, `Alphabetical`, and `OrderItems` do not exist on `ListBox`; automatic alphabetical ordering uses `lstItems.Sorted = true`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14639,7 +14984,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_347",
@@ -14673,7 +15019,7 @@
       "ans": 2,
       "exp": "Items.Contains(object) checks for item membership, returning a boolean true or false.",
       "explanation": "Items.Contains(object) checks for item membership, returning a boolean true or false.",
-      "distractorRationale": "",
+      "distractorRationale": "`Items.Contains(obj)` returns `bool` (`true`/`false`), whereas item index lookup uses `Items.IndexOf(obj)`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14681,7 +15027,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_348",
@@ -14715,7 +15062,7 @@
       "ans": 3,
       "exp": "SelectedIndices contains the collection of zero-based index numbers for all highlighted items in a multi-selection ListBox.",
       "explanation": "SelectedIndices contains the collection of zero-based index numbers for all highlighted items in a multi-selection ListBox.",
-      "distractorRationale": "",
+      "distractorRationale": "`CheckedIndices` belongs to `CheckedListBox`, while `MultiSelections` and `SelectedItemsList` do not existâ€”multi-select indices live in `lstItems.SelectedIndices`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14723,7 +15070,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su4_349",
@@ -14757,7 +15105,7 @@
       "ans": 0,
       "exp": "Excessive GUI repainting on the UI thread starves the message pump, causing responsiveness issues unless batched (e.g. with BeginUpdate/EndUpdate).",
       "explanation": "Excessive GUI repainting on the UI thread starves the message pump, causing responsiveness issues unless batched (e.g. with BeginUpdate/EndUpdate).",
-      "distractorRationale": "",
+      "distractorRationale": "`ListBox`es hold thousands of items without turning off monitors or deleting forms, but triggering thousands of individual repaints inside a loop causes severe UI flicker/lag (`BeginUpdate`/`EndUpdate` avoids this).",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14765,7 +15113,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_350",
@@ -14799,7 +15148,7 @@
       "ans": 1,
       "exp": "Visible history in a ListBox offloads cognitive load from human short-term memory into the interface display.",
       "explanation": "Visible history in a ListBox offloads cognitive load from human short-term memory into the interface display.",
-      "distractorRationale": "",
+      "distractorRationale": "Hiding scanned items, showing only one number, or forcing barcode memorization *increases* memory burdenâ€”persisting the cart in a `ListBox` satisfies Rule 8.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14807,7 +15156,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su-exam_351",
@@ -14839,16 +15189,17 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "RadioButtons grouped inside a common container (such as a GroupBox) exhibit mutually exclusive behavior: selecting one automatically unchecks all other radio buttons in that group (Visual C# Ch 4.10).",
-      "explanation": "RadioButtons grouped inside a common container (such as a GroupBox) exhibit mutually exclusive behavior: selecting one automatically unchecks all other radio buttons in that group (Visual C# Ch 4.10).",
-      "distractorRationale": "",
+      "exp": "RadioButtons grouped inside a common container (such as a GroupBox) exhibit mutually exclusive behavior: selecting one automatically unchecks all other radio buttons in that group.",
+      "explanation": "RadioButtons grouped inside a common container (such as a GroupBox) exhibit mutually exclusive behavior: selecting one automatically unchecks all other radio buttons in that group.",
+      "distractorRationale": "Checking multiple vehicles at once describes `CheckBox`es (Option B), `RadioButton`s receive clicks anywhere on a form (Option C), and `GroupBox`es never convert buttons into labels (Option D).",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 1,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su-exam_352",
@@ -14880,9 +15231,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "NWU standard Hungarian prefix for TextBoxes is 'txt' (txtDays). As the primary initial input field, TabIndex should be set to 0 so the cursor begins in this field on launch (Visual C# Ch 2 & Ch 3).",
-      "explanation": "NWU standard Hungarian prefix for TextBoxes is 'txt' (txtDays). As the primary initial input field, TabIndex should be set to 0 so the cursor begins in this field on launch (Visual C# Ch 2 & Ch 3).",
-      "distractorRationale": "",
+      "exp": "NWU standard Hungarian prefix for TextBoxes is 'txt' (txtDays). As the primary initial input field, TabIndex should be set to 0 so the cursor begins in this field on launch.",
+      "explanation": "NWU standard Hungarian prefix for TextBoxes is 'txt' (txtDays). As the primary initial input field, TabIndex should be set to 0 so the cursor begins in this field on launch.",
+      "distractorRationale": "`tbDays`, `inputDays`, and `lblDaysInput` violate the `txt` prefix for `TextBox`es, while `TabIndex: 1` or invalid `-1` fails to make `txtDays` the first (`0`) Tab stop.",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -14890,7 +15241,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 2,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.32
     },
     {
       "id": "q_su-exam_353",
@@ -14922,9 +15274,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Int.TryParse returns a boolean indicating success and populates the variable via an out parameter, completely avoiding runtime crash exceptions on non-numeric input (Visual C# Ch 4.9).",
-      "explanation": "Int.TryParse returns a boolean indicating success and populates the variable via an out parameter, completely avoiding runtime crash exceptions on non-numeric input (Visual C# Ch 4.9).",
-      "distractorRationale": "",
+      "exp": "Int.TryParse returns a boolean indicating success and populates the variable via an out parameter, completely avoiding runtime crash exceptions on non-numeric input.",
+      "explanation": "Int.TryParse returns a boolean indicating success and populates the variable via an out parameter, completely avoiding runtime crash exceptions on non-numeric input.",
+      "distractorRationale": "`int.Parse` throws `FormatException` on invalid text, `(int)txtDays.Text` fails compilation (`string` cannot cast to `int`), and `Convert.ToInt32(txtDays)` passes the `TextBox` object instead of `.Text`.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -14932,7 +15284,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 3,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.34
     },
     {
       "id": "q_su-exam_354",
@@ -14966,7 +15319,7 @@
       "ans": 3,
       "exp": "At an SUV daily rate of R650.00/day, the base charge for 4 days is 4 * R650.00 = R2,600.00.",
       "explanation": "At an SUV daily rate of R650.00/day, the base charge for 4 days is 4 * R650.00 = R2,600.00.",
-      "distractorRationale": "",
+      "distractorRationale": "At `R650.00/day` for `4` days, `4 * 650m = R 2,600.00`; `R 1,800.00` uses Sedan (`4 * 450`), `R 3,000.00` uses Bakkie (`4 * 750`), and `R 2,400.00` miscalculates `4 * 600`.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -14974,7 +15327,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 4,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.35
     },
     {
       "id": "q_su-exam_355",
@@ -15006,9 +15360,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "With an included allowance of 150 km per day, freeKms is calculated as days * 150m (Visual C# Ch 3.5).",
-      "explanation": "With an included allowance of 150 km per day, freeKms is calculated as days * 150m (Visual C# Ch 3.5).",
-      "distractorRationale": "",
+      "exp": "With an included allowance of 150 km per day, freeKms is calculated as days * 150m.",
+      "explanation": "With an included allowance of 150 km per day, freeKms is calculated as days * 150m.",
+      "distractorRationale": "`days * 100m` uses the wrong allowance (`100` instead of `150`), `150m` ignores multi-day rentals, and `days + 150m` adds days to kilometres instead of multiplying.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -15016,7 +15370,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 5,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su-exam_356",
@@ -15050,7 +15405,7 @@
       "ans": 1,
       "exp": "Excess kilometers = 500 km - 300 km = 200 km. At R3.50/km, the excess surcharge is 200 * R3.50 = R700.00.",
       "explanation": "Excess kilometers = 500 km - 300 km = 200 km. At R3.50/km, the excess surcharge is 200 * R3.50 = R700.00.",
-      "distractorRationale": "",
+      "distractorRationale": "Free allowance on 2 days is `2 * 150 = 300 km`, leaving `500 - 300 = 200` excess km `* R3.50 = R 700.00` (`R 1,750` bills all 500 km; `R 1,050` bills the 300 free km; `R 350` bills only 100 km).",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -15058,7 +15413,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 6,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su-exam_357",
@@ -15090,16 +15446,17 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "CheckBox controls provide a boolean Checked property. At R80.00 per day: if (chkGps.Checked) total += days * 80m; (Visual C# Ch 4.10).",
-      "explanation": "CheckBox controls provide a boolean Checked property. At R80.00 per day: if (chkGps.Checked) total += days * 80m; (Visual C# Ch 4.10).",
-      "distractorRationale": "",
+      "exp": "CheckBox controls provide a boolean Checked property. At R80.00 per day: if (chkGps.Checked) total += days * 80m;.",
+      "explanation": "CheckBox controls provide a boolean Checked property. At R80.00 per day: if (chkGps.Checked) total += days * 80m;.",
+      "distractorRationale": "`CheckBox` has no `.Selected` or `.Value` property, `chkGps.Text` holds the caption rather than `\"true\"`, and Option B also forgets to multiply `R80` by `days`.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 7,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su-exam_358",
@@ -15131,9 +15488,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "The \"C\" or \"c\" format specifier formats a numeric value as currency including currency symbols (R), thousands separators, and two decimal places (Visual C# Ch 3.5).",
-      "explanation": "The \"C\" or \"c\" format specifier formats a numeric value as currency including currency symbols (R), thousands separators, and two decimal places (Visual C# Ch 3.5).",
-      "distractorRationale": "",
+      "exp": "The \"C\" or \"c\" format specifier formats a numeric value as currency including currency symbols (R), thousands separators, and two decimal places.",
+      "explanation": "The \"C\" or \"c\" format specifier formats a numeric value as currency including currency symbols (R), thousands separators, and two decimal places.",
+      "distractorRationale": "`\"F2\"` omits both `R` and thousands separators, `\"N\"` omits the `R` currency symbol, and parameterless `ToString()` leaves raw unpadded decimals.",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -15141,7 +15498,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 8,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su-exam_359",
@@ -15173,9 +15531,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard Windows Forms event handler signatures accept (object sender, EventArgs e) and return void (Visual C# Ch 2.4).",
-      "explanation": "Standard Windows Forms event handler signatures accept (object sender, EventArgs e) and return void (Visual C# Ch 2.4).",
-      "distractorRationale": "",
+      "exp": "Standard Windows Forms event handler signatures accept (object sender, EventArgs e) and return void.",
+      "explanation": "Standard Windows Forms event handler signatures accept (object sender, EventArgs e) and return void.",
+      "distractorRationale": "Standard WinForms `Click` handlers are `private` instance methods (not `static`) taking `(object sender, EventArgs e)`â€”omitting `sender` or both parameters breaks `EventHandler` delegate binding.",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -15183,7 +15541,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 9,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_360",
@@ -15215,9 +15574,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Proper form reset clears all input TextBoxes, resets the default radio button (Sedan), unchecks optional CheckBoxes, clears output labels and ListBoxes, and restores focus to txtDays (Visual C# Ch 2 & Ch 3).",
-      "explanation": "Proper form reset clears all input TextBoxes, resets the default radio button (Sedan), unchecks optional CheckBoxes, clears output labels and ListBoxes, and restores focus to txtDays (Visual C# Ch 2 & Ch 3).",
-      "distractorRationale": "",
+      "exp": "Proper form reset clears all input TextBoxes, resets the default radio button (Sedan), unchecks optional CheckBoxes, clears output labels and ListBoxes, and restores focus to txtDays.",
+      "explanation": "Proper form reset clears all input TextBoxes, resets the default radio button (Sedan), unchecks optional CheckBoxes, clears output labels and ListBoxes, and restores focus to txtDays.",
+      "distractorRationale": "`this.Close()`/`Application.Restart()` exits the form, `Form.Reset()` does not exist, and leaving all vehicle `RadioButton`s unchecked violates the default `rdoSedan.Checked = true` state.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -15225,7 +15584,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 10,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su-exam_361",
@@ -15257,9 +15617,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "'this.Close();' closes the current form instance and releases its Windows resources (Visual C# Ch 2.4).",
-      "explanation": "'this.Close();' closes the current form instance and releases its Windows resources (Visual C# Ch 2.4).",
-      "distractorRationale": "",
+      "exp": "'this.Close();' closes the current form instance and releases its Windows resources.",
+      "explanation": "'this.Close();' closes the current form instance and releases its Windows resources.",
+      "distractorRationale": "`Application.Halt()`, `Close.This()`, and `Form.Exit()` do not exist in `System.Windows.Forms`; `this.Close();` closes the current form.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -15267,7 +15627,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 11,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_362",
@@ -15299,9 +15660,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "Validating days <= 0 with an informative MessageBox, setting focus, selecting all text, and executing 'return;' prevents invalid calculations from executing (Visual C# Ch 4.9).",
-      "explanation": "Validating days <= 0 with an informative MessageBox, setting focus, selecting all text, and executing 'return;' prevents invalid calculations from executing (Visual C# Ch 4.9).",
-      "distractorRationale": "",
+      "exp": "Validating days <= 0 with an informative MessageBox, setting focus, selecting all text, and executing 'return;' prevents invalid calculations from executing.",
+      "explanation": "Validating days <= 0 with an informative MessageBox, setting focus, selecting all text, and executing 'return;' prevents invalid calculations from executing.",
+      "distractorRationale": "`while (days <= 0) days++;` silently fabricates `1` day instead of alerting the agent, `days == 0` misses negative numbers, and intentional `/ 0` exception abuse is an anti-pattern.",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -15309,7 +15670,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 12,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.85
     },
     {
       "id": "q_su-exam_363",
@@ -15341,9 +15703,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "TryParse returns false when the string is empty or contains non-numeric text, safely preventing unhandled runtime conversion crashes (Visual C# Ch 4.9).",
-      "explanation": "TryParse returns false when the string is empty or contains non-numeric text, safely preventing unhandled runtime conversion crashes (Visual C# Ch 4.9).",
-      "distractorRationale": "",
+      "exp": "TryParse returns false when the string is empty or contains non-numeric text, safely preventing unhandled runtime conversion crashes.",
+      "explanation": "TryParse returns false when the string is empty or contains non-numeric text, safely preventing unhandled runtime conversion crashes.",
+      "distractorRationale": "`decimal.TryParse(\"\", out kms)` returns `bool` `false` (never `-1` or `true`) and sets `kms = 0m` without throwing any exception.",
       "definitions": [
         "def_tryparse",
         "def_parse_methods",
@@ -15351,7 +15713,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 13,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.85
     },
     {
       "id": "q_su-exam_364",
@@ -15383,9 +15746,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Named constants (const) replace magic numbers with descriptive identifiers, enhancing maintainability and readability (Visual C# Ch 3.6).",
-      "explanation": "Named constants (const) replace magic numbers with descriptive identifiers, enhancing maintainability and readability (Visual C# Ch 3.6).",
-      "distractorRationale": "",
+      "exp": "Named constants (const) replace magic numbers with descriptive identifiers, enhancing maintainability and readability.",
+      "explanation": "Named constants (const) replace magic numbers with descriptive identifiers, enhancing maintainability and readability.",
+      "distractorRationale": "C# allows numeric literals, `const` values are immutable at runtime (Option C is false), and `private const` stays encapsulated inside `Form1`â€”`const` eliminates error-prone magic numbers.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -15393,7 +15756,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 14,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.86
     },
     {
       "id": "q_su-exam_365",
@@ -15425,9 +15789,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "ListBox items are added via the collection method 'lstReceipt.Items.Add(...)'. The .Text property only refers to the currently selected item (Visual C# Ch 4.11).",
-      "explanation": "ListBox items are added via the collection method 'lstReceipt.Items.Add(...)'. The .Text property only refers to the currently selected item (Visual C# Ch 4.11).",
-      "distractorRationale": "",
+      "exp": "ListBox items are added via the collection method 'lstReceipt.Items.Add(...)'. The .Text property only refers to the currently selected item.",
+      "explanation": "ListBox items are added via the collection method 'lstReceipt.Items.Add(...)'. The .Text property only refers to the currently selected item.",
+      "distractorRationale": "Assigning to `lstReceipt.Text` does not append list rows, `lstReceipt.Items` is a read-only collection property (cannot assign `=`), and `lstReceipt.Add` does not exist.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -15435,7 +15799,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 15,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su-exam_366",
@@ -15467,9 +15832,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "Shneiderman's Rule 6 states that actions should be reversible to relieve user anxiety and prevent accidental work loss upon destructive operations like exiting (Shneiderman Ch 2).",
-      "explanation": "Shneiderman's Rule 6 states that actions should be reversible to relieve user anxiety and prevent accidental work loss upon destructive operations like exiting (Shneiderman Ch 2).",
-      "distractorRationale": "",
+      "exp": "Shneiderman's Rule 6 states that actions should be reversible to relieve user anxiety and prevent accidental work loss upon destructive operations like exiting.",
+      "explanation": "Shneiderman's Rule 6 states that actions should be reversible to relieve user anxiety and prevent accidental work loss upon destructive operations like exiting.",
+      "distractorRationale": "Confirmation before exiting prevents accidental loss and lets the agent back out (`No`), directly serving **Reversal of Actions (Rule 6)** and **Error Prevention (Rule 5)** rather than memory load.",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -15477,7 +15842,8 @@
       ],
       "groupId": "exam_2024_dec",
       "groupOrder": 16,
-      "examPaperId": "exam_2024_dec"
+      "examPaperId": "exam_2024_dec",
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su-exam_367",
@@ -15509,9 +15875,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard NWU Hungarian naming conventions require 'txt' prefix followed by PascalCase descriptor: txtCredits (Visual C# Ch 2).",
-      "explanation": "Standard NWU Hungarian naming conventions require 'txt' prefix followed by PascalCase descriptor: txtCredits (Visual C# Ch 2).",
-      "distractorRationale": "",
+      "exp": "Standard NWU Hungarian naming conventions require 'txt' prefix followed by PascalCase descriptor: txtCredits.",
+      "explanation": "Standard NWU Hungarian naming conventions require 'txt' prefix followed by PascalCase descriptor: txtCredits.",
+      "distractorRationale": "`tbCredits`, `crInput`, and `numCredits` violate CMPG122 Hungarian naming, which requires `txt` for `TextBox` controls (`txtCredits`).",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -15519,7 +15885,8 @@
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 1,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su-exam_368",
@@ -15553,7 +15920,7 @@
       "ans": 1,
       "exp": "At R850.00 per credit for Natural & Agricultural Sciences, 12 credits * R850.00 = R10,200.00.",
       "explanation": "At R850.00 per credit for Natural & Agricultural Sciences, 12 credits * R850.00 = R10,200.00.",
-      "distractorRationale": "",
+      "distractorRationale": "`12 credits * R850.00/credit = R 10,200.00` base tuition; `R 9,000` uses Commerce (`12 * 750`), `R 7,800` uses Humanities (`12 * 650`), and `R 12,700` prematurely adds the `R 2,500` lab levy.",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -15561,7 +15928,8 @@
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 2,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su-exam_369",
@@ -15593,16 +15961,17 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "RadioButtons expose the boolean Checked property, so an if-else-if chain testing rdoScience.Checked and rdoCommerce.Checked assigns the corresponding faculty levy (Visual C# Ch 4.10).",
-      "explanation": "RadioButtons expose the boolean Checked property, so an if-else-if chain testing rdoScience.Checked and rdoCommerce.Checked assigns the corresponding faculty levy (Visual C# Ch 4.10).",
-      "distractorRationale": "",
+      "exp": "RadioButtons expose the boolean Checked property, so an if-else-if chain testing rdoScience.Checked and rdoCommerce.Checked assigns the corresponding faculty levy.",
+      "explanation": "RadioButtons expose the boolean Checked property, so an if-else-if chain testing rdoScience.Checked and rdoCommerce.Checked assigns the corresponding faculty levy.",
+      "distractorRationale": "`RadioButton` has no `.Selected` property, cannot be compared directly to `true` (`rdoScience == true` fails compilation), and `.Text` stores the faculty name rather than `\"Checked\"`.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 3,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.33
     },
     {
       "id": "q_su-exam_370",
@@ -15634,9 +16003,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "A 25% discount deducts (tuition * 0.25m) from the tuition: netTuition = tuition - (tuition * 0.25m) or tuition * 0.75m (Visual C# Ch 3.4).",
-      "explanation": "A 25% discount deducts (tuition * 0.25m) from the tuition: netTuition = tuition - (tuition * 0.25m) or tuition * 0.75m (Visual C# Ch 3.4).",
-      "distractorRationale": "",
+      "exp": "A 25% discount deducts (tuition * 0.25m) from the tuition: netTuition = tuition - (tuition * 0.25m) or tuition * 0.75m.",
+      "explanation": "A 25% discount deducts (tuition * 0.25m) from the tuition: netTuition = tuition - (tuition * 0.25m) or tuition * 0.75m.",
+      "distractorRationale": "`tuition - 25m` subtracts only R25 instead of 25%, `tuition / 0.25m` quadruples tuition to R48,000, and `tuition * 25m` multiplies by 25Ã— instead of deducting `tuition * 0.25m`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -15644,7 +16013,8 @@
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 4,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.35
     },
     {
       "id": "q_su-exam_371",
@@ -15676,9 +16046,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "A 4-month semester payment plan divides the balance into 4 monthly installments for Months 1 through 4 (Visual C# Ch 5).",
-      "explanation": "A 4-month semester payment plan divides the balance into 4 monthly installments for Months 1 through 4 (Visual C# Ch 5).",
-      "distractorRationale": "",
+      "exp": "A 4-month semester payment plan divides the balance into 4 monthly installments for Months 1 through 4.",
+      "explanation": "A 4-month semester payment plan divides the balance into 4 monthly installments for Months 1 through 4.",
+      "distractorRationale": "A 4-month semester schedule (`Months 1..4`) appends exactly `4` itemsâ€”not a 12-month annual schedule, 1 lump sum, or 2 semester halves.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -15686,7 +16056,8 @@
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 5,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su-exam_372",
@@ -15718,9 +16089,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "A for loop initializing at month = 1 with condition month <= 4 and increment month++ iterates exactly 4 times for months 1, 2, 3, 4 (Visual C# Ch 5.5).",
-      "explanation": "A for loop initializing at month = 1 with condition month <= 4 and increment month++ iterates exactly 4 times for months 1, 2, 3, 4 (Visual C# Ch 5.5).",
-      "distractorRationale": "",
+      "exp": "A for loop initializing at month = 1 with condition month <= 4 and increment month++ iterates exactly 4 times for months 1, 2, 3, 4.",
+      "explanation": "A for loop initializing at month = 1 with condition month <= 4 and increment month++ iterates exactly 4 times for months 1, 2, 3, 4.",
+      "distractorRationale": "`while (true)` loops forever, `do { month++; } while (month < 4)` needs prior initialization and miscounts, and `0..2` (`month < 3`) runs only `3` times with `0`-based labels.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -15728,7 +16099,8 @@
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 6,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_373",
@@ -15760,9 +16132,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Items.Add() is the collection method for inserting entries into a ListBox. String interpolation with :C formats the amount as South African currency (Visual C# Ch 4.11).",
-      "explanation": "Items.Add() is the collection method for inserting entries into a ListBox. String interpolation with :C formats the amount as South African currency (Visual C# Ch 4.11).",
-      "distractorRationale": "",
+      "exp": "Items.Add() is the collection method for inserting entries into a ListBox. String interpolation with :C formats the amount as South African currency.",
+      "explanation": "Items.Add() is the collection method for inserting entries into a ListBox. String interpolation with :C formats the amount as South African currency.",
+      "distractorRationale": "`lstInstallments.Add` does not exist, `lstInstallments.Items` cannot be assigned a `string`, and `lstInstallments.Text = ...` does not add rows to the `ListBox`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -15770,7 +16142,8 @@
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 7,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su-exam_374",
@@ -15802,9 +16175,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "The condition credits < 1 || credits > 25 catches any value outside the valid range [1, 25], displays an error message, restores focus, and halts (Visual C# Ch 4.9).",
-      "explanation": "The condition credits < 1 || credits > 25 catches any value outside the valid range [1, 25], displays an error message, restores focus, and halts (Visual C# Ch 4.9).",
-      "distractorRationale": "",
+      "exp": "The condition credits < 1 || credits > 25 catches any value outside the valid range [1, 25], displays an error message, restores focus, and halts.",
+      "explanation": "The condition credits < 1 || credits > 25 catches any value outside the valid range [1, 25], displays an error message, restores focus, and halts.",
+      "distractorRationale": "`credits > 25` misses `0` and negative credits, `credits == 0 || credits == 25` wrongly rejects valid `25` while allowing `-5` and `30`, and `while` mutates input silently.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -15812,7 +16185,8 @@
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 8,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.59
     },
     {
       "id": "q_su-exam_375",
@@ -15844,9 +16218,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "The Focus() method moves keyboard focus to the specified control (Visual C# Ch 3.8).",
-      "explanation": "The Focus() method moves keyboard focus to the specified control (Visual C# Ch 3.8).",
-      "distractorRationale": "",
+      "exp": "The Focus() method moves keyboard focus to the specified control.",
+      "explanation": "The Focus() method moves keyboard focus to the specified control.",
+      "distractorRationale": "`Clear()` erases text without focusing, `BringToFront()` changes Z-order layering, and standard CMPG122 focus restoration calls `txtCredits.Focus()`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -15854,7 +16228,8 @@
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 9,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.59
     },
     {
       "id": "q_su-exam_376",
@@ -15886,9 +16261,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "SelectAll() highlights all text in the TextBox so typing immediately replaces the contents (Visual C# Ch 3.8).",
-      "explanation": "SelectAll() highlights all text in the TextBox so typing immediately replaces the contents (Visual C# Ch 3.8).",
-      "distractorRationale": "",
+      "exp": "SelectAll() highlights all text in the TextBox so typing immediately replaces the contents.",
+      "explanation": "SelectAll() highlights all text in the TextBox so typing immediately replaces the contents.",
+      "distractorRationale": "`ResetText()` deletes the text, `ClearUndo()` clears the undo buffer, and `Refresh()` repaints the controlâ€”`SelectAll()` highlights the invalid characters for immediate overwrite.",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -15896,7 +16271,8 @@
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 10,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_377",
@@ -15928,9 +16304,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "FormatException occurs when the format of an argument is invalid and cannot be converted to the target numeric type (Visual C# Ch 3.7).",
-      "explanation": "FormatException occurs when the format of an argument is invalid and cannot be converted to the target numeric type (Visual C# Ch 3.7).",
-      "distractorRationale": "",
+      "exp": "FormatException occurs when the format of an argument is invalid and cannot be converted to the target numeric type.",
+      "explanation": "FormatException occurs when the format of an argument is invalid and cannot be converted to the target numeric type.",
+      "distractorRationale": "`\"twelve\"` is non-digit text, so `int.Parse` throws `FormatException` (`OverflowException` is for huge digits like `\"99999999999\"`, not alphabetic words).",
       "definitions": [
         "def_tryparse",
         "def_parse_methods",
@@ -15938,7 +16314,8 @@
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 11,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.59
     },
     {
       "id": "q_su-exam_378",
@@ -15970,16 +16347,17 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "The Checked property is of type bool and returns true if ticked, false otherwise (Visual C# Ch 4.10).",
-      "explanation": "The Checked property is of type bool and returns true if ticked, false otherwise (Visual C# Ch 4.10).",
-      "distractorRationale": "",
+      "exp": "The Checked property is of type bool and returns true if ticked, false otherwise.",
+      "explanation": "The Checked property is of type bool and returns true if ticked, false otherwise.",
+      "distractorRationale": "`CheckBox` exposes `bool` `.Checked`; `.Selected`, `.Value`, and `.State` do not exist on `System.Windows.Forms.CheckBox`.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 12,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su-exam_379",
@@ -16011,16 +16389,17 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Setting Enabled = chkBursary.Checked enables the input when checked and disables it when unchecked, preventing invalid bursary entries (Visual C# Ch 4.10).",
-      "explanation": "Setting Enabled = chkBursary.Checked enables the input when checked and disables it when unchecked, preventing invalid bursary entries (Visual C# Ch 4.10).",
-      "distractorRationale": "",
+      "exp": "Setting Enabled = chkBursary.Checked enables the input when checked and disables it when unchecked, preventing invalid bursary entries.",
+      "explanation": "Setting Enabled = chkBursary.Checked enables the input when checked and disables it when unchecked, preventing invalid bursary entries.",
+      "distractorRationale": "`Visible = false` hides the box permanently even when checked, `ReadOnly = chkBursary.Checked` locks it *when checked* (backwards!), and `Focus()` alone leaves it disabled.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 13,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su-exam_380",
@@ -16052,9 +16431,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "\"F2\" formats as fixed-point with exactly 2 decimal places without currency symbols (Visual C# Ch 3.5).",
-      "explanation": "\"F2\" formats as fixed-point with exactly 2 decimal places without currency symbols (Visual C# Ch 3.5).",
-      "distractorRationale": "",
+      "exp": "\"F2\" formats as fixed-point with exactly 2 decimal places without currency symbols.",
+      "explanation": "\"F2\" formats as fixed-point with exactly 2 decimal places without currency symbols.",
+      "distractorRationale": "`\"C2\"` adds a currency symbol, `\"D2\"` is valid only on integral types (throws `FormatException` on `decimal`!), and `\"P2\"` multiplies by 100 and adds `%`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -16062,7 +16441,8 @@
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 14,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.86
     },
     {
       "id": "q_su-exam_381",
@@ -16094,9 +16474,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Calculations requiring user-initiated form processing belong in the calculate button click event handler (Visual C# Ch 2.4).",
-      "explanation": "Calculations requiring user-initiated form processing belong in the calculate button click event handler (Visual C# Ch 2.4).",
-      "distractorRationale": "",
+      "exp": "Calculations requiring user-initiated form processing belong in the calculate button click event handler.",
+      "explanation": "Calculations requiring user-initiated form processing belong in the calculate button click event handler.",
+      "distractorRationale": "`Form1_Load` runs before the student types anything, `FormClosing` runs on exit, and running modal `MessageBox` errors on every keystroke inside `TextChanged` traps the user.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -16104,7 +16484,8 @@
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 15,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.86
     },
     {
       "id": "q_su-exam_382",
@@ -16136,16 +16517,17 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "Rule 3 requires systems to provide clear, informative feedback for every user action, ensuring transparency and confidence in calculation results (Shneiderman Ch 2).",
-      "explanation": "Rule 3 requires systems to provide clear, informative feedback for every user action, ensuring transparency and confidence in calculation results (Shneiderman Ch 2).",
-      "distractorRationale": "",
+      "exp": "Rule 3 requires systems to provide clear, informative feedback for every user action, ensuring transparency and confidence in calculation results.",
+      "explanation": "Rule 3 requires systems to provide clear, informative feedback for every user action, ensuring transparency and confidence in calculation results.",
+      "distractorRationale": "Presenting clear, itemized tuition/levy/bursary outputs immediately after clicking Calculate directly exemplifies **Rule 3 (Offer informative feedback)**.",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
       ],
       "groupId": "exam_2023_dec",
       "groupOrder": 16,
-      "examPaperId": "exam_2023_dec"
+      "examPaperId": "exam_2023_dec",
+      "estimatedDifficulty": 0.86
     },
     {
       "id": "q_su-exam_383",
@@ -16177,16 +16559,17 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "NWU standard Hungarian prefix for RadioButtons is 'rdo' or 'rad' (Visual C# Ch 4.10).",
-      "explanation": "NWU standard Hungarian prefix for RadioButtons is 'rdo' or 'rad' (Visual C# Ch 4.10).",
-      "distractorRationale": "",
+      "exp": "NWU standard Hungarian prefix for RadioButtons is 'rdo' or 'rad'.",
+      "explanation": "NWU standard Hungarian prefix for RadioButtons is 'rdo' or 'rad'.",
+      "distractorRationale": "`btn` is for `Button`, `chk` is for `CheckBox`, and `opt_standard_tier` uses non-standard snake_caseâ€”`RadioButton`s use `rdo` or `rad` (`rdoStandard`).",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 1,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su-exam_384",
@@ -16220,7 +16603,7 @@
       "ans": 1,
       "exp": "VIP membership is R600.00/month (with free private locker) and Personal Trainer coaching is R250.00/month. Subtotal = 600 + 250 = R850.00.",
       "explanation": "VIP membership is R600.00/month (with free private locker) and Personal Trainer coaching is R250.00/month. Subtotal = 600 + 250 = R850.00.",
-      "distractorRationale": "",
+      "distractorRationale": "VIP base is `R600` + Trainer `R250` + VIP Locker `R0` (waived for VIP!) = `R 850.00` (`R 950` wrongly charges the R100 locker fee to VIP; `R 600` omits Trainer; `R 700` adds Locker instead of Trainer).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -16228,7 +16611,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 2,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su-exam_385",
@@ -16260,9 +16644,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "15% tax is calculated by multiplying the subtotal by 0.15m (Visual C# Ch 3.4).",
-      "explanation": "15% tax is calculated by multiplying the subtotal by 0.15m (Visual C# Ch 3.4).",
-      "distractorRationale": "",
+      "exp": "15% tax is calculated by multiplying the subtotal by 0.15m.",
+      "explanation": "15% tax is calculated by multiplying the subtotal by 0.15m.",
+      "distractorRationale": "`subtotal * 15` multiplies by 1,500%, `subtotal / 0.15m` divides by 0.15 (`6.67Ã—`), and `subtotal + 0.15m` adds only 15 cents instead of 15%.",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -16270,7 +16654,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 3,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.35
     },
     {
       "id": "q_su-exam_386",
@@ -16304,7 +16689,7 @@
       "ans": 3,
       "exp": "VAT = R850.00 * 0.15 = R127.50. Monthly total = R850.00 + R127.50 = R977.50.",
       "explanation": "VAT = R850.00 * 0.15 = R127.50. Monthly total = R850.00 + R127.50 = R977.50.",
-      "distractorRationale": "",
+      "distractorRationale": "`R850.00 * 0.15 = R127.50` VAT (`Option B` is VAT alone; `Option A` forgets VAT), so `R850.00 + R127.50 = R 977.50` (`R 1,000` rounds arbitrarily).",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -16312,7 +16697,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 4,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.33
     },
     {
       "id": "q_su-exam_387",
@@ -16344,9 +16730,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "A count-controlled loop running from m = 1 to 12 computes cumulative cost (m * monthlyTotal) and adds it to lstDebitOrders (Visual C# Ch 5.5).",
-      "explanation": "A count-controlled loop running from m = 1 to 12 computes cumulative cost (m * monthlyTotal) and adds it to lstDebitOrders (Visual C# Ch 5.5).",
-      "distractorRationale": "",
+      "exp": "A count-controlled loop running from m = 1 to 12 computes cumulative cost (m * monthlyTotal) and adds it to lstDebitOrders.",
+      "explanation": "A count-controlled loop running from m = 1 to 12 computes cumulative cost (m * monthlyTotal) and adds it to lstDebitOrders.",
+      "distractorRationale": "Option B never increments `m` (infinite loop), Option C adds literal `12` once, and Option D (`m = 1; m < 12; m--`) decrements into negative numbers infinitely.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -16354,7 +16740,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 5,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_388",
@@ -16386,16 +16773,17 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Validating that at least one radio button is checked prevents unhandled null reference or zero-rate calculation errors (Visual C# Ch 4.10).",
-      "explanation": "Validating that at least one radio button is checked prevents unhandled null reference or zero-rate calculation errors (Visual C# Ch 4.10).",
-      "distractorRationale": "",
+      "exp": "Validating that at least one radio button is checked prevents unhandled null reference or zero-rate calculation errors.",
+      "explanation": "Validating that at least one radio button is checked prevents unhandled null reference or zero-rate calculation errors.",
+      "distractorRationale": "Silently charging VIP, computing with invalid negative rates, or abruptly closing the app violates defensive validation and user locus of control.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 6,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.59
     },
     {
       "id": "q_su-exam_389",
@@ -16427,16 +16815,17 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Logical AND with negation (!rdoStandard.Checked && !rdoPremium.Checked && !rdoVip.Checked) evaluates to true when all radio buttons in the group are unchecked (Visual C# Ch 4.6).",
-      "explanation": "Logical AND with negation (!rdoStandard.Checked && !rdoPremium.Checked && !rdoVip.Checked) evaluates to true when all radio buttons in the group are unchecked (Visual C# Ch 4.6).",
-      "distractorRationale": "",
+      "exp": "Logical AND with negation (!rdoStandard.Checked && !rdoPremium.Checked && !rdoVip.Checked) evaluates to true when all radio buttons in the group are unchecked.",
+      "explanation": "Logical AND with negation (!rdoStandard.Checked && !rdoPremium.Checked && !rdoVip.Checked) evaluates to true when all radio buttons in the group are unchecked.",
+      "distractorRationale": "Option A checks if all three are checked *simultaneously* (impossible), `grpTiers.Text` is the frame caption `\"Membership Tier\"`, and initialized `RadioButton` controls are never `null`.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 7,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_390",
@@ -16468,9 +16857,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "LstDebitOrders.Items.Clear() removes all existing items from the ListBox collection (Visual C# Ch 4.11).",
-      "explanation": "LstDebitOrders.Items.Clear() removes all existing items from the ListBox collection (Visual C# Ch 4.11).",
-      "distractorRationale": "",
+      "exp": "LstDebitOrders.Items.Clear() removes all existing items from the ListBox collection.",
+      "explanation": "LstDebitOrders.Items.Clear() removes all existing items from the ListBox collection.",
+      "distractorRationale": "`lstDebitOrders.Clear()` and `Items.Remove()` (with 0 args) do not exist, while `ResetText()` does not empty `ListBox.Items`â€”`lstDebitOrders.Items.Clear()` is required.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -16478,7 +16867,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 8,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su-exam_391",
@@ -16510,9 +16900,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Decimal provides 128-bit exact representation for base-10 financial amounts, avoiding floating-point rounding errors (Visual C# Ch 3.2).",
-      "explanation": "Decimal provides 128-bit exact representation for base-10 financial amounts, avoiding floating-point rounding errors (Visual C# Ch 3.2).",
-      "distractorRationale": "",
+      "exp": "Decimal provides 128-bit exact representation for base-10 financial amounts, avoiding floating-point rounding errors.",
+      "explanation": "Decimal provides 128-bit exact representation for base-10 financial amounts, avoiding floating-point rounding errors.",
+      "distractorRationale": "`double` displays in `Label`s and multiplies freely, and `decimal` uses 16 bytes (*more* than `int`'s 4 bytes)â€”`decimal` is required to prevent binary floating-point rounding drift.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -16520,7 +16910,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 9,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_392",
@@ -16552,9 +16943,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "\"P1\" multiplies the value by 100, appends the % symbol, and displays 1 decimal digit: \"15.0%\" (Visual C# Ch 3.5).",
-      "explanation": "\"P1\" multiplies the value by 100, appends the % symbol, and displays 1 decimal digit: \"15.0%\" (Visual C# Ch 3.5).",
-      "distractorRationale": "",
+      "exp": "\"P1\" multiplies the value by 100, appends the % symbol, and displays 1 decimal digit: \"15.0%\".",
+      "explanation": "\"P1\" multiplies the value by 100, appends the % symbol, and displays 1 decimal digit: \"15.0%\".",
+      "distractorRationale": "`\"C1\"` formats `R 0.2` as currency, while `\"F1\"` and `\"N1\"` output `\"0.2\"` without multiplying by 100 or appending `%` (`\"P1\"` produces `\"15.0%\"`).",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -16562,7 +16953,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 10,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_393",
@@ -16594,9 +16986,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "BackColor sets the background color of the form or control (Visual C# Ch 3.8).",
-      "explanation": "BackColor sets the background color of the form or control (Visual C# Ch 3.8).",
-      "distractorRationale": "",
+      "exp": "BackColor sets the background color of the form or control.",
+      "explanation": "BackColor sets the background color of the form or control.",
+      "distractorRationale": "`ForeColor` sets default text colour, while `Background` and `Color` do not exist on `System.Windows.Forms.Form` (`BackColor` sets window surface colour).",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -16604,7 +16996,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 11,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_394",
@@ -16636,9 +17029,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "ForeColor determines the text/font color displayed in Windows Forms controls (Visual C# Ch 3.8).",
-      "explanation": "ForeColor determines the text/font color displayed in Windows Forms controls (Visual C# Ch 3.8).",
-      "distractorRationale": "",
+      "exp": "ForeColor determines the text/font color displayed in Windows Forms controls.",
+      "explanation": "ForeColor determines the text/font color displayed in Windows Forms controls.",
+      "distractorRationale": "`TextColor`, `FontColor`, and `PaintColor` do not exist on `Label`; text colour is controlled by `ForeColor`.",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -16646,7 +17039,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 12,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su-exam_395",
@@ -16678,9 +17072,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "FixedSingle produces a fixed, single-line border that cannot be resized by dragging (Visual C# Ch 2.3).",
-      "explanation": "FixedSingle produces a fixed, single-line border that cannot be resized by dragging (Visual C# Ch 2.3).",
-      "distractorRationale": "",
+      "exp": "FixedSingle produces a fixed, single-line border that cannot be resized by dragging.",
+      "explanation": "FixedSingle produces a fixed, single-line border that cannot be resized by dragging.",
+      "distractorRationale": "`FixedSingle` keeps the title bar and minimize button intact (`FormBorderStyle.None` removes the title bar) and does not center the window (`StartPosition` does)â€”it prevents border drag-resizing.",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -16688,7 +17082,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 13,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su-exam_396",
@@ -16720,9 +17115,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Setting StartPosition to CenterScreen positions the form in the center of the display when shown (Visual C# Ch 2.3).",
-      "explanation": "Setting StartPosition to CenterScreen positions the form in the center of the display when shown (Visual C# Ch 2.3).",
-      "distractorRationale": "",
+      "exp": "Setting StartPosition to CenterScreen positions the form in the center of the display when shown.",
+      "explanation": "Setting StartPosition to CenterScreen positions the form in the center of the display when shown.",
+      "distractorRationale": "`CenterToScreen` is a protected method (not a `bool` property), `Point(0, 0)` places the window at top-left, and `FormWindowState.Normal` does not center it.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -16730,7 +17125,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 14,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su-exam_397",
@@ -16762,9 +17158,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "MessageBox.Show returns a DialogResult enum. Testing result == DialogResult.Yes ensures the form closes only upon user confirmation (Visual C# Ch 4.9).",
-      "explanation": "MessageBox.Show returns a DialogResult enum. Testing result == DialogResult.Yes ensures the form closes only upon user confirmation (Visual C# Ch 4.9).",
-      "distractorRationale": "",
+      "exp": "MessageBox.Show returns a DialogResult enum. Testing result == DialogResult.Yes ensures the form closes only upon user confirmation.",
+      "explanation": "MessageBox.Show returns a DialogResult enum. Testing result == DialogResult.Yes ensures the form closes only upon user confirmation.",
+      "distractorRationale": "Option A closes unconditionally even if the user clicks `No`!, Option B compares `DialogResult` to `bool` `true` (`CS0019`), and `this.Close()` returns `void`.",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -16772,7 +17168,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 15,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su-exam_398",
@@ -16804,9 +17201,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "Rule 5 focuses on designing systems to prevent user error before illegal states or crash exceptions occur (Shneiderman Ch 2).",
-      "explanation": "Rule 5 focuses on designing systems to prevent user error before illegal states or crash exceptions occur (Shneiderman Ch 2).",
-      "distractorRationale": "",
+      "exp": "Rule 5 focuses on designing systems to prevent user error before illegal states or crash exceptions occur.",
+      "explanation": "Rule 5 focuses on designing systems to prevent user error before illegal states or crash exceptions occur.",
+      "distractorRationale": "Blocking calculation until a required `RadioButton` tier is selected proactively stops invalid state calculations (**Rule 5: Prevent errors**).",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -16814,7 +17211,8 @@
       ],
       "groupId": "exam_2022_dec",
       "groupOrder": 16,
-      "examPaperId": "exam_2022_dec"
+      "examPaperId": "exam_2022_dec",
+      "estimatedDifficulty": 0.85
     },
     {
       "id": "q_su-exam_399",
@@ -16846,9 +17244,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Standard Hungarian notation requires 'txt' prefix followed by descriptive PascalCase identifier: txtNights (Visual C# Ch 2).",
-      "explanation": "Standard Hungarian notation requires 'txt' prefix followed by descriptive PascalCase identifier: txtNights (Visual C# Ch 2).",
-      "distractorRationale": "",
+      "exp": "Standard Hungarian notation requires 'txt' prefix followed by descriptive PascalCase identifier: txtNights.",
+      "explanation": "Standard Hungarian notation requires 'txt' prefix followed by descriptive PascalCase identifier: txtNights.",
+      "distractorRationale": "`tbNights`, `nightsInput`, and `txt_stay_duration` violate camelCase Hungarian `TextBox` naming (`txtNights`).",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -16856,7 +17254,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 1,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su-exam_400",
@@ -16890,7 +17289,7 @@
       "ans": 1,
       "exp": "At R950.00 per night for a Standard Room, 3 nights * R950.00 = R2,850.00.",
       "explanation": "At R950.00 per night for a Standard Room, 3 nights * R950.00 = R2,850.00.",
-      "distractorRationale": "",
+      "distractorRationale": "`3 nights * R950.00/night = R 2,850.00`; `R 1,900` is 2 nights, `R 4,350` uses Deluxe (`3 * 1450`), and `R 3,000` rounds the rate to R1,000.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -16898,7 +17297,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 2,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su-exam_401",
@@ -16932,7 +17332,7 @@
       "ans": 2,
       "exp": "At R120.00 per guest per night, 3 nights * 2 guests * R120.00 = R720.00.",
       "explanation": "At R120.00 per guest per night, 3 nights * 2 guests * R120.00 = R720.00.",
-      "distractorRationale": "",
+      "distractorRationale": "Breakfast is billed *per guest per night*: `3 nights * 2 guests * R120m = R720.00` (`R360` forgets 2 guests; `R240` forgets 3 nights; `R120` ignores both).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -16940,7 +17340,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 3,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.33
     },
     {
       "id": "q_su-exam_402",
@@ -16972,9 +17373,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "RadioButtons in a GroupBox guarantee mutual exclusion so that selecting one room tier automatically deselects the others (Visual C# Ch 4.10).",
-      "explanation": "RadioButtons in a GroupBox guarantee mutual exclusion so that selecting one room tier automatically deselects the others (Visual C# Ch 4.10).",
-      "distractorRationale": "",
+      "exp": "RadioButtons in a GroupBox guarantee mutual exclusion so that selecting one room tier automatically deselects the others.",
+      "explanation": "RadioButtons in a GroupBox guarantee mutual exclusion so that selecting one room tier automatically deselects the others.",
+      "distractorRationale": "`CheckBox`es allow selecting multiple room types at once, a `TextBox` invites spelling errors, and `Timer` is non-visualâ€”`RadioButton`s in `grpRoomType` enforce single-tier choice.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -16982,7 +17383,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 4,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.32
     },
     {
       "id": "q_su-exam_403",
@@ -17014,9 +17416,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Nights >= 1 && nights <= 30 verifies that nights falls within the inclusive interval [1, 30] (Visual C# Ch 4.6).",
-      "explanation": "Nights >= 1 && nights <= 30 verifies that nights falls within the inclusive interval [1, 30] (Visual C# Ch 4.6).",
-      "distractorRationale": "",
+      "exp": "Nights >= 1 && nights <= 30 verifies that nights falls within the inclusive interval [1, 30].",
+      "explanation": "Nights >= 1 && nights <= 30 verifies that nights falls within the inclusive interval [1, 30].",
+      "distractorRationale": "`nights < 1 || nights > 30` tests *invalid* nights (inverted!), `nights == 1 && nights == 30` is always `false`, and `nights != 0` allows `-5` or `999` nights.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -17024,7 +17426,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 5,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su-exam_404",
@@ -17056,9 +17459,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Int.TryParse returns false on bad input rather than throwing an exception (Visual C# Ch 4.9).",
-      "explanation": "Int.TryParse returns false on bad input rather than throwing an exception (Visual C# Ch 4.9).",
-      "distractorRationale": "",
+      "exp": "Int.TryParse returns false on bad input rather than throwing an exception.",
+      "explanation": "Int.TryParse returns false on bad input rather than throwing an exception.",
+      "distractorRationale": "`int.Parse` crashes on non-digits, `(int)txtGuests.Text` does not compile, and `Convert.ToInt32(txtGuests)` passes the `TextBox` control instead of its string text.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -17066,7 +17469,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 6,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_405",
@@ -17098,16 +17502,17 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Rand.Next(min, maxExclusive) excludes the upper bound. To include 9999, the upper bound must be 10000 (Visual C# Ch 5.7).",
-      "explanation": "Rand.Next(min, maxExclusive) excludes the upper bound. To include 9999, the upper bound must be 10000 (Visual C# Ch 5.7).",
-      "distractorRationale": "",
+      "exp": "Rand.Next(min, maxExclusive) excludes the upper bound. To include 9999, the upper bound must be 10000.",
+      "explanation": "Rand.Next(min, maxExclusive) excludes the upper bound. To include 9999, the upper bound must be 10000.",
+      "distractorRationale": "`rand.Next(1000, 9999)` excludes `9999` (stopping at `9998`), `Math.Random` does not exist in C#, and `rand.Next(4)` returns only `0, 1, 2, 3`.",
       "definitions": [
         "def_random_class",
         "def_form_load"
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 7,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_406",
@@ -17139,16 +17544,17 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "Instantiating Random repeatedly in short intervals causes identical system clock seeds, generating identical sequences (Visual C# Ch 5.7).",
-      "explanation": "Instantiating Random repeatedly in short intervals causes identical system clock seeds, generating identical sequences (Visual C# Ch 5.7).",
-      "distractorRationale": "",
+      "exp": "Instantiating Random repeatedly in short intervals causes identical system clock seeds, generating identical sequences.",
+      "explanation": "Instantiating Random repeatedly in short intervals causes identical system clock seeds, generating identical sequences.",
+      "distractorRationale": "C# permits local `Random` variables and negative bounds, and local variables work fine inside methods; class-level `Random` avoids identical time-seeded values across rapid clicks.",
       "definitions": [
         "def_random_class",
         "def_form_load"
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 8,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_407",
@@ -17180,9 +17586,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "ToString(\"C\") formats numbers with local currency symbol, grouping separators, and two decimal places (Visual C# Ch 3.5).",
-      "explanation": "ToString(\"C\") formats numbers with local currency symbol, grouping separators, and two decimal places (Visual C# Ch 3.5).",
-      "distractorRationale": "",
+      "exp": "ToString(\"C\") formats numbers with local currency symbol, grouping separators, and two decimal places.",
+      "explanation": "ToString(\"C\") formats numbers with local currency symbol, grouping separators, and two decimal places.",
+      "distractorRationale": "`\"D\"` is invalid on `decimal` (throws `FormatException`), `\"F\"` omits both currency symbol and thousands separators, and `\"N\"` omits the `R` currency symbol.",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -17190,7 +17596,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 9,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su-exam_408",
@@ -17222,9 +17629,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "The collection method lstReceipt.Items.Clear() empties all items from the control (Visual C# Ch 4.11).",
-      "explanation": "The collection method lstReceipt.Items.Clear() empties all items from the control (Visual C# Ch 4.11).",
-      "distractorRationale": "",
+      "exp": "The collection method lstReceipt.Items.Clear() empties all items from the control.",
+      "explanation": "The collection method lstReceipt.Items.Clear() empties all items from the control.",
+      "distractorRationale": "`lstReceipt.Clear()`, `lstReceipt.Reset()`, and `Items.RemoveAll()` do not exist on `ListBox`â€”clearing items requires `lstReceipt.Items.Clear()`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -17232,7 +17639,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 10,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_409",
@@ -17264,9 +17672,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "When no item is selected, SelectedIndex equals -1. Testing != -1 ensures a valid item is chosen (Visual C# Ch 4.11).",
-      "explanation": "When no item is selected, SelectedIndex equals -1. Testing != -1 ensures a valid item is chosen (Visual C# Ch 4.11).",
-      "distractorRationale": "",
+      "exp": "When no item is selected, SelectedIndex equals -1. Testing != -1 ensures a valid item is chosen.",
+      "explanation": "When no item is selected, SelectedIndex equals -1. Testing != -1 ensures a valid item is chosen.",
+      "distractorRationale": "`SelectedIndex == 0` works *only* when the very first item is selected (rejecting indices `1, 2, ...`), and `Items.Count > 0` can be `true` while no item is highlighted.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -17274,7 +17682,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 11,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_410",
@@ -17306,9 +17715,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "Accessing a collection index outside [0, Count - 1] throws ArgumentOutOfRangeException (Visual C# Ch 4.11).",
-      "explanation": "Accessing a collection index outside [0, Count - 1] throws ArgumentOutOfRangeException (Visual C# Ch 4.11).",
-      "distractorRationale": "",
+      "exp": "Accessing a collection index outside [0, Count - 1] throws ArgumentOutOfRangeException.",
+      "explanation": "Accessing a collection index outside [0, Count - 1] throws ArgumentOutOfRangeException.",
+      "distractorRationale": "With `3` items, valid indices are `0, 1, 2`; requesting `Items[5]` throws `ArgumentOutOfRangeException` (not `NullReference`, `Format`, or `DivideByZero`).",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -17316,7 +17725,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 12,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su-exam_411",
@@ -17348,9 +17758,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Enabled = false disables interaction while keeping the control visible (Visual C# Ch 4.10).",
-      "explanation": "Enabled = false disables interaction while keeping the control visible (Visual C# Ch 4.10).",
-      "distractorRationale": "",
+      "exp": "Enabled = false disables interaction while keeping the control visible.",
+      "explanation": "Enabled = false disables interaction while keeping the control visible.",
+      "distractorRationale": "`Visible = false` hides the button completely, `.Active` does not exist on `Button`, and `.Locked` only locks Designer dragging at design time.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -17358,7 +17768,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 13,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.85
     },
     {
       "id": "q_su-exam_412",
@@ -17390,9 +17801,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Disabled controls are rendered with grayed-out text and border and do not respond to events (Visual C# Ch 4.10).",
-      "explanation": "Disabled controls are rendered with grayed-out text and border and do not respond to events (Visual C# Ch 4.10).",
-      "distractorRationale": "",
+      "exp": "Disabled controls are rendered with grayed-out text and border and do not respond to events.",
+      "explanation": "Disabled controls are rendered with grayed-out text and border and do not respond to events.",
+      "distractorRationale": "`Enabled = false` never makes a button invisible, flashing yellow, or zero-sizedâ€”Windows renders it dimmed/grayed-out and ignores clicks/focus.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -17400,7 +17811,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 14,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.86
     },
     {
       "id": "q_su-exam_413",
@@ -17432,9 +17844,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Disabling destructive or premature actions until prerequisites are met proactively prevents errors (Shneiderman Ch 2).",
-      "explanation": "Disabling destructive or premature actions until prerequisites are met proactively prevents errors (Shneiderman Ch 2).",
-      "distractorRationale": "",
+      "exp": "Disabling destructive or premature actions until prerequisites are met proactively prevents errors.",
+      "explanation": "Disabling destructive or premature actions until prerequisites are met proactively prevents errors.",
+      "distractorRationale": "Disabling `btnConfirm` until valid quote prerequisites pass prevents premature invalid booking submissions (**Rule 5: Prevent errors**).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -17442,7 +17854,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 15,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.85
     },
     {
       "id": "q_su-exam_414",
@@ -17474,9 +17887,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "'this.Close();' terminates the form instance safely (Visual C# Ch 2.4).",
-      "explanation": "'this.Close();' terminates the form instance safely (Visual C# Ch 2.4).",
-      "distractorRationale": "",
+      "exp": "'this.Close();' terminates the form instance safely.",
+      "explanation": "'this.Close();' terminates the form instance safely.",
+      "distractorRationale": "`Form.Exit()`, `Application.Halt()`, and `Stop.Application()` do not exist in C# WinForms; `this.Close();` closes the active form.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -17484,7 +17897,8 @@
       ],
       "groupId": "exam_2021_nov",
       "groupOrder": 16,
-      "examPaperId": "exam_2021_nov"
+      "examPaperId": "exam_2021_nov",
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su-exam_415",
@@ -17516,9 +17930,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Hungarian naming requires 'txt' prefix: txtPrice (Visual C# Ch 2).",
-      "explanation": "Hungarian naming requires 'txt' prefix: txtPrice (Visual C# Ch 2).",
-      "distractorRationale": "",
+      "exp": "Hungarian naming requires 'txt' prefix: txtPrice.",
+      "explanation": "Hungarian naming requires 'txt' prefix: txtPrice.",
+      "distractorRationale": "`tbPrice`, `priceInput`, and `txt_price_val` violate CMPG122 Hungarian `TextBox` naming (`txtPrice`).",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -17526,7 +17940,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 1,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su-exam_416",
@@ -17558,9 +17973,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Int.TryParse safely parses string to int without throwing FormatException (Visual C# Ch 4.9).",
-      "explanation": "Int.TryParse safely parses string to int without throwing FormatException (Visual C# Ch 4.9).",
-      "distractorRationale": "",
+      "exp": "Int.TryParse safely parses string to int without throwing FormatException.",
+      "explanation": "Int.TryParse safely parses string to int without throwing FormatException.",
+      "distractorRationale": "`int.Parse` throws `FormatException` on blank/letter input, `Convert.ToInt32(txtQuantity)` passes the control object, and `(int)txtQuantity.Text` fails compilation.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -17568,7 +17983,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 2,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su-exam_417",
@@ -17602,7 +18018,7 @@
       "ans": 2,
       "exp": "3 units * R150.00 = R450.00.",
       "explanation": "3 units * R150.00 = R450.00.",
-      "distractorRationale": "",
+      "distractorRationale": "At `3` units (`< 5`, `0%` volume discount) Ã— `R150.00`, subtotal is `3 * 150m = R 450.00` (`R 300` is 2 units, `R 150` is 1 unit, `R 600` is 4 units).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -17610,7 +18026,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 3,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.35
     },
     {
       "id": "q_su-exam_418",
@@ -17642,9 +18059,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "Purchasing 10 or more units qualifies for a 15% discount: if (qty >= 10) discount = subtotal * 0.15m; (Visual C# Ch 4.5).",
-      "explanation": "Purchasing 10 or more units qualifies for a 15% discount: if (qty >= 10) discount = subtotal * 0.15m; (Visual C# Ch 4.5).",
-      "distractorRationale": "",
+      "exp": "Purchasing 10 or more units qualifies for a 15% discount: if (qty >= 10) discount = subtotal * 0.15m;.",
+      "explanation": "Purchasing 10 or more units qualifies for a 15% discount: if (qty >= 10) discount = subtotal * 0.15m;.",
+      "distractorRationale": "Option A misses `10..15` and uses 10%, Option B misses `11+` and deducts flat R10, and Option C divides by 10 (10%) unconditionally without checking `qty >= 10`.",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -17652,7 +18069,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 4,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.35
     },
     {
       "id": "q_su-exam_419",
@@ -17684,9 +18102,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Explicit cast (int)(netTotal / 50m) truncates the decimal portion, returning complete R50 blocks as whole integer points (Visual C# Ch 3.3).",
-      "explanation": "Explicit cast (int)(netTotal / 50m) truncates the decimal portion, returning complete R50 blocks as whole integer points (Visual C# Ch 3.3).",
-      "distractorRationale": "",
+      "exp": "Explicit cast (int)(netTotal / 50m) truncates the decimal portion, returning complete R50 blocks as whole integer points.",
+      "explanation": "Explicit cast (int)(netTotal / 50m) truncates the decimal portion, returning complete R50 blocks as whole integer points.",
+      "distractorRationale": "`netTotal * 50` multiplies by 50 instead of dividing, `% 50` gives leftover Rand remainder (`0..49`) instead of R50 blocks, and `50` hardcodes a constant.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -17694,7 +18112,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 5,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su-exam_420",
@@ -17726,9 +18145,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "ListBox is specifically designed for holding collections of scrollable text items (Visual C# Ch 4.11).",
-      "explanation": "ListBox is specifically designed for holding collections of scrollable text items (Visual C# Ch 4.11).",
-      "distractorRationale": "",
+      "exp": "ListBox is specifically designed for holding collections of scrollable text items.",
+      "explanation": "ListBox is specifically designed for holding collections of scrollable text items.",
+      "distractorRationale": "A `Label` has no built-in scrollbars or item collection, `RadioButton` is a single option selector, and `PictureBox` renders imagesâ€”scrollable line items belong in a `ListBox`.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -17736,7 +18155,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 6,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_421",
@@ -17768,9 +18188,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "LstReceipt.Items.Add(...) is the method for appending items to a ListBox (Visual C# Ch 4.11).",
-      "explanation": "LstReceipt.Items.Add(...) is the method for appending items to a ListBox (Visual C# Ch 4.11).",
-      "distractorRationale": "",
+      "exp": "LstReceipt.Items.Add(...) is the method for appending items to a ListBox.",
+      "explanation": "LstReceipt.Items.Add(...) is the method for appending items to a ListBox.",
+      "distractorRationale": "`lstReceipt.Text = ...` does not append rows, `lstReceipt.Items = ...` fails compilation (read-only property), and `lstReceipt.Add(...)` does not exist.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -17778,7 +18198,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 7,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_422",
@@ -17810,9 +18231,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "Class-level field variables persist for the lifetime of the form and retain values across multiple button click events (Visual C# Ch 3.6).",
-      "explanation": "Class-level field variables persist for the lifetime of the form and retain values across multiple button click events (Visual C# Ch 3.6).",
-      "distractorRationale": "",
+      "exp": "Class-level field variables persist for the lifetime of the form and retain values across multiple button click events.",
+      "explanation": "Class-level field variables persist for the lifetime of the form and retain values across multiple button click events.",
+      "distractorRationale": "Local variables in `btnAddItem_Click` or `btnCheckout_Click` reset on every click, and `const` cannot be modifiedâ€”running shift totals require a class-level `decimal` field.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -17820,7 +18241,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 8,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_423",
@@ -17852,9 +18274,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Local variables exist only during method execution and are deallocated upon method exit (Visual C# Ch 3.6).",
-      "explanation": "Local variables exist only during method execution and are deallocated upon method exit (Visual C# Ch 3.6).",
-      "distractorRationale": "",
+      "exp": "Local variables exist only during method execution and are deallocated upon method exit.",
+      "explanation": "Local variables exist only during method execution and are deallocated upon method exit.",
+      "distractorRationale": "Local variables never promote to fields, write to disk, or survive across clicksâ€”their stack frame is reclaimed as soon as the event handler returns.",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -17862,7 +18284,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 9,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su-exam_424",
@@ -17894,9 +18317,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Reassigning _currentCartTotal = 0m resets the transaction accumulator. Declaring 'decimal _currentCartTotal = 0m;' creates a local shadow variable that fails to reset the field (Visual C# Ch 3.6).",
-      "explanation": "Reassigning _currentCartTotal = 0m resets the transaction accumulator. Declaring 'decimal _currentCartTotal = 0m;' creates a local shadow variable that fails to reset the field (Visual C# Ch 3.6).",
-      "distractorRationale": "",
+      "exp": "Reassigning _currentCartTotal = 0m resets the transaction accumulator. Declaring 'decimal _currentCartTotal = 0m;' creates a local shadow variable that fails to reset the field.",
+      "explanation": "Reassigning _currentCartTotal = 0m resets the transaction accumulator. Declaring 'decimal _currentCartTotal = 0m;' creates a local shadow variable that fails to reset the field.",
+      "distractorRationale": "`const` cannot modify an existing field, `Reset(...)` does not exist, and `decimal _currentCartTotal = 0m;` declares a brand-new **local** variable that shadows the class field without resetting it!",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -17904,7 +18327,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 10,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su-exam_425",
@@ -17936,9 +18360,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "String.IsNullOrWhiteSpace checks for null, empty string (\"\"), and strings containing only whitespace characters (Visual C# Ch 4.9).",
-      "explanation": "String.IsNullOrWhiteSpace checks for null, empty string (\"\"), and strings containing only whitespace characters (Visual C# Ch 4.9).",
-      "distractorRationale": "",
+      "exp": "String.IsNullOrWhiteSpace checks for null, empty string (\"\"), and strings containing only whitespace characters.",
+      "explanation": "String.IsNullOrWhiteSpace checks for null, empty string (\"\"), and strings containing only whitespace characters.",
+      "distractorRationale": "`TextBox.Text` defaults to `\"\"` (never `null`, so `== null` misses empty boxes), `Length == 0` misses spaces `\"   \"`, and `txtItemName == null` checks the control object itself.",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -17946,7 +18370,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 11,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.59
     },
     {
       "id": "q_su-exam_426",
@@ -17978,9 +18403,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "\"D5\" formats integer numbers with at least 5 digits, padding with leading zeros if necessary: \"00125\" (Visual C# Ch 3.5).",
-      "explanation": "\"D5\" formats integer numbers with at least 5 digits, padding with leading zeros if necessary: \"00125\" (Visual C# Ch 3.5).",
-      "distractorRationale": "",
+      "exp": "\"D5\" formats integer numbers with at least 5 digits, padding with leading zeros if necessary: \"00125\".",
+      "explanation": "\"D5\" formats integer numbers with at least 5 digits, padding with leading zeros if necessary: \"00125\".",
+      "distractorRationale": "`\"C5\"` formats currency with 5 decimal places, `\"F5\"` gives `\"125.00000\"`, and `\"P5\"` multiplies by 100 with `%`â€”zero-padded 5-digit integers use `\"D5\"` (`\"00125\"`).",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -17988,7 +18413,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 12,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su-exam_427",
@@ -18020,16 +18446,17 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "CheckBox.Checked returns a boolean (true if checked, false if unchecked) (Visual C# Ch 4.10).",
-      "explanation": "CheckBox.Checked returns a boolean (true if checked, false if unchecked) (Visual C# Ch 4.10).",
-      "distractorRationale": "",
+      "exp": "CheckBox.Checked returns a boolean (true if checked, false if unchecked).",
+      "explanation": "CheckBox.Checked returns a boolean (true if checked, false if unchecked).",
+      "distractorRationale": "`Selected`, `Value`, and `Active` are not properties of `System.Windows.Forms.CheckBox`; tick state is read via `chkGoldCard.Checked`.",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 13,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su-exam_428",
@@ -18061,9 +18488,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "Deducting 5% leaves 95% of the balance: subtotal * 0.95m or subtotal - (subtotal * 0.05m) (Visual C# Ch 3.4).",
-      "explanation": "Deducting 5% leaves 95% of the balance: subtotal * 0.95m or subtotal - (subtotal * 0.05m) (Visual C# Ch 3.4).",
-      "distractorRationale": "",
+      "exp": "Deducting 5% leaves 95% of the balance: subtotal * 0.95m or subtotal - (subtotal * 0.05m).",
+      "explanation": "Deducting 5% leaves 95% of the balance: subtotal * 0.95m or subtotal - (subtotal * 0.05m).",
+      "distractorRationale": "`subtotal - 5m` deducts flat R5 instead of 5%, `subtotal * 0.05m` sets the total to the 5% discount itself (95% off!), and `/ 0.05m` multiplies the bill by 20Ã—.",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -18071,7 +18498,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 14,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.86
     },
     {
       "id": "q_su-exam_429",
@@ -18103,9 +18531,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "MessageBoxButtons.YesNo and MessageBoxButtons.OKCancel provide two-option confirmation dialogs (Visual C# Ch 4.9).",
-      "explanation": "MessageBoxButtons.YesNo and MessageBoxButtons.OKCancel provide two-option confirmation dialogs (Visual C# Ch 4.9).",
-      "distractorRationale": "",
+      "exp": "MessageBoxButtons.YesNo and MessageBoxButtons.OKCancel provide two-option confirmation dialogs.",
+      "explanation": "MessageBoxButtons.YesNo and MessageBoxButtons.OKCancel provide two-option confirmation dialogs.",
+      "distractorRationale": "`AbortRetryIgnore` is for device/file failures, while `MessageBoxButtons.None` and `MessageBoxButtons.Ignore` do not exist on the `MessageBoxButtons` enum.",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -18113,7 +18541,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 15,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su-exam_430",
@@ -18145,9 +18574,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "Rule 4 states sequences of actions should be organized into groups with a beginning, middle, and end, yielding closure upon completion; Rule 3 offers informative feedback (Shneiderman Ch 2).",
-      "explanation": "Rule 4 states sequences of actions should be organized into groups with a beginning, middle, and end, yielding closure upon completion; Rule 3 offers informative feedback (Shneiderman Ch 2).",
-      "distractorRationale": "",
+      "exp": "Rule 4 states sequences of actions should be organized into groups with a beginning, middle, and end, yielding closure upon completion; Rule 3 offers informative feedback.",
+      "explanation": "Rule 4 states sequences of actions should be organized into groups with a beginning, middle, and end, yielding closure upon completion; Rule 3 offers informative feedback.",
+      "distractorRationale": "Showing the final itemized receipt, savings, and points confirms the transaction's outcome (**Informative Feedback, Rule 3**) and marks completion of the sale (**Closure, Rule 4**).",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -18155,7 +18584,8 @@
       ],
       "groupId": "exam_2024_pec",
       "groupOrder": 16,
-      "examPaperId": "exam_2024_pec"
+      "examPaperId": "exam_2024_pec",
+      "estimatedDifficulty": 0.86
     },
     {
       "id": "q_su4_351",
@@ -18189,7 +18619,7 @@
       "ans": 2,
       "exp": "The `System.IO` namespace provides the `.NET` classes required for file input and output, including `StreamWriter`, `StreamReader`, and `File`.",
       "explanation": "The `System.IO` namespace provides the `.NET` classes required for file input and output, including `StreamWriter`, `StreamReader`, and `File`.",
-      "distractorRationale": "",
+      "distractorRationale": "`System.Files`, `System.Data.Streams`, and `System.Windows.Storage` do not provide `StreamReader`/`StreamWriter`/`File` in WinFormsâ€”`using System.IO;` does.",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18197,7 +18627,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.28
     },
     {
       "id": "q_su4_352",
@@ -18231,7 +18662,7 @@
       "ans": 3,
       "exp": "`File.CreateText` creates a text file with the given name; if the file already exists, its previous contents are erased. Use `File.AppendText` to preserve existing contents.",
       "explanation": "`File.CreateText` creates a text file with the given name; if the file already exists, its previous contents are erased. Use `File.AppendText` to preserve existing contents.",
-      "distractorRationale": "",
+      "distractorRationale": "`File.CreateText` never renames to `(1)`, throws on existing files, or appendsâ€”it truncates and **overwrites** the existing file.",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18239,7 +18670,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.55
     },
     {
       "id": "q_su4_353",
@@ -18273,7 +18705,7 @@
       "ans": 0,
       "exp": "`File.AppendText` opens a text file (or creates it if it does not exist) and returns a `StreamWriter` that appends new data to the end of the file.",
       "explanation": "`File.AppendText` opens a text file (or creates it if it does not exist) and returns a `StreamWriter` that appends new data to the end of the file.",
-      "distractorRationale": "",
+      "distractorRationale": "`File.CreateText` erases existing data, `File.WriteEnd` does not exist, and `File.OpenText` opens a read-only `StreamReader`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -18281,7 +18713,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_354",
@@ -18315,7 +18748,7 @@
       "ans": 1,
       "exp": "`StreamWriter.WriteLine` writes the data to the file followed by a newline character, whereas `StreamWriter.Write` writes the item without a trailing newline.",
       "explanation": "`StreamWriter.WriteLine` writes the data to the file followed by a newline character, whereas `StreamWriter.Write` writes the item without a trailing newline.",
-      "distractorRationale": "",
+      "distractorRationale": "Neither method closes the stream or erases prior lines, and both accept strings/numbers; `WriteLine` appends a line terminator whereas `Write` stays on the same line.",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18323,7 +18756,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_355",
@@ -18357,7 +18791,7 @@
       "ans": 2,
       "exp": "Prefixing a string literal with `@` tells the C# compiler to treat backslashes literally as path separators rather than escape sequences.",
       "explanation": "Prefixing a string literal with `@` tells the C# compiler to treat backslashes literally as path separators rather than escape sequences.",
-      "distractorRationale": "",
+      "distractorRationale": "`#` and `&` are invalid string prefixes, and `$` enables `{...}` interpolation without disabling `\\` escape sequences (`\\U` and `\\N` fail compilation without `@`).",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18365,7 +18799,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su4_356",
@@ -18399,7 +18834,7 @@
       "ans": 3,
       "exp": "`File.OpenText(\"students.txt\")` opens an existing UTF-8 text file for reading and returns a `StreamReader` reference.",
       "explanation": "`File.OpenText(\"students.txt\")` opens an existing UTF-8 text file for reading and returns a `StreamReader` reference.",
-      "distractorRationale": "",
+      "distractorRationale": "`File.ReadText` does not exist, `File.CreateText` returns a `StreamWriter` (and erases the file!), and `File` is a `static` class that cannot be instantiated with `new File(...)`.",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18407,7 +18842,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.28
     },
     {
       "id": "q_su4_357",
@@ -18441,7 +18877,7 @@
       "ans": 0,
       "exp": "`StreamReader.EndOfStream` is a `bool` property that is `false` while unread data remains and becomes `true` at the end of the file. Therefore `while (!inputFile.EndOfStream)` (or `while (inputFile.EndOfStream == false)`) loops until all lines are read.",
       "explanation": "`StreamReader.EndOfStream` is a `bool` property that is `false` while unread data remains and becomes `true` at the end of the file. Therefore `while (!inputFile.EndOfStream)` (or `while (inputFile.EndOfStream == false)`) loops until all lines are read.",
-      "distractorRationale": "",
+      "distractorRationale": "`StreamReader` has no `.Length`, `EndOfStream == true` runs `0` times on a non-empty file, and `ReadLine()` returns a `string` (cannot compare `== false`).",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18449,7 +18885,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.82
     },
     {
       "id": "q_su4_358",
@@ -18483,7 +18920,7 @@
       "ans": 1,
       "exp": "`StreamReader.ReadLine()` reads a line of characters from the current stream and returns the data as a `string`, whereas `Read()` reads only the next character.",
       "explanation": "`StreamReader.ReadLine()` reads a line of characters from the current stream and returns the data as a `string`, whereas `Read()` reads only the next character.",
-      "distractorRationale": "",
+      "distractorRationale": "`NextLine()` and `GetLine()` do not exist on `StreamReader`, and `Read()` reads only a single character's `int` code rather than a full line.",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18491,7 +18928,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.28
     },
     {
       "id": "q_su4_359",
@@ -18525,7 +18963,7 @@
       "ans": 2,
       "exp": "Because `OpenFileDialog` and `SaveFileDialog` are invisible controls that do not appear on the form surface at runtime, Visual Studio places them in the component tray below the Form Designer.",
       "explanation": "Because `OpenFileDialog` and `SaveFileDialog` are invisible controls that do not appear on the form surface at runtime, Visual Studio places them in the component tray below the Form Designer.",
-      "distractorRationale": "",
+      "distractorRationale": "Like `Timer`, `OpenFileDialog` and `SaveFileDialog` are non-visual components placed in the **Component Tray** beneath the Form canvas.",
       "definitions": [
         "def_file_dialogs",
         "def_dialog_result",
@@ -18533,7 +18971,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.28
     },
     {
       "id": "q_su4_360",
@@ -18567,7 +19006,7 @@
       "ans": 3,
       "exp": "`ShowDialog()` displays the dialog box and returns `DialogResult.OK` if the user clicks Open/Save, or `DialogResult.Cancel` if the user clicks Cancel.",
       "explanation": "`ShowDialog()` displays the dialog box and returns `DialogResult.OK` if the user clicks Open/Save, or `DialogResult.Cancel` if the user clicks Cancel.",
-      "distractorRationale": "",
+      "distractorRationale": "`Clicked` and `DialogResult.Open` do not exist, checking `FileName != \"\"` without `ShowDialog()` never opens the dialog, and `ShowDialog()` returns `DialogResult` (not `bool`).",
       "definitions": [
         "def_file_dialogs",
         "def_dialog_result",
@@ -18575,7 +19014,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.82
     },
     {
       "id": "q_su4_361",
@@ -18609,7 +19049,7 @@
       "ans": 0,
       "exp": "When a user selects a file in an `OpenFileDialog` or `SaveFileDialog`, the full path and filename are stored in the control's `Filename` (or `FileName`) property.",
       "explanation": "When a user selects a file in an `OpenFileDialog` or `SaveFileDialog`, the full path and filename are stored in the control's `Filename` (or `FileName`) property.",
-      "distractorRationale": "",
+      "distractorRationale": "`OpenFileDialog` has no `.Text`, `.Path`, or `.SelectedFile` property for the chosen fileâ€”the selected full path is stored in `openFile.FileName`.",
       "definitions": [
         "def_file_dialogs",
         "def_dialog_result",
@@ -18617,7 +19057,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_362",
@@ -18651,7 +19092,7 @@
       "ans": 1,
       "exp": "The `InitialDirectory` property (e.g., `openFile.InitialDirectory = @\"C:\\Data\";`) sets the initial directory displayed by the file dialog box.",
       "explanation": "The `InitialDirectory` property (e.g., `openFile.InitialDirectory = @\"C:\\Data\";`) sets the initial directory displayed by the file dialog box.",
-      "distractorRationale": "",
+      "distractorRationale": "`DirectoryName`, `StartFolder`, and `DefaultPath` do not exist on `FileDialog`; the starting folder property is `InitialDirectory`.",
       "definitions": [
         "def_file_dialogs",
         "def_dialog_result",
@@ -18659,7 +19100,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.28
     },
     {
       "id": "q_su4_363",
@@ -18693,14 +19135,15 @@
       "ans": 2,
       "exp": "When passing a single upper bound `max` to `rand.Next(max)`, the generated integer ranges from `0` up to `max - 1`. Thus `rand.Next(10)` produces a number from `0` to `9`.",
       "explanation": "When passing a single upper bound `max` to `rand.Next(max)`, the generated integer ranges from `0` up to `max - 1`. Thus `rand.Next(10)` produces a number from `0` to `9`.",
-      "distractorRationale": "",
+      "distractorRationale": "Single-argument `rand.Next(10)` has an inclusive lower bound `0` (not `1`) and an **exclusive** upper bound `10` (so `10` is never returned: `0..9`).",
       "definitions": [
         "def_random_class",
         "def_form_load"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_364",
@@ -18734,14 +19177,15 @@
       "ans": 3,
       "exp": "`Random.NextDouble()` returns a random `double` floating-point number in the range `0.0` up to (but not including) `1.0`.",
       "explanation": "`Random.NextDouble()` returns a random `double` floating-point number in the range `0.0` up to (but not including) `1.0`.",
-      "distractorRationale": "",
+      "distractorRationale": "`Random.NextDouble()` always returns a `double` in `[0.0, 1.0)`â€”never negative values, `int`s, or `decimal`s.",
       "definitions": [
         "def_random_class",
         "def_form_load"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_365",
@@ -18775,14 +19219,15 @@
       "ans": 0,
       "exp": "In `rand.Next(min, max)`, the lower bound `min` is inclusive and the upper bound `max` is exclusive (or `rand.Next(6) + 1`). Therefore `rand.Next(1, 7)` yields integers from `1` through `6`.",
       "explanation": "In `rand.Next(min, max)`, the lower bound `min` is inclusive and the upper bound `max` is exclusive (or `rand.Next(6) + 1`). Therefore `rand.Next(1, 7)` yields integers from `1` through `6`.",
-      "distractorRationale": "",
+      "distractorRationale": "`rand.Next(6)` and `rand.Next(0, 6)` yield `0..5`, while `rand.Next(1, 6)` yields only `1..5` because the upper bound `6` is exclusive.",
       "definitions": [
         "def_random_class",
         "def_form_load"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su4_366",
@@ -18816,14 +19261,15 @@
       "ans": 1,
       "exp": "When a Windows Forms application launches, the form is loaded into memory and the `Load` event fires before the form becomes visible on screen.",
       "explanation": "When a Windows Forms application launches, the form is loaded into memory and the `Load` event fires before the form becomes visible on screen.",
-      "distractorRationale": "",
+      "distractorRationale": "`Form1_Load` runs once right before the form first appearsâ€”not on button clicks, `TextBox` focus changes, or form closure.",
       "definitions": [
         "def_random_class",
         "def_form_load"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_367",
@@ -18857,7 +19303,7 @@
       "ans": 2,
       "exp": "The loop starts at `10` and decrements `count` by `1` after each iteration while `count >= 0` is true. The last iteration executes with `count == 0`, after which `count` becomes `-1` and the loop terminates.",
       "explanation": "The loop starts at `10` and decrements `count` by `1` after each iteration while `count >= 0` is true. The last iteration executes with `count == 0`, after which `count` becomes `-1` and the loop terminates.",
-      "distractorRationale": "",
+      "distractorRationale": "Starting at `10` and decrementing `count -= 2` while `count >= 0` displays `10, 8, 6, 4, 2, 0`, then `count` becomes `-2` and exitsâ€”so `0` is the last value shown.",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -18865,7 +19311,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_368",
@@ -18899,7 +19346,7 @@
       "ans": 3,
       "exp": "`count` takes the values `0`, `10`, `20`, and `30` — executing the loop body 4 times before `count` becomes `40` and fails `count <= 30`.",
       "explanation": "`count` takes the values `0`, `10`, `20`, and `30` — executing the loop body 4 times before `count` becomes `40` and fails `count <= 30`.",
-      "distractorRationale": "",
+      "distractorRationale": "Stepping by `count += 10` from `0` with `count <= 30` visits `0, 10, 20, 30` (`4` iterations; `3` forgets `0`, while `30`/`31` assume `count++`).",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -18907,7 +19354,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_369",
@@ -18941,7 +19389,7 @@
       "ans": 0,
       "exp": "File processing always requires three steps: (1) Open the file to create a connection, (2) Process the file by reading or writing data, and (3) Close the file to disconnect it from the program.",
       "explanation": "File processing always requires three steps: (1) Open the file to create a connection, (2) Process the file by reading or writing data, and (3) Close the file to disconnect it from the program.",
-      "distractorRationale": "",
+      "distractorRationale": "Standard sequential file processing follows the three-step lifecycle **Open -> Process (read/write) -> Close** (not compiling or deleting data files).",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -18949,7 +19397,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su4_370",
@@ -18983,7 +19432,7 @@
       "ans": 1,
       "exp": "Failing to call `outputFile.Close()` can leave unwritten data sitting in the memory buffer, resulting in an incomplete or locked file on disk.",
       "explanation": "Failing to call `outputFile.Close()` can leave unwritten data sitting in the memory buffer, resulting in an incomplete or locked file on disk.",
-      "distractorRationale": "",
+      "distractorRationale": "`outputFile.Close()` does not touch `ListBox` controls, local variables, or encryptionâ€”it flushes buffered bytes to disk and releases the OS file handle.",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18991,7 +19440,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.55
     },
     {
       "id": "q_su5_001",
@@ -19025,14 +19475,15 @@
       "ans": 0,
       "exp": "A `void` method executes statements and returns nothing, whereas a value-returning method declares a return type (`int`, `string`, `bool`, etc.) and uses a `return` statement to send a result back to the calling statement.",
       "explanation": "A `void` method executes statements and returns nothing, whereas a value-returning method declares a return type (`int`, `string`, `bool`, etc.) and uses a `return` statement to send a result back to the calling statement.",
-      "distractorRationale": "",
+      "distractorRationale": "`void` methods can be `private` or `public`, accept any number of parameters, and be called any number of times; they simply return no value.",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_002",
@@ -19066,14 +19517,15 @@
       "ans": 1,
       "exp": "A parameter is the receiving variable declared inside the method header's parentheses (e.g., `int totalSeconds`), whereas an argument is the actual value or variable supplied in the method call (e.g., `FormatTime(65)`).",
       "explanation": "A parameter is the receiving variable declared inside the method header's parentheses (e.g., `int totalSeconds`), whereas an argument is the actual value or variable supplied in the method call (e.g., `FormatTime(65)`).",
-      "distractorRationale": "",
+      "distractorRationale": "Both `void` and value-returning methods take parameters of any C# type, and Option D swaps the two terms (parameters are in the header; arguments are passed in the call).",
       "definitions": [
         "def_parameters_vs_arguments",
         "def_pass_by_value"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_003",
@@ -19107,14 +19559,15 @@
       "ans": 2,
       "exp": "When an argument is passed by value (without `ref` or `out`), the parameter `val` receives a separate copy of `num`. Modifying `val` inside `DoubleValue` has no effect on `num` in the caller.",
       "explanation": "When an argument is passed by value (without `ref` or `out`), the parameter `val` receives a separate copy of `num`. Modifying `val` inside `DoubleValue` has no effect on `num` in the caller.",
-      "distractorRationale": "",
+      "distractorRationale": "`void` methods compile cleanly and `num` stays in scope in the caller; because `num` was passed by value without `ref`, `val = val * 2` modified only `DoubleValue`'s local copy, leaving `num == 10`.",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_004",
@@ -19148,7 +19601,7 @@
       "ans": 3,
       "exp": "Because `amount` is a `ref` parameter, it refers directly to the caller's `total` variable in memory. Adding `25` to `amount` changes `total` from `100` to `125`.",
       "explanation": "Because `amount` is a `ref` parameter, it refers directly to the caller's `total` variable in memory. Adding `25` to `amount` changes `total` from `100` to `125`.",
-      "distractorRationale": "",
+      "distractorRationale": "`CalcBonus(1000m)` returns `1000m * 0.10m + 25m = 125m`; `100` forgets `+ 25m`, `25` forgets the 10% commission, and `0` ignores the `return` value.",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19156,7 +19609,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_005",
@@ -19190,7 +19644,7 @@
       "ans": 0,
       "exp": "A variable passed as a `ref` argument must be assigned a value before calling the method. A variable passed as an `out` argument need not be initialized prior to the call, but the called method is required by the compiler (`CS0177`) to assign it a value before returning.",
       "explanation": "A variable passed as a `ref` argument must be assigned a value before calling the method. A variable passed as an `out` argument need not be initialized prior to the call, but the called method is required by the compiler (`CS0177`) to assign it a value before returning.",
-      "distractorRationale": "",
+      "distractorRationale": "Both `ref` and `out` must appear in BOTH header and call; `ref` requires initialization *before* the call, whereas `out` requires assignment *inside* the called method.",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19198,7 +19652,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su5_006",
@@ -19232,7 +19687,7 @@
       "ans": 1,
       "exp": "In C#, the `ref` keyword must match between the method header and the method call (`ref fastestSeconds, ref totalSeconds`), and data types (`int`) are never repeated inside the call statement.",
       "explanation": "In C#, the `ref` keyword must match between the method header and the method call (`ref fastestSeconds, ref totalSeconds`), and data types (`int`) are never repeated inside the call statement.",
-      "distractorRationale": "",
+      "distractorRationale": "Option A wrongly puts `ref` on pass-by-value `seconds`, Option C includes data types (`int`) in a method call, and Option D omits required `ref` keywords at the call site.",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19240,7 +19695,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su5_007",
@@ -19274,7 +19730,7 @@
       "ans": 2,
       "exp": "The first argument (`txtSeconds.Text`) is passed by value and the second argument (`out enteredSeconds`) must include the `out` keyword to match the parameter declaration.",
       "explanation": "The first argument (`txtSeconds.Text`) is passed by value and the second argument (`out enteredSeconds`) must include the `out` keyword to match the parameter declaration.",
-      "distractorRationale": "",
+      "distractorRationale": "Method calls never include type names (`string`, `int`), Option B omits the required `out` keyword before `enteredSeconds`, and `txtSeconds.Text` is a value `string` (not `out`).",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19282,7 +19738,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su5_008",
@@ -19316,7 +19773,7 @@
       "ans": 3,
       "exp": "Because `int.TryParse(text, out seconds)` executes first in the `if` condition, `seconds` is definitely assigned (to the parsed integer on success, or `0` on failure) before either `return` statement is reached, so it compiles cleanly! Setting `seconds = 0;` before `return false;` is also good practice to guarantee `0` when out of range.",
       "explanation": "Because `int.TryParse(text, out seconds)` executes first in the `if` condition, `seconds` is definitely assigned (to the parsed integer on success, or `0` on failure) before either `return` statement is reached, so it compiles cleanly! Setting `seconds = 0;` before `return false;` is also good practice to guarantee `0` when out of range.",
-      "distractorRationale": "",
+      "distractorRationale": "`bool` methods frequently use `out` parameters (just like `int.TryParse` itself!), and `int.TryParse(text, out seconds)` definitely assigns `seconds` on both `true` and `false` paths.",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19324,7 +19781,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.87
     },
     {
       "id": "q_su5_009",
@@ -19358,14 +19816,15 @@
       "ans": 0,
       "exp": "Integer division `totalSeconds / 60` gives the whole number of minutes (`65 / 60 == 1`), and the remainder operator `totalSeconds % 60` gives the leftover seconds (`65 % 60 == 5`).",
       "explanation": "Integer division `totalSeconds / 60` gives the whole number of minutes (`65 / 60 == 1`), and the remainder operator `totalSeconds % 60` gives the leftover seconds (`65 % 60 == 5`).",
-      "distractorRationale": "",
+      "distractorRationale": "Multiplying `* 60` converts minutes to seconds, `/ 100` assumes metric 100-second minutes, and Option C swaps quotient `/` (minutes) with remainder `%` (leftover seconds).",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su5_010",
@@ -19399,14 +19858,15 @@
       "ans": 1,
       "exp": "When `seconds` is `0` through `9`, concatenating `minutes + \":\" + seconds` would produce `\"1:5\"`. Checking `if (seconds < 10)` and returning `minutes + \":0\" + seconds` ensures two-digit seconds (`\"1:05\"`).",
       "explanation": "When `seconds` is `0` through `9`, concatenating `minutes + \":\" + seconds` would produce `\"1:5\"`. Checking `if (seconds < 10)` and returning `minutes + \":0\" + seconds` ensures two-digit seconds (`\"1:05\"`).",
-      "distractorRationale": "",
+      "distractorRationale": "Seconds range `0..59`, no division occurs here, and rounding would falsify the time; `< 10` pads single-digit seconds (`5` -> `\":05\"` instead of `\":5\"`).",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su5_011",
@@ -19440,7 +19900,7 @@
       "ans": 2,
       "exp": "When `fastestSeconds` is initialized to `0` at class level, checking only `if (seconds < fastest)` would never be true for positive lap times! Checking `fastest == 0 || seconds < fastest` ensures the first lap sets the initial benchmark.",
       "explanation": "When `fastestSeconds` is initialized to `0` at class level, checking only `if (seconds < fastest)` would never be true for positive lap times! Checking `fastest == 0 || seconds < fastest` ensures the first lap sets the initial benchmark.",
-      "distractorRationale": "",
+      "distractorRationale": "`ref` parameters keep their caller value (`0` initially); if you only checked `seconds < fastest`, no positive lap (e.g. `62`) could ever beat initial `0` without `fastest == 0`.",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19448,7 +19908,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su5_012",
@@ -19482,7 +19943,7 @@
       "ans": 3,
       "exp": "`total` increases by `58` (`127 + 58 = 185`), and because `58 < 62`, `fastest` is updated to `58`.",
       "explanation": "`total` increases by `58` (`127 + 58 = 185`), and because `58 < 62`, `fastest` is updated to `58`.",
-      "distractorRationale": "",
+      "distractorRationale": "`58 < 62` updates `fastest` to `58` (Option B misses this), and `total += 58` updates `127 + 58 = 185` (Option A subtracts; Option C forgets `total += seconds`).",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19490,7 +19951,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_013",
@@ -19524,14 +19986,15 @@
       "ans": 0,
       "exp": "Integer division `185 / 3` truncates the fractional part to `61` seconds. Passing `61` to `FormatTime` computes `61 / 60 = 1` minute and `61 % 60 = 1` second, formatted with a leading zero as `\"1:01\"`.",
       "explanation": "Integer division `185 / 3` truncates the fractional part to `61` seconds. Passing `61` to `FormatTime` computes `61 / 60 = 1` minute and `61 % 60 = 1` second, formatted with a leading zero as `\"1:01\"`.",
-      "distractorRationale": "",
+      "distractorRationale": "Integer division `185 / 3` truncates `61.66` to `61` total seconds = `1` minute (`61 / 60`) and `1` second (`61 % 60`), formatted as `\"1:01\"` (`\"0:61\"` skips `/ 60`; `\"1:02\"` rounds instead of truncating).",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_014",
@@ -19565,14 +20028,15 @@
       "ans": 1,
       "exp": "Local variables declared inside `btnAddLap_Click` are recreated on every click and destroyed when the handler ends. Class-level fields persist in memory for the lifetime of the form across multiple button clicks.",
       "explanation": "Local variables declared inside `btnAddLap_Click` are recreated on every click and destroyed when the handler ends. Class-level fields persist in memory for the lifetime of the form across multiple button clicks.",
-      "distractorRationale": "",
+      "distractorRationale": "Local `int`s can be passed by `ref`, `InitializeComponent()` needs no custom fields, and `int`s are legal in handlersâ€”class fields are needed so values survive *between* button clicks.",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_015",
@@ -19606,14 +20070,15 @@
       "ans": 2,
       "exp": "In C# and `.NET` naming standards, method names use **PascalCase** (`UpperCamelCase`), starting with a capital letter for each word (`CalculateDiscount`, `ReadSeconds`, `FormatTime`).",
       "explanation": "In C# and `.NET` naming standards, method names use **PascalCase** (`UpperCamelCase`), starting with a capital letter for each word (`CalculateDiscount`, `ReadSeconds`, `FormatTime`).",
-      "distractorRationale": "",
+      "distractorRationale": "C# method names follow **PascalCase** (`CalculateDiscount`), not Python `snake_case`, Java `camelCase`, or Hungarian `mth` prefixes.",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_016",
@@ -19647,14 +20112,15 @@
       "ans": 3,
       "exp": "A method declared with a `void` return type cannot return a value (`CS0127`). To return `price * 0.15m`, the return type in the method header must be `decimal`.",
       "explanation": "A method declared with a `void` return type cannot return a value (`CS0127`). To return `price * 0.15m`, the return type in the method header must be `decimal`.",
-      "distractorRationale": "",
+      "distractorRationale": "Methods accept `decimal` parameters freely and `return` works in any method, but a method declared `void` cannot return a numeric expression (`CS0127`).",
       "definitions": [
         "def_void_vs_value_method",
         "def_method_overloading"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_017",
@@ -19688,14 +20154,15 @@
       "ans": 0,
       "exp": "Because `CalcTotal(100m, 15m)` evaluates to a `decimal` value (`115m`), you can assign its return value to a `decimal` variable or call `.ToString(\"C\")` directly on the returned result.",
       "explanation": "Because `CalcTotal(100m, 15m)` evaluates to a `decimal` value (`115m`), you can assign its return value to a `decimal` variable or call `.ToString(\"C\")` directly on the returned result.",
-      "distractorRationale": "",
+      "distractorRationale": "Option B puts a method call on the left of `=`, Option C treats `CalcTotal(...)` as having a `.lblTotal` member, and Option D writes keyword `void` in an assignment.",
       "definitions": [
         "def_void_vs_value_method",
         "def_method_overloading"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su5_018",
@@ -19729,14 +20196,15 @@
       "ans": 1,
       "exp": "The relational expression `16 >= 18 && 16 <= 65` evaluates to `false`, which the `return` statement sends back as a `bool`.",
       "explanation": "The relational expression `16 >= 18 && 16 <= 65` evaluates to `false`, which the `return` statement sends back as a `bool`.",
-      "distractorRationale": "",
+      "distractorRationale": "`IsValidAge` has return type `bool` (`age >= 18`); for `16`, `16 >= 18` evaluates to `false` (never returning `int` `16` or `18`, or `true`).",
       "definitions": [
         "def_void_vs_value_method",
         "def_method_overloading"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_019",
@@ -19770,14 +20238,15 @@
       "ans": 2,
       "exp": "**Step Into (F11)** moves execution into the called method's body, whereas **Step Over (F10)** executes the entire method call as a single step and stops on the next line in the caller.",
       "explanation": "**Step Into (F11)** moves execution into the called method's body, whereas **Step Over (F10)** executes the entire method call as a single step and stops on the next line in the caller.",
-      "distractorRationale": "",
+      "distractorRationale": "`Step Over (F10)` runs `RecordLap` without entering it, `Continue (F5)` resumes full-speed execution, and `Step Out (Shift+F11)` exits the *current* method.",
       "definitions": [
         "def_debugger_stepping",
         "def_scope_fields_vs_local"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_020",
@@ -19811,14 +20280,15 @@
       "ans": 3,
       "exp": "In a C# parameter list, parameters are separated by commas, and **every** parameter must have its own explicit data type (`string name, decimal sub, decimal vat`).",
       "explanation": "In a C# parameter list, parameters are separated by commas, and **every** parameter must have its own explicit data type (`string name, decimal sub, decimal vat`).",
-      "distractorRationale": "",
+      "distractorRationale": "TypeScript-style `name: string` (Option A), semicolons between parameters (Option B), and omitting the second `decimal` type in `decimal sub, vat` (Option C) are all C# syntax errors.",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su5_021",
@@ -19852,14 +20322,15 @@
       "ans": 0,
       "exp": "C# automatically performs a widening conversion from `int` to `double` when passing an `int` argument to a `double` by-value parameter because no precision is lost.",
       "explanation": "C# automatically performs a widening conversion from `int` to `double` when passing an `int` argument to a `double` by-value parameter because no precision is lost.",
-      "distractorRationale": "",
+      "distractorRationale": "Passing an `int` (`5`) to a `double` parameter is a safe implicit widening conversion (`5.0`)â€”it neither truncates to `0.0`, throws `InvalidCastException`, nor fails compilation.",
       "definitions": [
         "def_parameters_vs_arguments",
         "def_pass_by_value"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su5_022",
@@ -19893,7 +20364,7 @@
       "ans": 1,
       "exp": "Unlike pass-by-value parameters, `ref` and `out` parameters pass the memory address of the caller's variable, so the variable's type must match the parameter type identically (`double`).",
       "explanation": "Unlike pass-by-value parameters, `ref` and `out` parameters pass the memory address of the caller's variable, so the variable's type must match the parameter type identically (`double`).",
-      "distractorRationale": "",
+      "distractorRationale": "Unlike pass-by-value widening, `ref` aliases the caller's exact memory slot, so `int` (`4` bytes) cannot alias `ref double` (`8` bytes, `CS1503`); `const` cannot be passed by `ref`.",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19901,7 +20372,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su5_023",
@@ -19935,7 +20407,7 @@
       "ans": 2,
       "exp": "`17 / 5` using integer division assigns `3` to `quotient` (`q`), and `17 % 5` assigns `2` to `remainder` (`r`). Therefore `lblOut.Text` becomes `\"3 R 2\"`.",
       "explanation": "`17 / 5` using integer division assigns `3` to `quotient` (`q`), and `17 % 5` assigns `2` to `remainder` (`r`). Therefore `lblOut.Text` becomes `\"3 R 2\"`.",
-      "distractorRationale": "",
+      "distractorRationale": "`Divide(17, 5, out q, out r)` sets `q = 17 / 5 = 3` and `r = 17 % 5 = 2` -> `\"3 R 2\"` (`2 R 3` swaps `/` and `%`, `3.4 R 2` forgets integer division).",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19943,7 +20415,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_024",
@@ -19977,14 +20450,15 @@
       "ans": 3,
       "exp": "A parameter's scope is limited strictly to the body of the method in which it is declared.",
       "explanation": "A parameter's scope is limited strictly to the body of the method in which it is declared.",
-      "distractorRationale": "",
+      "distractorRationale": "A method parameter (`int totalSeconds`) has local method scope strictly inside `FormatTime`â€”it cannot be referenced in `btnAddLap_Click` or other forms.",
       "definitions": [
         "def_parameters_vs_arguments",
         "def_pass_by_value"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_025",
@@ -20018,14 +20492,15 @@
       "ans": 0,
       "exp": "In a `void` method, a standalone `return;` statement immediately exits the method and returns control to the caller without returning a value.",
       "explanation": "In a `void` method, a standalone `return;` statement immediately exits the method and returns control to the caller without returning a value.",
-      "distractorRationale": "",
+      "distractorRationale": "`return false;` fails in a `void` method (`CS0127`), while `continue;` and `break;` are illegal outside loops/`switch` (`CS0139`).",
       "definitions": [
         "def_void_vs_value_method",
         "def_method_overloading"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su5_026",
@@ -20059,14 +20534,15 @@
       "ans": 1,
       "exp": "A value-returning method must guarantee a `return` statement on **every** possible execution path. Adding `else { return \"Fail\"; }` or `return \"Fail\";` after the `if` block resolves `CS0161`.",
       "explanation": "A value-returning method must guarantee a `return` statement on **every** possible execution path. Adding `else { return \"Fail\"; }` or `return \"Fail\";` after the `if` block resolves `CS0161`.",
-      "distractorRationale": "",
+      "distractorRationale": "Access modifiers, `int` parameters, and double-quoted `\"Pass\"` are all valid; `CS0161` occurs because when `mark < 50`, execution reaches the closing `}` without returning a `string`.",
       "definitions": [
         "def_void_vs_value_method",
         "def_method_overloading"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.87
     },
     {
       "id": "q_su5_027",
@@ -20100,14 +20576,15 @@
       "ans": 2,
       "exp": "Modularizing code into focused methods promotes code reuse, isolates logic for easier testing/debugging, and improves readability.",
       "explanation": "Modularizing code into focused methods promotes code reuse, isolates logic for easier testing/debugging, and improves readability.",
-      "distractorRationale": "",
+      "distractorRationale": "Modular methods never remove C# static typing, variable declarations, or UI event wiringâ€”they eliminate copy-pasted logic and isolate testable units.",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_028",
@@ -20141,14 +20618,15 @@
       "ans": 3,
       "exp": "Pass-by-value parameters accept any expression that evaluates to a compatible data type, whereas `ref` and `out` parameters require an actual variable.",
       "explanation": "Pass-by-value parameters accept any expression that evaluates to a compatible data type, whereas `ref` and `out` parameters require an actual variable.",
-      "distractorRationale": "",
+      "distractorRationale": "For a normal pass-by-value `int` parameter, any `int`-valued expression (`totalSeconds / lapCount`) is evaluated first and its result passed in (`ref` would actually forbid an expression!).",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su5_029",
@@ -20182,7 +20660,7 @@
       "ans": 0,
       "exp": "Because `ref` and `out` parameters write back to the caller's storage location in memory, the argument passed must be a modifiable variable, not a literal or constant.",
       "explanation": "Because `ref` and `out` parameters write back to the caller's storage location in memory, the argument passed must be a modifiable variable, not a literal or constant.",
-      "distractorRationale": "",
+      "distractorRationale": "`100.00m` *is* a `decimal` literal, `ref` goes before the argument, and no loop is neededâ€”`AddTax(ref 100.00m)` fails (`CS1510`) because a literal has no assignable variable storage.",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -20190,7 +20668,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su5_030",
@@ -20224,14 +20703,15 @@
       "ans": 1,
       "exp": "Clearing only the visual controls leaves the old running values in the class-level fields. Resetting `lapCount`, `fastestSeconds`, and `totalSeconds` to `0` ensures the next session starts cleanly at `Lap 1`.",
       "explanation": "Clearing only the visual controls leaves the old running values in the class-level fields. Resetting `lapCount`, `fastestSeconds`, and `totalSeconds` to `0` ensures the next session starts cleanly at `Lap 1`.",
-      "distractorRationale": "",
+      "distractorRationale": "Deleting methods breaks compilation, calling `InitializeComponent()` again duplicates controls on the form, and `this.Close()` exits the app instead of zeroing fields and clearing UI.",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.8
     },
     {
       "id": "q_su6_001",
@@ -20265,7 +20745,7 @@
       "ans": 0,
       "exp": "Each form in a project is a class. Just like any other class object, you must instantiate it using the `new` operator (`ResultsForm frmResults = new ResultsForm();`) before calling `ShowDialog()` or `Show()`.",
       "explanation": "Each form in a project is a class. Just like any other class object, you must instantiate it using the `new` operator (`ResultsForm frmResults = new ResultsForm();`) before calling `ShowDialog()` or `Show()`.",
-      "distractorRationale": "",
+      "distractorRationale": "`ResultsForm.Show()` calls an instance method statically (`CS0120`), while `Form.Create` and `Form.Open` do not existâ€”you must instantiate with `new ResultsForm()`.",
       "definitions": [
         "def_partial_form_classes",
         "def_program_cs",
@@ -20273,7 +20753,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su6_002",
@@ -20307,14 +20788,15 @@
       "ans": 1,
       "exp": "A **modal** form (`ShowDialog()`) retains exclusive focus until closed, whereas a **modeless** form (`Show()`) permits the user to interact with other open forms at the same time.",
       "explanation": "A **modal** form (`ShowDialog()`) retains exclusive focus until closed, whereas a **modeless** form (`Show()`) permits the user to interact with other open forms at the same time.",
-      "distractorRationale": "",
+      "distractorRationale": "`Show()` never closes the startup form and is *modeless* (non-blocking), whereas `ShowDialog()` works on any custom `Form` to display it *modally*.",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su6_003",
@@ -20348,14 +20830,15 @@
       "ans": 2,
       "exp": "When `ShowDialog()` is called, execution of the calling method pauses at that line and only resumes with the statements following `ShowDialog()` after the modal form is closed.",
       "explanation": "When `ShowDialog()` is called, execution of the calling method pauses at that line and only resumes with the statements following `ShowDialog()` after the modal form is closed.",
-      "distractorRationale": "",
+      "distractorRationale": "`ShowDialog()` blocks the calling event handler on that line until the modal `frmResults` window is closed, after which the next line (`lblStatus.Text = ...`) executes.",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.34
     },
     {
       "id": "q_su6_004",
@@ -20389,14 +20872,15 @@
       "ans": 3,
       "exp": "Because `Show()` displays a modeless form, it does not pause the calling method. The statement `lblStatus.Text = \"Done\";` runs immediately after `Show()` opens the form.",
       "explanation": "Because `Show()` displays a modeless form, it does not pause the calling method. The statement `lblStatus.Text = \"Done\";` runs immediately after `Show()` opens the form.",
-      "distractorRationale": "",
+      "distractorRationale": "Because `frmResults.Show()` is **modeless**, it displays `frmResults` and returns control immediately so `lblStatus.Text` updates while `frmResults` stays open.",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.34
     },
     {
       "id": "q_su6_005",
@@ -20430,7 +20914,7 @@
       "ans": 0,
       "exp": "Visual Studio declares form controls as `private` fields by default (`Modifiers = Private`). Setting a control's `Modifiers` property to `Public` changes its declaration to `public`, making `frmResults.lblTotal.Text` accessible from `Form1`.",
       "explanation": "Visual Studio declares form controls as `private` fields by default (`Modifiers = Private`). Setting a control's `Modifiers` property to `Public` changes its declaration to `public`, making `frmResults.lblTotal.Text` accessible from `Form1`.",
-      "distractorRationale": "",
+      "distractorRationale": "Labels on any form have `.Text`, Designer controls default to `Private` (not `Static`), and forms never inherit from each other just to share UI values (`Modifiers = Public` or public properties expose them).",
       "definitions": [
         "def_partial_form_classes",
         "def_program_cs",
@@ -20438,7 +20922,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su6_006",
@@ -20472,7 +20957,7 @@
       "ans": 1,
       "exp": "The `Main` method inside `Program.cs` is the application's entry point and calls `Application.Run(new Form1());` to launch the startup form.",
       "explanation": "The `Main` method inside `Program.cs` is the application's entry point and calls `Application.Run(new Form1());` to launch the startup form.",
-      "distractorRationale": "",
+      "distractorRationale": "`StartPosition` sets screen centering (not startup class), while `App.config` and `AssemblyInfo.cs` do not launch WinFormsâ€”`Application.Run(new Form1())` in `Program.cs` does.",
       "definitions": [
         "def_partial_form_classes",
         "def_program_cs",
@@ -20480,7 +20965,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su6_007",
@@ -20514,7 +21000,7 @@
       "ans": 2,
       "exp": "`this.Hide();` hides the form from view (setting its `Visible` property to `false`) while preserving the form instance in memory, whereas `this.Close();` closes the form.",
       "explanation": "`this.Hide();` hides the form from view (setting its `Visible` property to `false`) while preserving the form instance in memory, whereas `this.Close();` closes the form.",
-      "distractorRationale": "",
+      "distractorRationale": "`this.Minimize()` does not exist, while `this.Close()` and `this.Dispose()` tear down and release the form instance instead of merely hiding it (`this.Hide()`).",
       "definitions": [
         "def_partial_form_classes",
         "def_program_cs",
@@ -20522,7 +21008,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su6_008",
@@ -20556,7 +21043,7 @@
       "ans": 3,
       "exp": "Because the application's message loop in `Program.cs` is bound to the startup form (`Application.Run(new Form1())`), closing the startup form ends the entire application.",
       "explanation": "Because the application's message loop in `Program.cs` is bound to the startup form (`Application.Run(new Form1())`), closing the startup form ends the entire application.",
-      "distractorRationale": "",
+      "distractorRationale": "Closing the startup form passed to `Application.Run(new Form1())` ends the application's main message loop, closing any open modeless `Form2` and exiting cleanly.",
       "definitions": [
         "def_close_vs_hide",
         "def_this_close",
@@ -20564,7 +21051,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su6_009",
@@ -20598,14 +21086,15 @@
       "ans": 0,
       "exp": "The `Load` event occurs once per form instance when it is loaded into memory. The `Activated` event occurs every time the form receives focus from another form or application.",
       "explanation": "The `Load` event occurs once per form instance when it is loaded into memory. The `Activated` event occurs every time the form receives focus from another form or application.",
-      "distractorRationale": "",
+      "distractorRationale": "`Load` runs once before first display, whereas `Activated` runs *every* time the window becomes the active foreground form (not just once and never on close).",
       "definitions": [
         "def_form_lifecycle",
         "def_form_load"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su6_010",
@@ -20639,7 +21128,7 @@
       "ans": 1,
       "exp": "`FormClosing` fires while the form is in the process of closing (allowing cancellation via `e.Cancel = true;`), whereas `FormClosed` fires after the form has already closed.",
       "explanation": "`FormClosing` fires while the form is in the process of closing (allowing cancellation via `e.Cancel = true;`), whereas `FormClosed` fires after the form has already closed.",
-      "distractorRationale": "",
+      "distractorRationale": "`Deactivate` fires when focus leaves the window, while `FormClosed` and `Disposed` fire *after* closure when cancelling via `e.Cancel = true` is no longer possible.",
       "definitions": [
         "def_partial_form_classes",
         "def_program_cs",
@@ -20647,7 +21136,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su6_011",
@@ -20681,7 +21171,7 @@
       "ans": 2,
       "exp": "Selecting `Project -> Add Form (Windows Forms)...` (or right-clicking the project in Solution Explorer and choosing `Add -> Form (Windows Forms)...`) adds a new form class to the project.",
       "explanation": "Selecting `Project -> Add Form (Windows Forms)...` (or right-clicking the project in Solution Explorer and choosing `Add -> Form (Windows Forms)...`) adds a new form class to the project.",
-      "distractorRationale": "",
+      "distractorRationale": "`File -> New -> Solution` replaces your project, while `Debug -> New Window` and `Build -> Add Second Form` do not create a new Form class (`Project -> Add Form...` does).",
       "definitions": [
         "def_partial_form_classes",
         "def_program_cs",
@@ -20689,7 +21179,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su6_012",
@@ -20723,14 +21214,15 @@
       "ans": 3,
       "exp": "To display data on a modal form, you must assign `frmGreet.lblGreeting.Text` **before** calling `frmGreet.ShowDialog();`, because lines after `ShowDialog()` do not run until the modal form closes.",
       "explanation": "To display data on a modal form, you must assign `frmGreet.lblGreeting.Text` **before** calling `frmGreet.ShowDialog();`, because lines after `ShowDialog()` do not run until the modal form closes.",
-      "distractorRationale": "",
+      "distractorRationale": "String concatenation and Labels work normally with `ShowDialog()`; the bug is placing `frmGreet.lblGreeting.Text = ...` *after* blocking `ShowDialog()` instead of *before* it.",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su6_013",
@@ -20764,14 +21256,15 @@
       "ans": 0,
       "exp": "When a form displayed via `ShowDialog()` is closed, `ShowDialog()` returns control to the caller while the `frmPromo` object and its public controls/properties remain accessible in memory.",
       "explanation": "When a form displayed via `ShowDialog()` is closed, `ShowDialog()` returns control to the caller while the `frmPromo` object and its public controls/properties remain accessible in memory.",
-      "distractorRationale": "",
+      "distractorRationale": "Visual Studio saves nothing to disk automatically and `txtPromo` is an instance control; closing a modal `ShowDialog()` form hides the window while keeping `frmPromo`'s properties readable in memory.",
       "definitions": [
         "def_cross_form_modifiers",
         "def_form_instantiation"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su6_014",
@@ -20805,14 +21298,15 @@
       "ans": 1,
       "exp": "Every Windows Form is split across two partial class files: `FormName.cs` for developer code and `FormName.Designer.cs` for the Visual Studio Designer's `InitializeComponent()` layout code.",
       "explanation": "Every Windows Form is split across two partial class files: `FormName.cs` for developer code and `FormName.Designer.cs` for the Visual Studio Designer's `InitializeComponent()` layout code.",
-      "distractorRationale": "",
+      "distractorRationale": "`.exe`/`.dll` are compiled binaries and `.html`/`.css` are web assets; adding `InvoiceForm` creates `InvoiceForm.cs` and `InvoiceForm.Designer.cs`.",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su6_015",
@@ -20853,7 +21347,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su6_016",
@@ -20887,14 +21382,15 @@
       "ans": 3,
       "exp": "Because `TotalDue` is an instance field on `ReceiptForm`, you first instantiate `ReceiptForm frmReceipt = new ReceiptForm();`, assign `frmReceipt.TotalDue = 450.00m;`, and then call `frmReceipt.ShowDialog();`.",
       "explanation": "Because `TotalDue` is an instance field on `ReceiptForm`, you first instantiate `ReceiptForm frmReceipt = new ReceiptForm();`, assign `frmReceipt.TotalDue = 450.00m;`, and then call `frmReceipt.ShowDialog();`.",
-      "distractorRationale": "",
+      "distractorRationale": "`this.TotalDue` looks on `MainForm` instead of `frmReceipt`, Option B closes without showing, and `ReceiptForm.TotalDue` accesses an instance field statically (`CS0120`).",
       "definitions": [
         "def_cross_form_modifiers",
         "def_form_instantiation"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su6_017",
@@ -20928,14 +21424,15 @@
       "ans": 0,
       "exp": "`ReceiptForm_Load` executes when `ShowDialog()` or `Show()` loads `ReceiptForm` for display — after `frmReceipt.TotalDue = 450.00m;` has already been assigned by `MainForm`.",
       "explanation": "`ReceiptForm_Load` executes when `ShowDialog()` or `Show()` loads `ReceiptForm` for display — after `frmReceipt.TotalDue = 450.00m;` has already been assigned by `MainForm`.",
-      "distractorRationale": "",
+      "distractorRationale": "`btnClose_Click`, `FormClosed`, and `Deactivate` all run when leaving/closing the formâ€”`ReceiptForm_Load` runs right before `ReceiptForm` appears on screen.",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su6_018",
@@ -20969,14 +21466,15 @@
       "ans": 1,
       "exp": "`SummaryForm` is a class type, not an instance. You must create an object with `new SummaryForm()` and call `.ShowDialog()` on that object variable.",
       "explanation": "`SummaryForm` is a class type, not an instance. You must create an object with `new SummaryForm()` and call `.ShowDialog()` on that object variable.",
-      "distractorRationale": "",
+      "distractorRationale": "`ShowDialog()` takes zero required arguments, works from any form, and allows any class nameâ€”calling it on the class name `SummaryForm` instead of `new SummaryForm()` triggers `CS0120`.",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su6_019",
@@ -21010,7 +21508,7 @@
       "ans": 2,
       "exp": "Inside any form class method, `this` refers to the currently executing form instance. Calling `this.Close();` inside `SummaryForm` closes only that `SummaryForm` window.",
       "explanation": "Inside any form class method, `this` refers to the currently executing form instance. Calling `this.Close();` inside `SummaryForm` closes only that `SummaryForm` window.",
-      "distractorRationale": "",
+      "distractorRationale": "Inside `SummaryForm`'s code-behind, `this` refers strictly to that `SummaryForm` instanceâ€”so `this.Close()` closes `SummaryForm`, leaving `Form1` open.",
       "definitions": [
         "def_close_vs_hide",
         "def_this_close",
@@ -21018,7 +21516,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su6_020",
@@ -21052,14 +21551,15 @@
       "ans": 3,
       "exp": "Setting a button's `DialogResult` property on a modal form causes clicking that button to close the modal dialog automatically and return that `DialogResult` value from `ShowDialog()`.",
       "explanation": "Setting a button's `DialogResult` property on a modal form causes clicking that button to close the modal dialog automatically and return that `DialogResult` value from `ShowDialog()`.",
-      "distractorRationale": "",
+      "distractorRationale": "Setting `btnOk.DialogResult = DialogResult.OK` requires no extra `Click` handler, touches neither `Form1` textboxes nor `OpenFileDialog`, and automatically closes the modal dialog returning `DialogResult.OK`.",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su4_new_001",
@@ -21100,7 +21600,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.28
     },
     {
       "id": "q_su4_new_002",
@@ -21140,7 +21641,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.58
     },
     {
       "id": "q_su4_new_003",
@@ -21180,7 +21682,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su4_new_004",
@@ -21221,7 +21724,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_new_005",
@@ -21262,7 +21766,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.85
     },
     {
       "id": "q_su4_new_006",
@@ -21303,7 +21808,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.28
     },
     {
       "id": "q_su4_new_007",
@@ -21344,7 +21850,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su4_new_008",
@@ -21384,7 +21891,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.28
     },
     {
       "id": "q_su4_new_009",
@@ -21424,7 +21932,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su4_new_010",
@@ -21464,7 +21973,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.88
     },
     {
       "id": "q_su5_new_001",
@@ -21504,7 +22014,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_new_002",
@@ -21545,7 +22056,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.32
     },
     {
       "id": "q_su5_new_003",
@@ -21585,7 +22097,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su5_new_004",
@@ -21625,7 +22138,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su5_new_005",
@@ -21665,7 +22179,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.59
     },
     {
       "id": "q_su5_new_006",
@@ -21706,7 +22221,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_new_007",
@@ -21746,7 +22262,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_new_008",
@@ -21787,7 +22304,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_new_009",
@@ -21827,7 +22345,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_new_010",
@@ -21867,7 +22386,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.59
     },
     {
       "id": "q_su5_new_011",
@@ -21908,7 +22428,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.59
     },
     {
       "id": "q_su5_new_012",
@@ -21950,7 +22471,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.88
     },
     {
       "id": "q_su5_new_013",
@@ -21990,7 +22512,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su5_new_014",
@@ -22030,7 +22553,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.29
     },
     {
       "id": "q_su5_new_015",
@@ -22071,7 +22595,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_new_016",
@@ -22111,7 +22636,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su5_new_017",
@@ -22151,7 +22677,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_new_018",
@@ -22191,7 +22718,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_new_019",
@@ -22231,7 +22759,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_new_020",
@@ -22272,7 +22801,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_new_021",
@@ -22313,7 +22843,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.32
     },
     {
       "id": "q_su5_new_022",
@@ -22355,7 +22886,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su5_new_023",
@@ -22396,7 +22928,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.88
     },
     {
       "id": "q_su5_new_024",
@@ -22437,7 +22970,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.88
     },
     {
       "id": "q_su5_new_025",
@@ -22478,7 +23012,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su5_new_026",
@@ -22518,7 +23053,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su5_new_027",
@@ -22559,7 +23095,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_new_028",
@@ -22599,7 +23136,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_new_029",
@@ -22641,7 +23179,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.88
     },
     {
       "id": "q_su5_new_030",
@@ -22682,7 +23221,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.59
     },
     {
       "id": "q_su5_new_031",
@@ -22723,7 +23263,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.88
     },
     {
       "id": "q_su5_new_032",
@@ -22763,7 +23304,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su5_new_033",
@@ -22804,7 +23346,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_new_034",
@@ -22846,7 +23389,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_new_035",
@@ -22886,7 +23430,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.56
     },
     {
       "id": "q_su5_new_036",
@@ -22927,7 +23472,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_new_037",
@@ -22969,7 +23515,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.88
     },
     {
       "id": "q_su5_new_038",
@@ -23010,7 +23557,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_new_039",
@@ -23050,7 +23598,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_new_040",
@@ -23090,7 +23639,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.59
     },
     {
       "id": "q_su5_new_041",
@@ -23132,7 +23682,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su5_new_042",
@@ -23172,7 +23723,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su5_new_043",
@@ -23213,7 +23765,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su5_new_044",
@@ -23254,7 +23807,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.88
     },
     {
       "id": "q_su5_new_045",
@@ -23295,7 +23849,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.54
     },
     {
       "id": "q_su6_new_001",
@@ -23335,7 +23890,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.3
     },
     {
       "id": "q_su6_new_002",
@@ -23376,7 +23932,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.59
     },
     {
       "id": "q_su6_new_003",
@@ -23416,7 +23973,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su6_new_004",
@@ -23457,7 +24015,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.29
     },
     {
       "id": "q_su6_new_005",
@@ -23497,7 +24056,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su6_new_006",
@@ -23538,7 +24098,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su6_new_007",
@@ -23578,7 +24139,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.88
     },
     {
       "id": "q_su6_new_008",
@@ -23618,7 +24180,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su6_new_009",
@@ -23658,7 +24221,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su6_new_010",
@@ -23699,7 +24263,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.88
     },
     {
       "id": "q_su6_new_011",
@@ -23741,7 +24306,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su6_new_012",
@@ -23781,7 +24347,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su6_new_013",
@@ -23822,7 +24389,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.84
     },
     {
       "id": "q_su6_new_014",
@@ -23863,7 +24431,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.57
     },
     {
       "id": "q_su6_new_015",
@@ -23904,7 +24473,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su6_new_016",
@@ -23944,7 +24514,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su6_new_017",
@@ -23986,7 +24557,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.85
     },
     {
       "id": "q_su6_new_018",
@@ -24026,7 +24598,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su6_new_019",
@@ -24067,7 +24640,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su6_new_020",
@@ -24109,7 +24683,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su6_new_021",
@@ -24150,7 +24725,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su6_new_022",
@@ -24191,7 +24767,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.83
     },
     {
       "id": "q_su6_new_023",
@@ -24232,7 +24809,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.26
     },
     {
       "id": "q_su6_new_024",
@@ -24274,7 +24852,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su6_new_025",
@@ -24316,7 +24895,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.6
     },
     {
       "id": "q_su6_new_026",
@@ -24356,7 +24936,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.27
     },
     {
       "id": "q_su6_new_027",
@@ -24398,7 +24979,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     },
     {
       "id": "q_su6_new_028",
@@ -24439,7 +25021,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.29
     },
     {
       "id": "q_su6_new_029",
@@ -24481,7 +25064,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.88
     },
     {
       "id": "q_su6_new_030",
@@ -24521,7 +25105,8 @@
       ],
       "groupId": null,
       "groupOrder": null,
-      "examPaperId": null
+      "examPaperId": null,
+      "estimatedDifficulty": 0.53
     }
   ]
 };

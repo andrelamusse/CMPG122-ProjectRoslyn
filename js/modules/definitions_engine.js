@@ -91,58 +91,62 @@
       if (!rawText) return '';
       const maxLinks = options.maxLinks !== undefined ? options.maxLinks : 3;
       const linkedDefIds = new Set();
+      const placeholders = [];
+      const putPlaceholder = (html) => {
+        const tok = `\x00\x01${placeholders.length}\x00`;
+        placeholders.push(html);
+        return tok;
+      };
 
-      // Split on inline backtick code spans first so code spans stay untouched
-      const parts = String(rawText).split(/(`[^`]+`)/g);
-      return parts.map(part => {
-        if (part.startsWith('`') && part.endsWith('`') && part.length >= 2) {
-          const inner = part.slice(1, -1);
-          // Check if exact inline code token matches a known definition
-          const exactDef = this.definitions.find(d =>
-            d.term === inner || (d.aliases || []).includes(inner)
+      // 1. Tokenize inline backtick `code` spans first so code tokens are never altered
+      //    while allowing surrounding **bold** (e.g. **Step Into (`F11`)**) to parse cleanly.
+      const codeTokenized = String(rawText).replace(/`([^`]+)`/g, (_full, inner) => {
+        const exactDef = this.definitions.find(d =>
+          d.term === inner || (d.aliases || []).includes(inner)
+        );
+        if (exactDef && linkedDefIds.size < maxLinks && !linkedDefIds.has(exactDef.id)) {
+          linkedDefIds.add(exactDef.id);
+          return putPlaceholder(
+            `<button type="button" class="inline-def-link inline-code-def" data-def-id="${escapeHtml(exactDef.id)}" title="View definition: ${escapeHtml(exactDef.term)}"><code>${escapeHtml(inner)}</code></button>`
           );
-          if (exactDef && linkedDefIds.size < maxLinks && !linkedDefIds.has(exactDef.id)) {
-            linkedDefIds.add(exactDef.id);
-            return `<button type="button" class="inline-def-link inline-code-def" data-def-id="${escapeHtml(exactDef.id)}" title="View definition: ${escapeHtml(exactDef.term)}"><code>${escapeHtml(inner)}</code></button>`;
-          }
-          return `<code class="inline-code">${escapeHtml(inner)}</code>`;
         }
+        return putPlaceholder(`<code class="inline-code">${escapeHtml(inner)}</code>`);
+      });
 
-        let safe = escapeHtml(part);
-        // Convert **bold** and *italic* emphasis cleanly after HTML escaping
-        safe = safe.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-        safe = safe.replace(/(^|[\s(])\*([^*]+)\*(?=[\s.,;:!?)]|$)/g, '$1<em>$2</em>');
+      // 2. Escape HTML on prose text (control-char placeholders pass through untouched)
+      let safe = escapeHtml(codeTokenized);
 
-        if (linkedDefIds.size >= maxLinks) return safe;
+      // 3. Convert **bold** (requires non-empty non-asterisk body; leaves literal "**" operator intact)
+      safe = safe.replace(/\*\*(?!\s)([^\n*]+?)(?<!\s)\*\*/g, '<strong>$1</strong>');
 
-        // Protect emphasis tags with placeholders so term matchers never match inside tag names
-        const placeholders = [];
-        safe = safe.replace(/<\/?(?:strong|em)>/g, (tag) => {
-          const tok = `\x00TAG_${placeholders.length}\x00`;
-          placeholders.push(tag);
-          return tok;
-        });
+      // 4. Convert *italic* strictly on genuine alphabetic prose words so C# multiplication
+      //    (3 * 2 * 2, a++ * 2) and dialog wildcards (*.txt, *.*) never lose asterisks.
+      safe = safe.replace(
+        /(^|[\s(])\*([A-Za-z][^*|;=\\"\n]*?[A-Za-z]|[A-Za-z])\*(?=$|\s|[.,;:!?)\]}](?![A-Za-z0-9_*]))/g,
+        '$1<em>$2</em>'
+      );
 
+      // 5. Shield emphasis tags before matching inline technical definition phrases
+      safe = safe.replace(/<\/?(?:strong|em)>/g, (tag) => putPlaceholder(tag));
+
+      if (linkedDefIds.size < maxLinks) {
         for (const m of this._matchers) {
           if (linkedDefIds.size >= maxLinks) break;
           if (linkedDefIds.has(m.id)) continue;
           if (m.regex.test(safe)) {
             safe = safe.replace(m.regex, (_full, prefix, matchedWord) => {
               linkedDefIds.add(m.id);
-              const tok = `\x00TAG_${placeholders.length}\x00`;
               const defObj = this.byId.get(m.id);
-              placeholders.push(
+              const btn = putPlaceholder(
                 `<button type="button" class="inline-def-link" data-def-id="${escapeHtml(m.id)}" title="View definition: ${escapeHtml(defObj ? defObj.term : matchedWord)}">${matchedWord}</button>`
               );
-              return `${prefix}${tok}`;
+              return `${prefix}${btn}`;
             });
           }
         }
-        placeholders.forEach((html, idx) => {
-          safe = safe.replace(`\x00TAG_${idx}\x00`, () => html);
-        });
-        return safe;
-      }).join('');
+      }
+
+      return safe.replace(/\x00\x01(\d+)\x00/g, (_m, idx) => placeholders[Number(idx)]);
     }
 
     pushReturnContext(contextSnapshot) {

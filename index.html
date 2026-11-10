@@ -291,6 +291,13 @@
                 <label for="customTimeLimit" style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Time Limit (Minutes, 0 = Untimed)</label>
                 <input type="number" id="customTimeLimit" class="text-input" min="0" max="240" value="30">
               </div>
+              <div>
+                <label for="customDeliveryMode" style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Delivery Format</label>
+                <select id="customDeliveryMode" class="select-input">
+                  <option value="quiz" selected>Interactive Quiz (Card + Shortcuts)</option>
+                  <option value="exam">Exam Paper Sheet (Grade at End)</option>
+                </select>
+              </div>
             </div>
             <div class="check-chip-group" style="margin-bottom:1.25rem;">
               <label class="check-chip"><input type="checkbox" id="customWeightedCheck" checked> Use Exam Weighting Distribution</label>
