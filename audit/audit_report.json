@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-10T09:50:54.188Z",
+  "timestamp": "2026-11-10T10:34:15.120Z",
   "module": "CMPG122",
   "version": "9.2.1",
   "status": "PASS",
@@ -22,7 +22,7 @@
       "SU1": 10,
       "SU2": 15
     },
-    "mobileBundleBytes": 2201401,
+    "mobileBundleBytes": 2122904,
     "failureCount": 0,
     "warningCount": 0
   },

@@ -218,9 +218,32 @@
     } catch (_e) {}
   }
 
-  async function resolveDeviceHash() {
+  function getOrCreateDeviceSeed() {
+    let seed = '';
     try {
-      const cached = localStorage.getItem(STORAGE_KEYS.DEVICE_HASH);
+      seed = localStorage.getItem(STORAGE_KEYS.DEVICE_SEED) || '';
+      if (!seed) {
+        const nav = typeof navigator !== 'undefined' ? navigator : {};
+        const scr = typeof screen !== 'undefined' ? screen : {};
+        seed = [
+          nav.userAgent || 'ua',
+          nav.language || 'en',
+          scr.width || 0,
+          scr.height || 0,
+          typeof Intl !== 'undefined' && Intl.DateTimeFormat ? Intl.DateTimeFormat().resolvedOptions().timeZone : 'tz'
+        ].join('|');
+        localStorage.setItem(STORAGE_KEYS.DEVICE_SEED, seed);
+      }
+    } catch (_e) {
+      seed = 'cmpg122-fallback-device-seed';
+    }
+    return seed;
+  }
+
+  async function resolveDeviceHash() {
+    let cached = '';
+    try {
+      cached = localStorage.getItem(STORAGE_KEYS.DEVICE_HASH) || '';
       if (cached && cached.length === 64) {
         deviceHash = cached;
       }
@@ -263,34 +286,14 @@
       }
     }
 
-    if (!ipString) {
-      if (deviceHash && deviceHash.length === 64) {
-        return deviceHash;
-      }
-      let seed = '';
-      try {
-        seed = localStorage.getItem(STORAGE_KEYS.DEVICE_SEED) || '';
-        if (!seed) {
-          const nav = typeof navigator !== 'undefined' ? navigator : {};
-          const scr = typeof screen !== 'undefined' ? screen : {};
-          seed = [
-            nav.userAgent || 'ua',
-            nav.language || 'en',
-            scr.width || 0,
-            scr.height || 0,
-            Intl && Intl.DateTimeFormat ? Intl.DateTimeFormat().resolvedOptions().timeZone : 'tz'
-          ].join('|');
-          localStorage.setItem(STORAGE_KEYS.DEVICE_SEED, seed);
-        }
-      } catch (_e) {
-        seed = 'cmpg122-fallback-device-seed';
-      }
-      ipString = 'device:' + seed;
-    }
-
-    const computedHash = await sha256Hex('cmpg122_ip_salt_v2::' + ipString);
     const oldHash = deviceHash;
-    deviceHash = computedHash;
+    if (ipString) {
+      deviceHash = await sha256Hex('cmpg122_ip_salt_v2::' + ipString);
+    } else if (cached && cached.length === 64) {
+      deviceHash = cached;
+    } else {
+      deviceHash = await sha256Hex('cmpg122_ip_salt_v2::device:' + getOrCreateDeviceSeed());
+    }
 
     try {
       localStorage.setItem(STORAGE_KEYS.DEVICE_HASH, deviceHash);
@@ -385,12 +388,23 @@
 
   function tickActiveSecond(nowTs) {
     const now = typeof nowTs === 'number' ? nowTs : Date.now();
-    if (isUserIdle(now) || !deviceHash) return false;
+    if (!deviceHash) return false;
+    if (isUserIdle(now)) {
+      const idleState = ensureDeviceRecord(deviceHash);
+      if (idleState && idleState.record.lastHeartbeat > 0) {
+        idleState.record.lastHeartbeat = 0;
+        idleState.record.lastSeen = now;
+        safeWriteLedger(idleState.ledger);
+        broadcastUpdate('idle_timeout', { deviceHash: deviceHash });
+        sendCloudPacket('leave', { hb: 0 });
+      }
+      return false;
+    }
     const ensured = ensureDeviceRecord(deviceHash);
     if (!ensured) return false;
     ensured.record.activeSeconds = (Number(ensured.record.activeSeconds) || 0) + 1;
     ensured.record.lastSeen = now;
-    if ((now - (ensured.record.lastHeartbeat || 0)) <= IDLE_CUTOFF_MS) {
+    if (!ensured.record.lastHeartbeat) {
       ensured.record.lastHeartbeat = now;
     }
     safeWriteLedger(ensured.ledger);
@@ -410,8 +424,7 @@
     const now = Date.now();
     lastActivityTime = now;
     if (!deviceHash) {
-      const seedHash = sha256HexSync('cmpg122_ip_salt_v2::pending');
-      deviceHash = seedHash;
+      deviceHash = sha256HexSync('cmpg122_ip_salt_v2::device:' + getOrCreateDeviceSeed());
     }
     const ensured = ensureDeviceRecord(deviceHash);
     if (!ensured) return null;
@@ -448,10 +461,14 @@
       const proto = persRoot.PersistenceManager.prototype;
       if (typeof proto.recordQuestionAttempt === 'function' && !proto.recordQuestionAttempt._telemetryWrapped) {
         const originalRecord = proto.recordQuestionAttempt;
-        const wrapped = function (questionId, isCorrect, meta) {
+        const wrapped = function (question, selectedIndex, isCorrect) {
+          const hasQuestion = Boolean(question && (typeof question === 'string' || question.id));
           const result = originalRecord.apply(this, arguments);
           try {
-            recordQuestionSubmission(Boolean(isCorrect));
+            if (hasQuestion) {
+              const correctFlag = arguments.length >= 3 ? Boolean(isCorrect) : Boolean(selectedIndex);
+              recordQuestionSubmission(correctFlag);
+            }
           } catch (_e) {}
           return result;
         };
@@ -470,14 +487,17 @@
         const target = ev && ev.target && typeof ev.target.closest === 'function'
           ? ev.target.closest('#btnSubmitSpot')
           : null;
-        if (!target) return;
+        if (!target || target.disabled) return;
         setTimeout(function () {
           try {
-            const fb = document.getElementById('spotFeedback');
+            const fb = document.querySelector('#codelabSubSpot .q-feedback-panel') || document.getElementById('spotFeedback');
             if (!fb || fb.style.display === 'none' || !fb.textContent) return;
             const txt = fb.textContent.trim();
             if (!txt || /select an option/i.test(txt)) return;
-            const isCorrect = /spot-on/i.test(txt) || fb.classList.contains('correct');
+            const isCorrect =
+              fb.classList.contains('feedback-correct') ||
+              fb.classList.contains('correct') ||
+              /correct diagnosis|spot-on/i.test(txt);
             recordQuestionSubmission(isCorrect);
           } catch (_e) {}
         }, 30);
@@ -536,7 +556,7 @@
     if (initialSeed && initialSeed.length === 64) {
       deviceHash = initialSeed;
     } else {
-      deviceHash = sha256HexSync('cmpg122_ip_salt_v2::init_' + (Date.now()));
+      deviceHash = sha256HexSync('cmpg122_ip_salt_v2::device:' + getOrCreateDeviceSeed());
     }
     const ensured = ensureDeviceRecord(deviceHash);
     if (ensured) {
@@ -562,6 +582,7 @@
           // Immediately expire live heartbeat when tab is hidden or closed
           const state = ensureDeviceRecord(deviceHash);
           if (state) {
+            state.record.lastSeen = Date.now();
             state.record.lastHeartbeat = 0;
             safeWriteLedger(state.ledger);
             broadcastUpdate('tab_hidden', { deviceHash: deviceHash });
@@ -574,6 +595,7 @@
         if (!deviceHash) return;
         const state = ensureDeviceRecord(deviceHash);
         if (state) {
+          state.record.lastSeen = Date.now();
           state.record.lastHeartbeat = 0;
           safeWriteLedger(state.ledger);
           broadcastUpdate('pagehide', { deviceHash: deviceHash });
@@ -630,4 +652,4 @@
       startStudentTracker();
     }
   }
-})(typeof self !== 'undefined' ? self : this);
+})(typeof globalThis !== 'undefined' ? globalThis : (typeof self !== 'undefined' ? self : this));

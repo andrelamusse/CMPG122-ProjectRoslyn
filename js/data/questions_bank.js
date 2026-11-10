@@ -179,18 +179,18 @@
       "stem": "Which of the following is NOT one of Shneiderman's 5 measurable human factors / usability goals?",
       "code": "",
       "options": [
-        "Time to learn for end users",
-        "Speed of performance",
+        "Time required for users to learn",
+        "Speed of task performance",
         "Hardware manufacturing cost",
-        "Rate of errors by users",
-        "Subjective satisfaction"
+        "Rate of errors made by users",
+        "Subjective user satisfaction"
       ],
       "opts": [
-        "Time to learn for end users",
-        "Speed of performance",
+        "Time required for users to learn",
+        "Speed of task performance",
         "Hardware manufacturing cost",
-        "Rate of errors by users",
-        "Subjective satisfaction"
+        "Rate of errors made by users",
+        "Subjective user satisfaction"
       ],
       "answer": 2,
       "ans": 2,
@@ -268,15 +268,15 @@
       "code": "",
       "options": [
         "Playfulness and aesthetic appeal",
-        "Zero-error rate and high reliability",
-        "Low training cost in desktop user interfaces",
-        "Subjective satisfaction for end users"
+        "Zero-error rate and reliability",
+        "Minimal operator training expense",
+        "Casual subjective satisfaction"
       ],
       "opts": [
         "Playfulness and aesthetic appeal",
-        "Zero-error rate and high reliability",
-        "Low training cost in desktop user interfaces",
-        "Subjective satisfaction for end users"
+        "Zero-error rate and reliability",
+        "Minimal operator training expense",
+        "Casual subjective satisfaction"
       ],
       "answer": 1,
       "ans": 1,
@@ -353,16 +353,16 @@
       "stem": "What does the concept of 'Universal Usability' mandate for interface developers?",
       "code": "",
       "options": [
-        "Creating a single interface designed only for high-end PCs during routine user interaction with the interface",
-        "Forcing all users to learn command-line syntax within standard graphical desktop applications within the current form class instance",
-        "Eliminating all graphical controls when evaluating operator task performance on screen on the active Windows Form canvas",
-        "Accommodating diversity in user physical abilities, cognitive skills, cultural backgrounds, and hardware platforms"
+        "Creating a single interface designed only for high-end PCs",
+        "Forcing all users to learn complex command-line syntax",
+        "Eliminating graphical controls in favor of text terminals",
+        "Serving diverse user skills, backgrounds, and hardware"
       ],
       "opts": [
-        "Creating a single interface designed only for high-end PCs during routine user interaction with the interface",
-        "Forcing all users to learn command-line syntax within standard graphical desktop applications within the current form class instance",
-        "Eliminating all graphical controls when evaluating operator task performance on screen on the active Windows Form canvas",
-        "Accommodating diversity in user physical abilities, cognitive skills, cultural backgrounds, and hardware platforms"
+        "Creating a single interface designed only for high-end PCs",
+        "Forcing all users to learn complex command-line syntax",
+        "Eliminating graphical controls in favor of text terminals",
+        "Serving diverse user skills, backgrounds, and hardware"
       ],
       "answer": 3,
       "ans": 3,
@@ -396,16 +396,16 @@
       "stem": "Why is 'Strive for consistency' considered the first and most fundamental of Shneiderman's 8 Golden Rules?",
       "code": "",
       "options": [
-        "Consistent terminology, color schemes, layouts, and input patterns enable users to transfer learned knowledge effortlessly",
-        "It allows developers to copy code without thinking within standard graphical desktop applications during standard GUI event execution",
-        "It eliminates the need for testing when evaluating operator task performance on screen before updating the target UI control",
-        "It requires all buttons to be bright red across interactive desktop interface workflows before returning to the calling method"
+        "Consistent layouts and terms let users apply prior knowledge",
+        "It allows developers to copy event code without modifications",
+        "It eliminates the need for usability testing before deployment",
+        "It requires every action button on a form to be bright red"
       ],
       "opts": [
-        "Consistent terminology, color schemes, layouts, and input patterns enable users to transfer learned knowledge effortlessly",
-        "It allows developers to copy code without thinking within standard graphical desktop applications during standard GUI event execution",
-        "It eliminates the need for testing when evaluating operator task performance on screen before updating the target UI control",
-        "It requires all buttons to be bright red across interactive desktop interface workflows before returning to the calling method"
+        "Consistent layouts and terms let users apply prior knowledge",
+        "It allows developers to copy event code without modifications",
+        "It eliminates the need for usability testing before deployment",
+        "It requires every action button on a form to be bright red"
       ],
       "answer": 0,
       "ans": 0,
@@ -568,16 +568,16 @@
       "stem": "What is the psychological rationale behind Rule 8: 'Reduce short-term memory load'?",
       "code": "",
       "options": [
-        "Humans can only hold approximately 7 ± 2 chunks of information in working memory",
-        "It allows developers to build smaller forms within standard graphical desktop applications",
-        "Human short-term memory is virtually limitless for interactive operators",
-        "Users prefer to memorize long hexadecimal account numbers in desktop user interfaces"
+        "Humans can hold only about 7 ± 2 chunks of data in working memory",
+        "It allows developers to build smaller forms with fewer controls",
+        "Human short-term working memory is virtually limitless in capacity",
+        "Users prefer to memorize long hexadecimal account numbers"
       ],
       "opts": [
-        "Humans can only hold approximately 7 ± 2 chunks of information in working memory",
-        "It allows developers to build smaller forms within standard graphical desktop applications",
-        "Human short-term memory is virtually limitless for interactive operators",
-        "Users prefer to memorize long hexadecimal account numbers in desktop user interfaces"
+        "Humans can hold only about 7 ± 2 chunks of data in working memory",
+        "It allows developers to build smaller forms with fewer controls",
+        "Human short-term working memory is virtually limitless in capacity",
+        "Users prefer to memorize long hexadecimal account numbers"
       ],
       "answer": 0,
       "ans": 0,
@@ -611,16 +611,16 @@
       "stem": "In Don Norman's Action Cycle, what is the 'Gulf of Execution'?",
       "code": "",
       "options": [
-        "The distance between the monitor and the user's eyes when evaluating operator task performance on screen",
-        "The difference between the user's intended goal and the physical actions the system allows them to perform",
-        "The delay in internet transmission across interactive desktop interface workflows before updating the target UI control",
-        "The time required to compile C# code during routine user interaction with the interface before returning to the calling method"
+        "The physical distance between the monitor and the user's eyes",
+        "The gap between a user's goal and the actions the system offers",
+        "The network latency delay during remote internet data transmission",
+        "The total compilation time required to build the C# source code"
       ],
       "opts": [
-        "The distance between the monitor and the user's eyes when evaluating operator task performance on screen",
-        "The difference between the user's intended goal and the physical actions the system allows them to perform",
-        "The delay in internet transmission across interactive desktop interface workflows before updating the target UI control",
-        "The time required to compile C# code during routine user interaction with the interface before returning to the calling method"
+        "The physical distance between the monitor and the user's eyes",
+        "The gap between a user's goal and the actions the system offers",
+        "The network latency delay during remote internet data transmission",
+        "The total compilation time required to build the C# source code"
       ],
       "answer": 1,
       "ans": 1,
@@ -654,16 +654,16 @@
       "stem": "In Don Norman's Action Cycle, what is the 'Gulf of Evaluation'?",
       "code": "",
       "options": [
-        "The cost of purchasing software across interactive desktop interface workflows within the current form class instance during interface state updates",
-        "The time taken to grade an exam during routine user interaction with the interface on the active Windows Form canvas",
-        "The difficulty the user experiences in perceiving and interpreting the system's state to determine if their goal was met",
-        "The number of lines of code in Form1.cs within standard graphical desktop applications during standard GUI event execution"
+        "The total licensing cost of purchasing commercial desktop software",
+        "The time required by an instructor to grade a programming exam",
+        "The effort needed to interpret system state and verify goal success",
+        "The total number of source code lines written inside Form1.cs"
       ],
       "opts": [
-        "The cost of purchasing software across interactive desktop interface workflows within the current form class instance during interface state updates",
-        "The time taken to grade an exam during routine user interaction with the interface on the active Windows Form canvas",
-        "The difficulty the user experiences in perceiving and interpreting the system's state to determine if their goal was met",
-        "The number of lines of code in Form1.cs within standard graphical desktop applications during standard GUI event execution"
+        "The total licensing cost of purchasing commercial desktop software",
+        "The time required by an instructor to grade a programming exam",
+        "The effort needed to interpret system state and verify goal success",
+        "The total number of source code lines written inside Form1.cs"
       ],
       "answer": 2,
       "ans": 2,
@@ -697,16 +697,16 @@
       "stem": "Which of the following interface features best supports 'Internal Locus of Control' (Rule 7)?",
       "code": "",
       "options": [
-        "Forcing the user to wait for arbitrary background delays during routine user interaction with the interface",
-        "Randomly playing loud sound effects within standard graphical desktop applications before returning to the calling method",
-        "Automatically closing forms without asking when evaluating operator task performance on screen within the current form class instance",
-        "Making the user the initiator of actions rather than surprising them with unexpected system actions or changes"
+        "Forcing the user to wait for arbitrary background timer delays",
+        "Randomly playing loud sound effects during data entry tasks",
+        "Automatically closing active forms without asking for confirmation",
+        "Making the user the initiator of actions rather than the system"
       ],
       "opts": [
-        "Forcing the user to wait for arbitrary background delays during routine user interaction with the interface",
-        "Randomly playing loud sound effects within standard graphical desktop applications before returning to the calling method",
-        "Automatically closing forms without asking when evaluating operator task performance on screen within the current form class instance",
-        "Making the user the initiator of actions rather than surprising them with unexpected system actions or changes"
+        "Forcing the user to wait for arbitrary background timer delays",
+        "Randomly playing loud sound effects during data entry tasks",
+        "Automatically closing active forms without asking for confirmation",
+        "Making the user the initiator of actions rather than the system"
       ],
       "answer": 3,
       "ans": 3,
@@ -740,16 +740,16 @@
       "stem": "Why should Visual C# desktop applications provide keyboard shortcuts (access keys such as &File or Alt+C) and TabIndex navigation?",
       "code": "",
       "options": [
-        "It caters to universal usability by accommodating expert power users and individuals who cannot use a mouse",
-        "It is required by the Windows operating system kernel within standard graphical desktop applications",
-        "It reduces the size of the compiled .exe file when evaluating operator task performance on screen during standard GUI event execution",
-        "It prevents syntax errors in event handlers during the Visual Studio build verification step before updating the target UI control"
+        "It supports universal usability for expert and mouse-free users",
+        "It is strictly required by the Windows operating system kernel",
+        "It significantly reduces the size of the compiled .exe binary",
+        "It prevents compile-time syntax errors inside Click event handlers"
       ],
       "opts": [
-        "It caters to universal usability by accommodating expert power users and individuals who cannot use a mouse",
-        "It is required by the Windows operating system kernel within standard graphical desktop applications",
-        "It reduces the size of the compiled .exe file when evaluating operator task performance on screen during standard GUI event execution",
-        "It prevents syntax errors in event handlers during the Visual Studio build verification step before updating the target UI control"
+        "It supports universal usability for expert and mouse-free users",
+        "It is strictly required by the Windows operating system kernel",
+        "It significantly reduces the size of the compiled .exe binary",
+        "It prevents compile-time syntax errors inside Click event handlers"
       ],
       "answer": 0,
       "ans": 0,
@@ -783,16 +783,16 @@
       "stem": "When a user enters an invalid number in a TextBox, which error feedback mechanism is most effective under HCI design principles?",
       "code": "",
       "options": [
-        "Sounding a loud screeching alarm when evaluating operator task performance on screen",
-        "Displaying a polite, constructive error message explaining the valid range",
-        "Crashing the application immediately with an unhandled exception in GUI design",
-        "Silently ignoring the error without notifying the user for end users"
+        "Sounding a loud screeching alarm through the system speakers",
+        "Showing a polite, specific message that states the valid range",
+        "Crashing the application immediately with an unhandled exception",
+        "Silently ignoring the invalid input without notifying the user"
       ],
       "opts": [
-        "Sounding a loud screeching alarm when evaluating operator task performance on screen",
-        "Displaying a polite, constructive error message explaining the valid range",
-        "Crashing the application immediately with an unhandled exception in GUI design",
-        "Silently ignoring the error without notifying the user for end users"
+        "Sounding a loud screeching alarm through the system speakers",
+        "Showing a polite, specific message that states the valid range",
+        "Crashing the application immediately with an unhandled exception",
+        "Silently ignoring the invalid input without notifying the user"
       ],
       "answer": 1,
       "ans": 1,
@@ -912,16 +912,16 @@
       "stem": "When designing interfaces for elderly users, which Universal Usability adjustment is most critical?",
       "code": "",
       "options": [
-        "Higher contrast ratios, adjustable font sizes, and larger click targets",
-        "Faster animation speeds within standard graphical desktop applications",
-        "Removing all button labels when evaluating operator task performance on screen",
-        "Smaller fonts and low-contrast grayscale colors in desktop user interfaces"
+        "Higher contrast ratios, scalable fonts, and larger click targets",
+        "Faster animation speeds and rapid auto-advancing screen transitions",
+        "Removing all text labels from buttons in favor of tiny abstract icons",
+        "Smaller condensed fonts paired with low-contrast grayscale backgrounds"
       ],
       "opts": [
-        "Higher contrast ratios, adjustable font sizes, and larger click targets",
-        "Faster animation speeds within standard graphical desktop applications",
-        "Removing all button labels when evaluating operator task performance on screen",
-        "Smaller fonts and low-contrast grayscale colors in desktop user interfaces"
+        "Higher contrast ratios, scalable fonts, and larger click targets",
+        "Faster animation speeds and rapid auto-advancing screen transitions",
+        "Removing all text labels from buttons in favor of tiny abstract icons",
+        "Smaller condensed fonts paired with low-contrast grayscale backgrounds"
       ],
       "answer": 0,
       "ans": 0,
@@ -1041,16 +1041,16 @@
       "stem": "In visual design, what does 'affordance' refer to?",
       "code": "",
       "options": [
-        "The download speed of the application during routine user interaction with the interface",
-        "The price of the software license within standard graphical desktop applications during interface state updates",
-        "The memory consumption of a bitmap when evaluating operator task performance on screen",
-        "The perceptual cues that indicate to a user how an object or control can be interacted with"
+        "The network download speed of the compiled desktop application",
+        "The retail license price of the commercial software package",
+        "The RAM memory consumption of an uncompressed bitmap graphic",
+        "Visual cues showing how a control can be interacted with"
       ],
       "opts": [
-        "The download speed of the application during routine user interaction with the interface",
-        "The price of the software license within standard graphical desktop applications during interface state updates",
-        "The memory consumption of a bitmap when evaluating operator task performance on screen",
-        "The perceptual cues that indicate to a user how an object or control can be interacted with"
+        "The network download speed of the compiled desktop application",
+        "The retail license price of the commercial software package",
+        "The RAM memory consumption of an uncompressed bitmap graphic",
+        "Visual cues showing how a control can be interacted with"
       ],
       "answer": 3,
       "ans": 3,
@@ -1084,16 +1084,16 @@
       "stem": "Why is informative feedback (Rule 3) crucial when a long database query or calculation is executing?",
       "code": "",
       "options": [
-        "It prevents the user from assuming the application has frozen or crashed",
-        "It generates automatic unit tests within standard graphical desktop applications",
-        "It speeds up CPU clock cycles when evaluating operator task performance on screen",
-        "It clears the RAM cache across interactive desktop interface workflows"
+        "It reassures the user that the application has not frozen or crashed",
+        "It automatically generates unit test suites for the active form class",
+        "It directly increases the hardware clock speed of the processor cores",
+        "It flushes and clears the operating system's physical RAM cache"
       ],
       "opts": [
-        "It prevents the user from assuming the application has frozen or crashed",
-        "It generates automatic unit tests within standard graphical desktop applications",
-        "It speeds up CPU clock cycles when evaluating operator task performance on screen",
-        "It clears the RAM cache across interactive desktop interface workflows"
+        "It reassures the user that the application has not frozen or crashed",
+        "It automatically generates unit test suites for the active form class",
+        "It directly increases the hardware clock speed of the processor cores",
+        "It flushes and clears the operating system's physical RAM cache"
       ],
       "answer": 0,
       "ans": 0,
@@ -1127,16 +1127,16 @@
       "stem": "Which of the following describes an example of striving for consistency in button placement across multiple Windows Forms?",
       "code": "",
       "options": [
-        "Placing the Close button randomly on each screen in desktop apps",
-        "Placing the 'Close' button at the bottom-right of every dialog form",
-        "Changing button colors from purple to green on every tab in GUI design",
-        "Using different font families on each button during routine user tasks"
+        "Placing the Close button in a random corner on each dialog screen",
+        "Placing the 'Close' button at the bottom-right of each dialog form",
+        "Changing button colors from purple to green across different tabs",
+        "Using a different decorative font family on every form button"
       ],
       "opts": [
-        "Placing the Close button randomly on each screen in desktop apps",
-        "Placing the 'Close' button at the bottom-right of every dialog form",
-        "Changing button colors from purple to green on every tab in GUI design",
-        "Using different font families on each button during routine user tasks"
+        "Placing the Close button in a random corner on each dialog screen",
+        "Placing the 'Close' button at the bottom-right of each dialog form",
+        "Changing button colors from purple to green across different tabs",
+        "Using a different decorative font family on every form button"
       ],
       "answer": 1,
       "ans": 1,
@@ -1170,16 +1170,16 @@
       "stem": "What is the primary danger of violating Rule 7 (Internal Locus of Control) by showing frequent unexpected modal pop-ups?",
       "code": "",
       "options": [
-        "Variables will lose their values across interactive desktop interface workflows on the active Windows Form canvas",
-        "The C# compiler will refuse to build the project during routine user interaction with the interface",
-        "Users experience frustration, feeling controlled by the computer rather than being the master of the tool",
-        "The hard disk will run out of space within standard graphical desktop applications before updating the target UI control"
+        "Local numeric variables will unexpectedly lose their stored values",
+        "The Visual C# compiler will refuse to build the solution project",
+        "Users feel frustrated and controlled rather than in charge",
+        "The local hard disk drive will rapidly run out of storage space"
       ],
       "opts": [
-        "Variables will lose their values across interactive desktop interface workflows on the active Windows Form canvas",
-        "The C# compiler will refuse to build the project during routine user interaction with the interface",
-        "Users experience frustration, feeling controlled by the computer rather than being the master of the tool",
-        "The hard disk will run out of space within standard graphical desktop applications before updating the target UI control"
+        "Local numeric variables will unexpectedly lose their stored values",
+        "The Visual C# compiler will refuse to build the solution project",
+        "Users feel frustrated and controlled rather than in charge",
+        "The local hard disk drive will rapidly run out of storage space"
       ],
       "answer": 2,
       "ans": 2,
@@ -1213,16 +1213,16 @@
       "stem": "Which Golden Rule directly justifies why a word processor asks 'Do you want to save changes before closing?' when exiting?",
       "code": "",
       "options": [
-        "Strive for consistency only during routine user tasks",
-        "Reduce short-term memory load only on the screen",
-        "Cater to universal usability only for interactive operators",
-        "Permit easy reversal of actions & Error prevention"
+        "Rule 1: Strive for interface consistency only",
+        "Rule 8: Reduce short-term memory load only",
+        "Rule 2: Cater to universal usability only",
+        "Rule 6: Easy reversal & Rule 5: Error prevention"
       ],
       "opts": [
-        "Strive for consistency only during routine user tasks",
-        "Reduce short-term memory load only on the screen",
-        "Cater to universal usability only for interactive operators",
-        "Permit easy reversal of actions & Error prevention"
+        "Rule 1: Strive for interface consistency only",
+        "Rule 8: Reduce short-term memory load only",
+        "Rule 2: Cater to universal usability only",
+        "Rule 6: Easy reversal & Rule 5: Error prevention"
       ],
       "answer": 3,
       "ans": 3,
@@ -1428,16 +1428,16 @@
       "stem": "How is the usability measure 'Subjective satisfaction' typically assessed in software development?",
       "code": "",
       "options": [
-        "Through user post-test surveys, interviews, and Likert-scale satisfaction questionnaires",
-        "By timing the millisecond latency of the garbage collector within standard graphical desktop applications",
-        "By counting compiler warnings generated during build when evaluating operator task performance on screen",
-        "By measuring the physical weight of the monitor across interactive desktop interface workflows"
+        "Via post-test user surveys, interviews, and Likert questionnaires",
+        "By timing the millisecond latency of the .NET runtime garbage collector",
+        "By counting the number of compiler warnings generated during the build",
+        "By measuring the physical dimensions and weight of the display monitor"
       ],
       "opts": [
-        "Through user post-test surveys, interviews, and Likert-scale satisfaction questionnaires",
-        "By timing the millisecond latency of the garbage collector within standard graphical desktop applications",
-        "By counting compiler warnings generated during build when evaluating operator task performance on screen",
-        "By measuring the physical weight of the monitor across interactive desktop interface workflows"
+        "Via post-test user surveys, interviews, and Likert questionnaires",
+        "By timing the millisecond latency of the .NET runtime garbage collector",
+        "By counting the number of compiler warnings generated during the build",
+        "By measuring the physical dimensions and weight of the display monitor"
       ],
       "answer": 0,
       "ans": 0,
@@ -1471,16 +1471,16 @@
       "stem": "In life-critical systems (e.g., intensive care patient monitoring, air traffic control, nuclear power management), what usability trade-off is strictly mandated?",
       "code": "",
       "options": [
-        "Training time must always be kept under 5 minutes when evaluating operator task performance on screen",
-        "Zero-tolerance for user error and absolute reliability take precedence over rapid learning or novelty",
-        "Voice synthesis must entirely replace visual graphical interfaces in desktop user interfaces",
-        "Aesthetics and animated transitions must be prioritized over reliability during routine user interaction with the interface"
+        "Operator training time must always be kept under five minutes total",
+        "Zero-error reliability takes strict precedence over novelty or speed",
+        "Voice synthesis must completely replace all visual graphical displays",
+        "Aesthetic animations must be prioritized over operational reliability"
       ],
       "opts": [
-        "Training time must always be kept under 5 minutes when evaluating operator task performance on screen",
-        "Zero-tolerance for user error and absolute reliability take precedence over rapid learning or novelty",
-        "Voice synthesis must entirely replace visual graphical interfaces in desktop user interfaces",
-        "Aesthetics and animated transitions must be prioritized over reliability during routine user interaction with the interface"
+        "Operator training time must always be kept under five minutes total",
+        "Zero-error reliability takes strict precedence over novelty or speed",
+        "Voice synthesis must completely replace all visual graphical displays",
+        "Aesthetic animations must be prioritized over operational reliability"
       ],
       "answer": 1,
       "ans": 1,
@@ -1514,16 +1514,16 @@
       "stem": "For industrial and commercial office systems (e.g. banking teller terminals, insurance claim auditing), what is the primary economic driver of interface usability?",
       "code": "",
       "options": [
-        "Ensuring the program can run without an operating system across interactive desktop interface workflows",
-        "Designing interfaces that require no keyboard during routine user interaction with the interface on the active Windows Form canvas",
-        "Minimizing operator transaction time and reducing costly data-entry mistakes to lower business operating costs",
-        "Maximizing playful animations to entertain staff within standard graphical desktop applications during standard GUI event execution"
+        "Ensuring the desktop program can run without an operating system",
+        "Designing data-entry interfaces that prohibit keyboard navigation",
+        "Minimizing transaction time and data-entry errors to lower costs",
+        "Maximizing playful screen animations to entertain office staff"
       ],
       "opts": [
-        "Ensuring the program can run without an operating system across interactive desktop interface workflows",
-        "Designing interfaces that require no keyboard during routine user interaction with the interface on the active Windows Form canvas",
-        "Minimizing operator transaction time and reducing costly data-entry mistakes to lower business operating costs",
-        "Maximizing playful animations to entertain staff within standard graphical desktop applications during standard GUI event execution"
+        "Ensuring the desktop program can run without an operating system",
+        "Designing data-entry interfaces that prohibit keyboard navigation",
+        "Minimizing transaction time and data-entry errors to lower costs",
+        "Maximizing playful screen animations to entertain office staff"
       ],
       "answer": 2,
       "ans": 2,
@@ -1557,16 +1557,16 @@
       "stem": "In office, home, and entertainment applications, what factor most heavily determines whether users continue to adopt and utilize the software?",
       "code": "",
       "options": [
-        "The number of command-line switches available during routine user interaction with the interface inside the desktop session",
-        "The presence of complex nested multi-tiered menus within standard graphical desktop applications",
-        "Forced registration and complex password renewals when evaluating operator task performance on screen",
-        "Ease of learning, low frustration, and seamless self-explanatory operation without formal training manuals"
+        "The total number of hidden command-line switches available",
+        "The presence of deeply nested multi-tiered configuration menus",
+        "Mandatory daily account registration and complex password renewals",
+        "Ease of learning, low frustration, and self-explanatory operation"
       ],
       "opts": [
-        "The number of command-line switches available during routine user interaction with the interface inside the desktop session",
-        "The presence of complex nested multi-tiered menus within standard graphical desktop applications",
-        "Forced registration and complex password renewals when evaluating operator task performance on screen",
-        "Ease of learning, low frustration, and seamless self-explanatory operation without formal training manuals"
+        "The total number of hidden command-line switches available",
+        "The presence of deeply nested multi-tiered configuration menus",
+        "Mandatory daily account registration and complex password renewals",
+        "Ease of learning, low frustration, and self-explanatory operation"
       ],
       "answer": 3,
       "ans": 3,
@@ -1600,16 +1600,16 @@
       "stem": "What core interface capability is essential for exploratory, creative, and collaborative applications (such as CAD modeling, graphic design, and music editors)?",
       "code": "",
       "options": [
-        "Easy exploration with comprehensive Undo/Redo capabilities and non-destructive experimentation",
-        "Disabling keyboard shortcuts to prevent accidental commands across form layouts on the active Windows Form canvas",
-        "Forcing permanent saving after every mouse click when evaluating operator task performance on screen",
-        "Strict modal dialogs that prevent multitasking across interactive desktop interface workflows"
+        "Full Undo/Redo support for safe, non-destructive exploration",
+        "Disabling all keyboard shortcuts to prevent accidental user commands",
+        "Forcing permanent disk overwrites after every single mouse click",
+        "Using strict modal dialogs that block all concurrent multitasking"
       ],
       "opts": [
-        "Easy exploration with comprehensive Undo/Redo capabilities and non-destructive experimentation",
-        "Disabling keyboard shortcuts to prevent accidental commands across form layouts on the active Windows Form canvas",
-        "Forcing permanent saving after every mouse click when evaluating operator task performance on screen",
-        "Strict modal dialogs that prevent multitasking across interactive desktop interface workflows"
+        "Full Undo/Redo support for safe, non-destructive exploration",
+        "Disabling all keyboard shortcuts to prevent accidental user commands",
+        "Forcing permanent disk overwrites after every single mouse click",
+        "Using strict modal dialogs that block all concurrent multitasking"
       ],
       "answer": 0,
       "ans": 0,
@@ -1643,16 +1643,16 @@
       "stem": "In socio-technical public systems (such as national election voting kiosks and municipal service portals), which interface attribute is paramount?",
       "code": "",
       "options": [
-        "High-speed keyboard commands intended only for expert typists when evaluating operator task performance on screen",
-        "Trust, accessibility for citizens of all literacy levels, and total prevention of ambiguous inputs",
-        "Integration with cutting-edge 3D virtual reality headsets across interactive desktop interface workflows",
-        "Eliminating confirmation screens to accelerate line throughput during routine user tasks"
+        "High-speed cryptic keyboard macros intended only for expert typists",
+        "Public trust, broad accessibility, and preventing ambiguous input",
+        "Mandatory integration with specialized 3D virtual reality headsets",
+        "Eliminating all confirmation screens to accelerate queue throughput"
       ],
       "opts": [
-        "High-speed keyboard commands intended only for expert typists when evaluating operator task performance on screen",
-        "Trust, accessibility for citizens of all literacy levels, and total prevention of ambiguous inputs",
-        "Integration with cutting-edge 3D virtual reality headsets across interactive desktop interface workflows",
-        "Eliminating confirmation screens to accelerate line throughput during routine user tasks"
+        "High-speed cryptic keyboard macros intended only for expert typists",
+        "Public trust, broad accessibility, and preventing ambiguous input",
+        "Mandatory integration with specialized 3D virtual reality headsets",
+        "Eliminating all confirmation screens to accelerate queue throughput"
       ],
       "answer": 1,
       "ans": 1,
@@ -1729,16 +1729,16 @@
       "stem": "On a traffic signal trainer form, red, amber, and green light PictureBoxes are paired with a Label (lblInstruction) displaying 'STOP', 'GET READY', and 'GO'. Why is this redundant coding vital for universal usability?",
       "code": "",
       "options": [
-        "It speeds up CPU rendering of JPEG images during routine user interaction with the interface within the current form class instance",
-        "It forces the C# compiler to allocate double the graphics memory within standard graphical desktop applications",
-        "It is a required syntax requirement of .NET Framework 4.8 when evaluating operator task performance on screen under .NET runtime execution",
-        "It satisfies accessibility requirements for color-blind users who cannot distinguish red from green solely by hue"
+        "It accelerates hardware GPU rendering of compressed JPEG images",
+        "It forces the C# compiler to allocate double the video graphics memory",
+        "It is a mandatory syntax rule enforced by the .NET Framework compiler",
+        "It lets color-blind users tell signal states apart without hue"
       ],
       "opts": [
-        "It speeds up CPU rendering of JPEG images during routine user interaction with the interface within the current form class instance",
-        "It forces the C# compiler to allocate double the graphics memory within standard graphical desktop applications",
-        "It is a required syntax requirement of .NET Framework 4.8 when evaluating operator task performance on screen under .NET runtime execution",
-        "It satisfies accessibility requirements for color-blind users who cannot distinguish red from green solely by hue"
+        "It accelerates hardware GPU rendering of compressed JPEG images",
+        "It forces the C# compiler to allocate double the video graphics memory",
+        "It is a mandatory syntax rule enforced by the .NET Framework compiler",
+        "It lets color-blind users tell signal states apart without hue"
       ],
       "answer": 3,
       "ans": 3,
@@ -1772,16 +1772,16 @@
       "stem": "How does grouping related controls inside a GroupBox with a descriptive text header (e.g. grpRoute, grpFinding) improve cognitive usability?",
       "code": "",
       "options": [
-        "It reduces visual clutter and chunks related information, easing cognitive processing and visual search",
-        "It increases the screen resolution of the form within standard graphical desktop applications",
-        "It automatically encrypts variables inside the group when evaluating operator task performance on screen",
-        "It converts TextBox controls to decimal variables automatically across interactive desktop interface workflows"
+        "It cuts visual clutter and groups related controls for easy scanning",
+        "It physically increases the pixel resolution of the computer monitor",
+        "It automatically encrypts all local variables declared inside the form",
+        "It converts TextBox string inputs into decimal variables automatically"
       ],
       "opts": [
-        "It reduces visual clutter and chunks related information, easing cognitive processing and visual search",
-        "It increases the screen resolution of the form within standard graphical desktop applications",
-        "It automatically encrypts variables inside the group when evaluating operator task performance on screen",
-        "It converts TextBox controls to decimal variables automatically across interactive desktop interface workflows"
+        "It cuts visual clutter and groups related controls for easy scanning",
+        "It physically increases the pixel resolution of the computer monitor",
+        "It automatically encrypts all local variables declared inside the form",
+        "It converts TextBox string inputs into decimal variables automatically"
       ],
       "answer": 0,
       "ans": 0,
@@ -1815,16 +1815,16 @@
       "stem": "Which interface adaptation is specifically recommended when designing Visual C# Windows Forms for elderly users?",
       "code": "",
       "options": [
-        "Hiding standard controls inside complex contextual right-click menus when evaluating operator task performance on screen",
-        "Employing scalable high-contrast fonts, distinct button affordances, and forgiving error handling",
-        "Using low-contrast light grey text on dark grey backgrounds to reduce brightness in GUI design",
-        "Removing all confirmation dialogs to eliminate extra clicks during routine user interaction with the interface"
+        "Hiding standard action controls inside nested contextual right-click menus",
+        "Scalable high-contrast fonts, clear affordances, and safe error recovery",
+        "Using low-contrast light grey text on dark grey backgrounds to dim the screen",
+        "Removing all confirmation dialogs to reduce the total number of mouse clicks"
       ],
       "opts": [
-        "Hiding standard controls inside complex contextual right-click menus when evaluating operator task performance on screen",
-        "Employing scalable high-contrast fonts, distinct button affordances, and forgiving error handling",
-        "Using low-contrast light grey text on dark grey backgrounds to reduce brightness in GUI design",
-        "Removing all confirmation dialogs to eliminate extra clicks during routine user interaction with the interface"
+        "Hiding standard action controls inside nested contextual right-click menus",
+        "Scalable high-contrast fonts, clear affordances, and safe error recovery",
+        "Using low-contrast light grey text on dark grey backgrounds to dim the screen",
+        "Removing all confirmation dialogs to reduce the total number of mouse clicks"
       ],
       "answer": 1,
       "ans": 1,
@@ -1858,16 +1858,16 @@
       "stem": "What design strategy best supports internationalization (i18n) when displaying financial outputs in a South African Visual C# application?",
       "code": "",
       "options": [
-        "Writing custom loop algorithms to replace commas with asterisks across interactive desktop interface workflows before returning to the calling method",
-        "Displaying financial amounts as unformatted floating-point raw numbers during routine user interaction with the interface",
-        "Formatting numeric variables using.ToString(\"C\") to dynamically leverage the regional culture currency symbol and decimal separator",
-        "Hardcoding the dollar symbol '$' directly into string concatenations within standard graphical desktop applications on the active Windows Form canvas"
+        "Writing custom loop algorithms to replace decimal commas with asterisks",
+        "Displaying financial amounts as unformatted floating-point raw numbers",
+        "Using .ToString(\"C\") to apply regional currency symbols and formatting",
+        "Hardcoding the dollar symbol '$' directly into string concatenations"
       ],
       "opts": [
-        "Writing custom loop algorithms to replace commas with asterisks across interactive desktop interface workflows before returning to the calling method",
-        "Displaying financial amounts as unformatted floating-point raw numbers during routine user interaction with the interface",
-        "Formatting numeric variables using.ToString(\"C\") to dynamically leverage the regional culture currency symbol and decimal separator",
-        "Hardcoding the dollar symbol '$' directly into string concatenations within standard graphical desktop applications on the active Windows Form canvas"
+        "Writing custom loop algorithms to replace decimal commas with asterisks",
+        "Displaying financial amounts as unformatted floating-point raw numbers",
+        "Using .ToString(\"C\") to apply regional currency symbols and formatting",
+        "Hardcoding the dollar symbol '$' directly into string concatenations"
       ],
       "answer": 2,
       "ans": 2,
@@ -1901,16 +1901,16 @@
       "stem": "In Windows Forms controls, what is the role of the 'AccessibleName' and 'AccessibleDescription' properties?",
       "code": "",
       "options": [
-        "They control database access permissions for the control during routine user interaction with the interface",
-        "They set the C# identifier name used in source code logic within standard graphical desktop applications",
-        "They determine the file path for control background bitmaps when evaluating operator task performance on screen",
-        "They provide descriptive spoken text for assistive screen readers utilized by visually impaired users"
+        "They control SQL database access permissions for the selected control",
+        "They set the C# variable identifier name used in source code logic",
+        "They determine the local file path for control background bitmaps",
+        "They supply spoken descriptions for screen readers used by blind users"
       ],
       "opts": [
-        "They control database access permissions for the control during routine user interaction with the interface",
-        "They set the C# identifier name used in source code logic within standard graphical desktop applications",
-        "They determine the file path for control background bitmaps when evaluating operator task performance on screen",
-        "They provide descriptive spoken text for assistive screen readers utilized by visually impaired users"
+        "They control SQL database access permissions for the selected control",
+        "They set the C# variable identifier name used in source code logic",
+        "They determine the local file path for control background bitmaps",
+        "They supply spoken descriptions for screen readers used by blind users"
       ],
       "answer": 3,
       "ans": 3,
@@ -1987,16 +1987,16 @@
       "stem": "Which scenario represents an unacceptable violation of Shneiderman's 1st Golden Rule ('Strive for consistency') across a multi-form application?",
       "code": "",
       "options": [
-        "Using Arial 9pt font for all data input labels across all forms when evaluating operator task performance on screen",
-        "Using the label 'Exit' on Form 1, 'Quit' on Form 2, and 'Close Window' on Form 3 with varying button placements",
-        "Placing the primary action button at the bottom right of each window across interactive desktop interface workflows",
-        "Setting TabIndex on all textboxes in logical top-to-bottom reading order during routine user interaction with the interface"
+        "Using a consistent 9pt font for all data input labels across all forms",
+        "Labeling the close button 'Exit', 'Quit', and 'Close' on different forms",
+        "Placing the primary action button at the bottom right of each window",
+        "Setting TabIndex on all textboxes in logical top-to-bottom reading order"
       ],
       "opts": [
-        "Using Arial 9pt font for all data input labels across all forms when evaluating operator task performance on screen",
-        "Using the label 'Exit' on Form 1, 'Quit' on Form 2, and 'Close Window' on Form 3 with varying button placements",
-        "Placing the primary action button at the bottom right of each window across interactive desktop interface workflows",
-        "Setting TabIndex on all textboxes in logical top-to-bottom reading order during routine user interaction with the interface"
+        "Using a consistent 9pt font for all data input labels across all forms",
+        "Labeling the close button 'Exit', 'Quit', and 'Close' on different forms",
+        "Placing the primary action button at the bottom right of each window",
+        "Setting TabIndex on all textboxes in logical top-to-bottom reading order"
       ],
       "answer": 1,
       "ans": 1,
@@ -2030,16 +2030,16 @@
       "stem": "Setting the Button's Text property to '&Calculate' enables an access key. How does a user trigger this button from the keyboard, and which Golden Rule does this satisfy?",
       "code": "",
       "options": [
-        "Pressing Ctrl+Alt+Delete; satisfies Rule 5 (Prevent errors) in desktop user interfaces",
-        "Pressing Shift+F12; satisfies Rule 6 (Permit easy reversal of actions) during routine user tasks",
-        "Pressing Alt+C; satisfies Rule 2 (Cater to universal usability / shortcuts for experts)",
-        "Pressing Esc; satisfies Rule 8 (Reduce short-term memory load) across form layouts"
+        "Pressing Ctrl+Alt+Delete; satisfies Rule 5: Prevent user errors",
+        "Pressing Shift+F12; satisfies Rule 6: Permit easy reversal of actions",
+        "Pressing Alt+C; satisfies Rule 2: Cater to universal usability",
+        "Pressing Esc; satisfies Rule 8: Reduce short-term memory load"
       ],
       "opts": [
-        "Pressing Ctrl+Alt+Delete; satisfies Rule 5 (Prevent errors) in desktop user interfaces",
-        "Pressing Shift+F12; satisfies Rule 6 (Permit easy reversal of actions) during routine user tasks",
-        "Pressing Alt+C; satisfies Rule 2 (Cater to universal usability / shortcuts for experts)",
-        "Pressing Esc; satisfies Rule 8 (Reduce short-term memory load) across form layouts"
+        "Pressing Ctrl+Alt+Delete; satisfies Rule 5: Prevent user errors",
+        "Pressing Shift+F12; satisfies Rule 6: Permit easy reversal of actions",
+        "Pressing Alt+C; satisfies Rule 2: Cater to universal usability",
+        "Pressing Esc; satisfies Rule 8: Reduce short-term memory load"
       ],
       "answer": 2,
       "ans": 2,
@@ -2073,15 +2073,15 @@
       "stem": "On a Windows Form, setting Form.AcceptButton = btnCalculate and Form.CancelButton = btnExit fulfills which usability principle?",
       "code": "",
       "options": [
-        "Forcing the application to compile without Roslyn diagnostics during routine user tasks",
-        "Encrypting the user's keystrokes for security compliance across form layouts",
-        "Violating user locus of control by triggering actions without clicks in desktop apps",
+        "Forcing the application to compile without Roslyn diagnostics",
+        "Encrypting the user's keystrokes for security compliance",
+        "Violating user locus of control by triggering actions without clicks",
         "Catering to universal usability by standardizing Enter and Esc keyboard behavior"
       ],
       "opts": [
-        "Forcing the application to compile without Roslyn diagnostics during routine user tasks",
-        "Encrypting the user's keystrokes for security compliance across form layouts",
-        "Violating user locus of control by triggering actions without clicks in desktop apps",
+        "Forcing the application to compile without Roslyn diagnostics",
+        "Encrypting the user's keystrokes for security compliance",
+        "Violating user locus of control by triggering actions without clicks",
         "Catering to universal usability by standardizing Enter and Esc keyboard behavior"
       ],
       "answer": 3,
@@ -2161,14 +2161,14 @@
       "options": [
         "The C# runtime will terminate the thread with a FatalExecutionEngineError",
         "Users will assume the application has frozen, crashed, or ignored their click",
-        "The Windows OS will immediately delete the project .exe file in desktop user interfaces",
-        "It violates C# Hungarian naming guidelines during routine user interaction with the interface"
+        "The Windows OS will immediately delete the project .exe file",
+        "It violates C# Hungarian naming guidelines"
       ],
       "opts": [
         "The C# runtime will terminate the thread with a FatalExecutionEngineError",
         "Users will assume the application has frozen, crashed, or ignored their click",
-        "The Windows OS will immediately delete the project .exe file in desktop user interfaces",
-        "It violates C# Hungarian naming guidelines during routine user interaction with the interface"
+        "The Windows OS will immediately delete the project .exe file",
+        "It violates C# Hungarian naming guidelines"
       ],
       "answer": 1,
       "ans": 1,
@@ -2202,16 +2202,16 @@
       "stem": "Which design technique best embodies Shneiderman's 4th Golden Rule ('Design dialogs to yield closure') upon completing a multi-step booking process?",
       "code": "",
       "options": [
-        "Switching form background color to black without explanation across interactive desktop interface workflows before updating the target UI control during interface state updates",
-        "Abruptly closing the form without any message during routine user interaction with the interface before returning to the calling method",
-        "Presenting a final booking summary dialog showing total tickets, package selected, and final Rand amount, signaling that the transaction is finalized",
-        "Leaving input fields filled with no indication whether the booking was registered within standard graphical desktop applications within the current form class instance"
+        "Switching the form background color to solid black without explanation",
+        "Abruptly closing the application window without showing any confirmation",
+        "Presenting a final booking summary dialog confirming the completed order",
+        "Leaving input fields filled with no indication that booking succeeded"
       ],
       "opts": [
-        "Switching form background color to black without explanation across interactive desktop interface workflows before updating the target UI control during interface state updates",
-        "Abruptly closing the form without any message during routine user interaction with the interface before returning to the calling method",
-        "Presenting a final booking summary dialog showing total tickets, package selected, and final Rand amount, signaling that the transaction is finalized",
-        "Leaving input fields filled with no indication whether the booking was registered within standard graphical desktop applications within the current form class instance"
+        "Switching the form background color to solid black without explanation",
+        "Abruptly closing the application window without showing any confirmation",
+        "Presenting a final booking summary dialog confirming the completed order",
+        "Leaving input fields filled with no indication that booking succeeded"
       ],
       "answer": 2,
       "ans": 2,
@@ -2245,16 +2245,16 @@
       "stem": "What psychological benefit does the user experience when an interface successfully provides 'closure' (Rule 4)?",
       "code": "",
       "options": [
-        "A feeling of helplessness and loss of control during routine user interaction with the interface",
-        "Confusion regarding whether payment was processed within standard graphical desktop applications",
-        "A desire to rewrite the underlying C# source code when evaluating operator task performance on screen under .NET runtime execution",
-        "Relief of anxiety, confirmation that the goal was attained, and mental readiness to initiate the next task"
+        "A persistent feeling of helplessness and loss of locus of control",
+        "Uncertainty regarding whether the financial payment was processed",
+        "An immediate need to inspect the underlying C# event-handler code",
+        "Relief of anxiety, sense of completion, and readiness for the next task"
       ],
       "opts": [
-        "A feeling of helplessness and loss of control during routine user interaction with the interface",
-        "Confusion regarding whether payment was processed within standard graphical desktop applications",
-        "A desire to rewrite the underlying C# source code when evaluating operator task performance on screen under .NET runtime execution",
-        "Relief of anxiety, confirmation that the goal was attained, and mental readiness to initiate the next task"
+        "A persistent feeling of helplessness and loss of locus of control",
+        "Uncertainty regarding whether the financial payment was processed",
+        "An immediate need to inspect the underlying C# event-handler code",
+        "Relief of anxiety, sense of completion, and readiness for the next task"
       ],
       "answer": 3,
       "ans": 3,
@@ -2288,14 +2288,14 @@
       "stem": "Using decimal.TryParse() to guard numeric text inputs instead of raw decimal.Parse() satisfies which of Shneiderman's 8 Golden Rules?",
       "code": "",
       "options": [
-        "Rule 4: Design dialogs to yield closure only",
         "Rule 5: Prevent errors and handle them cleanly",
+        "Rule 4: Design dialogs to yield closure only",
         "Rule 8: Reduce short-term memory load only",
         "Rule 1: Strive for interface consistency only"
       ],
       "opts": [
-        "Rule 4: Design dialogs to yield closure only",
         "Rule 5: Prevent errors and handle them cleanly",
+        "Rule 4: Design dialogs to yield closure only",
         "Rule 8: Reduce short-term memory load only",
         "Rule 1: Strive for interface consistency only"
       ],
@@ -2331,16 +2331,16 @@
       "stem": "Which error message complies best with Shneiderman's guidelines for effective error message construction?",
       "code": "",
       "options": [
-        "'You made a stupid mistake in txtWorsKg!' for interactive operators",
-        "'Invalid Input. Please enter a positive numeric value for Wors Kilograms.'",
-        "'Error! Program halted.' across interactive desktop interface workflows",
-        "'FATAL ERROR 0x80004005: System.FormatException at offset 12' in the handler"
+        "'You made a stupid mistake in txtWorsKg! Fix your input immediately.'",
+        "'Invalid Input. Please enter a positive number for Wors Kilograms.'",
+        "'Error! Program execution halted due to illegal user keyboard entry.'",
+        "'FATAL ERROR 0x80004005: System.FormatException thrown at offset 0012.'"
       ],
       "opts": [
-        "'You made a stupid mistake in txtWorsKg!' for interactive operators",
-        "'Invalid Input. Please enter a positive numeric value for Wors Kilograms.'",
-        "'Error! Program halted.' across interactive desktop interface workflows",
-        "'FATAL ERROR 0x80004005: System.FormatException at offset 12' in the handler"
+        "'You made a stupid mistake in txtWorsKg! Fix your input immediately.'",
+        "'Invalid Input. Please enter a positive number for Wors Kilograms.'",
+        "'Error! Program execution halted due to illegal user keyboard entry.'",
+        "'FATAL ERROR 0x80004005: System.FormatException thrown at offset 0012.'"
       ],
       "answer": 1,
       "ans": 1,
@@ -2374,16 +2374,16 @@
       "stem": "What is the HCI justification for providing a dedicated 'Clear' button (btnClear) on a data-entry form?",
       "code": "",
       "options": [
-        "It is mandatory to free RAM from Windows OS paging across interactive desktop interface workflows within the current form class instance",
-        "It forces the garbage collector to immediately purge all controls during routine user interaction with the interface on the active Windows Form canvas",
-        "It fulfills Rule 6: Permit easy reversal of actions, allowing users to wipe erroneous data entry and start fresh without restarting the application",
-        "It satisfies Visual C# rule of using at least 5 buttons on every form within standard graphical desktop applications during standard GUI event execution"
+        "It is mandatory to release physical RAM from Windows OS paging files",
+        "It forces the .NET garbage collector to purge all form controls",
+        "It fulfills Rule 6 by letting users reset mistaken inputs easily",
+        "It satisfies a C# rule requiring at least three buttons per form"
       ],
       "opts": [
-        "It is mandatory to free RAM from Windows OS paging across interactive desktop interface workflows within the current form class instance",
-        "It forces the garbage collector to immediately purge all controls during routine user interaction with the interface on the active Windows Form canvas",
-        "It fulfills Rule 6: Permit easy reversal of actions, allowing users to wipe erroneous data entry and start fresh without restarting the application",
-        "It satisfies Visual C# rule of using at least 5 buttons on every form within standard graphical desktop applications during standard GUI event execution"
+        "It is mandatory to release physical RAM from Windows OS paging files",
+        "It forces the .NET garbage collector to purge all form controls",
+        "It fulfills Rule 6 by letting users reset mistaken inputs easily",
+        "It satisfies a C# rule requiring at least three buttons per form"
       ],
       "answer": 2,
       "ans": 2,
@@ -2417,16 +2417,16 @@
       "stem": "When a user clicks 'btnExit', displaying a MessageBox asking 'Are you sure you want to exit?' with Yes and No buttons enforces which usability rule?",
       "code": "",
       "options": [
-        "Rule 8: Reduce short-term memory load only during routine user interaction with the interface before updating the target UI control",
-        "Rule 1: Strive for consistency only within standard graphical desktop applications before returning to the calling method",
-        "Rule 2: Cater to universal usability only when evaluating operator task performance on screen within the current form class instance",
-        "Rule 6: Permit easy reversal of actions / Error prevention by preventing accidental termination of the user's workflow"
+        "Rule 8: Reduce short-term memory load across complex data forms",
+        "Rule 1: Strive for visual consistency across application windows",
+        "Rule 2: Cater to universal usability for international keyboards",
+        "Rule 6: Permit easy reversal and prevent accidental form closure"
       ],
       "opts": [
-        "Rule 8: Reduce short-term memory load only during routine user interaction with the interface before updating the target UI control",
-        "Rule 1: Strive for consistency only within standard graphical desktop applications before returning to the calling method",
-        "Rule 2: Cater to universal usability only when evaluating operator task performance on screen within the current form class instance",
-        "Rule 6: Permit easy reversal of actions / Error prevention by preventing accidental termination of the user's workflow"
+        "Rule 8: Reduce short-term memory load across complex data forms",
+        "Rule 1: Strive for visual consistency across application windows",
+        "Rule 2: Cater to universal usability for international keyboards",
+        "Rule 6: Permit easy reversal and prevent accidental form closure"
       ],
       "answer": 3,
       "ans": 3,
@@ -2460,16 +2460,16 @@
       "stem": "What does Shneiderman's 7th Golden Rule ('Support internal locus of control') mean in the context of GUI application design?",
       "code": "",
       "options": [
-        "Users should feel that they are in charge of the system and that the system responds predictably to their explicit commands",
-        "The CPU clock must synchronize with the monitor refresh rate within standard graphical desktop applications on the active Windows Form canvas",
-        "Database records should automatically delete themselves after 30 days when evaluating operator task performance on screen",
-        "The computer system should make autonomous decisions and navigate between forms without user initiation in GUI design"
+        "Users feel in charge and the system responds predictably to their actions",
+        "The CPU clock must synchronize directly with the monitor refresh rate",
+        "Database records should automatically delete themselves after thirty days",
+        "The computer should make autonomous decisions without user initiation"
       ],
       "opts": [
-        "Users should feel that they are in charge of the system and that the system responds predictably to their explicit commands",
-        "The CPU clock must synchronize with the monitor refresh rate within standard graphical desktop applications on the active Windows Form canvas",
-        "Database records should automatically delete themselves after 30 days when evaluating operator task performance on screen",
-        "The computer system should make autonomous decisions and navigate between forms without user initiation in GUI design"
+        "Users feel in charge and the system responds predictably to their actions",
+        "The CPU clock must synchronize directly with the monitor refresh rate",
+        "Database records should automatically delete themselves after thirty days",
+        "The computer should make autonomous decisions without user initiation"
       ],
       "answer": 0,
       "ans": 0,
@@ -2503,16 +2503,16 @@
       "stem": "Which interface design defect directly violates Shneiderman's 7th Golden Rule (Internal Locus of Control)?",
       "code": "",
       "options": [
-        "Providing a clear 'Clear' button that resets inputs when evaluating operator task performance on screen before returning to the calling method",
-        "A form that automatically changes the user's cursor position and submits data without the user clicking the Submit button",
-        "Allowing the user to select between Daytime and Sunset cruises using RadioButtons across interactive desktop interface workflows",
-        "Formatting currency outputs with two decimal places during routine user interaction with the interface on the active Windows Form canvas"
+        "Providing a clearly labeled 'Clear' button that resets all input fields",
+        "Automatically moving the cursor and submitting data without user clicks",
+        "Allowing the user to choose between Daytime and Sunset via RadioButtons",
+        "Formatting calculated monetary outputs with two fixed decimal places"
       ],
       "opts": [
-        "Providing a clear 'Clear' button that resets inputs when evaluating operator task performance on screen before returning to the calling method",
-        "A form that automatically changes the user's cursor position and submits data without the user clicking the Submit button",
-        "Allowing the user to select between Daytime and Sunset cruises using RadioButtons across interactive desktop interface workflows",
-        "Formatting currency outputs with two decimal places during routine user interaction with the interface on the active Windows Form canvas"
+        "Providing a clearly labeled 'Clear' button that resets all input fields",
+        "Automatically moving the cursor and submitting data without user clicks",
+        "Allowing the user to choose between Daytime and Sunset via RadioButtons",
+        "Formatting calculated monetary outputs with two fixed decimal places"
       ],
       "answer": 1,
       "ans": 1,
@@ -2546,16 +2546,16 @@
       "stem": "How does Shneiderman's 8th Golden Rule ('Reduce short-term memory load') explain why displaying a running ListBox of items with an active total label is superior to only showing the final bill at checkout?",
       "code": "",
       "options": [
-        "It speeds up arithmetic addition in the ALU in desktop user interfaces",
-        "ListBox controls require zero memory on the graphics card for end users",
+        "It speeds up arithmetic addition in the ALU",
+        "ListBox controls require zero memory on the graphics card",
         "Human short-term memory can only hold 7 ± 2 chunks of information",
-        "It allows the user to memorize 50 items simultaneously on the screen"
+        "It allows the user to memorize 50 items simultaneously"
       ],
       "opts": [
-        "It speeds up arithmetic addition in the ALU in desktop user interfaces",
-        "ListBox controls require zero memory on the graphics card for end users",
+        "It speeds up arithmetic addition in the ALU",
+        "ListBox controls require zero memory on the graphics card",
         "Human short-term memory can only hold 7 ± 2 chunks of information",
-        "It allows the user to memorize 50 items simultaneously on the screen"
+        "It allows the user to memorize 50 items simultaneously"
       ],
       "answer": 2,
       "ans": 2,
@@ -2632,16 +2632,16 @@
       "stem": "Under Shneiderman's 5th Golden Rule ('Prevent errors'), why is wrapping user input conversion in a try-catch (FormatException) block or using double.TryParse superior interface design?",
       "code": "",
       "options": [
-        "It intercepts invalid non-numeric inputs gracefully, prevents the application from crashing, and displays constructive feedback with focus redirected to the erroneous field",
-        "It suppresses all compiler errors at build time so the project compiles regardless of syntax mistakes when the Roslyn compiler checks the method body before updating the target UI control",
-        "It forces the operating system to automatically retry the parse using a default value of 0.0 without notifying the user when evaluating operator task performance on screen",
-        "It disables Windows operating system error reporting and user notifications across interactive desktop interface workflows within the current form class instance during interface state updates"
+        "It catches invalid inputs gracefully, prevents crashes, and guides recovery",
+        "It suppresses all compiler errors at build time so broken syntax still builds",
+        "It forces Windows to retry parsing with 0.0 silently without alerting the user",
+        "It disables Windows operating system error reporting and user notifications"
       ],
       "opts": [
-        "It intercepts invalid non-numeric inputs gracefully, prevents the application from crashing, and displays constructive feedback with focus redirected to the erroneous field",
-        "It suppresses all compiler errors at build time so the project compiles regardless of syntax mistakes when the Roslyn compiler checks the method body before updating the target UI control",
-        "It forces the operating system to automatically retry the parse using a default value of 0.0 without notifying the user when evaluating operator task performance on screen",
-        "It disables Windows operating system error reporting and user notifications across interactive desktop interface workflows within the current form class instance during interface state updates"
+        "It catches invalid inputs gracefully, prevents crashes, and guides recovery",
+        "It suppresses all compiler errors at build time so broken syntax still builds",
+        "It forces Windows to retry parsing with 0.0 silently without alerting the user",
+        "It disables Windows operating system error reporting and user notifications"
       ],
       "answer": 0,
       "ans": 0,
@@ -2675,16 +2675,16 @@
       "stem": "When a user clicks 'btnCalculate' and lblAverage.Text immediately displays 'Average: 82.50%', which of Don Norman's conceptual user interface gulfs is bridged?",
       "code": "",
       "options": [
-        "The Gulf of Intention (translating a high-level psychological goal into a concrete system input) for interactive operators",
+        "The Gulf of Intention (translating a high-level psychological goal into a concrete system input)",
         "The Gulf of Evaluation (allowing the user to perceive and interpret the new state of the system and verify their goal was achieved)",
-        "The Gulf of Execution (determining how to formulate and perform the physical actions required by the system) across interactive desktop interface workflows",
-        "The Gulf of Affordance (perceiving what physical manipulations are possible on form controls) during routine user tasks"
+        "The Gulf of Execution (determining how to formulate and perform the physical actions required by the system)",
+        "The Gulf of Affordance (perceiving what physical manipulations are possible on form controls)"
       ],
       "opts": [
-        "The Gulf of Intention (translating a high-level psychological goal into a concrete system input) for interactive operators",
+        "The Gulf of Intention (translating a high-level psychological goal into a concrete system input)",
         "The Gulf of Evaluation (allowing the user to perceive and interpret the new state of the system and verify their goal was achieved)",
-        "The Gulf of Execution (determining how to formulate and perform the physical actions required by the system) across interactive desktop interface workflows",
-        "The Gulf of Affordance (perceiving what physical manipulations are possible on form controls) during routine user tasks"
+        "The Gulf of Execution (determining how to formulate and perform the physical actions required by the system)",
+        "The Gulf of Affordance (perceiving what physical manipulations are possible on form controls)"
       ],
       "answer": 1,
       "ans": 1,
@@ -2804,16 +2804,16 @@
       "stem": "In Fitts' Law, what two physical factors determine the time required to rapidly move to and click a target control?",
       "code": "",
       "options": [
-        "The distance to the target and the physical width/size of the target",
-        "The length of the variable name in the C# code across form layouts",
-        "The speed of the network internet connection for interactive operators",
-        "The color depth of the monitor and the RAM capacity in GUI design"
+        "The distance to the target and the physical size of the target",
+        "The character length of the control's variable name in C# code",
+        "The bandwidth speed of the local network internet connection",
+        "The color depth of the monitor and the installed RAM capacity"
       ],
       "opts": [
-        "The distance to the target and the physical width/size of the target",
-        "The length of the variable name in the C# code across form layouts",
-        "The speed of the network internet connection for interactive operators",
-        "The color depth of the monitor and the RAM capacity in GUI design"
+        "The distance to the target and the physical size of the target",
+        "The character length of the control's variable name in C# code",
+        "The bandwidth speed of the local network internet connection",
+        "The color depth of the monitor and the installed RAM capacity"
       ],
       "answer": 0,
       "ans": 0,
@@ -2847,16 +2847,16 @@
       "stem": "How does Fitts' Law guide the sizing and placement of the primary 'Calculate' button on a data-entry form?",
       "code": "",
       "options": [
-        "Require the user to drag the button across the screen before clicking when evaluating operator task performance on screen before updating the target UI control",
-        "Make the primary action button sufficiently large and place it directly adjacent to the input fields in the user's natural scanning path",
-        "Make the button tiny and hide it in the top corner of the screen across interactive desktop interface workflows before returning to the calling method",
-        "Change the button position randomly after each click during routine user interaction with the interface within the current form class instance"
+        "Require the user to drag the button across the screen before clicking",
+        "Make the main button reasonably large and place it near the inputs",
+        "Make the button tiny and hide it in the top-left corner of the screen",
+        "Change the button coordinates to a random location after each click"
       ],
       "opts": [
-        "Require the user to drag the button across the screen before clicking when evaluating operator task performance on screen before updating the target UI control",
-        "Make the primary action button sufficiently large and place it directly adjacent to the input fields in the user's natural scanning path",
-        "Make the button tiny and hide it in the top corner of the screen across interactive desktop interface workflows before returning to the calling method",
-        "Change the button position randomly after each click during routine user interaction with the interface within the current form class instance"
+        "Require the user to drag the button across the screen before clicking",
+        "Make the main button reasonably large and place it near the inputs",
+        "Make the button tiny and hide it in the top-left corner of the screen",
+        "Change the button coordinates to a random location after each click"
       ],
       "answer": 1,
       "ans": 1,
@@ -2891,15 +2891,15 @@
       "code": "",
       "options": [
         "Decision time is completely unaffected by the number of alternatives",
-        "Decision time drops to zero immediately during routine user interaction with the interface",
-        "Decision time increases logarithmically with the number of available options",
-        "Users always choose the first option without thinking across form layouts"
+        "Decision time drops to zero immediately when more options appear",
+        "Decision time grows logarithmically as the number of choices grows",
+        "Users always select the very first option without reading the rest"
       ],
       "opts": [
         "Decision time is completely unaffected by the number of alternatives",
-        "Decision time drops to zero immediately during routine user interaction with the interface",
-        "Decision time increases logarithmically with the number of available options",
-        "Users always choose the first option without thinking across form layouts"
+        "Decision time drops to zero immediately when more options appear",
+        "Decision time grows logarithmically as the number of choices grows",
+        "Users always select the very first option without reading the rest"
       ],
       "answer": 2,
       "ans": 2,
@@ -2933,16 +2933,16 @@
       "stem": "Why is it superior usability practice to use RadioButtons grouped in a GroupBox (e.g., Daytime vs Sunset) rather than letting users type 'day' or 'sunset' into a TextBox?",
       "code": "",
       "options": [
-        "It makes the C# source code twice as long during routine user interaction with the interface before returning to the calling method",
-        "RadioButtons consume less power on mobile batteries within standard graphical desktop applications within the current form class instance during interface state updates",
-        "TextBoxes cannot handle string data in Visual C# when evaluating operator task performance on screen on the active Windows Form canvas",
-        "It enforces mutual exclusion, provides immediate visual recognition of all valid choices, and eliminates spelling/capitalization errors"
+        "It makes the underlying C# event-handler source code twice as long",
+        "RadioButtons consume significantly less battery power on laptops",
+        "TextBox controls cannot store or process string data in Visual C#",
+        "It enforces one choice, shows valid options, and prevents typos"
       ],
       "opts": [
-        "It makes the C# source code twice as long during routine user interaction with the interface before returning to the calling method",
-        "RadioButtons consume less power on mobile batteries within standard graphical desktop applications within the current form class instance during interface state updates",
-        "TextBoxes cannot handle string data in Visual C# when evaluating operator task performance on screen on the active Windows Form canvas",
-        "It enforces mutual exclusion, provides immediate visual recognition of all valid choices, and eliminates spelling/capitalization errors"
+        "It makes the underlying C# event-handler source code twice as long",
+        "RadioButtons consume significantly less battery power on laptops",
+        "TextBox controls cannot store or process string data in Visual C#",
+        "It enforces one choice, shows valid options, and prevents typos"
       ],
       "answer": 3,
       "ans": 3,
@@ -3489,16 +3489,16 @@
       "stem": "Where are non-visual components (such as Timers, OpenFileDialog, and SaveFileDialog) placed when added to a form in the Visual Studio Designer?",
       "code": "",
       "options": [
-        "In the Component Tray at the bottom of the Designer window",
-        "Directly on top of the Form title bar during program execution",
-        "Inside the Solution Explorer toolbar within the form class",
-        "In the Properties window header inside the event handler"
+        "In the Component Tray below the visual Designer canvas",
+        "Directly on top of the active Windows Form title bar area",
+        "Inside the Solution Explorer project folder tree toolbar",
+        "Inside the top header bar of the Properties tool window"
       ],
       "opts": [
-        "In the Component Tray at the bottom of the Designer window",
-        "Directly on top of the Form title bar during program execution",
-        "Inside the Solution Explorer toolbar within the form class",
-        "In the Properties window header inside the event handler"
+        "In the Component Tray below the visual Designer canvas",
+        "Directly on top of the active Windows Form title bar area",
+        "Inside the Solution Explorer project folder tree toolbar",
+        "Inside the top header bar of the Properties tool window"
       ],
       "answer": 0,
       "ans": 0,
@@ -3618,16 +3618,16 @@
       "stem": "In Visual Studio, what is the architectural difference between the 'Windows Forms App (.NET Framework)' project template and a Console App template when building a desktop utility?",
       "code": "",
       "options": [
-        "Windows Forms App compiles C# directly without using any classes or methods, whereas Console App requires event handlers during invocation of the declared helper method",
-        "Console App supports `Button`, `PictureBox`, and `GroupBox` controls on a visual canvas, whereas Windows Forms App only supports text files on input check",
-        "Windows Forms App projects cannot declare `decimal` or `int` variables inside methods while passing data across the method call boundary before returning to the calling method",
-        "Windows Forms App provides a visual Form Designer, Toolbox controls, and an event-driven message loop, whereas a Console App uses text-stream standard input/output"
+        "Windows Forms App compiles C# directly without classes or methods, whereas Console App requires event handlers",
+        "Console App supports Button, PictureBox, and GroupBox controls on a visual canvas, whereas Windows Forms App only uses text",
+        "Windows Forms App projects cannot declare local decimal or int variables inside calculation methods",
+        "Windows Forms App provides a visual Designer, Toolbox controls, and an event loop, whereas Console App uses text I/O"
       ],
       "opts": [
-        "Windows Forms App compiles C# directly without using any classes or methods, whereas Console App requires event handlers during invocation of the declared helper method",
-        "Console App supports `Button`, `PictureBox`, and `GroupBox` controls on a visual canvas, whereas Windows Forms App only supports text files on input check",
-        "Windows Forms App projects cannot declare `decimal` or `int` variables inside methods while passing data across the method call boundary before returning to the calling method",
-        "Windows Forms App provides a visual Form Designer, Toolbox controls, and an event-driven message loop, whereas a Console App uses text-stream standard input/output"
+        "Windows Forms App compiles C# directly without classes or methods, whereas Console App requires event handlers",
+        "Console App supports Button, PictureBox, and GroupBox controls on a visual canvas, whereas Windows Forms App only uses text",
+        "Windows Forms App projects cannot declare local decimal or int variables inside calculation methods",
+        "Windows Forms App provides a visual Designer, Toolbox controls, and an event loop, whereas Console App uses text I/O"
       ],
       "answer": 3,
       "ans": 3,
@@ -3661,16 +3661,16 @@
       "stem": "In the Visual Studio 'Configure your new project' dialog, why is it recommended to check 'Place solution and project in the same directory'?",
       "code": "",
       "options": [
-        "It prevents an extra nested folder level, keeping the .sln and project files together for clean zipping and submission",
-        "It enables automatic hardware acceleration for graphics when updating the zero-based collection items within the current form class instance",
-        "It makes the application run twice as fast on laboratory workstations within the active form class implementation",
-        "It automatically renames all controls using Hungarian notation inside the Windows Forms event handler routine during standard GUI event execution"
+        "It avoids an extra nested folder, keeping .sln and project files together",
+        "It enables dedicated GPU hardware acceleration for Windows Forms graphics",
+        "It makes the compiled executable run twice as fast on lab workstations",
+        "It automatically renames all form controls to follow Hungarian notation"
       ],
       "opts": [
-        "It prevents an extra nested folder level, keeping the .sln and project files together for clean zipping and submission",
-        "It enables automatic hardware acceleration for graphics when updating the zero-based collection items within the current form class instance",
-        "It makes the application run twice as fast on laboratory workstations within the active form class implementation",
-        "It automatically renames all controls using Hungarian notation inside the Windows Forms event handler routine during standard GUI event execution"
+        "It avoids an extra nested folder, keeping .sln and project files together",
+        "It enables dedicated GPU hardware acceleration for Windows Forms graphics",
+        "It makes the compiled executable run twice as fast on lab workstations",
+        "It automatically renames all form controls to follow Hungarian notation"
       ],
       "answer": 0,
       "ans": 0,
@@ -3704,16 +3704,16 @@
       "stem": "When four PictureBoxes (Off.png, Red.png, Amber.png, Green.png) are stacked to represent a single traffic signal, what designer technique ensures the traffic light does not visibly jump when switching colours?",
       "code": "",
       "options": [
-        "Placing them on four separate tabs in a TabControl within the active form class implementation before updating the target UI control",
-        "Setting identical pixel values for Location and Size in the Properties window rather than dragging by mouse",
-        "Calling Application.Restart() each time a button is clicked inside the Windows Forms event handler routine in the compiled C# project",
-        "Setting the opacity of the form to 50% during execution of the Visual C# form application within the current form class instance"
+        "Placing the four PictureBoxes onto four separate tabs in a TabControl",
+        "Setting identical Location and Size values in the Properties window",
+        "Calling Application.Restart() inside every button Click event handler",
+        "Setting the Opacity property of the parent Windows Form to 50 percent"
       ],
       "opts": [
-        "Placing them on four separate tabs in a TabControl within the active form class implementation before updating the target UI control",
-        "Setting identical pixel values for Location and Size in the Properties window rather than dragging by mouse",
-        "Calling Application.Restart() each time a button is clicked inside the Windows Forms event handler routine in the compiled C# project",
-        "Setting the opacity of the form to 50% during execution of the Visual C# form application within the current form class instance"
+        "Placing the four PictureBoxes onto four separate tabs in a TabControl",
+        "Setting identical Location and Size values in the Properties window",
+        "Calling Application.Restart() inside every button Click event handler",
+        "Setting the Opacity property of the parent Windows Form to 50 percent"
       ],
       "answer": 1,
       "ans": 1,
@@ -3830,16 +3830,16 @@
       "stem": "Why does setting a PictureBox's SizeMode to 'StretchImage' often distort the displayed image?",
       "code": "",
       "options": [
-        "It forces the image to distort its aspect ratio to match the box dimensions",
-        "It hides the PictureBox behind the Form background during program execution",
-        "It converts the image into grayscale within the active form class implementation",
-        "It causes a runtime crash if the image is in PNG format at runtime"
+        "It forces the image to match box dimensions, distorting its aspect ratio",
+        "It hides the PictureBox control behind the parent Form background canvas",
+        "It automatically converts all color pixels in the image into grayscale",
+        "It causes an unhandled runtime exception when loading PNG image files"
       ],
       "opts": [
-        "It forces the image to distort its aspect ratio to match the box dimensions",
-        "It hides the PictureBox behind the Form background during program execution",
-        "It converts the image into grayscale within the active form class implementation",
-        "It causes a runtime crash if the image is in PNG format at runtime"
+        "It forces the image to match box dimensions, distorting its aspect ratio",
+        "It hides the PictureBox control behind the parent Form background canvas",
+        "It automatically converts all color pixels in the image into grayscale",
+        "It causes an unhandled runtime exception when loading PNG image files"
       ],
       "answer": 0,
       "ans": 0,
@@ -3872,16 +3872,16 @@
       "stem": "When a traffic light form launches, the dark traffic light (Off.png) must be visible and the other three lamps (picRed, picAmber, picGreen) hidden. How should this be configured at design time?",
       "code": "",
       "options": [
-        "Set the Opacity of the three lamps to 99% within the active form class implementation under .NET runtime execution",
-        "Set picRed.Visible, picAmber.Visible, and picGreen.Visible to false in the Properties window",
-        "Delete picRed, picAmber, and picGreen from the project until needed inside the event handler",
-        "Set Form1.Enabled to false during navigation between active Windows Forms during standard GUI event execution"
+        "Set the Opacity property of the three colored lamps to 99% at design time",
+        "Set Visible to false on picRed, picAmber, and picGreen in Properties",
+        "Delete picRed, picAmber, and picGreen from Solution Explorer until runtime",
+        "Set the parent Form1.Enabled property to false in the Properties window"
       ],
       "opts": [
-        "Set the Opacity of the three lamps to 99% within the active form class implementation under .NET runtime execution",
-        "Set picRed.Visible, picAmber.Visible, and picGreen.Visible to false in the Properties window",
-        "Delete picRed, picAmber, and picGreen from the project until needed inside the event handler",
-        "Set Form1.Enabled to false during navigation between active Windows Forms during standard GUI event execution"
+        "Set the Opacity property of the three colored lamps to 99% at design time",
+        "Set Visible to false on picRed, picAmber, and picGreen in Properties",
+        "Delete picRed, picAmber, and picGreen from Solution Explorer until runtime",
+        "Set the parent Form1.Enabled property to false in the Properties window"
       ],
       "answer": 1,
       "ans": 1,
@@ -3914,16 +3914,16 @@
       "stem": "If a student accidentally double-clicks the Form canvas instead of a Button, creating 'private void Form1_Load(object sender, EventArgs e)', what happens if they simply delete that method from Form1.cs?",
       "code": "",
       "options": [
-        "The Form permanently switches to full-screen mode inside the Windows Forms event handler routine before updating the target UI control",
-        "Nothing happens; Visual Studio silently cleans up the reference during execution of the Visual C# form application",
-        "The project fails to build because Form1.Designer.cs still contains an event hook referencing the deleted method",
-        "Visual Studio automatically replaces it with a button click handler when the Windows Forms control processes the action"
+        "The Windows Form permanently switches into borderless full-screen mode",
+        "Nothing happens; Visual Studio silently removes the deleted event hook",
+        "Build fails because Form1.Designer.cs still references the deleted method",
+        "Visual Studio automatically replaces it with a Button Click event handler"
       ],
       "opts": [
-        "The Form permanently switches to full-screen mode inside the Windows Forms event handler routine before updating the target UI control",
-        "Nothing happens; Visual Studio silently cleans up the reference during execution of the Visual C# form application",
-        "The project fails to build because Form1.Designer.cs still contains an event hook referencing the deleted method",
-        "Visual Studio automatically replaces it with a button click handler when the Windows Forms control processes the action"
+        "The Windows Form permanently switches into borderless full-screen mode",
+        "Nothing happens; Visual Studio silently removes the deleted event hook",
+        "Build fails because Form1.Designer.cs still references the deleted method",
+        "Visual Studio automatically replaces it with a Button Click event handler"
       ],
       "answer": 2,
       "ans": 2,
@@ -3957,16 +3957,16 @@
       "stem": "What is the recommended student response when an accidental Form1_Load method is scaffolded in Form1.cs?",
       "code": "",
       "options": [
-        "Rename Form1.cs to Form2.cs during navigation between active Windows Forms on the active Windows Form canvas inside the desktop session",
-        "Restart Windows immediately when the Windows Forms control processes the action during standard GUI event execution during interface state updates",
-        "Change the project language to Visual Basic within the active form class implementation before updating the target UI control",
-        "Either leave the empty method in Form1.cs or clear the Load event in the Properties window Events tab before deleting the code"
+        "Rename Form1.cs to Form2.cs inside the Solution Explorer window",
+        "Restart the Windows operating system immediately without saving",
+        "Convert the project target language from Visual C# to Visual Basic",
+        "Keep the empty method in Form1.cs or clear Load in Properties"
       ],
       "opts": [
-        "Rename Form1.cs to Form2.cs during navigation between active Windows Forms on the active Windows Form canvas inside the desktop session",
-        "Restart Windows immediately when the Windows Forms control processes the action during standard GUI event execution during interface state updates",
-        "Change the project language to Visual Basic within the active form class implementation before updating the target UI control",
-        "Either leave the empty method in Form1.cs or clear the Load event in the Properties window Events tab before deleting the code"
+        "Rename Form1.cs to Form2.cs inside the Solution Explorer window",
+        "Restart the Windows operating system immediately without saving",
+        "Convert the project target language from Visual C# to Visual Basic",
+        "Keep the empty method in Form1.cs or clear Load in Properties"
       ],
       "answer": 3,
       "ans": 3,
@@ -4043,16 +4043,16 @@
       "stem": "Which two Form properties ensure a window has a fixed size that the user cannot resize or maximize?",
       "code": "",
       "options": [
-        "Locked = true and ShowIcon = false in the handler",
+        "Locked = true and ShowIcon = false",
         "FormBorderStyle = FixedSingle and MaximizeBox = false",
-        "WindowState = Minimized and ControlBox = false at runtime",
-        "AutoSize = true and AutoSizeMode = GrowOnly on the form"
+        "WindowState = Minimized and ControlBox = false",
+        "AutoSize = true and AutoSizeMode = GrowOnly"
       ],
       "opts": [
-        "Locked = true and ShowIcon = false in the handler",
+        "Locked = true and ShowIcon = false",
         "FormBorderStyle = FixedSingle and MaximizeBox = false",
-        "WindowState = Minimized and ControlBox = false at runtime",
-        "AutoSize = true and AutoSizeMode = GrowOnly on the form"
+        "WindowState = Minimized and ControlBox = false",
+        "AutoSize = true and AutoSizeMode = GrowOnly"
       ],
       "answer": 1,
       "ans": 1,
@@ -4301,16 +4301,16 @@
       "stem": "Why does pressing the Tab key on a Windows Form never place keyboard focus onto a Label control?",
       "code": "",
       "options": [
-        "Labels are not drawn by the Windows operating system during execution of the Visual C# form application",
-        "Labels do not have a TabIndex property when the Windows Forms control processes the action",
-        "Labels automatically close the active form when focused within the active form class implementation",
-        "Labels have their TabStop property set to false by default because they do not accept keyboard input"
+        "Labels are not rendered by the Windows desktop window manager",
+        "Label controls do not expose a TabIndex property in Visual Studio",
+        "Focusing a Label control automatically closes the active Windows Form",
+        "Labels have TabStop set to false by default since they take no input"
       ],
       "opts": [
-        "Labels are not drawn by the Windows operating system during execution of the Visual C# form application",
-        "Labels do not have a TabIndex property when the Windows Forms control processes the action",
-        "Labels automatically close the active form when focused within the active form class implementation",
-        "Labels have their TabStop property set to false by default because they do not accept keyboard input"
+        "Labels are not rendered by the Windows desktop window manager",
+        "Label controls do not expose a TabIndex property in Visual Studio",
+        "Focusing a Label control automatically closes the active Windows Form",
+        "Labels have TabStop set to false by default since they take no input"
       ],
       "answer": 3,
       "ans": 3,
@@ -4344,16 +4344,16 @@
       "stem": "When a Label (lblInstruction) displays strings of differing lengths ('STOP', 'GET READY', 'GO'), why should AutoSize be set to false and TextAlign to MiddleCenter?",
       "code": "",
       "options": [
-        "To prevent the label boundary from shifting unpredictably and keep each instruction centered in its display area",
-        "To automatically translate text into Afrikaans when the Windows Forms control processes the action before updating the target UI control",
-        "To allow the label to act as a button within the active form class implementation before returning to the calling method",
-        "To enable multi-line text input from the keyboard inside the Windows Forms event handler routine within the current form class instance"
+        "To keep the label bounds fixed and center each instruction cleanly",
+        "To automatically translate the displayed caption text into Afrikaans",
+        "To allow the Label control to fire standard Button Click events",
+        "To enable multi-line user keyboard text entry inside the Label"
       ],
       "opts": [
-        "To prevent the label boundary from shifting unpredictably and keep each instruction centered in its display area",
-        "To automatically translate text into Afrikaans when the Windows Forms control processes the action before updating the target UI control",
-        "To allow the label to act as a button within the active form class implementation before returning to the calling method",
-        "To enable multi-line text input from the keyboard inside the Windows Forms event handler routine within the current form class instance"
+        "To keep the label bounds fixed and center each instruction cleanly",
+        "To automatically translate the displayed caption text into Afrikaans",
+        "To allow the Label control to fire standard Button Click events",
+        "To enable multi-line user keyboard text entry inside the Label"
       ],
       "answer": 0,
       "ans": 0,
@@ -4430,16 +4430,16 @@
       "stem": "Why is an Exit button (btnExit) often styled with BackColor set to Red under GUI design principles?",
       "code": "",
       "options": [
-        "To satisfy a compiler requirement for closing forms while iterating through the collection entries",
-        "Because red buttons process code faster during execution of the Visual C# form application",
-        "To provide an unmistakable visual warning that clicking this button terminates the current session",
-        "To make the button text invisible when the Windows Forms control processes the action on the active Windows Form canvas"
+        "To satisfy a C# compiler requirement for calling this.Close()",
+        "Because red-styled buttons execute event-handler logic faster",
+        "To give a clear visual cue that clicking it ends the session",
+        "To make the button caption text invisible against the border"
       ],
       "opts": [
-        "To satisfy a compiler requirement for closing forms while iterating through the collection entries",
-        "Because red buttons process code faster during execution of the Visual C# form application",
-        "To provide an unmistakable visual warning that clicking this button terminates the current session",
-        "To make the button text invisible when the Windows Forms control processes the action on the active Windows Form canvas"
+        "To satisfy a C# compiler requirement for calling this.Close()",
+        "Because red-styled buttons execute event-handler logic faster",
+        "To give a clear visual cue that clicking it ends the session",
+        "To make the button caption text invisible against the border"
       ],
       "answer": 2,
       "ans": 2,
@@ -4473,16 +4473,16 @@
       "stem": "What is the primary role of the InitializeComponent() method called inside the Form1 constructor?",
       "code": "",
       "options": [
-        "It shuts down the Visual Studio IDE during execution of the Visual C# form application during standard GUI event execution",
-        "It connects to the remote assessment grading server when the Windows Forms control processes the action before updating the target UI control",
-        "It formats all numbers on the form as South African Rand within the active form class implementation before returning to the calling method",
-        "It runs the auto-generated code in Form1.Designer.cs that instantiates controls, sets properties, and attaches event handlers"
+        "It immediately closes the Visual Studio development environment",
+        "It opens a network connection to the remote grading database",
+        "It formats all numeric variables on the form as South African Rand",
+        "It runs Designer code that creates controls and wires up events"
       ],
       "opts": [
-        "It shuts down the Visual Studio IDE during execution of the Visual C# form application during standard GUI event execution",
-        "It connects to the remote assessment grading server when the Windows Forms control processes the action before updating the target UI control",
-        "It formats all numbers on the form as South African Rand within the active form class implementation before returning to the calling method",
-        "It runs the auto-generated code in Form1.Designer.cs that instantiates controls, sets properties, and attaches event handlers"
+        "It immediately closes the Visual Studio development environment",
+        "It opens a network connection to the remote grading database",
+        "It formats all numeric variables on the form as South African Rand",
+        "It runs Designer code that creates controls and wires up events"
       ],
       "answer": 3,
       "ans": 3,
@@ -4516,16 +4516,16 @@
       "stem": "Why does Visual C# use the 'partial' keyword when defining 'public partial class Form1 : Form'?",
       "code": "",
       "options": [
-        "It allows the class implementation to be split across Form1.cs and Form1.Designer.cs",
-        "It restricts the class to single-threaded execution when the Windows Forms control processes the action",
-        "It forces all methods in the class to return void inside the custom method inside the desktop session",
-        "It indicates that the class is only partially compiled inside the event handler"
+        "It lets the class definition span Form1.cs and Form1.Designer.cs",
+        "It restricts the Windows Form class to single-threaded CPU execution only",
+        "It forces every event-handler method in the class to return void",
+        "It indicates that the C# class source code is only partially compiled"
       ],
       "opts": [
-        "It allows the class implementation to be split across Form1.cs and Form1.Designer.cs",
-        "It restricts the class to single-threaded execution when the Windows Forms control processes the action",
-        "It forces all methods in the class to return void inside the custom method inside the desktop session",
-        "It indicates that the class is only partially compiled inside the event handler"
+        "It lets the class definition span Form1.cs and Form1.Designer.cs",
+        "It restricts the Windows Form class to single-threaded CPU execution only",
+        "It forces every event-handler method in the class to return void",
+        "It indicates that the C# class source code is only partially compiled"
       ],
       "answer": 0,
       "ans": 0,
@@ -4559,16 +4559,16 @@
       "stem": "In a Windows Form class, a developer defines two event handlers with the identical signature `private void btnClear_Click(object sender, EventArgs e)`. What compiler error does Roslyn report?",
       "code": "",
       "options": [
-        "CS0029: Cannot implicitly convert type 'void' to 'method' during static type and syntax analysis of the class",
-        "CS0111: Type 'MainForm' already defines a member called 'btnClear_Click' with the same parameter types",
-        "CS1002: ; expected during the Visual Studio build verification step before returning to the calling method",
-        "The code compiles cleanly and executes both handlers sequentially upon clicking on the Windows Form canvas"
+        "CS0029: Cannot implicitly convert return type 'void' to 'method'",
+        "CS0111: 'MainForm' already defines 'btnClear_Click' with those parameters",
+        "CS1002: Missing terminating semicolon ';' expected after method header",
+        "The project compiles cleanly and executes both handlers sequentially on click"
       ],
       "opts": [
-        "CS0029: Cannot implicitly convert type 'void' to 'method' during static type and syntax analysis of the class",
-        "CS0111: Type 'MainForm' already defines a member called 'btnClear_Click' with the same parameter types",
-        "CS1002: ; expected during the Visual Studio build verification step before returning to the calling method",
-        "The code compiles cleanly and executes both handlers sequentially upon clicking on the Windows Form canvas"
+        "CS0029: Cannot implicitly convert return type 'void' to 'method'",
+        "CS0111: 'MainForm' already defines 'btnClear_Click' with those parameters",
+        "CS1002: Missing terminating semicolon ';' expected after method header",
+        "The project compiles cleanly and executes both handlers sequentially on click"
       ],
       "answer": 1,
       "ans": 1,
@@ -4731,16 +4731,16 @@
       "stem": "When a C# project is compiled, what intermediate format is produced before the CLR converts it into machine code?",
       "code": "",
       "options": [
-        "Raw Java Bytecode in the handler",
+        "Raw Java Virtual Machine Bytecode",
         "Common Intermediate Language",
-        "Pure ASCII text at runtime",
-        "Native x86 Assembly on the form"
+        "Unformatted pure ASCII source text",
+        "Native processor x86 machine code"
       ],
       "opts": [
-        "Raw Java Bytecode in the handler",
+        "Raw Java Virtual Machine Bytecode",
         "Common Intermediate Language",
-        "Pure ASCII text at runtime",
-        "Native x86 Assembly on the form"
+        "Unformatted pure ASCII source text",
+        "Native processor x86 machine code"
       ],
       "answer": 1,
       "ans": 1,
@@ -5031,16 +5031,16 @@
       "stem": "How does Shneiderman's 1st Golden Rule ('Strive for consistency') apply to control design across Windows Forms applications?",
       "code": "",
       "options": [
-        "All buttons on all forms should use identical font styles, standard button heights, and consistent Hungarian naming prefixes",
-        "Every form must be painted red when the Windows Forms control processes the action on the active Windows Form canvas in the compiled C# project",
-        "The user must be forced to use only keyboard arrows within the active form class implementation during standard GUI event execution",
-        "Every control must have a random background color inside the Windows Forms event handler routine before updating the target UI control"
+        "Buttons across forms should share consistent fonts, sizes, and prefixes",
+        "Every Windows Form in the project must have a bright red background",
+        "Users must be restricted to navigating solely with keyboard arrow keys",
+        "Every control on the canvas must be assigned a random background color"
       ],
       "opts": [
-        "All buttons on all forms should use identical font styles, standard button heights, and consistent Hungarian naming prefixes",
-        "Every form must be painted red when the Windows Forms control processes the action on the active Windows Form canvas in the compiled C# project",
-        "The user must be forced to use only keyboard arrows within the active form class implementation during standard GUI event execution",
-        "Every control must have a random background color inside the Windows Forms event handler routine before updating the target UI control"
+        "Buttons across forms should share consistent fonts, sizes, and prefixes",
+        "Every Windows Form in the project must have a bright red background",
+        "Users must be restricted to navigating solely with keyboard arrow keys",
+        "Every control on the canvas must be assigned a random background color"
       ],
       "answer": 0,
       "ans": 0,
@@ -5074,16 +5074,16 @@
       "stem": "How does Shneiderman's 3rd Golden Rule ('Offer informative feedback') apply when the user clicks 'btnGo' on a traffic signal form?",
       "code": "",
       "options": [
-        "The form minimizes to the Windows taskbar within the active form class implementation before returning to the calling method",
-        "The interface immediately switches the green light on and displays 'GO' in bold text to acknowledge the click",
-        "A sound card diagnostic routine runs in the background inside the Windows Forms event handler routine",
-        "The program should remain silent and wait for the user to guess if it worked during execution of the repetition structure"
+        "The active window immediately minimizes itself to the Windows taskbar",
+        "The form immediately turns the green light on and displays 'GO'",
+        "A background sound-card diagnostic routine runs silently in memory",
+        "The program stays unchanged and leaves the user to guess if it worked"
       ],
       "opts": [
-        "The form minimizes to the Windows taskbar within the active form class implementation before returning to the calling method",
-        "The interface immediately switches the green light on and displays 'GO' in bold text to acknowledge the click",
-        "A sound card diagnostic routine runs in the background inside the Windows Forms event handler routine",
-        "The program should remain silent and wait for the user to guess if it worked during execution of the repetition structure"
+        "The active window immediately minimizes itself to the Windows taskbar",
+        "The form immediately turns the green light on and displays 'GO'",
+        "A background sound-card diagnostic routine runs silently in memory",
+        "The program stays unchanged and leaves the user to guess if it worked"
       ],
       "answer": 1,
       "ans": 1,
@@ -5117,16 +5117,16 @@
       "stem": "What characterizes the event-driven programming paradigm utilized in C# Windows Forms?",
       "code": "",
       "options": [
-        "Only the CPU clock triggers code execution inside the Windows Forms event handler routine during standard GUI event execution",
-        "Code executes strictly from line 1 to the end without stopping during execution of the Visual C# form application before updating the target UI control",
-        "The application waits in an event loop and executes specific handler routines in response to user actions like clicks and keystrokes",
-        "Programs can only be run once per day when the Windows Forms control processes the action before returning to the calling method"
+        "Only the hardware CPU clock can trigger method execution",
+        "Code runs strictly from line 1 to the end without waiting for input",
+        "The app waits for events and runs handlers when user actions occur",
+        "Compiled desktop applications can only be launched once per day"
       ],
       "opts": [
-        "Only the CPU clock triggers code execution inside the Windows Forms event handler routine during standard GUI event execution",
-        "Code executes strictly from line 1 to the end without stopping during execution of the Visual C# form application before updating the target UI control",
-        "The application waits in an event loop and executes specific handler routines in response to user actions like clicks and keystrokes",
-        "Programs can only be run once per day when the Windows Forms control processes the action before returning to the calling method"
+        "Only the hardware CPU clock can trigger method execution",
+        "Code runs strictly from line 1 to the end without waiting for input",
+        "The app waits for events and runs handlers when user actions occur",
+        "Compiled desktop applications can only be launched once per day"
       ],
       "answer": 2,
       "ans": 2,
@@ -5418,16 +5418,16 @@
       "stem": "What happens when a user presses Alt plus the underlined letter on a button with an access key?",
       "code": "",
       "options": [
-        "The active form closes without saving within the active form class implementation",
-        "The button's Click event handler executes exactly as if the mouse clicked it",
-        "The button text changes to uppercase inside the Windows Forms event handler routine",
-        "The button moves to the center of the screen on the Windows Form canvas"
+        "The active Windows Form closes immediately without saving data",
+        "The button's Click event handler executes just as if clicked by mouse",
+        "The button's displayed Text property converts to all uppercase letters",
+        "The button control relocates itself to the center of the form canvas"
       ],
       "opts": [
-        "The active form closes without saving within the active form class implementation",
-        "The button's Click event handler executes exactly as if the mouse clicked it",
-        "The button text changes to uppercase inside the Windows Forms event handler routine",
-        "The button moves to the center of the screen on the Windows Form canvas"
+        "The active Windows Form closes immediately without saving data",
+        "The button's Click event handler executes just as if clicked by mouse",
+        "The button's displayed Text property converts to all uppercase letters",
+        "The button control relocates itself to the center of the form canvas"
       ],
       "answer": 1,
       "ans": 1,
@@ -5547,15 +5547,15 @@
       "code": "",
       "options": [
         "The picture box and its image are hidden from view on the form",
-        "The image file on the hard drive is erased during program execution",
-        "The picture box is deleted from memory within the form class",
-        "The image turns completely black inside the event handler"
+        "The underlying image file on the local hard drive is deleted",
+        "The PictureBox object is permanently destroyed from system RAM",
+        "The displayed bitmap graphic is filled with solid black pixels"
       ],
       "opts": [
         "The picture box and its image are hidden from view on the form",
-        "The image file on the hard drive is erased during program execution",
-        "The picture box is deleted from memory within the form class",
-        "The image turns completely black inside the event handler"
+        "The underlying image file on the local hard drive is deleted",
+        "The PictureBox object is permanently destroyed from system RAM",
+        "The displayed bitmap graphic is filled with solid black pixels"
       ],
       "answer": 0,
       "ans": 0,
@@ -5588,16 +5588,16 @@
       "stem": "In the Visual Studio Properties window, what does clicking the lightning bolt icon display?",
       "code": "",
       "options": [
-        "Battery power level within the active form class implementation",
-        "The list of available events for the currently selected control",
-        "Database connection status inside the Windows Forms event handler routine",
-        "CPU performance statistics during execution of the Visual C# form application"
+        "The laptop battery power charge level",
+        "The list of events for the selected control",
+        "The active SQL database connection status",
+        "Real-time CPU processor usage statistics"
       ],
       "opts": [
-        "Battery power level within the active form class implementation",
-        "The list of available events for the currently selected control",
-        "Database connection status inside the Windows Forms event handler routine",
-        "CPU performance statistics during execution of the Visual C# form application"
+        "The laptop battery power charge level",
+        "The list of events for the selected control",
+        "The active SQL database connection status",
+        "Real-time CPU processor usage statistics"
       ],
       "answer": 1,
       "ans": 1,
@@ -5674,16 +5674,16 @@
       "stem": "What is the effect of setting a Form's MaximizeBox property to false?",
       "code": "",
       "options": [
-        "The form is automatically closed on the Windows Form canvas",
-        "The user cannot close the form during program execution",
-        "The minimize button disappears within the active form class implementation",
-        "The maximize button in the form title bar is disabled or removed"
+        "The active form is automatically closed on startup",
+        "The user is prevented from closing the active form",
+        "The minimize button is removed from the title bar",
+        "The maximize button in the title bar is disabled"
       ],
       "opts": [
-        "The form is automatically closed on the Windows Form canvas",
-        "The user cannot close the form during program execution",
-        "The minimize button disappears within the active form class implementation",
-        "The maximize button in the form title bar is disabled or removed"
+        "The active form is automatically closed on startup",
+        "The user is prevented from closing the active form",
+        "The minimize button is removed from the title bar",
+        "The maximize button in the title bar is disabled"
       ],
       "answer": 3,
       "ans": 3,
@@ -5890,15 +5890,15 @@
       "code": "",
       "options": [
         "total // count",
-        "total / count / 1.0",
+        "(int)total / count",
         "Convert.ToInt32(total / count)",
-        "total / count"
+        "(double)total / count"
       ],
       "opts": [
         "total // count",
-        "total / count / 1.0",
+        "(int)total / count",
         "Convert.ToInt32(total / count)",
-        "total / count"
+        "(double)total / count"
       ],
       "answer": 3,
       "ans": 3,
@@ -6103,16 +6103,16 @@
       "stem": "What is the primary difference between a 'local variable' and a 'field variable' in a Windows Form?",
       "code": "",
       "options": [
-        "Local variables are declared inside a method and destroyed when it exits; field variables are declared at class level and retain state across multiple button clicks",
-        "Local variables can be accessed by all forms, while field variables cannot across successive passes of the loop body on the active Windows Form canvas",
-        "Local variables cannot hold decimal numbers when evaluating the numeric expression in the handler during standard GUI event execution in the compiled C# project",
-        "There is no difference; they are synonymous during execution of the Visual C# form application before updating the target UI control inside the desktop session"
+        "Local variables exist only during a call; fields persist across clicks",
+        "Local variables can be accessed by all forms, whereas field variables cannot",
+        "Local variables cannot store decimal numbers inside Click event handlers",
+        "There is no functional difference; both variable types behave identically"
       ],
       "opts": [
-        "Local variables are declared inside a method and destroyed when it exits; field variables are declared at class level and retain state across multiple button clicks",
-        "Local variables can be accessed by all forms, while field variables cannot across successive passes of the loop body on the active Windows Form canvas",
-        "Local variables cannot hold decimal numbers when evaluating the numeric expression in the handler during standard GUI event execution in the compiled C# project",
-        "There is no difference; they are synonymous during execution of the Visual C# form application before updating the target UI control inside the desktop session"
+        "Local variables exist only during a call; fields persist across clicks",
+        "Local variables can be accessed by all forms, whereas field variables cannot",
+        "Local variables cannot store decimal numbers inside Click event handlers",
+        "There is no functional difference; both variable types behave identically"
       ],
       "answer": 0,
       "ans": 0,
@@ -6403,16 +6403,16 @@
       "stem": "Why is 'decimal' the required C# data type for unit prices (pricePerKg, pricePerRoll) and total monetary costs, rather than 'float' or 'double'?",
       "code": "",
       "options": [
-        "Visual Studio does not permit using double variables inside button click event handlers when storing the formatted result into the control",
-        "The double type is too large to fit into computer RAM while computing the value in local memory before updating the target UI control inside the desktop session",
-        "The decimal type runs twice as fast as integer arithmetic when evaluating the numeric expression in the handler before returning to the calling method",
-        "The decimal type uses 128-bit base-10 fixed-point representation, eliminating binary floating-point rounding errors in monetary calculations"
+        "Visual Studio forbids declaring double variables inside button Click event handlers",
+        "The 64-bit double data type is too large to fit into standard computer RAM",
+        "The 128-bit decimal type executes twice as fast as 32-bit integer arithmetic",
+        "The decimal type uses base-10 arithmetic, avoiding binary rounding errors"
       ],
       "opts": [
-        "Visual Studio does not permit using double variables inside button click event handlers when storing the formatted result into the control",
-        "The double type is too large to fit into computer RAM while computing the value in local memory before updating the target UI control inside the desktop session",
-        "The decimal type runs twice as fast as integer arithmetic when evaluating the numeric expression in the handler before returning to the calling method",
-        "The decimal type uses 128-bit base-10 fixed-point representation, eliminating binary floating-point rounding errors in monetary calculations"
+        "Visual Studio forbids declaring double variables inside button Click event handlers",
+        "The 64-bit double data type is too large to fit into standard computer RAM",
+        "The 128-bit decimal type executes twice as fast as 32-bit integer arithmetic",
+        "The decimal type uses base-10 arithmetic, avoiding binary rounding errors"
       ],
       "answer": 3,
       "ans": 3,
@@ -6447,15 +6447,15 @@
       "code": "",
       "options": [
         "Bread rolls are discrete physical items purchased in whole units",
-        "C# does not allow dividing decimals while computing the value in local memory",
+        "C# does not allow dividing decimals",
         "The int type automatically rounds numbers to four decimal places",
-        "int variables use more memory than decimal variables in C# code"
+        "int variables use more memory than decimal variables"
       ],
       "opts": [
         "Bread rolls are discrete physical items purchased in whole units",
-        "C# does not allow dividing decimals while computing the value in local memory",
+        "C# does not allow dividing decimals",
         "The int type automatically rounds numbers to four decimal places",
-        "int variables use more memory than decimal variables in C# code"
+        "int variables use more memory than decimal variables"
       ],
       "answer": 0,
       "ans": 0,
@@ -6489,16 +6489,16 @@
       "stem": "If a user enters 2.5 in txtWorsKg (kilograms) and each bread roll holds 120 grams, what unit conversion must be performed before calculating how many rolls can be filled?",
       "code": "",
       "options": [
-        "Divide kilograms by 1000 inside the Windows Forms event handler routine",
-        "Multiply kilograms by 1000 to convert kilograms into grams: worsKg * 1000m",
-        "Add 120 to kilograms directly during execution of the Visual C# form application",
-        "Convert kilograms into pounds when the Windows Forms control processes the action"
+        "Divide the entered kilograms value by 1000: worsKg / 1000m",
+        "Multiply kilograms by 1000 to convert to grams: worsKg * 1000m",
+        "Add 120 directly to the entered kilograms value: worsKg + 120m",
+        "Multiply kilograms by 2.2046 to convert the mass into pounds"
       ],
       "opts": [
-        "Divide kilograms by 1000 inside the Windows Forms event handler routine",
-        "Multiply kilograms by 1000 to convert kilograms into grams: worsKg * 1000m",
-        "Add 120 to kilograms directly during execution of the Visual C# form application",
-        "Convert kilograms into pounds when the Windows Forms control processes the action"
+        "Divide the entered kilograms value by 1000: worsKg / 1000m",
+        "Multiply kilograms by 1000 to convert to grams: worsKg * 1000m",
+        "Add 120 directly to the entered kilograms value: worsKg + 120m",
+        "Multiply kilograms by 2.2046 to convert the mass into pounds"
       ],
       "answer": 1,
       "ans": 1,
@@ -6532,16 +6532,16 @@
       "stem": "If one bread roll holds a fixed 120 grams of wors, why does writing `int rolls = (int)(grams / 120);` directly in calculation code violate C# coding standards?",
       "code": "",
       "options": [
-        "Division must always use a while loop during execution of the repetition structure",
-        "Parentheses are illegal around division operations during program execution",
-        "120 is a magic number; fixed domain rules must be declared as a named constant",
-        "C# does not allow the number 120 in expressions within the form class"
+        "Division operations in C# must always be placed inside a while loop",
+        "Parentheses are illegal around arithmetic division expressions in C#",
+        "120 is a magic number; fixed domain rates belong in a named constant",
+        "Visual C# syntax does not allow the literal integer 120 in expressions"
       ],
       "opts": [
-        "Division must always use a while loop during execution of the repetition structure",
-        "Parentheses are illegal around division operations during program execution",
-        "120 is a magic number; fixed domain rules must be declared as a named constant",
-        "C# does not allow the number 120 in expressions within the form class"
+        "Division operations in C# must always be placed inside a while loop",
+        "Parentheses are illegal around arithmetic division expressions in C#",
+        "120 is a magic number; fixed domain rates belong in a named constant",
+        "Visual C# syntax does not allow the literal integer 120 in expressions"
       ],
       "answer": 2,
       "ans": 2,
@@ -6661,16 +6661,16 @@
       "stem": "What happens when you compile the C# statement 'decimal price = 85.50;' without an 'm' or 'M' suffix?",
       "code": "",
       "options": [
-        "Visual Studio automatically inserts the 'm' suffix inside the Windows Forms event handler routine",
-        "Compiler error CS0664: Literal of type double cannot be implicitly converted to type decimal",
-        "The variable is converted to an int during type conversion and arithmetic processing under .NET runtime execution",
-        "It compiles and runs without error when the Windows Forms control processes the action"
+        "Visual Studio automatically appends the missing 'm' suffix at build time",
+        "Error CS0664: double literal cannot implicitly convert to decimal",
+        "The decimal variable is silently truncated into a 32-bit signed int",
+        "The statement compiles and executes normally without any compiler error"
       ],
       "opts": [
-        "Visual Studio automatically inserts the 'm' suffix inside the Windows Forms event handler routine",
-        "Compiler error CS0664: Literal of type double cannot be implicitly converted to type decimal",
-        "The variable is converted to an int during type conversion and arithmetic processing under .NET runtime execution",
-        "It compiles and runs without error when the Windows Forms control processes the action"
+        "Visual Studio automatically appends the missing 'm' suffix at build time",
+        "Error CS0664: double literal cannot implicitly convert to decimal",
+        "The decimal variable is silently truncated into a 32-bit signed int",
+        "The statement compiles and executes normally without any compiler error"
       ],
       "answer": 1,
       "ans": 1,
@@ -6747,16 +6747,16 @@
       "stem": "Why is 'decimal.TryParse(txtWorsKg.Text, out decimal worsKg)' strongly preferred over 'decimal.Parse(txtWorsKg.Text)' in Windows Forms?",
       "code": "",
       "options": [
-        "TryParse automatically rounds negative numbers to positive when testing the decision structure in the click event on the active Windows Form canvas",
-        "TryParse writes the value directly to the printer while resolving the boolean expression in the handler during standard GUI event execution inside the desktop session",
-        "TryParse converts text into upper case when evaluating the conditional branching logic before updating the target UI control during interface state updates",
-        "TryParse returns a boolean indicating success or failure without crashing the application with an unhandled FormatException if the user enters non-numeric text"
+        "TryParse automatically converts negative numeric inputs into positive values",
+        "TryParse sends the parsed numeric value directly to the default printer",
+        "TryParse converts alphabetic characters into uppercase ASCII codes",
+        "TryParse returns a bool instead of crashing with FormatException on bad text"
       ],
       "opts": [
-        "TryParse automatically rounds negative numbers to positive when testing the decision structure in the click event on the active Windows Form canvas",
-        "TryParse writes the value directly to the printer while resolving the boolean expression in the handler during standard GUI event execution inside the desktop session",
-        "TryParse converts text into upper case when evaluating the conditional branching logic before updating the target UI control during interface state updates",
-        "TryParse returns a boolean indicating success or failure without crashing the application with an unhandled FormatException if the user enters non-numeric text"
+        "TryParse automatically converts negative numeric inputs into positive values",
+        "TryParse sends the parsed numeric value directly to the default printer",
+        "TryParse converts alphabetic characters into uppercase ASCII codes",
+        "TryParse returns a bool instead of crashing with FormatException on bad text"
       ],
       "answer": 3,
       "ans": 3,
@@ -6789,16 +6789,16 @@
       "stem": "In the statement 'bool ok = decimal.TryParse(txtWorsKg.Text, out worsKg);', what is the purpose of the 'out' keyword?",
       "code": "",
       "options": [
-        "It specifies that worsKg is passed by reference to receive the parsed numeric result from inside the method",
-        "It prints the variable to the debug console while computing the value in local memory before returning to the calling method",
-        "It deletes the variable from memory when the method exits when control passes between caller and helper method",
-        "It marks the variable as an output label during type conversion and arithmetic processing on the active Windows Form canvas"
+        "It passes worsKg by reference so TryParse stores the parsed value in it",
+        "It prints the current value of worsKg to the Visual Studio Output window",
+        "It deallocates worsKg from system memory as soon as TryParse finishes",
+        "It binds the worsKg variable directly to an on-screen output Label control"
       ],
       "opts": [
-        "It specifies that worsKg is passed by reference to receive the parsed numeric result from inside the method",
-        "It prints the variable to the debug console while computing the value in local memory before returning to the calling method",
-        "It deletes the variable from memory when the method exits when control passes between caller and helper method",
-        "It marks the variable as an output label during type conversion and arithmetic processing on the active Windows Form canvas"
+        "It passes worsKg by reference so TryParse stores the parsed value in it",
+        "It prints the current value of worsKg to the Visual Studio Output window",
+        "It deallocates worsKg from system memory as soon as TryParse finishes",
+        "It binds the worsKg variable directly to an on-screen output Label control"
       ],
       "answer": 0,
       "ans": 0,
@@ -6831,16 +6831,16 @@
       "stem": "If the user leaves txtWorsKg blank and clicks Calculate, what happens during 'decimal.TryParse(txtWorsKg.Text, out decimal worsKg)'?",
       "code": "",
       "options": [
-        "A fatal StackOverflowException is thrown when evaluated at runtime",
-        "The method returns false and worsKg is set to its default value 0m",
-        "The computer beeps and shuts down on the Windows Form canvas",
-        "The method returns true and worsKg becomes null at the call site"
+        "An unhandled StackOverflowException immediately crashes the form",
+        "TryParse returns false and sets the out parameter worsKg to 0m",
+        "The operating system sounds an error beep and shuts down the PC",
+        "TryParse returns true and assigns a null reference to worsKg"
       ],
       "opts": [
-        "A fatal StackOverflowException is thrown when evaluated at runtime",
-        "The method returns false and worsKg is set to its default value 0m",
-        "The computer beeps and shuts down on the Windows Form canvas",
-        "The method returns true and worsKg becomes null at the call site"
+        "An unhandled StackOverflowException immediately crashes the form",
+        "TryParse returns false and sets the out parameter worsKg to 0m",
+        "The operating system sounds an error beep and shuts down the PC",
+        "TryParse returns true and assigns a null reference to worsKg"
       ],
       "answer": 1,
       "ans": 1,
@@ -6959,16 +6959,16 @@
       "stem": "What is the difference between 'total.ToString(\"C\")' and 'total.ToString(\"F2\")'?",
       "code": "",
       "options": [
-        "\"C\" includes the currency symbol, whereas \"F2\" displays strictly the fixed-point number with 2 decimals and no currency symbol",
-        "\"F2\" rounds to two significant digits while \"C\" truncates across successive passes of the loop body on the active Windows Form canvas",
-        "\"C\" only works on integers inside the Windows Forms event handler routine during standard GUI event execution in the compiled C# project",
-        "There is no difference between them during execution of the Visual C# form application before updating the target UI control"
+        "\"C\" prefixes the regional currency symbol, while \"F2\" shows 2 fixed decimals",
+        "\"F2\" rounds to two significant digits, whereas \"C\" truncates all fractional cents",
+        "\"C\" can only be called on int variables, whereas \"F2\" works on decimal values",
+        "There is no difference; both format specifiers produce identical output strings"
       ],
       "opts": [
-        "\"C\" includes the currency symbol, whereas \"F2\" displays strictly the fixed-point number with 2 decimals and no currency symbol",
-        "\"F2\" rounds to two significant digits while \"C\" truncates across successive passes of the loop body on the active Windows Form canvas",
-        "\"C\" only works on integers inside the Windows Forms event handler routine during standard GUI event execution in the compiled C# project",
-        "There is no difference between them during execution of the Visual C# form application before updating the target UI control"
+        "\"C\" prefixes the regional currency symbol, while \"F2\" shows 2 fixed decimals",
+        "\"F2\" rounds to two significant digits, whereas \"C\" truncates all fractional cents",
+        "\"C\" can only be called on int variables, whereas \"F2\" works on decimal values",
+        "There is no difference; both format specifiers produce identical output strings"
       ],
       "answer": 0,
       "ans": 0,
@@ -7046,14 +7046,14 @@
       "code": "",
       "options": [
         "double result = int.Parse(a / b);",
-        "double result = Math.Floor(a / b);",
-        "double result =a / b;",
+        "double result = (int)a / b;",
+        "double result = (double)a / b;",
         "double result = a / b;"
       ],
       "opts": [
         "double result = int.Parse(a / b);",
-        "double result = Math.Floor(a / b);",
-        "double result =a / b;",
+        "double result = (int)a / b;",
+        "double result = (double)a / b;",
         "double result = a / b;"
       ],
       "answer": 2,
@@ -7131,16 +7131,16 @@
       "stem": "What is the key difference in scope between a local variable declared inside btnCalculate_Click and a class-level field declared in Form1?",
       "code": "",
       "options": [
-        "Local variables exist only while the method executes; class-level fields exist for the lifetime of the form and can be accessed by all methods in the class",
-        "Local variables cannot be modified while computing the value in local memory before updating the target UI control under .NET runtime execution",
-        "Local variables can be accessed by any program in Windows when evaluating the numeric expression in the handler before returning to the calling method",
-        "Class-level fields can only hold strings during execution of the Visual C# form application within the current form class instance inside the desktop session"
+        "Local variables exist during the method call; fields persist for the form's life",
+        "Local variables are read-only constants that cannot be modified after declaration",
+        "Local variables are globally accessible to every running application in Windows",
+        "Class-level fields can only store string literals and cannot hold numeric types"
       ],
       "opts": [
-        "Local variables exist only while the method executes; class-level fields exist for the lifetime of the form and can be accessed by all methods in the class",
-        "Local variables cannot be modified while computing the value in local memory before updating the target UI control under .NET runtime execution",
-        "Local variables can be accessed by any program in Windows when evaluating the numeric expression in the handler before returning to the calling method",
-        "Class-level fields can only hold strings during execution of the Visual C# form application within the current form class instance inside the desktop session"
+        "Local variables exist during the method call; fields persist for the form's life",
+        "Local variables are read-only constants that cannot be modified after declaration",
+        "Local variables are globally accessible to every running application in Windows",
+        "Class-level fields can only store string literals and cannot hold numeric types"
       ],
       "answer": 0,
       "ans": 0,
@@ -7173,16 +7173,16 @@
       "stem": "What compiler error occurs if you declare a local variable 'decimal total;' inside an event handler and attempt to use it in an expression without initializing it first?",
       "code": "",
       "options": [
-        "CS1002: Semicolon expected during project compilation",
+        "CS1002: Missing semicolon expected at end of declaration",
         "CS0165: Use of unassigned local variable 'total'",
-        "CS0103: The name 'total' does not exist during build",
-        "CS0029: Cannot convert decimal to int in the IDE"
+        "CS0103: The identifier 'total' does not exist in context",
+        "CS0029: Cannot implicitly convert type decimal to int"
       ],
       "opts": [
-        "CS1002: Semicolon expected during project compilation",
+        "CS1002: Missing semicolon expected at end of declaration",
         "CS0165: Use of unassigned local variable 'total'",
-        "CS0103: The name 'total' does not exist during build",
-        "CS0029: Cannot convert decimal to int in the IDE"
+        "CS0103: The identifier 'total' does not exist in context",
+        "CS0029: Cannot implicitly convert type decimal to int"
       ],
       "answer": 1,
       "ans": 1,
@@ -7257,14 +7257,14 @@
       "stem": "On a form with inputs txtName, txtWorsKg, txtPricePerKg, txtPricePerRoll and output lblTotalResult, which statements in btnClear_Click reset the form for another calculation?",
       "code": "",
       "options": [
-        "Application.Restart(); txtName.Text = \"\"; txtWorsKg.Text = \"\"; txtPricePerKg.Text = \"\"; lblTotalResult.Visible = false;",
-        "this.Close(); txtName.Clear(); txtWorsKg.Clear(); txtPricePerKg.Clear(); txtPricePerRoll.Clear();",
+        "Application.Restart(); txtName.Text = null; txtWorsKg.Text = null; lblTotalResult.Dispose();",
+        "this.Close(); Form1 newForm = new Form1(); newForm.ShowDialog(); txtName.Focus();",
         "txtName.Text = \"0\"; txtWorsKg.Text = \"0\"; txtPricePerKg.Text = \"0\"; txtPricePerRoll.Text = \"0\"; lblTotalResult.Text = \"0\";",
         "txtName.Clear(); txtWorsKg.Clear(); txtPricePerKg.Clear(); txtPricePerRoll.Clear(); lblTotalResult.Text = \"\"; txtName.Focus();"
       ],
       "opts": [
-        "Application.Restart(); txtName.Text = \"\"; txtWorsKg.Text = \"\"; txtPricePerKg.Text = \"\"; lblTotalResult.Visible = false;",
-        "this.Close(); txtName.Clear(); txtWorsKg.Clear(); txtPricePerKg.Clear(); txtPricePerRoll.Clear();",
+        "Application.Restart(); txtName.Text = null; txtWorsKg.Text = null; lblTotalResult.Dispose();",
+        "this.Close(); Form1 newForm = new Form1(); newForm.ShowDialog(); txtName.Focus();",
         "txtName.Text = \"0\"; txtWorsKg.Text = \"0\"; txtPricePerKg.Text = \"0\"; txtPricePerRoll.Text = \"0\"; lblTotalResult.Text = \"0\";",
         "txtName.Clear(); txtWorsKg.Clear(); txtPricePerKg.Clear(); txtPricePerRoll.Clear(); lblTotalResult.Text = \"\"; txtName.Focus();"
       ],
@@ -7300,16 +7300,16 @@
       "stem": "What does calling 'txtName.Focus();' accomplish in a Windows Forms application?",
       "code": "",
       "options": [
-        "It sets the active blinking keyboard cursor into txtName so the user can begin typing immediately without clicking",
-        "It maximizes the textbox to fill the screen within the active form class implementation within the current form class instance",
-        "It changes the textbox background to yellow inside the Windows Forms event handler routine on the active Windows Form canvas",
-        "It validates the textbox contents against a database during execution of the Visual C# form application"
+        "It places the active keyboard cursor inside txtName for immediate typing",
+        "It resizes txtName so the control fills the entire Windows Form canvas",
+        "It changes the BackColor property of txtName to a bright yellow highlight",
+        "It validates the text inside txtName against an external SQL database"
       ],
       "opts": [
-        "It sets the active blinking keyboard cursor into txtName so the user can begin typing immediately without clicking",
-        "It maximizes the textbox to fill the screen within the active form class implementation within the current form class instance",
-        "It changes the textbox background to yellow inside the Windows Forms event handler routine on the active Windows Form canvas",
-        "It validates the textbox contents against a database during execution of the Visual C# form application"
+        "It places the active keyboard cursor inside txtName for immediate typing",
+        "It resizes txtName so the control fills the entire Windows Form canvas",
+        "It changes the BackColor property of txtName to a bright yellow highlight",
+        "It validates the text inside txtName against an external SQL database"
       ],
       "answer": 0,
       "ans": 0,
@@ -7343,16 +7343,16 @@
       "stem": "Why should a C# banking form declare currency variables as `decimal` (with the `m` suffix) rather than `double` even though both compile without syntax errors?",
       "code": "",
       "options": [
-        "`decimal` executes faster hardware graphics rendering on `Label` controls than `double` when evaluating the numeric expression in the handler before updating the target UI control",
-        "`double` uses base-2 binary floating-point representation which introduces rounding inaccuracies on base-10 cents, whereas `decimal` uses exact base-10 arithmetic",
-        "`double` variables cannot be formatted with `.ToString(\"F2\")` or `.ToString(\"C\")` in Windows Forms during type conversion and arithmetic processing",
-        "`double` only stores whole integers and truncates all digits after the decimal point when storing the formatted result into the control within the current form class instance"
+        "`decimal` renders text onto Windows Forms `Label` controls faster than `double`",
+        "`double` uses binary floating-point that can misround cents; `decimal` is base-10",
+        "`double` variables cannot be formatted with `.ToString(\"F2\")` or `.ToString(\"C\")` in C#",
+        "`double` only stores whole numbers and truncates all digits after the decimal point"
       ],
       "opts": [
-        "`decimal` executes faster hardware graphics rendering on `Label` controls than `double` when evaluating the numeric expression in the handler before updating the target UI control",
-        "`double` uses base-2 binary floating-point representation which introduces rounding inaccuracies on base-10 cents, whereas `decimal` uses exact base-10 arithmetic",
-        "`double` variables cannot be formatted with `.ToString(\"F2\")` or `.ToString(\"C\")` in Windows Forms during type conversion and arithmetic processing",
-        "`double` only stores whole integers and truncates all digits after the decimal point when storing the formatted result into the control within the current form class instance"
+        "`decimal` renders text onto Windows Forms `Label` controls faster than `double`",
+        "`double` uses binary floating-point that can misround cents; `decimal` is base-10",
+        "`double` variables cannot be formatted with `.ToString(\"F2\")` or `.ToString(\"C\")` in C#",
+        "`double` only stores whole numbers and truncates all digits after the decimal point"
       ],
       "answer": 1,
       "ans": 1,
@@ -7471,16 +7471,16 @@
       "stem": "Why can a constant declared with the 'const' keyword NOT be reassigned inside an event handler?",
       "code": "",
       "options": [
-        "Constants are immutable values resolved at compile time whose values can never change during program execution",
-        "Event handlers can only modify strings within the active form class implementation during standard GUI event execution",
-        "The CLR disables memory writes after form loading inside the Windows Forms event handler routine before updating the target UI control",
-        "Constants only exist while the form is hidden during execution of the repetition structure before returning to the calling method"
+        "Constants are compile-time immutable values that cannot change at runtime",
+        "Button Click event handlers are only permitted to modify string variables",
+        "The .NET runtime blocks all memory writes after Form1_Load finishes running",
+        "Declared const identifiers only exist in memory while the form is hidden"
       ],
       "opts": [
-        "Constants are immutable values resolved at compile time whose values can never change during program execution",
-        "Event handlers can only modify strings within the active form class implementation during standard GUI event execution",
-        "The CLR disables memory writes after form loading inside the Windows Forms event handler routine before updating the target UI control",
-        "Constants only exist while the form is hidden during execution of the repetition structure before returning to the calling method"
+        "Constants are compile-time immutable values that cannot change at runtime",
+        "Button Click event handlers are only permitted to modify string variables",
+        "The .NET runtime blocks all memory writes after Form1_Load finishes running",
+        "Declared const identifiers only exist in memory while the form is hidden"
       ],
       "answer": 0,
       "ans": 0,
@@ -7769,16 +7769,16 @@
       "stem": "Can an 'int' variable be implicitly assigned to a 'decimal' variable in C#?",
       "code": "",
       "options": [
-        "No, C# forbids mixing int and decimal completely when storing the formatted result into the control before updating the target UI control",
-        "Only if the int is negative while computing the value in local memory before returning to the calling method inside the desktop session",
-        "Only if an explicit cast is supplied inside the Windows Forms event handler routine within the current form class instance during interface state updates",
-        "Yes, int to decimal is an implicit widening conversion because all 32-bit integers fit within 128-bit decimal without loss of precision"
+        "No, C# strictly forbids mixing int and decimal types in any assignment",
+        "Only if the int variable holds a negative value less than zero",
+        "Only if an explicit (decimal) cast is written before the int variable",
+        "Yes, C# implicitly widens 32-bit int to 128-bit decimal without loss"
       ],
       "opts": [
-        "No, C# forbids mixing int and decimal completely when storing the formatted result into the control before updating the target UI control",
-        "Only if the int is negative while computing the value in local memory before returning to the calling method inside the desktop session",
-        "Only if an explicit cast is supplied inside the Windows Forms event handler routine within the current form class instance during interface state updates",
-        "Yes, int to decimal is an implicit widening conversion because all 32-bit integers fit within 128-bit decimal without loss of precision"
+        "No, C# strictly forbids mixing int and decimal types in any assignment",
+        "Only if the int variable holds a negative value less than zero",
+        "Only if an explicit (decimal) cast is written before the int variable",
+        "Yes, C# implicitly widens 32-bit int to 128-bit decimal without loss"
       ],
       "answer": 3,
       "ans": 3,
@@ -7812,16 +7812,16 @@
       "stem": "Why does the statement `lblAverage.Text = dblAverage.toString(''n2'');` fail to compile in Visual C#?",
       "code": "",
       "options": [
-        "C# method names are case-sensitive and string format specifiers require standard double quotes, not paired single quotes",
-        "In C#, double values must be converted using Convert.ToString() rather than the instance method .ToString() in the caller",
-        "The 'n2' specifier is only valid for integers, not doubles while iterating through the collection entries during standard GUI event execution",
-        "The ToString method cannot accept format strings without passing a CultureInfo object across the method boundary"
+        "C# is case-sensitive — `ToString`, not `toString` — and requires `\"n2\"`",
+        "In C#, double values must be formatted via `Convert.ToString()` instead of `.ToString()`",
+        "The `\"n2\"` numeric format specifier is only valid for 32-bit integers, not `double`",
+        "The `.ToString()` method cannot accept format specifiers without a `CultureInfo` argument"
       ],
       "opts": [
-        "C# method names are case-sensitive and string format specifiers require standard double quotes, not paired single quotes",
-        "In C#, double values must be converted using Convert.ToString() rather than the instance method .ToString() in the caller",
-        "The 'n2' specifier is only valid for integers, not doubles while iterating through the collection entries during standard GUI event execution",
-        "The ToString method cannot accept format strings without passing a CultureInfo object across the method boundary"
+        "C# is case-sensitive — `ToString`, not `toString` — and requires `\"n2\"`",
+        "In C#, double values must be formatted via `Convert.ToString()` instead of `.ToString()`",
+        "The `\"n2\"` numeric format specifier is only valid for 32-bit integers, not `double`",
+        "The `.ToString()` method cannot accept format specifiers without a `CultureInfo` argument"
       ],
       "answer": 0,
       "ans": 0,
@@ -8070,16 +8070,16 @@
       "stem": "Why is 'Math.Round(val, 2, MidpointRounding.AwayFromZero)' commonly used in financial accounting?",
       "code": "",
       "options": [
-        "It eliminates all decimal places during type conversion and arithmetic processing",
-        "It converts negative numbers to positive during program execution",
-        "It rounds.005 up to.01 rather than rounding to the nearest even number",
-        "It automatically calculates VAT within the active form class implementation"
+        "It truncates and removes all fractional decimal places from the number",
+        "It automatically converts negative monetary balances into positive values",
+        "It rounds midpoint .005 values up to .01 rather than to an even digit",
+        "It automatically adds 15% South African VAT to the rounded decimal amount"
       ],
       "opts": [
-        "It eliminates all decimal places during type conversion and arithmetic processing",
-        "It converts negative numbers to positive during program execution",
-        "It rounds.005 up to.01 rather than rounding to the nearest even number",
-        "It automatically calculates VAT within the active form class implementation"
+        "It truncates and removes all fractional decimal places from the number",
+        "It automatically converts negative monetary balances into positive values",
+        "It rounds midpoint .005 values up to .01 rather than to an even digit",
+        "It automatically adds 15% South African VAT to the rounded decimal amount"
       ],
       "answer": 2,
       "ans": 2,
@@ -8156,16 +8156,16 @@
       "stem": "What happens when the '+' operator is used with a string operand and a numeric operand in C#?",
       "code": "",
       "options": [
-        "String concatenation is performed; the numeric value is converted to a string and joined to the other string",
-        "The string is converted to a number and added while computing the value in local memory within the current form class instance",
-        "Compiler error CS0019 occurs during the Visual Studio build verification step on the active Windows Form canvas",
-        "A FormatException is thrown at runtime during runtime execution of the event handler during standard GUI event execution"
+        "The number is converted to text and concatenated to the string",
+        "The string is parsed into a number and added to the numeric operand",
+        "The Roslyn compiler halts the build with operator error CS0019",
+        "An unhandled FormatException is thrown when the expression executes"
       ],
       "opts": [
-        "String concatenation is performed; the numeric value is converted to a string and joined to the other string",
-        "The string is converted to a number and added while computing the value in local memory within the current form class instance",
-        "Compiler error CS0019 occurs during the Visual Studio build verification step on the active Windows Form canvas",
-        "A FormatException is thrown at runtime during runtime execution of the event handler during standard GUI event execution"
+        "The number is converted to text and concatenated to the string",
+        "The string is parsed into a number and added to the numeric operand",
+        "The Roslyn compiler halts the build with operator error CS0019",
+        "An unhandled FormatException is thrown when the expression executes"
       ],
       "answer": 0,
       "ans": 0,
@@ -8371,16 +8371,16 @@
       "stem": "What happens if a student uses 'decimal.Parse(\"\")' on an empty TextBox string without try-catch protection?",
       "code": "",
       "options": [
-        "The form reloads automatically inside the Windows Forms event handler routine",
-        "A FormatException is thrown, immediately terminating or crashing the application",
-        "The textbox turns red during execution of the Visual C# form application",
-        "The variable is assigned 0m silently when storing the formatted result into the control"
+        "The Windows Form automatically reloads and resets all controls",
+        "An unhandled FormatException is thrown and crashes the program",
+        "The TextBox border automatically turns bright red without crashing",
+        "The target decimal variable is silently assigned a value of 0m"
       ],
       "opts": [
-        "The form reloads automatically inside the Windows Forms event handler routine",
-        "A FormatException is thrown, immediately terminating or crashing the application",
-        "The textbox turns red during execution of the Visual C# form application",
-        "The variable is assigned 0m silently when storing the formatted result into the control"
+        "The Windows Form automatically reloads and resets all controls",
+        "An unhandled FormatException is thrown and crashes the program",
+        "The TextBox border automatically turns bright red without crashing",
+        "The target decimal variable is silently assigned a value of 0m"
       ],
       "answer": 1,
       "ans": 1,
@@ -8500,15 +8500,15 @@
       "code": "",
       "options": [
         "Approximately 2.14 billion",
-        "Approximately 65,535",
-        "Virtually unlimited at runtime",
-        "Approximately 32,767 on the form"
+        "Approximately 65,535 total",
+        "Virtually unlimited range",
+        "Approximately 32,767 total"
       ],
       "opts": [
         "Approximately 2.14 billion",
-        "Approximately 65,535",
-        "Virtually unlimited at runtime",
-        "Approximately 32,767 on the form"
+        "Approximately 65,535 total",
+        "Virtually unlimited range",
+        "Approximately 32,767 total"
       ],
       "answer": 0,
       "ans": 0,
@@ -8585,16 +8585,16 @@
       "stem": "What is the scope of a variable declared inside the body block of an 'if' statement?",
       "code": "",
       "options": [
-        "Method scope: accessible throughout the entire method during invocation of the declared helper method",
-        "Global scope: accessible to the whole Windows operating system when the Windows Forms control processes the action",
-        "Block scope: it is accessible only inside that specific if block and ceases to exist once the block finishes",
-        "Class scope: accessible across all forms within the active form class implementation during standard GUI event execution"
+        "Method scope: the variable remains accessible throughout the entire method",
+        "Global scope: the variable is accessible across the operating system",
+        "Block scope: the variable is accessible only inside that specific if block",
+        "Class scope: the variable is accessible across all methods in the form"
       ],
       "opts": [
-        "Method scope: accessible throughout the entire method during invocation of the declared helper method",
-        "Global scope: accessible to the whole Windows operating system when the Windows Forms control processes the action",
-        "Block scope: it is accessible only inside that specific if block and ceases to exist once the block finishes",
-        "Class scope: accessible across all forms within the active form class implementation during standard GUI event execution"
+        "Method scope: the variable remains accessible throughout the entire method",
+        "Global scope: the variable is accessible across the operating system",
+        "Block scope: the variable is accessible only inside that specific if block",
+        "Class scope: the variable is accessible across all methods in the form"
       ],
       "answer": 2,
       "ans": 2,
@@ -8627,16 +8627,16 @@
       "stem": "Why should blank lines be used to separate input parsing, arithmetic calculations, and output display inside an event handler?",
       "code": "",
       "options": [
-        "Blank lines increase execution speed when the Windows Forms control processes the action before updating the target UI control",
-        "Blank lines automatically reset memory within the active form class implementation before returning to the calling method",
-        "Visual Studio requires blank lines to compile inside the Windows Forms event handler routine",
-        "Blank lines visually structure code into logical paragraphs, improving readability and maintainability"
+        "Blank lines make the compiled machine code execute significantly faster",
+        "Blank lines automatically clear unused local variables from system RAM",
+        "The Visual C# compiler requires blank lines between sections to build",
+        "Blank lines group code into logical sections, improving readability"
       ],
       "opts": [
-        "Blank lines increase execution speed when the Windows Forms control processes the action before updating the target UI control",
-        "Blank lines automatically reset memory within the active form class implementation before returning to the calling method",
-        "Visual Studio requires blank lines to compile inside the Windows Forms event handler routine",
-        "Blank lines visually structure code into logical paragraphs, improving readability and maintainability"
+        "Blank lines make the compiled machine code execute significantly faster",
+        "Blank lines automatically clear unused local variables from system RAM",
+        "The Visual C# compiler requires blank lines between sections to build",
+        "Blank lines group code into logical sections, improving readability"
       ],
       "answer": 3,
       "ans": 3,
@@ -8928,16 +8928,16 @@
       "stem": "In Visual Studio, why should you use 'File -> Save All' (Ctrl+Shift+S) rather than 'File -> Save' (Ctrl+S) before packaging a Windows Forms project?",
       "code": "",
       "options": [
-        "Ctrl+S corrupts the project file during execution of the Visual C# form application",
-        "Ctrl+Shift+S compresses the folder into a zip file when the Windows Forms control processes the action",
-        "Ctrl+S saves only the active code tab, leaving designer layout modifications unsaved on disk",
-        "Ctrl+Shift+S submits the project directly to assessment within the active form class implementation"
+        "Pressing Ctrl+S corrupts the Visual Studio solution configuration file",
+        "Pressing Ctrl+Shift+S compresses the project folder into a .zip archive",
+        "Ctrl+S saves only the active file, leaving other modified files unsaved",
+        "Pressing Ctrl+Shift+S uploads the project directly to the grading server"
       ],
       "opts": [
-        "Ctrl+S corrupts the project file during execution of the Visual C# form application",
-        "Ctrl+Shift+S compresses the folder into a zip file when the Windows Forms control processes the action",
-        "Ctrl+S saves only the active code tab, leaving designer layout modifications unsaved on disk",
-        "Ctrl+Shift+S submits the project directly to assessment within the active form class implementation"
+        "Pressing Ctrl+S corrupts the Visual Studio solution configuration file",
+        "Pressing Ctrl+Shift+S compresses the project folder into a .zip archive",
+        "Ctrl+S saves only the active file, leaving other modified files unsaved",
+        "Pressing Ctrl+Shift+S uploads the project directly to the grading server"
       ],
       "answer": 2,
       "ans": 2,
@@ -9186,16 +9186,16 @@
       "stem": "What happens during short-circuit evaluation of 'if (a > 10 && b < 20)' when 'a' is 5?",
       "code": "",
       "options": [
-        "The entire condition evaluates to true in the handler",
+        "The entire compound condition evaluates to true",
         "Since 5 > 10 is false, 'b < 20' is never evaluated",
-        "Both sides are always evaluated regardless at runtime",
-        "A compiler error is thrown when building the solution"
+        "Both relational sides are always evaluated regardless",
+        "A compile-time syntax error is reported by Roslyn"
       ],
       "opts": [
-        "The entire condition evaluates to true in the handler",
+        "The entire compound condition evaluates to true",
         "Since 5 > 10 is false, 'b < 20' is never evaluated",
-        "Both sides are always evaluated regardless at runtime",
-        "A compiler error is thrown when building the solution"
+        "Both relational sides are always evaluated regardless",
+        "A compile-time syntax error is reported by Roslyn"
       ],
       "answer": 1,
       "ans": 1,
@@ -9229,16 +9229,16 @@
       "stem": "How do RadioButton controls behave when placed inside the same container (such as a GroupBox or Form)?",
       "code": "",
       "options": [
-        "Multiple radio buttons can be checked simultaneously when evaluating the conditional branching logic",
-        "They behave identically to CheckBoxes during validation of the user input state on the form on the active Windows Form canvas",
-        "They are mutually exclusive: checking one automatically unchecks all other radio buttons in that container",
-        "RadioButtons cannot be unchecked once clicked when testing the decision structure in the click event"
+        "Multiple radio buttons in the group can be checked simultaneously",
+        "They behave identically to independent CheckBox controls on a form",
+        "They are mutually exclusive: checking one unchecks all others",
+        "RadioButtons become permanently locked once clicked by the user"
       ],
       "opts": [
-        "Multiple radio buttons can be checked simultaneously when evaluating the conditional branching logic",
-        "They behave identically to CheckBoxes during validation of the user input state on the form on the active Windows Form canvas",
-        "They are mutually exclusive: checking one automatically unchecks all other radio buttons in that container",
-        "RadioButtons cannot be unchecked once clicked when testing the decision structure in the click event"
+        "Multiple radio buttons in the group can be checked simultaneously",
+        "They behave identically to independent CheckBox controls on a form",
+        "They are mutually exclusive: checking one unchecks all others",
+        "RadioButtons become permanently locked once clicked by the user"
       ],
       "answer": 2,
       "ans": 2,
@@ -9271,16 +9271,16 @@
       "stem": "How do CheckBox controls differ from RadioButton controls in a GUI?",
       "code": "",
       "options": [
-        "CheckBoxes cannot trigger event handlers during validation of the user input state on the form before updating the target UI control",
-        "CheckBoxes are mutually exclusive when testing the decision structure in the click event before returning to the calling method",
-        "CheckBoxes do not have a Checked property while resolving the boolean expression in the handler under .NET runtime execution",
-        "CheckBoxes allow independent, multiple selections; any number of checkboxes can be checked at the same time"
+        "CheckBox controls cannot be wired to Click or CheckedChanged handlers",
+        "CheckBoxes are mutually exclusive when placed inside a GroupBox",
+        "CheckBox controls do not expose a boolean Checked property in C#",
+        "CheckBoxes allow independent choices where any number may be checked"
       ],
       "opts": [
-        "CheckBoxes cannot trigger event handlers during validation of the user input state on the form before updating the target UI control",
-        "CheckBoxes are mutually exclusive when testing the decision structure in the click event before returning to the calling method",
-        "CheckBoxes do not have a Checked property while resolving the boolean expression in the handler under .NET runtime execution",
-        "CheckBoxes allow independent, multiple selections; any number of checkboxes can be checked at the same time"
+        "CheckBox controls cannot be wired to Click or CheckedChanged handlers",
+        "CheckBoxes are mutually exclusive when placed inside a GroupBox",
+        "CheckBox controls do not expose a boolean Checked property in C#",
+        "CheckBoxes allow independent choices where any number may be checked"
       ],
       "answer": 3,
       "ans": 3,
@@ -9355,16 +9355,16 @@
       "stem": "What is the primary function of a GroupBox control in Visual C# form design?",
       "code": "",
       "options": [
-        "To automatically validate text input within the active form class implementation before returning to the calling method",
-        "To visually group related controls and create separate mutually exclusive scopes for RadioButtons",
-        "To speed up CPU calculations when evaluating the numeric expression in the handler within the current form class instance",
-        "To display animated GIFs during execution of the Visual C# form application on the active Windows Form canvas"
+        "To automatically validate numeric TextBox input strings at runtime",
+        "To visually group related controls and scope RadioButton choices",
+        "To accelerate floating-point arithmetic calculations on the CPU",
+        "To render hardware-accelerated animated GIFs on the form canvas"
       ],
       "opts": [
-        "To automatically validate text input within the active form class implementation before returning to the calling method",
-        "To visually group related controls and create separate mutually exclusive scopes for RadioButtons",
-        "To speed up CPU calculations when evaluating the numeric expression in the handler within the current form class instance",
-        "To display animated GIFs during execution of the Visual C# form application on the active Windows Form canvas"
+        "To automatically validate numeric TextBox input strings at runtime",
+        "To visually group related controls and scope RadioButton choices",
+        "To accelerate floating-point arithmetic calculations on the CPU",
+        "To render hardware-accelerated animated GIFs on the form canvas"
       ],
       "answer": 1,
       "ans": 1,
@@ -9651,16 +9651,16 @@
       "stem": "In a speed trap calculator where `speedOver <= 0` indicates legal driving, what exact outputs are assigned to `lblKmOver`, `lblCategory`, and `lblFine`?",
       "code": "",
       "options": [
-        "lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Within the limit\"; lblFine.Text = \"No fine. Safe driving.\";",
-        "lblKmOver.Text = \"OK\"; lblCategory.Text = \"Pass\"; lblFine.Text = \"None\"; when the Windows Forms control processes the action",
-        "lblFine.Text = \"Warning: drive faster\"; within the active form class implementation on the active Windows Form canvas",
-        "lblKmOver.Text = \"-5 km/h\"; lblCategory.Text = \"Legal\"; lblFine.Text = \"R 0.00\"; inside the event handler"
+        "lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Within the limit\"; lblFine.Text = \"No fine.\";",
+        "lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Pass / Legal\"; lblFine.Text = \"R 0.00 (No fine issued)\";",
+        "lblKmOver.Text = \"Legal\"; lblCategory.Text = \"No Offence\"; lblFine.Text = \"Warning: drive faster\";",
+        "lblKmOver.Text = \"-5 km/h\"; lblCategory.Text = \"Legal Speed\"; lblFine.Text = \"R 0.00 Fine Payable\";"
       ],
       "opts": [
-        "lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Within the limit\"; lblFine.Text = \"No fine. Safe driving.\";",
-        "lblKmOver.Text = \"OK\"; lblCategory.Text = \"Pass\"; lblFine.Text = \"None\"; when the Windows Forms control processes the action",
-        "lblFine.Text = \"Warning: drive faster\"; within the active form class implementation on the active Windows Form canvas",
-        "lblKmOver.Text = \"-5 km/h\"; lblCategory.Text = \"Legal\"; lblFine.Text = \"R 0.00\"; inside the event handler"
+        "lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Within the limit\"; lblFine.Text = \"No fine.\";",
+        "lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Pass / Legal\"; lblFine.Text = \"R 0.00 (No fine issued)\";",
+        "lblKmOver.Text = \"Legal\"; lblCategory.Text = \"No Offence\"; lblFine.Text = \"Warning: drive faster\";",
+        "lblKmOver.Text = \"-5 km/h\"; lblCategory.Text = \"Legal Speed\"; lblFine.Text = \"R 0.00 Fine Payable\";"
       ],
       "answer": 0,
       "ans": 0,
@@ -9824,15 +9824,15 @@
       "code": "",
       "options": [
         "The zone is a built-up area AND speedOver is strictly greater than 20 km/h",
-        "The zone is a Highway and speedOver >= 20 during program execution",
+        "The zone is a Highway and speedOver >= 20",
         "Whenever the driver was traveling at more than 10 km/h over the limit in any zone",
-        "Whenever the repeat offender answer is 'yes' inside the Windows Forms event handler routine"
+        "Whenever the repeat offender answer is 'yes'"
       ],
       "opts": [
         "The zone is a built-up area AND speedOver is strictly greater than 20 km/h",
-        "The zone is a Highway and speedOver >= 20 during program execution",
+        "The zone is a Highway and speedOver >= 20",
         "Whenever the driver was traveling at more than 10 km/h over the limit in any zone",
-        "Whenever the repeat offender answer is 'yes' inside the Windows Forms event handler routine"
+        "Whenever the repeat offender answer is 'yes'"
       ],
       "answer": 0,
       "ans": 0,
@@ -9866,16 +9866,16 @@
       "stem": "If a fine doubles in a built-up zone only when `speedOver > 20` (strictly more than 20 km/h over), what happens when a vehicle travels at 80 km/h in a 60 km/h School zone (exactly 20 km/h over, base fine R750)?",
       "code": "",
       "options": [
-        "The driver receives a court appearance summons within the active form class implementation",
-        "The fine does NOT double because speedOver > 20 requires strictly MORE than 20 km/h over",
-        "The fine is reduced to R250 inside the Windows Forms event handler routine on the active Windows Form canvas",
-        "The fine doubles to R1500 immediately during type conversion and arithmetic processing"
+        "The driver is issued an automatic court appearance summons",
+        "The fine stays R750 since speedOver > 20 requires strictly over 20",
+        "The base fine is automatically reduced by half down to R250",
+        "The base fine immediately doubles from R750 to R1500 in School zones"
       ],
       "opts": [
-        "The driver receives a court appearance summons within the active form class implementation",
-        "The fine does NOT double because speedOver > 20 requires strictly MORE than 20 km/h over",
-        "The fine is reduced to R250 inside the Windows Forms event handler routine on the active Windows Form canvas",
-        "The fine doubles to R1500 immediately during type conversion and arithmetic processing"
+        "The driver is issued an automatic court appearance summons",
+        "The fine stays R750 since speedOver > 20 requires strictly over 20",
+        "The base fine is automatically reduced by half down to R250",
+        "The base fine immediately doubles from R750 to R1500 in School zones"
       ],
       "answer": 1,
       "ans": 1,
@@ -9952,16 +9952,16 @@
       "stem": "Where and how should a fixed R500.00 repeat offender surcharge constant be declared in a Windows Form class?",
       "code": "",
       "options": [
-        "In Program.cs as a static string during type conversion and arithmetic processing on the active Windows Form canvas",
-        "Inside btnCheck_Click as a local int variable when storing the formatted result into the control",
-        "Inside txtRepeat.Text property window within the active form class implementation before updating the target UI control",
-        "At class level, outside every method, declared with the 'const' keyword: const decimal REPEAT_FINE = 500m;"
+        "Inside Program.cs as a public static string variable",
+        "Inside btnCheck_Click as a local mutable int variable",
+        "Inside the txtRepeat.Text property in the Designer window",
+        "At class level: const decimal REPEAT_FINE = 500m;"
       ],
       "opts": [
-        "In Program.cs as a static string during type conversion and arithmetic processing on the active Windows Form canvas",
-        "Inside btnCheck_Click as a local int variable when storing the formatted result into the control",
-        "Inside txtRepeat.Text property window within the active form class implementation before updating the target UI control",
-        "At class level, outside every method, declared with the 'const' keyword: const decimal REPEAT_FINE = 500m;"
+        "Inside Program.cs as a public static string variable",
+        "Inside btnCheck_Click as a local mutable int variable",
+        "Inside the txtRepeat.Text property in the Designer window",
+        "At class level: const decimal REPEAT_FINE = 500m;"
       ],
       "answer": 3,
       "ans": 3,
@@ -10038,16 +10038,16 @@
       "stem": "How does 'txtRepeat.Text.CompareTo(\"yes\") == 0' determine if the driver is a repeat offender?",
       "code": "",
       "options": [
-        "CompareTo throws a FormatException if strings do not match while processing the operation on the UI thread",
-        "CompareTo returns 0 when the calling string and argument are identical in alphabetical sort order",
-        "CompareTo returns true or false directly inside the Windows Forms event handler routine",
-        "CompareTo returns 0 only when the string is empty during type conversion and arithmetic processing"
+        "CompareTo throws a FormatException whenever the strings do not match",
+        "CompareTo returns 0 when both strings match in sort order",
+        "CompareTo returns a boolean true or false status value directly",
+        "CompareTo returns 0 only when the calling TextBox string is empty"
       ],
       "opts": [
-        "CompareTo throws a FormatException if strings do not match while processing the operation on the UI thread",
-        "CompareTo returns 0 when the calling string and argument are identical in alphabetical sort order",
-        "CompareTo returns true or false directly inside the Windows Forms event handler routine",
-        "CompareTo returns 0 only when the string is empty during type conversion and arithmetic processing"
+        "CompareTo throws a FormatException whenever the strings do not match",
+        "CompareTo returns 0 when both strings match in sort order",
+        "CompareTo returns a boolean true or false status value directly",
+        "CompareTo returns 0 only when the calling TextBox string is empty"
       ],
       "answer": 1,
       "ans": 1,
@@ -10081,16 +10081,16 @@
       "stem": "Why should you avoid writing an empty `else { }` block when checking an optional condition such as repeat offender status (`if (isRepeat) fine += REPEAT_FINE;`)?",
       "code": "",
       "options": [
-        "Visual Studio deletes empty else blocks during compilation when evaluating the conditional branching logic",
-        "Else blocks can only be used with numbers during validation of the user input state on the form",
-        "Writing empty 'else { }' blocks is poor coding style that clutters code and adds zero functional value",
-        "Empty else blocks cause compiler error CS0101 when the Roslyn compiler checks the method body in the compiled C# project"
+        "Visual Studio deletes empty else blocks automatically when building",
+        "Else blocks in C# are only permitted when comparing numeric types",
+        "Empty 'else { }' blocks clutter code and add no functional value",
+        "Empty else blocks trigger fatal Roslyn compiler error CS0101"
       ],
       "opts": [
-        "Visual Studio deletes empty else blocks during compilation when evaluating the conditional branching logic",
-        "Else blocks can only be used with numbers during validation of the user input state on the form",
-        "Writing empty 'else { }' blocks is poor coding style that clutters code and adds zero functional value",
-        "Empty else blocks cause compiler error CS0101 when the Roslyn compiler checks the method body in the compiled C# project"
+        "Visual Studio deletes empty else blocks automatically when building",
+        "Else blocks in C# are only permitted when comparing numeric types",
+        "Empty 'else { }' blocks clutter code and add no functional value",
+        "Empty else blocks trigger fatal Roslyn compiler error CS0101"
       ],
       "answer": 2,
       "ans": 2,
@@ -10124,16 +10124,16 @@
       "stem": "Why is a GroupBox control chosen over a Panel control when grouping output labels under a visible titled frame (such as 'Finding')?",
       "code": "",
       "options": [
-        "Panels cannot hold Label controls during execution of the Visual C# form application before updating the target UI control",
-        "GroupBoxes automatically calculate speeding fines when testing the decision structure in the click event before returning to the calling method",
-        "Panels only work on Windows 7 within the active form class implementation within the current form class instance under .NET runtime execution",
-        "A GroupBox has a built-in bordered frame and a Text property to display a titled caption, whereas a Panel has no caption property"
+        "Panel controls are unable to contain Label controls in Windows Forms",
+        "GroupBox controls automatically compute arithmetic totals for labels",
+        "Panel controls are deprecated and only supported on Windows 7",
+        "A GroupBox shows a border frame and Text caption, unlike a Panel"
       ],
       "opts": [
-        "Panels cannot hold Label controls during execution of the Visual C# form application before updating the target UI control",
-        "GroupBoxes automatically calculate speeding fines when testing the decision structure in the click event before returning to the calling method",
-        "Panels only work on Windows 7 within the active form class implementation within the current form class instance under .NET runtime execution",
-        "A GroupBox has a built-in bordered frame and a Text property to display a titled caption, whereas a Panel has no caption property"
+        "Panel controls are unable to contain Label controls in Windows Forms",
+        "GroupBox controls automatically compute arithmetic totals for labels",
+        "Panel controls are deprecated and only supported on Windows 7",
+        "A GroupBox shows a border frame and Text caption, unlike a Panel"
       ],
       "answer": 3,
       "ans": 3,
@@ -10167,15 +10167,15 @@
       "code": "",
       "options": [
         "Because `&&` uses short-circuit evaluation: when `count > 0` is `false`, C# skips evaluating `total / count >= 50` completely",
-        "Because `&&` evaluates the right-hand side first and automatically catches `DivideByZeroException` before the next statement in the method executes",
-        "Because C# integer division by zero returns `0` instead of throwing an exception inside `if` statements in the handler",
-        "Because `>=` has higher operator precedence than `/` so division happens after the `if` block inside the event handler"
+        "Because `&&` evaluates the right-hand side first and automatically catches `DivideByZeroException`",
+        "Because C# integer division by zero returns `0` instead of throwing an exception inside `if` statements",
+        "Because `>=` has higher operator precedence than `/` so division happens after the `if` block"
       ],
       "opts": [
         "Because `&&` uses short-circuit evaluation: when `count > 0` is `false`, C# skips evaluating `total / count >= 50` completely",
-        "Because `&&` evaluates the right-hand side first and automatically catches `DivideByZeroException` before the next statement in the method executes",
-        "Because C# integer division by zero returns `0` instead of throwing an exception inside `if` statements in the handler",
-        "Because `>=` has higher operator precedence than `/` so division happens after the `if` block inside the event handler"
+        "Because `&&` evaluates the right-hand side first and automatically catches `DivideByZeroException`",
+        "Because C# integer division by zero returns `0` instead of throwing an exception inside `if` statements",
+        "Because `>=` has higher operator precedence than `/` so division happens after the `if` block"
       ],
       "answer": 0,
       "ans": 0,
@@ -10252,16 +10252,16 @@
       "stem": "What is short-circuit evaluation in C# logical expressions?",
       "code": "",
       "options": [
-        "The computer shuts down if an expression is too long inside the Windows Forms event handler routine during standard GUI event execution during interface state updates",
-        "All conditions in an expression are evaluated in parallel by multiple CPU cores during execution of the Visual C# form application before updating the target UI control",
-        "If the first operand of '&&' is false, or the first of '||' is true, the second operand is never evaluated because the overall result is already determined",
-        "Expressions with errors are automatically converted to true when the Windows Forms control processes the action before returning to the calling method"
+        "The application terminates if a boolean condition is too complex",
+        "All operands in a boolean condition are evaluated in parallel on the CPU",
+        "If the left side of && is false, or || is true, the right side is skipped",
+        "Boolean expressions containing runtime errors automatically evaluate to true"
       ],
       "opts": [
-        "The computer shuts down if an expression is too long inside the Windows Forms event handler routine during standard GUI event execution during interface state updates",
-        "All conditions in an expression are evaluated in parallel by multiple CPU cores during execution of the Visual C# form application before updating the target UI control",
-        "If the first operand of '&&' is false, or the first of '||' is true, the second operand is never evaluated because the overall result is already determined",
-        "Expressions with errors are automatically converted to true when the Windows Forms control processes the action before returning to the calling method"
+        "The application terminates if a boolean condition is too complex",
+        "All operands in a boolean condition are evaluated in parallel on the CPU",
+        "If the left side of && is false, or || is true, the right side is skipped",
+        "Boolean expressions containing runtime errors automatically evaluate to true"
       ],
       "answer": 2,
       "ans": 2,
@@ -10338,16 +10338,16 @@
       "stem": "What is the role of the `!` operator in `if (!int.TryParse(txtQty.Text, out int qty))`?",
       "code": "",
       "options": [
-        "It negates the `bool` return value of `TryParse`, entering the `if` error-handling block whenever parsing fails",
-        "It converts negative integers in `qty` into positive integers automatically during program execution",
-        "It compares `txtQty.Text` for inequality against `qty` before converting the string in the collection control",
-        "It forces `TryParse` to throw a `FormatException` if `txtQty.Text` is empty when the CLR evaluates the statement at runtime"
+        "It negates TryParse's bool return value so the if block runs when parsing fails",
+        "It converts negative integers in `qty` into positive integers automatically",
+        "It compares `txtQty.Text` for inequality against `qty` before converting the string",
+        "It forces `TryParse` to throw a `FormatException` if `txtQty.Text` is empty"
       ],
       "opts": [
-        "It negates the `bool` return value of `TryParse`, entering the `if` error-handling block whenever parsing fails",
-        "It converts negative integers in `qty` into positive integers automatically during program execution",
-        "It compares `txtQty.Text` for inequality against `qty` before converting the string in the collection control",
-        "It forces `TryParse` to throw a `FormatException` if `txtQty.Text` is empty when the CLR evaluates the statement at runtime"
+        "It negates TryParse's bool return value so the if block runs when parsing fails",
+        "It converts negative integers in `qty` into positive integers automatically",
+        "It compares `txtQty.Text` for inequality against `qty` before converting the string",
+        "It forces `TryParse` to throw a `FormatException` if `txtQty.Text` is empty"
       ],
       "answer": 0,
       "ans": 0,
@@ -10381,16 +10381,16 @@
       "stem": "What common compilation error occurs if a student mistakenly writes 'if (speed = 80)' instead of 'if (speed == 80)' in C#?",
       "code": "",
       "options": [
-        "Visual Studio converts speed to a string when storing the value",
-        "Compiler error CS0029: Cannot implicitly convert type 'int' to 'bool'",
-        "A warning is logged but execution proceeds inside the event handler",
-        "The code compiles and executes silently on the Windows Form canvas"
+        "Visual Studio implicitly converts the int variable speed to string",
+        "Compiler error CS0029: Cannot implicitly convert 'int' to 'bool'",
+        "A minor compiler warning is logged while execution proceeds normally",
+        "The assignment compiles cleanly and evaluates as true at runtime"
       ],
       "opts": [
-        "Visual Studio converts speed to a string when storing the value",
-        "Compiler error CS0029: Cannot implicitly convert type 'int' to 'bool'",
-        "A warning is logged but execution proceeds inside the event handler",
-        "The code compiles and executes silently on the Windows Form canvas"
+        "Visual Studio implicitly converts the int variable speed to string",
+        "Compiler error CS0029: Cannot implicitly convert 'int' to 'bool'",
+        "A minor compiler warning is logged while execution proceeds normally",
+        "The assignment compiles cleanly and evaluates as true at runtime"
       ],
       "answer": 1,
       "ans": 1,
@@ -10508,16 +10508,16 @@
       "stem": "What is the exact difference between `lstCities.SelectedIndex` and `lstCities.SelectedItem` on a Windows Forms `ListBox`?",
       "code": "",
       "options": [
-        "`SelectedIndex` returns the zero-based `int` position (`-1` if none selected), whereas `SelectedItem` returns the selected item `object` (`null` if none selected)",
-        "`SelectedIndex` returns a `1`-based `string`, whereas `SelectedItem` returns a `bool` indicating whether the ListBox is empty across each loop pass",
-        "`SelectedIndex` counts total items in the ListBox, whereas `SelectedItem` deletes the highlighted entry across successive passes of the loop body on the active Windows Form canvas",
-        "`SelectedIndex` and `SelectedItem` both return `\"\"` (empty string) when no item is selected when control passes between caller and helper method during standard GUI event execution"
+        "`SelectedIndex` returns the 0-based `int` index (`-1` if none); `SelectedItem` returns the `object` (`null` if none)",
+        "`SelectedIndex` returns a 1-based `string` index; `SelectedItem` returns a `bool` indicating whether the list is empty",
+        "`SelectedIndex` counts total items in the ListBox; `SelectedItem` deletes the currently highlighted entry",
+        "`SelectedIndex` and `SelectedItem` both return `\"\"` (an empty string) whenever no item is selected"
       ],
       "opts": [
-        "`SelectedIndex` returns the zero-based `int` position (`-1` if none selected), whereas `SelectedItem` returns the selected item `object` (`null` if none selected)",
-        "`SelectedIndex` returns a `1`-based `string`, whereas `SelectedItem` returns a `bool` indicating whether the ListBox is empty across each loop pass",
-        "`SelectedIndex` counts total items in the ListBox, whereas `SelectedItem` deletes the highlighted entry across successive passes of the loop body on the active Windows Form canvas",
-        "`SelectedIndex` and `SelectedItem` both return `\"\"` (empty string) when no item is selected when control passes between caller and helper method during standard GUI event execution"
+        "`SelectedIndex` returns the 0-based `int` index (`-1` if none); `SelectedItem` returns the `object` (`null` if none)",
+        "`SelectedIndex` returns a 1-based `string` index; `SelectedItem` returns a `bool` indicating whether the list is empty",
+        "`SelectedIndex` counts total items in the ListBox; `SelectedItem` deletes the currently highlighted entry",
+        "`SelectedIndex` and `SelectedItem` both return `\"\"` (an empty string) whenever no item is selected"
       ],
       "answer": 0,
       "ans": 0,
@@ -10634,16 +10634,16 @@
       "stem": "Why does the C# compiler reject the `switch` statement below with error `CS0163` (`Control cannot fall through from one case label to another`)?",
       "code": "switch (tier)\n{\n    case 1:\n        discount = 0.05m;\n    case 2:\n        discount = 0.10m;\n        break;\n}",
       "options": [
-        "`decimal` assignments are not permitted inside `switch` blocks during validation of the user input state on the form before returning to the calling method",
-        "Every `switch` statement fails to compile unless a `default:` label is written first when the Roslyn compiler checks the method body within the current form class instance",
-        "`switch` statements in C# cannot test `int` variables such as `tier` while resolving the boolean expression in the handler on the active Windows Form canvas",
-        "C# forbids implicit fall-through from a non-empty `case` block; `case 1:` executes `discount = 0.05m;` without ending with `break;` or `return`"
+        "`decimal` variable assignments are not permitted inside `switch` blocks",
+        "Every `switch` statement fails to compile unless `default:` is listed first",
+        "`switch` statements in C# cannot evaluate `int` selector variables like `tier`",
+        "C# forbids fall-through from a non-empty `case`; `case 1:` lacks a `break;`"
       ],
       "opts": [
-        "`decimal` assignments are not permitted inside `switch` blocks during validation of the user input state on the form before returning to the calling method",
-        "Every `switch` statement fails to compile unless a `default:` label is written first when the Roslyn compiler checks the method body within the current form class instance",
-        "`switch` statements in C# cannot test `int` variables such as `tier` while resolving the boolean expression in the handler on the active Windows Form canvas",
-        "C# forbids implicit fall-through from a non-empty `case` block; `case 1:` executes `discount = 0.05m;` without ending with `break;` or `return`"
+        "`decimal` variable assignments are not permitted inside `switch` blocks",
+        "Every `switch` statement fails to compile unless `default:` is listed first",
+        "`switch` statements in C# cannot evaluate `int` selector variables like `tier`",
+        "C# forbids fall-through from a non-empty `case`; `case 1:` lacks a `break;`"
       ],
       "answer": 3,
       "ans": 3,
@@ -10718,16 +10718,16 @@
       "stem": "In C#, what happens if a case block in a switch statement contains executable statements but omits a break, return, or goto statement?",
       "code": "",
       "options": [
-        "The application throws a SwitchFallthroughException at runtime on the UI thread",
-        "Compiler error CS0163: Control cannot fall through from one case label to another",
-        "The code falls through silently to the next case as in C++ inside the event handler",
-        "Visual Studio automatically inserts a break statement on the Windows Form canvas"
+        "The application throws a SwitchFallthroughException at runtime",
+        "Error CS0163: Control cannot fall through from one case label",
+        "Execution falls through silently into the next case block as in C++",
+        "Visual Studio automatically inserts a hidden break statement at build"
       ],
       "opts": [
-        "The application throws a SwitchFallthroughException at runtime on the UI thread",
-        "Compiler error CS0163: Control cannot fall through from one case label to another",
-        "The code falls through silently to the next case as in C++ inside the event handler",
-        "Visual Studio automatically inserts a break statement on the Windows Form canvas"
+        "The application throws a SwitchFallthroughException at runtime",
+        "Error CS0163: Control cannot fall through from one case label",
+        "Execution falls through silently into the next case block as in C++",
+        "Visual Studio automatically inserts a hidden break statement at build"
       ],
       "answer": 1,
       "ans": 1,
@@ -10803,16 +10803,16 @@
       "stem": "Inside a `CheckedChanged` event handler, which C# code sets the Form background color to `Orange` when `radSunset` is selected and `PowderBlue` otherwise?",
       "code": "",
       "options": [
-        "switch (radSunset) { case true: BackColor = Orange; break; case false: BackColor = PowderBlue; break; }",
+        "switch (radSunset.Checked) { case true: Form.BackColor = Orange; break; }",
         "if (radSunset.Selected) { Form.BackColor = \"Orange\"; } else { Form.BackColor = \"PowderBlue\"; }",
-        "if (radSunset.Text == \"Checked\") { this.Color = Color.Orange; } else { this.Color = Color.PowderBlue; }",
-        "if (radSunset.Checked) { this.BackColor = Color.Orange; } else { this.BackColor = Color.PowderBlue; }"
+        "if (radSunset.Text == \"Checked\") { this.Color = Color.Orange; } else { this.Color = Color.Blue; }",
+        "if (radSunset.Checked) this.BackColor = Color.Orange; else this.BackColor = Color.PowderBlue;"
       ],
       "opts": [
-        "switch (radSunset) { case true: BackColor = Orange; break; case false: BackColor = PowderBlue; break; }",
+        "switch (radSunset.Checked) { case true: Form.BackColor = Orange; break; }",
         "if (radSunset.Selected) { Form.BackColor = \"Orange\"; } else { Form.BackColor = \"PowderBlue\"; }",
-        "if (radSunset.Text == \"Checked\") { this.Color = Color.Orange; } else { this.Color = Color.PowderBlue; }",
-        "if (radSunset.Checked) { this.BackColor = Color.Orange; } else { this.BackColor = Color.PowderBlue; }"
+        "if (radSunset.Text == \"Checked\") { this.Color = Color.Orange; } else { this.Color = Color.Blue; }",
+        "if (radSunset.Checked) this.BackColor = Color.Orange; else this.BackColor = Color.PowderBlue;"
       ],
       "answer": 3,
       "ans": 3,
@@ -10845,16 +10845,16 @@
       "stem": "Why are RadioButtons inside the same container mutually exclusive by default?",
       "code": "",
       "options": [
-        "Windows Forms ensures that checking any one RadioButton in a shared parent automatically unchecks all other RadioButtons in that container",
-        "RadioButtons delete other buttons when clicked when testing the decision structure in the click event before returning to the calling method",
-        "RadioButtons can only hold numbers while resolving the boolean expression in the handler within the current form class instance",
-        "Only one button can be visible at a time inside the Windows Forms event handler routine on the active Windows Form canvas during interface state updates"
+        "Checking one RadioButton in a container unchecks all the others",
+        "Clicking a RadioButton permanently deletes the other buttons on the form",
+        "RadioButton controls in C# are restricted to storing integer values",
+        "Only a single RadioButton control is permitted to be visible at once"
       ],
       "opts": [
-        "Windows Forms ensures that checking any one RadioButton in a shared parent automatically unchecks all other RadioButtons in that container",
-        "RadioButtons delete other buttons when clicked when testing the decision structure in the click event before returning to the calling method",
-        "RadioButtons can only hold numbers while resolving the boolean expression in the handler within the current form class instance",
-        "Only one button can be visible at a time inside the Windows Forms event handler routine on the active Windows Form canvas during interface state updates"
+        "Checking one RadioButton in a container unchecks all the others",
+        "Clicking a RadioButton permanently deletes the other buttons on the form",
+        "RadioButton controls in C# are restricted to storing integer values",
+        "Only a single RadioButton control is permitted to be visible at once"
       ],
       "answer": 0,
       "ans": 0,
@@ -10887,16 +10887,16 @@
       "stem": "If an application requires two separate independent groups of RadioButtons on the same form (e.g. TimeSlot and PaymentMethod), how should they be designed?",
       "code": "",
       "options": [
-        "Place them on different monitor displays within the active form class implementation",
-        "Place each group inside its own container control, such as a GroupBox or Panel",
-        "Use CheckBoxes instead of RadioButtons when evaluating the conditional branching logic",
-        "Separate them with empty labels during execution of the Visual C# form application"
+        "Place the two sets of buttons onto separate physical monitor displays",
+        "Place each group inside its own GroupBox or Panel container control",
+        "Replace all RadioButtons with multi-select CheckBox controls instead",
+        "Separate the two RadioButton groups on the canvas using blank Labels"
       ],
       "opts": [
-        "Place them on different monitor displays within the active form class implementation",
-        "Place each group inside its own container control, such as a GroupBox or Panel",
-        "Use CheckBoxes instead of RadioButtons when evaluating the conditional branching logic",
-        "Separate them with empty labels during execution of the Visual C# form application"
+        "Place the two sets of buttons onto separate physical monitor displays",
+        "Place each group inside its own GroupBox or Panel container control",
+        "Replace all RadioButtons with multi-select CheckBox controls instead",
+        "Separate the two RadioButton groups on the canvas using blank Labels"
       ],
       "answer": 1,
       "ans": 1,
@@ -10929,16 +10929,16 @@
       "stem": "What is the primary operational difference between a RadioButton and a CheckBox?",
       "code": "",
       "options": [
-        "RadioButtons do not have a Checked property when evaluating the conditional branching logic within the current form class instance during interface state updates",
-        "RadioButtons are square while CheckBoxes are circular during execution of the repetition structure on the active Windows Form canvas under .NET runtime execution",
-        "RadioButtons allow only one selection from a mutually exclusive group, whereas CheckBoxes allow multiple independent options to be checked simultaneously",
-        "CheckBoxes cannot be clicked with a mouse when testing the decision structure in the click event during standard GUI event execution in the compiled C# project"
+        "RadioButtons do not expose a boolean Checked property in C# code",
+        "RadioButtons render as square boxes whereas CheckBoxes render as circles",
+        "RadioButtons allow one choice per group; CheckBoxes allow any number",
+        "CheckBox controls can only be toggled with the keyboard, not a mouse"
       ],
       "opts": [
-        "RadioButtons do not have a Checked property when evaluating the conditional branching logic within the current form class instance during interface state updates",
-        "RadioButtons are square while CheckBoxes are circular during execution of the repetition structure on the active Windows Form canvas under .NET runtime execution",
-        "RadioButtons allow only one selection from a mutually exclusive group, whereas CheckBoxes allow multiple independent options to be checked simultaneously",
-        "CheckBoxes cannot be clicked with a mouse when testing the decision structure in the click event during standard GUI event execution in the compiled C# project"
+        "RadioButtons do not expose a boolean Checked property in C# code",
+        "RadioButtons render as square boxes whereas CheckBoxes render as circles",
+        "RadioButtons allow one choice per group; CheckBoxes allow any number",
+        "CheckBox controls can only be toggled with the keyboard, not a mouse"
       ],
       "answer": 2,
       "ans": 2,
@@ -10971,16 +10971,16 @@
       "stem": "What defensive input validation rule must be enforced on a passenger count TextBox (`txtPassengers`) before calculating ticket totals?",
       "code": "",
       "options": [
-        "It cannot exceed 2 passengers during execution of the Visual C# form application before updating the target UI control",
-        "It must be spelled in words (e.g. 'two') when the Windows Forms control processes the action before returning to the calling method",
-        "It must be an even number within the active form class implementation within the current form class instance under .NET runtime execution",
-        "It must parse to an integer using int.TryParse and the resulting passenger count must be at least 1 (passengers >= 1)"
+        "The entered passenger count must never exceed 2 passengers total",
+        "The passenger count must be typed out as English words like 'two'",
+        "The entered passenger count must always be an even integer value",
+        "It must parse via int.TryParse and be at least 1: passengers >= 1"
       ],
       "opts": [
-        "It cannot exceed 2 passengers during execution of the Visual C# form application before updating the target UI control",
-        "It must be spelled in words (e.g. 'two') when the Windows Forms control processes the action before returning to the calling method",
-        "It must be an even number within the active form class implementation within the current form class instance under .NET runtime execution",
-        "It must parse to an integer using int.TryParse and the resulting passenger count must be at least 1 (passengers >= 1)"
+        "The entered passenger count must never exceed 2 passengers total",
+        "The passenger count must be typed out as English words like 'two'",
+        "The entered passenger count must always be an even integer value",
+        "It must parse via int.TryParse and be at least 1: passengers >= 1"
       ],
       "answer": 3,
       "ans": 3,
@@ -11014,16 +11014,16 @@
       "stem": "Why is `txtPassengers.Focus();` called right after `MessageBox.Show(...)` inside an input-validation guard clause?",
       "code": "",
       "options": [
-        "To place keyboard focus back inside `txtPassengers` so the user can immediately type a corrected value without clicking the TextBox",
-        "To re-trigger `btnCalculate_Click` automatically in a loop until valid digits are entered when updating the zero-based collection items",
-        "To clear all text inside `txtPassengers` and reset its `TabIndex` property to `0` within the active form class implementation during standard GUI event execution",
-        "To lock `txtPassengers` into read-only mode until the form is restarted inside the Windows Forms event handler routine"
+        "To return focus to `txtPassengers` so the user can retype right away",
+        "To re-trigger `btnCalculate_Click` in a loop until valid digits are entered",
+        "To clear all text inside `txtPassengers` and reset its `TabIndex` to `0`",
+        "To lock `txtPassengers` into read-only mode until the form is restarted"
       ],
       "opts": [
-        "To place keyboard focus back inside `txtPassengers` so the user can immediately type a corrected value without clicking the TextBox",
-        "To re-trigger `btnCalculate_Click` automatically in a loop until valid digits are entered when updating the zero-based collection items",
-        "To clear all text inside `txtPassengers` and reset its `TabIndex` property to `0` within the active form class implementation during standard GUI event execution",
-        "To lock `txtPassengers` into read-only mode until the form is restarted inside the Windows Forms event handler routine"
+        "To return focus to `txtPassengers` so the user can retype right away",
+        "To re-trigger `btnCalculate_Click` in a loop until valid digits are entered",
+        "To clear all text inside `txtPassengers` and reset its `TabIndex` to `0`",
+        "To lock `txtPassengers` into read-only mode until the form is restarted"
       ],
       "answer": 0,
       "ans": 0,
@@ -11057,16 +11057,16 @@
       "stem": "What does calling 'txtPassengers.SelectAll();' do when input validation fails?",
       "code": "",
       "options": [
-        "Selects all textboxes on the form simultaneously within the active form class implementation before returning to the calling method",
-        "Highlights the entire text inside the textbox so typing a new character immediately overwrites the invalid input",
-        "Deletes the textbox from the form inside the Windows Forms event handler routine within the current form class instance",
-        "Copies the text to the Windows clipboard during execution of the Visual C# form application on the active Windows Form canvas"
+        "It selects every TextBox control across the active form simultaneously",
+        "It highlights the text in txtPassengers so typing replaces it",
+        "It permanently removes the txtPassengers control from the form canvas",
+        "It copies the invalid text string into the Windows system clipboard"
       ],
       "opts": [
-        "Selects all textboxes on the form simultaneously within the active form class implementation before returning to the calling method",
-        "Highlights the entire text inside the textbox so typing a new character immediately overwrites the invalid input",
-        "Deletes the textbox from the form inside the Windows Forms event handler routine within the current form class instance",
-        "Copies the text to the Windows clipboard during execution of the Visual C# form application on the active Windows Form canvas"
+        "It selects every TextBox control across the active form simultaneously",
+        "It highlights the text in txtPassengers so typing replaces it",
+        "It permanently removes the txtPassengers control from the form canvas",
+        "It copies the invalid text string into the Windows system clipboard"
       ],
       "answer": 1,
       "ans": 1,
@@ -11229,16 +11229,16 @@
       "stem": "Why does the expression '0 <= mark <= 100' cause a compilation error in C#?",
       "code": "",
       "options": [
-        "The '<=' operator can only be used once per line within the active form class implementation on the active Windows Form canvas",
-        "C# evaluates left-to-right: '0 <= mark' produces a boolean, and comparing a boolean to an integer is illegal syntax",
-        "C# requires all inequalities to use the word 'AND' inside the Windows Forms event handler routine during standard GUI event execution",
-        "Numbers cannot be compared to 0 in C# during execution of the Visual C# form application before updating the target UI control"
+        "The relational '<=' operator can only appear once per method in C#",
+        "Left-to-right evaluation makes '0 <= mark' a bool, and 'bool <= 100' is invalid",
+        "C# requires compound range checks to use the uppercase keyword 'AND'",
+        "Numeric variables in C# cannot be compared directly against literal 0"
       ],
       "opts": [
-        "The '<=' operator can only be used once per line within the active form class implementation on the active Windows Form canvas",
-        "C# evaluates left-to-right: '0 <= mark' produces a boolean, and comparing a boolean to an integer is illegal syntax",
-        "C# requires all inequalities to use the word 'AND' inside the Windows Forms event handler routine during standard GUI event execution",
-        "Numbers cannot be compared to 0 in C# during execution of the Visual C# form application before updating the target UI control"
+        "The relational '<=' operator can only appear once per method in C#",
+        "Left-to-right evaluation makes '0 <= mark' a bool, and 'bool <= 100' is invalid",
+        "C# requires compound range checks to use the uppercase keyword 'AND'",
+        "Numeric variables in C# cannot be compared directly against literal 0"
       ],
       "answer": 1,
       "ans": 1,
@@ -11272,16 +11272,16 @@
       "stem": "What is the key functional difference between '&' and '&&' in C# boolean expressions?",
       "code": "",
       "options": [
-        "'&&' can only compare two variables when evaluating the numeric expression in the handler",
-        "There is no difference in C# during execution of the Visual C# form application under .NET runtime execution",
-        "'&&' is short-circuiting, while '&' always evaluates both operands regardless of the first",
-        "'&' only works on strings when the Windows Forms control processes the action on the active Windows Form canvas"
+        "'&&' can only compare two local variables, never constants",
+        "There is no functional difference between '&' and '&&' in C#",
+        "'&&' short-circuits if left is false; '&' checks both sides",
+        "The single '&' operator only works on string operands in C#"
       ],
       "opts": [
-        "'&&' can only compare two variables when evaluating the numeric expression in the handler",
-        "There is no difference in C# during execution of the Visual C# form application under .NET runtime execution",
-        "'&&' is short-circuiting, while '&' always evaluates both operands regardless of the first",
-        "'&' only works on strings when the Windows Forms control processes the action on the active Windows Form canvas"
+        "'&&' can only compare two local variables, never constants",
+        "There is no functional difference between '&' and '&&' in C#",
+        "'&&' short-circuits if left is false; '&' checks both sides",
+        "The single '&' operator only works on string operands in C#"
       ],
       "answer": 2,
       "ans": 2,
@@ -11315,16 +11315,16 @@
       "stem": "What is the key functional difference between '|' and '||' in C# boolean expressions?",
       "code": "",
       "options": [
-        "There is no difference during execution of the Visual C# form application inside the desktop session",
-        "'|' is used for division while '||' is for addition across each loop pass",
-        "'||' only works on numbers within the active form class implementation under .NET runtime execution",
-        "'||' is short-circuiting, while '|' always evaluates both operands unconditionally"
+        "There is no functional difference between '|' and '||' in C#",
+        "'|' performs integer division whereas '||' performs addition",
+        "The '||' operator only works on numeric operands in Visual C#",
+        "'||' short-circuits if left is true; '|' checks both sides"
       ],
       "opts": [
-        "There is no difference during execution of the Visual C# form application inside the desktop session",
-        "'|' is used for division while '||' is for addition across each loop pass",
-        "'||' only works on numbers within the active form class implementation under .NET runtime execution",
-        "'||' is short-circuiting, while '|' always evaluates both operands unconditionally"
+        "There is no functional difference between '|' and '||' in C#",
+        "'|' performs integer division whereas '||' performs addition",
+        "The '||' operator only works on numeric operands in Visual C#",
+        "'||' short-circuits if left is true; '|' checks both sides"
       ],
       "answer": 3,
       "ans": 3,
@@ -11358,16 +11358,16 @@
       "stem": "In a nested if structure without explicit curly braces, which 'if' statement does an 'else' clause automatically pair with?",
       "code": "",
       "options": [
-        "The closest preceding 'if' within the same block that does not already have an associated 'else'",
-        "The very first 'if' in the method when evaluating the method signature and arguments in the compiled C# project",
-        "The 'if' that appears at the same indentation level within the active form class implementation",
-        "It causes a compiler syntax error during the Visual Studio build verification step during standard GUI event execution"
+        "The closest preceding unmatched 'if' within the same block",
+        "The very first outer 'if' statement at the top of the method",
+        "Whichever 'if' statement shares the same visual indentation column",
+        "Omitting curly braces on nested 'if' statements causes a syntax error"
       ],
       "opts": [
-        "The closest preceding 'if' within the same block that does not already have an associated 'else'",
-        "The very first 'if' in the method when evaluating the method signature and arguments in the compiled C# project",
-        "The 'if' that appears at the same indentation level within the active form class implementation",
-        "It causes a compiler syntax error during the Visual Studio build verification step during standard GUI event execution"
+        "The closest preceding unmatched 'if' within the same block",
+        "The very first outer 'if' statement at the top of the method",
+        "Whichever 'if' statement shares the same visual indentation column",
+        "Omitting curly braces on nested 'if' statements causes a syntax error"
       ],
       "answer": 0,
       "ans": 0,
@@ -11400,16 +11400,16 @@
       "stem": "How can a developer unambiguously resolve the 'dangling else' problem and ensure an else matches the intended outer if?",
       "code": "",
       "options": [
-        "By adding a comment above the else while resolving the boolean expression in the handler",
-        "By enclosing the inner if statement and its body inside curly braces { }",
-        "By declaring all variables as static when evaluating the numeric expression in the handler",
-        "By pressing Tab three times during execution of the Visual C# form application"
+        "By placing a descriptive '// outer else' comment above the else keyword",
+        "By enclosing the inner if statement and its body in curly braces { }",
+        "By declaring all boolean condition variables with the static modifier",
+        "By indenting the else clause three Tab stops to the left in the editor"
       ],
       "opts": [
-        "By adding a comment above the else while resolving the boolean expression in the handler",
-        "By enclosing the inner if statement and its body inside curly braces { }",
-        "By declaring all variables as static when evaluating the numeric expression in the handler",
-        "By pressing Tab three times during execution of the Visual C# form application"
+        "By placing a descriptive '// outer else' comment above the else keyword",
+        "By enclosing the inner if statement and its body in curly braces { }",
+        "By declaring all boolean condition variables with the static modifier",
+        "By indenting the else clause three Tab stops to the left in the editor"
       ],
       "answer": 1,
       "ans": 1,
@@ -11443,16 +11443,16 @@
       "stem": "Given `int d = 0;`, what happens when `bool ok = (10 > 2) || (5 / d == 1);` is evaluated in C#?",
       "code": "",
       "options": [
-        "Compiler error CS0020 occurs during the Visual Studio build verification step during interface state updates",
-        "A DivideByZeroException crashes the application during runtime execution of the event handler",
-        "`ok` becomes `true` without error because short-circuit evaluation skips `(5 / d == 1)`",
-        "The expression evaluates to false when the Windows Forms control processes the action"
+        "The Roslyn compiler halts the build with division error CS0020",
+        "An unhandled DivideByZeroException crashes the program at runtime",
+        "`ok` is `true` without error since `||` short-circuits `(5 / d == 1)`",
+        "The boolean expression evaluates to `false` and assigns `false` to `ok`"
       ],
       "opts": [
-        "Compiler error CS0020 occurs during the Visual Studio build verification step during interface state updates",
-        "A DivideByZeroException crashes the application during runtime execution of the event handler",
-        "`ok` becomes `true` without error because short-circuit evaluation skips `(5 / d == 1)`",
-        "The expression evaluates to false when the Windows Forms control processes the action"
+        "The Roslyn compiler halts the build with division error CS0020",
+        "An unhandled DivideByZeroException crashes the program at runtime",
+        "`ok` is `true` without error since `||` short-circuits `(5 / d == 1)`",
+        "The boolean expression evaluates to `false` and assigns `false` to `ok`"
       ],
       "answer": 2,
       "ans": 2,
@@ -11486,16 +11486,16 @@
       "stem": "In defensive input validation, consider the statement:\nWhy does this code safely avoid runtime errors even if `txtTest1` is empty or non-numeric?",
       "code": "if (double.TryParse(txtTest1.Text, out double m1) && m1 >= 0 && m1 <= 100)",
       "options": [
-        "C# TryParse automatically replaces empty strings with 100 during validation of the user input state on the form before returning to the calling method",
-        "The 'out' keyword bypasses boolean evaluation entirely when evaluating the method signature and arguments within the current form class instance",
-        "The compiler converts the if statement into a background try-catch block within the active form class implementation on the active Windows Form canvas",
-        "The '&&' operator short-circuits: if TryParse returns false, the subsequent conditions 'm1 >= 0' and 'm1 <= 100' are never evaluated"
+        "C# TryParse automatically replaces empty TextBox strings with 100",
+        "The 'out' keyword bypasses boolean condition evaluation in C#",
+        "The compiler wraps the if statement inside a hidden try-catch block",
+        "The '&&' operator short-circuits when TryParse returns false"
       ],
       "opts": [
-        "C# TryParse automatically replaces empty strings with 100 during validation of the user input state on the form before returning to the calling method",
-        "The 'out' keyword bypasses boolean evaluation entirely when evaluating the method signature and arguments within the current form class instance",
-        "The compiler converts the if statement into a background try-catch block within the active form class implementation on the active Windows Form canvas",
-        "The '&&' operator short-circuits: if TryParse returns false, the subsequent conditions 'm1 >= 0' and 'm1 <= 100' are never evaluated"
+        "C# TryParse automatically replaces empty TextBox strings with 100",
+        "The 'out' keyword bypasses boolean condition evaluation in C#",
+        "The compiler wraps the if statement inside a hidden try-catch block",
+        "The '&&' operator short-circuits when TryParse returns false"
       ],
       "answer": 3,
       "ans": 3,
@@ -11529,16 +11529,16 @@
       "stem": "In C#, what is a boolean flag variable?",
       "code": "",
       "options": [
-        "A bool variable used to signal whether a specific condition or state has been met",
-        "A variable that can hold three different values inside the arithmetic step",
-        "A variable that only exists in memory for 1 second across successive passes of the loop body",
-        "A variable that prints an image of the South African flag during numeric calculation"
+        "A bool variable that tracks whether a given condition has occurred",
+        "A special numeric variable capable of storing three distinct states",
+        "A temporary variable that stays in memory for exactly one second",
+        "A PictureBox control that renders an image of a national flag"
       ],
       "opts": [
-        "A bool variable used to signal whether a specific condition or state has been met",
-        "A variable that can hold three different values inside the arithmetic step",
-        "A variable that only exists in memory for 1 second across successive passes of the loop body",
-        "A variable that prints an image of the South African flag during numeric calculation"
+        "A bool variable that tracks whether a given condition has occurred",
+        "A special numeric variable capable of storing three distinct states",
+        "A temporary variable that stays in memory for exactly one second",
+        "A PictureBox control that renders an image of a national flag"
       ],
       "answer": 0,
       "ans": 0,
@@ -11784,16 +11784,16 @@
       "stem": "When should a developer prefer a C# switch statement over a long chain of if-else-if statements?",
       "code": "",
       "options": [
-        "When reading from a file inside the Windows Forms event handler routine within the current form class instance",
-        "When checking complex relational inequalities with multiple variables (e.g. x > 5 && y < 10) when converting the value",
-        "When testing a single discrete variable (like an int, string, or char) against multiple constant candidate values",
-        "When repeating code 100 times when the Windows Forms control processes the action during standard GUI event execution"
+        "When reading sequential lines of text from an external disk file",
+        "When checking complex multi-variable relational ranges like x > 5 && y < 10",
+        "When testing one discrete expression against multiple constant case values",
+        "When repeating a calculation block a fixed number of times in a loop"
       ],
       "opts": [
-        "When reading from a file inside the Windows Forms event handler routine within the current form class instance",
-        "When checking complex relational inequalities with multiple variables (e.g. x > 5 && y < 10) when converting the value",
-        "When testing a single discrete variable (like an int, string, or char) against multiple constant candidate values",
-        "When repeating code 100 times when the Windows Forms control processes the action during standard GUI event execution"
+        "When reading sequential lines of text from an external disk file",
+        "When checking complex multi-variable relational ranges like x > 5 && y < 10",
+        "When testing one discrete expression against multiple constant case values",
+        "When repeating a calculation block a fixed number of times in a loop"
       ],
       "answer": 2,
       "ans": 2,
@@ -11826,16 +11826,16 @@
       "stem": "What is the purpose of the 'default:' section in a C# switch statement?",
       "code": "",
       "options": [
-        "It runs only if an exception is thrown during execution of the Visual C# form application inside the desktop session",
-        "It defines the default background color of the form when the Windows Forms control processes the action",
-        "It executes before every other case within the active form class implementation within the current form class instance",
-        "It executes when none of the explicitly defined case constants match the evaluated selector value"
+        "It executes only when an unhandled runtime exception is thrown",
+        "It defines the default background color of the active Windows Form",
+        "It executes at the start of the switch block before any case label",
+        "It runs when none of the explicit case constants match the selector"
       ],
       "opts": [
-        "It runs only if an exception is thrown during execution of the Visual C# form application inside the desktop session",
-        "It defines the default background color of the form when the Windows Forms control processes the action",
-        "It executes before every other case within the active form class implementation within the current form class instance",
-        "It executes when none of the explicitly defined case constants match the evaluated selector value"
+        "It executes only when an unhandled runtime exception is thrown",
+        "It defines the default background color of the active Windows Form",
+        "It executes at the start of the switch block before any case label",
+        "It runs when none of the explicit case constants match the selector"
       ],
       "answer": 3,
       "ans": 3,
@@ -11868,16 +11868,16 @@
       "stem": "In a speed trap calculator where `speedOver = recordedSpeed - limit`, what `speedOver` value, category, and fine apply when a vehicle travels at 60 km/h in a 60 km/h zone?",
       "code": "",
       "options": [
-        "speedOver is 0; category is \"Within the limit\" and fine is \"No fine. Safe driving.\"",
-        "A warning letter is printed when the Windows Forms control processes the action",
-        "speedOver is 0; category is \"Minor\" and fine is R250 within the form class inside the desktop session",
-        "speedOver is 1; category is \"Serious\" inside the Windows Forms event handler routine"
+        "speedOver is 0; category is \"Within the limit\" and fine is \"No fine.\"",
+        "speedOver is 0; a formal court summons warning letter is printed to disk",
+        "speedOver is 0; category is \"Minor Offence\" and the payable fine is R250",
+        "speedOver is 1; category is \"Serious Offence\" and the payable fine is R750"
       ],
       "opts": [
-        "speedOver is 0; category is \"Within the limit\" and fine is \"No fine. Safe driving.\"",
-        "A warning letter is printed when the Windows Forms control processes the action",
-        "speedOver is 0; category is \"Minor\" and fine is R250 within the form class inside the desktop session",
-        "speedOver is 1; category is \"Serious\" inside the Windows Forms event handler routine"
+        "speedOver is 0; category is \"Within the limit\" and fine is \"No fine.\"",
+        "speedOver is 0; a formal court summons warning letter is printed to disk",
+        "speedOver is 0; category is \"Minor Offence\" and the payable fine is R250",
+        "speedOver is 1; category is \"Serious Offence\" and the payable fine is R750"
       ],
       "answer": 0,
       "ans": 0,
@@ -11911,16 +11911,16 @@
       "stem": "Why does 'txtZone.Text == \"School\"' evaluate to false if the officer typed 'school' with a lowercase 's'?",
       "code": "",
       "options": [
-        "Visual Studio automatically capitalizes all text within the form class",
-        "C# string comparisons using the equality operator are strictly case-sensitive",
-        "TextBoxes do not support lowercase letters inside the Windows Forms event handler routine",
-        "Strings cannot be compared using == during execution of the Visual C# form application"
+        "Visual Studio automatically converts all TextBox strings to uppercase",
+        "C# string comparisons with the '==' operator are case-sensitive",
+        "Windows Forms TextBox controls do not accept lowercase keyboard input",
+        "String variables in Visual C# cannot be compared with the '==' operator"
       ],
       "opts": [
-        "Visual Studio automatically capitalizes all text within the form class",
-        "C# string comparisons using the equality operator are strictly case-sensitive",
-        "TextBoxes do not support lowercase letters inside the Windows Forms event handler routine",
-        "Strings cannot be compared using == during execution of the Visual C# form application"
+        "Visual Studio automatically converts all TextBox strings to uppercase",
+        "C# string comparisons with the '==' operator are case-sensitive",
+        "Windows Forms TextBox controls do not accept lowercase keyboard input",
+        "String variables in Visual C# cannot be compared with the '==' operator"
       ],
       "answer": 1,
       "ans": 1,
@@ -11953,14 +11953,14 @@
       "stem": "How can a C# string comparison be performed in a case-insensitive manner?",
       "code": "",
       "options": [
-        "txtZone.Text = \"school\".ToLower()",
-        "txtZone.Text.NoCase() == \"school\"",
+        "txtZone.Text = \"school\"",
+        "txtZone.Text.NoCase(\"school\")",
         "txtZone.Text.ToLower() == \"school\"",
         "txtZone.Text.IgnoreCaps(\"school\")"
       ],
       "opts": [
-        "txtZone.Text = \"school\".ToLower()",
-        "txtZone.Text.NoCase() == \"school\"",
+        "txtZone.Text = \"school\"",
+        "txtZone.Text.NoCase(\"school\")",
         "txtZone.Text.ToLower() == \"school\"",
         "txtZone.Text.IgnoreCaps(\"school\")"
       ],
@@ -11995,16 +11995,16 @@
       "stem": "What does the C# conditional (ternary) operator 'condition ? expr1 : expr2' do?",
       "code": "",
       "options": [
-        "Prints both expressions to a label during execution of the Visual C# form application",
-        "Repeats expr1 while condition is true across each loop pass",
-        "Declares a three-dimensional array within the active form class implementation",
-        "Evaluates the condition and returns expr1 if true, or expr2 if false"
+        "Prints both expr1 and expr2 to the active output Label control",
+        "Repeatedly executes expr1 in a loop while condition remains true",
+        "Declares a three-element array initialized with condition and expressions",
+        "Evaluates condition and returns expr1 if true, or expr2 if false"
       ],
       "opts": [
-        "Prints both expressions to a label during execution of the Visual C# form application",
-        "Repeats expr1 while condition is true across each loop pass",
-        "Declares a three-dimensional array within the active form class implementation",
-        "Evaluates the condition and returns expr1 if true, or expr2 if false"
+        "Prints both expr1 and expr2 to the active output Label control",
+        "Repeatedly executes expr1 in a loop while condition remains true",
+        "Declares a three-element array initialized with condition and expressions",
+        "Evaluates condition and returns expr1 if true, or expr2 if false"
       ],
       "answer": 3,
       "ans": 3,
@@ -12166,16 +12166,16 @@
       "stem": "Why is the 'while' loop classified as a 'pre-test loop' in Visual C#?",
       "code": "",
       "options": [
-        "Because its continuation condition is tested BEFORE the loop body executes",
-        "Because it cannot be stopped once started on the Windows Form canvas",
-        "Because it executes before the form loads during program execution",
-        "Because it always runs at least once before testing within the form class"
+        "Because its condition is tested BEFORE each execution of the loop body",
+        "Because the loop cannot be terminated once execution has begun",
+        "Because it executes automatically before the Form1_Load event fires",
+        "Because its body is guaranteed to execute at least once before testing"
       ],
       "opts": [
-        "Because its continuation condition is tested BEFORE the loop body executes",
-        "Because it cannot be stopped once started on the Windows Form canvas",
-        "Because it executes before the form loads during program execution",
-        "Because it always runs at least once before testing within the form class"
+        "Because its condition is tested BEFORE each execution of the loop body",
+        "Because the loop cannot be terminated once execution has begun",
+        "Because it executes automatically before the Form1_Load event fires",
+        "Because its body is guaranteed to execute at least once before testing"
       ],
       "answer": 0,
       "ans": 0,
@@ -12209,16 +12209,16 @@
       "stem": "Why is the 'do-while' loop classified as a 'post-test loop'?",
       "code": "",
       "options": [
-        "Because it requires a post-dated check when the Windows Forms control processes the action in the compiled C# project",
-        "Because its condition is tested AFTER the loop body executes, guaranteeing at least one execution",
-        "Because it executes after the form closes within the active form class implementation on the active Windows Form canvas",
-        "Because it is slower than a while loop while iterating through the collection entries during standard GUI event execution"
+        "Because it requires a post-dated timestamp parameter to compile",
+        "Because its condition is tested AFTER the body runs at least once",
+        "Because it executes only after the active Windows Form has been closed",
+        "Because it executes significantly slower than an equivalent while loop"
       ],
       "opts": [
-        "Because it requires a post-dated check when the Windows Forms control processes the action in the compiled C# project",
-        "Because its condition is tested AFTER the loop body executes, guaranteeing at least one execution",
-        "Because it executes after the form closes within the active form class implementation on the active Windows Form canvas",
-        "Because it is slower than a while loop while iterating through the collection entries during standard GUI event execution"
+        "Because it requires a post-dated timestamp parameter to compile",
+        "Because its condition is tested AFTER the body runs at least once",
+        "Because it executes only after the active Windows Form has been closed",
+        "Because it executes significantly slower than an equivalent while loop"
       ],
       "answer": 1,
       "ans": 1,
@@ -12295,16 +12295,16 @@
       "stem": "What is the difference between prefix '++count' and postfix 'count++' in C#?",
       "code": "",
       "options": [
-        "Postfix only works on integers, prefix works on decimals when evaluating the numeric expression in the handler on the active Windows Form canvas",
-        "Prefix multiplies by 2, postfix adds 1 during execution of the Visual C# form application during standard GUI event execution under .NET runtime execution",
-        "There is no difference in any context when the Windows Forms control processes the action before updating the target UI control",
-        "Postfix uses the current value in the surrounding expression before incrementing; prefix increments the value first before using it"
+        "Postfix only works on int variables, whereas prefix works on decimal values",
+        "Prefix multiplies the variable by 2, whereas postfix adds 1 to the variable",
+        "There is no difference between prefix and postfix in any C# expression",
+        "Postfix uses the current value before incrementing; prefix increments first"
       ],
       "opts": [
-        "Postfix only works on integers, prefix works on decimals when evaluating the numeric expression in the handler on the active Windows Form canvas",
-        "Prefix multiplies by 2, postfix adds 1 during execution of the Visual C# form application during standard GUI event execution under .NET runtime execution",
-        "There is no difference in any context when the Windows Forms control processes the action before updating the target UI control",
-        "Postfix uses the current value in the surrounding expression before incrementing; prefix increments the value first before using it"
+        "Postfix only works on int variables, whereas prefix works on decimal values",
+        "Prefix multiplies the variable by 2, whereas postfix adds 1 to the variable",
+        "There is no difference between prefix and postfix in any C# expression",
+        "Postfix uses the current value before incrementing; prefix increments first"
       ],
       "answer": 3,
       "ans": 3,
@@ -12338,16 +12338,16 @@
       "stem": "What happens to an application if a while loop's condition never becomes false?",
       "code": "",
       "options": [
-        "The application enters an infinite loop, freezing the user interface thread and becoming unresponsive",
-        "Windows terminates the computer during execution of the Visual C# form application before returning to the calling method",
-        "The loop automatically runs backward when updating the zero-based collection items within the current form class instance",
-        "The compiler automatically adds a break statement within the active form class implementation"
+        "It enters an infinite loop and freezes the Windows Form UI thread",
+        "The Windows operating system immediately powers off the computer hardware",
+        "The loop automatically reverses direction and counts backward to zero",
+        "The C# compiler automatically injects a break statement after 100 passes"
       ],
       "opts": [
-        "The application enters an infinite loop, freezing the user interface thread and becoming unresponsive",
-        "Windows terminates the computer during execution of the Visual C# form application before returning to the calling method",
-        "The loop automatically runs backward when updating the zero-based collection items within the current form class instance",
-        "The compiler automatically adds a break statement within the active form class implementation"
+        "It enters an infinite loop and freezes the Windows Form UI thread",
+        "The Windows operating system immediately powers off the computer hardware",
+        "The loop automatically reverses direction and counts backward to zero",
+        "The C# compiler automatically injects a break statement after 100 passes"
       ],
       "answer": 0,
       "ans": 0,
@@ -12381,15 +12381,15 @@
       "stem": "What are the three core expressions in a standard C# 'for' loop header: 'for (exp1; exp2; exp3)'?",
       "code": "",
       "options": [
-        "Start; Stop; Pause in Visual C#",
+        "Start; Stop; Pause",
         "Initialization; Condition; Update",
-        "Input; Process; Output in the handler",
+        "Input; Process; Output",
         "Declaration; Multiplication; Division"
       ],
       "opts": [
-        "Start; Stop; Pause in Visual C#",
+        "Start; Stop; Pause",
         "Initialization; Condition; Update",
-        "Input; Process; Output in the handler",
+        "Input; Process; Output",
         "Declaration; Multiplication; Division"
       ],
       "answer": 1,
@@ -12553,16 +12553,16 @@
       "stem": "In programming, what is an 'accumulator' variable?",
       "code": "",
       "options": [
-        "A hardware component in the mouse when the Windows Forms control processes the action before returning to the calling method",
-        "A variable used to keep a running total of values added across loop iterations, typically initialized to 0",
-        "A variable that counts loop iterations by 1 across successive passes of the loop body within the current form class instance",
-        "A constant that never changes inside the Windows Forms event handler routine on the active Windows Form canvas"
+        "A physical memory register inside the computer's mouse hardware",
+        "A variable initialized to 0 that sums values across loop passes",
+        "A fixed loop control variable that only increments by 1 on each pass",
+        "A compile-time constant declared with const whose value never changes"
       ],
       "opts": [
-        "A hardware component in the mouse when the Windows Forms control processes the action before returning to the calling method",
-        "A variable used to keep a running total of values added across loop iterations, typically initialized to 0",
-        "A variable that counts loop iterations by 1 across successive passes of the loop body within the current form class instance",
-        "A constant that never changes inside the Windows Forms event handler routine on the active Windows Form canvas"
+        "A physical memory register inside the computer's mouse hardware",
+        "A variable initialized to 0 that sums values across loop passes",
+        "A fixed loop control variable that only increments by 1 on each pass",
+        "A compile-time constant declared with const whose value never changes"
       ],
       "answer": 1,
       "ans": 1,
@@ -12596,16 +12596,16 @@
       "stem": "What is a 'sentinel value' in loop processing?",
       "code": "",
       "options": [
-        "A variable that locks the screen while computing the value in local memory during standard GUI event execution",
-        "A syntax error code during the Visual Studio build verification step before updating the target UI control",
-        "A special predetermined value that signals the end of user input and terminates the loop",
-        "A security password during execution of the Visual C# form application before returning to the calling method"
+        "A boolean property that locks the Windows Form screen from resizing",
+        "A hexadecimal diagnostic code produced when compilation fails",
+        "A special input value that signals the end of loop processing",
+        "An encrypted administrator password required to launch Visual Studio"
       ],
       "opts": [
-        "A variable that locks the screen while computing the value in local memory during standard GUI event execution",
-        "A syntax error code during the Visual Studio build verification step before updating the target UI control",
-        "A special predetermined value that signals the end of user input and terminates the loop",
-        "A security password during execution of the Visual C# form application before returning to the calling method"
+        "A boolean property that locks the Windows Form screen from resizing",
+        "A hexadecimal diagnostic code produced when compilation fails",
+        "A special input value that signals the end of loop processing",
+        "An encrypted administrator password required to launch Visual Studio"
       ],
       "answer": 2,
       "ans": 2,
@@ -12682,16 +12682,16 @@
       "stem": "What is the scope of a loop control variable declared inside the for loop header: 'for (int i = 0; i < 10; i++)'?",
       "code": "",
       "options": [
-        "Block scope: 'i' exists only inside the for loop body and is destroyed upon loop completion",
-        "Global scope across all project files during execution of the Visual C# form application",
-        "Field scope when the Windows Forms control processes the action before returning to the calling method",
-        "Class scope: visible to all methods in the form while passing data across the method call boundary"
+        "Block scope: 'i' exists only within the for loop header and body",
+        "Global scope: 'i' is accessible across all source files in the solution",
+        "Field scope: 'i' persists in memory across multiple button clicks",
+        "Class scope: 'i' is visible to every event handler inside Form1"
       ],
       "opts": [
-        "Block scope: 'i' exists only inside the for loop body and is destroyed upon loop completion",
-        "Global scope across all project files during execution of the Visual C# form application",
-        "Field scope when the Windows Forms control processes the action before returning to the calling method",
-        "Class scope: visible to all methods in the form while passing data across the method call boundary"
+        "Block scope: 'i' exists only within the for loop header and body",
+        "Global scope: 'i' is accessible across all source files in the solution",
+        "Field scope: 'i' persists in memory across multiple button clicks",
+        "Class scope: 'i' is visible to every event handler inside Form1"
       ],
       "answer": 0,
       "ans": 0,
@@ -12811,16 +12811,16 @@
       "stem": "In Visual C#, what is the fundamental behavioral difference between a 'while' loop and a 'do-while' loop?",
       "code": "",
       "options": [
-        "A 'do-while' loop cannot contain if statements while iterating through the collection entries during standard GUI event execution during interface state updates",
-        "A 'while' loop requires an array to run during execution of the repetition structure before updating the target UI control under .NET runtime execution",
-        "A 'while' loop can only count backwards when updating the zero-based collection items before returning to the calling method in the compiled C# project",
-        "A 'while' loop tests its condition before each iteration and may execute zero times, whereas a 'do-while' loop tests its condition after each iteration and always executes at least once"
+        "A 'do-while' loop cannot contain nested if statements inside its body",
+        "A 'while' loop requires a pre-populated ListBox collection to execute",
+        "A 'while' loop can only decrement counters backward toward zero",
+        "'while' tests before each pass; 'do-while' tests after each pass"
       ],
       "opts": [
-        "A 'do-while' loop cannot contain if statements while iterating through the collection entries during standard GUI event execution during interface state updates",
-        "A 'while' loop requires an array to run during execution of the repetition structure before updating the target UI control under .NET runtime execution",
-        "A 'while' loop can only count backwards when updating the zero-based collection items before returning to the calling method in the compiled C# project",
-        "A 'while' loop tests its condition before each iteration and may execute zero times, whereas a 'do-while' loop tests its condition after each iteration and always executes at least once"
+        "A 'do-while' loop cannot contain nested if statements inside its body",
+        "A 'while' loop requires a pre-populated ListBox collection to execute",
+        "A 'while' loop can only decrement counters backward toward zero",
+        "'while' tests before each pass; 'do-while' tests after each pass"
       ],
       "answer": 3,
       "ans": 3,
@@ -12854,16 +12854,16 @@
       "stem": "Why does C# syntax require a terminating semicolon after the condition in a do-while loop ('do { ... } while (condition);')?",
       "code": "",
       "options": [
-        "The semicolon is required by C# grammar to mark the formal end of the do-while statement",
-        "It forces the loop to iterate an infinite number of times during execution of the repetition structure",
-        "It pauses execution for one second when updating the zero-based collection items",
-        "It resets all local variables to zero while computing the value in local memory"
+        "C# syntax requires a semicolon to end the do-while statement",
+        "The semicolon forces the loop body to iterate an infinite number of times",
+        "The semicolon pauses the UI thread for one second after each iteration",
+        "The semicolon resets all local variables inside the method back to zero"
       ],
       "opts": [
-        "The semicolon is required by C# grammar to mark the formal end of the do-while statement",
-        "It forces the loop to iterate an infinite number of times during execution of the repetition structure",
-        "It pauses execution for one second when updating the zero-based collection items",
-        "It resets all local variables to zero while computing the value in local memory"
+        "C# syntax requires a semicolon to end the do-while statement",
+        "The semicolon forces the loop body to iterate an infinite number of times",
+        "The semicolon pauses the UI thread for one second after each iteration",
+        "The semicolon resets all local variables inside the method back to zero"
       ],
       "answer": 0,
       "ans": 0,
@@ -12897,16 +12897,16 @@
       "stem": "What are the three control expressions defined inside a standard C# for loop header: 'for (1; 2; 3)'?",
       "code": "",
       "options": [
-        "1: File name, 2: File size, 3: File type when the Windows Forms control processes the action",
-        "1: Initialization expression, 2: Boolean test condition, 3: Update/increment expression",
-        "1: Start point, 2: Font size, 3: Form title while computing the value in local memory",
-        "1: Input textbox, 2: Output label, 3: Button inside the Windows Forms event handler routine"
+        "1: External file name, 2: File byte size, 3: File extension type",
+        "1: Initialization, 2: Boolean test condition, 3: Update expression",
+        "1: Form start position, 2: Label font size, 3: Window title caption",
+        "1: Input TextBox control, 2: Output Label control, 3: Action Button"
       ],
       "opts": [
-        "1: File name, 2: File size, 3: File type when the Windows Forms control processes the action",
-        "1: Initialization expression, 2: Boolean test condition, 3: Update/increment expression",
-        "1: Start point, 2: Font size, 3: Form title while computing the value in local memory",
-        "1: Input textbox, 2: Output label, 3: Button inside the Windows Forms event handler routine"
+        "1: External file name, 2: File byte size, 3: File extension type",
+        "1: Initialization, 2: Boolean test condition, 3: Update expression",
+        "1: Form start position, 2: Label font size, 3: Window title caption",
+        "1: Input TextBox control, 2: Output Label control, 3: Action Button"
       ],
       "answer": 1,
       "ans": 1,
@@ -12940,16 +12940,16 @@
       "stem": "In what exact chronological order are the components of a 'for' loop executed during the very first iteration?",
       "code": "",
       "options": [
-        "Initialization -> Update -> Loop body -> Condition test in the collection control",
-        "Update -> Initialization -> Condition test -> Loop body while iterating through the collection entries",
-        "Initialization -> Boolean condition test -> Loop body execution -> Update expression",
-        "Loop body -> Condition test -> Initialization -> Update while iterating the items"
+        "Initialization -> Update expression -> Loop body -> Boolean condition test",
+        "Update expression -> Initialization -> Boolean condition test -> Loop body",
+        "Initialization -> Boolean condition test -> Loop body -> Update expression",
+        "Loop body -> Boolean condition test -> Initialization -> Update expression"
       ],
       "opts": [
-        "Initialization -> Update -> Loop body -> Condition test in the collection control",
-        "Update -> Initialization -> Condition test -> Loop body while iterating through the collection entries",
-        "Initialization -> Boolean condition test -> Loop body execution -> Update expression",
-        "Loop body -> Condition test -> Initialization -> Update while iterating the items"
+        "Initialization -> Update expression -> Loop body -> Boolean condition test",
+        "Update expression -> Initialization -> Boolean condition test -> Loop body",
+        "Initialization -> Boolean condition test -> Loop body -> Update expression",
+        "Loop body -> Boolean condition test -> Initialization -> Update expression"
       ],
       "answer": 2,
       "ans": 2,
@@ -12983,16 +12983,16 @@
       "stem": "In what exact sequence do components of a 'for' loop execute during the second and subsequent iterations?",
       "code": "",
       "options": [
-        "Loop body -> Initialization -> Update during loop body execution",
-        "Update -> Initialization -> Boolean test on the Windows Form canvas",
-        "Initialization -> Boolean condition test -> Loop body on the ListBox",
-        "Boolean condition test -> Loop body execution -> Update expression"
+        "Loop body execution -> Initialization -> Update expression",
+        "Update expression -> Initialization -> Boolean condition test",
+        "Initialization -> Boolean condition test -> Loop body execution",
+        "Boolean condition test -> Loop body -> Update expression"
       ],
       "opts": [
-        "Loop body -> Initialization -> Update during loop body execution",
-        "Update -> Initialization -> Boolean test on the Windows Form canvas",
-        "Initialization -> Boolean condition test -> Loop body on the ListBox",
-        "Boolean condition test -> Loop body execution -> Update expression"
+        "Loop body execution -> Initialization -> Update expression",
+        "Update expression -> Initialization -> Boolean condition test",
+        "Initialization -> Boolean condition test -> Loop body execution",
+        "Boolean condition test -> Loop body -> Update expression"
       ],
       "answer": 3,
       "ans": 3,
@@ -13112,16 +13112,16 @@
       "stem": "What compiler error occurs if an accumulator variable 'decimal total;' is declared inside an event handler but not initialized before being used inside a loop ('total += amount;')?",
       "code": "",
       "options": [
-        "Compiler error CS0029: Cannot convert double to int in Visual C#",
-        "Compiler error CS0103: The name 'total' does not exist at compile time",
+        "Compiler error CS0029: Cannot convert double to int",
+        "Compiler error CS0103: The name 'total' does not exist",
         "Compiler error CS0165: Use of unassigned local variable 'total'",
-        "Compiler error CS1002: Semicolon expected when building the solution"
+        "Compiler error CS1002: Semicolon expected"
       ],
       "opts": [
-        "Compiler error CS0029: Cannot convert double to int in Visual C#",
-        "Compiler error CS0103: The name 'total' does not exist at compile time",
+        "Compiler error CS0029: Cannot convert double to int",
+        "Compiler error CS0103: The name 'total' does not exist",
         "Compiler error CS0165: Use of unassigned local variable 'total'",
-        "Compiler error CS1002: Semicolon expected when building the solution"
+        "Compiler error CS1002: Semicolon expected"
       ],
       "answer": 2,
       "ans": 2,
@@ -13155,16 +13155,16 @@
       "stem": "Consider the C# loop header: `for (int count = 1; count <= 10; count++)`. What is the formal role of `count`, and what is its value when the loop terminates?",
       "code": "",
       "options": [
-        "It is an accumulator variable that sums the numbers 1 to 10, terminating with value 55 when evaluating the numeric expression in the handler",
-        "It is a counter variable initialized to 1, incremented by 1 each iteration, and its value is 10 because the loop condition specifies count <= 10",
-        "It is a sentinel variable that terminates when the user enters a sentinel exit condition when storing the formatted result into the control before updating the target UI control",
-        "It is a counter variable initialized to 1, incremented by 1 each iteration, and its value is 11 when the loop condition evaluates to false and terminates"
+        "It is an accumulator variable summing 1 to 10, terminating with value 55",
+        "It is a counter starting at 1, incremented by 1 each pass, and stops at value 10",
+        "It is a sentinel variable that stops when the user enters a sentinel value",
+        "It is a counter starting at 1, incremented by 1 each pass, and terminates at 11"
       ],
       "opts": [
-        "It is an accumulator variable that sums the numbers 1 to 10, terminating with value 55 when evaluating the numeric expression in the handler",
-        "It is a counter variable initialized to 1, incremented by 1 each iteration, and its value is 10 because the loop condition specifies count <= 10",
-        "It is a sentinel variable that terminates when the user enters a sentinel exit condition when storing the formatted result into the control before updating the target UI control",
-        "It is a counter variable initialized to 1, incremented by 1 each iteration, and its value is 11 when the loop condition evaluates to false and terminates"
+        "It is an accumulator variable summing 1 to 10, terminating with value 55",
+        "It is a counter starting at 1, incremented by 1 each pass, and stops at value 10",
+        "It is a sentinel variable that stops when the user enters a sentinel value",
+        "It is a counter starting at 1, incremented by 1 each pass, and terminates at 11"
       ],
       "answer": 3,
       "ans": 3,
@@ -13241,16 +13241,16 @@
       "stem": "What is the primary cause of an infinite loop in a while loop construct?",
       "code": "",
       "options": [
-        "A button on the form has its Visible property set to false when the Windows Forms control processes the action during standard GUI event execution",
-        "The loop continuation condition never evaluates to false, often because the counter update statement was omitted from the loop body",
-        "The form is minimized by the user within the active form class implementation before updating the target UI control inside the desktop session",
-        "The computer has insufficient hard drive space inside the Windows Forms event handler routine before returning to the calling method"
+        "A Button control on the form has its Visible property set to false",
+        "The loop condition never becomes false, e.g., the counter update is omitted",
+        "The user minimizes the Windows Form window while the loop is running",
+        "The workstation hard drive has less than one gigabyte of free space"
       ],
       "opts": [
-        "A button on the form has its Visible property set to false when the Windows Forms control processes the action during standard GUI event execution",
-        "The loop continuation condition never evaluates to false, often because the counter update statement was omitted from the loop body",
-        "The form is minimized by the user within the active form class implementation before updating the target UI control inside the desktop session",
-        "The computer has insufficient hard drive space inside the Windows Forms event handler routine before returning to the calling method"
+        "A Button control on the form has its Visible property set to false",
+        "The loop condition never becomes false, e.g., the counter update is omitted",
+        "The user minimizes the Windows Form window while the loop is running",
+        "The workstation hard drive has less than one gigabyte of free space"
       ],
       "answer": 1,
       "ans": 1,
@@ -13284,16 +13284,16 @@
       "stem": "What is an 'off-by-one' error in loop implementation?",
       "code": "",
       "options": [
-        "A syntax error caused by missing one quotation mark during static type and syntax analysis of the class within the current form class instance",
-        "A compiler error caused by adding two numbers incorrectly during the Visual Studio build verification step on the active Windows Form canvas",
-        "A logic error where a loop executes one iteration too many or one too few, usually caused by writing '<=' instead of '<' or initializing at 1 instead of 0",
-        "An error where one button has two event handlers during execution of the Visual C# form application during standard GUI event execution inside the desktop session"
+        "A compile-time syntax error caused by omitting one closing quote",
+        "A runtime exception caused by dividing an integer variable by zero",
+        "A logic error where a loop runs one pass too many or too few",
+        "A Designer error where one Button control is wired to two Click handlers"
       ],
       "opts": [
-        "A syntax error caused by missing one quotation mark during static type and syntax analysis of the class within the current form class instance",
-        "A compiler error caused by adding two numbers incorrectly during the Visual Studio build verification step on the active Windows Form canvas",
-        "A logic error where a loop executes one iteration too many or one too few, usually caused by writing '<=' instead of '<' or initializing at 1 instead of 0",
-        "An error where one button has two event handlers during execution of the Visual C# form application during standard GUI event execution inside the desktop session"
+        "A compile-time syntax error caused by omitting one closing quote",
+        "A runtime exception caused by dividing an integer variable by zero",
+        "A logic error where a loop runs one pass too many or too few",
+        "A Designer error where one Button control is wired to two Click handlers"
       ],
       "answer": 2,
       "ans": 2,
@@ -13456,16 +13456,16 @@
       "stem": "If a loop control variable is declared in the for loop header ('for (int count = 0; count < 10; count++)'), can 'count' be used outside the loop?",
       "code": "",
       "options": [
-        "Yes, it becomes a class-level field within the active form class implementation",
-        "Only if the loop iterated at least once while iterating through the collection entries",
-        "No, 'count' has block scope limited strictly to the for loop header and body",
-        "Yes, it remains available throughout the entire method on invocation"
+        "Yes, it is automatically promoted to a private class-level field",
+        "Only if the for loop body executed at least one full iteration",
+        "No, 'count' has block scope limited strictly to the for loop",
+        "Yes, it remains accessible throughout the rest of the event handler"
       ],
       "opts": [
-        "Yes, it becomes a class-level field within the active form class implementation",
-        "Only if the loop iterated at least once while iterating through the collection entries",
-        "No, 'count' has block scope limited strictly to the for loop header and body",
-        "Yes, it remains available throughout the entire method on invocation"
+        "Yes, it is automatically promoted to a private class-level field",
+        "Only if the for loop body executed at least one full iteration",
+        "No, 'count' has block scope limited strictly to the for loop",
+        "Yes, it remains accessible throughout the rest of the event handler"
       ],
       "answer": 2,
       "ans": 2,
@@ -13585,16 +13585,16 @@
       "stem": "What happens when a 'break;' statement is encountered inside a loop body?",
       "code": "",
       "options": [
-        "The current iteration is skipped and the loop starts again when updating the zero-based collection items",
-        "The loop terminates immediately, and execution jumps to the statement directly following the loop",
-        "All variables in the program are reset to null while computing the value in local memory inside the desktop session",
-        "The computer restarts inside the Windows Forms event handler routine before updating the target UI control"
+        "The current pass is skipped and the loop immediately tests the next pass",
+        "The loop stops immediately and control jumps to the statement after it",
+        "All local variables declared inside the method are reset to zero",
+        "The Windows Forms application closes and restarts from Program.cs"
       ],
       "opts": [
-        "The current iteration is skipped and the loop starts again when updating the zero-based collection items",
-        "The loop terminates immediately, and execution jumps to the statement directly following the loop",
-        "All variables in the program are reset to null while computing the value in local memory inside the desktop session",
-        "The computer restarts inside the Windows Forms event handler routine before updating the target UI control"
+        "The current pass is skipped and the loop immediately tests the next pass",
+        "The loop stops immediately and control jumps to the statement after it",
+        "All local variables declared inside the method are reset to zero",
+        "The Windows Forms application closes and restarts from Program.cs"
       ],
       "answer": 1,
       "ans": 1,
@@ -13628,16 +13628,16 @@
       "stem": "What happens when a 'continue;' statement is encountered inside a loop body?",
       "code": "",
       "options": [
-        "The loop is terminated completely across successive passes of the loop body before returning to the calling method under .NET runtime execution",
-        "The application terminates immediately inside the Windows Forms event handler routine within the current form class instance",
-        "The remainder of the current iteration is skipped, and control jumps directly to the update/test expression for the next iteration",
-        "The form reloads during execution of the Visual C# form application on the active Windows Form canvas inside the desktop session"
+        "The enclosing loop is terminated completely and exited immediately",
+        "The entire Windows Forms desktop application closes immediately",
+        "The current pass stops and the loop continues with the next pass",
+        "The active Windows Form reloads its initial controls from Designer.cs"
       ],
       "opts": [
-        "The loop is terminated completely across successive passes of the loop body before returning to the calling method under .NET runtime execution",
-        "The application terminates immediately inside the Windows Forms event handler routine within the current form class instance",
-        "The remainder of the current iteration is skipped, and control jumps directly to the update/test expression for the next iteration",
-        "The form reloads during execution of the Visual C# form application on the active Windows Form canvas inside the desktop session"
+        "The enclosing loop is terminated completely and exited immediately",
+        "The entire Windows Forms desktop application closes immediately",
+        "The current pass stops and the loop continues with the next pass",
+        "The active Windows Form reloads its initial controls from Designer.cs"
       ],
       "answer": 2,
       "ans": 2,
@@ -13888,13 +13888,13 @@
       "options": [
         "ArgumentOutOfRangeException",
         "NullReferenceException",
-        "FormatException during execution",
+        "InvalidFormatException",
         "DivideByZeroException"
       ],
       "opts": [
         "ArgumentOutOfRangeException",
         "NullReferenceException",
-        "FormatException during execution",
+        "InvalidFormatException",
         "DivideByZeroException"
       ],
       "answer": 0,
@@ -14101,16 +14101,16 @@
       "stem": "What insidious bug is created by accidentally placing a semicolon at the end of a while loop header: 'while (count < 10); { count++; }'?",
       "code": "",
       "options": [
-        "Visual Studio deletes the while statement when updating the zero-based collection items during standard GUI event execution",
-        "The semicolon forms an empty loop body; since count is never incremented, the loop hangs indefinitely in an infinite loop",
-        "The code fails to compile with CS1002 during static type and syntax analysis of the class before updating the target UI control",
-        "The block '{ count++; }' executes 10 times immediately inside the Windows Forms event handler routine before returning to the calling method"
+        "Visual Studio automatically deletes the while statement during build",
+        "The semicolon creates an empty loop body, causing an infinite loop",
+        "The project fails to compile with syntax diagnostic error CS1002",
+        "The block '{ count++; }' executes 10 times before the loop stops"
       ],
       "opts": [
-        "Visual Studio deletes the while statement when updating the zero-based collection items during standard GUI event execution",
-        "The semicolon forms an empty loop body; since count is never incremented, the loop hangs indefinitely in an infinite loop",
-        "The code fails to compile with CS1002 during static type and syntax analysis of the class before updating the target UI control",
-        "The block '{ count++; }' executes 10 times immediately inside the Windows Forms event handler routine before returning to the calling method"
+        "Visual Studio automatically deletes the while statement during build",
+        "The semicolon creates an empty loop body, causing an infinite loop",
+        "The project fails to compile with syntax diagnostic error CS1002",
+        "The block '{ count++; }' executes 10 times before the loop stops"
       ],
       "answer": 1,
       "ans": 1,
@@ -14145,15 +14145,15 @@
       "code": "",
       "options": [
         "The program crashes with an OutOfMemoryException",
-        "'Hi' is added 5 times as expected at runtime",
+        "'Hi' is added 5 times as expected",
         "The loop executes all 5 iterations doing nothing",
-        "A syntax error stops compilation during build"
+        "A syntax error stops compilation"
       ],
       "opts": [
         "The program crashes with an OutOfMemoryException",
-        "'Hi' is added 5 times as expected at runtime",
+        "'Hi' is added 5 times as expected",
         "The loop executes all 5 iterations doing nothing",
-        "A syntax error stops compilation during build"
+        "A syntax error stops compilation"
       ],
       "answer": 2,
       "ans": 2,
@@ -14187,16 +14187,16 @@
       "stem": "In a retail POS transaction system, why is 'lstCart.Items.Clear();' called when the cashier clicks the 'New Sale' button?",
       "code": "",
       "options": [
-        "To print the customer receipt when evaluating the numeric expression in the handler before updating the target UI control",
-        "To calculate 15% VAT during execution of the Visual C# form application before returning to the calling method",
-        "To close the cash register drawer when the Windows Forms control processes the action within the current form class instance",
-        "To remove all scanned items from the previous customer from the display and memory before starting a new transaction"
+        "To send the formatted customer receipt to the thermal printer",
+        "To compute the 15% South African VAT amount on the subtotal",
+        "To trigger the electronic cash register drawer release latch",
+        "To clear prior customer items before starting a new sale"
       ],
       "opts": [
-        "To print the customer receipt when evaluating the numeric expression in the handler before updating the target UI control",
-        "To calculate 15% VAT during execution of the Visual C# form application before returning to the calling method",
-        "To close the cash register drawer when the Windows Forms control processes the action within the current form class instance",
-        "To remove all scanned items from the previous customer from the display and memory before starting a new transaction"
+        "To send the formatted customer receipt to the thermal printer",
+        "To compute the 15% South African VAT amount on the subtotal",
+        "To trigger the electronic cash register drawer release latch",
+        "To clear prior customer items before starting a new sale"
       ],
       "answer": 3,
       "ans": 3,
@@ -14318,14 +14318,14 @@
       "options": [
         "lstGrowth.Items.Insert(year, $\"Year: {balance}\");",
         "lstGrowth.Items.Add(year + balance.ToString(\"C\"));",
-        "lstGrowth.Items.Add($\"Year {year}:\t{balance:C}\");",
-        "lstGrowth.Text = $\"Year {year}:\t{balance:C}\";"
+        "lstGrowth.Items.Add($\"Year {year}:\\t{balance:C}\");",
+        "lstGrowth.Text = $\"Year {year}:\\t{balance:C}\";"
       ],
       "opts": [
         "lstGrowth.Items.Insert(year, $\"Year: {balance}\");",
         "lstGrowth.Items.Add(year + balance.ToString(\"C\"));",
-        "lstGrowth.Items.Add($\"Year {year}:\t{balance:C}\");",
-        "lstGrowth.Text = $\"Year {year}:\t{balance:C}\";"
+        "lstGrowth.Items.Add($\"Year {year}:\\t{balance:C}\");",
+        "lstGrowth.Text = $\"Year {year}:\\t{balance:C}\";"
       ],
       "answer": 2,
       "ans": 2,
@@ -14445,16 +14445,16 @@
       "stem": "Consider the following nested loop structure in Visual C#:\nHow many total items will be added to `lstLog` upon loop completion?",
       "code": "for (int student = 1; student <= 3; student++)\n{\n    for (int test = 1; test <= 2; test++)\n    {\n        lstLog.Items.Add($\"Student {student}, Test {test}\");\n    }\n}",
       "options": [
-        "2 items (only the inner loop adds items) when updating the zero-based collection items",
-        "6 items (for each of the 3 outer iterations, the inner loop executes 2 times: 3 * 2 = 6)",
-        "12 items (3 * 2 * 2) within the active form class implementation during standard GUI event execution",
-        "5 items (3 outer iterations + 2 inner iterations) while iterating through the collection entries"
+        "2 items: only the inner loop calls lstLog.Items.Add",
+        "6 items: 3 outer passes each run 2 inner passes",
+        "12 items: both loop counters are multiplied by 2",
+        "5 items: 3 outer passes plus 2 inner loop passes"
       ],
       "opts": [
-        "2 items (only the inner loop adds items) when updating the zero-based collection items",
-        "6 items (for each of the 3 outer iterations, the inner loop executes 2 times: 3 * 2 = 6)",
-        "12 items (3 * 2 * 2) within the active form class implementation during standard GUI event execution",
-        "5 items (3 outer iterations + 2 inner iterations) while iterating through the collection entries"
+        "2 items: only the inner loop calls lstLog.Items.Add",
+        "6 items: 3 outer passes each run 2 inner passes",
+        "12 items: both loop counters are multiplied by 2",
+        "5 items: 3 outer passes plus 2 inner loop passes"
       ],
       "answer": 1,
       "ans": 1,
@@ -14617,16 +14617,16 @@
       "stem": "How can a loop find the highest numeric score stored in a ListBox named lstScores?",
       "code": "",
       "options": [
-        "Call lstScores.Items.Clear() when updating the zero-based collection items before updating the target UI control in the compiled C# project",
-        "Initialize a variable 'highest' with the first item, iterate through remaining items, and update 'highest' whenever an item exceeds it",
-        "Sort the form alphabetically within the active form class implementation before returning to the calling method inside the desktop session",
-        "Sum all numbers and divide by 2 inside the Windows Forms event handler routine within the current form class instance during interface state updates"
+        "Call lstScores.Items.Clear() to reset the collection to its maximum",
+        "Start 'highest' with item 0, loop through, and update when larger",
+        "Set the Sorted property of the parent Windows Form to true at runtime",
+        "Add all numeric items in lstScores together and divide the sum by two"
       ],
       "opts": [
-        "Call lstScores.Items.Clear() when updating the zero-based collection items before updating the target UI control in the compiled C# project",
-        "Initialize a variable 'highest' with the first item, iterate through remaining items, and update 'highest' whenever an item exceeds it",
-        "Sort the form alphabetically within the active form class implementation before returning to the calling method inside the desktop session",
-        "Sum all numbers and divide by 2 inside the Windows Forms event handler routine within the current form class instance during interface state updates"
+        "Call lstScores.Items.Clear() to reset the collection to its maximum",
+        "Start 'highest' with item 0, loop through, and update when larger",
+        "Set the Sorted property of the parent Windows Form to true at runtime",
+        "Add all numeric items in lstScores together and divide the sum by two"
       ],
       "answer": 1,
       "ans": 1,
@@ -14703,16 +14703,16 @@
       "stem": "What happens at compile time and runtime if `while (false) { count++; }` is written in C#?",
       "code": "",
       "options": [
-        "The loop body executes once before checking `false`, incrementing `count` by `1` while iterating through the collection entries before returning to the calling method",
-        "The loop runs infinitely because `false` can never transition to `true` during execution of the repetition structure within the current form class instance",
-        "A `FormatException` is thrown at runtime when entering the `while` header before the next statement in the method executes on the active Windows Form canvas",
-        "Because the pretest condition is `false` initially, the loop body executes `0` times and the C# compiler reports warning `CS0162` on `count++;`"
+        "The loop body executes once before checking `false`, incrementing `count` by `1`",
+        "The loop runs infinitely because `false` can never transition to `true`",
+        "A `FormatException` is thrown at runtime when entering the `while` header",
+        "The pre-test condition is `false`, so the body runs `0` times with `CS0162`"
       ],
       "opts": [
-        "The loop body executes once before checking `false`, incrementing `count` by `1` while iterating through the collection entries before returning to the calling method",
-        "The loop runs infinitely because `false` can never transition to `true` during execution of the repetition structure within the current form class instance",
-        "A `FormatException` is thrown at runtime when entering the `while` header before the next statement in the method executes on the active Windows Form canvas",
-        "Because the pretest condition is `false` initially, the loop body executes `0` times and the C# compiler reports warning `CS0162` on `count++;`"
+        "The loop body executes once before checking `false`, incrementing `count` by `1`",
+        "The loop runs infinitely because `false` can never transition to `true`",
+        "A `FormatException` is thrown at runtime when entering the `while` header",
+        "The pre-test condition is `false`, so the body runs `0` times with `CS0162`"
       ],
       "answer": 3,
       "ans": 3,
@@ -14746,16 +14746,16 @@
       "stem": "What happens if 'do { ... } while (false);' is written in C#?",
       "code": "",
       "options": [
-        "The loop body executes exactly once because the post-test condition is only evaluated after the first iteration",
-        "The loop runs infinitely during execution of the repetition structure during standard GUI event execution",
-        "It causes a compilation error when the Windows Forms control processes the action before updating the target UI control",
-        "The loop body never executes across successive passes of the loop body before returning to the calling method"
+        "The body runs once since the post-test condition is checked after pass 1",
+        "The loop runs infinitely and freezes the Windows Forms user interface",
+        "The Roslyn compiler rejects the statement with a fatal syntax error",
+        "The loop body is skipped completely and executes zero times at runtime"
       ],
       "opts": [
-        "The loop body executes exactly once because the post-test condition is only evaluated after the first iteration",
-        "The loop runs infinitely during execution of the repetition structure during standard GUI event execution",
-        "It causes a compilation error when the Windows Forms control processes the action before updating the target UI control",
-        "The loop body never executes across successive passes of the loop body before returning to the calling method"
+        "The body runs once since the post-test condition is checked after pass 1",
+        "The loop runs infinitely and freezes the Windows Forms user interface",
+        "The Roslyn compiler rejects the statement with a fatal syntax error",
+        "The loop body is skipped completely and executes zero times at runtime"
       ],
       "answer": 0,
       "ans": 0,
@@ -14789,16 +14789,16 @@
       "stem": "Why is it considered bad programming practice to alter the loop control variable manually inside the body of a for loop?",
       "code": "",
       "options": [
-        "It automatically changes the loop to a while loop when updating the zero-based collection items within the current form class instance in the compiled C# project",
-        "It obscures loop termination logic, making execution flow difficult to trace and greatly increasing the risk of off-by-one or infinite loop bugs",
-        "The C# compiler refuses to compile the project within the active form class implementation on the active Windows Form canvas inside the desktop session",
-        "It deletes the variable from memory when evaluating the numeric expression in the handler during standard GUI event execution during interface state updates"
+        "It automatically converts the for loop into an unguarded while loop",
+        "It obscures termination logic and risks off-by-one or infinite loop bugs",
+        "The Visual C# compiler refuses to build any for loop that modifies its counter",
+        "It immediately deallocates the loop control variable from stack memory"
       ],
       "opts": [
-        "It automatically changes the loop to a while loop when updating the zero-based collection items within the current form class instance in the compiled C# project",
-        "It obscures loop termination logic, making execution flow difficult to trace and greatly increasing the risk of off-by-one or infinite loop bugs",
-        "The C# compiler refuses to compile the project within the active form class implementation on the active Windows Form canvas inside the desktop session",
-        "It deletes the variable from memory when evaluating the numeric expression in the handler during standard GUI event execution during interface state updates"
+        "It automatically converts the for loop into an unguarded while loop",
+        "It obscures termination logic and risks off-by-one or infinite loop bugs",
+        "The Visual C# compiler refuses to build any for loop that modifies its counter",
+        "It immediately deallocates the loop control variable from stack memory"
       ],
       "answer": 1,
       "ans": 1,
@@ -15090,16 +15090,16 @@
       "stem": "Why should UI updates (such as adding items to a ListBox) inside a loop with 100,000 iterations be handled with care?",
       "code": "",
       "options": [
-        "Repeatedly updating the GUI thread inside a tight loop causes UI freezing and severe performance degradation",
-        "The monitor will turn off during execution of the Visual C# form application on the active Windows Form canvas",
-        "Visual Studio will delete the form when the Windows Forms control processes the action during standard GUI event execution",
-        "ListBoxes can never hold more than 100 items across successive passes of the loop body before updating the target UI control"
+        "Repainting the UI on each pass can freeze and slow the interface",
+        "The computer monitor will automatically enter power-saving sleep mode",
+        "Visual Studio will delete the Form1.Designer.cs file from the project",
+        "Windows Forms ListBox controls cannot hold more than 100 total items"
       ],
       "opts": [
-        "Repeatedly updating the GUI thread inside a tight loop causes UI freezing and severe performance degradation",
-        "The monitor will turn off during execution of the Visual C# form application on the active Windows Form canvas",
-        "Visual Studio will delete the form when the Windows Forms control processes the action during standard GUI event execution",
-        "ListBoxes can never hold more than 100 items across successive passes of the loop body before updating the target UI control"
+        "Repainting the UI on each pass can freeze and slow the interface",
+        "The computer monitor will automatically enter power-saving sleep mode",
+        "Visual Studio will delete the Form1.Designer.cs file from the project",
+        "Windows Forms ListBox controls cannot hold more than 100 total items"
       ],
       "answer": 0,
       "ans": 0,
@@ -15133,16 +15133,16 @@
       "stem": "How does Shneiderman's 8th Golden Rule ('Reduce short-term memory load') apply to displaying accumulated transaction items in a ListBox?",
       "code": "",
       "options": [
-        "All items should disappear immediately after scanning when the Windows Forms control processes the action before returning to the calling method",
-        "Presenting all scanned items and subtotals persistently in a scrollable list frees users from having to remember entered transactions while continuing work",
-        "The application should only display one number at a time within the active form class implementation within the current form class instance inside the desktop session",
-        "The user must memorize all product barcodes inside the Windows Forms event handler routine on the active Windows Form canvas during interface state updates"
+        "All scanned items should be erased from the screen after each barcode scan",
+        "Listing scanned items and subtotals frees users from memorizing them",
+        "The checkout interface should display only a single item price at a time",
+        "Cashiers should be required to memorize all 12-digit product barcodes"
       ],
       "opts": [
-        "All items should disappear immediately after scanning when the Windows Forms control processes the action before returning to the calling method",
-        "Presenting all scanned items and subtotals persistently in a scrollable list frees users from having to remember entered transactions while continuing work",
-        "The application should only display one number at a time within the active form class implementation within the current form class instance inside the desktop session",
-        "The user must memorize all product barcodes inside the Windows Forms event handler routine on the active Windows Form canvas during interface state updates"
+        "All scanned items should be erased from the screen after each barcode scan",
+        "Listing scanned items and subtotals frees users from memorizing them",
+        "The checkout interface should display only a single item price at a time",
+        "Cashiers should be required to memorize all 12-digit product barcodes"
       ],
       "answer": 1,
       "ans": 1,
@@ -15177,15 +15177,15 @@
       "code": "",
       "options": [
         "To ensure mutual exclusion so that selecting one vehicle category automatically unchecks any other category.",
-        "To allow multiple vehicle categories to be checked simultaneously for a single rental contract in the collection control.",
-        "Because RadioButtons cannot receive mouse clicks unless nested inside a GroupBox container in the branch.",
-        "To convert the RadioButtons into TabStop navigation labels automatically during input validation before returning to the calling method."
+        "To allow multiple vehicle categories to be checked simultaneously for a single rental contract.",
+        "Because RadioButtons cannot receive mouse clicks unless nested inside a GroupBox container.",
+        "To convert the RadioButtons into TabStop navigation labels automatically."
       ],
       "opts": [
         "To ensure mutual exclusion so that selecting one vehicle category automatically unchecks any other category.",
-        "To allow multiple vehicle categories to be checked simultaneously for a single rental contract in the collection control.",
-        "Because RadioButtons cannot receive mouse clicks unless nested inside a GroupBox container in the branch.",
-        "To convert the RadioButtons into TabStop navigation labels automatically during input validation before returning to the calling method."
+        "To allow multiple vehicle categories to be checked simultaneously for a single rental contract.",
+        "Because RadioButtons cannot receive mouse clicks unless nested inside a GroupBox container.",
+        "To convert the RadioButtons into TabStop navigation labels automatically."
       ],
       "answer": 0,
       "ans": 0,
@@ -15561,16 +15561,16 @@
       "stem": "When btnClear is clicked, which code block restores the car rental form to its default initial state (Sedan selected, add-ons unchecked, inputs and receipt cleared)?",
       "code": "",
       "options": [
-        "this.Close(); Application.Restart(); txtDays.Text = \"\"; txtKms.Text = \"\"; rdoSedan.Checked = false; chkGps.Checked = false; lblTotalDue.Text = \"\";",
+        "this.Close(); Application.Restart(); txtDays.Text = \"0\"; txtKms.Text = \"0\"; rdoSedan.Checked = false; chkGps.Checked = true; lstReceipt.ClearSelected();",
         "txtDays.Clear(); txtKms.Clear(); rdoSedan.Checked = true; chkGps.Checked = false; chkVoucher.Checked = false; lblTotalDue.Text = \"\"; lstReceipt.Items.Clear(); txtDays.Focus();",
-        "Form.Reset(); txtDays.Text = \"0\"; txtKms.Text = \"0\"; rdoSedan.Checked = false; chkGps.Checked = true; chkVoucher.Checked = true; lblTotalDue.Text = \"0\";",
-        "txtDays.Text = null; txtKms.Text = null; rdoSedan.Checked = false; chkGps.Checked = false; chkVoucher.Checked = false; lstReceipt.Dispose(); lblTotalDue.Dispose();"
+        "Form.Reset(); txtDays.Text = \"0\"; txtKms.Text = \"0\"; rdoSuv.Checked = true; chkGps.Checked = true; chkVoucher.Checked = true; lstReceipt.ClearSelected();",
+        "txtDays.Text = null; txtKms.Text = null; rdoSedan.Checked = false; rdoBakkie.Checked = true; lblTotalDue.Dispose(); lstReceipt.Dispose(); this.Hide();"
       ],
       "opts": [
-        "this.Close(); Application.Restart(); txtDays.Text = \"\"; txtKms.Text = \"\"; rdoSedan.Checked = false; chkGps.Checked = false; lblTotalDue.Text = \"\";",
+        "this.Close(); Application.Restart(); txtDays.Text = \"0\"; txtKms.Text = \"0\"; rdoSedan.Checked = false; chkGps.Checked = true; lstReceipt.ClearSelected();",
         "txtDays.Clear(); txtKms.Clear(); rdoSedan.Checked = true; chkGps.Checked = false; chkVoucher.Checked = false; lblTotalDue.Text = \"\"; lstReceipt.Items.Clear(); txtDays.Focus();",
-        "Form.Reset(); txtDays.Text = \"0\"; txtKms.Text = \"0\"; rdoSedan.Checked = false; chkGps.Checked = true; chkVoucher.Checked = true; lblTotalDue.Text = \"0\";",
-        "txtDays.Text = null; txtKms.Text = null; rdoSedan.Checked = false; chkGps.Checked = false; chkVoucher.Checked = false; lstReceipt.Dispose(); lblTotalDue.Dispose();"
+        "Form.Reset(); txtDays.Text = \"0\"; txtKms.Text = \"0\"; rdoSuv.Checked = true; chkGps.Checked = true; chkVoucher.Checked = true; lstReceipt.ClearSelected();",
+        "txtDays.Text = null; txtKms.Text = null; rdoSedan.Checked = false; rdoBakkie.Checked = true; lblTotalDue.Dispose(); lstReceipt.Dispose(); this.Hide();"
       ],
       "answer": 1,
       "ans": 1,
@@ -15690,16 +15690,16 @@
       "stem": "If a user leaves txtKms blank and clicks Calculate, what is the boolean return value of decimal.TryParse(txtKms.Text, out kms)?",
       "code": "",
       "options": [
-        "false, preventing an unhandled FormatException crash",
-        "true, setting kms to 1.0m within the form class",
-        "Throws an unhandled System.NullReferenceException",
-        "Returns -1 during execution of the Visual C# form application"
+        "Returns false, preventing an unhandled FormatException crash",
+        "Returns true and initializes the out parameter kms to 1.0m",
+        "Throws an unhandled System.NullReferenceException at runtime",
+        "Returns the integer error code -1 to the calling event handler"
       ],
       "opts": [
-        "false, preventing an unhandled FormatException crash",
-        "true, setting kms to 1.0m within the form class",
-        "Throws an unhandled System.NullReferenceException",
-        "Returns -1 during execution of the Visual C# form application"
+        "Returns false, preventing an unhandled FormatException crash",
+        "Returns true and initializes the out parameter kms to 1.0m",
+        "Throws an unhandled System.NullReferenceException at runtime",
+        "Returns the integer error code -1 to the calling event handler"
       ],
       "answer": 0,
       "ans": 0,
@@ -15733,16 +15733,16 @@
       "stem": "Why should fixed daily rental rates (450m, 650m, 750m) and the excess kilometer rate (3.50m) be declared as named constants (const)?",
       "code": "",
       "options": [
-        "Because C# does not allow literal numbers in arithmetic expressions inside the Windows Forms event handler routine",
-        "To prevent magic numbers, improve code readability, and allow rates to be updated in a single declaration location",
-        "Because const variables can be modified dynamically by user input at runtime when converting the value",
-        "To make the variables accessible to other applications on the operating system when storing the formatted result into the control"
+        "Because C# syntax forbids literal numbers in arithmetic expressions",
+        "To avoid magic numbers, improve readability, and centralize rate updates",
+        "Because const variables can be modified dynamically by user input at runtime",
+        "To expose the rate variables to external programs on the operating system"
       ],
       "opts": [
-        "Because C# does not allow literal numbers in arithmetic expressions inside the Windows Forms event handler routine",
-        "To prevent magic numbers, improve code readability, and allow rates to be updated in a single declaration location",
-        "Because const variables can be modified dynamically by user input at runtime when converting the value",
-        "To make the variables accessible to other applications on the operating system when storing the formatted result into the control"
+        "Because C# syntax forbids literal numbers in arithmetic expressions",
+        "To avoid magic numbers, improve readability, and centralize rate updates",
+        "Because const variables can be modified dynamically by user input at runtime",
+        "To expose the rate variables to external programs on the operating system"
       ],
       "answer": 1,
       "ans": 1,
@@ -15948,16 +15948,16 @@
       "stem": "Given faculty levies (Natural Sciences: R2,500.00; Commerce: R1,000.00; Humanities: R500.00), which C# conditional block assigns the compulsory `levy` from the selected faculty RadioButton?",
       "code": "",
       "options": [
-        "if (rdoScience.Selected) levy = 2500m; else if (rdoCommerce.Selected) levy = 1000m; else levy = 500m; when evaluated",
-        "if (rdoScience == true) levy = 2500m; else levy = 0m; when testing the decision structure in the click event",
+        "if (rdoScience.Selected) levy = 2500m; else if (rdoCommerce.Selected) levy = 1000m; else levy = 500m;",
+        "if (rdoScience == true) levy = 2500m; else if (rdoCommerce == true) levy = 1000m; else levy = 0m;",
         "if (rdoScience.Checked) levy = 2500m; else if (rdoCommerce.Checked) levy = 1000m; else levy = 500m;",
-        "switch (rdoScience.Text) { case \"Checked\": levy = 2500m; break; } when evaluating the branch"
+        "switch (rdoScience.Text) { case \"Science\": levy = 2500m; case \"Commerce\": levy = 1000m; break; }"
       ],
       "opts": [
-        "if (rdoScience.Selected) levy = 2500m; else if (rdoCommerce.Selected) levy = 1000m; else levy = 500m; when evaluated",
-        "if (rdoScience == true) levy = 2500m; else levy = 0m; when testing the decision structure in the click event",
+        "if (rdoScience.Selected) levy = 2500m; else if (rdoCommerce.Selected) levy = 1000m; else levy = 500m;",
+        "if (rdoScience == true) levy = 2500m; else if (rdoCommerce == true) levy = 1000m; else levy = 0m;",
         "if (rdoScience.Checked) levy = 2500m; else if (rdoCommerce.Checked) levy = 1000m; else levy = 500m;",
-        "switch (rdoScience.Text) { case \"Checked\": levy = 2500m; break; } when evaluating the branch"
+        "switch (rdoScience.Text) { case \"Science\": levy = 2500m; case \"Commerce\": levy = 1000m; break; }"
       ],
       "answer": 2,
       "ans": 2,
@@ -15990,16 +15990,16 @@
       "stem": "If academic tuition plus levy totals R12,000.00 and the student is awarded a 25% merit bursary remission, how should the net academic tuition be calculated?",
       "code": "",
       "options": [
-        "netTuition = tuition - 25m;",
-        "netTuition = tuition / 0.25m;",
-        "netTuition = tuition * 25m;",
-        "netTuition = tuition -;"
+        "netTuition = tuition - (tuition / 0.25m);",
+        "netTuition = tuition + (tuition * 0.25m);",
+        "netTuition = tuition * (tuition - 0.25m);",
+        "netTuition = tuition - (tuition * 0.25m);"
       ],
       "opts": [
-        "netTuition = tuition - 25m;",
-        "netTuition = tuition / 0.25m;",
-        "netTuition = tuition * 25m;",
-        "netTuition = tuition -;"
+        "netTuition = tuition - (tuition / 0.25m);",
+        "netTuition = tuition + (tuition * 0.25m);",
+        "netTuition = tuition * (tuition - 0.25m);",
+        "netTuition = tuition - (tuition * 0.25m);"
       ],
       "answer": 3,
       "ans": 3,
@@ -16034,15 +16034,15 @@
       "code": "",
       "options": [
         "Exactly 4 monthly installment items",
-        "12 monthly installment items in the handler",
-        "1 lump sum item inside the event handler",
-        "2 semester items on the Windows Form canvas"
+        "12 monthly installment line items",
+        "1 single lump-sum payment item",
+        "2 bi-annual semester payment items"
       ],
       "opts": [
         "Exactly 4 monthly installment items",
-        "12 monthly installment items in the handler",
-        "1 lump sum item inside the event handler",
-        "2 semester items on the Windows Form canvas"
+        "12 monthly installment line items",
+        "1 single lump-sum payment item",
+        "2 bi-annual semester payment items"
       ],
       "answer": 0,
       "ans": 0,
@@ -16162,15 +16162,15 @@
       "stem": "Full-time semester registration permits between 1 and 25 credits inclusive. Which conditional statement enforces this boundary validation?",
       "code": "",
       "options": [
-        "if (credits > 25) { MessageBox.Show(\"Credits cannot exceed 25.\", \"Invalid Credits\"); txtCredits.Focus(); return; }",
-        "if (credits == 0 || credits == 25) { MessageBox.Show(\"Credits cannot be 0 or 25.\", \"Invalid Credits\"); txtCredits.Focus(); return; }",
-        "while (credits < 25) { credits++; txtCredits.Text = credits.ToString(); lblTotalDue.Text = \"Updated\"; }",
+        "if (credits > 25) { MessageBox.Show(\"Credits must be greater than 25.\", \"Invalid Credits\"); txtCredits.Clear(); return; }",
+        "if (credits == 0 || credits == 25) { MessageBox.Show(\"Credits cannot equal 0 or 25.\", \"Invalid Credits\"); txtCredits.Focus(); return; }",
+        "while (credits < 1 && credits > 25) { MessageBox.Show(\"Credits out of range.\", \"Invalid Credits\"); credits++; return; }",
         "if (credits < 1 || credits > 25) { MessageBox.Show(\"Credits must be between 1 and 25.\", \"Invalid Credits\"); txtCredits.Focus(); return; }"
       ],
       "opts": [
-        "if (credits > 25) { MessageBox.Show(\"Credits cannot exceed 25.\", \"Invalid Credits\"); txtCredits.Focus(); return; }",
-        "if (credits == 0 || credits == 25) { MessageBox.Show(\"Credits cannot be 0 or 25.\", \"Invalid Credits\"); txtCredits.Focus(); return; }",
-        "while (credits < 25) { credits++; txtCredits.Text = credits.ToString(); lblTotalDue.Text = \"Updated\"; }",
+        "if (credits > 25) { MessageBox.Show(\"Credits must be greater than 25.\", \"Invalid Credits\"); txtCredits.Clear(); return; }",
+        "if (credits == 0 || credits == 25) { MessageBox.Show(\"Credits cannot equal 0 or 25.\", \"Invalid Credits\"); txtCredits.Focus(); return; }",
+        "while (credits < 1 && credits > 25) { MessageBox.Show(\"Credits out of range.\", \"Invalid Credits\"); credits++; return; }",
         "if (credits < 1 || credits > 25) { MessageBox.Show(\"Credits must be between 1 and 25.\", \"Invalid Credits\"); txtCredits.Focus(); return; }"
       ],
       "answer": 3,
@@ -16760,16 +16760,16 @@
       "stem": "What defensive validation check should be performed if a user clicks Calculate Debit Order without selecting any membership tier RadioButton?",
       "code": "",
       "options": [
-        "Silently default to the VIP tier without notifying the user at runtime",
-        "Display a MessageBox prompting the user to select a tier and halt execution",
-        "Allow the calculation to proceed with a negative base rate in C# code",
-        "Close the application immediately when the Windows Forms control processes the action"
+        "Silently default to the VIP tier without notifying the user",
+        "Show a MessageBox prompting for a tier and return from the handler",
+        "Allow the calculation to proceed with a negative base rate",
+        "Immediately close and terminate the Windows Forms application"
       ],
       "opts": [
-        "Silently default to the VIP tier without notifying the user at runtime",
-        "Display a MessageBox prompting the user to select a tier and halt execution",
-        "Allow the calculation to proceed with a negative base rate in C# code",
-        "Close the application immediately when the Windows Forms control processes the action"
+        "Silently default to the VIP tier without notifying the user",
+        "Show a MessageBox prompting for a tier and return from the handler",
+        "Allow the calculation to proceed with a negative base rate",
+        "Immediately close and terminate the Windows Forms application"
       ],
       "answer": 1,
       "ans": 1,
@@ -16887,16 +16887,16 @@
       "stem": "In Visual C# Windows Forms development, why must monetary values (subtotal, VAT, monthly debit order) be declared as 'decimal' rather than 'double' or 'float'?",
       "code": "",
       "options": [
-        "decimal offers 128-bit precision and eliminates binary floating-point rounding errors inherent to financial calculations",
-        "double cannot be displayed in a Label control while computing the value in local memory during standard GUI event execution",
-        "decimal variables take up less memory than int variables when evaluating the numeric expression in the handler",
-        "C# does not allow double variables to be multiplied by constants during type conversion and arithmetic processing inside the desktop session"
+        "decimal uses 128-bit base-10 precision, avoiding binary rounding errors in money",
+        "double variables cannot be formatted or displayed inside a Label control",
+        "decimal variables occupy fewer bytes of RAM than 32-bit int variables",
+        "C# forbids multiplying double variables by named constant values"
       ],
       "opts": [
-        "decimal offers 128-bit precision and eliminates binary floating-point rounding errors inherent to financial calculations",
-        "double cannot be displayed in a Label control while computing the value in local memory during standard GUI event execution",
-        "decimal variables take up less memory than int variables when evaluating the numeric expression in the handler",
-        "C# does not allow double variables to be multiplied by constants during type conversion and arithmetic processing inside the desktop session"
+        "decimal uses 128-bit base-10 precision, avoiding binary rounding errors in money",
+        "double variables cannot be formatted or displayed inside a Label control",
+        "decimal variables occupy fewer bytes of RAM than 32-bit int variables",
+        "C# forbids multiplying double variables by named constant values"
       ],
       "answer": 0,
       "ans": 0,
@@ -17059,16 +17059,16 @@
       "stem": "In Windows Forms applications, what is the effect of setting FormBorderStyle = FormBorderStyle.FixedSingle?",
       "code": "",
       "options": [
-        "It prevents the user from resizing the window by dragging its border edges",
-        "It removes the window title bar completely within the form class",
-        "It automatically centers the form on the display monitor inside the event handler",
-        "It disables the application's minimize button only on the Windows Form canvas"
+        "It prevents the user from resizing the form by dragging its borders",
+        "It completely removes the top title bar and control box from the window",
+        "It automatically centers the form on the user's primary display monitor",
+        "It disables only the minimize button while allowing free border resizing"
       ],
       "opts": [
-        "It prevents the user from resizing the window by dragging its border edges",
-        "It removes the window title bar completely within the form class",
-        "It automatically centers the form on the display monitor inside the event handler",
-        "It disables the application's minimize button only on the Windows Form canvas"
+        "It prevents the user from resizing the form by dragging its borders",
+        "It completely removes the top title bar and control box from the window",
+        "It automatically centers the form on the user's primary display monitor",
+        "It disables only the minimize button while allowing free border resizing"
       ],
       "answer": 0,
       "ans": 0,
@@ -17145,16 +17145,16 @@
       "stem": "Which code snippet displays a confirmation dialog with Yes/No buttons and only closes the form if the user clicks Yes?",
       "code": "",
       "options": [
-        "MessageBox.Show(\"Exit?\", \"Confirm\", MessageBoxButtons.YesNo); this.Close(); during navigation between active Windows Forms within the current form class instance inside the desktop session",
-        "if (MessageBox.Show(\"Exit\") == true) this.Close(); when coordinating execution across multiple forms on the active Windows Form canvas during interface state updates",
+        "MessageBox.Show(\"Are you sure you want to exit?\", \"Confirm Exit\", MessageBoxButtons.YesNo, MessageBoxIcon.Question); this.Close();",
+        "if (MessageBox.Show(\"Are you sure you want to exit?\", \"Confirm Exit\", MessageBoxButtons.YesNo) == true) { Application.Restart(); }",
         "DialogResult result = MessageBox.Show(\"Are you sure you want to exit?\", \"Confirm Exit\", MessageBoxButtons.YesNo, MessageBoxIcon.Question); if (result == DialogResult.Yes) { this.Close(); }",
-        "if (this.Close() == DialogResult.Yes) { MessageBox.Show(\"Exited\"); } while handling form instance lifetime in memory during standard GUI event execution under .NET runtime execution"
+        "if (this.Close() == DialogResult.Yes) { MessageBox.Show(\"Are you sure you want to exit?\", \"Confirm Exit\", MessageBoxButtons.YesNo, MessageBoxIcon.Question); }"
       ],
       "opts": [
-        "MessageBox.Show(\"Exit?\", \"Confirm\", MessageBoxButtons.YesNo); this.Close(); during navigation between active Windows Forms within the current form class instance inside the desktop session",
-        "if (MessageBox.Show(\"Exit\") == true) this.Close(); when coordinating execution across multiple forms on the active Windows Form canvas during interface state updates",
+        "MessageBox.Show(\"Are you sure you want to exit?\", \"Confirm Exit\", MessageBoxButtons.YesNo, MessageBoxIcon.Question); this.Close();",
+        "if (MessageBox.Show(\"Are you sure you want to exit?\", \"Confirm Exit\", MessageBoxButtons.YesNo) == true) { Application.Restart(); }",
         "DialogResult result = MessageBox.Show(\"Are you sure you want to exit?\", \"Confirm Exit\", MessageBoxButtons.YesNo, MessageBoxIcon.Question); if (result == DialogResult.Yes) { this.Close(); }",
-        "if (this.Close() == DialogResult.Yes) { MessageBox.Show(\"Exited\"); } while handling form instance lifetime in memory during standard GUI event execution under .NET runtime execution"
+        "if (this.Close() == DialogResult.Yes) { MessageBox.Show(\"Are you sure you want to exit?\", \"Confirm Exit\", MessageBoxButtons.YesNo, MessageBoxIcon.Question); }"
       ],
       "answer": 2,
       "ans": 2,
@@ -17361,14 +17361,14 @@
       "code": "",
       "options": [
         "CheckBoxes placed directly on the form",
-        "A single multiline TextBox in the handler",
-        "A Timer control inside the event handler",
+        "A single multiline TextBox control",
+        "A background Windows Forms Timer",
         "RadioButtons enclosed inside a GroupBox"
       ],
       "opts": [
         "CheckBoxes placed directly on the form",
-        "A single multiline TextBox in the handler",
-        "A Timer control inside the event handler",
+        "A single multiline TextBox control",
+        "A background Windows Forms Timer",
         "RadioButtons enclosed inside a GroupBox"
       ],
       "answer": 3,
@@ -17531,16 +17531,16 @@
       "stem": "In Visual C# Windows Forms, why should a Random object instance (rand) be declared as a private class-level field rather than instantiated locally inside btnConfirm_Click?",
       "code": "",
       "options": [
-        "Because local variables cannot be accessed by methods in the same class during method execution",
-        "Because C# disallows new Random() inside event handlers within the active form class implementation",
-        "Because the Random class cannot generate integers without static methods when calling the helper method",
-        "To prevent rapid successive clicks from creating new generators with identical system clock seeds"
+        "Because local variables cannot be read inside the same event handler",
+        "Because C# syntax forbids calling new Random() inside Click handlers",
+        "Because Random cannot generate integers unless declared as static",
+        "To prevent rapid clicks from seeding new instances with the same clock time"
       ],
       "opts": [
-        "Because local variables cannot be accessed by methods in the same class during method execution",
-        "Because C# disallows new Random() inside event handlers within the active form class implementation",
-        "Because the Random class cannot generate integers without static methods when calling the helper method",
-        "To prevent rapid successive clicks from creating new generators with identical system clock seeds"
+        "Because local variables cannot be read inside the same event handler",
+        "Because C# syntax forbids calling new Random() inside Click handlers",
+        "Because Random cannot generate integers unless declared as static",
+        "To prevent rapid clicks from seeding new instances with the same clock time"
       ],
       "answer": 3,
       "ans": 3,
@@ -17703,14 +17703,14 @@
       "code": "",
       "options": [
         "NullReferenceException",
-        "FormatException on the UI thread",
-        "DivideByZeroException at runtime",
+        "InvalidFormatException",
+        "DivideByZeroException",
         "ArgumentOutOfRangeException"
       ],
       "opts": [
         "NullReferenceException",
-        "FormatException on the UI thread",
-        "DivideByZeroException at runtime",
+        "InvalidFormatException",
+        "DivideByZeroException",
         "ArgumentOutOfRangeException"
       ],
       "answer": 3,
@@ -17788,16 +17788,16 @@
       "stem": "What visual feedback is rendered by the Windows Forms engine when a Button's Enabled property is set to false?",
       "code": "",
       "options": [
-        "The button becomes invisible and transparent inside the Windows Forms event handler routine during interface state updates",
-        "The button text and border appear dimmed/grayed-out and do not respond to mouse clicks or hover events",
-        "The button flashes yellow to alert the user during execution of the Visual C# form application",
-        "The button shrinks to zero size when the Windows Forms control processes the action during standard GUI event execution"
+        "The button becomes completely invisible on the form canvas",
+        "The button appears grayed-out and ignores mouse clicks",
+        "The button border flashes bright yellow to warn the user",
+        "The button shrinks to 0x0 pixels in the top-left corner"
       ],
       "opts": [
-        "The button becomes invisible and transparent inside the Windows Forms event handler routine during interface state updates",
-        "The button text and border appear dimmed/grayed-out and do not respond to mouse clicks or hover events",
-        "The button flashes yellow to alert the user during execution of the Visual C# form application",
-        "The button shrinks to zero size when the Windows Forms control processes the action during standard GUI event execution"
+        "The button becomes completely invisible on the form canvas",
+        "The button appears grayed-out and ignores mouse clicks",
+        "The button border flashes bright yellow to warn the user",
+        "The button shrinks to 0x0 pixels in the top-left corner"
       ],
       "answer": 1,
       "ans": 1,
@@ -17831,16 +17831,16 @@
       "stem": "Keeping the 'Confirm Booking' button disabled until the user has validated room capacity and calculated the total demonstrates which of Shneiderman's 8 Golden Rules?",
       "code": "",
       "options": [
-        "Rule 5: Prevent errors before they occur",
+        "Rule 8: Reduce short-term memory load",
         "Rule 6: Permit easy reversal of actions",
-        "Rule 7: Support internal locus of control",
-        "Rule 1: Strive for interface consistency"
+        "Rule 5: Prevent errors before they occur",
+        "Rule 2: Cater to universal usability"
       ],
       "opts": [
-        "Rule 5: Prevent errors before they occur",
+        "Rule 8: Reduce short-term memory load",
         "Rule 6: Permit easy reversal of actions",
-        "Rule 7: Support internal locus of control",
-        "Rule 1: Strive for interface consistency"
+        "Rule 5: Prevent errors before they occur",
+        "Rule 2: Cater to universal usability"
       ],
       "answer": 2,
       "ans": 2,
@@ -18218,16 +18218,16 @@
       "stem": "In a point-of-sale form, which variable declaration maintains cumulative session sales revenue across multiple customer checkouts?",
       "code": "",
       "options": [
-        "A local variable declared inside btnAddItem_Click: decimal sessionRevenue = 0m;",
-        "A const variable declared inside Form1: const decimal SESSION_REVENUE = 0m;",
-        "A local variable declared inside btnCheckout_Click: decimal sessionRevenue = 0m;",
-        "A private class-level field variable: private decimal _sessionRevenue = 0m;"
+        "A local variable declared inside the btnAddItem_Click handler",
+        "A compile-time const variable declared inside the Form1 class",
+        "A local variable declared inside the btnCheckout_Click handler",
+        "A private class-level field: private decimal _sessionRevenue = 0m;"
       ],
       "opts": [
-        "A local variable declared inside btnAddItem_Click: decimal sessionRevenue = 0m;",
-        "A const variable declared inside Form1: const decimal SESSION_REVENUE = 0m;",
-        "A local variable declared inside btnCheckout_Click: decimal sessionRevenue = 0m;",
-        "A private class-level field variable: private decimal _sessionRevenue = 0m;"
+        "A local variable declared inside the btnAddItem_Click handler",
+        "A compile-time const variable declared inside the Form1 class",
+        "A local variable declared inside the btnCheckout_Click handler",
+        "A private class-level field: private decimal _sessionRevenue = 0m;"
       ],
       "answer": 3,
       "ans": 3,
@@ -18261,16 +18261,16 @@
       "stem": "What happens to a local variable declared inside an event handler method when the method finishes executing?",
       "code": "",
       "options": [
-        "It is destroyed and its memory is deallocated; its value does not persist to the next event invocation",
-        "It is automatically converted into a permanent field variable while computing the value in local memory",
-        "It is saved to a text file on the local hard drive inside the Windows Forms event handler routine",
-        "It retains its value across all subsequent button clicks during execution of the Visual C# form application"
+        "It is destroyed when the method exits and does not persist to the next click",
+        "It is automatically promoted into a permanent class-level field variable",
+        "It is serialized and saved to a temporary text file on the hard drive",
+        "It retains its last assigned value across all subsequent button clicks"
       ],
       "opts": [
-        "It is destroyed and its memory is deallocated; its value does not persist to the next event invocation",
-        "It is automatically converted into a permanent field variable while computing the value in local memory",
-        "It is saved to a text file on the local hard drive inside the Windows Forms event handler routine",
-        "It retains its value across all subsequent button clicks during execution of the Visual C# form application"
+        "It is destroyed when the method exits and does not persist to the next click",
+        "It is automatically promoted into a permanent class-level field variable",
+        "It is serialized and saved to a temporary text file on the hard drive",
+        "It retains its last assigned value across all subsequent button clicks"
       ],
       "answer": 0,
       "ans": 0,
@@ -18561,16 +18561,16 @@
       "stem": "Displaying the completed till receipt, net total, discount savings, and loyalty points earned on checkout satisfies which of Shneiderman's 8 Golden Rules?",
       "code": "",
       "options": [
-        "Rule 8: Reduce short-term memory load only across form layouts in the compiled C# project",
-        "Rule 1: Strive for consistency only when evaluating operator task performance on screen",
-        "Rule 2: Cater to universal usability only across interactive desktop interface workflows",
-        "Rule 4: Design dialogs to yield closure & Rule 3: Offer informative feedback"
+        "Rule 8: Reduce short-term memory load & Rule 7: Locus of control",
+        "Rule 1: Strive for consistency & Rule 5: Prevent user errors",
+        "Rule 2: Cater to universal usability & Rule 6: Reversal of actions",
+        "Rule 4: Design dialogs to yield closure & Rule 3: Offer feedback"
       ],
       "opts": [
-        "Rule 8: Reduce short-term memory load only across form layouts in the compiled C# project",
-        "Rule 1: Strive for consistency only when evaluating operator task performance on screen",
-        "Rule 2: Cater to universal usability only across interactive desktop interface workflows",
-        "Rule 4: Design dialogs to yield closure & Rule 3: Offer informative feedback"
+        "Rule 8: Reduce short-term memory load & Rule 7: Locus of control",
+        "Rule 1: Strive for consistency & Rule 5: Prevent user errors",
+        "Rule 2: Cater to universal usability & Rule 6: Reversal of actions",
+        "Rule 4: Design dialogs to yield closure & Rule 3: Offer feedback"
       ],
       "answer": 3,
       "ans": 3,
@@ -18948,16 +18948,16 @@
       "stem": "When you add an `OpenFileDialog` or `SaveFileDialog` control to a form in Visual Studio, where does it appear at design time?",
       "code": "",
       "options": [
-        "Inside the Solution Explorer folder tree in the handler.",
-        "Directly in the center of the Windows Form canvas at runtime.",
+        "Inside the Solution Explorer folder tree.",
+        "Directly in the center of the Windows Form canvas.",
         "In the component tray at the bottom of the Designer window.",
-        "In the top-left corner of the form's title bar on the Windows Form canvas."
+        "In the top-left corner of the form's title bar."
       ],
       "opts": [
-        "Inside the Solution Explorer folder tree in the handler.",
-        "Directly in the center of the Windows Form canvas at runtime.",
+        "Inside the Solution Explorer folder tree.",
+        "Directly in the center of the Windows Form canvas.",
         "In the component tray at the bottom of the Designer window.",
-        "In the top-left corner of the form's title bar on the Windows Form canvas."
+        "In the top-left corner of the form's title bar."
       ],
       "answer": 2,
       "ans": 2,
@@ -18992,14 +18992,14 @@
       "code": "",
       "options": [
         "if (openFile.Clicked == DialogResult.Open)",
-        "if (openFile.FileName != \"\") on the Windows Form canvas",
-        "if (openFile.ShowDialog() == true) at form launch",
+        "if (openFile.FileName != \"\")",
+        "if (openFile.ShowDialog() == true)",
         "if (openFile.ShowDialog() == DialogResult.OK)"
       ],
       "opts": [
         "if (openFile.Clicked == DialogResult.Open)",
-        "if (openFile.FileName != \"\") on the Windows Form canvas",
-        "if (openFile.ShowDialog() == true) at form launch",
+        "if (openFile.FileName != \"\")",
+        "if (openFile.ShowDialog() == true)",
         "if (openFile.ShowDialog() == DialogResult.OK)"
       ],
       "answer": 3,
@@ -19246,16 +19246,16 @@
       "stem": "When does the code inside `private void Form1_Load(object sender, EventArgs e)` execute?",
       "code": "",
       "options": [
-        "Every time the user clicks any button on the form during program execution in the compiled C# project.",
-        "Automatically when the form is loaded into memory at startup before it is displayed.",
-        "Only when the user closes the form within the active form class implementation inside the desktop session.",
-        "Whenever a text box on the form receives keyboard focus inside the event handler."
+        "Every time the user clicks any Button control on the form.",
+        "Automatically when the form loads into memory before it is shown.",
+        "Only when the user clicks the X button to close the form.",
+        "Whenever an input TextBox on the form receives keyboard focus."
       ],
       "opts": [
-        "Every time the user clicks any button on the form during program execution in the compiled C# project.",
-        "Automatically when the form is loaded into memory at startup before it is displayed.",
-        "Only when the user closes the form within the active form class implementation inside the desktop session.",
-        "Whenever a text box on the form receives keyboard focus inside the event handler."
+        "Every time the user clicks any Button control on the form.",
+        "Automatically when the form loads into memory before it is shown.",
+        "Only when the user clicks the X button to close the form.",
+        "Whenever an input TextBox on the form receives keyboard focus."
       ],
       "answer": 1,
       "ans": 1,
@@ -19417,16 +19417,16 @@
       "stem": "Why is it important to call `outputFile.Close();` after writing data to a `StreamWriter`?",
       "code": "",
       "options": [
-        "It clears all items from the form's ListBox control when updating the zero-based collection items.",
-        "It flushes any buffered data to disk and disconnects the file from the program.",
-        "It automatically deletes temporary variables from the form on assignment.",
-        "It converts the text file into an encrypted binary file inside the event handler."
+        "It clears all string items from the form's ListBox control.",
+        "It flushes buffered data to disk and releases the file handle.",
+        "It automatically deletes temporary local variables from the form.",
+        "It converts the plain text file into an encrypted binary file."
       ],
       "opts": [
-        "It clears all items from the form's ListBox control when updating the zero-based collection items.",
-        "It flushes any buffered data to disk and disconnects the file from the program.",
-        "It automatically deletes temporary variables from the form on assignment.",
-        "It converts the text file into an encrypted binary file inside the event handler."
+        "It clears all string items from the form's ListBox control.",
+        "It flushes buffered data to disk and releases the file handle.",
+        "It automatically deletes temporary local variables from the form.",
+        "It converts the plain text file into an encrypted binary file."
       ],
       "answer": 1,
       "ans": 1,
@@ -19461,15 +19461,15 @@
       "code": "",
       "options": [
         "A `void` method performs an action without returning a value, whereas a value-returning method returns a value of its declared type to the caller.",
-        "A `void` method must be declared `public`, whereas a value-returning method must be declared `private` while passing data across the method call boundary.",
-        "A `void` method cannot accept any parameters, whereas a value-returning method must accept at least one parameter when calling the helper method.",
-        "A `void` method can only be called once per program run, whereas a value-returning method can be called inside loops during invocation of the declared helper method."
+        "A `void` method must be declared `public`, whereas a value-returning method must be declared `private`.",
+        "A `void` method cannot accept any parameters, whereas a value-returning method must accept at least one parameter.",
+        "A `void` method can only be called once per program run, whereas a value-returning method can be called inside loops."
       ],
       "opts": [
         "A `void` method performs an action without returning a value, whereas a value-returning method returns a value of its declared type to the caller.",
-        "A `void` method must be declared `public`, whereas a value-returning method must be declared `private` while passing data across the method call boundary.",
-        "A `void` method cannot accept any parameters, whereas a value-returning method must accept at least one parameter when calling the helper method.",
-        "A `void` method can only be called once per program run, whereas a value-returning method can be called inside loops during invocation of the declared helper method."
+        "A `void` method must be declared `public`, whereas a value-returning method must be declared `private`.",
+        "A `void` method cannot accept any parameters, whereas a value-returning method must accept at least one parameter.",
+        "A `void` method can only be called once per program run, whereas a value-returning method can be called inside loops."
       ],
       "answer": 0,
       "ans": 0,
@@ -19502,16 +19502,16 @@
       "stem": "In C#, what is the distinction between a **parameter** and an **argument**?",
       "code": "",
       "options": [
-        "Parameters are used only with `void` methods, whereas arguments are used only with value-returning methods when calling the helper method.",
-        "A parameter is the variable declared in the method header, whereas an argument is the value or variable passed when the method is called.",
-        "A parameter is always a `string`, whereas an argument is always an `int` during invocation of the declared helper method on the active Windows Form canvas.",
-        "An argument is declared in the method header, whereas a parameter is passed inside the method call during method execution during standard GUI event execution."
+        "Parameters are used only with `void` methods, whereas arguments are used only with value-returning methods.",
+        "A parameter is the variable declared in the method header; an argument is the value passed in the call.",
+        "A parameter is always declared as `string`, whereas an argument is always passed as a 32-bit `int`.",
+        "An argument is declared inside the method header, whereas a parameter is passed inside the method call."
       ],
       "opts": [
-        "Parameters are used only with `void` methods, whereas arguments are used only with value-returning methods when calling the helper method.",
-        "A parameter is the variable declared in the method header, whereas an argument is the value or variable passed when the method is called.",
-        "A parameter is always a `string`, whereas an argument is always an `int` during invocation of the declared helper method on the active Windows Form canvas.",
-        "An argument is declared in the method header, whereas a parameter is passed inside the method call during method execution during standard GUI event execution."
+        "Parameters are used only with `void` methods, whereas arguments are used only with value-returning methods.",
+        "A parameter is the variable declared in the method header; an argument is the value passed in the call.",
+        "A parameter is always declared as `string`, whereas an argument is always passed as a 32-bit `int`.",
+        "An argument is declared inside the method header, whereas a parameter is passed inside the method call."
       ],
       "answer": 1,
       "ans": 1,
@@ -19629,16 +19629,16 @@
       "stem": "How do `ref` and `out` parameters differ regarding variable initialization and assignment?",
       "code": "",
       "options": [
-        "A `ref` argument must be initialized before the call; an `out` argument does not need to be initialized before the call, but the method must assign it a value before returning.",
-        "Neither `ref` nor `out` arguments need to be initialized or assigned inside the method while passing data across the method call boundary before returning to the calling method.",
-        "`ref` is only required in the method header, whereas `out` is only required in the method call when control passes between caller and helper method within the current form class instance.",
-        "An `out` argument must be initialized before the call; a `ref` argument cannot be initialized before the call during invocation of the declared helper method on the active Windows Form canvas."
+        "`ref` requires initialization before the call; `out` does not, but must be assigned before the method returns.",
+        "Neither `ref` nor `out` arguments need to be initialized before the call or assigned inside the method.",
+        "`ref` is written only in the method header, whereas `out` is written only inside the method call statement.",
+        "`out` requires initialization before the call, whereas `ref` cannot be initialized prior to the method call."
       ],
       "opts": [
-        "A `ref` argument must be initialized before the call; an `out` argument does not need to be initialized before the call, but the method must assign it a value before returning.",
-        "Neither `ref` nor `out` arguments need to be initialized or assigned inside the method while passing data across the method call boundary before returning to the calling method.",
-        "`ref` is only required in the method header, whereas `out` is only required in the method call when control passes between caller and helper method within the current form class instance.",
-        "An `out` argument must be initialized before the call; a `ref` argument cannot be initialized before the call during invocation of the declared helper method on the active Windows Form canvas."
+        "`ref` requires initialization before the call; `out` does not, but must be assigned before the method returns.",
+        "Neither `ref` nor `out` arguments need to be initialized before the call or assigned inside the method.",
+        "`ref` is written only in the method header, whereas `out` is written only inside the method call statement.",
+        "`out` requires initialization before the call, whereas `ref` cannot be initialized prior to the method call."
       ],
       "answer": 0,
       "ans": 0,
@@ -19758,16 +19758,16 @@
       "stem": "Why does the following method fail to compile?",
       "code": "private bool ReadSeconds(string text, out int seconds)\n{\n    if (int.TryParse(text, out seconds) && seconds >= 1 && seconds <= 3600)\n    {\n        return true;\n    }\n    return false;\n}",
       "options": [
-        "A method with an `out` parameter must have a `void` return type when evaluating the method signature and arguments.",
-        "`out` parameters cannot be used inside a method that returns `bool` while passing data across the method call boundary inside the desktop session.",
-        "`int.TryParse` requires `ref seconds` instead of `out seconds` when control passes between caller and helper method.",
-        "It compiles without any error because `int.TryParse(text, out seconds)` already assigns `seconds` before the `&&` check."
+        "A method declaring an `out` parameter must always have a `void` return type.",
+        "`out` parameters cannot be used inside a helper method that returns `bool`.",
+        "`int.TryParse` requires passing `ref seconds` instead of `out seconds`.",
+        "It compiles cleanly because `int.TryParse` assigns `seconds` before `&&` runs."
       ],
       "opts": [
-        "A method with an `out` parameter must have a `void` return type when evaluating the method signature and arguments.",
-        "`out` parameters cannot be used inside a method that returns `bool` while passing data across the method call boundary inside the desktop session.",
-        "`int.TryParse` requires `ref seconds` instead of `out seconds` when control passes between caller and helper method.",
-        "It compiles without any error because `int.TryParse(text, out seconds)` already assigns `seconds` before the `&&` check."
+        "A method declaring an `out` parameter must always have a `void` return type.",
+        "`out` parameters cannot be used inside a helper method that returns `bool`.",
+        "`int.TryParse` requires passing `ref seconds` instead of `out seconds`.",
+        "It compiles cleanly because `int.TryParse` assigns `seconds` before `&&` runs."
       ],
       "answer": 3,
       "ans": 3,
@@ -19843,16 +19843,16 @@
       "stem": "In `FormatTime(int totalSeconds)`, after computing `int minutes = totalSeconds / 60;` and `int seconds = totalSeconds % 60;`, why is `if (seconds < 10)` checked?",
       "code": "",
       "options": [
-        "Because seconds cannot exceed `10` in a minute inside the event handler.",
+        "Because the remainder of `totalSeconds % 60` can never exceed `10`.",
         "To insert a leading zero so `65` seconds formats as `\"1:05\"` instead of `\"1:5\"`.",
-        "To round the seconds up to the nearest multiple of `10` on the Windows Form canvas.",
-        "To prevent a division-by-zero exception when `seconds` is `0` during program execution."
+        "To round the remaining seconds up to the nearest multiple of `10`.",
+        "To prevent a runtime `DivideByZeroException` when `seconds` equals `0`."
       ],
       "opts": [
-        "Because seconds cannot exceed `10` in a minute inside the event handler.",
+        "Because the remainder of `totalSeconds % 60` can never exceed `10`.",
         "To insert a leading zero so `65` seconds formats as `\"1:05\"` instead of `\"1:5\"`.",
-        "To round the seconds up to the nearest multiple of `10` on the Windows Form canvas.",
-        "To prevent a division-by-zero exception when `seconds` is `0` during program execution."
+        "To round the remaining seconds up to the nearest multiple of `10`.",
+        "To prevent a runtime `DivideByZeroException` when `seconds` equals `0`."
       ],
       "answer": 1,
       "ans": 1,
@@ -19885,16 +19885,16 @@
       "stem": "In `private void RecordLap(int seconds, ref int fastest, ref int total)`, why is the condition written as `if (fastest == 0 || seconds < fastest)` before setting `fastest = seconds;`?",
       "code": "",
       "options": [
-        "Because `ref` parameters are automatically reset to `0` when a method starts during invocation of the declared helper method.",
-        "Because a lap of `0` seconds is the fastest possible lap when the Windows Forms control processes the action before updating the target UI control.",
-        "Because `fastest` starts at `0` before the first lap is recorded, so the first lap must become `fastest` even though `seconds > 0`.",
-        "Because `fastest` must be reset to `0` on every click within the active form class implementation before returning to the calling method."
+        "Because `ref` parameters are automatically reset to `0` when a method starts.",
+        "Because a lap duration of `0` seconds is the fastest possible valid lap.",
+        "Because `fastest` starts at `0`, so the first positive lap must replace `0`.",
+        "Because `fastest` must be overwritten back to `0` on every button click."
       ],
       "opts": [
-        "Because `ref` parameters are automatically reset to `0` when a method starts during invocation of the declared helper method.",
-        "Because a lap of `0` seconds is the fastest possible lap when the Windows Forms control processes the action before updating the target UI control.",
-        "Because `fastest` starts at `0` before the first lap is recorded, so the first lap must become `fastest` even though `seconds > 0`.",
-        "Because `fastest` must be reset to `0` on every click within the active form class implementation before returning to the calling method."
+        "Because `ref` parameters are automatically reset to `0` when a method starts.",
+        "Because a lap duration of `0` seconds is the fastest possible valid lap.",
+        "Because `fastest` starts at `0`, so the first positive lap must replace `0`.",
+        "Because `fastest` must be overwritten back to `0` on every button click."
       ],
       "answer": 2,
       "ans": 2,
@@ -20097,15 +20097,15 @@
       "stem": "What is wrong with the following method definition?",
       "code": "private void CalculateVat(decimal price)\n{\n    return price * 0.15m;\n}",
       "options": [
-        "A method parameter cannot have the `decimal` data type at the call site.",
-        "`0.15m` must be cast to `int` before multiplying when storing the value.",
-        "The `return` keyword can only be used inside event handlers when calling the helper method.",
+        "A helper method parameter cannot use the 128-bit `decimal` data type.",
+        "The literal `0.15m` must be cast to `int` before multiplying by `price`.",
+        "The `return` keyword is only permitted inside button Click event handlers.",
         "The method header specifies `void`, but the body returns a `decimal` value."
       ],
       "opts": [
-        "A method parameter cannot have the `decimal` data type at the call site.",
-        "`0.15m` must be cast to `int` before multiplying when storing the value.",
-        "The `return` keyword can only be used inside event handlers when calling the helper method.",
+        "A helper method parameter cannot use the 128-bit `decimal` data type.",
+        "The literal `0.15m` must be cast to `int` before multiplying by `price`.",
+        "The `return` keyword is only permitted inside button Click event handlers.",
         "The method header specifies `void`, but the body returns a `decimal` value."
       ],
       "answer": 3,
@@ -20308,14 +20308,14 @@
       "code": "",
       "options": [
         "C# automatically widens the `int` value `5` to `double` and executes the method.",
-        "The argument `5` is truncated to `0.0` while passing data across the method call boundary.",
-        "The program crashes at runtime with an `InvalidCastException` at runtime.",
+        "The argument `5` is truncated to `0.0`.",
+        "The program crashes at runtime with an `InvalidCastException`.",
         "The compiler rejects the call because `int` can never be converted to `double`."
       ],
       "opts": [
         "C# automatically widens the `int` value `5` to `double` and executes the method.",
-        "The argument `5` is truncated to `0.0` while passing data across the method call boundary.",
-        "The program crashes at runtime with an `InvalidCastException` at runtime.",
+        "The argument `5` is truncated to `0.0`.",
+        "The program crashes at runtime with an `InvalidCastException`.",
         "The compiler rejects the call because `int` can never be converted to `double`."
       ],
       "answer": 0,
@@ -20478,15 +20478,15 @@
       "code": "",
       "options": [
         "By executing `return;` with no value after the keyword.",
-        "By executing `return false;` inside the custom method.",
-        "By executing `continue;` inside the event handler.",
-        "By executing `break;` outside any loop or switch per iteration."
+        "By executing `return false;` inside the `void` method.",
+        "By executing `continue;` outside of any loop structure.",
+        "By executing `break;` outside of any loop or `switch`."
       ],
       "opts": [
         "By executing `return;` with no value after the keyword.",
-        "By executing `return false;` inside the custom method.",
-        "By executing `continue;` inside the event handler.",
-        "By executing `break;` outside any loop or switch per iteration."
+        "By executing `return false;` inside the `void` method.",
+        "By executing `continue;` outside of any loop structure.",
+        "By executing `break;` outside of any loop or `switch`."
       ],
       "answer": 0,
       "ans": 0,
@@ -20519,16 +20519,16 @@
       "stem": "Why does the compiler report error `CS0161 ('not all code paths return a value')` on the method below?",
       "code": "private string GetStatus(int mark)\n{\n    if (mark >= 50)\n    {\n        return \"Pass\";\n    }\n}",
       "options": [
-        "`GetStatus` must be declared `public` inside the Windows Forms event handler routine during standard GUI event execution.",
-        "If `mark < 50`, the `if` condition is false and the method reaches the closing brace without executing a `return` statement.",
-        "`string` methods cannot accept `int` parameters during invocation of the declared helper method before updating the target UI control.",
-        "`\"Pass\"` must be enclosed in single quotes when the Windows Forms control processes the action before returning to the calling method."
+        "The helper method `GetStatus` must be declared with the `public` modifier.",
+        "When `mark < 50`, execution reaches the end of the method without returning a string.",
+        "Methods with a `string` return type cannot accept `int` parameters in C#.",
+        "The string literal `\"Pass\"` must be enclosed in single quotes `'Pass'`."
       ],
       "opts": [
-        "`GetStatus` must be declared `public` inside the Windows Forms event handler routine during standard GUI event execution.",
-        "If `mark < 50`, the `if` condition is false and the method reaches the closing brace without executing a `return` statement.",
-        "`string` methods cannot accept `int` parameters during invocation of the declared helper method before updating the target UI control.",
-        "`\"Pass\"` must be enclosed in single quotes when the Windows Forms control processes the action before returning to the calling method."
+        "The helper method `GetStatus` must be declared with the `public` modifier.",
+        "When `mark < 50`, execution reaches the end of the method without returning a string.",
+        "Methods with a `string` return type cannot accept `int` parameters in C#.",
+        "The string literal `\"Pass\"` must be enclosed in single quotes `'Pass'`."
       ],
       "answer": 1,
       "ans": 1,
@@ -20561,16 +20561,16 @@
       "stem": "Which of the following is a primary software engineering benefit of breaking a large program into smaller methods?",
       "code": "",
       "options": [
-        "It eliminates the need to declare variables with data types during type conversion and arithmetic processing.",
-        "It allows controls to work without event handlers when the Windows Forms control processes the action.",
-        "It reduces code duplication, simplifies debugging, and makes the program easier to read and maintain.",
-        "It bypasses C# compiler type checking within the active form class implementation during standard GUI event execution."
+        "It eliminates the need to declare local variables with explicit C# data types.",
+        "It allows Windows Forms Button controls to function without event handlers.",
+        "It reduces code duplication, simplifies debugging, and improves maintainability.",
+        "It bypasses compile-time type checking so any value can be passed to any method."
       ],
       "opts": [
-        "It eliminates the need to declare variables with data types during type conversion and arithmetic processing.",
-        "It allows controls to work without event handlers when the Windows Forms control processes the action.",
-        "It reduces code duplication, simplifies debugging, and makes the program easier to read and maintain.",
-        "It bypasses C# compiler type checking within the active form class implementation during standard GUI event execution."
+        "It eliminates the need to declare local variables with explicit C# data types.",
+        "It allows Windows Forms Button controls to function without event handlers.",
+        "It reduces code duplication, simplifies debugging, and improves maintainability.",
+        "It bypasses compile-time type checking so any value can be passed to any method."
       ],
       "answer": 2,
       "ans": 2,
@@ -20603,16 +20603,16 @@
       "stem": "Given `private string FormatTime(int totalSeconds)`, is `FormatTime(totalSeconds / lapCount)` a valid method call?",
       "code": "",
       "options": [
-        "No; method arguments must always be single variable names, never arithmetic expressions when evaluating the method signature and arguments.",
-        "No; `totalSeconds / lapCount` requires the `ref` keyword while passing data across the method call boundary before returning to the calling method.",
-        "Yes, but only if `totalSeconds` and `lapCount` are `string` variables when evaluating the numeric expression in the handler within the current form class instance.",
-        "Yes; for a pass-by-value parameter, C# evaluates the arithmetic expression `totalSeconds / lapCount` first and passes the resulting `int` value."
+        "No; method arguments must always be single variable names, never arithmetic expressions.",
+        "No; passing `totalSeconds / lapCount` requires prefixing the expression with `ref`.",
+        "Yes, but only if both `totalSeconds` and `lapCount` are declared as `string`.",
+        "Yes; C# evaluates `totalSeconds / lapCount` first and passes the resulting `int` value."
       ],
       "opts": [
-        "No; method arguments must always be single variable names, never arithmetic expressions when evaluating the method signature and arguments.",
-        "No; `totalSeconds / lapCount` requires the `ref` keyword while passing data across the method call boundary before returning to the calling method.",
-        "Yes, but only if `totalSeconds` and `lapCount` are `string` variables when evaluating the numeric expression in the handler within the current form class instance.",
-        "Yes; for a pass-by-value parameter, C# evaluates the arithmetic expression `totalSeconds / lapCount` first and passes the resulting `int` value."
+        "No; method arguments must always be single variable names, never arithmetic expressions.",
+        "No; passing `totalSeconds / lapCount` requires prefixing the expression with `ref`.",
+        "Yes, but only if both `totalSeconds` and `lapCount` are declared as `string`.",
+        "Yes; C# evaluates `totalSeconds / lapCount` first and passes the resulting `int` value."
       ],
       "answer": 3,
       "ans": 3,
@@ -20645,16 +20645,16 @@
       "stem": "Given `private void AddTax(ref decimal amount)`, why does `AddTax(ref 100.00m);` fail to compile?",
       "code": "",
       "options": [
-        "A `ref` or `out` argument must be a variable with a memory location that the method can modify, not a constant literal.",
-        "`AddTax` must be called inside a `while` loop across successive passes of the loop body on the active Windows Form canvas.",
-        "The `ref` keyword must be placed after `100.00m` when control passes between caller and helper method during standard GUI event execution.",
-        "`100.00m` is a `double` literal rather than a `decimal` literal during type conversion and arithmetic processing."
+        "A `ref` or `out` argument must be an assignable variable, not a constant literal.",
+        "The helper method `AddTax` can only be invoked from inside a `while` loop.",
+        "The `ref` keyword must be written after the literal `100.00m` instead of before.",
+        "The literal `100.00m` is a 64-bit `double` rather than a 128-bit `decimal`."
       ],
       "opts": [
-        "A `ref` or `out` argument must be a variable with a memory location that the method can modify, not a constant literal.",
-        "`AddTax` must be called inside a `while` loop across successive passes of the loop body on the active Windows Form canvas.",
-        "The `ref` keyword must be placed after `100.00m` when control passes between caller and helper method during standard GUI event execution.",
-        "`100.00m` is a `double` literal rather than a `decimal` literal during type conversion and arithmetic processing."
+        "A `ref` or `out` argument must be an assignable variable, not a constant literal.",
+        "The helper method `AddTax` can only be invoked from inside a `while` loop.",
+        "The `ref` keyword must be written after the literal `100.00m` instead of before.",
+        "The literal `100.00m` is a 64-bit `double` rather than a 128-bit `decimal`."
       ],
       "answer": 0,
       "ans": 0,
@@ -20688,16 +20688,16 @@
       "stem": "In a Lap Timer form that stores `lapCount`, `fastestSeconds`, and `totalSeconds` as class-level fields, what must `btnClear_Click` do in addition to clearing `txtSeconds`, `lstLaps`, `lblFastest`, and `lblAverage`?",
       "code": "",
       "options": [
-        "Delete the `ReadSeconds`, `FormatTime`, and `RecordLap` methods when control passes between caller and helper method during interface state updates.",
-        "Reset `lapCount = 0;`, `fastestSeconds = 0;`, and `totalSeconds = 0;` so the next lap starts a fresh session at Lap 1.",
-        "Call `InitializeComponent();` a second time during execution of the Visual C# form application within the current form class instance.",
-        "Call `this.Close();` to restart the application when coordinating execution across multiple forms on the active Windows Form canvas."
+        "Delete the `ReadSeconds`, `FormatTime`, and `RecordLap` helper methods from `Form1`.",
+        "Reset `lapCount = 0;`, `fastestSeconds = 0;`, and `totalSeconds = 0;` for a fresh session.",
+        "Call `InitializeComponent();` a second time to recreate all controls on the form.",
+        "Call `this.Close();` to terminate the process and restart the desktop application."
       ],
       "opts": [
-        "Delete the `ReadSeconds`, `FormatTime`, and `RecordLap` methods when control passes between caller and helper method during interface state updates.",
-        "Reset `lapCount = 0;`, `fastestSeconds = 0;`, and `totalSeconds = 0;` so the next lap starts a fresh session at Lap 1.",
-        "Call `InitializeComponent();` a second time during execution of the Visual C# form application within the current form class instance.",
-        "Call `this.Close();` to restart the application when coordinating execution across multiple forms on the active Windows Form canvas."
+        "Delete the `ReadSeconds`, `FormatTime`, and `RecordLap` helper methods from `Form1`.",
+        "Reset `lapCount = 0;`, `fastestSeconds = 0;`, and `totalSeconds = 0;` for a fresh session.",
+        "Call `InitializeComponent();` a second time to recreate all controls on the form.",
+        "Call `this.Close();` to terminate the process and restart the desktop application."
       ],
       "answer": 1,
       "ans": 1,
@@ -20773,16 +20773,16 @@
       "stem": "How does displaying a form with `frmResults.ShowDialog();` (modal) differ from `frmResults.Show();` (modeless)?",
       "code": "",
       "options": [
-        "`Show()` automatically closes the startup form, whereas `ShowDialog()` hides it when coordinating execution across multiple forms within the current form class instance.",
-        "`ShowDialog()` prevents the user from clicking on any other form in the application until `frmResults` is closed, whereas `Show()` allows the user to switch focus freely between forms.",
-        "`Show()` blocks all other forms, whereas `ShowDialog()` allows switching between forms while handling form instance lifetime in memory on the active Windows Form canvas inside the desktop session.",
-        "`ShowDialog()` can only display message boxes, not custom Windows Forms while managing window state in a multiform project during standard GUI event execution during interface state updates."
+        "`Show()` automatically closes the startup form, whereas `ShowDialog()` hides it.",
+        "`ShowDialog()` blocks interaction with other forms until closed, whereas `Show()` allows switching forms.",
+        "`Show()` blocks all other forms in the project, whereas `ShowDialog()` allows free window switching.",
+        "`ShowDialog()` can only display system message boxes, not custom Windows Forms classes."
       ],
       "opts": [
-        "`Show()` automatically closes the startup form, whereas `ShowDialog()` hides it when coordinating execution across multiple forms within the current form class instance.",
-        "`ShowDialog()` prevents the user from clicking on any other form in the application until `frmResults` is closed, whereas `Show()` allows the user to switch focus freely between forms.",
-        "`Show()` blocks all other forms, whereas `ShowDialog()` allows switching between forms while handling form instance lifetime in memory on the active Windows Form canvas inside the desktop session.",
-        "`ShowDialog()` can only display message boxes, not custom Windows Forms while managing window state in a multiform project during standard GUI event execution during interface state updates."
+        "`Show()` automatically closes the startup form, whereas `ShowDialog()` hides it.",
+        "`ShowDialog()` blocks interaction with other forms until closed, whereas `Show()` allows switching forms.",
+        "`Show()` blocks all other forms in the project, whereas `ShowDialog()` allows free window switching.",
+        "`ShowDialog()` can only display system message boxes, not custom Windows Forms classes."
       ],
       "answer": 1,
       "ans": 1,
@@ -20857,16 +20857,16 @@
       "stem": "Consider the two statements below inside a button's `Click` event handler:\nWhen does `lblStatus.Text = \"Done\";` execute?",
       "code": "frmResults.Show();\nlblStatus.Text = \"Done\";",
       "options": [
-        "Only when the application exits inside the Windows Forms event handler routine during interface state updates.",
-        "Only if the user clicks Cancel on `frmResults` during execution of the Visual C# form application.",
-        "Only after the user closes `frmResults` when the Windows Forms control processes the action.",
-        "Immediately after `frmResults` is displayed, while `frmResults` is still open on screen."
+        "Only when the entire multiform desktop application exits.",
+        "Only if the user clicks the Cancel button inside `frmResults`.",
+        "Only after the user closes the secondary `frmResults` window.",
+        "Immediately after `frmResults.Show()`, while `frmResults` is open."
       ],
       "opts": [
-        "Only when the application exits inside the Windows Forms event handler routine during interface state updates.",
-        "Only if the user clicks Cancel on `frmResults` during execution of the Visual C# form application.",
-        "Only after the user closes `frmResults` when the Windows Forms control processes the action.",
-        "Immediately after `frmResults` is displayed, while `frmResults` is still open on screen."
+        "Only when the entire multiform desktop application exits.",
+        "Only if the user clicks the Cancel button inside `frmResults`.",
+        "Only after the user closes the secondary `frmResults` window.",
+        "Immediately after `frmResults.Show()`, while `frmResults` is open."
       ],
       "answer": 3,
       "ans": 3,
@@ -20900,15 +20900,15 @@
       "code": "",
       "options": [
         "Controls placed on a form have their `Modifiers` property set to `Private` by default.",
-        "Labels on a second form do not have a `Text` property on the Windows Form canvas.",
-        "Controls placed on a form have their `Modifiers` property set to `Static` by default in Visual C#.",
-        "`Form1` must inherit from `ResultsForm` to access its labels while the window is active."
+        "Labels on a second form do not have a `Text` property.",
+        "Controls placed on a form have their `Modifiers` property set to `Static` by default.",
+        "`Form1` must inherit from `ResultsForm` to access its labels."
       ],
       "opts": [
         "Controls placed on a form have their `Modifiers` property set to `Private` by default.",
-        "Labels on a second form do not have a `Text` property on the Windows Form canvas.",
-        "Controls placed on a form have their `Modifiers` property set to `Static` by default in Visual C#.",
-        "`Form1` must inherit from `ResultsForm` to access its labels while the window is active."
+        "Labels on a second form do not have a `Text` property.",
+        "Controls placed on a form have their `Modifiers` property set to `Static` by default.",
+        "`Form1` must inherit from `ResultsForm` to access its labels."
       ],
       "answer": 0,
       "ans": 0,
@@ -21071,16 +21071,16 @@
       "stem": "How does a form's `Activated` event differ from its `Load` event in a multiform application?",
       "code": "",
       "options": [
-        "`Load` fires only once when the form is first loaded into memory, whereas `Activated` fires every time the form becomes the active window.",
-        "`Activated` fires only when the form is closed during navigation between active Windows Forms on the active Windows Form canvas inside the desktop session.",
-        "There is no difference; both fire at the exact same times when the Windows Forms control processes the action during standard GUI event execution.",
-        "`Activated` fires only once when the form is created, whereas `Load` fires every time the user clicks the form in memory before updating the target UI control."
+        "`Load` fires once when the form first loads; `Activated` fires each time it becomes the active window.",
+        "`Activated` fires only once when the form is closed by the user via `this.Close()`.",
+        "There is no difference; both `Load` and `Activated` fire at the exact same times.",
+        "`Activated` fires only once on creation, whereas `Load` fires every time the user clicks the form."
       ],
       "opts": [
-        "`Load` fires only once when the form is first loaded into memory, whereas `Activated` fires every time the form becomes the active window.",
-        "`Activated` fires only when the form is closed during navigation between active Windows Forms on the active Windows Form canvas inside the desktop session.",
-        "There is no difference; both fire at the exact same times when the Windows Forms control processes the action during standard GUI event execution.",
-        "`Activated` fires only once when the form is created, whereas `Load` fires every time the user clicks the form in memory before updating the target UI control."
+        "`Load` fires once when the form first loads; `Activated` fires each time it becomes the active window.",
+        "`Activated` fires only once when the form is closed by the user via `this.Close()`.",
+        "There is no difference; both `Load` and `Activated` fire at the exact same times.",
+        "`Activated` fires only once on creation, whereas `Load` fires every time the user clicks the form."
       ],
       "answer": 0,
       "ans": 0,
@@ -21199,16 +21199,16 @@
       "stem": "Why does `lblGreeting` on `GreetingForm` appear blank while the user is viewing `frmGreet` in the code below?",
       "code": "GreetingForm frmGreet = new GreetingForm();\nfrmGreet.ShowDialog();\nfrmGreet.lblGreeting.Text = \"Welcome, \" + txtName.Text;",
       "options": [
-        "Because `txtName.Text` cannot be concatenated with a string literal when evaluating the numeric expression in the handler within the current form class instance during interface state updates.",
-        "Because `new GreetingForm()` automatically clears all public labels during execution of the Visual C# form application on the active Windows Form canvas.",
-        "Because `ShowDialog()` does not support Label controls when coordinating execution across multiple forms during standard GUI event execution in the compiled C# project.",
-        "Because `ShowDialog()` pauses execution until `frmGreet` is closed, so the assignment to `lblGreeting.Text` happens *after* the user has already closed the form."
+        "Because `txtName.Text` cannot be concatenated with a string literal in C#.",
+        "Because calling `new GreetingForm()` automatically locks all public labels.",
+        "Because `ShowDialog()` does not support displaying `Label` controls on a form.",
+        "Because `ShowDialog()` blocks until `frmGreet` closes, so `lblGreeting.Text` is set too late."
       ],
       "opts": [
-        "Because `txtName.Text` cannot be concatenated with a string literal when evaluating the numeric expression in the handler within the current form class instance during interface state updates.",
-        "Because `new GreetingForm()` automatically clears all public labels during execution of the Visual C# form application on the active Windows Form canvas.",
-        "Because `ShowDialog()` does not support Label controls when coordinating execution across multiple forms during standard GUI event execution in the compiled C# project.",
-        "Because `ShowDialog()` pauses execution until `frmGreet` is closed, so the assignment to `lblGreeting.Text` happens *after* the user has already closed the form."
+        "Because `txtName.Text` cannot be concatenated with a string literal in C#.",
+        "Because calling `new GreetingForm()` automatically locks all public labels.",
+        "Because `ShowDialog()` does not support displaying `Label` controls on a form.",
+        "Because `ShowDialog()` blocks until `frmGreet` closes, so `lblGreeting.Text` is set too late."
       ],
       "answer": 3,
       "ans": 3,
@@ -21241,16 +21241,16 @@
       "stem": "A user types a discount code into a public TextBox `txtPromo` on a modal form `PromoForm` and closes the modal form. Why can `Form1` still read `frmPromo.txtPromo.Text` on the line immediately after `frmPromo.ShowDialog();`?",
       "code": "",
       "options": [
-        "Because closing a modal form hides it and returns from `ShowDialog()`, while the `frmPromo` object still exists in memory until `frmPromo` goes out of scope.",
-        "Because Visual Studio saves all TextBoxes to a text file automatically during execution of the Visual C# form application before updating the target UI control.",
-        "It cannot; `frmPromo` is erased from memory the instant it closes when the Windows Forms control processes the action before returning to the calling method.",
-        "Because `txtPromo` is a `static` keyword within the active form class implementation within the current form class instance under .NET runtime execution."
+        "Closing a modal form hides it and returns from `ShowDialog()`, while `frmPromo` remains in memory.",
+        "Visual Studio automatically saves all `Public` TextBox values to a local `.txt` file on close.",
+        "It cannot; the `frmPromo` object is completely erased from RAM the instant the window closes.",
+        "Setting `Modifiers = Public` converts `txtPromo` into a global `static` variable in `Program.cs`."
       ],
       "opts": [
-        "Because closing a modal form hides it and returns from `ShowDialog()`, while the `frmPromo` object still exists in memory until `frmPromo` goes out of scope.",
-        "Because Visual Studio saves all TextBoxes to a text file automatically during execution of the Visual C# form application before updating the target UI control.",
-        "It cannot; `frmPromo` is erased from memory the instant it closes when the Windows Forms control processes the action before returning to the calling method.",
-        "Because `txtPromo` is a `static` keyword within the active form class implementation within the current form class instance under .NET runtime execution."
+        "Closing a modal form hides it and returns from `ShowDialog()`, while `frmPromo` remains in memory.",
+        "Visual Studio automatically saves all `Public` TextBox values to a local `.txt` file on close.",
+        "It cannot; the `frmPromo` object is completely erased from RAM the instant the window closes.",
+        "Setting `Modifiers = Public` converts `txtPromo` into a global `static` variable in `Program.cs`."
       ],
       "answer": 0,
       "ans": 0,
@@ -21325,16 +21325,16 @@
       "stem": "A modeless `HelpForm` instance stored in a class-level field `private HelpForm frmHelp = new HelpForm();` is shown via `frmHelp.Show();`. What happens if the user closes `frmHelp` via `this.Close();` vs `this.Hide();` and later clicks Open Help again?",
       "code": "",
       "options": [
-        "Both `this.Close()` and `this.Hide()` terminate the entire multiform application immediately, just like closing the startup form while handling form instance lifetime in memory before returning to the calling method",
-        "`this.Close()` clears only `TextBox` controls, whereas `this.Hide()` resets all `Public` modifiers back to `Private` while managing window state in a multiform project within the current form class instance",
-        "`this.Close()` disposes a modeless form so calling `frmHelp.Show()` again throws `ObjectDisposedException`, whereas `this.Hide()` keeps the instance alive in memory so `frmHelp.Show()` re-displays it cleanly",
-        "`this.Hide()` permanently deletes `frmHelp` from RAM, whereas `this.Close()` merely minimizes it to the taskbar during navigation between active Windows Forms on the active Windows Form canvas"
+        "Both `this.Close()` and `this.Hide()` terminate the entire multiform application immediately, just like closing the startup form",
+        "`this.Close()` clears only `TextBox` controls, whereas `this.Hide()` resets all `Public` modifiers back to `Private`",
+        "`this.Close()` disposes a modeless form and causes `ObjectDisposedException` on re-show, whereas `this.Hide()` keeps it alive",
+        "`this.Hide()` permanently deletes `frmHelp` from RAM, whereas `this.Close()` merely minimizes it to the taskbar"
       ],
       "opts": [
-        "Both `this.Close()` and `this.Hide()` terminate the entire multiform application immediately, just like closing the startup form while handling form instance lifetime in memory before returning to the calling method",
-        "`this.Close()` clears only `TextBox` controls, whereas `this.Hide()` resets all `Public` modifiers back to `Private` while managing window state in a multiform project within the current form class instance",
-        "`this.Close()` disposes a modeless form so calling `frmHelp.Show()` again throws `ObjectDisposedException`, whereas `this.Hide()` keeps the instance alive in memory so `frmHelp.Show()` re-displays it cleanly",
-        "`this.Hide()` permanently deletes `frmHelp` from RAM, whereas `this.Close()` merely minimizes it to the taskbar during navigation between active Windows Forms on the active Windows Form canvas"
+        "Both `this.Close()` and `this.Hide()` terminate the entire multiform application immediately, just like closing the startup form",
+        "`this.Close()` clears only `TextBox` controls, whereas `this.Hide()` resets all `Public` modifiers back to `Private`",
+        "`this.Close()` disposes a modeless form and causes `ObjectDisposedException` on re-show, whereas `this.Hide()` keeps it alive",
+        "`this.Hide()` permanently deletes `frmHelp` from RAM, whereas `this.Close()` merely minimizes it to the taskbar"
       ],
       "answer": 2,
       "ans": 2,
@@ -21368,14 +21368,14 @@
       "code": "",
       "options": [
         "ReceiptForm frmReceipt = new ReceiptForm(); this.TotalDue = 450.00m; this.ShowDialog();",
-        "ReceiptForm frmReceipt = new ReceiptForm(); frmReceipt.TotalDue = 450.00m; frmReceipt.Close();",
-        "ReceiptForm.TotalDue = 450.00m; ReceiptForm.ShowDialog(); ReceiptForm.Close();",
+        "ReceiptForm frmReceipt = new ReceiptForm(); ReceiptForm.ShowDialog(450.00m); frmReceipt.Close();",
+        "ReceiptForm frmReceipt = new ReceiptForm(); ReceiptForm.TotalDue = 450.00m; ReceiptForm.ShowDialog();",
         "ReceiptForm frmReceipt = new ReceiptForm(); frmReceipt.TotalDue = 450.00m; frmReceipt.ShowDialog();"
       ],
       "opts": [
         "ReceiptForm frmReceipt = new ReceiptForm(); this.TotalDue = 450.00m; this.ShowDialog();",
-        "ReceiptForm frmReceipt = new ReceiptForm(); frmReceipt.TotalDue = 450.00m; frmReceipt.Close();",
-        "ReceiptForm.TotalDue = 450.00m; ReceiptForm.ShowDialog(); ReceiptForm.Close();",
+        "ReceiptForm frmReceipt = new ReceiptForm(); ReceiptForm.ShowDialog(450.00m); frmReceipt.Close();",
+        "ReceiptForm frmReceipt = new ReceiptForm(); ReceiptForm.TotalDue = 450.00m; ReceiptForm.ShowDialog();",
         "ReceiptForm frmReceipt = new ReceiptForm(); frmReceipt.TotalDue = 450.00m; frmReceipt.ShowDialog();"
       ],
       "answer": 3,
@@ -21451,16 +21451,16 @@
       "stem": "Why does `SummaryForm.ShowDialog();` cause compiler error `CS0120 ('An object reference is required for the non-static field, method, or property')`?",
       "code": "",
       "options": [
-        "Because `ShowDialog()` can only be called inside `Program.cs` when coordinating execution across multiple forms before updating the target UI control.",
-        "Because `ShowDialog()` is an instance method that must be called on an instantiated form object, not on the class name `SummaryForm`.",
-        "Because `ShowDialog()` requires a `string` filename argument while passing data across the method call boundary before returning to the calling method.",
-        "Because `SummaryForm` must be renamed to `Form2` while managing window state in a multiform project within the current form class instance."
+        "Because `ShowDialog()` can only be called inside the `Main` method of `Program.cs`.",
+        "Because `ShowDialog()` is an instance method that must be called on a `new SummaryForm()` object.",
+        "Because `ShowDialog()` requires passing the form's `.cs` filename as a `string` argument.",
+        "Because C# requires all secondary forms in a project to be named `Form2`."
       ],
       "opts": [
-        "Because `ShowDialog()` can only be called inside `Program.cs` when coordinating execution across multiple forms before updating the target UI control.",
-        "Because `ShowDialog()` is an instance method that must be called on an instantiated form object, not on the class name `SummaryForm`.",
-        "Because `ShowDialog()` requires a `string` filename argument while passing data across the method call boundary before returning to the calling method.",
-        "Because `SummaryForm` must be renamed to `Form2` while managing window state in a multiform project within the current form class instance."
+        "Because `ShowDialog()` can only be called inside the `Main` method of `Program.cs`.",
+        "Because `ShowDialog()` is an instance method that must be called on a `new SummaryForm()` object.",
+        "Because `ShowDialog()` requires passing the form's `.cs` filename as a `string` argument.",
+        "Because C# requires all secondary forms in a project to be named `Form2`."
       ],
       "answer": 1,
       "ans": 1,
@@ -21493,16 +21493,16 @@
       "stem": "In a multiform project, what does the keyword `this` refer to when `this.Close();` executes inside `SummaryForm`?",
       "code": "",
       "options": [
-        "The startup form (`Form1`) while handling form instance lifetime in memory.",
-        "Every open form in the application inside the Windows Forms event handler routine.",
-        "The current instance of `SummaryForm` in which the code is executing.",
-        "The button control that was clicked during execution of the Visual C# form application."
+        "The main startup form (`Form1`) of the project.",
+        "Every currently open form in the application.",
+        "The current `SummaryForm` instance running the code.",
+        "The specific `Button` control that was clicked."
       ],
       "opts": [
-        "The startup form (`Form1`) while handling form instance lifetime in memory.",
-        "Every open form in the application inside the Windows Forms event handler routine.",
-        "The current instance of `SummaryForm` in which the code is executing.",
-        "The button control that was clicked during execution of the Visual C# form application."
+        "The main startup form (`Form1`) of the project.",
+        "Every currently open form in the application.",
+        "The current `SummaryForm` instance running the code.",
+        "The specific `Button` control that was clicked."
       ],
       "answer": 2,
       "ans": 2,
@@ -21536,16 +21536,16 @@
       "stem": "On a modal form `ConfirmForm`, if you set a button `btnOk`'s `DialogResult` property to `DialogResult.OK` in the Properties window, what happens when the user clicks `btnOk` at runtime?",
       "code": "",
       "options": [
-        "It clears all TextBoxes on the startup form while managing window state in a multiform project before returning to the calling method.",
-        "The application crashes unless you write a `btnOk_Click` event handler during execution of the Visual C# form application within the current form class instance.",
-        "It opens an `OpenFileDialog` control during sequential file input/output operations on disk on the active Windows Form canvas.",
-        "It automatically closes the modal `ConfirmForm` and causes `frmConfirm.ShowDialog()` to return `DialogResult.OK` to the calling form."
+        "It clears all TextBoxes on the main startup form without closing `ConfirmForm`.",
+        "The application crashes unless you also write a `btnOk_Click` event handler.",
+        "It automatically opens a file selection `OpenFileDialog` on screen.",
+        "It closes `ConfirmForm` and makes `ShowDialog()` return `DialogResult.OK`."
       ],
       "opts": [
-        "It clears all TextBoxes on the startup form while managing window state in a multiform project before returning to the calling method.",
-        "The application crashes unless you write a `btnOk_Click` event handler during execution of the Visual C# form application within the current form class instance.",
-        "It opens an `OpenFileDialog` control during sequential file input/output operations on disk on the active Windows Form canvas.",
-        "It automatically closes the modal `ConfirmForm` and causes `frmConfirm.ShowDialog()` to return `DialogResult.OK` to the calling form."
+        "It clears all TextBoxes on the main startup form without closing `ConfirmForm`.",
+        "The application crashes unless you also write a `btnOk_Click` event handler.",
+        "It automatically opens a file selection `OpenFileDialog` on screen.",
+        "It closes `ConfirmForm` and makes `ShowDialog()` return `DialogResult.OK`."
       ],
       "answer": 3,
       "ans": 3,
@@ -21663,14 +21663,14 @@
       "options": [
         "2 lines: ABC on line 1, and D on line 2",
         "3 lines: AB on line 1, C on line 2, and D on line 3",
-        "4 lines: A, B, C, D inside the event handler",
-        "1 line: ABCD on the Windows Form canvas"
+        "4 lines: A, B, C, and D on separate lines",
+        "1 single line containing the text ABCD"
       ],
       "opts": [
         "2 lines: ABC on line 1, and D on line 2",
         "3 lines: AB on line 1, C on line 2, and D on line 3",
-        "4 lines: A, B, C, D inside the event handler",
-        "1 line: ABCD on the Windows Form canvas"
+        "4 lines: A, B, C, and D on separate lines",
+        "1 single line containing the text ABCD"
       ],
       "answer": 0,
       "ans": 0,
@@ -21702,16 +21702,16 @@
       "stem": "Why does `File.OpenText(\"C:\\temp\\notes.txt\")` fail even when `C:\\temp\\notes.txt` exists on the computer?",
       "code": "",
       "options": [
-        "`File.OpenText` returns a `StreamWriter` instead of a `StreamReader` while processing the external sequential text file on the active Windows Form canvas.",
-        "Without the `@` verbatim prefix or doubled backslashes, `\\t` is interpreted as a Tab character and `\\n` as a Newline character.",
-        "Text filenames in C# must use uppercase `.TXT` extensions when accessing the local text file from the handler during standard GUI event execution.",
-        "`File.OpenText` only accepts relative filenames, never drive letters during sequential file input/output operations on disk."
+        "`File.OpenText` returns a `StreamWriter` instead of a `StreamReader`.",
+        "Without `@` or `\\\\`, `\\t` and `\\n` are parsed as Tab and Newline escapes.",
+        "Text filenames in C# must always use uppercase `.TXT` file extensions.",
+        "`File.OpenText` only accepts relative filenames, never drive letters."
       ],
       "opts": [
-        "`File.OpenText` returns a `StreamWriter` instead of a `StreamReader` while processing the external sequential text file on the active Windows Form canvas.",
-        "Without the `@` verbatim prefix or doubled backslashes, `\\t` is interpreted as a Tab character and `\\n` as a Newline character.",
-        "Text filenames in C# must use uppercase `.TXT` extensions when accessing the local text file from the handler during standard GUI event execution.",
-        "`File.OpenText` only accepts relative filenames, never drive letters during sequential file input/output operations on disk."
+        "`File.OpenText` returns a `StreamWriter` instead of a `StreamReader`.",
+        "Without `@` or `\\\\`, `\\t` and `\\n` are parsed as Tab and Newline escapes.",
+        "Text filenames in C# must always use uppercase `.TXT` file extensions.",
+        "`File.OpenText` only accepts relative filenames, never drive letters."
       ],
       "answer": 1,
       "ans": 1,
@@ -21870,16 +21870,16 @@
       "stem": "Why does `File.OpenText(@\"C:\\Data\\Marks.txt\")` compile cleanly in C#, whereas `File.OpenText(\"C:\\Data\\Marks.txt\")` without `@` fails to compile?",
       "code": "",
       "options": [
-        "`File.OpenText` only accepts verbatim strings and rejects `C:\\\\Data\\\\Marks.txt` with doubled backslashes on the file",
+        "`File.OpenText` only accepts verbatim strings and rejects `C:\\\\Data\\\\Marks.txt` with doubled backslashes",
         "Without the `@` verbatim prefix, `\\D` and `\\M` inside a regular string literal are parsed as unrecognized escape sequences",
-        "Without `@`, C# opens the file over a network socket instead of the local file system on the Windows Form canvas",
-        "The `@` prefix automatically creates `Marks.txt` on disk if the folder `C:\\Data` does not exist during sequential file input/output operations on disk"
+        "Without `@`, C# opens the file over a network socket instead of the local file system",
+        "The `@` prefix automatically creates `Marks.txt` on disk if the folder `C:\\Data` does not exist"
       ],
       "opts": [
-        "`File.OpenText` only accepts verbatim strings and rejects `C:\\\\Data\\\\Marks.txt` with doubled backslashes on the file",
+        "`File.OpenText` only accepts verbatim strings and rejects `C:\\\\Data\\\\Marks.txt` with doubled backslashes",
         "Without the `@` verbatim prefix, `\\D` and `\\M` inside a regular string literal are parsed as unrecognized escape sequences",
-        "Without `@`, C# opens the file over a network socket instead of the local file system on the Windows Form canvas",
-        "The `@` prefix automatically creates `Marks.txt` on disk if the folder `C:\\Data` does not exist during sequential file input/output operations on disk"
+        "Without `@`, C# opens the file over a network socket instead of the local file system",
+        "The `@` prefix automatically creates `Marks.txt` on disk if the folder `C:\\Data` does not exist"
       ],
       "answer": 1,
       "ans": 1,
@@ -21993,16 +21993,16 @@
       "stem": "Which four components make up a standard C# method header such as `private decimal CalculateTax(decimal amount)`?",
       "code": "",
       "options": [
-        "Namespace, class keyword, variable type, and return statement in the caller",
-        "Event delegate, sender object, return value, and semicolon in the method",
+        "Namespace, class keyword, variable type, and return statement",
+        "Event delegate, sender object, return value, and semicolon",
         "Access modifier, return type, method name, and parameter list in parentheses",
-        "Visibility tag, data literal, control prefix, and curly braces on the Windows Form canvas"
+        "Visibility tag, data literal, control prefix, and curly braces"
       ],
       "opts": [
-        "Namespace, class keyword, variable type, and return statement in the caller",
-        "Event delegate, sender object, return value, and semicolon in the method",
+        "Namespace, class keyword, variable type, and return statement",
+        "Event delegate, sender object, return value, and semicolon",
         "Access modifier, return type, method name, and parameter list in parentheses",
-        "Visibility tag, data literal, control prefix, and curly braces on the Windows Form canvas"
+        "Visibility tag, data literal, control prefix, and curly braces"
       ],
       "answer": 2,
       "ans": 2,
@@ -22034,16 +22034,16 @@
       "stem": "Why does the method definition below fail to compile?",
       "code": "private void ShowBanner();\n{\n    lblTitle.Text = \"Welcome\";\n}",
       "options": [
-        "`void` methods must always accept `object sender, EventArgs e` when calling the helper method.",
-        "`ShowBanner` must be declared `public` to access `lblTitle` during execution of the Visual C# form application.",
-        "A `void` method must end with `return 0;` when evaluating the method signature and arguments.",
-        "There is an illegal semicolon `;` immediately after `ShowBanner()` in the method header."
+        "`void` methods must always declare `(object sender, EventArgs e)` parameters.",
+        "`ShowBanner` must be declared `public` in order to access `lblTitle.Text`.",
+        "Every `void` method body is required to end with a `return 0;` statement.",
+        "There is an illegal semicolon `;` right after `ShowBanner()` in the header."
       ],
       "opts": [
-        "`void` methods must always accept `object sender, EventArgs e` when calling the helper method.",
-        "`ShowBanner` must be declared `public` to access `lblTitle` during execution of the Visual C# form application.",
-        "A `void` method must end with `return 0;` when evaluating the method signature and arguments.",
-        "There is an illegal semicolon `;` immediately after `ShowBanner()` in the method header."
+        "`void` methods must always declare `(object sender, EventArgs e)` parameters.",
+        "`ShowBanner` must be declared `public` in order to access `lblTitle.Text`.",
+        "Every `void` method body is required to end with a `return 0;` statement.",
+        "There is an illegal semicolon `;` right after `ShowBanner()` in the header."
       ],
       "answer": 3,
       "ans": 3,
@@ -22076,16 +22076,16 @@
       "stem": "What happens at the **return point** when a `void` helper method finishes executing its last statement?",
       "code": "",
       "options": [
-        "Execution jumps back to the caller statement immediately following the method call.",
-        "The compiler automatically refreshes all TextBoxes on the form on the Windows Form canvas.",
-        "The entire Windows Forms application closes immediately during program execution.",
-        "Execution restarts from the first line of `Form1_Load` while the window is active."
+        "Execution returns to the caller at the statement right after the method call.",
+        "The runtime automatically clears all TextBox controls on the active form.",
+        "The entire Windows Forms desktop application terminates immediately.",
+        "Execution jumps back to the first line of the `Form1_Load` event handler."
       ],
       "opts": [
-        "Execution jumps back to the caller statement immediately following the method call.",
-        "The compiler automatically refreshes all TextBoxes on the form on the Windows Form canvas.",
-        "The entire Windows Forms application closes immediately during program execution.",
-        "Execution restarts from the first line of `Form1_Load` while the window is active."
+        "Execution returns to the caller at the statement right after the method call.",
+        "The runtime automatically clears all TextBox controls on the active form.",
+        "The entire Windows Forms desktop application terminates immediately.",
+        "Execution jumps back to the first line of the `Form1_Load` event handler."
       ],
       "answer": 0,
       "ans": 0,
@@ -22117,16 +22117,16 @@
       "stem": "Is `return;` (with no expression) legal inside a `void` method in C#?",
       "code": "",
       "options": [
-        "Only if `return null;` is written instead when evaluating the method signature and arguments.",
-        "Yes—a bare `return;` immediately exits the `void` method and returns control to the caller.",
-        "No—the `return` keyword is strictly forbidden inside `void` methods inside the custom method.",
-        "Only if the `void` method is a `Click` event handler when control passes between caller and helper method."
+        "Only if `return null;` is written instead of a bare `return;` statement.",
+        "Yes—a bare `return;` immediately exits the `void` method back to the caller.",
+        "No—the `return` keyword is strictly forbidden inside `void` methods in C#.",
+        "Only if the `void` method is wired directly to a Button `Click` event."
       ],
       "opts": [
-        "Only if `return null;` is written instead when evaluating the method signature and arguments.",
-        "Yes—a bare `return;` immediately exits the `void` method and returns control to the caller.",
-        "No—the `return` keyword is strictly forbidden inside `void` methods inside the custom method.",
-        "Only if the `void` method is a `Click` event handler when control passes between caller and helper method."
+        "Only if `return null;` is written instead of a bare `return;` statement.",
+        "Yes—a bare `return;` immediately exits the `void` method back to the caller.",
+        "No—the `return` keyword is strictly forbidden inside `void` methods in C#.",
+        "Only if the `void` method is wired directly to a Button `Click` event."
       ],
       "answer": 1,
       "ans": 1,
@@ -22158,16 +22158,16 @@
       "stem": "Why does the C# compiler reject the method below with error **CS0161** (`not all code paths return a value`)?",
       "code": "private string ClassifyTemp(double temp)\n{\n    if (temp >= 30.0)\n        return \"Hot\";\n    else if (temp < 30.0)\n        return \"Mild\";\n}",
       "options": [
-        "`return` statements cannot appear inside `if` branches while passing data across the method call boundary before returning to the calling method.",
-        "`temp` must be passed with `ref` when control passes between caller and helper method within the current form class instance in the compiled C# project.",
-        "The compiler does not prove `else if (temp < 30.0)` covers all cases, so a fallback `else` or final `return` is required.",
-        "`string` cannot be used as a method return type in C# during invocation of the declared helper method on the active Windows Form canvas."
+        "`return` statements are not permitted inside `if` or `else if` blocks.",
+        "The `double temp` parameter must be passed by reference with `ref`.",
+        "Not all paths return a value when `temp >= 30.0`; a final `else`/`return` is needed.",
+        "The `string` type cannot be used as a return type for `private` methods."
       ],
       "opts": [
-        "`return` statements cannot appear inside `if` branches while passing data across the method call boundary before returning to the calling method.",
-        "`temp` must be passed with `ref` when control passes between caller and helper method within the current form class instance in the compiled C# project.",
-        "The compiler does not prove `else if (temp < 30.0)` covers all cases, so a fallback `else` or final `return` is required.",
-        "`string` cannot be used as a method return type in C# during invocation of the declared helper method on the active Windows Form canvas."
+        "`return` statements are not permitted inside `if` or `else if` blocks.",
+        "The `double temp` parameter must be passed by reference with `ref`.",
+        "Not all paths return a value when `temp >= 30.0`; a final `else`/`return` is needed.",
+        "The `string` type cannot be used as a return type for `private` methods."
       ],
       "answer": 2,
       "ans": 2,
@@ -22199,16 +22199,16 @@
       "stem": "A student writes the code below, compiles with 0 errors, clicks the button, and sees `R 200.00` instead of `R 230.00`. Why?",
       "code": "private decimal AddVat(decimal amount)\n{\n    return amount * 1.15m;\n}\n\nprivate void btnCalc_Click(object sender, EventArgs e)\n{\n    decimal price = 200m;\n    AddVat(price);\n    lblTotal.Text = price.ToString(\"C\");\n}",
       "options": [
-        "`AddVat` must be declared `public` to return a `decimal` when control passes between caller and helper method during standard GUI event execution.",
-        "`price` was reset by `.ToString(\"C\")` during type conversion and arithmetic processing before updating the target UI control.",
-        "`1.15m` is rounded down to `1` by `decimal` multiplication when storing the formatted result into the control before returning to the calling method.",
-        "`AddVat(price);` returns `230.00m`, but the caller discards the return value instead of assigning `price = AddVat(price);`."
+        "`AddVat` must be declared `public` to return a `decimal` value to the caller.",
+        "Calling `.ToString(\"C\")` resets the local `price` variable back to `200.00m`.",
+        "Multiplying by `1.15m` rounds down to `1.0m` in C# `decimal` arithmetic.",
+        "`AddVat(price);` discards the returned `230.00m` instead of assigning `price = AddVat(price);`."
       ],
       "opts": [
-        "`AddVat` must be declared `public` to return a `decimal` when control passes between caller and helper method during standard GUI event execution.",
-        "`price` was reset by `.ToString(\"C\")` during type conversion and arithmetic processing before updating the target UI control.",
-        "`1.15m` is rounded down to `1` by `decimal` multiplication when storing the formatted result into the control before returning to the calling method.",
-        "`AddVat(price);` returns `230.00m`, but the caller discards the return value instead of assigning `price = AddVat(price);`."
+        "`AddVat` must be declared `public` to return a `decimal` value to the caller.",
+        "Calling `.ToString(\"C\")` resets the local `price` variable back to `200.00m`.",
+        "Multiplying by `1.15m` rounds down to `1.0m` in C# `decimal` arithmetic.",
+        "`AddVat(price);` discards the returned `230.00m` instead of assigning `price = AddVat(price);`."
       ],
       "answer": 3,
       "ans": 3,
@@ -22406,16 +22406,16 @@
       "stem": "Why does the method below fail to compile with error **CS0177**?",
       "code": "private void CheckDiscount(decimal spend, out decimal rate)\n{\n    if (spend >= 1000m)\n    {\n        rate = 0.15m;\n    }\n}",
       "options": [
-        "When `spend < 1000m`, `rate` is never assigned a value before the method returns.",
-        "`out` parameters are allowed only in `bool`-returning methods on invocation.",
-        "`spend` must also be marked `out` when evaluating the method signature and arguments.",
-        "`0.15m` cannot be assigned to a `decimal` while computing the value in local memory."
+        "When `spend < 1000m`, the `out` parameter `rate` leaves the method unassigned.",
+        "`out` parameters are permitted only in methods with a `bool` return type.",
+        "The first parameter `decimal spend` must also be marked with `out`.",
+        "The literal `0.15m` cannot be assigned to a `decimal` variable in C#."
       ],
       "opts": [
-        "When `spend < 1000m`, `rate` is never assigned a value before the method returns.",
-        "`out` parameters are allowed only in `bool`-returning methods on invocation.",
-        "`spend` must also be marked `out` when evaluating the method signature and arguments.",
-        "`0.15m` cannot be assigned to a `decimal` while computing the value in local memory."
+        "When `spend < 1000m`, the `out` parameter `rate` leaves the method unassigned.",
+        "`out` parameters are permitted only in methods with a `bool` return type.",
+        "The first parameter `decimal spend` must also be marked with `out`.",
+        "The literal `0.15m` cannot be assigned to a `decimal` variable in C#."
       ],
       "answer": 0,
       "ans": 0,
@@ -22491,16 +22491,16 @@
       "stem": "Given `private void ResetCounter(ref int count) { count = 0; }`, why does `ResetCounter(0);` fail to compile?",
       "code": "",
       "options": [
-        "`ResetCounter` must be `static` within the form class.",
+        "`ResetCounter` must be `static`.",
         "`count = 0;` is not allowed inside a `void` method.",
         "A `ref` or `out` argument must be an assignable variable.",
-        "`0` is a `double` literal rather than an `int` in C# code."
+        "`0` is a `double` literal rather than an `int`."
       ],
       "opts": [
-        "`ResetCounter` must be `static` within the form class.",
+        "`ResetCounter` must be `static`.",
         "`count = 0;` is not allowed inside a `void` method.",
         "A `ref` or `out` argument must be an assignable variable.",
-        "`0` is a `double` literal rather than an `int` in C# code."
+        "`0` is a `double` literal rather than an `int`."
       ],
       "answer": 2,
       "ans": 2,
@@ -22573,16 +22573,16 @@
       "stem": "What is wrong with the `Swap` implementation below when `a = 5` and `b = 9`?",
       "code": "private void Swap(ref int a, ref int b)\n{\n    a = b;\n    b = a;\n}",
       "options": [
-        "Logic error: `a = b;` overwrites `a` with `9` before saving the original `5` in a `temp` variable, leaving BOTH `a` and `b` equal to `9`!",
-        "Runtime `StackOverflowException` during runtime execution of the event handler before returning to the calling method inside the desktop session.",
-        "Compiler error because two `ref` parameters cannot have the same type when the Roslyn compiler checks the method body within the current form class instance.",
-        "`a` and `b` remain `5` and `9` because `Swap` is `void` while passing data across the method call boundary on the active Windows Form canvas."
+        "`a = b;` overwrites `a` with `9` before saving `5` in a temporary variable, leaving both `9`.",
+        "Passing two `int` variables with `ref` throws a `StackOverflowException` at runtime.",
+        "C# forbids declaring two `ref` parameters of the same data type in one method.",
+        "`a` and `b` remain `5` and `9` because a `void` method cannot modify `ref` arguments."
       ],
       "opts": [
-        "Logic error: `a = b;` overwrites `a` with `9` before saving the original `5` in a `temp` variable, leaving BOTH `a` and `b` equal to `9`!",
-        "Runtime `StackOverflowException` during runtime execution of the event handler before returning to the calling method inside the desktop session.",
-        "Compiler error because two `ref` parameters cannot have the same type when the Roslyn compiler checks the method body within the current form class instance.",
-        "`a` and `b` remain `5` and `9` because `Swap` is `void` while passing data across the method call boundary on the active Windows Form canvas."
+        "`a = b;` overwrites `a` with `9` before saving `5` in a temporary variable, leaving both `9`.",
+        "Passing two `int` variables with `ref` throws a `StackOverflowException` at runtime.",
+        "C# forbids declaring two `ref` parameters of the same data type in one method.",
+        "`a` and `b` remain `5` and `9` because a `void` method cannot modify `ref` arguments."
       ],
       "answer": 0,
       "ans": 0,
@@ -22821,16 +22821,16 @@
       "stem": "Why does `PrintTotal()` fail to compile in the code below?",
       "code": "private void btnCalc_Click(object sender, EventArgs e)\n{\n    decimal grandTotal = 450.00m;\n    PrintTotal();\n}\n\nprivate void PrintTotal()\n{\n    lblOut.Text = grandTotal.ToString(\"C\");\n}",
       "options": [
-        "`lblOut` is inaccessible inside `PrintTotal()` within the active form class implementation during standard GUI event execution.",
-        "`ToString(\"C\")` cannot be called inside a helper method when control passes between caller and helper method.",
-        "`grandTotal` is a local variable scoped strictly to `btnCalc_Click` and is invisible inside `PrintTotal()`.",
-        "`PrintTotal()` must be declared above `btnCalc_Click` in the file during execution of the Visual C# form application."
+        "The control `lblOut` is private and inaccessible inside `PrintTotal()`.",
+        "`ToString(\"C\")` can only be called inside a Button `Click` event handler.",
+        "`grandTotal` is a local variable in `btnCalc_Click` and is out of scope in `PrintTotal()`.",
+        "`PrintTotal()` must be declared above `btnCalc_Click` in `Form1.cs` to compile."
       ],
       "opts": [
-        "`lblOut` is inaccessible inside `PrintTotal()` within the active form class implementation during standard GUI event execution.",
-        "`ToString(\"C\")` cannot be called inside a helper method when control passes between caller and helper method.",
-        "`grandTotal` is a local variable scoped strictly to `btnCalc_Click` and is invisible inside `PrintTotal()`.",
-        "`PrintTotal()` must be declared above `btnCalc_Click` in the file during execution of the Visual C# form application."
+        "The control `lblOut` is private and inaccessible inside `PrintTotal()`.",
+        "`ToString(\"C\")` can only be called inside a Button `Click` event handler.",
+        "`grandTotal` is a local variable in `btnCalc_Click` and is out of scope in `PrintTotal()`.",
+        "`PrintTotal()` must be declared above `btnCalc_Click` in `Form1.cs` to compile."
       ],
       "answer": 2,
       "ans": 2,
@@ -22990,16 +22990,16 @@
       "stem": "Given `private double Hypotenuse(double a, double b)`, what happens when calling `Hypotenuse(3, 4)` with two `int` arguments?",
       "code": "",
       "options": [
-        "It throws an `InvalidCastException` at runtime while processing the operation on the UI thread.",
-        "It truncates the return value to `int` when control passes between caller and helper method.",
-        "It compiles cleanly because C# implicitly widens `int` arguments to `double` parameters.",
-        "Compilation fails because `3` and `4` are `int`, not `double` during type conversion and arithmetic processing."
+        "It throws an unhandled `InvalidCastException` when the method is called.",
+        "It truncates the method's `double` return value into a 32-bit `int`.",
+        "It compiles cleanly because C# implicitly widens `int` arguments to `double`.",
+        "Compilation fails because the arguments `3` and `4` are `int`, not `double`."
       ],
       "opts": [
-        "It throws an `InvalidCastException` at runtime while processing the operation on the UI thread.",
-        "It truncates the return value to `int` when control passes between caller and helper method.",
-        "It compiles cleanly because C# implicitly widens `int` arguments to `double` parameters.",
-        "Compilation fails because `3` and `4` are `int`, not `double` during type conversion and arithmetic processing."
+        "It throws an unhandled `InvalidCastException` when the method is called.",
+        "It truncates the method's `double` return value into a 32-bit `int`.",
+        "It compiles cleanly because C# implicitly widens `int` arguments to `double`.",
+        "Compilation fails because the arguments `3` and `4` are `int`, not `double`."
       ],
       "answer": 2,
       "ans": 2,
@@ -23032,16 +23032,16 @@
       "stem": "Given `private void Scale(ref double factor) { factor *= 1.5; }`, what happens if you call `int n = 4; Scale(ref n);`?",
       "code": "",
       "options": [
-        "`n` is implicitly widened to `double`, becomes `6.0`, and truncates back to `6` in the expression.",
-        "`n` stays `4` during execution of the Visual C# form application before updating the target UI control.",
-        "A runtime `FormatException` occurs before the next statement in the method executes.",
-        "Compilation fails: `ref` and `out` arguments must match the parameter data type **exactly**."
+        "`n` is implicitly widened to `double`, becomes `6.0`, and truncates back to `6`.",
+        "The call succeeds silently and `n` remains unchanged at its initial value `4`.",
+        "An unhandled `FormatException` is thrown at runtime when `Scale` executes.",
+        "Compilation fails with CS1503: `ref` arguments must match the parameter type `double`."
       ],
       "opts": [
-        "`n` is implicitly widened to `double`, becomes `6.0`, and truncates back to `6` in the expression.",
-        "`n` stays `4` during execution of the Visual C# form application before updating the target UI control.",
-        "A runtime `FormatException` occurs before the next statement in the method executes.",
-        "Compilation fails: `ref` and `out` arguments must match the parameter data type **exactly**."
+        "`n` is implicitly widened to `double`, becomes `6.0`, and truncates back to `6`.",
+        "The call succeeds silently and `n` remains unchanged at its initial value `4`.",
+        "An unhandled `FormatException` is thrown at runtime when `Scale` executes.",
+        "Compilation fails with CS1503: `ref` arguments must match the parameter type `double`."
       ],
       "answer": 3,
       "ans": 3,
@@ -23115,16 +23115,16 @@
       "stem": "What is the primary engineering benefit of **modularising** a 150-line `btnSubmit_Click` event handler into smaller helper methods?",
       "code": "",
       "options": [
-        "It eliminates the need for `Form1.Designer.cs` when coordinating execution across multiple forms before updating the target UI control.",
-        "It reduces code duplication, improves readability, and lets each subtask be tested and debugged independently.",
-        "It allows C# code to bypass compiler type checking within the active form class implementation before returning to the calling method.",
-        "It automatically converts `double` calculations into `decimal` when evaluating the numeric expression in the handler."
+        "It eliminates the need for the auto-generated `Form1.Designer.cs` file.",
+        "It reduces duplication, improves readability, and isolates subtasks for testing.",
+        "It allows C# helper methods to bypass compile-time data type checking.",
+        "It automatically converts all `double` calculations into `decimal` precision."
       ],
       "opts": [
-        "It eliminates the need for `Form1.Designer.cs` when coordinating execution across multiple forms before updating the target UI control.",
-        "It reduces code duplication, improves readability, and lets each subtask be tested and debugged independently.",
-        "It allows C# code to bypass compiler type checking within the active form class implementation before returning to the calling method.",
-        "It automatically converts `double` calculations into `decimal` when evaluating the numeric expression in the handler."
+        "It eliminates the need for the auto-generated `Form1.Designer.cs` file.",
+        "It reduces duplication, improves readability, and isolates subtasks for testing.",
+        "It allows C# helper methods to bypass compile-time data type checking.",
+        "It automatically converts all `double` calculations into `decimal` precision."
       ],
       "answer": 1,
       "ans": 1,
@@ -23199,16 +23199,16 @@
       "stem": "Why does the method below fail to compile?",
       "code": "private int CalculateVat(decimal price)\n{\n    return price * 0.15m;\n}",
       "options": [
-        "`return` requires parentheses around `price * 0.15m` when control passes between caller and helper method before returning to the calling method.",
-        "`0.15m` is a `double` literal during type conversion and arithmetic processing within the current form class instance.",
-        "A `private` method cannot accept a `decimal` parameter when evaluating the method signature and arguments on the active Windows Form canvas.",
-        "The expression `price * 0.15m` evaluates to `decimal`, which cannot be implicitly converted to the declared `int` return type."
+        "The `return` statement requires parentheses around `price * 0.15m`.",
+        "The literal `0.15m` is a `double` value rather than a `decimal` literal.",
+        "A `private` helper method is not allowed to accept a `decimal` parameter.",
+        "`price * 0.15m` is `decimal`, which cannot convert implicitly to the `int` return type."
       ],
       "opts": [
-        "`return` requires parentheses around `price * 0.15m` when control passes between caller and helper method before returning to the calling method.",
-        "`0.15m` is a `double` literal during type conversion and arithmetic processing within the current form class instance.",
-        "A `private` method cannot accept a `decimal` parameter when evaluating the method signature and arguments on the active Windows Form canvas.",
-        "The expression `price * 0.15m` evaluates to `decimal`, which cannot be implicitly converted to the declared `int` return type."
+        "The `return` statement requires parentheses around `price * 0.15m`.",
+        "The literal `0.15m` is a `double` value rather than a `decimal` literal.",
+        "A `private` helper method is not allowed to accept a `decimal` parameter.",
+        "`price * 0.15m` is `decimal`, which cannot convert implicitly to the `int` return type."
       ],
       "answer": 3,
       "ans": 3,
@@ -23283,16 +23283,16 @@
       "stem": "Can a value-returning method be called directly inside another expression or method argument, such as `lblTotal.Text = CalcTotal(qty, price).ToString(\"C\");`?",
       "code": "",
       "options": [
-        "Only if the method returns `string` when evaluating the method signature and arguments within the current form class instance.",
-        "Yes—a value-returning method call evaluates to a value of its return type and can be chained or nested inside expressions.",
-        "Only if the method is `static` while passing data across the method call boundary on the active Windows Form canvas inside the desktop session.",
-        "No—the return value must always be stored in a separate local variable first when control passes between caller and helper method."
+        "Only if the helper method's declared return type is `string`.",
+        "Yes—a value-returning call evaluates to its return value and can be chained.",
+        "Only if the helper method is declared with the `static` keyword.",
+        "No—the returned value must always be stored in a local variable first."
       ],
       "opts": [
-        "Only if the method returns `string` when evaluating the method signature and arguments within the current form class instance.",
-        "Yes—a value-returning method call evaluates to a value of its return type and can be chained or nested inside expressions.",
-        "Only if the method is `static` while passing data across the method call boundary on the active Windows Form canvas inside the desktop session.",
-        "No—the return value must always be stored in a separate local variable first when control passes between caller and helper method."
+        "Only if the helper method's declared return type is `string`.",
+        "Yes—a value-returning call evaluates to its return value and can be chained.",
+        "Only if the helper method is declared with the `static` keyword.",
+        "No—the returned value must always be stored in a local variable first."
       ],
       "answer": 1,
       "ans": 1,
@@ -23324,16 +23324,16 @@
       "stem": "Inside a method with an `out int result` parameter, what happens if the method tries to **read** `result` (e.g., `int x = result + 1;`) BEFORE assigning any value to `result`?",
       "code": "",
       "options": [
-        "A runtime `NullReferenceException` is thrown while processing the operation on the UI thread.",
-        "`result` automatically starts at `0`, so `x` becomes `1` inside the event handler.",
-        "Compilation fails because an `out` parameter enters the method treated as unassigned.",
-        "`result` retains whatever value the caller had before the call on the form inside the desktop session."
+        "An unhandled `NullReferenceException` is thrown when the method runs.",
+        "`result` automatically defaults to `0`, so `x` is assigned `1` cleanly.",
+        "Compilation fails with CS0269 because an `out` parameter starts unassigned.",
+        "`result` retains whatever integer value the caller held before the call."
       ],
       "opts": [
-        "A runtime `NullReferenceException` is thrown while processing the operation on the UI thread.",
-        "`result` automatically starts at `0`, so `x` becomes `1` inside the event handler.",
-        "Compilation fails because an `out` parameter enters the method treated as unassigned.",
-        "`result` retains whatever value the caller had before the call on the form inside the desktop session."
+        "An unhandled `NullReferenceException` is thrown when the method runs.",
+        "`result` automatically defaults to `0`, so `x` is assigned `1` cleanly.",
+        "Compilation fails with CS0269 because an `out` parameter starts unassigned.",
+        "`result` retains whatever integer value the caller held before the call."
       ],
       "answer": 2,
       "ans": 2,
@@ -23450,16 +23450,16 @@
       "stem": "Look at `IsEven` below. For non-negative integers it works, but what happens if `IsEven(-3)` is called in C#?",
       "code": "private bool IsEven(int n)\n{\n    if (n % 2 == 1)\n        return false;\n    else\n        return true;\n}",
       "options": [
-        "It throws a `DivideByZeroException` before the next statement in the method executes during standard GUI event execution.",
-        "In C#, `-3 % 2` evaluates to `-1`, so `n % 2 == 1` is `false` and `IsEven(-3)` wrongly returns `true`!",
-        "It returns `false` because `-3 % 2` is `1` within the active form class implementation before updating the target UI control.",
-        "The `%` operator does not accept negative integers in C# inside the Windows Forms event handler routine."
+        "Calling `IsEven(-3)` throws an unhandled `DivideByZeroException` at runtime.",
+        "In C#, `-3 % 2` evaluates to `-1` rather than `1`, so `n % 2 == 1` is `false` and it returns `true`.",
+        "It returns `false` as expected because `-3 % 2` evaluates to `+1` for odd negative integers in C#.",
+        "The C# remainder operator `%` does not accept negative integer operands and fails at compile time."
       ],
       "opts": [
-        "It throws a `DivideByZeroException` before the next statement in the method executes during standard GUI event execution.",
-        "In C#, `-3 % 2` evaluates to `-1`, so `n % 2 == 1` is `false` and `IsEven(-3)` wrongly returns `true`!",
-        "It returns `false` because `-3 % 2` is `1` within the active form class implementation before updating the target UI control.",
-        "The `%` operator does not accept negative integers in C# inside the Windows Forms event handler routine."
+        "Calling `IsEven(-3)` throws an unhandled `DivideByZeroException` at runtime.",
+        "In C#, `-3 % 2` evaluates to `-1` rather than `1`, so `n % 2 == 1` is `false` and it returns `true`.",
+        "It returns `false` as expected because `-3 % 2` evaluates to `+1` for odd negative integers in C#.",
+        "The C# remainder operator `%` does not accept negative integer operands and fails at compile time."
       ],
       "answer": 1,
       "ans": 1,
@@ -23618,16 +23618,16 @@
       "stem": "What happens to any statement written immediately **after** an unconditional `return result;` statement inside the same block?",
       "code": "private decimal CalcNet(decimal gross)\n{\n    decimal net = gross * 0.85m;\n    return net;\n    lblDebug.Text = \"Done\";\n}",
       "options": [
-        "`lblDebug.Text = \"Done\";` executes right after the caller receives `net` when the Windows Forms control processes the action.",
-        "`lblDebug.Text = \"Done\";` is **unreachable code** and NEVER executes because `return` exits the method immediately.",
-        "`return net;` is ignored and the method becomes `void` while passing data across the method call boundary.",
-        "The method throws an exception when control passes between caller and helper method on the active Windows Form canvas."
+        "`lblDebug.Text = \"Done\";` executes right after the caller receives `net`.",
+        "`lblDebug.Text = \"Done\";` is unreachable code CS0162 and never executes.",
+        "`return net;` is ignored by the compiler and the method becomes `void`.",
+        "An `InvalidOperationException` is thrown as soon as `return net;` runs."
       ],
       "opts": [
-        "`lblDebug.Text = \"Done\";` executes right after the caller receives `net` when the Windows Forms control processes the action.",
-        "`lblDebug.Text = \"Done\";` is **unreachable code** and NEVER executes because `return` exits the method immediately.",
-        "`return net;` is ignored and the method becomes `void` while passing data across the method call boundary.",
-        "The method throws an exception when control passes between caller and helper method on the active Windows Form canvas."
+        "`lblDebug.Text = \"Done\";` executes right after the caller receives `net`.",
+        "`lblDebug.Text = \"Done\";` is unreachable code CS0162 and never executes.",
+        "`return net;` is ignored by the compiler and the method becomes `void`.",
+        "An `InvalidOperationException` is thrown as soon as `return net;` runs."
       ],
       "answer": 1,
       "ans": 1,
@@ -23659,16 +23659,16 @@
       "stem": "Which statement accurately summarises C# parameter-passing rules?",
       "code": "",
       "options": [
-        "`ref` and `out` are written in the method header only and omitted in the method call while passing data across the method call boundary during standard GUI event execution.",
-        "C# passes all numeric variables by reference by default unless `val` is written when evaluating the numeric expression in the handler before updating the target UI control in the compiled C# project.",
-        "C# passes arguments by value by default; `ref` requires initialisation before the call, while `out` does not require prior initialisation but must be assigned before the method returns.",
-        "`out` requires initialisation before the call, whereas `ref` does not during invocation of the declared helper method before returning to the calling method inside the desktop session."
+        "`ref` and `out` are written in the method header only and omitted in the method call.",
+        "C# passes all numeric variables by reference by default unless `val` is specified.",
+        "By-value is default; `ref` must be initialized before the call, while `out` must be assigned in the method.",
+        "`out` arguments must be initialized before the call, whereas `ref` arguments do not require initialization."
       ],
       "opts": [
-        "`ref` and `out` are written in the method header only and omitted in the method call while passing data across the method call boundary during standard GUI event execution.",
-        "C# passes all numeric variables by reference by default unless `val` is written when evaluating the numeric expression in the handler before updating the target UI control in the compiled C# project.",
-        "C# passes arguments by value by default; `ref` requires initialisation before the call, while `out` does not require prior initialisation but must be assigned before the method returns.",
-        "`out` requires initialisation before the call, whereas `ref` does not during invocation of the declared helper method before returning to the calling method inside the desktop session."
+        "`ref` and `out` are written in the method header only and omitted in the method call.",
+        "C# passes all numeric variables by reference by default unless `val` is specified.",
+        "By-value is default; `ref` must be initialized before the call, while `out` must be assigned in the method.",
+        "`out` arguments must be initialized before the call, whereas `ref` arguments do not require initialization."
       ],
       "answer": 2,
       "ans": 2,
@@ -23702,16 +23702,16 @@
       "stem": "During debugging, execution is paused at `decimal vat = GetVat(price);`. You press **F10 (Step Over)**. What value is in `vat` on the next line if `price` is `100m` and `GetVat` returns `price * 0.15m`?",
       "code": "",
       "options": [
-        "Debugging stops immediately inside the Windows Forms event handler routine within the current form class instance.",
-        "`0m`, because Step Over skips executing `GetVat(price)` during execution of the Visual C# form application.",
-        "`100m`, because Step Over copies the argument directly when evaluating the method signature and arguments.",
-        "`15.00m`, because Step Over executes `GetVat(price)` completely in a single step without pausing inside `GetVat`."
+        "The Visual Studio debugger terminates the running program immediately.",
+        "`0m`, because pressing F10 (Step Over) skips executing `GetVat(price)`.",
+        "`100m`, because Step Over copies the input argument without multiplying.",
+        "`15.00m`, because Step Over runs `GetVat(price)` completely in one step."
       ],
       "opts": [
-        "Debugging stops immediately inside the Windows Forms event handler routine within the current form class instance.",
-        "`0m`, because Step Over skips executing `GetVat(price)` during execution of the Visual C# form application.",
-        "`100m`, because Step Over copies the argument directly when evaluating the method signature and arguments.",
-        "`15.00m`, because Step Over executes `GetVat(price)` completely in a single step without pausing inside `GetVat`."
+        "The Visual Studio debugger terminates the running program immediately.",
+        "`0m`, because pressing F10 (Step Over) skips executing `GetVat(price)`.",
+        "`100m`, because Step Over copies the input argument without multiplying.",
+        "`15.00m`, because Step Over runs `GetVat(price)` completely in one step."
       ],
       "answer": 3,
       "ans": 3,
@@ -23827,16 +23827,16 @@
       "stem": "A method `PopulateList(ListBox lst, int max)` runs `for (int i = 1; i <= max; i++) lst.Items.Add(i);`. Why does `lstNumbers` on `Form1` show `1..5` after calling `PopulateList(lstNumbers, 5);` even without `ref`?",
       "code": "",
       "options": [
-        "Visual Studio silently inserts `ref` before all control parameters while passing data across the method call boundary before returning to the calling method under .NET runtime execution.",
-        "`Items` is a `static` property shared by all forms inside the Windows Forms event handler routine within the current form class instance in the compiled C# project.",
-        "`ListBox` is a reference-type object: passing `lstNumbers` by value copies the **reference** pointing to the same `ListBox` control on `Form1`, so `.Items.Add(i)` mutates that control’s items.",
-        "`ListBox` is a C# primitive value type during execution of the repetition structure on the active Windows Form canvas inside the desktop session."
+        "Visual Studio silently inserts the `ref` keyword before all control parameters.",
+        "`Items` is a `static` collection shared globally across all forms in the project.",
+        "`ListBox` is a reference type, so passing `lstNumbers` passes a reference to the same control.",
+        "`ListBox` is a primitive value type that copies its items back on method return."
       ],
       "opts": [
-        "Visual Studio silently inserts `ref` before all control parameters while passing data across the method call boundary before returning to the calling method under .NET runtime execution.",
-        "`Items` is a `static` property shared by all forms inside the Windows Forms event handler routine within the current form class instance in the compiled C# project.",
-        "`ListBox` is a reference-type object: passing `lstNumbers` by value copies the **reference** pointing to the same `ListBox` control on `Form1`, so `.Items.Add(i)` mutates that control’s items.",
-        "`ListBox` is a C# primitive value type during execution of the repetition structure on the active Windows Form canvas inside the desktop session."
+        "Visual Studio silently inserts the `ref` keyword before all control parameters.",
+        "`Items` is a `static` collection shared globally across all forms in the project.",
+        "`ListBox` is a reference type, so passing `lstNumbers` passes a reference to the same control.",
+        "`ListBox` is a primitive value type that copies its items back on method return."
       ],
       "answer": 2,
       "ans": 2,
@@ -23870,15 +23870,15 @@
       "code": "",
       "options": [
         "`Load` fires only once when a form instance first opens, whereas `Activated` fires every time the user switches window focus back to that form",
-        "`Activated` only exists on modal `ShowDialog()` forms and never fires on modeless `Show()` forms while managing window state in a multiform project",
-        "`Activated` fires before the form's constructor `InitializeComponent()`, whereas `Load` fires when the form closes across forms",
-        "`Load` fires every time a button is clicked on the form, whereas `Activated` fires only once at program startup when coordinating execution across multiple forms"
+        "`Activated` only exists on modal `ShowDialog()` forms and never fires on modeless `Show()` forms",
+        "`Activated` fires before the form's constructor `InitializeComponent()`, whereas `Load` fires when the form closes",
+        "`Load` fires every time a button is clicked on the form, whereas `Activated` fires only once at program startup"
       ],
       "opts": [
         "`Load` fires only once when a form instance first opens, whereas `Activated` fires every time the user switches window focus back to that form",
-        "`Activated` only exists on modal `ShowDialog()` forms and never fires on modeless `Show()` forms while managing window state in a multiform project",
-        "`Activated` fires before the form's constructor `InitializeComponent()`, whereas `Load` fires when the form closes across forms",
-        "`Load` fires every time a button is clicked on the form, whereas `Activated` fires only once at program startup when coordinating execution across multiple forms"
+        "`Activated` only exists on modal `ShowDialog()` forms and never fires on modeless `Show()` forms",
+        "`Activated` fires before the form's constructor `InitializeComponent()`, whereas `Load` fires when the form closes",
+        "`Load` fires every time a button is clicked on the form, whereas `Activated` fires only once at program startup"
       ],
       "answer": 0,
       "ans": 0,
@@ -23910,16 +23910,16 @@
       "stem": "A student adds a line in `Form1`’s constructor **above** `InitializeComponent();` as shown below. What happens when the program starts?",
       "code": "public Form1()\n{\n    lblWelcome.Text = \"Ready\";\n    InitializeComponent();\n}",
       "options": [
-        "`InitializeComponent()` is skipped during execution of the Visual C# form application within the current form class instance inside the desktop session.",
-        "A `NullReferenceException` is thrown at runtime because `lblWelcome` is `null` until `InitializeComponent()` instantiates the form’s controls!",
-        "`lblWelcome` displays `\"Ready\"` normally when the Windows Forms control processes the action on the active Windows Form canvas during interface state updates.",
-        "Compilation fails with a syntax error during static type and syntax analysis of the class during standard GUI event execution under .NET runtime execution."
+        "`InitializeComponent()` is skipped and the form opens blank without controls.",
+        "A `NullReferenceException` occurs because `lblWelcome` is `null` before `InitializeComponent()`.",
+        "`lblWelcome` displays `\"Ready\"` normally when the secondary form opens on screen.",
+        "The project fails to compile because assignments cannot precede `InitializeComponent()`."
       ],
       "opts": [
-        "`InitializeComponent()` is skipped during execution of the Visual C# form application within the current form class instance inside the desktop session.",
-        "A `NullReferenceException` is thrown at runtime because `lblWelcome` is `null` until `InitializeComponent()` instantiates the form’s controls!",
-        "`lblWelcome` displays `\"Ready\"` normally when the Windows Forms control processes the action on the active Windows Form canvas during interface state updates.",
-        "Compilation fails with a syntax error during static type and syntax analysis of the class during standard GUI event execution under .NET runtime execution."
+        "`InitializeComponent()` is skipped and the form opens blank without controls.",
+        "A `NullReferenceException` occurs because `lblWelcome` is `null` before `InitializeComponent()`.",
+        "`lblWelcome` displays `\"Ready\"` normally when the secondary form opens on screen.",
+        "The project fails to compile because assignments cannot precede `InitializeComponent()`."
       ],
       "answer": 1,
       "ans": 1,
@@ -24035,16 +24035,16 @@
       "stem": "Which statement **accurately** describes what happens when `frmDetails.ShowDialog();` is called from `Form1`?",
       "code": "",
       "options": [
-        "It displays `frmDetails` as a **modal** form within the application: other forms in the same application cannot receive focus, and subsequent statements in the calling method wait until `frmDetails` is closed or hidden.",
-        "It freezes the entire Windows operating system so the user cannot switch to a web browser or calculator when evaluating the conditional branching logic before returning to the calling method during interface state updates.",
-        "It displays `frmDetails` as a modeless form and immediately runs the next line of code in `Form1` during navigation between active Windows Forms within the current form class instance under .NET runtime execution.",
-        "It closes `Form1` permanently before opening `frmDetails` when coordinating execution across multiple forms on the active Windows Form canvas in the compiled C# project."
+        "It opens `frmDetails` modally, blocking other forms in the app and pausing the caller until `frmDetails` closes.",
+        "It freezes the entire Windows operating system so the user cannot switch to a web browser or calculator.",
+        "It displays `frmDetails` as a modeless window and immediately executes the next line of code in `Form1`.",
+        "It permanently closes and disposes `Form1` before displaying the `frmDetails` window on screen."
       ],
       "opts": [
-        "It displays `frmDetails` as a **modal** form within the application: other forms in the same application cannot receive focus, and subsequent statements in the calling method wait until `frmDetails` is closed or hidden.",
-        "It freezes the entire Windows operating system so the user cannot switch to a web browser or calculator when evaluating the conditional branching logic before returning to the calling method during interface state updates.",
-        "It displays `frmDetails` as a modeless form and immediately runs the next line of code in `Form1` during navigation between active Windows Forms within the current form class instance under .NET runtime execution.",
-        "It closes `Form1` permanently before opening `frmDetails` when coordinating execution across multiple forms on the active Windows Form canvas in the compiled C# project."
+        "It opens `frmDetails` modally, blocking other forms in the app and pausing the caller until `frmDetails` closes.",
+        "It freezes the entire Windows operating system so the user cannot switch to a web browser or calculator.",
+        "It displays `frmDetails` as a modeless window and immediately executes the next line of code in `Form1`.",
+        "It permanently closes and disposes `Form1` before displaying the `frmDetails` window on screen."
       ],
       "answer": 0,
       "ans": 0,
@@ -24076,16 +24076,16 @@
       "stem": "Look carefully at the order of statements below (`lblMessage` on `QuoteForm` has `Modifiers = Public` and design-time `Text = \"Empty\"`). What does the user see on `QuoteForm` while it is open?",
       "code": "QuoteForm frmQuote = new QuoteForm();\nfrmQuote.ShowDialog();\nfrmQuote.lblMessage.Text = \"Total: R 750.00\";",
       "options": [
-        "`\"Total: R 750.00\"`, because C# runs all three lines simultaneously during execution of the Visual C# form application.",
-        "`\"Empty\"`, because `frmQuote.ShowDialog();` pauses execution at line 2 until the user CLOSES `QuoteForm`",
-        "A `NullReferenceException` when `ShowDialog()` starts before the next statement in the method executes.",
-        "A blank screen because `Show()` was not called first while handling form instance lifetime in memory."
+        "`\"Total: R 750.00\"`, because C# executes all three statements simultaneously.",
+        "`\"Empty\"`, because `ShowDialog()` blocks at line 2 until `QuoteForm` is closed.",
+        "An unhandled `NullReferenceException` as soon as `ShowDialog()` is invoked.",
+        "A blank titleless window because `Show()` was not called before `ShowDialog()`."
       ],
       "opts": [
-        "`\"Total: R 750.00\"`, because C# runs all three lines simultaneously during execution of the Visual C# form application.",
-        "`\"Empty\"`, because `frmQuote.ShowDialog();` pauses execution at line 2 until the user CLOSES `QuoteForm`",
-        "A `NullReferenceException` when `ShowDialog()` starts before the next statement in the method executes.",
-        "A blank screen because `Show()` was not called first while handling form instance lifetime in memory."
+        "`\"Total: R 750.00\"`, because C# executes all three statements simultaneously.",
+        "`\"Empty\"`, because `ShowDialog()` blocks at line 2 until `QuoteForm` is closed.",
+        "An unhandled `NullReferenceException` as soon as `ShowDialog()` is invoked.",
+        "A blank titleless window because `Show()` was not called before `ShowDialog()`."
       ],
       "answer": 1,
       "ans": 1,
@@ -24118,16 +24118,16 @@
       "stem": "Suppose `InputForm` has a `Public` TextBox `txtUserEntry` (initially `\"\"`) where the user is supposed to type their name and click OK. What happens if `Form1` uses modeless `Show()` instead of `ShowDialog()` below?",
       "code": "InputForm frmIn = new InputForm();\nfrmIn.Show();\nlblGreeting.Text = \"Hello \" + frmIn.txtUserEntry.Text;",
       "options": [
-        "Compiler error because `txtUserEntry` cannot be read after `Show()` when the Roslyn compiler checks the method body.",
-        "`InputForm` never appears on screen within the active form class implementation on the active Windows Form canvas.",
-        "Because `Show()` is **modeless**, line 3 executes **immediately**, setting `lblGreeting.Text` to `\"Hello \"`.",
-        "`lblGreeting` waits until the user closes `InputForm` and then shows `\"Hello Alice\"` inside the Windows Forms event handler routine."
+        "Compiler error because `txtUserEntry` cannot be accessed after calling `Show()`.",
+        "`InputForm` is never displayed on screen because `Show()` requires a loop.",
+        "Because `Show()` is modeless, line 3 runs immediately and sets `lblGreeting.Text` to `\"Hello \"`.",
+        "`lblGreeting` waits until the user closes `InputForm` and then displays `\"Hello Alice\"`."
       ],
       "opts": [
-        "Compiler error because `txtUserEntry` cannot be read after `Show()` when the Roslyn compiler checks the method body.",
-        "`InputForm` never appears on screen within the active form class implementation on the active Windows Form canvas.",
-        "Because `Show()` is **modeless**, line 3 executes **immediately**, setting `lblGreeting.Text` to `\"Hello \"`.",
-        "`lblGreeting` waits until the user closes `InputForm` and then shows `\"Hello Alice\"` inside the Windows Forms event handler routine."
+        "Compiler error because `txtUserEntry` cannot be accessed after calling `Show()`.",
+        "`InputForm` is never displayed on screen because `Show()` requires a loop.",
+        "Because `Show()` is modeless, line 3 runs immediately and sets `lblGreeting.Text` to `\"Hello \"`.",
+        "`lblGreeting` waits until the user closes `InputForm` and then displays `\"Hello Alice\"`."
       ],
       "answer": 2,
       "ans": 2,
@@ -24200,16 +24200,16 @@
       "stem": "In CMPG122 assessments, setting a control’s `Modifiers` property to `Public` allows `frm2.lblOutput.Text = ...;` from `Form1`. Why do production C# software teams generally prefer passing values via **constructor parameters or public properties** on `Form2` instead?",
       "code": "",
       "options": [
-        "Exposing UI controls directly as `Public` tightly couples `Form1` to `Form2`’s internal widget names/types, whereas properties or constructors preserve encapsulation so `Form2`’s UI can change safely.",
-        "Because `Public` controls cannot display formatted currency strings inside the Windows Forms event handler routine on the active Windows Form canvas during interface state updates.",
-        "Because `Modifiers = Public` disables `ShowDialog()` during navigation between active Windows Forms during standard GUI event execution under .NET runtime execution.",
-        "Because `Modifiers = Public` causes a syntax error in .NET when the Roslyn compiler checks the method body before updating the target UI control in the compiled C# project."
+        "Public controls tightly couple `Form1` to `Form2`'s widgets, whereas properties preserve encapsulation.",
+        "Because controls with `Modifiers = Public` cannot display formatted currency strings at runtime.",
+        "Because setting `Modifiers = Public` on any control disables `Form2.ShowDialog()`.",
+        "Because `Modifiers = Public` causes a compile-time protection error in .NET Framework."
       ],
       "opts": [
-        "Exposing UI controls directly as `Public` tightly couples `Form1` to `Form2`’s internal widget names/types, whereas properties or constructors preserve encapsulation so `Form2`’s UI can change safely.",
-        "Because `Public` controls cannot display formatted currency strings inside the Windows Forms event handler routine on the active Windows Form canvas during interface state updates.",
-        "Because `Modifiers = Public` disables `ShowDialog()` during navigation between active Windows Forms during standard GUI event execution under .NET runtime execution.",
-        "Because `Modifiers = Public` causes a syntax error in .NET when the Roslyn compiler checks the method body before updating the target UI control in the compiled C# project."
+        "Public controls tightly couple `Form1` to `Form2`'s widgets, whereas properties preserve encapsulation.",
+        "Because controls with `Modifiers = Public` cannot display formatted currency strings at runtime.",
+        "Because setting `Modifiers = Public` on any control disables `Form2.ShowDialog()`.",
+        "Because `Modifiers = Public` causes a compile-time protection error in .NET Framework."
       ],
       "answer": 0,
       "ans": 0,
@@ -24241,16 +24241,16 @@
       "stem": "A student sets `lblResult`’s `Modifiers` to `Public` on `ReceiptForm`, writes the code below in `Form1`, and wonders why `ReceiptForm` opens with a blank `lblResult`!",
       "code": "ReceiptForm frmA = new ReceiptForm();\nfrmA.lblResult.Text = \"R 499.00\";\n\nReceiptForm frmB = new ReceiptForm();\nfrmB.ShowDialog();",
       "options": [
-        "`ReceiptForm` can only be instantiated once per program during execution of the Visual C# form application before returning to the calling method.",
-        "Two **separate** instances of `ReceiptForm` were created with `new`: `\"R 499.00\"` was assigned to `frmA`, while the brand-new blank instance `frmB` was displayed!",
-        "`lblResult` cannot store `\"R 499.00\"` when the Windows Forms control processes the action within the current form class instance during interface state updates.",
-        "`ShowDialog()` clears all `Public` labels automatically while handling form instance lifetime in memory on the active Windows Form canvas under .NET runtime execution."
+        "`ReceiptForm` is a singleton class that can only be instantiated once per program.",
+        "Two separate instances were created: `\"R 499.00\"` was set on `frmA`, while blank `frmB` was shown.",
+        "A `Label` control with `Modifiers = Public` cannot store the string `\"R 499.00\"`.",
+        "Calling `ShowDialog()` automatically resets all `Public` labels back to empty strings."
       ],
       "opts": [
-        "`ReceiptForm` can only be instantiated once per program during execution of the Visual C# form application before returning to the calling method.",
-        "Two **separate** instances of `ReceiptForm` were created with `new`: `\"R 499.00\"` was assigned to `frmA`, while the brand-new blank instance `frmB` was displayed!",
-        "`lblResult` cannot store `\"R 499.00\"` when the Windows Forms control processes the action within the current form class instance during interface state updates.",
-        "`ShowDialog()` clears all `Public` labels automatically while handling form instance lifetime in memory on the active Windows Form canvas under .NET runtime execution."
+        "`ReceiptForm` is a singleton class that can only be instantiated once per program.",
+        "Two separate instances were created: `\"R 499.00\"` was set on `frmA`, while blank `frmB` was shown.",
+        "A `Label` control with `Modifiers = Public` cannot store the string `\"R 499.00\"`.",
+        "Calling `ShowDialog()` automatically resets all `Public` labels back to empty strings."
       ],
       "answer": 1,
       "ans": 1,
@@ -24283,16 +24283,16 @@
       "stem": "`Form1` is the startup form passed to `Application.Run(new Form1())`. What happens when the user clicks a button on `Form1` containing the two lines below?",
       "code": "DashboardForm frmDash = new DashboardForm();\nfrmDash.Show();\nthis.Close();",
       "options": [
-        "`this.Close()` closes `frmDash` while keeping `Form1` open when coordinating execution across multiple forms.",
-        "A compile-time error occurs during static type and syntax analysis of the class before updating the target UI control.",
-        "Closing `Form1` ends `Application.Run(...)`, immediately terminating the **entire application**",
-        "`Form1` closes cleanly and `frmDash` remains open for the user between active Windows Forms."
+        "`this.Close()` closes `frmDash` while keeping the startup `Form1` open.",
+        "A compile-time error occurs because `Show()` and `Close()` cannot be combined.",
+        "Closing the startup form `Form1` ends `Application.Run(...)` and exits the whole app.",
+        "`Form1` closes cleanly while `frmDash` stays open as the new main window."
       ],
       "opts": [
-        "`this.Close()` closes `frmDash` while keeping `Form1` open when coordinating execution across multiple forms.",
-        "A compile-time error occurs during static type and syntax analysis of the class before updating the target UI control.",
-        "Closing `Form1` ends `Application.Run(...)`, immediately terminating the **entire application**",
-        "`Form1` closes cleanly and `frmDash` remains open for the user between active Windows Forms."
+        "`this.Close()` closes `frmDash` while keeping the startup `Form1` open.",
+        "A compile-time error occurs because `Show()` and `Close()` cannot be combined.",
+        "Closing the startup form `Form1` ends `Application.Run(...)` and exits the whole app.",
+        "`Form1` closes cleanly while `frmDash` stays open as the new main window."
       ],
       "answer": 2,
       "ans": 2,
@@ -24326,16 +24326,16 @@
       "stem": "How does `this.Hide();` differ from `this.Close();` on a Windows Form?",
       "code": "",
       "options": [
-        "They are 100% identical aliases in Windows Forms within the active form class implementation within the current form class instance under .NET runtime execution.",
-        "`this.Hide()` works only on `Button` controls while managing window state in a multiform project on the active Windows Form canvas in the compiled C# project.",
-        "`this.Hide()` deletes the form’s `.cs` file, whereas `this.Close()` minimizes it to the taskbar during navigation between active Windows Forms.",
-        "`this.Hide()` sets the form’s `Visible` state to `false` while preserving the form object and its control values in memory; `this.Close()` closes the window."
+        "`this.Hide()` and `this.Close()` are 100% identical aliases in Windows Forms.",
+        "`this.Hide()` works only on `Button` controls and cannot be called on a form.",
+        "`this.Hide()` deletes the form's `.cs` file, whereas `this.Close()` minimizes it.",
+        "`this.Hide()` hides the form while keeping its state in memory; `this.Close()` closes it."
       ],
       "opts": [
-        "They are 100% identical aliases in Windows Forms within the active form class implementation within the current form class instance under .NET runtime execution.",
-        "`this.Hide()` works only on `Button` controls while managing window state in a multiform project on the active Windows Form canvas in the compiled C# project.",
-        "`this.Hide()` deletes the form’s `.cs` file, whereas `this.Close()` minimizes it to the taskbar during navigation between active Windows Forms.",
-        "`this.Hide()` sets the form’s `Visible` state to `false` while preserving the form object and its control values in memory; `this.Close()` closes the window."
+        "`this.Hide()` and `this.Close()` are 100% identical aliases in Windows Forms.",
+        "`this.Hide()` works only on `Button` controls and cannot be called on a form.",
+        "`this.Hide()` deletes the form's `.cs` file, whereas `this.Close()` minimizes it.",
+        "`this.Hide()` hides the form while keeping its state in memory; `this.Close()` closes it."
       ],
       "answer": 3,
       "ans": 3,
@@ -24367,16 +24367,16 @@
       "stem": "`Form1` opens `SettingsForm` modally via `frmSettings.ShowDialog();`. Inside `SettingsForm`, clicking **Save** executes `this.Hide();`. What happens next in `Form1`?",
       "code": "",
       "options": [
-        "`this.Hide()` dismisses the modal loop so execution in `Form1` immediately resumes on the line after `frmSettings.ShowDialog();`, with all `frmSettings` control values intact in memory!",
-        "`Form1` stays frozen forever because `this.Close()` was not called while managing window state in a multiform project before updating the target UI control during interface state updates.",
-        "The entire application terminates during execution of the Visual C# form application before returning to the calling method under .NET runtime execution.",
-        "An `InvalidOperationException` is thrown before the next statement in the method executes within the current form class instance in the compiled C# project."
+        "`this.Hide()` ends the modal loop so `Form1` resumes with `frmSettings` values intact in memory.",
+        "`Form1` stays frozen forever because `this.Close()` was not called inside `SettingsForm`.",
+        "Calling `this.Hide()` on a modal form immediately terminates the entire application.",
+        "An unhandled `InvalidOperationException` is thrown because modal forms cannot be hidden."
       ],
       "opts": [
-        "`this.Hide()` dismisses the modal loop so execution in `Form1` immediately resumes on the line after `frmSettings.ShowDialog();`, with all `frmSettings` control values intact in memory!",
-        "`Form1` stays frozen forever because `this.Close()` was not called while managing window state in a multiform project before updating the target UI control during interface state updates.",
-        "The entire application terminates during execution of the Visual C# form application before returning to the calling method under .NET runtime execution.",
-        "An `InvalidOperationException` is thrown before the next statement in the method executes within the current form class instance in the compiled C# project."
+        "`this.Hide()` ends the modal loop so `Form1` resumes with `frmSettings` values intact in memory.",
+        "`Form1` stays frozen forever because `this.Close()` was not called inside `SettingsForm`.",
+        "Calling `this.Hide()` on a modal form immediately terminates the entire application.",
+        "An unhandled `InvalidOperationException` is thrown because modal forms cannot be hidden."
       ],
       "answer": 0,
       "ans": 0,
@@ -24534,16 +24534,16 @@
       "stem": "`LoginForm` (the startup form) validates a password, executes `this.Hide(); MainForm frm = new MainForm(); frm.Show();`, and later the user clicks the **X** button on `MainForm`. What subtle bug occurs?",
       "code": "",
       "options": [
-        "`MainForm` closes, leaving **zero visible windows** on screen while the hidden startup `LoginForm` keeps the `.exe` process running silently in the background!",
-        "A compile-time error prevents `this.Hide()` inside a startup form during the Visual Studio build verification step within the current form class instance.",
-        "`LoginForm` automatically reappears during execution of the Visual C# form application on the active Windows Form canvas under .NET runtime execution.",
-        "Visual Studio deletes `LoginForm.cs` when the Windows Forms control processes the action during standard GUI event execution in the compiled C# project."
+        "`MainForm` closes, leaving zero visible windows while hidden `LoginForm` keeps the process running.",
+        "A compile-time error prevents calling `this.Hide()` inside the project's startup form.",
+        "Closing `MainForm` causes the hidden `LoginForm` window to reappear automatically.",
+        "Visual Studio automatically deletes `LoginForm.cs` from the solution when `MainForm` closes."
       ],
       "opts": [
-        "`MainForm` closes, leaving **zero visible windows** on screen while the hidden startup `LoginForm` keeps the `.exe` process running silently in the background!",
-        "A compile-time error prevents `this.Hide()` inside a startup form during the Visual Studio build verification step within the current form class instance.",
-        "`LoginForm` automatically reappears during execution of the Visual C# form application on the active Windows Form canvas under .NET runtime execution.",
-        "Visual Studio deletes `LoginForm.cs` when the Windows Forms control processes the action during standard GUI event execution in the compiled C# project."
+        "`MainForm` closes, leaving zero visible windows while hidden `LoginForm` keeps the process running.",
+        "A compile-time error prevents calling `this.Hide()` inside the project's startup form.",
+        "Closing `MainForm` causes the hidden `LoginForm` window to reappear automatically.",
+        "Visual Studio automatically deletes `LoginForm.cs` from the solution when `MainForm` closes."
       ],
       "answer": 0,
       "ans": 0,
@@ -24577,16 +24577,16 @@
       "stem": "Trace the exact sequence appended to `lstLog` when the user clicks `btnOpen_Click` and then 5 seconds later closes `DetailsForm`:",
       "code": "private void btnOpen_Click(object sender, EventArgs e)\n{\n    lstLog.Items.Add(\"1-Before\");\n    DetailsForm frm = new DetailsForm();\n    frm.ShowDialog();\n    lstLog.Items.Add(\"2-After\");\n}",
       "options": [
-        "`2-After` appears first, then `1-Before` during execution of the Visual C# form application before updating the target UI control inside the desktop session.",
-        "`1-Before` appears immediately, `DetailsForm` opens modally and blocks, and `2-After` is added ONLY AFTER the user closes `DetailsForm` 5 seconds later.",
-        "`2-After` never runs because `ShowDialog()` exits `btnOpen_Click` when coordinating execution across multiple forms before returning to the calling method.",
-        "`1-Before` and `2-After` both appear immediately BEFORE `DetailsForm` is closed within the active form class implementation within the current form class instance."
+        "`2-After` is added to `lstLog` first, followed 5 seconds later by `1-Before`.",
+        "`1-Before` is added first, `DetailsForm` blocks modally, and `2-After` is added after it closes.",
+        "`2-After` is never added because `ShowDialog()` immediately exits `btnOpen_Click`.",
+        "`1-Before` and `2-After` are both added immediately before `DetailsForm` is closed."
       ],
       "opts": [
-        "`2-After` appears first, then `1-Before` during execution of the Visual C# form application before updating the target UI control inside the desktop session.",
-        "`1-Before` appears immediately, `DetailsForm` opens modally and blocks, and `2-After` is added ONLY AFTER the user closes `DetailsForm` 5 seconds later.",
-        "`2-After` never runs because `ShowDialog()` exits `btnOpen_Click` when coordinating execution across multiple forms before returning to the calling method.",
-        "`1-Before` and `2-After` both appear immediately BEFORE `DetailsForm` is closed within the active form class implementation within the current form class instance."
+        "`2-After` is added to `lstLog` first, followed 5 seconds later by `1-Before`.",
+        "`1-Before` is added first, `DetailsForm` blocks modally, and `2-After` is added after it closes.",
+        "`2-After` is never added because `ShowDialog()` immediately exits `btnOpen_Click`.",
+        "`1-Before` and `2-After` are both added immediately before `DetailsForm` is closed."
       ],
       "answer": 1,
       "ans": 1,
@@ -24618,16 +24618,16 @@
       "stem": "When you add a second Windows Form named `InvoiceForm` to a project named `BillingSystem`, what namespace do both `Form1` and `InvoiceForm` belong to by default?",
       "code": "",
       "options": [
-        "`Form1` is in `System.Forms` and `InvoiceForm` is in `System.Invoices` when coordinating execution across multiple forms on the active Windows Form canvas",
-        "Each form gets an isolated random namespace within the active form class implementation during standard GUI event execution inside the desktop session",
-        "Both belong to the same project namespace `BillingSystem`, so `Form1` can instantiate `new InvoiceForm()` directly without an extra `using` directive",
-        "`InvoiceForm` has no namespace inside the Windows Forms event handler routine before updating the target UI control during interface state updates"
+        "`Form1` is placed in `System.Forms` and `InvoiceForm` is placed in `System.Invoices`",
+        "Each form added to the project receives an isolated random namespace",
+        "Both `Form1` and `InvoiceForm` belong to the default `BillingSystem` namespace",
+        "`InvoiceForm` is created without any enclosing C# namespace declaration"
       ],
       "opts": [
-        "`Form1` is in `System.Forms` and `InvoiceForm` is in `System.Invoices` when coordinating execution across multiple forms on the active Windows Form canvas",
-        "Each form gets an isolated random namespace within the active form class implementation during standard GUI event execution inside the desktop session",
-        "Both belong to the same project namespace `BillingSystem`, so `Form1` can instantiate `new InvoiceForm()` directly without an extra `using` directive",
-        "`InvoiceForm` has no namespace inside the Windows Forms event handler routine before updating the target UI control during interface state updates"
+        "`Form1` is placed in `System.Forms` and `InvoiceForm` is placed in `System.Invoices`",
+        "Each form added to the project receives an isolated random namespace",
+        "Both `Form1` and `InvoiceForm` belong to the default `BillingSystem` namespace",
+        "`InvoiceForm` is created without any enclosing C# namespace declaration"
       ],
       "answer": 2,
       "ans": 2,
@@ -24703,16 +24703,16 @@
       "stem": "What return type does `Form.ShowDialog()` return, and how can a modal dialog signal whether the user clicked **Confirm** vs **Cancel**?",
       "code": "",
       "options": [
-        "`DialogResult` (e.g., `DialogResult.OK` or `DialogResult.Cancel`, set via the button’s `DialogResult` property or `this.DialogResult = DialogResult.OK;`)",
-        "`int` (`1` or `0`) when evaluating the numeric expression in the handler during standard GUI event execution during interface state updates",
-        "`void` (returns nothing) during invocation of the declared helper method before updating the target UI control under .NET runtime execution",
-        "`bool` (`true` or `false`) when the Windows Forms control processes the action before returning to the calling method in the compiled C# project"
+        "`DialogResult`, returned as `DialogResult.OK` or `DialogResult.Cancel`",
+        "`int`, signaled by returning `1` for Confirm or `0` for Cancel",
+        "`void`, signaled by setting the form's `Text` property on exit",
+        "`bool`, signaled by returning `true` for Confirm or `false` for Cancel"
       ],
       "opts": [
-        "`DialogResult` (e.g., `DialogResult.OK` or `DialogResult.Cancel`, set via the button’s `DialogResult` property or `this.DialogResult = DialogResult.OK;`)",
-        "`int` (`1` or `0`) when evaluating the numeric expression in the handler during standard GUI event execution during interface state updates",
-        "`void` (returns nothing) during invocation of the declared helper method before updating the target UI control under .NET runtime execution",
-        "`bool` (`true` or `false`) when the Windows Forms control processes the action before returning to the calling method in the compiled C# project"
+        "`DialogResult`, returned as `DialogResult.OK` or `DialogResult.Cancel`",
+        "`int`, signaled by returning `1` for Confirm or `0` for Cancel",
+        "`void`, signaled by setting the form's `Text` property on exit",
+        "`bool`, signaled by returning `true` for Confirm or `false` for Cancel"
       ],
       "answer": 0,
       "ans": 0,
@@ -24745,16 +24745,16 @@
       "stem": "Suppose `HelpForm frmHelp = new HelpForm();` is opened **modelessly** via `frmHelp.Show();`, the user closes `HelpForm` with its **X** button, and later clicks Help again running `frmHelp.Show();` on that **same** closed `frmHelp` variable. What happens?",
       "code": "",
       "options": [
-        "Nothing happens and no error occurs during execution of the Visual C# form application within the current form class instance.",
-        "An `ObjectDisposedException` is thrown because closing a **modeless** form disposes its window handle!",
-        "`frmHelp` reopens normally when the Windows Forms control processes the action on the active Windows Form canvas.",
-        "`Form1` closes instead while handling form instance lifetime in memory during standard GUI event execution."
+        "Nothing happens and the closed form remains hidden without any error.",
+        "An `ObjectDisposedException` is thrown because closing a modeless form disposes it.",
+        "`frmHelp` reopens normally on screen with all of its previous control values.",
+        "The startup form `Form1` closes instead and transfers control to `frmHelp`."
       ],
       "opts": [
-        "Nothing happens and no error occurs during execution of the Visual C# form application within the current form class instance.",
-        "An `ObjectDisposedException` is thrown because closing a **modeless** form disposes its window handle!",
-        "`frmHelp` reopens normally when the Windows Forms control processes the action on the active Windows Form canvas.",
-        "`Form1` closes instead while handling form instance lifetime in memory during standard GUI event execution."
+        "Nothing happens and the closed form remains hidden without any error.",
+        "An `ObjectDisposedException` is thrown because closing a modeless form disposes it.",
+        "`frmHelp` reopens normally on screen with all of its previous control values.",
+        "The startup form `Form1` closes instead and transfers control to `frmHelp`."
       ],
       "answer": 1,
       "ans": 1,
@@ -24872,16 +24872,16 @@
       "stem": "On `SummaryForm`, a student populates `lblHeader.Text` inside `SummaryForm_Load` by overwriting it with `\"Default Summary\"`. In `Form1`, they run the code below. What appears in `lblHeader` when `SummaryForm` opens?",
       "code": "SummaryForm frm = new SummaryForm();\nfrm.lblHeader.Text = \"VIP Customer Invoice\";\nfrm.ShowDialog();",
       "options": [
-        "`\"Default Summary\"`, because `SummaryForm_Load` executes when `frm.ShowDialog()` opens the form for the first time",
-        "An empty string when evaluating the numeric expression in the handler before returning to the calling method.",
-        "`\"VIP Customer Invoice\"`, because `SummaryForm_Load` already ran during `new SummaryForm()` across forms.",
-        "Both strings concatenated together when the Windows Forms control processes the action on the active Windows Form canvas."
+        "`\"Default Summary\"`, because `SummaryForm_Load` runs when `ShowDialog()` opens the form.",
+        "An empty string `\"\"`, because `ShowDialog()` clears all public labels on launch.",
+        "`\"VIP Customer Invoice\"`, because `SummaryForm_Load` already ran during `new SummaryForm()`.",
+        "Both strings concatenated together inside `lblHeader.Text` when the form opens."
       ],
       "opts": [
-        "`\"Default Summary\"`, because `SummaryForm_Load` executes when `frm.ShowDialog()` opens the form for the first time",
-        "An empty string when evaluating the numeric expression in the handler before returning to the calling method.",
-        "`\"VIP Customer Invoice\"`, because `SummaryForm_Load` already ran during `new SummaryForm()` across forms.",
-        "Both strings concatenated together when the Windows Forms control processes the action on the active Windows Form canvas."
+        "`\"Default Summary\"`, because `SummaryForm_Load` runs when `ShowDialog()` opens the form.",
+        "An empty string `\"\"`, because `ShowDialog()` clears all public labels on launch.",
+        "`\"VIP Customer Invoice\"`, because `SummaryForm_Load` already ran during `new SummaryForm()`.",
+        "Both strings concatenated together inside `lblHeader.Text` when the form opens."
       ],
       "answer": 0,
       "ans": 0,
@@ -24915,16 +24915,16 @@
       "stem": "Which scenario is the best fit for a **modeless** form (`Show()`) rather than a **modal** form (`ShowDialog()`)?",
       "code": "",
       "options": [
-        "A mandatory password-confirmation popup before deleting all records during execution of the Visual C# form application",
-        "A floating \"Reference Formula Cheat Sheet\" window that the user keeps open side-by-side while typing calculations into `Form1`",
-        "An `OpenFileDialog` choosing which required text file to parse immediately on the next line during sequential file input/output operations on disk",
-        "An unsaved-changes Yes/No exit prompt within the active form class implementation before returning to the calling method"
+        "A mandatory password-confirmation popup before deleting all customer records",
+        "A floating reference cheat-sheet window kept open beside `Form1` while typing",
+        "An `OpenFileDialog` choosing which required text file to parse on the next line",
+        "An unsaved-changes Yes/No confirmation prompt when clicking the Exit button"
       ],
       "opts": [
-        "A mandatory password-confirmation popup before deleting all records during execution of the Visual C# form application",
-        "A floating \"Reference Formula Cheat Sheet\" window that the user keeps open side-by-side while typing calculations into `Form1`",
-        "An `OpenFileDialog` choosing which required text file to parse immediately on the next line during sequential file input/output operations on disk",
-        "An unsaved-changes Yes/No exit prompt within the active form class implementation before returning to the calling method"
+        "A mandatory password-confirmation popup before deleting all customer records",
+        "A floating reference cheat-sheet window kept open beside `Form1` while typing",
+        "An `OpenFileDialog` choosing which required text file to parse on the next line",
+        "An unsaved-changes Yes/No confirmation prompt when clicking the Exit button"
       ],
       "answer": 1,
       "ans": 1,
@@ -24999,16 +24999,16 @@
       "stem": "Inside `Form2`’s `btnBack_Click` event handler, what does the keyword `this` in `this.Close();` refer to?",
       "code": "",
       "options": [
-        "The `btnBack` Button control within the active form class implementation",
-        "The `Program` class inside the Windows Forms event handler routine",
-        "Always the startup `Form1` instance in a multiform application",
-        "The currently executing `Form2` instance whose button was clicked"
+        "The `btnBack` Button control",
+        "The static `Program` class",
+        "Always the startup `Form1` instance",
+        "The current `Form2` instance"
       ],
       "opts": [
-        "The `btnBack` Button control within the active form class implementation",
-        "The `Program` class inside the Windows Forms event handler routine",
-        "Always the startup `Form1` instance in a multiform application",
-        "The currently executing `Form2` instance whose button was clicked"
+        "The `btnBack` Button control",
+        "The static `Program` class",
+        "Always the startup `Form1` instance",
+        "The current `Form2` instance"
       ],
       "answer": 3,
       "ans": 3,
@@ -25084,16 +25084,16 @@
       "stem": "Why must unsaved-data confirmation (`e.Cancel = true;`) be placed in `FormClosing` rather than `FormClosed`?",
       "code": "",
       "options": [
-        "`FormClosed` cannot call `MessageBox.Show()` during navigation between active Windows Forms before returning to the calling method.",
-        "By the time `FormClosed` fires, the window has **already** closed and `FormClosedEventArgs` has no `Cancel` property.",
-        "`FormClosing` only runs on secondary forms when the Windows Forms control processes the action within the current form class instance.",
-        "`FormClosed` fires before `Form_Load` while handling form instance lifetime in memory on the active Windows Form canvas."
+        "`FormClosed` is not permitted to call `MessageBox.Show()`.",
+        "`FormClosed` fires after closure and lacks `e.Cancel`.",
+        "`FormClosing` only fires on secondary modal forms.",
+        "`FormClosed` fires before `Form_Load` initializes controls."
       ],
       "opts": [
-        "`FormClosed` cannot call `MessageBox.Show()` during navigation between active Windows Forms before returning to the calling method.",
-        "By the time `FormClosed` fires, the window has **already** closed and `FormClosedEventArgs` has no `Cancel` property.",
-        "`FormClosing` only runs on secondary forms when the Windows Forms control processes the action within the current form class instance.",
-        "`FormClosed` fires before `Form_Load` while handling form instance lifetime in memory on the active Windows Form canvas."
+        "`FormClosed` is not permitted to call `MessageBox.Show()`.",
+        "`FormClosed` fires after closure and lacks `e.Cancel`.",
+        "`FormClosing` only fires on secondary modal forms.",
+        "`FormClosed` fires before `Form_Load` initializes controls."
       ],
       "answer": 1,
       "ans": 1,

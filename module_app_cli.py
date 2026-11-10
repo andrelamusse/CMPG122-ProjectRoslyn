@@ -340,7 +340,10 @@ function hasProseParenthetical(str) {
   return false;
 }
 
-function auditOptionSymmetry(itemId, opts, answerIdx) {
+const cannedOptionSuffixRe = /within the current form class instance|before returning to the calling method|before updating the target UI control|on the active Windows Form canvas|during standard GUI event execution|when the Windows Forms control processes the action|when evaluating operator task performance on screen|under \.NET runtime execution|when evaluating the numeric expression in the handler|when executing the loop body in the event handler|when processing the event handler on the active form|when opening or closing forms in the Windows Forms project/i;
+let longestIsCorrectCount = 0;
+
+function auditOptionSymmetry(itemId, opts, answerIdx, isMainQuestion) {
   if (!Array.isArray(opts) || typeof answerIdx !== 'number' || answerIdx < 0 || answerIdx >= opts.length) return;
   const ans = String(opts[answerIdx] || '');
   const dists = opts.filter((_, i) => i !== answerIdx).map(d => String(d || ''));
@@ -349,6 +352,7 @@ function auditOptionSymmetry(itemId, opts, answerIdx) {
   const maxD = Math.max(...dists.map(d => d.length));
   const minD = Math.min(...dists.map(d => d.length));
   const avgD = dists.reduce((a, b) => a + b.length, 0) / dists.length;
+  if (isMainQuestion && ansLen > maxD) longestIsCorrectCount += 1;
   if (ansLen > 25 && (ansLen > maxD * 1.28 || ansLen > avgD * 1.38)) {
     fail(itemId, `Option length giveaway: correct option (${ansLen} chars) is disproportionately longer than distractors (max=${maxD}, avg=${Math.round(avgD)})`);
   }
@@ -359,8 +363,12 @@ function auditOptionSymmetry(itemId, opts, answerIdx) {
     fail(itemId, `Asymmetric parenthetical coaching giveaway in correct option: ${ans}`);
   }
   opts.forEach((o, oi) => {
-    if (/\b[A-Za-z0-9_]+Form\.(html|css|main|header|body|sub)\b/i.test(String(o))) {
+    const oStr = String(o);
+    if (/\b[A-Za-z0-9_]+Form\.(html|css|main|header|body|sub)\b/i.test(oStr)) {
       fail(itemId, `Implausible non-C# form file extension in options[${oi}]: ${o}`);
+    }
+    if (cannedOptionSuffixRe.test(oStr)) {
+      fail(itemId, `Robotic boilerplate distractor suffix in options[${oi}]: ${o}`);
     }
   });
 }
@@ -414,7 +422,7 @@ function auditOptionSymmetry(itemId, opts, answerIdx) {
     if (typeof q.answer !== 'number' || q.answer < 0 || q.answer >= opts.length) {
       fail(qId, `Answer index ${q.answer} out of bounds [0..${opts.length - 1}]`);
     } else {
-      auditOptionSymmetry(qId, opts, q.answer);
+      auditOptionSymmetry(qId, opts, q.answer, true);
     }
   }
 
@@ -482,7 +490,11 @@ function auditOptionSymmetry(itemId, opts, answerIdx) {
   qTypeDist[q.questionType] = (qTypeDist[q.questionType] || 0) + 1;
 });
 
-// Verify per-Study-Unit answer-key balance (no option > 36% or < 15%)
+// Verify per-Study-Unit answer-key balance (no option > 36% or < 15%) and overall longest-option rate (18%-30%)
+const longestCorrectShare = longestIsCorrectCount / Math.max(1, (DATA.questions || []).length);
+if (longestCorrectShare > 0.30 || longestCorrectShare < 0.18) {
+  fail('LONGEST_OPT_BIAS', `Longest option is correct in ${(longestCorrectShare * 100).toFixed(1)}% of questions (${longestIsCorrectCount}/${(DATA.questions || []).length}); expected 18%-30%`);
+}
 Object.entries(suAnsDist).forEach(([su, counts]) => {
   const total = counts.reduce((a, b) => a + b, 0);
   counts.forEach((cnt, optIdx) => {

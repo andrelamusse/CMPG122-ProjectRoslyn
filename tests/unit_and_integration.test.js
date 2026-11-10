@@ -621,7 +621,8 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
     assert.ok(appSrc.includes("postMessage({ type: 'SKIP_WAITING' })"), 'app.js must post SKIP_WAITING to waiting/installed workers');
   });
 
-  it('enforces psychometric option-length symmetry, zero asymmetric parenthetical coaching, and realistic C# file extensions across all 585 questions and 24 Spot-the-Error items', () => {
+  it('enforces psychometric option-length symmetry, zero asymmetric parenthetical coaching, zero canned suffixes, and realistic C# file extensions across all 585 questions and 24 Spot-the-Error items', () => {
+    const cannedOptionSuffixRe = /within the current form class instance|before returning to the calling method|before updating the target UI control|on the active Windows Form canvas|during standard GUI event execution|when the Windows Forms control processes the action|when evaluating operator task performance on screen|under \.NET runtime execution|when evaluating the numeric expression in the handler|when executing the loop body in the event handler|when processing the event handler on the active form|when opening or closing forms in the Windows Forms project/i;
     function isCodeParen(prefix) {
       const prevToken = (prefix.trim().match(/([A-Za-z0-9_`]+)$/) || [])[1] || '';
       if (/^(if|for|while|switch|catch)$/.test(prevToken)) return true;
@@ -651,6 +652,7 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
       return false;
     }
 
+    let longestCorrectCount = 0;
     for (const q of DATA.questions) {
       const opts = q.options;
       const ans = opts[q.answer];
@@ -660,13 +662,17 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
       const minD = Math.min(...dists.map(d => d.length));
       const avgD = dists.reduce((a, b) => a + b.length, 0) / dists.length;
 
+      if (ansLen > maxD) longestCorrectCount++;
       assert.ok(!(ansLen > 25 && (ansLen > maxD * 1.28 || ansLen > avgD * 1.38)), `${q.id} option length giveaway: ansLen=${ansLen}, maxD=${maxD}, avgD=${Math.round(avgD)}`);
       assert.ok(!(minD > 25 && minD > ansLen * 1.45), `${q.id} short option giveaway: ansLen=${ansLen}, minD=${minD}`);
       assert.equal(hasProseParen(ans) && !dists.some(hasProseParen), false, `${q.id} has asymmetric parenthetical prose in correct answer: ${ans}`);
       for (const o of opts) {
         assert.equal(/\b[A-Za-z0-9_]+Form\.(html|css|main|header|body|sub)\b/i.test(o), false, `${q.id} has implausible non-C# form file extension: ${o}`);
+        assert.equal(cannedOptionSuffixRe.test(o), false, `${q.id} has canned boilerplate distractor suffix: ${o}`);
       }
     }
+    const longestShare = longestCorrectCount / DATA.questions.length;
+    assert.ok(longestShare >= 0.18 && longestShare <= 0.30, `Longest option is correct in ${(longestShare * 100).toFixed(1)}% of questions (${longestCorrectCount}/${DATA.questions.length})`);
 
     for (const se of DATA.spotErrors) {
       const opts = se.options;
@@ -683,25 +689,57 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
     }
   });
 
-  it('verifies silent telemetry engine (1-minute idle cutoff, SHA-256 IP deduplication, question hooks, and strict student blinding)', async () => {
+  it('verifies silent telemetry engine (1-minute idle cutoff, SHA-256 IP deduplication, 3-arg PersistenceManager question hook, and strict student blinding)', async () => {
     const fs = require('node:fs');
     const path = require('node:path');
+    global.localStorage = createMemoryStorage();
+    global.CMPG122_PERSISTENCE = PersistenceMod;
     const telemetry = require(path.join(__dirname, '..', 'js', 'telemetry.js'));
 
-    // 1. SHA-256 deterministic hashing
+    // 1. SHA-256 deterministic hashing & offline device deduplication
     const h1 = await telemetry.sha256Hex('cmpg122_ip_salt_v2::196.21.45.10');
     const h2 = telemetry.sha256HexSync('cmpg122_ip_salt_v2::196.21.45.10');
     assert.equal(h1.length, 64);
     assert.equal(h1, h2);
 
-    // 2. Strict 60-second (60000ms) idle cutoff
+    const resolved1 = await telemetry.resolveDeviceHash();
+    const resolved2 = await telemetry.resolveDeviceHash();
+    assert.equal(resolved1.length, 64);
+    assert.equal(resolved1, resolved2, 'Repeated resolveDeviceHash calls must deduplicate to the same SHA-256 device hash');
+    assert.equal(global.localStorage.getItem(telemetry.STORAGE_KEYS.DEVICE_HASH), resolved1);
+
+    // 2. Strict 60-second (60000ms) idle cutoff & immediate activeUsersNow dropoff
     const baseTs = 1700000000000;
     telemetry.setLastActivityTimeForTest(baseTs);
     assert.equal(telemetry.isIdle(baseTs + 30000), false, 'Should be active within 30s of interaction');
     assert.equal(telemetry.isIdle(baseTs + 60000), false, 'Should be active at exactly 60s');
     assert.equal(telemetry.isIdle(baseTs + 60001), true, 'Must pause immediately after 60s (60001ms) without interaction');
 
-    // 3. Student app blinding check
+    assert.equal(telemetry.tickActiveSecond(baseTs + 10000), true);
+    assert.equal(telemetry.computeAggregatedMetrics(baseTs + 10000).activeUsersNow, 1);
+    assert.equal(telemetry.tickActiveSecond(baseTs + 60001), false, 'Idle tick must not increment active time');
+    assert.equal(telemetry.computeAggregatedMetrics(baseTs + 60001).activeUsersNow, 0, 'Transitioning to idle (>60s) must immediately drop device from activeUsersNow');
+
+    // 3. PersistenceManager.prototype.recordQuestionAttempt(question, selectedIndex, isCorrect, elapsedMs) hook
+    telemetry.attachQuestionHooks();
+    const pm = new PersistenceMod.PersistenceManager({ localStorage: createMemoryStorage(), indexedDB: null });
+    await pm.init();
+    const beforeMetrics = telemetry.computeAggregatedMetrics();
+    // Option A (selectedIndex = 0) answered CORRECTLY (isCorrect = true)
+    await pm.recordQuestionAttempt(DATA.questions[0], 0, true, 500);
+    const afterCorrectA = telemetry.computeAggregatedMetrics();
+    assert.equal(afterCorrectA.totalQuestionsAnswered, beforeMetrics.totalQuestionsAnswered + 1);
+    assert.equal(afterCorrectA.totalCorrectAnswers, beforeMetrics.totalCorrectAnswers + 1, 'Option A (selectedIndex=0) with isCorrect=true must increment totalCorrectAnswers');
+    assert.equal(afterCorrectA.totalWrongAnswers, beforeMetrics.totalWrongAnswers);
+
+    // Option C (selectedIndex = 2) answered WRONGLY (isCorrect = false)
+    await pm.recordQuestionAttempt(DATA.questions[1], 2, false, 500);
+    const afterWrongC = telemetry.computeAggregatedMetrics();
+    assert.equal(afterWrongC.totalQuestionsAnswered, beforeMetrics.totalQuestionsAnswered + 2);
+    assert.equal(afterWrongC.totalCorrectAnswers, beforeMetrics.totalCorrectAnswers + 1);
+    assert.equal(afterWrongC.totalWrongAnswers, beforeMetrics.totalWrongAnswers + 1, 'Option C (selectedIndex=2) with isCorrect=false must increment totalWrongAnswers');
+
+    // 4. Student app blinding check
     const indexSrc = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
     const telemetrySrc = fs.readFileSync(path.join(__dirname, '..', 'js', 'telemetry.js'), 'utf8');
     const adminSrc = fs.readFileSync(path.join(__dirname, '..', 'admin.html'), 'utf8');

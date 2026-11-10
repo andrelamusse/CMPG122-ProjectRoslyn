@@ -661,15 +661,38 @@ def run_suite():
             total_wrg_val = int(admin_page.locator('#metricWrongAnswers').inner_text().replace(',', '').strip())
             acc_badge_txt = admin_page.locator('#metricAccuracyBadge').inner_text().strip()
 
-            assert_true(active_users_val >= 1, f'Expected >=1 Live Active Users on admin.html, got {active_users_val}')
-            assert_true(total_devices_val >= 1, f'Expected >=1 IP-deduplicated Total Devices on admin.html, got {total_devices_val}')
+            assert_true(active_users_val == 1, f'Expected 1 Live Active User on admin.html, got {active_users_val}')
+            assert_true(total_devices_val == 1, f'Expected 1 IP-deduplicated Total Device on admin.html across reloads, got {total_devices_val}')
             assert_true('h ' in active_time_txt and active_time_txt.endswith('m'), f'Expected Hours & Minutes format (Xh Ym), got {active_time_txt}')
             assert_true(total_ans_val >= 5 and total_ans_val == (total_cor_val + total_wrg_val), f'Expected answered == correct + wrong >= 5, got {total_ans_val} ({total_cor_val} + {total_wrg_val})')
+            assert_true(total_cor_val >= 3, f'Expected >=3 verified correct answers recorded, got {total_cor_val}')
             assert_true('Accuracy:' in acc_badge_txt and '%' in acc_badge_txt, f'Expected Accuracy % badge on admin.html, got {acc_badge_txt}')
+
+            # Verify live idle drop-off on admin.html when student is idle > 60s, and live recovery on interaction
+            page.evaluate('''() => {
+              const t = window.CMPG122_TELEMETRY;
+              const now = Date.now();
+              t.setLastActivityTimeForTest(now - 65000);
+              t.tickActiveSecond(now);
+            }''')
+            admin_page.wait_for_timeout(150)
+            active_after_idle = int(admin_page.locator('#metricActiveUsers').inner_text().replace(',', '').strip())
+            assert_true(active_after_idle == 0, f'Expected Live Active Users to drop to 0 immediately when idle > 60s, got {active_after_idle}')
+
+            page.evaluate('''() => {
+              const t = window.CMPG122_TELEMETRY;
+              const now = Date.now();
+              t.setLastActivityTimeForTest(now);
+              t.sendHeartbeatIfActive();
+            }''')
+            admin_page.wait_for_timeout(150)
+            active_after_resume = int(admin_page.locator('#metricActiveUsers').inner_text().replace(',', '').strip())
+            assert_true(active_after_resume == 1, f'Expected Live Active Users to return to 1 on interaction, got {active_after_resume}')
+
             assert_true(len(admin_errors) == 0, f'admin.html threw JS errors: {admin_errors}')
             admin_page.close()
             results_summary['adminTelemetryDashboard'] = True
-            print(f'[+] Verified Private Admin Telemetry Dashboard (admin.html): Active={active_users_val}, Devices={total_devices_val}, Time={active_time_txt}, Answered={total_ans_val} ({total_cor_val}C/{total_wrg_val}W, {acc_badge_txt}).')
+            print(f'[+] Verified Private Admin Telemetry Dashboard (admin.html): Active={active_users_val}->0->1, Devices={total_devices_val}, Time={active_time_txt}, Answered={total_ans_val} ({total_cor_val}C/{total_wrg_val}W, {acc_badge_txt}).')
 
             # Standalone Mobile/Offline Bundle Verification on file://
             assert_true(STANDALONE_HTML.exists(), f'Missing standalone bundle {STANDALONE_HTML}')

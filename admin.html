@@ -293,16 +293,14 @@
         };
 
         const inTs = Number(incoming.lastSeen || incoming.ts || 0);
-        if (incoming.leave && inTs >= existing.lastSeen) {
-          existing.lastHeartbeat = 0;
+        const hasExplicitHb = incoming.lastHeartbeat !== undefined || incoming.hb !== undefined;
+        const inHb = Number(incoming.lastHeartbeat !== undefined ? incoming.lastHeartbeat : (incoming.hb !== undefined ? incoming.hb : inTs));
+        if (inTs >= existing.lastSeen) {
           existing.lastSeen = inTs;
-        } else {
-          const inHb = Number(incoming.lastHeartbeat !== undefined ? incoming.lastHeartbeat : (incoming.hb !== undefined ? incoming.hb : inTs));
-          if (inHb > existing.lastHeartbeat) {
-            existing.lastHeartbeat = inHb;
-          }
-          if (inTs > existing.lastSeen) {
-            existing.lastSeen = inTs;
+          if (incoming.leave || (hasExplicitHb && inHb === 0)) {
+            existing.lastHeartbeat = 0;
+          } else {
+            existing.lastHeartbeat = Math.max(existing.lastHeartbeat, inHb);
           }
         }
 
