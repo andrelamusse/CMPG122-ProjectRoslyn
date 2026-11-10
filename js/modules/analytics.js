@@ -197,7 +197,12 @@
       };
     }
 
-    // 5. Flagged & Understood queues
+    // 5. Flagged, Unanswered & Understood queues
+    const unansweredMap = (state && state.unansweredQuestions) || {};
+    const unansweredQueue = Object.keys(unansweredMap)
+      .filter(id => unansweredMap[id] && !understoodMap[id] && qMap.has(id))
+      .map(id => qMap.get(id));
+
     const flaggedQueue = Object.keys(flaggedMap)
       .filter(id => flaggedMap[id] && qMap.has(id))
       .map(id => qMap.get(id));
@@ -206,7 +211,7 @@
       .filter(id => understoodMap[id] && qMap.has(id))
       .map(id => qMap.get(id));
 
-    // Unanswered questions from most recent exam (if any) or unattempted pool count
+    // Unattempted questions across bank
     const unattemptedCount = Math.max(0, questions.length - uniqueAttempted);
 
     return {
@@ -235,6 +240,7 @@
       examDeltaPct,
       pacingTrend,
       incorrectQueue,
+      unansweredQueue,
       flaggedQueue,
       understoodQueue,
       recentActivity: (state && state.recentActivity) || []

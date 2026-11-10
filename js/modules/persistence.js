@@ -45,6 +45,7 @@
       completedUnits: {},       // { [su]: timestampMs }
       understoodQuestions: {},  // { [questionId]: timestampMs }
       flaggedQuestions: {},     // { [questionId]: true }
+      unansweredQuestions: {},  // { [questionId]: timestampMs } from submitted exams until answered
       questionHistory: {},      // { [questionId]: { attempts, correct, incorrect, lastSelected, isCorrect, lastAttemptAt, totalTimeMs, su, topic, questionType } }
       examResults: [],          // [{ id, mode, title, rawMarks, totalMarks, percentage, correctCount, incorrectCount, unansweredCount, durationSeconds, completedAt, byUnit, byTopic }]
       recentActivity: [],       // [{ type, label, detail, timestamp }]
@@ -87,6 +88,7 @@
     out.completedUnits = copySafeMap(raw.completedUnits, v => typeof v === 'number' || typeof v === 'boolean');
     out.understoodQuestions = copySafeMap(raw.understoodQuestions, v => typeof v === 'number' || typeof v === 'boolean');
     out.flaggedQuestions = copySafeMap(raw.flaggedQuestions, v => Boolean(v) === true);
+    out.unansweredQuestions = copySafeMap(raw.unansweredQuestions, v => typeof v === 'number' || typeof v === 'boolean');
 
     // Migrate v1 solvedIds array if present
     if (ver < 2 && Array.isArray(raw.solvedIds)) {
@@ -410,6 +412,9 @@
       prev.questionType = question.questionType || prev.questionType;
 
       this._state.questionHistory[qId] = prev;
+      if (this._state.unansweredQuestions && this._state.unansweredQuestions[qId]) {
+        delete this._state.unansweredQuestions[qId];
+      }
       this._pushActivity('practice', `${question.su}: ${isCorrect ? 'Answered correctly' : 'Needs review'}`, question.topicTitle || question.id);
       return this.saveState();
     }
@@ -459,6 +464,15 @@
     }
 
     recordExamResult(resultRecord) {
+      if (resultRecord && Array.isArray(resultRecord.detailedItems)) {
+        if (!this._state.unansweredQuestions) this._state.unansweredQuestions = {};
+        const now = Date.now();
+        resultRecord.detailedItems.forEach(item => {
+          if (item && item.questionId && item.outcome === 'unanswered') {
+            this._state.unansweredQuestions[item.questionId] = now;
+          }
+        });
+      }
       const clean = migrateState({
         schemaVersion: CURRENT_SCHEMA_VERSION,
         examResults: [...this._state.examResults, resultRecord]

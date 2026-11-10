@@ -157,72 +157,72 @@
     </svg>`;
   }
 
-  // 7 Educational Vector SVG Diagrams (one per Study Unit)
+  // 7 Educational Vector SVG Diagrams (one per Study Unit, 100% theme-token-aware for Dark & Light WCAG AA contrast)
   const EDUCATIONAL_DIAGRAMS = {
     svg_su7_hci: () => `<svg class="edu-svg-diagram" viewBox="0 0 680 210" role="img" aria-labelledby="svg_su7_t svg_su7_d">
       <title id="svg_su7_t">Norman's Action Cycle: Gulf of Execution and Gulf of Evaluation</title>
       <desc id="svg_su7_d">Shows user goal flowing across the Gulf of Execution via Windows Forms input controls to system state, and returning via output Labels across the Gulf of Evaluation.</desc>
-      <rect x="16" y="58" width="160" height="92" rx="12" fill="var(--surface-2)" stroke="#38bdf8" stroke-width="2"/>
+      <rect x="16" y="58" width="160" height="92" rx="12" fill="var(--surface-2)" stroke="var(--status-info-text)" stroke-width="2"/>
       <text x="96" y="96" text-anchor="middle" fill="var(--text-primary)" font-weight="700" font-size="14">USER GOAL</text>
       <text x="96" y="118" text-anchor="middle" fill="var(--text-muted)" font-size="12">Intention &amp; Evaluation</text>
 
-      <rect x="504" y="58" width="160" height="92" rx="12" fill="var(--surface-2)" stroke="#8b5cf6" stroke-width="2"/>
+      <rect x="504" y="58" width="160" height="92" rx="12" fill="var(--surface-2)" stroke="var(--accent-primary)" stroke-width="2"/>
       <text x="584" y="96" text-anchor="middle" fill="var(--text-primary)" font-weight="700" font-size="14">WINDOWS FORM</text>
       <text x="584" y="118" text-anchor="middle" fill="var(--text-muted)" font-size="12">Controls &amp; C# State</text>
 
-      <path d="M184 74 C 280 22, 400 22, 494 74" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
-      <polygon points="496,75 485,68 488,79" fill="#38bdf8"/>
+      <path d="M184 74 C 280 22, 400 22, 494 74" fill="none" stroke="var(--status-info-text)" stroke-width="2.5"/>
+      <polygon points="496,75 485,68 488,79" fill="var(--status-info-text)"/>
       <rect x="235" y="14" width="210" height="34" rx="8" fill="var(--surface-3)" stroke="var(--border-subtle)"/>
-      <text x="340" y="35" text-anchor="middle" fill="#38bdf8" font-weight="700" font-size="12">Gulf of Execution (btn, rad, TabIndex)</text>
+      <text x="340" y="35" text-anchor="middle" fill="var(--status-info-text)" font-weight="700" font-size="12">Gulf of Execution (btn, rad, TabIndex)</text>
 
-      <path d="M496 136 C 400 188, 280 188, 186 136" fill="none" stroke="#4ade80" stroke-width="2.5"/>
-      <polygon points="184,135 195,142 192,131" fill="#4ade80"/>
+      <path d="M496 136 C 400 188, 280 188, 186 136" fill="none" stroke="var(--status-success-text)" stroke-width="2.5"/>
+      <polygon points="184,135 195,142 192,131" fill="var(--status-success-text)"/>
       <rect x="230" y="162" width="220" height="34" rx="8" fill="var(--surface-3)" stroke="var(--border-subtle)"/>
-      <text x="340" y="183" text-anchor="middle" fill="#4ade80" font-weight="700" font-size="12">Gulf of Evaluation (lblStatus, MessageBox)</text>
+      <text x="340" y="183" text-anchor="middle" fill="var(--status-success-text)" font-weight="700" font-size="12">Gulf of Evaluation (lblStatus, MessageBox)</text>
     </svg>`,
 
     svg_su1_ide: () => `<svg class="edu-svg-diagram" viewBox="0 0 680 215" role="img" aria-labelledby="svg_su1_t">
       <title id="svg_su1_t">Visual Studio Windows Form Anatomy &amp; Event Dispatch</title>
       <rect x="18" y="18" width="290" height="178" rx="10" fill="var(--surface-2)" stroke="var(--accent-primary)" stroke-width="2"/>
-      <rect x="18" y="18" width="290" height="28" rx="8" fill="var(--accent-primary)"/>
-      <text x="30" y="37" fill="#fff" font-size="12" font-weight="700">Form1 (Text = "Quote Calculator")</text>
+      <rect x="18" y="18" width="290" height="28" rx="8" fill="var(--accent-primary-strong)"/>
+      <text x="30" y="37" fill="var(--text-on-accent)" font-size="12" font-weight="700">Form1 (Text = "Quote Calculator")</text>
       <rect x="34" y="60" width="110" height="24" rx="4" fill="var(--surface-3)" stroke="var(--border-strong)"/>
       <text x="42" y="76" fill="var(--text-secondary)" font-family="monospace" font-size="11">txtAmount</text>
-      <rect x="158" y="60" width="132" height="24" rx="4" fill="var(--surface-3)" stroke="#22d3ee"/>
-      <text x="166" y="76" fill="#22d3ee" font-family="monospace" font-size="11">lblTotal</text>
-      <rect x="34" y="102" width="126" height="32" rx="6" fill="#6d4aff"/>
-      <text x="97" y="122" text-anchor="middle" fill="#fff" font-family="monospace" font-size="11" font-weight="700">btnCalc (&amp;Calc)</text>
+      <rect x="158" y="60" width="132" height="24" rx="4" fill="var(--surface-3)" stroke="var(--status-info-text)"/>
+      <text x="166" y="76" fill="var(--status-info-text)" font-family="monospace" font-size="11">lblTotal</text>
+      <rect x="34" y="102" width="126" height="32" rx="6" fill="var(--accent-primary-strong)"/>
+      <text x="97" y="122" text-anchor="middle" fill="var(--text-on-accent)" font-family="monospace" font-size="11" font-weight="700">btnCalc (&amp;Calc)</text>
       <rect x="174" y="98" width="116" height="78" rx="6" fill="var(--surface-3)" stroke="var(--border-subtle)" stroke-dasharray="4 3"/>
       <text x="232" y="135" text-anchor="middle" fill="var(--text-muted)" font-family="monospace" font-size="11">picLogo</text>
       <text x="232" y="152" text-anchor="middle" fill="var(--text-muted)" font-size="10">SizeMode: Zoom</text>
 
-      <line x1="316" y1="118" x2="378" y2="118" stroke="#fb923c" stroke-width="2.5"/>
-      <polygon points="382,118 372,112 372,124" fill="#fb923c"/>
-      <text x="348" y="108" text-anchor="middle" fill="#fb923c" font-size="11" font-weight="700">Click</text>
+      <line x1="316" y1="118" x2="378" y2="118" stroke="var(--status-warning-text)" stroke-width="2.5"/>
+      <polygon points="382,118 372,112 372,124" fill="var(--status-warning-text)"/>
+      <text x="348" y="108" text-anchor="middle" fill="var(--status-warning-text)" font-size="11" font-weight="700">Click</text>
 
-      <rect x="386" y="34" width="276" height="146" rx="10" fill="var(--surface-2)" stroke="#fb923c" stroke-width="1.8"/>
-      <text x="402" y="60" fill="#a78bfa" font-family="monospace" font-size="11.5">private void btnCalc_Click(...)</text>
+      <rect x="386" y="34" width="276" height="146" rx="10" fill="var(--surface-2)" stroke="var(--status-warning-text)" stroke-width="1.8"/>
+      <text x="402" y="60" fill="var(--accent-tertiary)" font-family="monospace" font-size="11.5">private void btnCalc_Click(...)</text>
       <text x="402" y="80" fill="var(--text-primary)" font-family="monospace" font-size="11.5">{</text>
-      <text x="416" y="102" fill="#4ade80" font-family="monospace" font-size="11.5">lblTotal.Text = "R 250.00";</text>
-      <text x="416" y="124" fill="#38bdf8" font-family="monospace" font-size="11.5">picLogo.Visible = true;</text>
+      <text x="416" y="102" fill="var(--status-success-text)" font-family="monospace" font-size="11.5">lblTotal.Text = "R 250.00";</text>
+      <text x="416" y="124" fill="var(--status-info-text)" font-family="monospace" font-size="11.5">picLogo.Visible = true;</text>
       <text x="402" y="146" fill="var(--text-primary)" font-family="monospace" font-size="11.5">}</text>
     </svg>`,
 
     svg_su2_types: () => `<svg class="edu-svg-diagram" viewBox="0 0 680 200" role="img" aria-labelledby="svg_su2_t">
       <title id="svg_su2_t">C# Integer Division Truncation vs Explicit Cast &amp; Decimal Currency</title>
-      <rect x="18" y="22" width="308" height="156" rx="10" fill="var(--surface-2)" stroke="#f87171" stroke-width="1.8"/>
-      <text x="34" y="48" fill="#f87171" font-weight="700" font-size="13">Integer Division Trap (int / int)</text>
+      <rect x="18" y="22" width="308" height="156" rx="10" fill="var(--surface-2)" stroke="var(--status-error-text)" stroke-width="1.8"/>
+      <text x="34" y="48" fill="var(--status-error-text)" font-weight="700" font-size="13">Integer Division Trap (int / int)</text>
       <text x="34" y="78" fill="var(--text-primary)" font-family="monospace" font-size="12">double d = 15 / 2;</text>
       <text x="34" y="104" fill="var(--text-muted)" font-size="12">1. 15 / 2 runs as int / int = 7</text>
       <text x="34" y="126" fill="var(--text-muted)" font-size="12">2. Fraction .5 is truncated FIRST</text>
-      <text x="34" y="152" fill="#f87171" font-family="monospace" font-weight="700" font-size="12">Result: d == 7.0 (NOT 7.5!)</text>
+      <text x="34" y="152" fill="var(--status-error-text)" font-family="monospace" font-weight="700" font-size="12">Result: d == 7.0 (NOT 7.5!)</text>
 
-      <rect x="354" y="22" width="308" height="156" rx="10" fill="var(--surface-2)" stroke="#4ade80" stroke-width="1.8"/>
-      <text x="370" y="48" fill="#4ade80" font-weight="700" font-size="13">Explicit Cast &amp; Decimal Money</text>
+      <rect x="354" y="22" width="308" height="156" rx="10" fill="var(--surface-2)" stroke="var(--status-success-text)" stroke-width="1.8"/>
+      <text x="370" y="48" fill="var(--status-success-text)" font-weight="700" font-size="13">Explicit Cast &amp; Decimal Money</text>
       <text x="370" y="78" fill="var(--text-primary)" font-family="monospace" font-size="12">double d = (double)15 / 2; // 7.5</text>
       <text x="370" y="106" fill="var(--text-primary)" font-family="monospace" font-size="12">decimal price = 149.95m;</text>
       <text x="370" y="132" fill="var(--text-muted)" font-size="12">Exact base-10 money with m suffix</text>
-      <text x="370" y="156" fill="#4ade80" font-family="monospace" font-weight="700" font-size="12">price.ToString("C") -&gt; R 149.95</text>
+      <text x="370" y="156" fill="var(--status-success-text)" font-family="monospace" font-weight="700" font-size="12">price.ToString("C") -&gt; R 149.95</text>
     </svg>`,
 
     svg_su3_decisions: () => `<svg class="edu-svg-diagram" viewBox="0 0 680 205" role="img" aria-labelledby="svg_su3_t">
@@ -234,99 +234,99 @@
       <line x1="150" y1="102" x2="196" y2="102" stroke="var(--text-muted)" stroke-width="2"/>
       <polygon points="200,102 191,97 191,107" fill="var(--text-muted)"/>
 
-      <polygon points="315,38 430,102 315,166 200,102" fill="var(--surface-2)" stroke="#fb923c" stroke-width="2"/>
+      <polygon points="315,38 430,102 315,166 200,102" fill="var(--surface-2)" stroke="var(--status-warning-text)" stroke-width="2"/>
       <text x="315" y="98" text-anchor="middle" fill="var(--text-primary)" font-family="monospace" font-size="11.5">int.TryParse(..., out n)</text>
-      <text x="315" y="115" text-anchor="middle" fill="#fb923c" font-family="monospace" font-size="11.5">&amp;&amp; n &gt; 0</text>
+      <text x="315" y="115" text-anchor="middle" fill="var(--status-warning-text)" font-family="monospace" font-size="11.5">&amp;&amp; n &gt; 0</text>
 
-      <line x1="430" y1="102" x2="492" y2="62" stroke="#4ade80" stroke-width="2.2"/>
-      <text x="454" y="70" fill="#4ade80" font-size="11" font-weight="700">true</text>
-      <rect x="494" y="34" width="168" height="54" rx="8" fill="var(--surface-2)" stroke="#4ade80" stroke-width="1.8"/>
-      <text x="578" y="58" text-anchor="middle" fill="#4ade80" font-weight="700" font-size="12">Safe Calculation</text>
+      <line x1="430" y1="102" x2="492" y2="62" stroke="var(--status-success-text)" stroke-width="2.2"/>
+      <text x="454" y="70" fill="var(--status-success-text)" font-size="11" font-weight="700">true</text>
+      <rect x="494" y="34" width="168" height="54" rx="8" fill="var(--surface-2)" stroke="var(--status-success-text)" stroke-width="1.8"/>
+      <text x="578" y="58" text-anchor="middle" fill="var(--status-success-text)" font-weight="700" font-size="12">Safe Calculation</text>
       <text x="578" y="76" text-anchor="middle" fill="var(--text-secondary)" font-family="monospace" font-size="11">total = n * rate;</text>
 
-      <line x1="430" y1="102" x2="492" y2="144" stroke="#f87171" stroke-width="2.2"/>
-      <text x="454" y="142" fill="#f87171" font-size="11" font-weight="700">false</text>
-      <rect x="494" y="118" width="168" height="58" rx="8" fill="var(--surface-2)" stroke="#f87171" stroke-width="1.8"/>
-      <text x="578" y="141" text-anchor="middle" fill="#f87171" font-weight="700" font-size="12">No Crash Recovery</text>
+      <line x1="430" y1="102" x2="492" y2="144" stroke="var(--status-error-text)" stroke-width="2.2"/>
+      <text x="454" y="142" fill="var(--status-error-text)" font-size="11" font-weight="700">false</text>
+      <rect x="494" y="118" width="168" height="58" rx="8" fill="var(--surface-2)" stroke="var(--status-error-text)" stroke-width="1.8"/>
+      <text x="578" y="141" text-anchor="middle" fill="var(--status-error-text)" font-weight="700" font-size="12">No Crash Recovery</text>
       <text x="578" y="160" text-anchor="middle" fill="var(--text-secondary)" font-family="monospace" font-size="10.5">MessageBox + Focus()</text>
     </svg>`,
 
     svg_su4_loops_files: () => `<svg class="edu-svg-diagram" viewBox="0 0 680 210" role="img" aria-labelledby="svg_su4_t">
       <title id="svg_su4_t">Pretest vs Posttest Loops &amp; Sequential File I/O</title>
-      <rect x="18" y="20" width="204" height="170" rx="10" fill="var(--surface-2)" stroke="#4ade80" stroke-width="1.8"/>
-      <text x="120" y="45" text-anchor="middle" fill="#4ade80" font-weight="700" font-size="12.5">while / for (Pretest: 0+ runs)</text>
+      <rect x="18" y="20" width="204" height="170" rx="10" fill="var(--surface-2)" stroke="var(--status-success-text)" stroke-width="1.8"/>
+      <text x="120" y="45" text-anchor="middle" fill="var(--status-success-text)" font-weight="700" font-size="12.5">while / for (Pretest: 0+ runs)</text>
       <text x="32" y="74" fill="var(--text-primary)" font-family="monospace" font-size="11">1. Check condition FIRST</text>
       <text x="32" y="98" fill="var(--text-primary)" font-family="monospace" font-size="11">2. Run body if true</text>
       <text x="32" y="122" fill="var(--text-primary)" font-family="monospace" font-size="11">3. Update counter (i++)</text>
       <text x="32" y="156" fill="var(--text-muted)" font-size="11">do-while (Posttest): body</text>
       <text x="32" y="172" fill="var(--text-muted)" font-size="11">runs AT LEAST ONCE first!</text>
 
-      <rect x="238" y="20" width="204" height="170" rx="10" fill="var(--surface-2)" stroke="#38bdf8" stroke-width="1.8"/>
-      <text x="340" y="45" text-anchor="middle" fill="#38bdf8" font-weight="700" font-size="12.5">StreamWriter &amp; StreamReader</text>
-      <text x="250" y="74" fill="#f87171" font-family="monospace" font-size="10.8">CreateText -&gt; Overwrites!</text>
-      <text x="250" y="96" fill="#4ade80" font-family="monospace" font-size="10.8">AppendText -&gt; Keeps data</text>
+      <rect x="238" y="20" width="204" height="170" rx="10" fill="var(--surface-2)" stroke="var(--status-info-text)" stroke-width="1.8"/>
+      <text x="340" y="45" text-anchor="middle" fill="var(--status-info-text)" font-weight="700" font-size="12.5">StreamWriter &amp; StreamReader</text>
+      <text x="250" y="74" fill="var(--status-error-text)" font-family="monospace" font-size="10.8">CreateText -&gt; Overwrites!</text>
+      <text x="250" y="96" fill="var(--status-success-text)" font-family="monospace" font-size="10.8">AppendText -&gt; Keeps data</text>
       <text x="250" y="124" fill="var(--text-primary)" font-family="monospace" font-size="10.8">while (!sr.EndOfStream)</text>
       <text x="250" y="144" fill="var(--text-primary)" font-family="monospace" font-size="10.8">  line = sr.ReadLine();</text>
-      <text x="250" y="170" fill="#fb923c" font-family="monospace" font-size="10.8">sr.Close(); // Mandatory!</text>
+      <text x="250" y="170" fill="var(--status-warning-text)" font-family="monospace" font-size="10.8">sr.Close(); // Mandatory!</text>
 
-      <rect x="458" y="20" width="204" height="170" rx="10" fill="var(--surface-2)" stroke="#a78bfa" stroke-width="1.8"/>
-      <text x="560" y="45" text-anchor="middle" fill="#a78bfa" font-weight="700" font-size="12.5">Random.Next(min, max)</text>
+      <rect x="458" y="20" width="204" height="170" rx="10" fill="var(--surface-2)" stroke="var(--accent-tertiary)" stroke-width="1.8"/>
+      <text x="560" y="45" text-anchor="middle" fill="var(--accent-tertiary)" font-weight="700" font-size="12.5">Random.Next(min, max)</text>
       <text x="472" y="78" fill="var(--text-primary)" font-family="monospace" font-size="11">rand.Next(1, 7)</text>
-      <text x="472" y="104" fill="#4ade80" font-size="11.5">min = 1 (INCLUSIVE)</text>
-      <text x="472" y="126" fill="#f87171" font-size="11.5">max = 7 (EXCLUSIVE)</text>
+      <text x="472" y="104" fill="var(--status-success-text)" font-size="11.5">min = 1 (INCLUSIVE)</text>
+      <text x="472" y="126" fill="var(--status-error-text)" font-size="11.5">max = 7 (EXCLUSIVE)</text>
       <text x="472" y="156" fill="var(--text-secondary)" font-family="monospace" font-size="11">Outputs: 1, 2, 3, 4, 5, 6</text>
     </svg>`,
 
     svg_su5_methods: () => `<svg class="edu-svg-diagram" viewBox="0 0 680 205" role="img" aria-labelledby="svg_su5_t">
       <title id="svg_su5_t">C# Parameter Passing Modes: Value vs ref vs out</title>
-      <rect x="16" y="22" width="204" height="162" rx="10" fill="var(--surface-2)" stroke="#38bdf8" stroke-width="1.8"/>
-      <text x="118" y="48" text-anchor="middle" fill="#38bdf8" font-weight="700" font-size="13">Pass-by-Value (Default)</text>
+      <rect x="16" y="22" width="204" height="162" rx="10" fill="var(--surface-2)" stroke="var(--status-info-text)" stroke-width="1.8"/>
+      <text x="118" y="48" text-anchor="middle" fill="var(--status-info-text)" font-weight="700" font-size="13">Pass-by-Value (Default)</text>
       <text x="30" y="76" fill="var(--text-primary)" font-family="monospace" font-size="11">Calc(x)</text>
       <text x="30" y="102" fill="var(--text-muted)" font-size="11.5">• Copies value into callee</text>
       <text x="30" y="124" fill="var(--text-muted)" font-size="11.5">• Caller variable UNCHANGED</text>
       <text x="30" y="146" fill="var(--text-muted)" font-size="11.5">• Accepts literals &amp; exprs</text>
 
-      <rect x="238" y="22" width="204" height="162" rx="10" fill="var(--surface-2)" stroke="#a78bfa" stroke-width="1.8"/>
-      <text x="340" y="48" text-anchor="middle" fill="#a78bfa" font-weight="700" font-size="13">Pass-by-Reference (ref)</text>
+      <rect x="238" y="22" width="204" height="162" rx="10" fill="var(--surface-2)" stroke="var(--accent-tertiary)" stroke-width="1.8"/>
+      <text x="340" y="48" text-anchor="middle" fill="var(--accent-tertiary)" font-weight="700" font-size="13">Pass-by-Reference (ref)</text>
       <text x="252" y="76" fill="var(--text-primary)" font-family="monospace" font-size="11">Update(ref x)</text>
-      <text x="252" y="102" fill="#fb923c" font-size="11.5">• MUST init BEFORE call</text>
+      <text x="252" y="102" fill="var(--status-warning-text)" font-size="11.5">• MUST init BEFORE call</text>
       <text x="252" y="124" fill="var(--text-muted)" font-size="11.5">• Two-way memory alias</text>
       <text x="252" y="146" fill="var(--text-muted)" font-size="11.5">• Callee MAY modify x</text>
 
-      <rect x="460" y="22" width="204" height="162" rx="10" fill="var(--surface-2)" stroke="#4ade80" stroke-width="1.8"/>
-      <text x="562" y="48" text-anchor="middle" fill="#4ade80" font-weight="700" font-size="13">Output Reference (out)</text>
+      <rect x="460" y="22" width="204" height="162" rx="10" fill="var(--surface-2)" stroke="var(--status-success-text)" stroke-width="1.8"/>
+      <text x="562" y="48" text-anchor="middle" fill="var(--status-success-text)" font-weight="700" font-size="13">Output Reference (out)</text>
       <text x="474" y="76" fill="var(--text-primary)" font-family="monospace" font-size="11">TryRead(s, out x)</text>
       <text x="474" y="102" fill="var(--text-muted)" font-size="11.5">• Init NOT needed before call</text>
-      <text x="474" y="124" fill="#4ade80" font-size="11.5">• Callee MUST assign x</text>
+      <text x="474" y="124" fill="var(--status-success-text)" font-size="11.5">• Callee MUST assign x</text>
       <text x="474" y="146" fill="var(--text-muted)" font-size="11.5">• Keyword at header &amp; call</text>
     </svg>`,
 
     svg_su6_multiform: () => `<svg class="edu-svg-diagram" viewBox="0 0 680 210" role="img" aria-labelledby="svg_su6_t">
       <title id="svg_su6_t">Multiform Execution: Program.cs Startup, Modal ShowDialog vs Modeless Show</title>
-      <rect x="16" y="64" width="154" height="84" rx="10" fill="var(--surface-2)" stroke="#60a5fa" stroke-width="1.8"/>
-      <text x="93" y="92" text-anchor="middle" fill="#60a5fa" font-weight="700" font-size="12">Program.cs</text>
+      <rect x="16" y="64" width="154" height="84" rx="10" fill="var(--surface-2)" stroke="var(--status-info-text)" stroke-width="1.8"/>
+      <text x="93" y="92" text-anchor="middle" fill="var(--status-info-text)" font-weight="700" font-size="12">Program.cs</text>
       <text x="93" y="114" text-anchor="middle" fill="var(--text-primary)" font-family="monospace" font-size="10.5">Application.Run(</text>
       <text x="93" y="130" text-anchor="middle" fill="var(--text-primary)" font-family="monospace" font-size="10.5">  new Form1());</text>
 
-      <line x1="170" y1="106" x2="212" y2="106" stroke="#60a5fa" stroke-width="2"/>
-      <polygon points="216,106 207,101 207,111" fill="#60a5fa"/>
+      <line x1="170" y1="106" x2="212" y2="106" stroke="var(--status-info-text)" stroke-width="2"/>
+      <polygon points="216,106 207,101 207,111" fill="var(--status-info-text)"/>
 
       <rect x="218" y="42" width="176" height="128" rx="10" fill="var(--surface-2)" stroke="var(--accent-primary)" stroke-width="2"/>
       <text x="306" y="68" text-anchor="middle" fill="var(--text-primary)" font-weight="700" font-size="12.5">Form1 (Startup Form)</text>
       <text x="230" y="94" fill="var(--text-secondary)" font-family="monospace" font-size="10.5">var f2 = new Form2();</text>
-      <text x="230" y="114" fill="#4ade80" font-family="monospace" font-size="10.5">f2.lblOut.Text = val;</text>
-      <text x="230" y="134" fill="#fb923c" font-family="monospace" font-size="10.5">f2.ShowDialog();</text>
+      <text x="230" y="114" fill="var(--status-success-text)" font-family="monospace" font-size="10.5">f2.lblOut.Text = val;</text>
+      <text x="230" y="134" fill="var(--status-warning-text)" font-family="monospace" font-size="10.5">f2.ShowDialog();</text>
       <text x="230" y="154" fill="var(--text-muted)" font-size="10">Closing Form1 exits app!</text>
 
-      <line x1="394" y1="80" x2="454" y2="58" stroke="#fb923c" stroke-width="2"/>
-      <rect x="456" y="20" width="208" height="76" rx="9" fill="var(--surface-2)" stroke="#fb923c" stroke-width="1.8"/>
-      <text x="560" y="44" text-anchor="middle" fill="#fb923c" font-weight="700" font-size="12">Modal: f2.ShowDialog()</text>
+      <line x1="394" y1="80" x2="454" y2="58" stroke="var(--status-warning-text)" stroke-width="2"/>
+      <rect x="456" y="20" width="208" height="76" rx="9" fill="var(--surface-2)" stroke="var(--status-warning-text)" stroke-width="1.8"/>
+      <text x="560" y="44" text-anchor="middle" fill="var(--status-warning-text)" font-weight="700" font-size="12">Modal: f2.ShowDialog()</text>
       <text x="560" y="64" text-anchor="middle" fill="var(--text-muted)" font-size="11">Blocks other app forms &amp; pauses</text>
       <text x="560" y="80" text-anchor="middle" fill="var(--text-muted)" font-size="11">next C# line until f2 closes</text>
 
-      <line x1="394" y1="132" x2="454" y2="152" stroke="#38bdf8" stroke-width="2"/>
-      <rect x="456" y="114" width="208" height="76" rx="9" fill="var(--surface-2)" stroke="#38bdf8" stroke-width="1.8"/>
-      <text x="560" y="138" text-anchor="middle" fill="#38bdf8" font-weight="700" font-size="12">Modeless: f2.Show()</text>
+      <line x1="394" y1="132" x2="454" y2="152" stroke="var(--status-info-text)" stroke-width="2"/>
+      <rect x="456" y="114" width="208" height="76" rx="9" fill="var(--surface-2)" stroke="var(--status-info-text)" stroke-width="1.8"/>
+      <text x="560" y="138" text-anchor="middle" fill="var(--status-info-text)" font-weight="700" font-size="12">Modeless: f2.Show()</text>
       <text x="560" y="158" text-anchor="middle" fill="var(--text-muted)" font-size="11">Free focus switching &amp; next C#</text>
       <text x="560" y="174" text-anchor="middle" fill="var(--text-muted)" font-size="11">line executes IMMEDIATELY</text>
     </svg>`

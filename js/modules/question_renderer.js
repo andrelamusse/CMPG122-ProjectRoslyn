@@ -61,16 +61,19 @@
     const opts = question.options || question.opts || [];
     const isCorrect = qState && qState.selectedAnswer === correctIdx;
     const unanswered = !qState || typeof qState.selectedAnswer !== 'number';
+    const isBookmarkedOnly = Boolean(qState && qState.bookmarkedReview && unanswered);
 
-    const statusClass = isCorrect ? 'feedback-correct' : 'feedback-incorrect';
+    const statusClass = isBookmarkedOnly ? 'feedback-neutral' : (isCorrect ? 'feedback-correct' : 'feedback-incorrect');
     const statusIcon = icons
-      ? icons.icon(isCorrect ? 'check-circle' : 'x-circle', { size: 18 })
+      ? icons.icon(isBookmarkedOnly ? 'flag' : (isCorrect ? 'check-circle' : 'x-circle'), { size: 18 })
       : '';
-    const statusHeading = isCorrect
-      ? `Correct (+${question.marks || 2} marks)`
-      : unanswered
-        ? `Unanswered (0 / ${question.marks || 2} marks) — Correct Answer: ${LETTERS[correctIdx]}`
-        : `Incorrect (0 / ${question.marks || 2} marks) — Correct Answer: ${LETTERS[correctIdx]}`;
+    const statusHeading = isBookmarkedOnly
+      ? `Flagged for Review (Not Yet Attempted) — Correct Answer: ${LETTERS[correctIdx]}`
+      : isCorrect
+        ? `Correct (+${question.marks || 2} marks)`
+        : unanswered
+          ? `Unanswered (0 / ${question.marks || 2} marks) — Correct Answer: ${LETTERS[correctIdx]}`
+          : `Incorrect (0 / ${question.marks || 2} marks) — Correct Answer: ${LETTERS[correctIdx]}`;
 
     const expHtml = defsEngine
       ? defsEngine.renderTextWithInlineLinks(question.explanation || question.exp || '', { maxLinks: 3 })

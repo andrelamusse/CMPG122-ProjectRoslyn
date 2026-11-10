@@ -333,10 +333,17 @@ describe('7. Keyboard Shortcut System (A-E, 1-5, Enter & Guard Rules)', () => {
     assert.equal(ctrl.handleKeyDown({ key: 'a', target: { tagName: 'BODY' } }), false);
     assert.equal(ctrl.handleKeyDown({ key: '1', target: { tagName: 'BODY' } }), true);
     assert.equal(selected, 0);
+    // Enter on <summary> or <a> must NOT be hijacked even when question is graded
+    prefs.letterShortcutsEnabled = true;
+    submitted = 1;
+    advanced = 0;
+    assert.equal(ctrl.handleKeyDown({ key: 'Enter', target: { tagName: 'SUMMARY' } }), false);
+    assert.equal(ctrl.handleKeyDown({ key: 'Enter', target: { tagName: 'A' } }), false);
+    assert.equal(advanced, 0);
   });
 });
 
-describe('8. C# Syntax Highlighter & XSS Safety', () => {
+describe('8. C# Syntax Highlighter, Sandbox Edge Cases & Integer Division', () => {
   it('highlights C# keywords and escapes raw HTML injection safely', () => {
     const out = CSharpEngine.highlightCSharp('decimal total = 19.99m; // <img src=x onerror=alert(1)>');
     assert.ok(out.includes('class="tok-type"'));
@@ -344,4 +351,111 @@ describe('8. C# Syntax Highlighter & XSS Safety', () => {
     assert.ok(!out.includes('<img'));
     assert.ok(out.includes('&lt;img'));
   });
+
+  it('halts braceless and nested-paren infinite loops cleanly without hanging', () => {
+    const res1 = CSharpEngine.simulateExecution('int i = 0; while (i >= 0) i++;', [{ name: 't1', inputs: {}, expected: {} }]);
+    assert.equal(res1.success, false);
+    assert.match(res1.testResults[0].actual, /Infinite loop halted/);
+
+    const res2 = CSharpEngine.simulateExecution('while (true);', [{ name: 't2', inputs: {}, expected: {} }]);
+    assert.equal(res2.success, false);
+    assert.match(res2.testResults[0].actual, /Infinite loop halted/);
+
+    const res3 = CSharpEngine.simulateExecution('int k = 0; for (int i = 0; i < Math.Max(1, 5); i++) k += 2; lblOut.Text = k.ToString();', [
+      { name: 't3', inputs: {}, expected: { lblOut: '10' } }
+    ], { expectedOutputs: ['lblOut'] });
+    assert.equal(res3.success, true);
+  });
+
+  it('truncates C# int / int division while preserving explicit casts and decimal literals, and allows // inside strings', () => {
+    const diags = CSharpEngine.analyzeDiagnostics('string site = "https://nwu.ac.za";\nlblUrl.Text = site;');
+    assert.equal(diags.filter(d => d.severity === 'error').length, 0, 'URL with // inside string must not trigger false CS1002');
+
+    const divCode = `
+      int a = 7, b = 2;
+      double truncVar = a / b;
+      double castFloat = (double)a / b;
+      decimal decDiv = 7m / 2m;
+      lblA.Text = truncVar.ToString("F1");
+      lblB.Text = castFloat.ToString("F1");
+      lblC.Text = decDiv.ToString("F1");
+    `;
+    const sim = CSharpEngine.simulateExecution(divCode, [{
+      name: 'int_div',
+      inputs: {},
+      expected: { lblA: '3.0', lblB: '3.5', lblC: '3.5' }
+    }], { expectedOutputs: ['lblA', 'lblB', 'lblC'] });
+    assert.equal(sim.success, true, JSON.stringify(sim.testResults));
+
+    // Prototype helpers must be non-enumerable
+    assert.deepEqual(Object.keys(new String('hi')), ['0', '1']);
+  });
 });
+
+describe('9. Markdown Emphasis Rendering, Unanswered Review Queue & Answer-Key Calibration', () => {
+  it('renders **bold** and *italic* cleanly without raw asterisks and preserves $ characters', () => {
+    const eng = new DefsMod.DefinitionsEngine(DATA.definitions);
+    const rendered = eng.renderTextWithInlineLinks('Because `Show()` is **modeless**, execution continues *immediately* with $"R {total:F2}".');
+    assert.ok(rendered.includes('<strong>modeless</strong>'));
+    assert.ok(rendered.includes('<em>immediately</em>'));
+    assert.ok(!rendered.includes('**modeless**'));
+    assert.ok(rendered.includes('$&quot;R {total:F2}&quot;'));
+  });
+
+  it('tracks unanswered exam items until answered and distinguishes unattempted flagged bookmarks', async () => {
+    const pm = new PersistenceMod.PersistenceManager({ localStorage: createMemoryStorage(), indexedDB: null });
+    await pm.init();
+    const q1 = DATA.questions[0];
+    const q2 = DATA.questions[1];
+
+    await pm.recordExamResult({
+      id: 'ex_1',
+      mode: 'past_paper',
+      title: 'Sample Exam',
+      rawMarks: 2,
+      totalMarks: 4,
+      percentage: 50,
+      correctCount: 1,
+      incorrectCount: 0,
+      unansweredCount: 1,
+      durationSeconds: 120,
+      completedAt: Date.now(),
+      detailedItems: [
+        { questionId: q1.id, outcome: 'correct' },
+        { questionId: q2.id, outcome: 'unanswered' }
+      ]
+    });
+
+    let stats = AnalyticsMod.computeAnalytics(pm.getState(), DATA);
+    assert.equal(stats.unansweredQueue.length, 1);
+    assert.equal(stats.unansweredQueue[0].id, q2.id);
+
+    // Once learner answers q2 in practice, it leaves unansweredQueue
+    await pm.recordQuestionAttempt(q2, q2.answer, true, 1000);
+    stats = AnalyticsMod.computeAnalytics(pm.getState(), DATA);
+    assert.equal(stats.unansweredQueue.length, 0);
+
+    // Unattempted flagged bookmark must NOT claim "Correct (+marks)"
+    const panelHtml = Renderer.renderExplanationPanel(q1, { status: 'submitted', selectedAnswer: null, bookmarkedReview: true }, {});
+    assert.ok(panelHtml.includes('Flagged for Review (Not Yet Attempted)'));
+    assert.ok(!panelHtml.includes('Correct (+'));
+  });
+
+  it('maintains balanced A/B/C/D answer keys across all 7 Study Units and Spot-the-Error challenges', () => {
+    const bySu = {};
+    for (const q of DATA.questions) {
+      bySu[q.su] = bySu[q.su] || [0, 0, 0, 0];
+      bySu[q.su][q.answer]++;
+    }
+    for (const [su, dist] of Object.entries(bySu)) {
+      const n = dist.reduce((a, b) => a + b, 0);
+      for (const c of dist) {
+        assert.ok(c / n >= 0.18 && c / n <= 0.32, `${su} answer distribution imbalanced: ${dist}`);
+      }
+    }
+    const spotDist = [0, 0, 0, 0];
+    DATA.spotErrors.forEach(s => spotDist[s.answer]++);
+    assert.deepEqual(spotDist, [6, 6, 6, 6]);
+  });
+});
+

@@ -26,7 +26,7 @@
     if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
     if (target.isContentEditable) return true;
     if (typeof target.closest === 'function') {
-      if (target.closest('[contenteditable="true"], .modal-backdrop.open, dialog[open], .code-editor-surface')) {
+      if (target.closest('[contenteditable="true"], .modal-backdrop.open, .slide-drawer.open, .app-sidebar.open, .exam-sticky-sidebar.drawer-open, dialog[open], .code-editor-surface')) {
         return true;
       }
     }
@@ -99,10 +99,19 @@
 
       // Enter -> Submit if selected & unsubmitted; Advance if already graded; No-op if unselected
       if (rawKey === 'Enter') {
-        // Respect native keyboard Enter on explicit navigation/utility buttons outside option cards
+        // Respect native keyboard Enter on interactive buttons (except option cards), links, and expandable <summary> elements
         const target = event.target;
-        if (target && String(target.tagName || '').toUpperCase() === 'BUTTON' && !target.hasAttribute('data-option-idx')) {
-          return false;
+        if (target) {
+          const tName = String(target.tagName || '').toUpperCase();
+          if (tName === 'SUMMARY' || tName === 'A' || tName === 'DETAILS') {
+            return false;
+          }
+          if (tName === 'BUTTON' && (!target.hasAttribute || !target.hasAttribute('data-option-idx'))) {
+            return false;
+          }
+          if (typeof target.closest === 'function' && target.closest('summary, a[href]')) {
+            return false;
+          }
         }
 
         if (ctx.isSubmitted) {

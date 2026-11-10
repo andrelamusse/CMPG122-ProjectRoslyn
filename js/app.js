@@ -45,7 +45,10 @@
 
       this._timerInterval = null;
       this._studyTicker = null;
+      this._paperScrollObserver = null;
+      this._lastUnansweredJumpIdx = -1;
       this._modalOpen = false;
+      this._modalTriggerEl = null;
       this._modalConfirmHandler = null;
 
       this.shortcuts = new ShortcutsMod.KeyboardShortcutController({
@@ -54,7 +57,7 @@
           (this.currentRoute === 'practice' && this.practiceSubTab === 'session' && this.practiceViewMode === 'card')
         ),
         getPreferences: () => this.persistence.getPreferences(),
-        hasOpenModal: () => this._modalOpen,
+        hasOpenModal: () => this._modalOpen || this._hasAnyOpenDrawer(),
         getCurrentQuestionContext: () => this._getActiveCardQuestionContext(),
         onSelectOption: (idx) => this._handleShortcutSelect(idx),
         onSubmitCurrent: () => this._handleShortcutSubmit(),
@@ -310,20 +313,50 @@
         }).join('');
       }
 
-      // Revision Focus Card
+      // Revision Focus, Recent Exam Results & Recent Activity Card (Section 9.1)
       const revEl = document.getElementById('homeRevisionFocusCard');
       if (revEl) {
-        if (stats.weakTopics.length > 0) {
+        if (stats.hasActivity) {
+          const weakHtml = stats.weakTopics.length > 0
+            ? `<div style="margin-bottom:0.8rem;">
+                <div style="font-size:0.78rem;font-weight:700;color:var(--text-muted);margin-bottom:0.35rem;">Weak Topics</div>
+                <div style="display:flex;flex-direction:column;gap:0.4rem;">
+                  ${stats.weakTopics.slice(0, 3).map(wt => `
+                    <button type="button" class="btn-secondary btn-sm btn-align-start" data-retest-topic="${esc(wt.id)}" data-retest-su="${esc(wt.su)}">
+                      <span class="q-su-pill">${esc(wt.su)}</span>
+                      <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(wt.title)} (${wt.accuracyPct ?? 0}%)</span>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>`
+            : '';
+
+          const latestExams = stats.examResults.slice(-2).reverse();
+          const examHtml = latestExams.length > 0
+            ? `<div style="margin-bottom:0.8rem;">
+                <div style="font-size:0.78rem;font-weight:700;color:var(--text-muted);margin-bottom:0.3rem;">Recent Exam Results</div>
+                <div style="display:flex;flex-direction:column;gap:0.28rem;font-size:0.82rem;color:var(--text-secondary);">
+                  ${latestExams.map(ex => `<div style="display:flex;justify-content:space-between;gap:0.5rem;">
+                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(ex.title)}</span>
+                    <strong>${ex.percentage}%</strong>
+                  </div>`).join('')}
+                </div>
+              </div>`
+            : '';
+
+          const recentItems = stats.recentActivity.slice(0, 3);
+          const activityHtml = recentItems.length > 0
+            ? `<div>
+                <div style="font-size:0.78rem;font-weight:700;color:var(--text-muted);margin-bottom:0.3rem;">Recent Activity</div>
+                <div style="display:flex;flex-direction:column;gap:0.25rem;font-size:0.8rem;color:var(--text-secondary);">
+                  ${recentItems.map(act => `<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">• ${esc(act.label)}</div>`).join('')}
+                </div>
+              </div>`
+            : '';
+
           revEl.innerHTML = `
-            <h3 class="panel-title">${Icons.icon('alert-triangle', { size: 17 })} <span>Recommended Revision</span></h3>
-            <div style="display:flex;flex-direction:column;gap:0.45rem;">
-              ${stats.weakTopics.slice(0, 3).map(wt => `
-                <button type="button" class="btn-secondary btn-sm btn-align-start" data-retest-topic="${esc(wt.id)}" data-retest-su="${esc(wt.su)}">
-                  <span class="q-su-pill">${esc(wt.su)}</span>
-                  <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(wt.title)} (${wt.accuracyPct ?? 0}%)</span>
-                </button>
-              `).join('')}
-            </div>
+            <h3 class="panel-title">${Icons.icon('clock', { size: 17 })} <span>Revision &amp; Activity</span></h3>
+            ${weakHtml}${examHtml}${activityHtml}
           `;
         } else {
           revEl.innerHTML = `
@@ -828,7 +861,7 @@
               <span class="q-progress-label">Challenge ${this.spotIndex + 1} of ${list.length}</span>
             </div>
             ${Renderer.renderCodeBlock(item.code, CSharpEngine, Icons, 'Defective C# Snippet')}
-            <div class="q-stem-text">${esc(item.question)}</div>
+            <div class="q-stem-text">${this.defsEngine.renderTextWithInlineLinks(item.question, { maxLinks: 0 })}</div>
             <div class="q-options-list">
               ${(item.options || []).map((opt, idx) => {
                 let cls = 'q-option-btn';
@@ -840,14 +873,14 @@
                 }
                 return `<button type="button" class="${cls}" data-spot-opt="${idx}" ${this.spotSubmitted ? 'disabled' : ''}>
                   <span class="opt-radio-ring">${Renderer.LETTERS[idx]}</span>
-                  <span class="opt-text">${esc(opt)}</span>
+                  <span class="opt-text">${this.defsEngine.renderTextWithInlineLinks(opt, { maxLinks: 0 })}</span>
                 </button>`;
               }).join('')}
             </div>
             ${this.spotSubmitted ? `
               <div class="q-feedback-panel ${this.spotSelected === item.answer ? 'feedback-correct' : 'feedback-incorrect'}">
                 <strong>${this.spotSelected === item.answer ? 'Correct Diagnosis!' : `Incorrect — Correct Option: ${Renderer.LETTERS[item.answer]}`}</strong>
-                <p style="margin:0.4rem 0 0;">${esc(item.explanation)}</p>
+                <p style="margin:0.4rem 0 0;">${this.defsEngine.renderTextWithInlineLinks(item.explanation, { maxLinks: 0 })}</p>
               </div>
             ` : ''}
             <div class="q-nav-footer">
@@ -926,6 +959,7 @@
         durationMinutes: timed ? (ex.durationMinutes || 180) : 0
       });
 
+      this._lastUnansweredJumpIdx = -1;
       this.persistence.saveActiveExamSession(this.examSession.toSnapshot());
       this.navigate('exams');
       this.renderContinuousExamPaper();
@@ -944,6 +978,7 @@
         questions: qs,
         durationMinutes: timed ? 180 : 0
       });
+      this._lastUnansweredJumpIdx = -1;
       this.persistence.saveActiveExamSession(this.examSession.toSnapshot());
       this.navigate('exams');
       this.renderContinuousExamPaper();
@@ -962,6 +997,7 @@
         lobby.style.display = 'block';
         active.style.display = 'none';
         this._stopExamTimerLoop();
+        this._teardownPaperScrollSpy();
       }
     }
 
@@ -1005,6 +1041,7 @@
         paletteEl.innerHTML = sess.questions.map((q, idx) => {
           const st = sess.getQuestionState(q.id);
           let cls = 'palette-pill';
+          if (idx === 0) cls += ' current';
           if (sess.isCompleted) {
             cls += st.outcome === 'correct' ? ' graded-correct' : ' graded-incorrect';
           } else if (typeof st.selectedAnswer === 'number') {
@@ -1054,6 +1091,7 @@
         paperArea.innerHTML = resultsBannerHtml + scenarioInlineCard + questionsHtml + footSubmitHtml;
       }
 
+      this._setupPaperScrollSpy();
       this._startExamTimerLoop();
     }
 
@@ -1222,6 +1260,44 @@
       }
     }
 
+    _teardownPaperScrollSpy() {
+      if (this._paperScrollObserver) {
+        this._paperScrollObserver.disconnect();
+        this._paperScrollObserver = null;
+      }
+    }
+
+    _setupPaperScrollSpy() {
+      this._teardownPaperScrollSpy();
+      if (typeof IntersectionObserver !== 'function' || typeof document === 'undefined' || !this.examSession) return;
+      const cards = document.querySelectorAll('#continuousPaperArea .paper-q-card[data-question-id]');
+      if (cards.length === 0) return;
+
+      this._paperScrollObserver = new IntersectionObserver((entries) => {
+        if (!this.examSession) return;
+        let topVisibleId = null;
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const qId = entry.target.getAttribute('data-question-id');
+            if (qId) {
+              const st = this.examSession.states[qId];
+              if (st && st.status === 'unseen') {
+                st.status = 'seen';
+              }
+              if (!topVisibleId) topVisibleId = qId;
+            }
+          }
+        }
+        if (topVisibleId) {
+          document.querySelectorAll('#examQuestionPalette .palette-pill').forEach(pill => {
+            pill.classList.toggle('current', pill.id === `palettePill_${topVisibleId}`);
+          });
+        }
+      }, { rootMargin: '-12% 0px -60% 0px', threshold: 0.05 });
+
+      cards.forEach(card => this._paperScrollObserver.observe(card));
+    }
+
     /* ==================== 5. DEFINITIONS LIBRARY & EXACT CONTEXT RETURN ==================== */
 
     _populateDefsFilters() {
@@ -1245,21 +1321,24 @@
           });
         }
 
-        let activeQ = null;
+        let targetQId = extraSource.questionId || null;
         let qState = null;
         let sourceLabel = 'Previous View';
 
         if (this.currentRoute === 'study') {
           sourceLabel = `Study Note (${this.activeStudyUnit})`;
         } else if (this.currentRoute === 'home' && this.homeSession) {
-          activeQ = this.homeSession.getCurrentQuestion();
-          qState = activeQ ? this.homeSession.getQuestionState(activeQ.id) : null;
+          const activeQ = this.homeSession.getCurrentQuestion();
+          targetQId = targetQId || (activeQ ? activeQ.id : null);
+          qState = targetQId ? this.homeSession.getQuestionState(targetQId) : null;
           sourceLabel = 'Practice Question';
         } else if (this.currentRoute === 'practice' && this.practiceSession) {
-          activeQ = this.practiceSession.getCurrentQuestion();
-          qState = activeQ ? this.practiceSession.getQuestionState(activeQ.id) : null;
+          const activeQ = this.practiceSession.getCurrentQuestion();
+          targetQId = targetQId || (activeQ ? activeQ.id : null);
+          qState = targetQId ? this.practiceSession.getQuestionState(targetQId) : null;
           sourceLabel = 'Question';
         } else if (this.currentRoute === 'exams' && this.examSession) {
+          qState = targetQId ? this.examSession.getQuestionState(targetQId) : null;
           sourceLabel = 'Examination Question';
         } else if (this.currentRoute === 'progress') {
           sourceLabel = 'Question Review';
@@ -1270,11 +1349,12 @@
           sourceLabel,
           studyUnitId: this.activeStudyUnit,
           topicId: extraSource.topicId || null,
-          questionId: extraSource.questionId || (activeQ ? activeQ.id : null),
+          questionId: targetQId,
           selectedAnswer: qState ? qState.selectedAnswer : null,
           submissionStatus: qState ? qState.status : null,
           scrollY: typeof window !== 'undefined' ? window.scrollY : 0,
           activeSection: this.currentRoute === 'practice' ? this.practiceSubTab : this.reviewSubTab,
+          practiceViewMode: this.practiceViewMode,
           examState: this.examSession ? this.examSession.toSnapshot() : null,
           expandedPanels
         });
@@ -1306,8 +1386,9 @@
       this.highlightedDefId = null;
 
       if (ctx.studyUnitId) this.activeStudyUnit = ctx.studyUnitId;
-      if (ctx.route === 'practice' && ctx.activeSection) {
-        this.practiceSubTab = ctx.activeSection;
+      if (ctx.route === 'practice') {
+        if (ctx.activeSection) this.practiceSubTab = ctx.activeSection;
+        if (ctx.practiceViewMode) this.practiceViewMode = ctx.practiceViewMode;
       }
       if (ctx.route === 'progress' && ctx.activeSection) {
         this.reviewSubTab = ctx.activeSection;
@@ -1323,8 +1404,10 @@
       const targetSession = ctx.route === 'home' ? this.homeSession
         : (ctx.route === 'practice' ? this.practiceSession : null);
       if (targetSession && ctx.questionId) {
-        const qIdx = targetSession.questions.findIndex(q => q.id === ctx.questionId);
-        if (qIdx !== -1) targetSession.goToIndex(qIdx);
+        if (ctx.route !== 'practice' || this.practiceViewMode === 'card') {
+          const qIdx = targetSession.questions.findIndex(q => q.id === ctx.questionId);
+          if (qIdx !== -1) targetSession.goToIndex(qIdx);
+        }
         const st = targetSession.getQuestionState(ctx.questionId);
         if (st && typeof ctx.selectedAnswer === 'number' && st.status !== 'submitted') {
           st.selectedAnswer = ctx.selectedAnswer;
@@ -1438,15 +1521,49 @@
                 })}
               </div>
             `).join('');
+      } else if (this.reviewSubTab === 'unanswered') {
+        reviewItemsHtml = stats.unansweredQueue.length === 0
+          ? `<div style="display:flex;justify-content:space-between;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+              <p style="color:var(--text-muted);margin:0;">No unanswered examination questions pending review (${stats.unattemptedCount} unpractised questions remain in the full bank).</p>
+              ${stats.unattemptedCount > 0 ? `<button type="button" class="btn-secondary btn-sm" data-practise-unanswered="true">Practise Unattempted Questions</button>` : ''}
+            </div>`
+          : `<div style="display:flex;justify-content:space-between;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+              <span style="font-size:0.84rem;color:var(--text-secondary);">Questions left blank in submitted examinations remain here until you answer them or mark them understood.</span>
+              <button type="button" class="btn-primary btn-sm" data-practise-unanswered="true">${Icons.icon('play', { size: 14 })} <span>Practise Unanswered Set (${stats.unansweredQueue.length})</span></button>
+            </div>` +
+            stats.unansweredQueue.map((question, i) => `
+              <div style="margin-bottom:1rem;">
+                ${Renderer.renderQuestionCard(question, {
+                  status: 'submitted',
+                  selectedAnswer: null,
+                  outcome: 'unanswered'
+                }, {
+                  index: i,
+                  total: stats.unansweredQueue.length,
+                  csharpEngine: CSharpEngine,
+                  defsEngine: this.defsEngine,
+                  icons: Icons,
+                  isCompleted: true,
+                  isFlagged: this.persistence.isQuestionFlagged(question.id),
+                  isUnderstood: false
+                })}
+              </div>
+            `).join('');
       } else if (this.reviewSubTab === 'flagged') {
         reviewItemsHtml = stats.flaggedQueue.length === 0
           ? `<p style="color:var(--text-muted);margin:0;">No flagged questions yet. Click "Flag" on any question to bookmark it for review.</p>`
-          : stats.flaggedQueue.map((question, i) => {
+          : `<div style="display:flex;justify-content:space-between;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+              <span style="font-size:0.84rem;color:var(--text-secondary);">Bookmarked questions for targeted revision (${stats.flaggedQueue.length}).</span>
+              <button type="button" class="btn-secondary btn-sm" data-practise-flagged="true">${Icons.icon('play', { size: 14 })} <span>Practise Flagged Set</span></button>
+            </div>` +
+            stats.flaggedQueue.map((question, i) => {
               const h = state.questionHistory[question.id];
+              const hasAttempt = Boolean(h && typeof h.lastSelected === 'number');
               return `<div style="margin-bottom:1rem;">
                 ${Renderer.renderQuestionCard(question, {
                   status: 'submitted',
-                  selectedAnswer: h ? h.lastSelected : question.answer
+                  selectedAnswer: hasAttempt ? h.lastSelected : null,
+                  bookmarkedReview: !hasAttempt
                 }, {
                   index: i,
                   total: stats.flaggedQueue.length,
@@ -1532,6 +1649,9 @@
             <div class="unit-pills-bar" style="margin-bottom:0;">
               <button type="button" class="unit-pill-btn ${this.reviewSubTab === 'incorrect' ? 'active' : ''}" data-review-tab="incorrect">
                 Incorrect (${stats.incorrectQueue.length})
+              </button>
+              <button type="button" class="unit-pill-btn ${this.reviewSubTab === 'unanswered' ? 'active' : ''}" data-review-tab="unanswered">
+                Unanswered (${stats.unansweredQueue.length})
               </button>
               <button type="button" class="unit-pill-btn ${this.reviewSubTab === 'flagged' ? 'active' : ''}" data-review-tab="flagged">
                 Flagged (${stats.flaggedQueue.length})
@@ -1693,12 +1813,85 @@
 
     /* ==================== EVENT DELEGATION & MODALS ==================== */
 
+    _hasAnyOpenDrawer() {
+      if (typeof document === 'undefined') return false;
+      return Boolean(
+        document.getElementById('scenarioDrawer')?.classList.contains('open') ||
+        document.getElementById('examPaletteSidebar')?.classList.contains('drawer-open') ||
+        document.getElementById('appSidebar')?.classList.contains('open')
+      );
+    }
+
     _bindGlobalEvents() {
       document.addEventListener('keydown', (e) => {
-        if (this._modalOpen && e.key === 'Escape') {
-          this._closeModal();
+        if (this._modalOpen) {
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            this._closeModal();
+            return;
+          }
+          if (e.key === 'Tab') {
+            const dlg = document.querySelector('#appModalBackdrop.open .modal-dialog');
+            if (dlg) {
+              const focusables = [...dlg.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')];
+              if (focusables.length > 0) {
+                const first = focusables[0];
+                const last = focusables[focusables.length - 1];
+                if (e.shiftKey && (document.activeElement === first || !dlg.contains(document.activeElement))) {
+                  e.preventDefault();
+                  last.focus();
+                } else if (!e.shiftKey && (document.activeElement === last || !dlg.contains(document.activeElement))) {
+                  e.preventDefault();
+                  first.focus();
+                }
+              }
+            }
+            return;
+          }
           return;
         }
+
+        if (e.key === 'Escape' && this._hasAnyOpenDrawer()) {
+          const dr = document.getElementById('scenarioDrawer');
+          if (dr?.classList.contains('open')) {
+            dr.classList.remove('open');
+            dr.setAttribute('aria-hidden', 'true');
+            document.getElementById('btnToggleScenarioDrawer')?.focus();
+            return;
+          }
+          const pal = document.getElementById('examPaletteSidebar');
+          if (pal?.classList.contains('drawer-open')) {
+            pal.classList.remove('drawer-open');
+            document.getElementById('btnToggleMobilePalette')?.focus();
+            return;
+          }
+          const sb = document.getElementById('appSidebar');
+          if (sb?.classList.contains('open')) {
+            sb.classList.remove('open');
+            const mBtn = document.getElementById('btnMobileMenu');
+            if (mBtn) {
+              mBtn.setAttribute('aria-expanded', 'false');
+              mBtn.focus();
+            }
+            return;
+          }
+        }
+
+        // WAI-ARIA ArrowLeft / ArrowRight navigation inside Study Unit tablist
+        if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && e.target && typeof e.target.closest === 'function' && e.target.closest('#studyUnitSelectorBar')) {
+          const tabs = [...document.querySelectorAll('#studyUnitSelectorBar [role="tab"]')];
+          const curIdx = tabs.indexOf(e.target);
+          if (curIdx !== -1 && tabs.length > 0) {
+            e.preventDefault();
+            const nextIdx = (curIdx + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+            const nextTab = tabs[nextIdx];
+            nextTab.focus();
+            const suId = nextTab.getAttribute('data-select-su');
+            if (suId) this.selectStudyUnit(suId);
+            return;
+          }
+        }
+
         if (this.defsEngine.shouldTriggerKeyboardReturn(e, this.currentRoute)) {
           e.preventDefault();
           this.returnFromDefinition();
@@ -1710,6 +1903,13 @@
       document.addEventListener('click', (e) => {
         const target = e.target;
         if (!target || typeof target.closest !== 'function') return;
+
+        // Close open mobile sidebar if clicking outside sidebar and menu button
+        const openSb = document.getElementById('appSidebar');
+        if (openSb?.classList.contains('open') && !target.closest('#appSidebar') && !target.closest('#btnMobileMenu')) {
+          openSb.classList.remove('open');
+          document.getElementById('btnMobileMenu')?.setAttribute('aria-expanded', 'false');
+        }
 
         // Brand -> Home
         if (target.closest('#btnBrandHome')) {
@@ -1732,7 +1932,12 @@
         // Sidebar or bottom nav route link
         const routeBtn = target.closest('[data-route]');
         if (routeBtn) {
-          this.navigate(routeBtn.getAttribute('data-route'));
+          const destRoute = routeBtn.getAttribute('data-route');
+          if (destRoute === 'definitions') {
+            this.defsEngine.clearReturnContext();
+            this.highlightedDefId = null;
+          }
+          this.navigate(destRoute);
           return;
         }
 
@@ -1781,6 +1986,7 @@
         }
         if (target.closest('#qaDefinitions')) {
           this.defsEngine.clearReturnContext();
+          this.highlightedDefId = null;
           this.navigate('definitions');
           return;
         }
@@ -1844,7 +2050,7 @@
           const nowDone = this.persistence.toggleTopicCompleted(tId, suId, allTopicIds);
           this.showToast(nowDone ? 'Topic marked complete.' : 'Topic marked incomplete.');
           this.renderStudyView(openPanels);
-          window.scrollTo(0, prevScrollY);
+          window.scrollTo({ top: prevScrollY, behavior: 'instant' });
           return;
         }
 
@@ -2073,7 +2279,14 @@
             out.innerHTML = `<div class="panel-card">
               <strong>Audit Score: ${res.score}% (${res.fixedBugs} / ${res.totalBugs} defects fixed)</strong>
               <ul style="margin:0.5rem 0 0;padding-left:1.2rem;font-size:0.84rem;">
-                ${(res.feedback || []).map(f => `<li style="color:${f.passed ? 'var(--status-success-text)' : 'var(--status-error-text)'};">${esc(f.message || f.description || '')}</li>`).join('')}
+                ${(res.feedback || []).map(f => {
+                  const colorVar = (f.status === 'SUCCESS' || f.passed)
+                    ? 'var(--status-success-text)'
+                    : f.status === 'WARNING'
+                      ? 'var(--status-warning-text)'
+                      : 'var(--status-error-text)';
+                  return `<li style="color:${colorVar};">${esc(f.message || f.description || '')}</li>`;
+                }).join('')}
               </ul>
             </div>`;
           }
@@ -2109,6 +2322,44 @@
           this.navigate('practice');
           return;
         }
+        if (target.closest('[data-practise-unanswered]')) {
+          const stats = AnalyticsMod.computeAnalytics(this.persistence.getState(), this.data);
+          const pool = stats.unansweredQueue.length > 0
+            ? stats.unansweredQueue
+            : ExamMod.generateCustomExam(this.data.questions || [], {
+                questionCount: 15,
+                excludeIds: Object.keys(this.persistence.getState().questionHistory || {})
+              });
+          if (pool.length > 0) {
+            this.practiceSession = new ExamMod.ExamSession({
+              id: `unans_review_${Date.now()}`,
+              mode: 'review',
+              title: stats.unansweredQueue.length > 0 ? 'Unanswered Exam Questions Review' : 'Unattempted Curriculum Questions',
+              questions: pool,
+              allowInstantSubmit: true
+            });
+            this.practiceSubTab = 'session';
+            this.practiceViewMode = 'card';
+            this.navigate('practice');
+          }
+          return;
+        }
+        if (target.closest('[data-practise-flagged]')) {
+          const stats = AnalyticsMod.computeAnalytics(this.persistence.getState(), this.data);
+          if (stats.flaggedQueue.length > 0) {
+            this.practiceSession = new ExamMod.ExamSession({
+              id: `flagged_review_${Date.now()}`,
+              mode: 'review',
+              title: 'Flagged Questions Interactive Practice',
+              questions: stats.flaggedQueue,
+              allowInstantSubmit: true
+            });
+            this.practiceSubTab = 'session';
+            this.practiceViewMode = 'card';
+            this.navigate('practice');
+          }
+          return;
+        }
         const paperBtn = target.closest('[data-start-paper]');
         if (paperBtn) {
           const eId = paperBtn.getAttribute('data-start-paper');
@@ -2128,8 +2379,10 @@
           if (this.examSession) {
             const pre = this.examSession.getPreSubmitSummary();
             if (pre.unansweredNumbers.length > 0) {
-              const targetId = pre.unansweredNumbers[0].id;
-              document.getElementById(`paperQuestion_${targetId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              this._lastUnansweredJumpIdx = (this._lastUnansweredJumpIdx + 1) % pre.unansweredNumbers.length;
+              const chosen = pre.unansweredNumbers[this._lastUnansweredJumpIdx];
+              document.getElementById(`paperQuestion_${chosen.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              document.getElementById('examPaletteSidebar')?.classList.remove('drawer-open');
             } else {
               this.showToast('All questions in this paper have an answer selected.');
             }
@@ -2176,6 +2429,7 @@
         }
         if (target.closest('#btnExitExamToLobby')) {
           this._stopExamTimerLoop();
+          this._teardownPaperScrollSpy();
           if (this.examSession && this.examSession.isCompleted) {
             this.examSession = null;
           } else {
@@ -2363,6 +2617,10 @@
       const actionsEl = document.getElementById('appModalActions');
       if (!bd || !titleEl || !bodyEl || !actionsEl) return;
 
+      this._modalTriggerEl = (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement)
+        ? document.activeElement
+        : null;
+
       titleEl.textContent = title;
       bodyEl.innerHTML = bodyHtml;
       this._modalConfirmHandler = onConfirm;
@@ -2371,6 +2629,7 @@
         ${confirmLabel ? `<button type="button" class="btn-primary btn-sm" id="btnModalConfirmAction">${esc(confirmLabel)}</button>` : ''}
       `;
       bd.classList.add('open');
+      bd.setAttribute('aria-hidden', 'false');
       this._modalOpen = true;
 
       document.getElementById('btnModalCancelAction')?.addEventListener('click', () => this._closeModal(), { once: true });
@@ -2379,13 +2638,28 @@
         this._closeModal();
         if (typeof fn === 'function') fn();
       }, { once: true });
+
+      const initialFocus = document.getElementById('btnModalConfirmAction')
+        || document.getElementById('btnModalCancelAction')
+        || document.getElementById('btnCloseAppModal');
+      if (initialFocus && typeof initialFocus.focus === 'function') {
+        initialFocus.focus();
+      }
     }
 
     _closeModal() {
       const bd = document.getElementById('appModalBackdrop');
-      if (bd) bd.classList.remove('open');
+      if (bd) {
+        bd.classList.remove('open');
+        bd.setAttribute('aria-hidden', 'true');
+      }
       this._modalOpen = false;
       this._modalConfirmHandler = null;
+      const restoreTarget = this._modalTriggerEl;
+      this._modalTriggerEl = null;
+      if (restoreTarget && typeof restoreTarget.focus === 'function' && document.contains(restoreTarget)) {
+        restoreTarget.focus();
+      }
     }
 
     showToast(message) {

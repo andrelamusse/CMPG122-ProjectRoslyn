@@ -172,17 +172,56 @@ def run_suite():
             results_summary['keyboardShortcuts'] = True
             print('[+] Verified Practice workflow, Keyboard Shortcuts (1-5, Enter, A-E), and Question Flagging.')
 
+            # Test Practice Sheet View context-preserving Definition return WITHOUT corrupting answers across questions
+            page.locator('[data-view-mode="continuous"]').click()
+            q2 = page.locator('#practiceContinuousArea .paper-q-card').nth(2)
+            q3 = page.locator('#practiceContinuousArea .paper-q-card').nth(3)
+            q2.locator('.q-option-btn').nth(0).click()
+            q3.locator('.q-option-btn').nth(3).click()
+            # Open Shortcut Modal & verify keyboard Tab focus trap + trigger restoration
+            page.locator('#btnShortcutHelpModal').click()
+            assert_true(page.locator('#appModalBackdrop.open').count() == 1, 'Shortcut modal must open')
+            for _ in range(5):
+                page.keyboard.press('Tab')
+                inside_modal = page.evaluate('Boolean(document.activeElement && document.activeElement.closest(".modal-dialog"))')
+                assert_true(inside_modal, 'Tab focus must remain trapped inside open modal dialog')
+            page.keyboard.press('Escape')
+            assert_true(page.evaluate('document.activeElement && document.activeElement.id') == 'btnShortcutHelpModal', 'Closing modal must restore focus to trigger button')
+
+            # Open Definition from Q4 (nth(3)) in Sheet View and verify Q4 keeps Option D (not overwritten by Q1/Q3!)
+            q3_id = q3.get_attribute('data-question-id')
+            page.evaluate(f'window.CMPG122_APP.openDefinitionWithContext("def_tryparse", {{ questionId: "{q3_id}" }})')
+            assert_true(page.locator('#viewDefinitions.active').count() == 1, 'Definitions must open from Sheet View')
+            page.locator('#btnReturnFromDef').click()
+            assert_true(page.locator('#practiceContinuousArea').is_visible(), 'Must restore Sheet View mode on return')
+            q3_after = page.locator('#practiceContinuousArea .paper-q-card').nth(3)
+            assert_true(
+                q3_after.locator('.q-option-btn').nth(3).evaluate('el => el.classList.contains("opt-selected")'),
+                'Sheet View Q4 selected option D must NOT be overwritten on Definition return'
+            )
+
+            # Verify navigating directly to Definitions via sidebar clears stale return banner
+            page.locator('.sidebar-link[data-route="definitions"]').click()
+            assert_true(page.locator('#btnReturnFromDef').count() == 0, 'Direct sidebar navigation to Definitions must not show stale return banner')
+
             # 10–12. Complete a Continuous Single-Sheet Past Examination Paper & Review Results
             page.locator('.sidebar-link[data-route="exams"]').click()
             page.locator('[data-start-paper="exam_2024_dec"][data-paper-timed="true"]').click()
             assert_true(page.locator('#activeExamWorkspace').is_visible(), 'Continuous exam workspace must be visible')
             assert_true(page.locator('#continuousPaperArea .paper-q-card').count() == 16, 'All 16 past paper questions must render continuously')
+            assert_true(page.locator('#examQuestionPalette .palette-pill.current').count() >= 1, 'Scroll-spy palette must highlight active current question')
 
-            # Answer first 3 questions (1 intentional wrong + 2 choices) and flag question 4
+            # Answer first 3 questions and flag question 4; verify circular Next Unanswered cycles Q4 -> Q5
             for i in range(3):
                 q_card = page.locator('#continuousPaperArea .paper-q-card').nth(i)
                 q_card.locator('.q-option-btn').nth(i % 4).click()
             page.locator('#continuousPaperArea .paper-q-card').nth(3).locator('[data-flag-q]').click()
+
+            page.locator('#btnJumpNextUnanswered').click()
+            idx_after_1 = page.evaluate('window.CMPG122_APP._lastUnansweredJumpIdx')
+            page.locator('#btnJumpNextUnanswered').click()
+            idx_after_2 = page.evaluate('window.CMPG122_APP._lastUnansweredJumpIdx')
+            assert_true(idx_after_1 == 0 and idx_after_2 == 1, 'Next Unanswered button must cycle circularly across unanswered questions')
 
             # Open Submit Confirmation Modal -> verify Unanswered & Flagged counts shown
             page.locator('#btnOpenSubmitExamModal').click()
@@ -194,12 +233,15 @@ def run_suite():
             assert_true(page.locator('.exam-results-banner').is_visible(), 'Exam results banner must appear after submission')
             assert_true('/ 100' in page.locator('.exam-results-banner').inner_text(), 'Total marks must equal 100 in Dec 2024 paper')
             results_summary['continuousPastExam'] = True
-            print('[+] Verified Continuous Past Exam Paper, Pre-Submit Confirmation Modal, and 100-Mark Grading.')
+            print('[+] Verified Continuous Past Exam Paper, Circular Unanswered Jump, Pre-Submit Modal, and 100-Mark Grading.')
 
-            # 13. Open Progress / Incorrect Review & Switch Theme -> Reload & Confirm Persistence
+            # 13. Open Progress / Unanswered & Flagged Review -> Verify honest states & Switch Theme -> Reload
             page.locator('.sidebar-link[data-route="progress"]').click()
             assert_true(page.locator('#analyticsHost').is_visible(), 'Analytics & Review view must render')
-            assert_true('100%' not in page.locator('#homeOverallPct').inner_text(), 'Progress must reflect real partial completion')
+            assert_true('Unanswered (13)' in page.locator('#analyticsHost').inner_text(), 'Unanswered review tab must track 13 blank exam items')
+            page.locator('[data-review-tab="flagged"]').click()
+            flagged_text = page.locator('#analyticsHost').inner_text()
+            assert_true('Flagged for Review (Not Yet Attempted)' in flagged_text, 'Unattempted flagged bookmark must not fake a Correct score')
 
             # Switch to Light theme, then reload browser
             page.locator('#btnThemeLight').click()
@@ -211,11 +253,13 @@ def run_suite():
             page.locator('.sidebar-link[data-route="home"]').click()
             pct_after_reload = page.locator('#homeOverallPct').inner_text().strip()
             assert_true(pct_after_reload != '0%', f'Progress must persist in IndexedDB/storage across reload (got {pct_after_reload})')
+            assert_true('Recent Exam Results' in page.locator('#homeRevisionFocusCard').inner_text(), 'Home must surface Recent Exam Results when activity exists')
+            assert_true('Recent Activity' in page.locator('#homeRevisionFocusCard').inner_text(), 'Home must surface Recent Activity when activity exists')
             results_summary['persistenceAcrossReload'] = True
-            print(f'[+] Verified Persistence across page reload (Overall Progress retained: {pct_after_reload}).')
+            print(f'[+] Verified Persistence, Unanswered/Flagged Review Queues & Home Activity across reload (Progress: {pct_after_reload}).')
 
-            # Switch back to Dark theme so we verify accessibility in both Light and Dark!
-            # First run WCAG contrast & accessibility checks in LIGHT mode, then DARK mode
+            # Navigate to Study view so we also test SVG diagram + .q-su-pill + .btn-primary WCAG contrast in BOTH Light and Dark!
+            page.locator('.sidebar-link[data-route="study"]').click()
             a11y_check_js = """
             () => {
               const issues = [];
@@ -223,6 +267,17 @@ def run_suite():
               if (!document.querySelector('main')) issues.push('Missing <main> landmark');
               if (!document.querySelector('header')) issues.push('Missing <header> landmark');
               if (!document.querySelector('nav')) issues.push('Missing <nav> landmark');
+
+              // Check visible heading order (no skipped levels e.g. h1 -> h3)
+              const visHeadings = [...document.querySelectorAll('h1, h2, h3, h4')].filter(el => el.offsetParent !== null || el.classList.contains('sr-only'));
+              let prevLevel = 0;
+              visHeadings.forEach(h => {
+                const lvl = Number(h.tagName.slice(1));
+                if (prevLevel > 0 && lvl > prevLevel + 1) {
+                  issues.push(`Skipped heading level from h${prevLevel} to h${lvl} (${h.textContent.trim().slice(0,30)})`);
+                }
+                prevLevel = lvl;
+              });
 
               document.querySelectorAll('button').forEach((btn, idx) => {
                 const name = (btn.innerText || '').trim()
@@ -232,9 +287,18 @@ def run_suite():
                 if (!name) issues.push(`Unlabeled button at index ${idx} (${btn.id || btn.className})`);
               });
 
-              function parseRgb(s) {
-                const m = s.match(/rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)/);
-                return m ? [Number(m[1]), Number(m[2]), Number(m[3])] : null;
+              function parseRgba(s) {
+                const m = s && s.match(/rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)(?:,\\s*([0-9.]+))?\\)/);
+                return m ? [Number(m[1]), Number(m[2]), Number(m[3]), m[4] !== undefined ? Number(m[4]) : 1] : null;
+              }
+              function blend(fg, bg) {
+                const a = fg[3];
+                return [
+                  Math.round(fg[0] * a + bg[0] * (1 - a)),
+                  Math.round(fg[1] * a + bg[1] * (1 - a)),
+                  Math.round(fg[2] * a + bg[2] * (1 - a)),
+                  1
+                ];
               }
               function lum([r, g, b]) {
                 const f = c => {
@@ -249,10 +313,34 @@ def run_suite():
               }
 
               const bodyStyle = getComputedStyle(document.body);
-              const fg = parseRgb(bodyStyle.color);
-              const bg = parseRgb(bodyStyle.backgroundColor);
+              const fg = parseRgba(bodyStyle.color);
+              const bg = parseRgba(bodyStyle.backgroundColor);
               const bodyContrast = (fg && bg) ? ratio(fg, bg) : 0;
               if (bodyContrast < 7.0) issues.push(`Low body text contrast: ${bodyContrast.toFixed(2)}`);
+
+              const pill = document.querySelector('#viewStudy .q-su-pill');
+              if (pill && bg) {
+                const pStyle = getComputedStyle(pill);
+                const pFg = parseRgba(pStyle.color);
+                const pBgRaw = parseRgba(pStyle.backgroundColor);
+                const surfBg = parseRgba(getComputedStyle(document.querySelector('.study-unit-banner')).backgroundColor) || bg;
+                const pBg = pBgRaw ? blend(pBgRaw, surfBg) : surfBg;
+                const pillRatio = ratio(pFg, pBg);
+                if (pillRatio < 4.5) issues.push(`Low .q-su-pill contrast: ${pillRatio.toFixed(2)}:1`);
+              }
+
+              const svgTexts = [...document.querySelectorAll('#viewStudy .edu-svg-diagram text')];
+              const svgRect = document.querySelector('#viewStudy .edu-svg-diagram rect');
+              if (svgTexts.length > 0 && svgRect) {
+                const rBg = parseRgba(getComputedStyle(svgRect).fill) || bg;
+                svgTexts.forEach(t => {
+                  const tFg = parseRgba(getComputedStyle(t).fill);
+                  if (tFg && rBg) {
+                    const tr = ratio(tFg, rBg);
+                    if (tr < 4.5) issues.push(`Low SVG diagram text contrast (${t.textContent.trim().slice(0,20)}): ${tr.toFixed(2)}:1`);
+                  }
+                });
+              }
 
               return { issues, bodyContrast };
             }
@@ -264,23 +352,32 @@ def run_suite():
             dark_a11y = page.evaluate(a11y_check_js)
             assert_true(len(dark_a11y['issues']) == 0, f"Dark theme accessibility issues: {dark_a11y['issues']}")
             results_summary['accessibilityChecks'] = True
-            print(f"[+] Verified WCAG Landmarks, Button Labels & Contrast (Light={light_a11y['bodyContrast']:.1f}:1, Dark={dark_a11y['bodyContrast']:.1f}:1).")
+            print(f"[+] Verified WCAG Landmarks, Heading Order, Pill & SVG Diagram Contrast (Light={light_a11y['bodyContrast']:.1f}:1, Dark={dark_a11y['bodyContrast']:.1f}:1).")
 
-            # 16–17. Disable Internet Connectivity & Verify Full Offline Functionality (PWA + Code Lab)
+            # 16–17. Disable Internet Connectivity & Verify Full Offline Functionality (PWA + Code Lab + Multi-Bug Auditor)
+            page.locator('.sidebar-link[data-route="home"]').click()
             context.set_offline(True)
             page.reload(wait_until='domcontentloaded')
             page.wait_for_timeout(300)
             assert_true(page.locator('.su-ring-card').count() == 7, 'Offline reload via Service Worker must render full dashboard')
 
-            # Navigate to C# Code Lab while offline and run CodeGrade evaluation
+            # Navigate to C# Code Lab while offline and run BOTH CodeGrade AND Multi-Bug Code Auditor
             page.locator('#qaCodeLab').click()
             page.locator('#btnShowSolution').click()
             page.locator('#btnRunCodeGrade').click()
             assert_true('100%' in page.locator('#codeGradeOutputHost').inner_text(), 'Offline C# CodeGrade evaluation must score 100% on model solution')
+
+            page.locator('[data-codelab-tab="auditor"]').click()
+            page.locator('#btnLoadCanonicalAudit').click()
+            page.locator('#btnRunCodeAuditor').click()
+            assert_true('Audit Score: 100%' in page.locator('#auditResultOutput').inner_text(), 'Code Auditor must score 100% on canonical fix')
+            li_style = page.locator('#auditResultOutput li').first.get_attribute('style') or ''
+            assert_true('--status-success-text' in li_style, f'PASSED Code Auditor items must use --status-success-text, got: {li_style}')
+
             context.set_offline(False)
             results_summary['offlineServiceWorker'] = True
             results_summary['e2eLearnerPath'] = True
-            print('[+] Verified 100% Offline PWA Startup, Navigation & C# CodeGrade Sandbox Execution.')
+            print('[+] Verified 100% Offline PWA Startup, Navigation, CodeGrade & Multi-Bug Code Auditor Execution.')
 
             # Responsive Verification Across All 10 Required Viewports (320x568 -> 1920x1080)
             shot_dir = os.environ.get('CMPG122_SCREENSHOT_DIR')

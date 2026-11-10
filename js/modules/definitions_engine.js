@@ -109,17 +109,27 @@
         }
 
         let safe = escapeHtml(part);
+        // Convert **bold** and *italic* emphasis cleanly after HTML escaping
+        safe = safe.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        safe = safe.replace(/(^|[\s(])\*([^*]+)\*(?=[\s.,;:!?)]|$)/g, '$1<em>$2</em>');
+
         if (linkedDefIds.size >= maxLinks) return safe;
 
-        // Replace using placeholder tokens so we never nest tags inside tags
+        // Protect emphasis tags with placeholders so term matchers never match inside tag names
         const placeholders = [];
+        safe = safe.replace(/<\/?(?:strong|em)>/g, (tag) => {
+          const tok = `\x00TAG_${placeholders.length}\x00`;
+          placeholders.push(tag);
+          return tok;
+        });
+
         for (const m of this._matchers) {
           if (linkedDefIds.size >= maxLinks) break;
           if (linkedDefIds.has(m.id)) continue;
           if (m.regex.test(safe)) {
             safe = safe.replace(m.regex, (_full, prefix, matchedWord) => {
               linkedDefIds.add(m.id);
-              const tok = `\x00DEF_${placeholders.length}\x00`;
+              const tok = `\x00TAG_${placeholders.length}\x00`;
               const defObj = this.byId.get(m.id);
               placeholders.push(
                 `<button type="button" class="inline-def-link" data-def-id="${escapeHtml(m.id)}" title="View definition: ${escapeHtml(defObj ? defObj.term : matchedWord)}">${matchedWord}</button>`
@@ -129,7 +139,7 @@
           }
         }
         placeholders.forEach((html, idx) => {
-          safe = safe.replace(`\x00DEF_${idx}\x00`, html);
+          safe = safe.replace(`\x00TAG_${idx}\x00`, () => html);
         });
         return safe;
       }).join('');
@@ -147,6 +157,7 @@
         submissionStatus: contextSnapshot.submissionStatus || null,
         scrollY: Number(contextSnapshot.scrollY) || 0,
         activeSection: contextSnapshot.activeSection || null,
+        practiceViewMode: contextSnapshot.practiceViewMode || null,
         examState: contextSnapshot.examState || null,
         expandedPanels: Array.isArray(contextSnapshot.expandedPanels) ? [...contextSnapshot.expandedPanels] : [],
         timestamp: Date.now()

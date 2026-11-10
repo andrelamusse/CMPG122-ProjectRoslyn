@@ -143,16 +143,32 @@ function fail(id, reason) {
   failures.push({ id, reason });
 }
 
-// 1. Learner-Facing Blinding & Zero-Emoji / Zero-Admin Invariants (Section 18 & 8.3)
+// 1. Learner-Facing Blinding & Zero-Emoji / Zero-Admin Invariants across ALL learner assets (Section 18 & 8.3)
 const indexHtml = fs.readFileSync(path.join(appDir, 'index.html'), 'utf8');
 if (/admin\.html/i.test(indexHtml)) fail('SEC_INDEX_ADMIN', 'index.html contains prohibited reference to admin.html');
 if (/github/i.test(indexHtml)) fail('SEC_INDEX_GITHUB', 'index.html contains prohibited reference to GitHub');
-if (/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(indexHtml)) {
-  fail('UI_EMOJI_INDEX', 'index.html contains emoji characters instead of vector SVGs');
-}
 if (/user-scalable\s*=\s*no/i.test(indexHtml)) {
   fail('A11Y_VIEWPORT_ZOOM', 'index.html blocks browser zoom (user-scalable=no)');
 }
+const emojiRegex = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u;
+const learnerRelFiles = [
+  'index.html',
+  'js/data/definitions_data.js',
+  'js/data/curriculum.js',
+  'js/data/questions_bank.js',
+  'js/data/code_labs_data.js',
+  'js/csharp_engine.js',
+  'js/app.js'
+];
+learnerRelFiles.forEach(rel => {
+  const txt = fs.readFileSync(path.join(appDir, rel), 'utf8');
+  if (emojiRegex.test(txt)) {
+    fail(`UI_EMOJI_${rel}`, `${rel} contains emoji characters instead of vector SVGs`);
+  }
+  if (/admin\.html|\bgithub\b/i.test(txt)) {
+    fail(`SEC_LEAK_${rel}`, `${rel} contains prohibited admin.html or GitHub reference`);
+  }
+});
 
 // 2. Provenance Separation Check (Section 18 & 21)
 const provPath = path.join(appDir, 'audit', 'provenance_registry.json');
@@ -183,7 +199,7 @@ const validTopics = new Set();
 const validDefs = new Set((DATA.definitions || []).map(d => d.id));
 if (validDefs.size < 45) fail('DEFINITIONS_COUNT', `Expected comprehensive definitions library, found ${validDefs.size}`);
 
-// 4. Comprehensive Question-Bank Audit (Structural, Educational, Exam & Presentation Integrity)
+// 4. Comprehensive Question-Bank Audit (Structural, Educational, Answer-Balance, Near-Duplicate & Presentation Integrity)
 const validDiffs = new Set(['Foundational', 'Intermediate', 'Advanced']);
 const validTypes = new Set([
   'mcq', 'code-output', 'code-tracing', 'error-identification', 'debugging',
@@ -195,12 +211,26 @@ const validTypes = new Set([
 const seenIds = new Set();
 const seenStems = new Map();
 const suDist = {};
+const suAnsDist = {};
 const diffDist = {};
 const qTypeDist = {};
 
 const crossRefRe = /\bas calculated above\b|\brefer to question\b|\busing the previous\b|\bbased on the preceding\b|\bin the previous question\b/i;
-const roboticFluffRe = /according to the specification|based on the specification|in practical \d|\[nwu|as stated in the textbook|the examiner expects|based on the provided source|\befundi\b/i;
+const roboticFluffRe = /according to the specification|based on the specification|in practical \d|\[nwu|as stated in the textbook|the examiner expects|based on the provided source|\befundi\b|\bgaddis\b|\bchapters?\s*\d|\b(?:in|for|semester)\s+test\s*[123]\b/i;
+const roboticDrRe = /violate C# type, operator, control property, or HCI semantics/i;
 const outOfScopeRe = /\b(SqlConnection|SqlCommand|BinaryReader|BinaryWriter|async|await)\b/;
+
+function normDupTokens(s) {
+  const norm = String(s || '')
+    .replace(/\b(btn|txt|lbl|lst|rdo|rad|chk|cb|grp|pic)[A-Z][a-zA-Z0-9_]*/g, '$1Ctrl')
+    .toLowerCase();
+  return new Set(
+    norm.replace(/[^a-z0-9#+=-]+/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length >= 2 && !['the','and','for','with','what','which','when','how','why','does','following','visual','code','statement','in','is','are','that','this','from','into','control','named','property','method','value','c#','csharp'].includes(w))
+  );
+}
+const standaloneTokenCache = [];
 
 (DATA.questions || []).forEach((q, idx) => {
   const qId = q && q.id ? String(q.id) : `INDEX_${idx}`;
@@ -242,6 +272,9 @@ const outOfScopeRe = /\b(SqlConnection|SqlCommand|BinaryReader|BinaryWriter|asyn
 
   const exp = String(q.explanation || q.exp || '').trim();
   if (exp.length < 15) fail(qId, 'Explanation missing or too brief');
+  if (q.distractorRationale && roboticDrRe.test(q.distractorRationale)) {
+    fail(qId, 'Contains robotic boilerplate distractorRationale filler');
+  }
 
   if (!Array.isArray(q.definitions) || q.definitions.length === 0) {
     fail(qId, 'Missing linked technical definitions');
@@ -251,18 +284,46 @@ const outOfScopeRe = /\b(SqlConnection|SqlCommand|BinaryReader|BinaryWriter|asyn
     });
   }
 
-  const combinedText = [stem, q.code || '', ...(opts || []), exp].join(' ');
+  const combinedText = [stem, q.code || '', ...(opts || []), exp, q.distractorRationale || ''].join(' | ');
   if (crossRefRe.test(combinedText)) fail(qId, 'Contains prohibited cross-question dependency wording');
   if (roboticFluffRe.test(combinedText)) fail(qId, `Contains prohibited meta-fluff: ${combinedText.match(roboticFluffRe)[0]}`);
   if (outOfScopeRe.test(combinedText)) fail(qId, `Contains excluded out-of-scope C# API: ${combinedText.match(outOfScopeRe)[0]}`);
-  // Check .Filename bug except in spot-error questions that intentionally ask why .Filename fails
   if (/\.Filename\b/.test(q.code || '') || /\.Filename\b/.test(exp)) {
     fail(qId, 'Incorrect C# property casing .Filename (must be .FileName)');
   }
 
+  if (!q.examPaperId && Array.isArray(opts) && opts[q.answer] !== undefined) {
+    const toks = normDupTokens(stem + ' ' + (q.code || ''));
+    const ansNorm = String(opts[q.answer]).toLowerCase().trim();
+    for (const prev of standaloneTokenCache) {
+      if (prev.ansNorm === ansNorm && toks.size >= 3 && prev.toks.size >= 3) {
+        let inter = 0;
+        for (const w of toks) if (prev.toks.has(w)) inter++;
+        const jac = inter / (toks.size + prev.toks.size - inter);
+        if (jac >= 0.55) {
+          fail(qId, `Near-duplicate standalone question with ${prev.id} (similarity=${jac.toFixed(2)})`);
+        }
+      }
+    }
+    standaloneTokenCache.push({ id: qId, toks, ansNorm });
+  }
+
   suDist[q.su] = (suDist[q.su] || 0) + 1;
+  if (!suAnsDist[q.su]) suAnsDist[q.su] = [0, 0, 0, 0];
+  if (q.answer >= 0 && q.answer < 4) suAnsDist[q.su][q.answer] += 1;
   diffDist[q.difficulty] = (diffDist[q.difficulty] || 0) + 1;
   qTypeDist[q.questionType] = (qTypeDist[q.questionType] || 0) + 1;
+});
+
+// Verify per-Study-Unit answer-key balance (no option > 36% or < 15%)
+Object.entries(suAnsDist).forEach(([su, counts]) => {
+  const total = counts.reduce((a, b) => a + b, 0);
+  counts.forEach((cnt, optIdx) => {
+    const share = cnt / Math.max(1, total);
+    if (share > 0.36 || share < 0.15) {
+      fail(`ANS_BALANCE_${su}`, `Unbalanced answer distribution in ${su} for option ${optIdx}: ${cnt}/${total} (${Math.round(share * 100)}%)`);
+    }
+  });
 });
 
 // 5. Exam Integrity Audit (Official Past Papers + Weighted Generator)

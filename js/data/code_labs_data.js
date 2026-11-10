@@ -23,7 +23,7 @@
       ],
       "requiresCurrency": false,
       "requiresValidation": false,
-      "description": "Develop the event handler for btnStop_Click. (Racing Light Trainer), when the Stop button is clicked, the application must display the red traffic light (picRed.Visible = true), hide the amber light (picAmber.Visible = false), hide the green light (picGreen.Visible = false), hide the dark lamp (picDark.Visible = false), and update the instruction label text to 'STOP' (lblInstruction.Text = 'STOP').",
+      "description": "Develop the event handler for btnStop_Click in the Racing Light Trainer: when the Stop button is clicked, display the red traffic light (picRed.Visible = true), hide the amber, green, and dark lamps (Visible = false), and set lblInstruction.Text to \"STOP\".",
       "controls": [
         "picRed",
         "picAmber",
@@ -948,12 +948,12 @@
       "code": "1: private void btnCalculate_Click(object sender, EventArgs e)\n2: {\n3:     decimal hours = 40.5m\n4:     decimal rate = 120.00m;\n5:     lblGrossPay.Text = (hours * rate).ToString(\"C\");\n6: }",
       "question": "Which line contains a syntax error preventing this C# project from compiling?",
       "options": [
-        "Line 1: Event handler signature is missing public modifier",
         "Line 3: Missing terminating semicolon ';' at the end of statement (CS1002)",
+        "Line 1: Event handler signature is missing public modifier",
         "Line 4: 'm' suffix cannot be used with decimal literals",
         "Line 5: '.ToString(\"C\")' is invalid syntax for currency"
       ],
-      "answer": 1,
+      "answer": 0,
       "explanation": "Line 3 is missing the required semicolon ';'. In C#, every statement must terminate with a semicolon. The compiler reports CS1002: ; expected.",
       "su": "SU3"
     },
@@ -963,12 +963,12 @@
       "code": "1: private void btnSubmit_Click(object sender, EventArgs e)\n2: {\n3:     decimal price;\n4:     price = txtPrice.Text;\n5:     lblTotal.Text = price.ToString(\"C\");\n6: }",
       "question": "What error occurs on Line 4?",
       "options": [
-        "CS0029: Cannot implicitly convert type 'string' to 'decimal'. Must use decimal.Parse() or decimal.TryParse().",
         "CS0103: The name 'txtPrice' does not exist.",
+        "CS0029: Cannot implicitly convert type 'string' to 'decimal'. Must use decimal.Parse() or decimal.TryParse().",
         "Runtime NullReferenceException because Text is null.",
         "No error; C# automatically converts strings to decimals in assignments."
       ],
-      "answer": 0,
+      "answer": 1,
       "explanation": "The Text property of a TextBox returns a string. C# is strongly typed and does not perform implicit string-to-numeric conversions. You must use decimal.Parse(txtPrice.Text) or decimal.TryParse(txtPrice.Text, out price).",
       "su": "SU3"
     },
@@ -979,11 +979,11 @@
       "question": "Why will Line 2 fail to compile in Visual C#?",
       "options": [
         "mark cannot be compared to an integer",
-        "Single '=' is the assignment operator; comparison requires the relational '==' operator (CS0029 / CS0266)",
         "if statements cannot have integer conditions in any circumstance",
+        "Single '=' is the assignment operator; comparison requires the relational '==' operator (CS0029 / CS0266)",
         "Parentheses around mark = 50 are not allowed in C#"
       ],
-      "answer": 1,
+      "answer": 2,
       "explanation": "In C#, '=' assigns the value 50 to mark and yields an int (50). The if statement strictly requires a boolean expression. Since int cannot be converted to bool, the compiler flags an error. Comparison requires '==': if (mark == 50).",
       "su": "SU3"
     },
@@ -994,11 +994,11 @@
       "question": "What is wrong with the TryParse call on Line 2?",
       "options": [
         "TryParse only accepts int variables, not decimal",
-        "The second argument must be preceded by the 'out' keyword: decimal.TryParse(txtHours.Text, out hours)",
         "TryParse does not return a boolean value",
-        "txtHours.Text must be cast to an object first"
+        "txtHours.Text must be cast to an object first",
+        "The second argument must be preceded by the 'out' keyword: decimal.TryParse(txtHours.Text, out hours)"
       ],
-      "answer": 1,
+      "answer": 3,
       "explanation": "The C# TryParse method passes the target variable by reference using the 'out' keyword. Omitting 'out' causes a compiler error CS1503: Argument 2 must be passed with the 'out' keyword.",
       "su": "SU3"
     },
@@ -1008,12 +1008,12 @@
       "code": "1: int totalMarks = 85;\n2: int maxMarks = 100;\n3: double percentage = (totalMarks / maxMarks) * 100;\n4: lblPercent.Text = percentage.ToString(\"P\");",
       "question": "What logical bug occurs on Line 3 when totalMarks is 85?",
       "options": [
-        "A runtime DivideByZeroException is thrown",
         "Integer division '85 / 100' evaluates to 0 due to truncation, making percentage equal 0.0",
+        "A runtime DivideByZeroException is thrown",
         "The code will not compile because double cannot hold an int calculation",
         "The multiplication by 100 causes an arithmetic overflow"
       ],
-      "answer": 1,
+      "answer": 0,
       "explanation": "When dividing two integers in C# (totalMarks / maxMarks), integer division occurs and truncates any fractional part: 85 / 100 = 0. Multiplying 0 by 100 gives 0.0. To fix, cast at least one operand to double: ((double)totalMarks / maxMarks) * 100.",
       "su": "SU3"
     },
@@ -1023,12 +1023,12 @@
       "code": "1: switch (gradeLevel)\n2: {\n3:     case 1:\n4:         rate = 100.0m;\n5:     case 2:\n6:         rate = 150.0m;\n7:         break;\n8: }",
       "question": "What compiler error is generated for case 1 on Lines 3-4?",
       "options": [
-        "CS0163: Control cannot fall through from one case label ('case 1:') to another; a 'break;' statement is required",
         "gradeLevel must be a string",
+        "CS0163: Control cannot fall through from one case label ('case 1:') to another; a 'break;' statement is required",
         "case values cannot be integers",
         "default label is mandatory in all switch blocks"
       ],
-      "answer": 0,
+      "answer": 1,
       "explanation": "C# strictly prohibits implicit fall-through between non-empty case statements. Case 1 contains executable statements (rate = 100.0m;) and must end with a jump statement such as 'break;', 'return;', or 'goto case;'.",
       "su": "SU3"
     },
@@ -1039,11 +1039,11 @@
       "question": "Why does Line 7 fail to compile?",
       "options": [
         "lblTotal cannot display currency",
-        "The variable 'discount' is declared inside the if block and is not visible outside that block (CS0103: The name 'discount' does not exist in current context)",
         "chkDiscount does not have a Checked property",
+        "The variable 'discount' is declared inside the if block and is not visible outside that block (CS0103: The name 'discount' does not exist in current context)",
         "discount must be declared as static"
       ],
-      "answer": 1,
+      "answer": 2,
       "explanation": "In C#, variables declared inside curly braces '{ }' have block scope and cease to exist once the block terminates. Line 7 attempts to use 'discount' outside the if block where it was declared, triggering CS0103.",
       "su": "SU3"
     },
@@ -1054,11 +1054,11 @@
       "question": "What critical runtime defect exists in this while loop?",
       "options": [
         "The condition count <= 10 causes an index out of bounds error",
-        "The loop counter 'count' is never incremented (missing count++;), causing an infinite loop that freezes the application",
         "lstItems.Items.Add does not accept string arguments",
-        "total should be declared inside the while loop"
+        "total should be declared inside the while loop",
+        "The loop counter 'count' is never incremented (missing count++;), causing an infinite loop that freezes the application"
       ],
-      "answer": 1,
+      "answer": 3,
       "explanation": "The variable 'count' remains 1 forever because there is no 'count++;' or update statement inside the loop body. The condition '1 <= 10' remains perpetually true, resulting in an infinite loop that locks the UI thread.",
       "su": "SU3"
     },
@@ -1068,12 +1068,12 @@
       "code": "1: private void button1_Click(object sender, EventArgs e)\n2: {\n3:     decimal hours = decimal.Parse(textBox1.Text);\n4:     label1.Text = hours.ToString();\n5: }",
       "question": "What NWU CMPG122 coding standard violation is committed in this event handler?",
       "options": [
-        "Event handlers cannot be named button1_Click",
         "Default control names (button1, textBox1, label1) violate the prescribed NWU Hungarian notation standards (btnCalculate, txtHours, lblOutput), resulting in rubric penalties",
+        "Event handlers cannot be named button1_Click",
         "textBox1 cannot be parsed to decimal",
         "label1.Text only accepts integers"
       ],
-      "answer": 1,
+      "answer": 0,
       "explanation": "The official NWU CMPG122 naming conventions strictly mandate Hungarian prefixes: 'btn' for buttons, 'txt' for textboxes, 'lbl' for labels, and meaningful descriptive identifiers. Using default control names incurs penalties in practical examinations.",
       "su": "SU3"
     },
@@ -1098,12 +1098,12 @@
       "code": "1: decimal discountRate;\n2: if (chkLoyalty.Checked)\n3: {\n4:     discountRate = 0.10m;\n5: }\n6: decimal finalPrice = 1000m * (1 - discountRate);",
       "question": "Why does Line 6 fail to compile?",
       "options": [
-        "CS0165: Use of unassigned local variable 'discountRate'. If chkLoyalty.Checked is false, discountRate is never assigned a value.",
         "1000m cannot be multiplied by a parenthesized expression",
         "chkLoyalty.Checked is read-only",
+        "CS0165: Use of unassigned local variable 'discountRate'. If chkLoyalty.Checked is false, discountRate is never assigned a value.",
         "discountRate cannot be subtracted from 1"
       ],
-      "answer": 0,
+      "answer": 2,
       "explanation": "In C#, local variables are not given default values automatically. If chkLoyalty.Checked is false, discountRate remains unassigned when evaluated on line 6. The compiler flags CS0165. To fix, initialize it upon declaration: 'decimal discountRate = 0.0m;' or add an else block.",
       "su": "SU3"
     },
@@ -1114,11 +1114,11 @@
       "question": "What runtime error occurs on the final iteration of this for loop?",
       "options": [
         "StackOverflowException",
-        "IndexOutOfRangeException: Array indices range from 0 to Length - 1; using '<=' accesses index 4 which does not exist",
         "NullReferenceException",
-        "InvalidCastException"
+        "InvalidCastException",
+        "IndexOutOfRangeException: Array indices range from 0 to Length - 1; using '<=' accesses index 4 which does not exist"
       ],
-      "answer": 1,
+      "answer": 3,
       "explanation": "The array contains 4 items with valid indices 0, 1, 2, 3. The condition 'i <= months.Length' allows 'i' to reach 4. Evaluating months[4] throws an IndexOutOfRangeException. The condition must be 'i < months.Length'.",
       "su": "SU3"
     },
@@ -1143,12 +1143,12 @@
       "code": "1: decimal price = 199.99;\n2: decimal vat = price * 0.15;\n3: lblTotal.Text = (price + vat).ToString(\"C\");",
       "question": "Why do Lines 1 and 2 fail to compile in Visual C#?",
       "options": [
-        "Double literals without 'm' (199.99 and 0.15) cannot be implicitly converted to decimal (CS0664 / CS0029)",
         "decimal is not a valid C# keyword",
+        "Double literals without 'm' (199.99 and 0.15) cannot be implicitly converted to decimal (CS0664 / CS0029)",
         "Labels cannot display decimal values",
         "vat is a reserved C# keyword"
       ],
-      "answer": 0,
+      "answer": 1,
       "explanation": "By default, real numeric literals containing a decimal point are treated as type 'double'. C# does not allow implicit conversion from double to decimal. Suffix 'm' or 'M' must be appended: '199.99m' and '0.15m'.",
       "su": "SU3"
     },
@@ -1158,12 +1158,12 @@
       "code": "1: decimal total = 0m;\n2: decimal rate = 50m;\n3: int count = 5;\n4: decimal total = rate * count;\n5: lblTotal.Text = total.ToString(\"C\");",
       "question": "What compiler error occurs on Line 4?",
       "options": [
-        "CS0128: A local variable named 'total' is already defined in this scope",
         "Cannot multiply decimal by int",
         "count must be declared as decimal",
+        "CS0128: A local variable named 'total' is already defined in this scope",
         "lblTotal.Text only accepts strings"
       ],
-      "answer": 0,
+      "answer": 2,
       "explanation": "The variable 'total' was already declared on Line 1. Line 4 attempts to declare it again with 'decimal total = ...'. In C#, you cannot declare two local variables with the same name in the same scope. Line 4 should simply be an assignment: 'total = rate * count;'.",
       "su": "SU3"
     },
@@ -1175,10 +1175,10 @@
       "options": [
         "Line 1: Event handlers cannot be declared with 'private' access modifier",
         "Line 5: Assigning empty string \"\" to a Label is invalid syntax",
-        "Line 7: Two methods in the same class cannot share the identical identifier 'btnClear_Click' and parameter list",
-        "Line 9: 'this.Close();' cannot be called inside a Form class"
+        "Line 9: 'this.Close();' cannot be called inside a Form class",
+        "Line 7: Two methods in the same class cannot share the identical identifier 'btnClear_Click' and parameter list"
       ],
-      "answer": 2,
+      "answer": 3,
       "explanation": "In C#, declaring two methods in the same class with the same name and parameter list causes CS0111: Type already defines a member called 'btnClear_Click' with the same parameter types. The second method should be named 'btnExit_Click'.",
       "su": "SU3"
     },
@@ -1188,12 +1188,12 @@
       "code": "1: try\n2: {\n3:     double test1 = double.Parse(txtTest1.Text);\n4:     double test2 = double.Parse(txtTest2.Text);\n5:     double avg = (test1 + test2) / 2.0;\n6:     lblAverage.Text = avg.toString(''n2'');\n7: }\n8: catch except(ex e)\n9: {\n10:    MessageBox.Show(\"Please enter valid numeric marks.\");\n11: }",
       "question": "Which two lines contain syntax errors that prevent this event handler from compiling?",
       "options": [
-        "Line 3 (double.Parse does not exist in C#) and Line 5 (division by 2.0 is illegal)",
         "Line 6 (lowercase 'toString' with single quotes ''n2'') and Line 8 (invalid 'catch except(ex e)' syntax)",
+        "Line 3 (double.Parse does not exist in C#) and Line 5 (division by 2.0 is illegal)",
         "Line 1 (try cannot be lowercase) and Line 10 (MessageBox.Show requires 3 arguments)",
         "Line 4 (txtTest2.Text is read-only) and Line 8 (missing finally block)"
       ],
-      "answer": 1,
+      "answer": 0,
       "explanation": "Line 6 violates C# PascalCase naming (must be ToString) and uses two single quotes (''n2'') instead of double quotes (\"n2\"). Line 8 has invalid catch syntax; C# requires 'catch (FormatException ex)' or 'catch (Exception ex)'.",
       "su": "SU3"
     },
@@ -1203,12 +1203,12 @@
       "unit": "SU4",
       "question": "This handler is meant to append a new student name to the end of `Names.txt` without erasing existing entries and ensure the buffer is saved to disk. What two defects exist?",
       "options": [
-        "`File.CreateText` erases the existing file contents (should be `File.AppendText(\"Names.txt\")`), and `outputFile.Close();` is missing at the end.",
         "`StreamWriter` must be replaced with `StreamReader`, and `WriteLine` must be replaced with `ReadLine`.",
+        "`File.CreateText` erases the existing file contents (should be `File.AppendText(\"Names.txt\")`), and `outputFile.Close();` is missing at the end.",
         "`txtStudentName.Text` must be parsed with `int.TryParse` before calling `WriteLine`.",
         "`Names.txt` must be passed to `MessageBox.Show` before opening."
       ],
-      "answer": 0,
+      "answer": 1,
       "fix": "StreamWriter outputFile = File.AppendText(\"Names.txt\");\noutputFile.WriteLine(txtStudentName.Text);\noutputFile.Close();",
       "explanation": "`File.CreateText` overwrites any existing file and erases its contents; `File.AppendText` preserves existing lines and writes at the end. Additionally, `outputFile.Close();` is required to flush the buffer and release the file lock.",
       "code": "private void btnSaveLog_Click(object sender, EventArgs e)\n{\n    // Append new student name to existing Names.txt log without erasing old names:\n    StreamWriter outputFile = File.CreateText(\"Names.txt\");\n    outputFile.WriteLine(txtStudentName.Text);\n}",
@@ -1221,11 +1221,11 @@
       "question": "Why does the C# compiler reject `return false;` with error `CS0177: The out parameter 'seconds' must be assigned to before control leaves the current method`?",
       "options": [
         "Because `ReadSeconds` must have a `void` return type when using `out`.",
-        "Because when the `if` condition is false, execution reaches `return false;` without ever assigning a value to the `out` parameter `seconds` (must add `seconds = 0;` before `return false;`).",
         "Because `int.TryParse` does not work inside custom methods.",
+        "Because when the `if` condition is false, execution reaches `return false;` without ever assigning a value to the `out` parameter `seconds` (must add `seconds = 0;` before `return false;`).",
         "Because `3600` exceeds the maximum value of an `int`."
       ],
-      "answer": 1,
+      "answer": 2,
       "fix": "seconds = 0;\nreturn false;",
       "explanation": "Every code path in a method with an `out` parameter must assign a value to that parameter before returning. Assigning `seconds = 0;` before `return false;` (or passing `out seconds` directly to `int.TryParse`) satisfies the compiler.",
       "code": "private bool ReadSeconds(string text, out int seconds)\n{\n    int parsed;\n    if (int.TryParse(text, out parsed) && parsed >= 1 && parsed <= 3600)\n    {\n        seconds = parsed;\n        return true;\n    }\n    return false; // Compiler Error CS0177!\n}",
@@ -1239,10 +1239,10 @@
       "options": [
         "Because `new SummaryForm()` deletes `totalDue`.",
         "Because `ToString(\"C\")` cannot be used in multiform projects.",
-        "Because `frmSummary.ShowDialog()` blocks execution until the user closes `SummaryForm`, so `frmSummary.lblFinalTotal.Text` is assigned *after* the form has already been closed.",
-        "Because `SummaryForm` must be opened with `this.Close()`."
+        "Because `SummaryForm` must be opened with `this.Close()`.",
+        "Because `frmSummary.ShowDialog()` blocks execution until the user closes `SummaryForm`, so `frmSummary.lblFinalTotal.Text` is assigned *after* the form has already been closed."
       ],
-      "answer": 2,
+      "answer": 3,
       "fix": "SummaryForm frmSummary = new SummaryForm();\nfrmSummary.lblFinalTotal.Text = totalDue.ToString(\"C\");\nfrmSummary.ShowDialog();",
       "explanation": "A modal `ShowDialog()` call pauses the calling event handler until the modal form is closed. Any data or control text must be assigned to `frmSummary` **before** calling `frmSummary.ShowDialog()`.",
       "code": "private void btnShowSummary_Click(object sender, EventArgs e)\n{\n    SummaryForm frmSummary = new SummaryForm();\n    frmSummary.ShowDialog();\n    frmSummary.lblFinalTotal.Text = totalDue.ToString(\"C\");\n}",
@@ -1255,12 +1255,12 @@
       "code": "private void btnLoad_Click(object sender, EventArgs e)\n{\n    ofdInput.ShowDialog();\n    StreamReader sr = File.OpenText(ofdInput.Filename);\n    lblFirst.Text = sr.ReadLine();\n    sr.Close();\n}",
       "question": "Identify the TWO defects in this file-opening event handler:",
       "options": [
-        "StreamReader should be StreamWriter, and Close() should be Dispose().",
         "(1) ShowDialog() is not checked against DialogResult.OK (crashing if the user clicks Cancel), and (2) .Filename uses a lowercase \"n\" instead of .FileName (CS1061).",
+        "StreamReader should be StreamWriter, and Close() should be Dispose().",
         "ofdInput must be instantiated with new on every click, and ReadLine() returns an int.",
         "File.OpenText overwrites the file instead of reading it."
       ],
-      "answer": 1,
+      "answer": 0,
       "explanation": "Always check if (ofdInput.ShowDialog() == DialogResult.OK) before opening the file, and spell the C# property with exact PascalCase: ofdInput.FileName."
     },
     {
@@ -1286,11 +1286,11 @@
       "question": "Why does the C# compiler refuse to compile TryParseRate (error CS0177)?",
       "options": [
         "A bool method cannot declare an out decimal parameter.",
-        "When the if condition is false, the method returns false without ever assigning a value to the out parameter rate!",
         "decimal.TryParse cannot be called inside another method.",
+        "When the if condition is false, the method returns false without ever assigning a value to the out parameter rate!",
         "temp must be declared as double."
       ],
-      "answer": 1,
+      "answer": 2,
       "explanation": "Every out parameter must be assigned before control leaves the method on ALL return paths—assign rate = 0m; before return false;."
     },
     {
@@ -1301,11 +1301,11 @@
       "question": "Assuming lblAmountDue has Modifiers = Public on InvoiceForm, why does the user see an empty/default label while InvoiceForm is open?",
       "options": [
         "ShowDialog() resets all Public labels to empty strings.",
-        "ShowDialog() suspends execution at line 4 until the user CLOSES InvoiceForm, so line 5 assigns lblAmountDue.Text only after the window has already been dismissed!",
         "450m * 1.15m overflows decimal.",
-        "InvoiceForm must be opened with Application.Run()."
+        "InvoiceForm must be opened with Application.Run().",
+        "ShowDialog() suspends execution at line 4 until the user CLOSES InvoiceForm, so line 5 assigns lblAmountDue.Text only after the window has already been dismissed!"
       ],
-      "answer": 1,
+      "answer": 3,
       "explanation": "Assign frm.lblAmountDue.Text = ... BEFORE calling frm.ShowDialog(); so the value is already in the label while the modal form is displayed."
     }
   ],

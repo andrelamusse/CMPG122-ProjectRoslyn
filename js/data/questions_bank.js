@@ -24,7 +24,7 @@
       "totalMarks": 100,
       "badge": "Dec 2024 Past Paper",
       "scenario": "Car Rental Fleet & Mileage Surcharge Billing System: Counter agents at DriveNow Car Hire calculate vehicle rental charges based on vehicle category selection (Sedan, SUV, Bakkie), daily rental rates, included free mileage allowances with tiered excess surcharges, optional GPS add-on, promotional discount voucher, TryParse input validation, and formatted ListBox invoice statements.",
-      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>📋 Problem Scenario: DriveNow Fleet Car Rental Billing System</strong><br>\n    DriveNow Car Hire operates rental depots across the NWU Potchefstroom and Vanderbijlpark campuses. You have been commissioned to build an interactive Windows Forms desktop billing system in Visual C# for depot service agents. The application processes rental durations, reads odometer usage, determines vehicle category base rates, calculates included free mileage allowances and excess kilometer surcharges, evaluates optional GPS navigation add-ons and promotional discount vouchers, and outputs a formatted itemized invoice to an on-screen summary label and ListBox.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📊 1. Vehicle Rates, Mileage Allowances &amp; Business Rules Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Vehicle Category</th>\n          <th>GUI Selector</th>\n          <th>Daily Rental Rate</th>\n          <th>Daily Mileage Allowance</th>\n          <th>Excess Surcharge Rate</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>Sedan (Economy)</strong></td>\n          <td><code>rdoSedan</code></td>\n          <td><span class=\"rate-tag\">R450.00 / day</span></td>\n          <td>150 km / day free</td>\n          <td>R3.50 per excess km</td>\n        </tr>\n        <tr>\n          <td><strong>SUV (Touring / Family)</strong></td>\n          <td><code>rdoSuv</code></td>\n          <td><span class=\"rate-tag\">R650.00 / day</span></td>\n          <td>150 km / day free</td>\n          <td>R3.50 per excess km</td>\n        </tr>\n        <tr>\n          <td><strong>Bakkie (Light Commercial)</strong></td>\n          <td><code>rdoBakkie</code></td>\n          <td><span class=\"rate-tag\">R750.00 / day</span></td>\n          <td>150 km / day free</td>\n          <td>R3.50 per excess km</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);\">\n    <strong>⚙️ Optional Equipment, Discounts &amp; Mileage Rules:</strong>\n    <ul>\n      <li><strong>GPS Navigation Unit:</strong> CheckBox <code>chkGps</code> adds an optional surcharge of <span class=\"rate-tag\">R80.00 per rental day</span>.</li>\n      <li><strong>Promotional Discount Voucher:</strong> CheckBox <code>chkVoucher</code> deducts a <span class=\"rate-tag\">5% discount</span> (0.05m) from the gross subtotal if checked.</li>\n      <li><strong>Free Mileage Allowance Rule:</strong> Free kilometers allowed = <code>days * 150m</code>. If total kilometers driven exceed free kilometers, excess kilometers = <code>kms - freeKms</code>, billed at <code>excessKms * 3.50m</code>. If kilometers driven are within allowance, excess surcharge is R0.00.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtDays</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Customer rental days input. Must parse to positive integer (<code>int.TryParse</code>, &gt; 0).</td>\n        </tr>\n        <tr>\n          <td><code>txtKms</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 1)</td>\n          <td>Focus target</td>\n          <td>Total kilometers driven. Must parse to non-negative decimal (<code>decimal.TryParse</code>, &gt;= 0).</td>\n        </tr>\n        <tr>\n          <td><code>grpVehicle</code></td>\n          <td>GroupBox</td>\n          <td>Text: \"Vehicle Category\"</td>\n          <td>Container</td>\n          <td>Enforces mutual exclusion among vehicle category radio buttons.</td>\n        </tr>\n        <tr>\n          <td><code>rdoSedan</code></td>\n          <td>RadioButton</td>\n          <td>Checked = true</td>\n          <td>CheckedChanged</td>\n          <td>Economy Sedan rate selector (R450.00/day). Default vehicle.</td>\n        </tr>\n        <tr>\n          <td><code>rdoSuv</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>SUV rate selector (R650.00/day).</td>\n        </tr>\n        <tr>\n          <td><code>rdoBakkie</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Bakkie rate selector (R750.00/day).</td>\n        </tr>\n        <tr>\n          <td><code>chkGps</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Optional GPS unit add-on (R80.00/day).</td>\n        </tr>\n        <tr>\n          <td><code>chkVoucher</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Promotional 5% discount deduction voucher.</td>\n        </tr>\n        <tr>\n          <td><code>btnCalculate</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Calculate Bill\"</td>\n          <td><code>btnCalculate_Click</code></td>\n          <td>Validates inputs defensively, calculates charges, outputs to label and ListBox.</td>\n        </tr>\n        <tr>\n          <td><code>btnClear</code></td>\n          <td>Button</td>\n          <td>Text: \"C&amp;lear\"</td>\n          <td><code>btnClear_Click</code></td>\n          <td>Resets all inputs to blank, selects default sedan, unchecks add-ons, clears outputs.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Prompts confirmation MessageBox (Yes/No); terminates via <code>this.Close();</code> on Yes.</td>\n        </tr>\n        <tr>\n          <td><code>lblTotalDue</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (Fixed3D, AutoSize=false)</td>\n          <td>Output target</td>\n          <td>Displays final net total due formatted as South African currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstReceipt</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Displays formatted itemized billing invoice breakdown.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Defensive Parsing:</strong> Days must be parsed using <code>int.TryParse(txtDays.Text, out days)</code>. If parsing fails or <code>days &lt;= 0</code>, display an informative error dialog via <code>MessageBox.Show</code>, set focus to <code>txtDays.Focus()</code>, select all text via <code>txtDays.SelectAll()</code>, and exit event handler using <code>return;</code>.</li>\n      <li><strong>Odometer Validation:</strong> Kilometers must be parsed via <code>decimal.TryParse(txtKms.Text, out kms)</code> and satisfy <code>kms &gt;= 0</code>. Failure triggers an error message and focus restoration.</li>\n      <li><strong>Base Cost:</strong> Determined by vehicle category: <code>rdoSedan.Checked</code> (R450), <code>rdoSuv.Checked</code> (R650), or <code>rdoBakkie.Checked</code> (R750). <code>baseCost = days * dailyRate</code>.</li>\n      <li><strong>Excess Mileage:</strong> <code>freeKms = days * 150m</code>. If <code>kms &gt; freeKms</code>, <code>excessCharge = (kms - freeKms) * 3.50m</code>; otherwise <code>excessCharge = 0m</code>.</li>\n      <li><strong>Add-ons &amp; Discounts:</strong> <code>gpsCharge = chkGps.Checked ? (days * 80m) : 0m</code>. Gross total = <code>baseCost + excessCharge + gpsCharge</code>. If <code>chkVoucher.Checked</code> is true, discount = <code>grossTotal * 0.05m</code>; final <code>netTotal = grossTotal - discount</code>.</li>\n      <li><strong>Output Formatting:</strong> <code>lblTotalDue.Text = netTotal.ToString(\"C\");</code>. Populate <code>lstReceipt.Items.Add(...)</code> with itemized entries.</li>\n    </ol>\n  </div>\n</div>",
+      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>Problem Scenario: DriveNow Fleet Car Rental Billing System</strong><br>\n    DriveNow Car Hire operates rental depots across the NWU Potchefstroom and Vanderbijlpark campuses. You have been commissioned to build an interactive Windows Forms desktop billing system in Visual C# for depot service agents. The application processes rental durations, reads odometer usage, determines vehicle category base rates, calculates included free mileage allowances and excess kilometer surcharges, evaluates optional GPS navigation add-ons and promotional discount vouchers, and outputs a formatted itemized invoice to an on-screen summary label and ListBox.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>1. Vehicle Rates, Mileage Allowances &amp; Business Rules Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Vehicle Category</th>\n          <th>GUI Selector</th>\n          <th>Daily Rental Rate</th>\n          <th>Daily Mileage Allowance</th>\n          <th>Excess Surcharge Rate</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>Sedan (Economy)</strong></td>\n          <td><code>rdoSedan</code></td>\n          <td><span class=\"rate-tag\">R450.00 / day</span></td>\n          <td>150 km / day free</td>\n          <td>R3.50 per excess km</td>\n        </tr>\n        <tr>\n          <td><strong>SUV (Touring / Family)</strong></td>\n          <td><code>rdoSuv</code></td>\n          <td><span class=\"rate-tag\">R650.00 / day</span></td>\n          <td>150 km / day free</td>\n          <td>R3.50 per excess km</td>\n        </tr>\n        <tr>\n          <td><strong>Bakkie (Light Commercial)</strong></td>\n          <td><code>rdoBakkie</code></td>\n          <td><span class=\"rate-tag\">R750.00 / day</span></td>\n          <td>150 km / day free</td>\n          <td>R3.50 per excess km</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--status-warning-text); background: var(--status-warning-bg);\">\n    <strong>Optional Equipment, Discounts &amp; Mileage Rules:</strong>\n    <ul>\n      <li><strong>GPS Navigation Unit:</strong> CheckBox <code>chkGps</code> adds an optional surcharge of <span class=\"rate-tag\">R80.00 per rental day</span>.</li>\n      <li><strong>Promotional Discount Voucher:</strong> CheckBox <code>chkVoucher</code> deducts a <span class=\"rate-tag\">5% discount</span> (0.05m) from the gross subtotal if checked.</li>\n      <li><strong>Free Mileage Allowance Rule:</strong> Free kilometers allowed = <code>days * 150m</code>. If total kilometers driven exceed free kilometers, excess kilometers = <code>kms - freeKms</code>, billed at <code>excessKms * 3.50m</code>. If kilometers driven are within allowance, excess surcharge is R0.00.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtDays</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Customer rental days input. Must parse to positive integer (<code>int.TryParse</code>, &gt; 0).</td>\n        </tr>\n        <tr>\n          <td><code>txtKms</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 1)</td>\n          <td>Focus target</td>\n          <td>Total kilometers driven. Must parse to non-negative decimal (<code>decimal.TryParse</code>, &gt;= 0).</td>\n        </tr>\n        <tr>\n          <td><code>grpVehicle</code></td>\n          <td>GroupBox</td>\n          <td>Text: \"Vehicle Category\"</td>\n          <td>Container</td>\n          <td>Enforces mutual exclusion among vehicle category radio buttons.</td>\n        </tr>\n        <tr>\n          <td><code>rdoSedan</code></td>\n          <td>RadioButton</td>\n          <td>Checked = true</td>\n          <td>CheckedChanged</td>\n          <td>Economy Sedan rate selector (R450.00/day). Default vehicle.</td>\n        </tr>\n        <tr>\n          <td><code>rdoSuv</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>SUV rate selector (R650.00/day).</td>\n        </tr>\n        <tr>\n          <td><code>rdoBakkie</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Bakkie rate selector (R750.00/day).</td>\n        </tr>\n        <tr>\n          <td><code>chkGps</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Optional GPS unit add-on (R80.00/day).</td>\n        </tr>\n        <tr>\n          <td><code>chkVoucher</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Promotional 5% discount deduction voucher.</td>\n        </tr>\n        <tr>\n          <td><code>btnCalculate</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Calculate Bill\"</td>\n          <td><code>btnCalculate_Click</code></td>\n          <td>Validates inputs defensively, calculates charges, outputs to label and ListBox.</td>\n        </tr>\n        <tr>\n          <td><code>btnClear</code></td>\n          <td>Button</td>\n          <td>Text: \"C&amp;lear\"</td>\n          <td><code>btnClear_Click</code></td>\n          <td>Resets all inputs to blank, selects default sedan, unchecks add-ons, clears outputs.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Prompts confirmation MessageBox (Yes/No); terminates via <code>this.Close();</code> on Yes.</td>\n        </tr>\n        <tr>\n          <td><code>lblTotalDue</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (Fixed3D, AutoSize=false)</td>\n          <td>Output target</td>\n          <td>Displays final net total due formatted as South African currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstReceipt</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Displays formatted itemized billing invoice breakdown.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Defensive Parsing:</strong> Days must be parsed using <code>int.TryParse(txtDays.Text, out days)</code>. If parsing fails or <code>days &lt;= 0</code>, display an informative error dialog via <code>MessageBox.Show</code>, set focus to <code>txtDays.Focus()</code>, select all text via <code>txtDays.SelectAll()</code>, and exit event handler using <code>return;</code>.</li>\n      <li><strong>Odometer Validation:</strong> Kilometers must be parsed via <code>decimal.TryParse(txtKms.Text, out kms)</code> and satisfy <code>kms &gt;= 0</code>. Failure triggers an error message and focus restoration.</li>\n      <li><strong>Base Cost:</strong> Determined by vehicle category: <code>rdoSedan.Checked</code> (R450), <code>rdoSuv.Checked</code> (R650), or <code>rdoBakkie.Checked</code> (R750). <code>baseCost = days * dailyRate</code>.</li>\n      <li><strong>Excess Mileage:</strong> <code>freeKms = days * 150m</code>. If <code>kms &gt; freeKms</code>, <code>excessCharge = (kms - freeKms) * 3.50m</code>; otherwise <code>excessCharge = 0m</code>.</li>\n      <li><strong>Add-ons &amp; Discounts:</strong> <code>gpsCharge = chkGps.Checked ? (days * 80m) : 0m</code>. Gross total = <code>baseCost + excessCharge + gpsCharge</code>. If <code>chkVoucher.Checked</code> is true, discount = <code>grossTotal * 0.05m</code>; final <code>netTotal = grossTotal - discount</code>.</li>\n      <li><strong>Output Formatting:</strong> <code>lblTotalDue.Text = netTotal.ToString(\"C\");</code>. Populate <code>lstReceipt.Items.Add(...)</code> with itemized entries.</li>\n    </ol>\n  </div>\n</div>",
       "subQuestionIds": [
         "q_su-exam_351",
         "q_su-exam_352",
@@ -53,7 +53,7 @@
       "totalMarks": 100,
       "badge": "Dec 2023 Past Paper",
       "scenario": "Student Tuition, Campus Residence & Bursary Assessment System: Visual C# application calculating faculty tuition fees based on credit enrollment, compulsory laboratory levies, residence accommodation meal plans, merit bursary percentage deductions, and a 4-month semester installment schedule.",
-      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>📋 Problem Scenario: Student Tuition, Residence Accommodation &amp; Bursary Assessment System</strong><br>\n    The NWU Student Accounts and Bursaries Office requires a standardized Windows Forms application in Visual C# to compute semester tuition fees for enrolling students. The system captures credit enrollments, determines faculty tuition rates and compulsory laboratory levies, processes optional on-campus residence accommodation and meal plans, applies merit bursary remissions, and projects a 4-month semester installment payment schedule into a ListBox using structured loop repetition.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📊 1. Faculty Tuition Rates, Facility Levies &amp; Business Rules Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Faculty / Discipline</th>\n          <th>GUI RadioButton</th>\n          <th>Cost per Enrolled Credit</th>\n          <th>Compulsory Laboratory / IT Levy</th>\n          <th>Max Allowable Credits</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>Natural &amp; Agricultural Sciences</strong></td>\n          <td><code>rdoScience</code></td>\n          <td><span class=\"rate-tag\">R850.00 / credit</span></td>\n          <td><span class=\"rate-tag\">R2,500.00</span> science lab levy</td>\n          <td>25 credits / semester</td>\n        </tr>\n        <tr>\n          <td><strong>Economic &amp; Management Sciences</strong></td>\n          <td><code>rdoCommerce</code></td>\n          <td><span class=\"rate-tag\">R750.00 / credit</span></td>\n          <td><span class=\"rate-tag\">R1,000.00</span> IT network levy</td>\n          <td>25 credits / semester</td>\n        </tr>\n        <tr>\n          <td><strong>Humanities &amp; Education</strong></td>\n          <td><code>rdoHumanities</code></td>\n          <td><span class=\"rate-tag\">R650.00 / credit</span></td>\n          <td><span class=\"rate-tag\">R500.00</span> resource levy</td>\n          <td>25 credits / semester</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);\">\n    <strong>⚙️ Residence Accommodation, Bursary Remissions &amp; Installment Schedule:</strong>\n    <ul>\n      <li><strong>Campus Residence &amp; Dining Hall Plan:</strong> CheckBox <code>chkResidence</code> adds a flat accommodation and catering fee of <span class=\"rate-tag\">R14,000.00 per semester</span>.</li>\n      <li><strong>Academic Merit Bursary Remission:</strong> CheckBox <code>chkBursary</code> activates the bursary percentage input <code>txtBursaryPercent</code>. Valid bursary percentages range from <span class=\"rate-tag\">5% to 100%</span>. The bursary deduction applies strictly to the academic fees (tuition + faculty levy); residence fees are not discounted.</li>\n      <li><strong>Installment Payment Projection:</strong> Total semester balance is divided across <span class=\"rate-tag\">4 equal monthly installments</span> (Months 1 to 4) populated in <code>lstInstallments</code> using a <code>for</code> loop.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtCredits</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Academic credits enrolled. Defensive range check: integer between 1 and 25 inclusive.</td>\n        </tr>\n        <tr>\n          <td><code>grpFaculty</code></td>\n          <td>GroupBox</td>\n          <td>Text: \"Faculty Selection\"</td>\n          <td>Container</td>\n          <td>Mutual exclusion container for faculty radio buttons.</td>\n        </tr>\n        <tr>\n          <td><code>rdoScience</code></td>\n          <td>RadioButton</td>\n          <td>Checked = true</td>\n          <td>CheckedChanged</td>\n          <td>Natural Sciences faculty selector (R850/credit + R2,500 levy).</td>\n        </tr>\n        <tr>\n          <td><code>rdoCommerce</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Commerce faculty selector (R750/credit + R1,000 levy).</td>\n        </tr>\n        <tr>\n          <td><code>rdoHumanities</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Humanities faculty selector (R650/credit + R500 levy).</td>\n        </tr>\n        <tr>\n          <td><code>chkResidence</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Toggles campus residence and meal plan flat fee (R14,000.00).</td>\n        </tr>\n        <tr>\n          <td><code>chkBursary</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Enables or disables <code>txtBursaryPercent</code> depending on checked state.</td>\n        </tr>\n        <tr>\n          <td><code>txtBursaryPercent</code></td>\n          <td>TextBox</td>\n          <td>Text: \"0\" (Enabled = false)</td>\n          <td>Focus target</td>\n          <td>Bursary percentage (5 to 100). Enabled only when <code>chkBursary.Checked == true</code>.</td>\n        </tr>\n        <tr>\n          <td><code>btnCalculate</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Calculate Tuition\"</td>\n          <td><code>btnCalculate_Click</code></td>\n          <td>Validates inputs, calculates net tuition, generates 4-month installment projection.</td>\n        </tr>\n        <tr>\n          <td><code>btnClear</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Clear Form\"</td>\n          <td><code>btnClear_Click</code></td>\n          <td>Resets all inputs, unchecks add-ons, clears ListBox, restores focus to <code>txtCredits</code>.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Confirmation dialog and application termination (<code>this.Close();</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblNetTuition</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays total net semester fees formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstInstallments</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Itemized ListBox containing the 4 monthly installment projection records.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Defensive Parsing &amp; Credit Bounds:</strong> Enrolled credits must be parsed with <code>int.TryParse(txtCredits.Text, out credits)</code>. If parsing fails or <code>credits &lt; 1 || credits &gt; 25</code>, display error message, call <code>txtCredits.Focus()</code> and <code>txtCredits.SelectAll()</code>, and <code>return;</code>.</li>\n      <li><strong>Faculty Tuition Calculation:</strong> Read selected radio button: Science (rate R850, levy R2,500), Commerce (rate R750, levy R1,000), Humanities (rate R650, levy R500). <code>academicTuition = (credits * rate) + levy</code>.</li>\n      <li><strong>Bursary Remission:</strong> If <code>chkBursary.Checked</code>, parse <code>decimal.TryParse(txtBursaryPercent.Text, out bursaryPct)</code>. Validate <code>bursaryPct &gt;= 5 &amp;&amp; bursaryPct &lt;= 100</code>. Calculate <code>bursaryDeduction = academicTuition * (bursaryPct / 100m)</code>. Net academic fee = <code>academicTuition - bursaryDeduction</code>.</li>\n      <li><strong>Residence Fee:</strong> If <code>chkResidence.Checked</code>, add R14,000.00. <code>totalSemesterFee = netAcademicFee + residenceFee</code>.</li>\n      <li><strong>Installment Projection Loop:</strong> <code>monthlyAmount = totalSemesterFee / 4m</code>. Clear <code>lstInstallments.Items.Clear()</code>. Execute loop <code>for (int m = 1; m &lt;= 4; m++)</code> and add <code>lstInstallments.Items.Add($\"Month {m}: {monthlyAmount:C}\");</code>.</li>\n    </ol>\n  </div>\n</div>",
+      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>Problem Scenario: Student Tuition, Residence Accommodation &amp; Bursary Assessment System</strong><br>\n    The NWU Student Accounts and Bursaries Office requires a standardized Windows Forms application in Visual C# to compute semester tuition fees for enrolling students. The system captures credit enrollments, determines faculty tuition rates and compulsory laboratory levies, processes optional on-campus residence accommodation and meal plans, applies merit bursary remissions, and projects a 4-month semester installment payment schedule into a ListBox using structured loop repetition.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>1. Faculty Tuition Rates, Facility Levies &amp; Business Rules Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Faculty / Discipline</th>\n          <th>GUI RadioButton</th>\n          <th>Cost per Enrolled Credit</th>\n          <th>Compulsory Laboratory / IT Levy</th>\n          <th>Max Allowable Credits</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>Natural &amp; Agricultural Sciences</strong></td>\n          <td><code>rdoScience</code></td>\n          <td><span class=\"rate-tag\">R850.00 / credit</span></td>\n          <td><span class=\"rate-tag\">R2,500.00</span> science lab levy</td>\n          <td>25 credits / semester</td>\n        </tr>\n        <tr>\n          <td><strong>Economic &amp; Management Sciences</strong></td>\n          <td><code>rdoCommerce</code></td>\n          <td><span class=\"rate-tag\">R750.00 / credit</span></td>\n          <td><span class=\"rate-tag\">R1,000.00</span> IT network levy</td>\n          <td>25 credits / semester</td>\n        </tr>\n        <tr>\n          <td><strong>Humanities &amp; Education</strong></td>\n          <td><code>rdoHumanities</code></td>\n          <td><span class=\"rate-tag\">R650.00 / credit</span></td>\n          <td><span class=\"rate-tag\">R500.00</span> resource levy</td>\n          <td>25 credits / semester</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--status-warning-text); background: var(--status-warning-bg);\">\n    <strong>Residence Accommodation, Bursary Remissions &amp; Installment Schedule:</strong>\n    <ul>\n      <li><strong>Campus Residence &amp; Dining Hall Plan:</strong> CheckBox <code>chkResidence</code> adds a flat accommodation and catering fee of <span class=\"rate-tag\">R14,000.00 per semester</span>.</li>\n      <li><strong>Academic Merit Bursary Remission:</strong> CheckBox <code>chkBursary</code> activates the bursary percentage input <code>txtBursaryPercent</code>. Valid bursary percentages range from <span class=\"rate-tag\">5% to 100%</span>. The bursary deduction applies strictly to the academic fees (tuition + faculty levy); residence fees are not discounted.</li>\n      <li><strong>Installment Payment Projection:</strong> Total semester balance is divided across <span class=\"rate-tag\">4 equal monthly installments</span> (Months 1 to 4) populated in <code>lstInstallments</code> using a <code>for</code> loop.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtCredits</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Academic credits enrolled. Defensive range check: integer between 1 and 25 inclusive.</td>\n        </tr>\n        <tr>\n          <td><code>grpFaculty</code></td>\n          <td>GroupBox</td>\n          <td>Text: \"Faculty Selection\"</td>\n          <td>Container</td>\n          <td>Mutual exclusion container for faculty radio buttons.</td>\n        </tr>\n        <tr>\n          <td><code>rdoScience</code></td>\n          <td>RadioButton</td>\n          <td>Checked = true</td>\n          <td>CheckedChanged</td>\n          <td>Natural Sciences faculty selector (R850/credit + R2,500 levy).</td>\n        </tr>\n        <tr>\n          <td><code>rdoCommerce</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Commerce faculty selector (R750/credit + R1,000 levy).</td>\n        </tr>\n        <tr>\n          <td><code>rdoHumanities</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Humanities faculty selector (R650/credit + R500 levy).</td>\n        </tr>\n        <tr>\n          <td><code>chkResidence</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Toggles campus residence and meal plan flat fee (R14,000.00).</td>\n        </tr>\n        <tr>\n          <td><code>chkBursary</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Enables or disables <code>txtBursaryPercent</code> depending on checked state.</td>\n        </tr>\n        <tr>\n          <td><code>txtBursaryPercent</code></td>\n          <td>TextBox</td>\n          <td>Text: \"0\" (Enabled = false)</td>\n          <td>Focus target</td>\n          <td>Bursary percentage (5 to 100). Enabled only when <code>chkBursary.Checked == true</code>.</td>\n        </tr>\n        <tr>\n          <td><code>btnCalculate</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Calculate Tuition\"</td>\n          <td><code>btnCalculate_Click</code></td>\n          <td>Validates inputs, calculates net tuition, generates 4-month installment projection.</td>\n        </tr>\n        <tr>\n          <td><code>btnClear</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Clear Form\"</td>\n          <td><code>btnClear_Click</code></td>\n          <td>Resets all inputs, unchecks add-ons, clears ListBox, restores focus to <code>txtCredits</code>.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Confirmation dialog and application termination (<code>this.Close();</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblNetTuition</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays total net semester fees formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstInstallments</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Itemized ListBox containing the 4 monthly installment projection records.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Defensive Parsing &amp; Credit Bounds:</strong> Enrolled credits must be parsed with <code>int.TryParse(txtCredits.Text, out credits)</code>. If parsing fails or <code>credits &lt; 1 || credits &gt; 25</code>, display error message, call <code>txtCredits.Focus()</code> and <code>txtCredits.SelectAll()</code>, and <code>return;</code>.</li>\n      <li><strong>Faculty Tuition Calculation:</strong> Read selected radio button: Science (rate R850, levy R2,500), Commerce (rate R750, levy R1,000), Humanities (rate R650, levy R500). <code>academicTuition = (credits * rate) + levy</code>.</li>\n      <li><strong>Bursary Remission:</strong> If <code>chkBursary.Checked</code>, parse <code>decimal.TryParse(txtBursaryPercent.Text, out bursaryPct)</code>. Validate <code>bursaryPct &gt;= 5 &amp;&amp; bursaryPct &lt;= 100</code>. Calculate <code>bursaryDeduction = academicTuition * (bursaryPct / 100m)</code>. Net academic fee = <code>academicTuition - bursaryDeduction</code>.</li>\n      <li><strong>Residence Fee:</strong> If <code>chkResidence.Checked</code>, add R14,000.00. <code>totalSemesterFee = netAcademicFee + residenceFee</code>.</li>\n      <li><strong>Installment Projection Loop:</strong> <code>monthlyAmount = totalSemesterFee / 4m</code>. Clear <code>lstInstallments.Items.Clear()</code>. Execute loop <code>for (int m = 1; m &lt;= 4; m++)</code> and add <code>lstInstallments.Items.Add($\"Month {m}: {monthlyAmount:C}\");</code>.</li>\n    </ol>\n  </div>\n</div>",
       "subQuestionIds": [
         "q_su-exam_367",
         "q_su-exam_368",
@@ -82,7 +82,7 @@
       "totalMarks": 100,
       "badge": "Dec 2022 Past Paper",
       "scenario": "Gym & Fitness Club Membership Billing & Class Booking Terminal: Application featuring membership tier radio buttons (Standard, Premium, VIP), personal trainer add-on checkbox, monthly debit order calculation with 15% VAT, and 12-month projection loop in a ListBox.",
-      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>📋 Problem Scenario: FitLife Health &amp; Racquet Club Membership Billing Terminal</strong><br>\n    FitLife Health &amp; Racquet Club (Potchefstroom campus) manages monthly membership subscriptions. Front desk staff record applicant details, select membership tiers, configure optional personal training coaching, calculate monthly debit orders including 15% South African VAT, and populate a 12-month cumulative expenditure forecast in a ListBox.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📊 1. Membership Subscription Tiers, Add-ons &amp; VAT Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Membership Tier</th>\n          <th>GUI RadioButton</th>\n          <th>Monthly Base Subscription</th>\n          <th>Included Amenities</th>\n          <th>Private Locker Privileges</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>Standard Tier</strong></td>\n          <td><code>rdoStandard</code></td>\n          <td><span class=\"rate-tag\">R350.00 / month</span></td>\n          <td>Cardio floor &amp; weight room access</td>\n          <td>Optional add-on (R100/mo)</td>\n        </tr>\n        <tr>\n          <td><strong>Premium Tier</strong></td>\n          <td><code>rdoPremium</code></td>\n          <td><span class=\"rate-tag\">R500.00 / month</span></td>\n          <td>Standard + sauna &amp; heated pool access</td>\n          <td>Optional add-on (R100/mo)</td>\n        </tr>\n        <tr>\n          <td><strong>VIP All-Access</strong></td>\n          <td><code>rdoVip</code></td>\n          <td><span class=\"rate-tag\">R600.00 / month</span></td>\n          <td>Premium + squash courts &amp; guest passes</td>\n          <td><strong>Included Free (R0.00)</strong></td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);\">\n    <strong>⚙️ Personal Coaching, Locker Surcharges &amp; Statutory VAT:</strong>\n    <ul>\n      <li><strong>Certified Personal Trainer Add-on:</strong> CheckBox <code>chkTrainer</code> adds a coaching fee of <span class=\"rate-tag\">R250.00 per month</span>.</li>\n      <li><strong>Private Locker Rental:</strong> CheckBox <code>chkLocker</code> adds <span class=\"rate-tag\">R100.00 per month</span> for Standard and Premium tiers. VIP members receive private lockers free of charge.</li>\n      <li><strong>South African Value-Added Tax (VAT):</strong> Statutory VAT rate of <span class=\"rate-tag\">15% (0.15m)</span> must be calculated on the monthly pre-tax subtotal and displayed in <code>lblVat</code>.</li>\n      <li><strong>12-Month Projection Forecast:</strong> <code>lstDebitOrders</code> displays cumulative projected fees for <span class=\"rate-tag\">Months 1 to 12</span> using a count-controlled loop.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtMemberName</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Applicant full name. Validated non-empty with <code>string.IsNullOrWhiteSpace</code>.</td>\n        </tr>\n        <tr>\n          <td><code>grpTiers</code></td>\n          <td>GroupBox</td>\n          <td>Text: \"Membership Tier\"</td>\n          <td>Container</td>\n          <td>Enforces mutual exclusion across membership radio buttons.</td>\n        </tr>\n        <tr>\n          <td><code>rdoStandard</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Standard tier subscription selector (R350.00/month).</td>\n        </tr>\n        <tr>\n          <td><code>rdoPremium</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Premium tier subscription selector (R500.00/month).</td>\n        </tr>\n        <tr>\n          <td><code>rdoVip</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>VIP All-Access tier selector (R600.00/month).</td>\n        </tr>\n        <tr>\n          <td><code>chkTrainer</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Optional personal trainer coaching package (R250.00/month).</td>\n        </tr>\n        <tr>\n          <td><code>chkLocker</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Private locker rental (R100.00/month; waived for VIP).</td>\n        </tr>\n        <tr>\n          <td><code>btnCalculate</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Calculate Debit Order\"</td>\n          <td><code>btnCalculate_Click</code></td>\n          <td>Validates tier selection, computes subtotal, 15% VAT, total, and 12-mo forecast.</td>\n        </tr>\n        <tr>\n          <td><code>btnClear</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Clear\"</td>\n          <td><code>btnClear_Click</code></td>\n          <td>Clears textboxes, resets radio buttons/checkboxes, clears ListBox.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Prompts Yes/No confirmation dialog; closes application via <code>this.Close();</code>.</td>\n        </tr>\n        <tr>\n          <td><code>lblSubtotal</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays monthly pre-tax subtotal formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblVat</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays 15% VAT amount formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblMonthlyTotal</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (Fixed3D, Bold)</td>\n          <td>Output target</td>\n          <td>Displays total monthly debit order fee formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstDebitOrders</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Populated with 12 monthly cumulative debit order payment projection lines.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Member Name Validation:</strong> Ensure applicant name is entered: <code>if (string.IsNullOrWhiteSpace(txtMemberName.Text)) { MessageBox.Show(\"Please enter member name.\", \"Validation Error\"); txtMemberName.Focus(); return; }</code>.</li>\n      <li><strong>Tier Selection Validation:</strong> Ensure at least one tier is chosen: <code>if (!rdoStandard.Checked &amp;&amp; !rdoPremium.Checked &amp;&amp; !rdoVip.Checked) { MessageBox.Show(\"Please select a membership tier.\", \"Input Error\"); return; }</code>.</li>\n      <li><strong>Base Subscription:</strong> <code>baseRate = rdoStandard.Checked ? 350m : (rdoPremium.Checked ? 500m : 600m)</code>.</li>\n      <li><strong>Add-ons:</strong> <code>trainerFee = chkTrainer.Checked ? 250m : 0m</code>. <code>lockerFee = (chkLocker.Checked &amp;&amp; !rdoVip.Checked) ? 100m : 0m</code>.</li>\n      <li><strong>Pre-tax Subtotal:</strong> <code>subtotal = baseRate + trainerFee + lockerFee</code>.</li>\n      <li><strong>15% VAT Calculation:</strong> <code>vatAmount = subtotal * 0.15m</code>. Total monthly debit order = <code>subtotal + vatAmount</code>.</li>\n      <li><strong>12-Month Projection Loop:</strong> Clear <code>lstDebitOrders.Items.Clear()</code>. Iterate <code>for (int month = 1; month &lt;= 12; month++)</code> and add <code>$\"Month {month:D2}: Cumulative Total = {(month * totalMonthly):C}\"</code>.</li>\n    </ol>\n  </div>\n</div>",
+      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>Problem Scenario: FitLife Health &amp; Racquet Club Membership Billing Terminal</strong><br>\n    FitLife Health &amp; Racquet Club (Potchefstroom campus) manages monthly membership subscriptions. Front desk staff record applicant details, select membership tiers, configure optional personal training coaching, calculate monthly debit orders including 15% South African VAT, and populate a 12-month cumulative expenditure forecast in a ListBox.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>1. Membership Subscription Tiers, Add-ons &amp; VAT Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Membership Tier</th>\n          <th>GUI RadioButton</th>\n          <th>Monthly Base Subscription</th>\n          <th>Included Amenities</th>\n          <th>Private Locker Privileges</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>Standard Tier</strong></td>\n          <td><code>rdoStandard</code></td>\n          <td><span class=\"rate-tag\">R350.00 / month</span></td>\n          <td>Cardio floor &amp; weight room access</td>\n          <td>Optional add-on (R100/mo)</td>\n        </tr>\n        <tr>\n          <td><strong>Premium Tier</strong></td>\n          <td><code>rdoPremium</code></td>\n          <td><span class=\"rate-tag\">R500.00 / month</span></td>\n          <td>Standard + sauna &amp; heated pool access</td>\n          <td>Optional add-on (R100/mo)</td>\n        </tr>\n        <tr>\n          <td><strong>VIP All-Access</strong></td>\n          <td><code>rdoVip</code></td>\n          <td><span class=\"rate-tag\">R600.00 / month</span></td>\n          <td>Premium + squash courts &amp; guest passes</td>\n          <td><strong>Included Free (R0.00)</strong></td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--status-warning-text); background: var(--status-warning-bg);\">\n    <strong>Personal Coaching, Locker Surcharges &amp; Statutory VAT:</strong>\n    <ul>\n      <li><strong>Certified Personal Trainer Add-on:</strong> CheckBox <code>chkTrainer</code> adds a coaching fee of <span class=\"rate-tag\">R250.00 per month</span>.</li>\n      <li><strong>Private Locker Rental:</strong> CheckBox <code>chkLocker</code> adds <span class=\"rate-tag\">R100.00 per month</span> for Standard and Premium tiers. VIP members receive private lockers free of charge.</li>\n      <li><strong>South African Value-Added Tax (VAT):</strong> Statutory VAT rate of <span class=\"rate-tag\">15% (0.15m)</span> must be calculated on the monthly pre-tax subtotal and displayed in <code>lblVat</code>.</li>\n      <li><strong>12-Month Projection Forecast:</strong> <code>lstDebitOrders</code> displays cumulative projected fees for <span class=\"rate-tag\">Months 1 to 12</span> using a count-controlled loop.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtMemberName</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Applicant full name. Validated non-empty with <code>string.IsNullOrWhiteSpace</code>.</td>\n        </tr>\n        <tr>\n          <td><code>grpTiers</code></td>\n          <td>GroupBox</td>\n          <td>Text: \"Membership Tier\"</td>\n          <td>Container</td>\n          <td>Enforces mutual exclusion across membership radio buttons.</td>\n        </tr>\n        <tr>\n          <td><code>rdoStandard</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Standard tier subscription selector (R350.00/month).</td>\n        </tr>\n        <tr>\n          <td><code>rdoPremium</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Premium tier subscription selector (R500.00/month).</td>\n        </tr>\n        <tr>\n          <td><code>rdoVip</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>VIP All-Access tier selector (R600.00/month).</td>\n        </tr>\n        <tr>\n          <td><code>chkTrainer</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Optional personal trainer coaching package (R250.00/month).</td>\n        </tr>\n        <tr>\n          <td><code>chkLocker</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Private locker rental (R100.00/month; waived for VIP).</td>\n        </tr>\n        <tr>\n          <td><code>btnCalculate</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Calculate Debit Order\"</td>\n          <td><code>btnCalculate_Click</code></td>\n          <td>Validates tier selection, computes subtotal, 15% VAT, total, and 12-mo forecast.</td>\n        </tr>\n        <tr>\n          <td><code>btnClear</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Clear\"</td>\n          <td><code>btnClear_Click</code></td>\n          <td>Clears textboxes, resets radio buttons/checkboxes, clears ListBox.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Prompts Yes/No confirmation dialog; closes application via <code>this.Close();</code>.</td>\n        </tr>\n        <tr>\n          <td><code>lblSubtotal</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays monthly pre-tax subtotal formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblVat</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays 15% VAT amount formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblMonthlyTotal</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (Fixed3D, Bold)</td>\n          <td>Output target</td>\n          <td>Displays total monthly debit order fee formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstDebitOrders</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Populated with 12 monthly cumulative debit order payment projection lines.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Member Name Validation:</strong> Ensure applicant name is entered: <code>if (string.IsNullOrWhiteSpace(txtMemberName.Text)) { MessageBox.Show(\"Please enter member name.\", \"Validation Error\"); txtMemberName.Focus(); return; }</code>.</li>\n      <li><strong>Tier Selection Validation:</strong> Ensure at least one tier is chosen: <code>if (!rdoStandard.Checked &amp;&amp; !rdoPremium.Checked &amp;&amp; !rdoVip.Checked) { MessageBox.Show(\"Please select a membership tier.\", \"Input Error\"); return; }</code>.</li>\n      <li><strong>Base Subscription:</strong> <code>baseRate = rdoStandard.Checked ? 350m : (rdoPremium.Checked ? 500m : 600m)</code>.</li>\n      <li><strong>Add-ons:</strong> <code>trainerFee = chkTrainer.Checked ? 250m : 0m</code>. <code>lockerFee = (chkLocker.Checked &amp;&amp; !rdoVip.Checked) ? 100m : 0m</code>.</li>\n      <li><strong>Pre-tax Subtotal:</strong> <code>subtotal = baseRate + trainerFee + lockerFee</code>.</li>\n      <li><strong>15% VAT Calculation:</strong> <code>vatAmount = subtotal * 0.15m</code>. Total monthly debit order = <code>subtotal + vatAmount</code>.</li>\n      <li><strong>12-Month Projection Loop:</strong> Clear <code>lstDebitOrders.Items.Clear()</code>. Iterate <code>for (int month = 1; month &lt;= 12; month++)</code> and add <code>$\"Month {month:D2}: Cumulative Total = {(month * totalMonthly):C}\"</code>.</li>\n    </ol>\n  </div>\n</div>",
       "subQuestionIds": [
         "q_su-exam_383",
         "q_su-exam_384",
@@ -111,7 +111,7 @@
       "totalMarks": 90,
       "badge": "Nov 2021 Past Paper",
       "scenario": "Hotel & Conference Booking Engine: Room tier selection, length of stay calculation, conference package options, TryParse validation, and detailed receipt itemization.",
-      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>📋 Problem Scenario: Riverside Hotel &amp; Conference Centre Reservation Engine</strong><br>\n    Riverside Hotel &amp; Conference Centre (Vanderbijlpark) automates guest reservation billing. Front office staff capture guest particulars, length of stay in nights, room tier selection, optional breakfast catering packages, validate guest capacity, generate a random 4-digit booking reservation reference, and output an itemized billing receipt in a ListBox.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📊 1. Room Categories, Rates &amp; Guest Capacity Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Room Category</th>\n          <th>GUI RadioButton</th>\n          <th>Nightly Room Rate</th>\n          <th>Maximum Guest Capacity</th>\n          <th>Included Room Amenities</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>Standard Room</strong></td>\n          <td><code>rdoStandard</code></td>\n          <td><span class=\"rate-tag\">R950.00 / night</span></td>\n          <td>Max 2 guests</td>\n          <td>Queen bed, en-suite shower, Wi-Fi</td>\n        </tr>\n        <tr>\n          <td><strong>Deluxe Suite</strong></td>\n          <td><code>rdoDeluxe</code></td>\n          <td><span class=\"rate-tag\">R1,450.00 / night</span></td>\n          <td>Max 3 guests</td>\n          <td>King bed, river view balcony, mini-bar</td>\n        </tr>\n        <tr>\n          <td><strong>Penthouse Executive</strong></td>\n          <td><code>rdoPenthouse</code></td>\n          <td><span class=\"rate-tag\">R2,200.00 / night</span></td>\n          <td>Max 4 guests</td>\n          <td>2 bedrooms, lounge, jacuzzi, butler service</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);\">\n    <strong>⚙️ Catering Packages, Airport Transfers &amp; Booking Reference:</strong>\n    <ul>\n      <li><strong>Buffet Breakfast Package:</strong> CheckBox <code>chkBreakfast</code> costs <span class=\"rate-tag\">R120.00 per guest per night</span> (calculated as <code>nights * guests * 120m</code>).</li>\n      <li><strong>Airport Shuttle Transfer:</strong> CheckBox <code>chkShuttle</code> adds a flat transfer surcharge of <span class=\"rate-tag\">R350.00</span> per booking.</li>\n      <li><strong>Random Confirmation Reference:</strong> Class-level <code>Random rand = new Random();</code> generates a 4-digit booking code between <span class=\"rate-tag\">1000 and 9999</span> via <code>rand.Next(1000, 10000)</code>.</li>\n      <li><strong>Defensive Button State Management:</strong> Button <code>btnConfirm</code> remains disabled (<code>Enabled = false</code>) until validation and cost calculation pass successfully.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtGuestName</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Lead guest name. Validated non-empty using <code>string.IsNullOrWhiteSpace</code>.</td>\n        </tr>\n        <tr>\n          <td><code>txtNights</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 1)</td>\n          <td>Focus target</td>\n          <td>Length of stay in nights. Defensive check: integer between 1 and 30 inclusive.</td>\n        </tr>\n        <tr>\n          <td><code>txtGuests</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 2)</td>\n          <td>Focus target</td>\n          <td>Guest count. Must not exceed maximum capacity for the selected room tier.</td>\n        </tr>\n        <tr>\n          <td><code>grpRoomType</code></td>\n          <td>GroupBox</td>\n          <td>Text: \"Room Category\"</td>\n          <td>Container</td>\n          <td>Guarantees mutual exclusion for room category radio buttons.</td>\n        </tr>\n        <tr>\n          <td><code>rdoStandard</code></td>\n          <td>RadioButton</td>\n          <td>Checked = true</td>\n          <td>CheckedChanged</td>\n          <td>Standard Room selector (R950/night, max 2 guests). Default selection.</td>\n        </tr>\n        <tr>\n          <td><code>rdoDeluxe</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Deluxe Suite selector (R1,450/night, max 3 guests).</td>\n        </tr>\n        <tr>\n          <td><code>rdoPenthouse</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Penthouse Executive selector (R2,200/night, max 4 guests).</td>\n        </tr>\n        <tr>\n          <td><code>chkBreakfast</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Buffet breakfast add-on (R120 per person per night).</td>\n        </tr>\n        <tr>\n          <td><code>chkShuttle</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Airport shuttle transfer add-on (R350 flat fee).</td>\n        </tr>\n        <tr>\n          <td><code>btnCalculate</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Calculate Quote\"</td>\n          <td><code>btnCalculate_Click</code></td>\n          <td>Validates inputs and capacity, calculates charges, enables <code>btnConfirm</code>.</td>\n        </tr>\n        <tr>\n          <td><code>btnConfirm</code></td>\n          <td>Button</td>\n          <td>Text: \"C&amp;onfirm Booking\" (Enabled=false)</td>\n          <td><code>btnConfirm_Click</code></td>\n          <td>Generates random reference, prints receipt in ListBox, confirms reservation.</td>\n        </tr>\n        <tr>\n          <td><code>btnClear</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Clear\"</td>\n          <td><code>btnClear_Click</code></td>\n          <td>Resets inputs, disables confirm button, clears ListBox, restores focus.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Closes the reservation system via <code>this.Close();</code>.</td>\n        </tr>\n        <tr>\n          <td><code>lblTotalDue</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays grand total quote formatted as South African currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstReceipt</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Displays itemized reservation receipt and random confirmation reference code.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Defensive Duration &amp; Guest Parsing:</strong> Nights must parse to an integer with <code>int.TryParse(txtNights.Text, out nights)</code> satisfying <code>nights &gt;= 1 &amp;&amp; nights &lt;= 30</code>. Guests must parse to integer <code>int.TryParse(txtGuests.Text, out guests)</code> satisfying <code>guests &gt;= 1</code>.</li>\n      <li><strong>Capacity Validation:</strong> Determine max capacity: Standard allows 2; Deluxe allows 3; Penthouse allows 4. If <code>guests &gt; maxCapacity</code>, show <code>MessageBox.Show($\"Selected room allows a maximum of {maxCapacity} guests.\", \"Capacity Exceeded\")</code>, focus <code>txtGuests</code>, and <code>return;</code>.</li>\n      <li><strong>Base Room Cost:</strong> <code>roomCharge = nights * roomRate</code>.</li>\n      <li><strong>Breakfast &amp; Shuttle:</strong> <code>breakfastCharge = chkBreakfast.Checked ? (nights * guests * 120m) : 0m</code>. <code>shuttleCharge = chkShuttle.Checked ? 350m : 0m</code>.</li>\n      <li><strong>Grand Total:</strong> <code>totalDue = roomCharge + breakfastCharge + shuttleCharge</code>. Format with <code>lblTotalDue.Text = totalDue.ToString(\"C\");</code>.</li>\n      <li><strong>Confirmation Execution:</strong> On quote success, set <code>btnConfirm.Enabled = true;</code>. When clicked, generate <code>int refCode = rand.Next(1000, 10000);</code> and populate itemized lines in <code>lstReceipt.Items.Add(...)</code>.</li>\n    </ol>\n  </div>\n</div>",
+      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>Problem Scenario: Riverside Hotel &amp; Conference Centre Reservation Engine</strong><br>\n    Riverside Hotel &amp; Conference Centre (Vanderbijlpark) automates guest reservation billing. Front office staff capture guest particulars, length of stay in nights, room tier selection, optional breakfast catering packages, validate guest capacity, generate a random 4-digit booking reservation reference, and output an itemized billing receipt in a ListBox.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>1. Room Categories, Rates &amp; Guest Capacity Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Room Category</th>\n          <th>GUI RadioButton</th>\n          <th>Nightly Room Rate</th>\n          <th>Maximum Guest Capacity</th>\n          <th>Included Room Amenities</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>Standard Room</strong></td>\n          <td><code>rdoStandard</code></td>\n          <td><span class=\"rate-tag\">R950.00 / night</span></td>\n          <td>Max 2 guests</td>\n          <td>Queen bed, en-suite shower, Wi-Fi</td>\n        </tr>\n        <tr>\n          <td><strong>Deluxe Suite</strong></td>\n          <td><code>rdoDeluxe</code></td>\n          <td><span class=\"rate-tag\">R1,450.00 / night</span></td>\n          <td>Max 3 guests</td>\n          <td>King bed, river view balcony, mini-bar</td>\n        </tr>\n        <tr>\n          <td><strong>Penthouse Executive</strong></td>\n          <td><code>rdoPenthouse</code></td>\n          <td><span class=\"rate-tag\">R2,200.00 / night</span></td>\n          <td>Max 4 guests</td>\n          <td>2 bedrooms, lounge, jacuzzi, butler service</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--status-warning-text); background: var(--status-warning-bg);\">\n    <strong>Catering Packages, Airport Transfers &amp; Booking Reference:</strong>\n    <ul>\n      <li><strong>Buffet Breakfast Package:</strong> CheckBox <code>chkBreakfast</code> costs <span class=\"rate-tag\">R120.00 per guest per night</span> (calculated as <code>nights * guests * 120m</code>).</li>\n      <li><strong>Airport Shuttle Transfer:</strong> CheckBox <code>chkShuttle</code> adds a flat transfer surcharge of <span class=\"rate-tag\">R350.00</span> per booking.</li>\n      <li><strong>Random Confirmation Reference:</strong> Class-level <code>Random rand = new Random();</code> generates a 4-digit booking code between <span class=\"rate-tag\">1000 and 9999</span> via <code>rand.Next(1000, 10000)</code>.</li>\n      <li><strong>Defensive Button State Management:</strong> Button <code>btnConfirm</code> remains disabled (<code>Enabled = false</code>) until validation and cost calculation pass successfully.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtGuestName</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Lead guest name. Validated non-empty using <code>string.IsNullOrWhiteSpace</code>.</td>\n        </tr>\n        <tr>\n          <td><code>txtNights</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 1)</td>\n          <td>Focus target</td>\n          <td>Length of stay in nights. Defensive check: integer between 1 and 30 inclusive.</td>\n        </tr>\n        <tr>\n          <td><code>txtGuests</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 2)</td>\n          <td>Focus target</td>\n          <td>Guest count. Must not exceed maximum capacity for the selected room tier.</td>\n        </tr>\n        <tr>\n          <td><code>grpRoomType</code></td>\n          <td>GroupBox</td>\n          <td>Text: \"Room Category\"</td>\n          <td>Container</td>\n          <td>Guarantees mutual exclusion for room category radio buttons.</td>\n        </tr>\n        <tr>\n          <td><code>rdoStandard</code></td>\n          <td>RadioButton</td>\n          <td>Checked = true</td>\n          <td>CheckedChanged</td>\n          <td>Standard Room selector (R950/night, max 2 guests). Default selection.</td>\n        </tr>\n        <tr>\n          <td><code>rdoDeluxe</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Deluxe Suite selector (R1,450/night, max 3 guests).</td>\n        </tr>\n        <tr>\n          <td><code>rdoPenthouse</code></td>\n          <td>RadioButton</td>\n          <td>Checked = false</td>\n          <td>CheckedChanged</td>\n          <td>Penthouse Executive selector (R2,200/night, max 4 guests).</td>\n        </tr>\n        <tr>\n          <td><code>chkBreakfast</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Buffet breakfast add-on (R120 per person per night).</td>\n        </tr>\n        <tr>\n          <td><code>chkShuttle</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Airport shuttle transfer add-on (R350 flat fee).</td>\n        </tr>\n        <tr>\n          <td><code>btnCalculate</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Calculate Quote\"</td>\n          <td><code>btnCalculate_Click</code></td>\n          <td>Validates inputs and capacity, calculates charges, enables <code>btnConfirm</code>.</td>\n        </tr>\n        <tr>\n          <td><code>btnConfirm</code></td>\n          <td>Button</td>\n          <td>Text: \"C&amp;onfirm Booking\" (Enabled=false)</td>\n          <td><code>btnConfirm_Click</code></td>\n          <td>Generates random reference, prints receipt in ListBox, confirms reservation.</td>\n        </tr>\n        <tr>\n          <td><code>btnClear</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Clear\"</td>\n          <td><code>btnClear_Click</code></td>\n          <td>Resets inputs, disables confirm button, clears ListBox, restores focus.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Closes the reservation system via <code>this.Close();</code>.</td>\n        </tr>\n        <tr>\n          <td><code>lblTotalDue</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays grand total quote formatted as South African currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstReceipt</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Displays itemized reservation receipt and random confirmation reference code.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Defensive Duration &amp; Guest Parsing:</strong> Nights must parse to an integer with <code>int.TryParse(txtNights.Text, out nights)</code> satisfying <code>nights &gt;= 1 &amp;&amp; nights &lt;= 30</code>. Guests must parse to integer <code>int.TryParse(txtGuests.Text, out guests)</code> satisfying <code>guests &gt;= 1</code>.</li>\n      <li><strong>Capacity Validation:</strong> Determine max capacity: Standard allows 2; Deluxe allows 3; Penthouse allows 4. If <code>guests &gt; maxCapacity</code>, show <code>MessageBox.Show($\"Selected room allows a maximum of {maxCapacity} guests.\", \"Capacity Exceeded\")</code>, focus <code>txtGuests</code>, and <code>return;</code>.</li>\n      <li><strong>Base Room Cost:</strong> <code>roomCharge = nights * roomRate</code>.</li>\n      <li><strong>Breakfast &amp; Shuttle:</strong> <code>breakfastCharge = chkBreakfast.Checked ? (nights * guests * 120m) : 0m</code>. <code>shuttleCharge = chkShuttle.Checked ? 350m : 0m</code>.</li>\n      <li><strong>Grand Total:</strong> <code>totalDue = roomCharge + breakfastCharge + shuttleCharge</code>. Format with <code>lblTotalDue.Text = totalDue.ToString(\"C\");</code>.</li>\n      <li><strong>Confirmation Execution:</strong> On quote success, set <code>btnConfirm.Enabled = true;</code>. When clicked, generate <code>int refCode = rand.Next(1000, 10000);</code> and populate itemized lines in <code>lstReceipt.Items.Add(...)</code>.</li>\n    </ol>\n  </div>\n</div>",
       "subQuestionIds": [
         "q_su-exam_399",
         "q_su-exam_400",
@@ -140,7 +140,7 @@
       "totalMarks": 100,
       "badge": "PEC 2024 Exam",
       "scenario": "Retail Inventory, Tiered Volume Discounts & POS Cash Register: Point-of-sale terminal calculating subtotal, quantity tiered discounts, loyalty points, accumulator loop for cart items, and formatted receipt output.",
-      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>📋 Problem Scenario: Campus Superstore POS Cash Register &amp; Loyalty Rewards Terminal</strong><br>\n    The NWU Student Centre Campus Superstore operates a point-of-sale desktop cash register. Cashiers record retail merchandise, enter unit prices and quantities, calculate tiered quantity volume discounts, evaluate gold customer loyalty membership discounts, accumulate running session revenue totals across customer transactions using class-level field variables, calculate loyalty rewards points, and output itemized till receipts to a ListBox.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📊 1. Tiered Volume Discounts &amp; Loyalty Rewards Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Purchased Quantity Band</th>\n          <th>Pricing Tier</th>\n          <th>Volume Discount Rate</th>\n          <th>Condition Evaluated in C#</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>1 to 4 units</strong></td>\n          <td>Standard / Single</td>\n          <td><span class=\"rate-tag\">0% (No discount)</span></td>\n          <td><code>qty &lt; 5</code></td>\n        </tr>\n        <tr>\n          <td><strong>5 to 9 units</strong></td>\n          <td>Bulk Pack Tier</td>\n          <td><span class=\"rate-tag\">5% volume discount (0.05m)</span></td>\n          <td><code>qty &gt;= 5 &amp;&amp; qty &lt;= 9</code></td>\n        </tr>\n        <tr>\n          <td><strong>10 or more units</strong></td>\n          <td>Wholesale Volume Tier</td>\n          <td><span class=\"rate-tag\">15% volume discount (0.15m)</span></td>\n          <td><code>qty &gt;= 10</code></td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--accent-amber); background: rgba(245, 158, 11, 0.08);\">\n    <strong>⚙️ Gold Membership, Loyalty Points &amp; Accumulator Variables:</strong>\n    <ul>\n      <li><strong>Gold Customer Loyalty Card:</strong> CheckBox <code>chkGoldCard</code> applies an <span class=\"rate-tag\">additional 5% discount (0.05m)</span> on the post-volume-discount subtotal.</li>\n      <li><strong>Customer Loyalty Rewards Points:</strong> Customers earn <span class=\"rate-tag\">1 point for every complete R50.00</span> spent on net sale total (<code>(int)(netTotal / 50m)</code>). Formatted as 5 digits with leading zeros (e.g., <code>points.ToString(\"D5\")</code>).</li>\n      <li><strong>Session Grand Total Accumulator:</strong> Private class-level field variable <code>private decimal _sessionRevenue = 0m;</code> accumulates gross revenue across all sales in the cashier shift.</li>\n      <li><strong>Cart Modification:</strong> Cashiers can delete an item from <code>lstReceipt</code> via <code>lstReceipt.Items.RemoveAt(lstReceipt.SelectedIndex)</code> after confirming <code>lstReceipt.SelectedIndex != -1</code>.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>🖥️ 2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtItemName</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Product description. Validated non-empty with <code>string.IsNullOrWhiteSpace</code>.</td>\n        </tr>\n        <tr>\n          <td><code>txtPrice</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 1)</td>\n          <td>Focus target</td>\n          <td>Item unit price. Defensive check: positive decimal (<code>decimal.TryParse</code>, &gt; 0).</td>\n        </tr>\n        <tr>\n          <td><code>txtQuantity</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 2)</td>\n          <td>Focus target</td>\n          <td>Units purchased. Defensive check: positive integer (<code>int.TryParse</code>, &gt;= 1).</td>\n        </tr>\n        <tr>\n          <td><code>chkGoldCard</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Toggles additional 5% gold member loyalty card discount.</td>\n        </tr>\n        <tr>\n          <td><code>btnAddItem</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Add Line Item\"</td>\n          <td><code>btnAddItem_Click</code></td>\n          <td>Validates line, applies volume tier discount, appends to ListBox, updates cart total.</td>\n        </tr>\n        <tr>\n          <td><code>btnRemoveItem</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Remove Selected\"</td>\n          <td><code>btnRemoveItem_Click</code></td>\n          <td>Validates <code>SelectedIndex != -1</code>, removes selected line item from ListBox cart.</td>\n        </tr>\n        <tr>\n          <td><code>btnCheckout</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Checkout\"</td>\n          <td><code>btnCheckout_Click</code></td>\n          <td>Calculates loyalty points, adds to shift session revenue accumulator, displays confirmation.</td>\n        </tr>\n        <tr>\n          <td><code>btnNewSale</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;New Customer Sale\"</td>\n          <td><code>btnNewSale_Click</code></td>\n          <td>Clears cart ListBox and current cart totals while preserving session shift accumulator.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Confirmation dialog and form closure via <code>this.Close();</code>.</td>\n        </tr>\n        <tr>\n          <td><code>lblCurrentTotal</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (Fixed3D, Bold)</td>\n          <td>Output target</td>\n          <td>Displays current customer transaction subtotal formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblSessionTotal</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays shift session revenue accumulator formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblLoyaltyPoints</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays 5-digit formatted loyalty points earned (e.g. <code>00125</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstReceipt</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Itemized sales till receipt showing item name, quantity, unit price, discount, and line total.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>📐 3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Defensive Parsing:</strong> Price must be parsed with <code>decimal.TryParse(txtPrice.Text, out price)</code> and satisfy <code>price &gt; 0</code>. Quantity must parse with <code>int.TryParse(txtQuantity.Text, out qty)</code> and satisfy <code>qty &gt;= 1</code>. On error, display message box, set focus, select all, and return.</li>\n      <li><strong>Gross Line Subtotal:</strong> <code>grossLine = qty * price</code>.</li>\n      <li><strong>Volume Discount Tier:</strong>\n        <code>if (qty &gt;= 10) volumeDiscount = grossLine * 0.15m;</code><br>\n        <code>else if (qty &gt;= 5) volumeDiscount = grossLine * 0.05m;</code><br>\n        <code>else volumeDiscount = 0m;</code><br>\n        <code>netLine = grossLine - volumeDiscount;</code>\n      </li>\n      <li><strong>Gold Member Surcharge / Discount:</strong> If <code>chkGoldCard.Checked</code>, <code>goldDiscount = netLine * 0.05m;</code> final line total = <code>netLine - goldDiscount</code>.</li>\n      <li><strong>Cart Accumulation:</strong> <code>_currentCartTotal += finalLineTotal;</code>. Update <code>lblCurrentTotal.Text = _currentCartTotal.ToString(\"C\");</code>. Add line item to <code>lstReceipt.Items.Add(...)</code>.</li>\n      <li><strong>Checkout Execution:</strong> In <code>btnCheckout_Click</code>, calculate <code>int points = (int)(_currentCartTotal / 50m);</code>. Format points with <code>lblLoyaltyPoints.Text = points.ToString(\"D5\");</code>. Add to session grand total: <code>_sessionRevenue += _currentCartTotal;</code> and update <code>lblSessionTotal.Text = _sessionRevenue.ToString(\"C\");</code>.</li>\n    </ol>\n  </div>\n</div>",
+      "scenarioHtml": "<div class=\"scenario-brief-container\">\n  <div class=\"scenario-callout\">\n    <strong>Problem Scenario: Campus Superstore POS Cash Register &amp; Loyalty Rewards Terminal</strong><br>\n    The NWU Student Centre Campus Superstore operates a point-of-sale desktop cash register. Cashiers record retail merchandise, enter unit prices and quantities, calculate tiered quantity volume discounts, evaluate gold customer loyalty membership discounts, accumulate running session revenue totals across customer transactions using class-level field variables, calculate loyalty rewards points, and output itemized till receipts to a ListBox.\n  </div>\n\n  <div class=\"scenario-section-header\"><span>1. Tiered Volume Discounts &amp; Loyalty Rewards Table</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Purchased Quantity Band</th>\n          <th>Pricing Tier</th>\n          <th>Volume Discount Rate</th>\n          <th>Condition Evaluated in C#</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><strong>1 to 4 units</strong></td>\n          <td>Standard / Single</td>\n          <td><span class=\"rate-tag\">0% (No discount)</span></td>\n          <td><code>qty &lt; 5</code></td>\n        </tr>\n        <tr>\n          <td><strong>5 to 9 units</strong></td>\n          <td>Bulk Pack Tier</td>\n          <td><span class=\"rate-tag\">5% volume discount (0.05m)</span></td>\n          <td><code>qty &gt;= 5 &amp;&amp; qty &lt;= 9</code></td>\n        </tr>\n        <tr>\n          <td><strong>10 or more units</strong></td>\n          <td>Wholesale Volume Tier</td>\n          <td><span class=\"rate-tag\">15% volume discount (0.15m)</span></td>\n          <td><code>qty &gt;= 10</code></td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-callout\" style=\"border-left-color: var(--status-warning-text); background: var(--status-warning-bg);\">\n    <strong>Gold Membership, Loyalty Points &amp; Accumulator Variables:</strong>\n    <ul>\n      <li><strong>Gold Customer Loyalty Card:</strong> CheckBox <code>chkGoldCard</code> applies an <span class=\"rate-tag\">additional 5% discount (0.05m)</span> on the post-volume-discount subtotal.</li>\n      <li><strong>Customer Loyalty Rewards Points:</strong> Customers earn <span class=\"rate-tag\">1 point for every complete R50.00</span> spent on net sale total (<code>(int)(netTotal / 50m)</code>). Formatted as 5 digits with leading zeros (e.g., <code>points.ToString(\"D5\")</code>).</li>\n      <li><strong>Session Grand Total Accumulator:</strong> Private class-level field variable <code>private decimal _sessionRevenue = 0m;</code> accumulates gross revenue across all sales in the cashier shift.</li>\n      <li><strong>Cart Modification:</strong> Cashiers can delete an item from <code>lstReceipt</code> via <code>lstReceipt.Items.RemoveAt(lstReceipt.SelectedIndex)</code> after confirming <code>lstReceipt.SelectedIndex != -1</code>.</li>\n    </ul>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>2. GUI Controls &amp; Hungarian Naming Matrix</span></div>\n  <div class=\"scenario-table-wrap\">\n    <table class=\"scenario-spec-table\">\n      <thead>\n        <tr>\n          <th>Control Name</th>\n          <th>Control Type</th>\n          <th>Default State / Text</th>\n          <th>Event / Handler</th>\n          <th>Technical Purpose &amp; Validation</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td><code>txtItemName</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 0)</td>\n          <td>Focus target</td>\n          <td>Product description. Validated non-empty with <code>string.IsNullOrWhiteSpace</code>.</td>\n        </tr>\n        <tr>\n          <td><code>txtPrice</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 1)</td>\n          <td>Focus target</td>\n          <td>Item unit price. Defensive check: positive decimal (<code>decimal.TryParse</code>, &gt; 0).</td>\n        </tr>\n        <tr>\n          <td><code>txtQuantity</code></td>\n          <td>TextBox</td>\n          <td>Empty (TabIndex = 2)</td>\n          <td>Focus target</td>\n          <td>Units purchased. Defensive check: positive integer (<code>int.TryParse</code>, &gt;= 1).</td>\n        </tr>\n        <tr>\n          <td><code>chkGoldCard</code></td>\n          <td>CheckBox</td>\n          <td>Checked = false</td>\n          <td>Click</td>\n          <td>Toggles additional 5% gold member loyalty card discount.</td>\n        </tr>\n        <tr>\n          <td><code>btnAddItem</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Add Line Item\"</td>\n          <td><code>btnAddItem_Click</code></td>\n          <td>Validates line, applies volume tier discount, appends to ListBox, updates cart total.</td>\n        </tr>\n        <tr>\n          <td><code>btnRemoveItem</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Remove Selected\"</td>\n          <td><code>btnRemoveItem_Click</code></td>\n          <td>Validates <code>SelectedIndex != -1</code>, removes selected line item from ListBox cart.</td>\n        </tr>\n        <tr>\n          <td><code>btnCheckout</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;Checkout\"</td>\n          <td><code>btnCheckout_Click</code></td>\n          <td>Calculates loyalty points, adds to shift session revenue accumulator, displays confirmation.</td>\n        </tr>\n        <tr>\n          <td><code>btnNewSale</code></td>\n          <td>Button</td>\n          <td>Text: \"&amp;New Customer Sale\"</td>\n          <td><code>btnNewSale_Click</code></td>\n          <td>Clears cart ListBox and current cart totals while preserving session shift accumulator.</td>\n        </tr>\n        <tr>\n          <td><code>btnExit</code></td>\n          <td>Button</td>\n          <td>Text: \"E&amp;xit\"</td>\n          <td><code>btnExit_Click</code></td>\n          <td>Confirmation dialog and form closure via <code>this.Close();</code>.</td>\n        </tr>\n        <tr>\n          <td><code>lblCurrentTotal</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (Fixed3D, Bold)</td>\n          <td>Output target</td>\n          <td>Displays current customer transaction subtotal formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblSessionTotal</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays shift session revenue accumulator formatted as currency (<code>ToString(\"C\")</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lblLoyaltyPoints</code></td>\n          <td>Label</td>\n          <td>Text: \"\" (BorderStyle = Fixed3D)</td>\n          <td>Output target</td>\n          <td>Displays 5-digit formatted loyalty points earned (e.g. <code>00125</code>).</td>\n        </tr>\n        <tr>\n          <td><code>lstReceipt</code></td>\n          <td>ListBox</td>\n          <td>Empty (Monospace font)</td>\n          <td>Output target</td>\n          <td>Itemized sales till receipt showing item name, quantity, unit price, discount, and line total.</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"scenario-section-header\"><span>3. Calculation Logic &amp; Defensive Validation Rules</span></div>\n  <div class=\"scenario-callout\">\n    <ol>\n      <li><strong>Defensive Parsing:</strong> Price must be parsed with <code>decimal.TryParse(txtPrice.Text, out price)</code> and satisfy <code>price &gt; 0</code>. Quantity must parse with <code>int.TryParse(txtQuantity.Text, out qty)</code> and satisfy <code>qty &gt;= 1</code>. On error, display message box, set focus, select all, and return.</li>\n      <li><strong>Gross Line Subtotal:</strong> <code>grossLine = qty * price</code>.</li>\n      <li><strong>Volume Discount Tier:</strong>\n        <code>if (qty &gt;= 10) volumeDiscount = grossLine * 0.15m;</code><br>\n        <code>else if (qty &gt;= 5) volumeDiscount = grossLine * 0.05m;</code><br>\n        <code>else volumeDiscount = 0m;</code><br>\n        <code>netLine = grossLine - volumeDiscount;</code>\n      </li>\n      <li><strong>Gold Member Surcharge / Discount:</strong> If <code>chkGoldCard.Checked</code>, <code>goldDiscount = netLine * 0.05m;</code> final line total = <code>netLine - goldDiscount</code>.</li>\n      <li><strong>Cart Accumulation:</strong> <code>_currentCartTotal += finalLineTotal;</code>. Update <code>lblCurrentTotal.Text = _currentCartTotal.ToString(\"C\");</code>. Add line item to <code>lstReceipt.Items.Add(...)</code>.</li>\n      <li><strong>Checkout Execution:</strong> In <code>btnCheckout_Click</code>, calculate <code>int points = (int)(_currentCartTotal / 50m);</code>. Format points with <code>lblLoyaltyPoints.Text = points.ToString(\"D5\");</code>. Add to session grand total: <code>_sessionRevenue += _currentCartTotal;</code> and update <code>lblSessionTotal.Text = _sessionRevenue.ToString(\"C\");</code>.</li>\n    </ol>\n  </div>\n</div>",
       "subQuestionIds": [
         "q_su-exam_415",
         "q_su-exam_416",
@@ -196,7 +196,7 @@
       "ans": 2,
       "exp": "The 5 measurable usability goals are: 1. Time to learn, 2. Speed of performance, 3. Rate of errors by users, 4. Retention over time, and 5. Subjective satisfaction. Hardware manufacturing cost is an engineering/financial metric.",
       "explanation": "The 5 measurable usability goals are: 1. Time to learn, 2. Speed of performance, 3. Rate of errors by users, 4. Retention over time, and 5. Subjective satisfaction. Hardware manufacturing cost is an engineering/financial metric.",
-      "distractorRationale": "Options other than \"Hardware manufacturing cost\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -223,22 +223,22 @@
       "stem": "Which usability measure evaluates how long users remember how to carry out specific interface tasks after an extended period of non-use?",
       "code": "",
       "options": [
-        "Speed of performance",
         "Retention over time",
+        "Speed of performance",
         "Time to learn",
         "Universal usability"
       ],
       "opts": [
-        "Speed of performance",
         "Retention over time",
+        "Speed of performance",
         "Time to learn",
         "Universal usability"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Retention over time measures how well users maintain their operational knowledge of the interface after days, weeks, or months without using the system.",
       "explanation": "Retention over time measures how well users maintain their operational knowledge of the interface after days, weeks, or months without using the system.",
-      "distractorRationale": "Options other than \"Retention over time\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -265,22 +265,22 @@
       "stem": "In life-critical systems (e.g., nuclear power plants, flight traffic control, intensive care monitors), which usability goal is prioritized above all others?",
       "code": "",
       "options": [
-        "Subjective satisfaction",
-        "Zero-error rate and high reliability",
         "Playfulness and aesthetic appeal",
-        "Low training cost"
+        "Zero-error rate and high reliability",
+        "Low training cost",
+        "Subjective satisfaction"
       ],
       "opts": [
-        "Subjective satisfaction",
-        "Zero-error rate and high reliability",
         "Playfulness and aesthetic appeal",
-        "Low training cost"
+        "Zero-error rate and high reliability",
+        "Low training cost",
+        "Subjective satisfaction"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "For life-critical systems, high reliability and zero/near-zero error rates are supreme because human lives depend on system accuracy and fault prevention.",
       "explanation": "For life-critical systems, high reliability and zero/near-zero error rates are supreme because human lives depend on system accuracy and fault prevention.",
-      "distractorRationale": "Options other than \"Zero-error rate and high reliability\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_error_prevention",
         "def_tryparse",
@@ -307,22 +307,22 @@
       "stem": "Which usability motivation category applies to software used in offices, banking, and e-commerce where operator speed, cost-effectiveness, and ease of learning drive business profits?",
       "code": "",
       "options": [
+        "Socio-technical systems",
         "Life-critical systems",
         "Industrial and commercial uses",
-        "Exploratory and creative uses",
-        "Socio-technical systems"
+        "Exploratory and creative uses"
       ],
       "opts": [
+        "Socio-technical systems",
         "Life-critical systems",
         "Industrial and commercial uses",
-        "Exploratory and creative uses",
-        "Socio-technical systems"
+        "Exploratory and creative uses"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Industrial and commercial systems focus on reducing operator transaction time, lowering training costs, and speeding up repetitive data entry tasks.",
       "explanation": "Industrial and commercial systems focus on reducing operator transaction time, lowering training costs, and speeding up repetitive data entry tasks.",
-      "distractorRationale": "Options other than \"Industrial and commercial uses\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -350,21 +350,21 @@
       "code": "",
       "options": [
         "Creating a single interface designed only for high-end PCs",
-        "Accommodating diversity in user physical abilities, cognitive skills, cultural backgrounds, and hardware platforms",
         "Forcing all users to learn command-line syntax",
-        "Eliminating all graphical controls"
+        "Eliminating all graphical controls",
+        "Accommodating diversity in user physical abilities, cognitive skills, cultural backgrounds, and hardware platforms"
       ],
       "opts": [
         "Creating a single interface designed only for high-end PCs",
-        "Accommodating diversity in user physical abilities, cognitive skills, cultural backgrounds, and hardware platforms",
         "Forcing all users to learn command-line syntax",
-        "Eliminating all graphical controls"
+        "Eliminating all graphical controls",
+        "Accommodating diversity in user physical abilities, cognitive skills, cultural backgrounds, and hardware platforms"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Universal usability means designing systems that can be successfully used by a broad spectrum of human users (including elderly, children, disabled) across diverse hardware.",
       "explanation": "Universal usability means designing systems that can be successfully used by a broad spectrum of human users (including elderly, children, disabled) across diverse hardware.",
-      "distractorRationale": "Options other than \"Accommodating diversity in user physical abilities, cognitiv\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -391,22 +391,22 @@
       "stem": "Why is 'Strive for consistency' considered the first and most fundamental of Shneiderman's 8 Golden Rules?",
       "code": "",
       "options": [
-        "It requires all buttons to be bright red",
         "Consistent terminology, color schemes, layouts, and input patterns enable users to transfer learned knowledge effortlessly",
         "It allows developers to copy code without thinking",
-        "It eliminates the need for testing"
+        "It eliminates the need for testing",
+        "It requires all buttons to be bright red"
       ],
       "opts": [
-        "It requires all buttons to be bright red",
         "Consistent terminology, color schemes, layouts, and input patterns enable users to transfer learned knowledge effortlessly",
         "It allows developers to copy code without thinking",
-        "It eliminates the need for testing"
+        "It eliminates the need for testing",
+        "It requires all buttons to be bright red"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Rule 1: Strive for consistency. Consistent sequences of actions, identical terminology in prompts/menus, and consistent fonts and colors reduce cognitive load.",
       "explanation": "Rule 1: Strive for consistency. Consistent sequences of actions, identical terminology in prompts/menus, and consistent fonts and colors reduce cognitive load.",
-      "distractorRationale": "Options other than \"Consistent terminology, color schemes, layouts, and input pa\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_radiobutton_checkbox_groupbox",
@@ -433,22 +433,22 @@
       "stem": "A Visual C# form disables the 'Submit' button until all required textboxes contain valid data. Which of Shneiderman's 8 Golden Rules is best illustrated by this design?",
       "code": "",
       "options": [
-        "Support internal locus of control",
+        "Permit easy reversal of actions",
         "Prevent errors",
-        "Reduce short-term memory load",
-        "Permit easy reversal of actions"
+        "Support internal locus of control",
+        "Reduce short-term memory load"
       ],
       "opts": [
-        "Support internal locus of control",
+        "Permit easy reversal of actions",
         "Prevent errors",
-        "Reduce short-term memory load",
-        "Permit easy reversal of actions"
+        "Support internal locus of control",
+        "Reduce short-term memory load"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "Rule 5: Prevent errors. Graying out or disabling buttons that cannot be legally clicked prevents users from making fatal input errors before they happen.",
       "explanation": "Rule 5: Prevent errors. Graying out or disabling buttons that cannot be legally clicked prevents users from making fatal input errors before they happen.",
-      "distractorRationale": "Options other than \"Prevent errors\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -475,22 +475,22 @@
       "stem": "Displaying a confirmation dialog reading 'Transaction R1,500.00 completed successfully. Reference: #8829' satisfies which of Shneiderman's Golden Rules?",
       "code": "",
       "options": [
-        "Design dialogs to yield closure",
         "Strive for consistency",
         "Cater to universal usability",
+        "Design dialogs to yield closure",
         "Reduce short-term memory load"
       ],
       "opts": [
-        "Design dialogs to yield closure",
         "Strive for consistency",
         "Cater to universal usability",
+        "Design dialogs to yield closure",
         "Reduce short-term memory load"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Rule 4: Design dialogs to yield closure. Sequences of action should have a beginning, middle, and end, with informative feedback indicating task completion so users feel closure.",
       "explanation": "Rule 4: Design dialogs to yield closure. Sequences of action should have a beginning, middle, and end, with informative feedback indicating task completion so users feel closure.",
-      "distractorRationale": "Options other than \"Design dialogs to yield closure\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -517,22 +517,22 @@
       "stem": "Providing an 'Undo' button or a 'Clear / Reset' button in a Visual C# Windows Form directly satisfies which Golden Rule?",
       "code": "",
       "options": [
-        "Permit easy reversal of actions",
-        "Strive for consistency",
         "Reduce short-term memory load",
-        "Offer informative feedback"
+        "Offer informative feedback",
+        "Strive for consistency",
+        "Permit easy reversal of actions"
       ],
       "opts": [
-        "Permit easy reversal of actions",
-        "Strive for consistency",
         "Reduce short-term memory load",
-        "Offer informative feedback"
+        "Offer informative feedback",
+        "Strive for consistency",
+        "Permit easy reversal of actions"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Rule 6: Permit easy reversal of actions. When users know errors can be undone, it relieves anxiety and encourages exploration of unfamiliar options.",
       "explanation": "Rule 6: Permit easy reversal of actions. When users know errors can be undone, it relieves anxiety and encourages exploration of unfamiliar options.",
-      "distractorRationale": "Options other than \"Permit easy reversal of actions\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_error_prevention",
         "def_tryparse",
@@ -559,22 +559,22 @@
       "stem": "What is the psychological rationale behind Rule 8: 'Reduce short-term memory load'?",
       "code": "",
       "options": [
-        "Human short-term memory is virtually limitless",
         "Humans can only hold approximately 7 ± 2 chunks of information in working memory, so interfaces should keep essential data visible",
-        "Users prefer to memorize long hexadecimal account numbers",
-        "It allows developers to build smaller forms"
+        "It allows developers to build smaller forms",
+        "Human short-term memory is virtually limitless",
+        "Users prefer to memorize long hexadecimal account numbers"
       ],
       "opts": [
-        "Human short-term memory is virtually limitless",
         "Humans can only hold approximately 7 ± 2 chunks of information in working memory, so interfaces should keep essential data visible",
-        "Users prefer to memorize long hexadecimal account numbers",
-        "It allows developers to build smaller forms"
+        "It allows developers to build smaller forms",
+        "Human short-term memory is virtually limitless",
+        "Users prefer to memorize long hexadecimal account numbers"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Rule 8 is grounded in Miller's Law (7 ± 2 chunks). Interfaces must avoid requiring users to remember numbers or codes from one screen to the next.",
       "explanation": "Rule 8 is grounded in Miller's Law (7 ± 2 chunks). Interfaces must avoid requiring users to remember numbers or codes from one screen to the next.",
-      "distractorRationale": "Options other than \"Humans can only hold approximately 7 ± 2 chunks of informati\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -601,22 +601,22 @@
       "stem": "In Don Norman's Action Cycle, what is the 'Gulf of Execution'?",
       "code": "",
       "options": [
-        "The difference between the user's intended goal and the physical actions the system allows them to perform",
-        "The time required to compile C# code",
         "The distance between the monitor and the user's eyes",
-        "The delay in internet transmission"
+        "The difference between the user's intended goal and the physical actions the system allows them to perform",
+        "The delay in internet transmission",
+        "The time required to compile C# code"
       ],
       "opts": [
-        "The difference between the user's intended goal and the physical actions the system allows them to perform",
-        "The time required to compile C# code",
         "The distance between the monitor and the user's eyes",
-        "The delay in internet transmission"
+        "The difference between the user's intended goal and the physical actions the system allows them to perform",
+        "The delay in internet transmission",
+        "The time required to compile C# code"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "The Gulf of Execution is the psychological gap between what a user wants to achieve and the physical input mechanisms the interface provides to accomplish it.",
       "explanation": "The Gulf of Execution is the psychological gap between what a user wants to achieve and the physical input mechanisms the interface provides to accomplish it.",
-      "distractorRationale": "Options other than \"The difference between the user's intended goal and the phys\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_gulf_of_execution",
         "def_gulf_of_evaluation",
@@ -644,21 +644,21 @@
       "code": "",
       "options": [
         "The cost of purchasing software",
-        "The difficulty the user experiences in perceiving and interpreting the system's state to determine if their goal was met",
         "The time taken to grade an exam",
+        "The difficulty the user experiences in perceiving and interpreting the system's state to determine if their goal was met",
         "The number of lines of code in Form1.cs"
       ],
       "opts": [
         "The cost of purchasing software",
-        "The difficulty the user experiences in perceiving and interpreting the system's state to determine if their goal was met",
         "The time taken to grade an exam",
+        "The difficulty the user experiences in perceiving and interpreting the system's state to determine if their goal was met",
         "The number of lines of code in Form1.cs"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "The Gulf of Evaluation is the difficulty of assessing the state of the system and deciding whether the intended goal was achieved through the feedback provided.",
       "explanation": "The Gulf of Evaluation is the difficulty of assessing the state of the system and deciding whether the intended goal was achieved through the feedback provided.",
-      "distractorRationale": "Options other than \"The difficulty the user experiences in perceiving and interp\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_gulf_of_execution",
         "def_gulf_of_evaluation",
@@ -685,22 +685,22 @@
       "stem": "Which of the following interface features best supports 'Internal Locus of Control' (Rule 7)?",
       "code": "",
       "options": [
-        "Making the user the initiator of actions rather than surprising them with unexpected system actions or changes",
+        "Forcing the user to wait for arbitrary background delays",
         "Randomly playing loud sound effects",
         "Automatically closing forms without asking",
-        "Forcing the user to wait for arbitrary background delays"
+        "Making the user the initiator of actions rather than surprising them with unexpected system actions or changes"
       ],
       "opts": [
-        "Making the user the initiator of actions rather than surprising them with unexpected system actions or changes",
+        "Forcing the user to wait for arbitrary background delays",
         "Randomly playing loud sound effects",
         "Automatically closing forms without asking",
-        "Forcing the user to wait for arbitrary background delays"
+        "Making the user the initiator of actions rather than surprising them with unexpected system actions or changes"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Rule 7: Support internal locus of control. Experienced operators strongly desire the feeling that they are in charge of the interface and that the system responds to their commands.",
       "explanation": "Rule 7: Support internal locus of control. Experienced operators strongly desire the feeling that they are in charge of the interface and that the system responds to their commands.",
-      "distractorRationale": "Options other than \"Making the user the initiator of actions rather than surpris\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -727,22 +727,22 @@
       "stem": "Why should Visual C# desktop applications provide keyboard shortcuts (access keys such as &File or Alt+C) and TabIndex navigation?",
       "code": "",
       "options": [
-        "It is required by the Windows operating system kernel",
         "It caters to universal usability by accommodating expert power users and individuals who cannot use a mouse",
+        "It is required by the Windows operating system kernel",
         "It reduces the size of the compiled .exe file",
         "It prevents syntax errors in event handlers"
       ],
       "opts": [
-        "It is required by the Windows operating system kernel",
         "It caters to universal usability by accommodating expert power users and individuals who cannot use a mouse",
+        "It is required by the Windows operating system kernel",
         "It reduces the size of the compiled .exe file",
         "It prevents syntax errors in event handlers"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Rule 2: Cater to universal usability. Keyboard shortcuts allow expert power users to execute commands rapidly and support users with motor impairments.",
       "explanation": "Rule 2: Cater to universal usability. Keyboard shortcuts allow expert power users to execute commands rapidly and support users with motor impairments.",
-      "distractorRationale": "Options other than \"It caters to universal usability by accommodating expert pow\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -769,22 +769,22 @@
       "stem": "When a user enters an invalid number in a TextBox, which error feedback mechanism is most effective under HCI design principles?",
       "code": "",
       "options": [
-        "Crashing the application immediately with an unhandled exception",
+        "Sounding a loud screeching alarm",
         "Displaying a polite, constructive error message explaining the valid range and placing focus back on the offending control",
-        "Silently ignoring the error without notifying the user",
-        "Sounding a loud screeching alarm"
+        "Crashing the application immediately with an unhandled exception",
+        "Silently ignoring the error without notifying the user"
       ],
       "opts": [
-        "Crashing the application immediately with an unhandled exception",
+        "Sounding a loud screeching alarm",
         "Displaying a polite, constructive error message explaining the valid range and placing focus back on the offending control",
-        "Silently ignoring the error without notifying the user",
-        "Sounding a loud screeching alarm"
+        "Crashing the application immediately with an unhandled exception",
+        "Silently ignoring the error without notifying the user"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "HCI principles dictate that error messages must be specific, polite, informative, and provide clear instructions on how to correct the problem.",
       "explanation": "HCI principles dictate that error messages must be specific, polite, informative, and provide clear instructions on how to correct the problem.",
-      "distractorRationale": "Options other than \"Displaying a polite, constructive error message explaining t\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -811,22 +811,22 @@
       "stem": "What usability motivation characterizes mobile gaming, interactive entertainment, and personal digital assistants?",
       "code": "",
       "options": [
-        "Office and home entertainment uses",
-        "Life-critical systems",
         "Industrial process control",
-        "Socio-technical military infrastructure"
+        "Socio-technical military infrastructure",
+        "Office and home entertainment uses",
+        "Life-critical systems"
       ],
       "opts": [
-        "Office and home entertainment uses",
-        "Life-critical systems",
         "Industrial process control",
-        "Socio-technical military infrastructure"
+        "Socio-technical military infrastructure",
+        "Office and home entertainment uses",
+        "Life-critical systems"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Home, entertainment, and consumer systems prioritize user engagement, ease of adoption, and subjective enjoyment.",
       "explanation": "Home, entertainment, and consumer systems prioritize user engagement, ease of adoption, and subjective enjoyment.",
-      "distractorRationale": "Options other than \"Office and home entertainment uses\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -853,22 +853,22 @@
       "stem": "Which design theory analyzes human task performance using Goals, Operators, Methods, and Selection rules?",
       "code": "",
       "options": [
-        "GOMS Model (Card, Moran & Newell)",
         "Relational Database Theory",
         "Ohm's Law",
-        "Boolean Logic Theory"
+        "Boolean Logic Theory",
+        "GOMS Model (Card, Moran & Newell)"
       ],
       "opts": [
-        "GOMS Model (Card, Moran & Newell)",
         "Relational Database Theory",
         "Ohm's Law",
-        "Boolean Logic Theory"
+        "Boolean Logic Theory",
+        "GOMS Model (Card, Moran & Newell)"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "The GOMS model is an engineering model of human cognitive performance used to predict execution times.",
       "explanation": "The GOMS model is an engineering model of human cognitive performance used to predict execution times.",
-      "distractorRationale": "Options other than \"GOMS Model (Card, Moran & Newell)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -895,22 +895,22 @@
       "stem": "When designing interfaces for elderly users, which Universal Usability adjustment is most critical?",
       "code": "",
       "options": [
-        "Smaller fonts and low-contrast grayscale colors",
         "Higher contrast ratios, adjustable font sizes, and larger click targets",
         "Faster animation speeds",
-        "Removing all button labels"
+        "Removing all button labels",
+        "Smaller fonts and low-contrast grayscale colors"
       ],
       "opts": [
-        "Smaller fonts and low-contrast grayscale colors",
         "Higher contrast ratios, adjustable font sizes, and larger click targets",
         "Faster animation speeds",
-        "Removing all button labels"
+        "Removing all button labels",
+        "Smaller fonts and low-contrast grayscale colors"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Aging users experience reduced visual acuity, motor precision, and contrast sensitivity. Larger targets and high contrast accommodate these changes.",
       "explanation": "Aging users experience reduced visual acuity, motor precision, and contrast sensitivity. Larger targets and high contrast accommodate these changes.",
-      "distractorRationale": "Options other than \"Higher contrast ratios, adjustable font sizes, and larger cl\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -952,7 +952,7 @@
       "ans": 1,
       "exp": "George Miller (1956) established that working memory holds roughly 5 to 9 chunks of information simultaneously.",
       "explanation": "George Miller (1956) established that working memory holds roughly 5 to 9 chunks of information simultaneously.",
-      "distractorRationale": "Options other than \"The working capacity of human short-term memory\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -979,22 +979,22 @@
       "stem": "Which stage in Norman's 7 Stages of Action immediately precedes physical execution?",
       "code": "",
       "options": [
-        "Action specification",
-        "Evaluation of outcome",
         "Perception of state",
-        "Forming the goal"
+        "Forming the goal",
+        "Action specification",
+        "Evaluation of outcome"
       ],
       "opts": [
-        "Action specification",
-        "Evaluation of outcome",
         "Perception of state",
-        "Forming the goal"
+        "Forming the goal",
+        "Action specification",
+        "Evaluation of outcome"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "The sequence is: Goal -> Intention -> Action specification -> Execution.",
       "explanation": "The sequence is: Goal -> Intention -> Action specification -> Execution.",
-      "distractorRationale": "Options other than \"Action specification\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_gulf_of_execution",
         "def_gulf_of_evaluation",
@@ -1021,22 +1021,22 @@
       "stem": "In visual design, what does 'affordance' refer to?",
       "code": "",
       "options": [
+        "The download speed of the application",
         "The price of the software license",
-        "The perceptual cues that indicate to a user how an object or control can be interacted with",
         "The memory consumption of a bitmap",
-        "The download speed of the application"
+        "The perceptual cues that indicate to a user how an object or control can be interacted with"
       ],
       "opts": [
+        "The download speed of the application",
         "The price of the software license",
-        "The perceptual cues that indicate to a user how an object or control can be interacted with",
         "The memory consumption of a bitmap",
-        "The download speed of the application"
+        "The perceptual cues that indicate to a user how an object or control can be interacted with"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Affordance (Norman) refers to the perceived and actual properties of an object that suggest how it should be used (e.g. 3D button invites clicking).",
       "explanation": "Affordance (Norman) refers to the perceived and actual properties of an object that suggest how it should be used (e.g. 3D button invites clicking).",
-      "distractorRationale": "Options other than \"The perceptual cues that indicate to a user how an object or\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1064,21 +1064,21 @@
       "code": "",
       "options": [
         "It prevents the user from assuming the application has frozen or crashed",
+        "It generates automatic unit tests",
         "It speeds up CPU clock cycles",
-        "It clears the RAM cache",
-        "It generates automatic unit tests"
+        "It clears the RAM cache"
       ],
       "opts": [
         "It prevents the user from assuming the application has frozen or crashed",
+        "It generates automatic unit tests",
         "It speeds up CPU clock cycles",
-        "It clears the RAM cache",
-        "It generates automatic unit tests"
+        "It clears the RAM cache"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Rule 3: Offer informative feedback. For prolonged tasks, progress bars or hour-glass cursors reassure users that processing is continuing normally.",
       "explanation": "Rule 3: Offer informative feedback. For prolonged tasks, progress bars or hour-glass cursors reassure users that processing is continuing normally.",
-      "distractorRationale": "Options other than \"It prevents the user from assuming the application has froze\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -1105,22 +1105,22 @@
       "stem": "Which of the following describes an example of striving for consistency in button placement across multiple Windows Forms?",
       "code": "",
       "options": [
-        "Placing the 'Close' button at the bottom-right of every dialog form",
         "Placing the Close button randomly on each screen",
+        "Placing the 'Close' button at the bottom-right of every dialog form",
         "Changing button colors from purple to green on every tab",
         "Using different font families on each button"
       ],
       "opts": [
-        "Placing the 'Close' button at the bottom-right of every dialog form",
         "Placing the Close button randomly on each screen",
+        "Placing the 'Close' button at the bottom-right of every dialog form",
         "Changing button colors from purple to green on every tab",
         "Using different font families on each button"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "Consistency in spatial layout helps users build muscle memory and predictable expectations.",
       "explanation": "Consistency in spatial layout helps users build muscle memory and predictable expectations.",
-      "distractorRationale": "Options other than \"Placing the 'Close' button at the bottom-right of every dial\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_radiobutton_checkbox_groupbox",
@@ -1147,22 +1147,22 @@
       "stem": "What is the primary danger of violating Rule 7 (Internal Locus of Control) by showing frequent unexpected modal pop-ups?",
       "code": "",
       "options": [
-        "Users experience frustration, feeling controlled by the computer rather than being the master of the tool",
+        "Variables will lose their values",
         "The C# compiler will refuse to build the project",
-        "The hard disk will run out of space",
-        "Variables will lose their values"
+        "Users experience frustration, feeling controlled by the computer rather than being the master of the tool",
+        "The hard disk will run out of space"
       ],
       "opts": [
-        "Users experience frustration, feeling controlled by the computer rather than being the master of the tool",
+        "Variables will lose their values",
         "The C# compiler will refuse to build the project",
-        "The hard disk will run out of space",
-        "Variables will lose their values"
+        "Users experience frustration, feeling controlled by the computer rather than being the master of the tool",
+        "The hard disk will run out of space"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "When an interface is unpredictable or takes initiative without user consent, users feel anxious and dissatisfied.",
       "explanation": "When an interface is unpredictable or takes initiative without user consent, users feel anxious and dissatisfied.",
-      "distractorRationale": "Options other than \"Users experience frustration, feeling controlled by the comp\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -1189,22 +1189,22 @@
       "stem": "Which Golden Rule directly justifies why a word processor asks 'Do you want to save changes before closing?' when exiting?",
       "code": "",
       "options": [
-        "Permit easy reversal of actions & Error prevention",
         "Strive for consistency only",
         "Reduce short-term memory load only",
-        "Cater to universal usability only"
+        "Cater to universal usability only",
+        "Permit easy reversal of actions & Error prevention"
       ],
       "opts": [
-        "Permit easy reversal of actions & Error prevention",
         "Strive for consistency only",
         "Reduce short-term memory load only",
-        "Cater to universal usability only"
+        "Cater to universal usability only",
+        "Permit easy reversal of actions & Error prevention"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Confirmation dialogs on destructive actions prevent accidental data loss and allow users to reverse unintentional exit commands.",
       "explanation": "Confirmation dialogs on destructive actions prevent accidental data loss and allow users to reverse unintentional exit commands.",
-      "distractorRationale": "Options other than \"Permit easy reversal of actions & Error prevention\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -1246,7 +1246,7 @@
       "ans": 0,
       "exp": "Time to learn measures how long it takes for users from the target audience to acquire the knowledge needed to carry out interface tasks successfully.",
       "explanation": "Time to learn measures how long it takes for users from the target audience to acquire the knowledge needed to carry out interface tasks successfully.",
-      "distractorRationale": "Options other than \"Time to learn\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1273,22 +1273,22 @@
       "stem": "In a busy commercial retail terminal, an interface architect configures keyboard access keys (e.g. Alt+C for Calculate) and sets the Form's AcceptButton to btnCalculate. Which usability measure is directly optimized?",
       "code": "",
       "options": [
-        "Subjective retention",
-        "Speed of performance",
         "Hardware scalability",
-        "System boot latency"
+        "Speed of performance",
+        "System boot latency",
+        "Subjective retention"
       ],
       "opts": [
-        "Subjective retention",
-        "Speed of performance",
         "Hardware scalability",
-        "System boot latency"
+        "Speed of performance",
+        "System boot latency",
+        "Subjective retention"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "Speed of performance measures how quickly routine tasks are completed once learned. Access keys and default enter keys allow expert operators to execute transactions rapidly without reaching for the mouse.",
       "explanation": "Speed of performance measures how quickly routine tasks are completed once learned. Access keys and default enter keys allow expert operators to execute transactions rapidly without reaching for the mouse.",
-      "distractorRationale": "Options other than \"Speed of performance\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1315,22 +1315,22 @@
       "stem": "Replacing a free-text TextBox with a ListBox or ComboBox for selecting standardized cruise packages directly improves which usability measure?",
       "code": "",
       "options": [
+        "Network bandwidth throughput",
         "CPU cycle consumption",
-        "Form design compile time",
         "Rate of errors by users",
-        "Network bandwidth throughput"
+        "Form design compile time"
       ],
       "opts": [
+        "Network bandwidth throughput",
         "CPU cycle consumption",
-        "Form design compile time",
         "Rate of errors by users",
-        "Network bandwidth throughput"
+        "Form design compile time"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "Rate of errors by users measures how many and what kinds of mistakes users make. Constraining choices to valid items in a ListBox eliminates typing mistakes, misspellings, and out-of-range errors.",
       "explanation": "Rate of errors by users measures how many and what kinds of mistakes users make. Constraining choices to valid items in a ListBox eliminates typing mistakes, misspellings, and out-of-range errors.",
-      "distractorRationale": "Options other than \"Rate of errors by users\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1372,7 +1372,7 @@
       "ans": 3,
       "exp": "Retention over time evaluates how well users preserve their interface operating skills after prolonged periods without using the system. Consistent layouts and clear visual cues facilitate high retention.",
       "explanation": "Retention over time evaluates how well users preserve their interface operating skills after prolonged periods without using the system. Consistent layouts and clear visual cues facilitate high retention.",
-      "distractorRationale": "Options other than \"Retention over time\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1400,21 +1400,21 @@
       "code": "",
       "options": [
         "Through user post-test surveys, interviews, and Likert-scale satisfaction questionnaires",
+        "By timing the millisecond latency of the garbage collector",
         "By counting compiler warnings generated during build",
-        "By measuring the physical weight of the monitor",
-        "By timing the millisecond latency of the garbage collector"
+        "By measuring the physical weight of the monitor"
       ],
       "opts": [
         "Through user post-test surveys, interviews, and Likert-scale satisfaction questionnaires",
+        "By timing the millisecond latency of the garbage collector",
         "By counting compiler warnings generated during build",
-        "By measuring the physical weight of the monitor",
-        "By timing the millisecond latency of the garbage collector"
+        "By measuring the physical weight of the monitor"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Subjective satisfaction measures users' personal perception, comfort, and enjoyment of the system, determined via questionnaires (such as QUIS), interviews, and rating scales.",
       "explanation": "Subjective satisfaction measures users' personal perception, comfort, and enjoyment of the system, determined via questionnaires (such as QUIS), interviews, and rating scales.",
-      "distractorRationale": "Options other than \"Through user post-test surveys, interviews, and Likert-scale\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1441,22 +1441,22 @@
       "stem": "In life-critical systems (e.g., intensive care patient monitoring, air traffic control, nuclear power management), what usability trade-off is strictly mandated?",
       "code": "",
       "options": [
-        "Aesthetics and animated transitions must be prioritized over reliability",
-        "Zero-tolerance for user error and absolute reliability take precedence over rapid learning or novelty",
         "Training time must always be kept under 5 minutes",
-        "Voice synthesis must entirely replace visual graphical interfaces"
+        "Zero-tolerance for user error and absolute reliability take precedence over rapid learning or novelty",
+        "Voice synthesis must entirely replace visual graphical interfaces",
+        "Aesthetics and animated transitions must be prioritized over reliability"
       ],
       "opts": [
-        "Aesthetics and animated transitions must be prioritized over reliability",
-        "Zero-tolerance for user error and absolute reliability take precedence over rapid learning or novelty",
         "Training time must always be kept under 5 minutes",
-        "Voice synthesis must entirely replace visual graphical interfaces"
+        "Zero-tolerance for user error and absolute reliability take precedence over rapid learning or novelty",
+        "Voice synthesis must entirely replace visual graphical interfaces",
+        "Aesthetics and animated transitions must be prioritized over reliability"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "In life-critical applications, the cost of human error is fatal. Lengthy training is acceptable if it guarantees near-zero operating errors, fail-safe confirmations, and rapid emergency intervention.",
       "explanation": "In life-critical applications, the cost of human error is fatal. Lengthy training is acceptable if it guarantees near-zero operating errors, fail-safe confirmations, and rapid emergency intervention.",
-      "distractorRationale": "Options other than \"Zero-tolerance for user error and absolute reliability take \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_error_prevention",
         "def_tryparse",
@@ -1483,22 +1483,22 @@
       "stem": "For industrial and commercial office systems (e.g. banking teller terminals, insurance claim auditing), what is the primary economic driver of interface usability?",
       "code": "",
       "options": [
-        "Maximizing playful animations to entertain staff",
         "Ensuring the program can run without an operating system",
+        "Designing interfaces that require no keyboard",
         "Minimizing operator transaction time and reducing costly data-entry mistakes to lower business operating costs",
-        "Designing interfaces that require no keyboard"
+        "Maximizing playful animations to entertain staff"
       ],
       "opts": [
-        "Maximizing playful animations to entertain staff",
         "Ensuring the program can run without an operating system",
+        "Designing interfaces that require no keyboard",
         "Minimizing operator transaction time and reducing costly data-entry mistakes to lower business operating costs",
-        "Designing interfaces that require no keyboard"
+        "Maximizing playful animations to entertain staff"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "In commercial settings, reducing repetitive transaction times by even seconds across thousands of daily operations dramatically reduces labor costs and costly operational mistakes.",
       "explanation": "In commercial settings, reducing repetitive transaction times by even seconds across thousands of daily operations dramatically reduces labor costs and costly operational mistakes.",
-      "distractorRationale": "Options other than \"Minimizing operator transaction time and reducing costly dat\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1540,7 +1540,7 @@
       "ans": 3,
       "exp": "Consumers in home and office settings will quickly abandon or reject software that causes frustration, confusion, or steep learning curves.",
       "explanation": "Consumers in home and office settings will quickly abandon or reject software that causes frustration, confusion, or steep learning curves.",
-      "distractorRationale": "Options other than \"Ease of learning, low frustration, and seamless self-explana\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1568,21 +1568,21 @@
       "code": "",
       "options": [
         "Easy exploration with comprehensive Undo/Redo capabilities and non-destructive experimentation",
-        "Strict modal dialogs that prevent multitasking",
         "Disabling keyboard shortcuts to prevent accidental commands",
-        "Forcing permanent saving after every mouse click"
+        "Forcing permanent saving after every mouse click",
+        "Strict modal dialogs that prevent multitasking"
       ],
       "opts": [
         "Easy exploration with comprehensive Undo/Redo capabilities and non-destructive experimentation",
-        "Strict modal dialogs that prevent multitasking",
         "Disabling keyboard shortcuts to prevent accidental commands",
-        "Forcing permanent saving after every mouse click"
+        "Forcing permanent saving after every mouse click",
+        "Strict modal dialogs that prevent multitasking"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Creative applications encourage innovation by enabling users to explore alternative ideas freely, supported by robust, multi-level Undo/Redo mechanisms.",
       "explanation": "Creative applications encourage innovation by enabling users to explore alternative ideas freely, supported by robust, multi-level Undo/Redo mechanisms.",
-      "distractorRationale": "Options other than \"Easy exploration with comprehensive Undo/Redo capabilities a\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1624,7 +1624,7 @@
       "ans": 1,
       "exp": "Socio-technical systems serve diverse citizen populations; they must ensure equal accessibility, unambiguous comprehension, verifiable trust, and zero disenfranchisement.",
       "explanation": "Socio-technical systems serve diverse citizen populations; they must ensure equal accessibility, unambiguous comprehension, verifiable trust, and zero disenfranchisement.",
-      "distractorRationale": "Options other than \"Trust, accessibility for citizens of all literacy levels, an\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1666,7 +1666,7 @@
       "ans": 2,
       "exp": "Users with motor challenges require larger interactive targets and sufficient spacing to prevent accidental mis-clicks, alongside complete keyboard alternatives.",
       "explanation": "Users with motor challenges require larger interactive targets and sufficient spacing to prevent accidental mis-clicks, alongside complete keyboard alternatives.",
-      "distractorRationale": "Options other than \"Providing larger click targets (e.g. min 32x32 pixels) with \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1693,22 +1693,22 @@
       "stem": "On a traffic signal trainer form, red, amber, and green light PictureBoxes are paired with a Label (lblInstruction) displaying 'STOP', 'GET READY', and 'GO'. Why is this redundant coding vital for universal usability?",
       "code": "",
       "options": [
+        "It speeds up CPU rendering of JPEG images",
         "It forces the C# compiler to allocate double the graphics memory",
         "It is a required syntax requirement of .NET Framework 4.8",
-        "It speeds up CPU rendering of JPEG images",
         "It satisfies accessibility requirements for color-blind users (deuteranopia/protanopia) who cannot distinguish red from green solely by hue"
       ],
       "opts": [
+        "It speeds up CPU rendering of JPEG images",
         "It forces the C# compiler to allocate double the graphics memory",
         "It is a required syntax requirement of .NET Framework 4.8",
-        "It speeds up CPU rendering of JPEG images",
         "It satisfies accessibility requirements for color-blind users (deuteranopia/protanopia) who cannot distinguish red from green solely by hue"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "Never rely solely on color to convey meaning or state. Color-blind users depend on secondary cues such as text labels, shapes, or spatial positions to interpret system states accurately.",
       "explanation": "Never rely solely on color to convey meaning or state. Color-blind users depend on secondary cues such as text labels, shapes, or spatial positions to interpret system states accurately.",
-      "distractorRationale": "Options other than \"It satisfies accessibility requirements for color-blind user\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1750,7 +1750,7 @@
       "ans": 0,
       "exp": "Visual chunking via GroupBoxes organizes complex form layouts into digestible semantic units, reducing visual search time and user cognitive load.",
       "explanation": "Visual chunking via GroupBoxes organizes complex form layouts into digestible semantic units, reducing visual search time and user cognitive load.",
-      "distractorRationale": "Options other than \"It reduces visual clutter and chunks related information, ea\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_radiobutton_checkbox_groupbox",
@@ -1777,22 +1777,22 @@
       "stem": "Which interface adaptation is specifically recommended when designing Visual C# Windows Forms for elderly users?",
       "code": "",
       "options": [
-        "Using low-contrast light grey text on dark grey backgrounds to reduce brightness",
+        "Hiding standard controls inside complex contextual right-click menus",
         "Employing scalable high-contrast fonts (minimum 11-12pt), distinct button affordances, and forgiving error handling",
-        "Removing all confirmation dialogs to eliminate extra clicks",
-        "Hiding standard controls inside complex contextual right-click menus"
+        "Using low-contrast light grey text on dark grey backgrounds to reduce brightness",
+        "Removing all confirmation dialogs to eliminate extra clicks"
       ],
       "opts": [
-        "Using low-contrast light grey text on dark grey backgrounds to reduce brightness",
+        "Hiding standard controls inside complex contextual right-click menus",
         "Employing scalable high-contrast fonts (minimum 11-12pt), distinct button affordances, and forgiving error handling",
-        "Removing all confirmation dialogs to eliminate extra clicks",
-        "Hiding standard controls inside complex contextual right-click menus"
+        "Using low-contrast light grey text on dark grey backgrounds to reduce brightness",
+        "Removing all confirmation dialogs to eliminate extra clicks"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "Elderly users benefit from higher visual contrast, larger font sizes, clear button boundaries that look clickable, and generous spatial separation between interactive elements.",
       "explanation": "Elderly users benefit from higher visual contrast, larger font sizes, clear button boundaries that look clickable, and generous spatial separation between interactive elements.",
-      "distractorRationale": "Options other than \"Employing scalable high-contrast fonts (minimum 11-12pt), di\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1819,22 +1819,22 @@
       "stem": "What design strategy best supports internationalization (i18n) when displaying financial outputs in a South African Visual C# application?",
       "code": "",
       "options": [
-        "Hardcoding the dollar symbol '$' directly into string concatenations",
         "Writing custom loop algorithms to replace commas with asterisks",
+        "Displaying financial amounts as unformatted floating-point raw numbers",
         "Formatting numeric variables using .ToString(\"C\") to dynamically leverage the regional culture currency symbol ('R') and decimal separator",
-        "Displaying financial amounts as unformatted floating-point raw numbers"
+        "Hardcoding the dollar symbol '$' directly into string concatenations"
       ],
       "opts": [
-        "Hardcoding the dollar symbol '$' directly into string concatenations",
         "Writing custom loop algorithms to replace commas with asterisks",
+        "Displaying financial amounts as unformatted floating-point raw numbers",
         "Formatting numeric variables using .ToString(\"C\") to dynamically leverage the regional culture currency symbol ('R') and decimal separator",
-        "Displaying financial amounts as unformatted floating-point raw numbers"
+        "Hardcoding the dollar symbol '$' directly into string concatenations"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "Using .ToString(\"C\") automatically formats monetary values using the host system's regional culture settings, rendering South African Rand ('R') without hardcoded symbols.",
       "explanation": "Using .ToString(\"C\") automatically formats monetary values using the host system's regional culture settings, rendering South African Rand ('R') without hardcoded symbols.",
-      "distractorRationale": "Options other than \"Formatting numeric variables using .ToString(\"C\") to dynamic\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1861,22 +1861,22 @@
       "stem": "In Windows Forms controls, what is the role of the 'AccessibleName' and 'AccessibleDescription' properties?",
       "code": "",
       "options": [
+        "They control database access permissions for the control",
         "They set the C# identifier name used in source code logic",
         "They determine the file path for control background bitmaps",
-        "They control database access permissions for the control",
         "They provide descriptive spoken text for assistive screen readers utilized by visually impaired users"
       ],
       "opts": [
+        "They control database access permissions for the control",
         "They set the C# identifier name used in source code logic",
         "They determine the file path for control background bitmaps",
-        "They control database access permissions for the control",
         "They provide descriptive spoken text for assistive screen readers utilized by visually impaired users"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "Assistive technologies like Windows Narrator read AccessibleName and AccessibleDescription aloud to convey the purpose and state of UI controls to visually impaired users.",
       "explanation": "Assistive technologies like Windows Narrator read AccessibleName and AccessibleDescription aloud to convey the purpose and state of UI controls to visually impaired users.",
-      "distractorRationale": "Options other than \"They provide descriptive spoken text for assistive screen re\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -1918,7 +1918,7 @@
       "ans": 0,
       "exp": "Consistent naming conventions (Hungarian prefixes) reduce cognitive friction for software engineers by making control types self-evident during development and code review.",
       "explanation": "Consistent naming conventions (Hungarian prefixes) reduce cognitive friction for software engineers by making control types self-evident during development and code review.",
-      "distractorRationale": "Options other than \"It helps developers immediately recognize control types in c\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_radiobutton_checkbox_groupbox",
@@ -1945,22 +1945,22 @@
       "stem": "Which scenario represents an unacceptable violation of Shneiderman's 1st Golden Rule ('Strive for consistency') across a multi-form application?",
       "code": "",
       "options": [
-        "Setting TabIndex on all textboxes in logical top-to-bottom reading order",
-        "Using the label 'Exit' on Form 1, 'Quit' on Form 2, and 'Close Window' on Form 3 with varying button placements",
         "Using Arial 9pt font for all data input labels across all forms",
-        "Placing the primary action button at the bottom right of each window"
+        "Using the label 'Exit' on Form 1, 'Quit' on Form 2, and 'Close Window' on Form 3 with varying button placements",
+        "Placing the primary action button at the bottom right of each window",
+        "Setting TabIndex on all textboxes in logical top-to-bottom reading order"
       ],
       "opts": [
-        "Setting TabIndex on all textboxes in logical top-to-bottom reading order",
-        "Using the label 'Exit' on Form 1, 'Quit' on Form 2, and 'Close Window' on Form 3 with varying button placements",
         "Using Arial 9pt font for all data input labels across all forms",
-        "Placing the primary action button at the bottom right of each window"
+        "Using the label 'Exit' on Form 1, 'Quit' on Form 2, and 'Close Window' on Form 3 with varying button placements",
+        "Placing the primary action button at the bottom right of each window",
+        "Setting TabIndex on all textboxes in logical top-to-bottom reading order"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "Inconsistent terminology ('Exit' vs 'Quit' vs 'Close Window') and shifting button coordinates confuse users and destroy mental predictability.",
       "explanation": "Inconsistent terminology ('Exit' vs 'Quit' vs 'Close Window') and shifting button coordinates confuse users and destroy mental predictability.",
-      "distractorRationale": "Options other than \"Using the label 'Exit' on Form 1, 'Quit' on Form 2, and 'Clo\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_radiobutton_checkbox_groupbox",
@@ -2002,7 +2002,7 @@
       "ans": 2,
       "exp": "The ampersand '&' underlines the subsequent letter ('C') and binds the Alt+C keyboard accelerator, providing rapid navigation for power users (Rule 2).",
       "explanation": "The ampersand '&' underlines the subsequent letter ('C') and binds the Alt+C keyboard accelerator, providing rapid navigation for power users (Rule 2).",
-      "distractorRationale": "Options other than \"Pressing Alt+C; satisfies Rule 2 (Cater to universal usabili\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2029,22 +2029,22 @@
       "stem": "On a Windows Form, setting Form.AcceptButton = btnCalculate and Form.CancelButton = btnExit fulfills which usability principle?",
       "code": "",
       "options": [
-        "Violating user locus of control by triggering actions without clicks",
         "Forcing the application to compile without Roslyn diagnostics",
         "Encrypting the user's keystrokes for security compliance",
+        "Violating user locus of control by triggering actions without clicks",
         "Catering to universal usability by standardizing Enter and Esc keyboard behavior"
       ],
       "opts": [
-        "Violating user locus of control by triggering actions without clicks",
         "Forcing the application to compile without Roslyn diagnostics",
         "Encrypting the user's keystrokes for security compliance",
+        "Violating user locus of control by triggering actions without clicks",
         "Catering to universal usability by standardizing Enter and Esc keyboard behavior"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "Binding AcceptButton to Enter and CancelButton to Escape honors universal usability and user expectations by enabling standard, effortless keyboard control.",
       "explanation": "Binding AcceptButton to Enter and CancelButton to Escape honors universal usability and user expectations by enabling standard, effortless keyboard control.",
-      "distractorRationale": "Options other than \"Catering to universal usability by standardizing Enter and E\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2072,21 +2072,21 @@
       "code": "",
       "options": [
         "Immediately append the item to the ListBox and update the running total label",
+        "Clear the entire form and reset all variables to zero",
         "Give no visual response until the entire application is closed",
-        "Display a modal pop-up dialog that interrupts the user for every single item added",
-        "Clear the entire form and reset all variables to zero"
+        "Display a modal pop-up dialog that interrupts the user for every single item added"
       ],
       "opts": [
         "Immediately append the item to the ListBox and update the running total label",
+        "Clear the entire form and reset all variables to zero",
         "Give no visual response until the entire application is closed",
-        "Display a modal pop-up dialog that interrupts the user for every single item added",
-        "Clear the entire form and reset all variables to zero"
+        "Display a modal pop-up dialog that interrupts the user for every single item added"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Frequent, minor actions require modest, immediate visual feedback: seeing the item appear in the list and watching the total update acknowledges the action without disruption.",
       "explanation": "Frequent, minor actions require modest, immediate visual feedback: seeing the item appear in the list and watching the total update acknowledges the action without disruption.",
-      "distractorRationale": "Options other than \"Immediately append the item to the ListBox and update the ru\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2128,7 +2128,7 @@
       "ans": 1,
       "exp": "Without visual feedback during lengthy operations, users lose confidence, suspect system lockup, and frequently re-click buttons or terminate the application prematurely.",
       "explanation": "Without visual feedback during lengthy operations, users lose confidence, suspect system lockup, and frequently re-click buttons or terminate the application prematurely.",
-      "distractorRationale": "Options other than \"Users will assume the application has frozen, crashed, or ig\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2155,22 +2155,22 @@
       "stem": "Which design technique best embodies Shneiderman's 4th Golden Rule ('Design dialogs to yield closure') upon completing a multi-step booking process?",
       "code": "",
       "options": [
+        "Switching form background color to black without explanation",
         "Abruptly closing the form without any message",
-        "Leaving input fields filled with no indication whether the booking was registered",
         "Presenting a final booking summary dialog showing total tickets, package selected, and final Rand amount, signaling that the transaction is finalized",
-        "Switching form background color to black without explanation"
+        "Leaving input fields filled with no indication whether the booking was registered"
       ],
       "opts": [
+        "Switching form background color to black without explanation",
         "Abruptly closing the form without any message",
-        "Leaving input fields filled with no indication whether the booking was registered",
         "Presenting a final booking summary dialog showing total tickets, package selected, and final Rand amount, signaling that the transaction is finalized",
-        "Switching form background color to black without explanation"
+        "Leaving input fields filled with no indication whether the booking was registered"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "Rule 4 states that sequences of action should have an organized beginning, middle, and end. A clear confirmation screen delivers closure, satisfaction, and peace of mind.",
       "explanation": "Rule 4 states that sequences of action should have an organized beginning, middle, and end. A clear confirmation screen delivers closure, satisfaction, and peace of mind.",
-      "distractorRationale": "Options other than \"Presenting a final booking summary dialog showing total tick\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2212,7 +2212,7 @@
       "ans": 3,
       "exp": "Closure provides users with the satisfaction of accomplishment and frees their short-term working memory to focus on subsequent tasks.",
       "explanation": "Closure provides users with the satisfaction of accomplishment and frees their short-term working memory to focus on subsequent tasks.",
-      "distractorRationale": "Options other than \"Relief of anxiety, confirmation that the goal was attained, \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2240,21 +2240,21 @@
       "code": "",
       "options": [
         "Rule 5: Prevent errors (and handle them gracefully when they occur)",
+        "Rule 4: Design dialogs to yield closure only",
         "Rule 8: Reduce short-term memory load only",
-        "Rule 1: Strive for consistency only",
-        "Rule 4: Design dialogs to yield closure only"
+        "Rule 1: Strive for consistency only"
       ],
       "opts": [
         "Rule 5: Prevent errors (and handle them gracefully when they occur)",
+        "Rule 4: Design dialogs to yield closure only",
         "Rule 8: Reduce short-term memory load only",
-        "Rule 1: Strive for consistency only",
-        "Rule 4: Design dialogs to yield closure only"
+        "Rule 1: Strive for consistency only"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Rule 5 mandates designing systems so users make fewer errors and handling mistakes gracefully with non-destructive, friendly alerts rather than unhandled exception crashes.",
       "explanation": "Rule 5 mandates designing systems so users make fewer errors and handling mistakes gracefully with non-destructive, friendly alerts rather than unhandled exception crashes.",
-      "distractorRationale": "Options other than \"Rule 5: Prevent errors (and handle them gracefully when they\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2281,22 +2281,22 @@
       "stem": "Which error message complies best with Shneiderman's guidelines for effective error message construction?",
       "code": "",
       "options": [
-        "'FATAL ERROR 0x80004005: System.FormatException at offset 12'",
-        "'Invalid Input. Please enter a positive numeric value for Wors Kilograms (e.g., 2.5).'",
         "'You made a stupid mistake in txtWorsKg!'",
-        "'Error! Program halted.'"
+        "'Invalid Input. Please enter a positive numeric value for Wors Kilograms (e.g., 2.5).'",
+        "'Error! Program halted.'",
+        "'FATAL ERROR 0x80004005: System.FormatException at offset 12'"
       ],
       "opts": [
-        "'FATAL ERROR 0x80004005: System.FormatException at offset 12'",
-        "'Invalid Input. Please enter a positive numeric value for Wors Kilograms (e.g., 2.5).'",
         "'You made a stupid mistake in txtWorsKg!'",
-        "'Error! Program halted.'"
+        "'Invalid Input. Please enter a positive numeric value for Wors Kilograms (e.g., 2.5).'",
+        "'Error! Program halted.'",
+        "'FATAL ERROR 0x80004005: System.FormatException at offset 12'"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "Effective error messages are polite, specific, avoid technical jargon, do not blame the user, and offer constructive guidance on how to rectify the problem.",
       "explanation": "Effective error messages are polite, specific, avoid technical jargon, do not blame the user, and offer constructive guidance on how to rectify the problem.",
-      "distractorRationale": "Options other than \"'Invalid Input. Please enter a positive numeric value for Wo\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_error_prevention",
         "def_tryparse",
@@ -2338,7 +2338,7 @@
       "ans": 2,
       "exp": "Easy reversal relieves anxiety, since users know that mistakes can be painlessly cleared and undone without consequences.",
       "explanation": "Easy reversal relieves anxiety, since users know that mistakes can be painlessly cleared and undone without consequences.",
-      "distractorRationale": "Options other than \"It fulfills Rule 6: Permit easy reversal of actions, allowin\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_error_prevention",
         "def_tryparse",
@@ -2365,22 +2365,22 @@
       "stem": "When a user clicks 'btnExit', displaying a MessageBox asking 'Are you sure you want to exit?' with Yes and No buttons enforces which usability rule?",
       "code": "",
       "options": [
+        "Rule 8: Reduce short-term memory load only",
         "Rule 1: Strive for consistency only",
         "Rule 2: Cater to universal usability only",
-        "Rule 8: Reduce short-term memory load only",
         "Rule 6: Permit easy reversal of actions / Error prevention by preventing accidental termination of the user's workflow"
       ],
       "opts": [
+        "Rule 8: Reduce short-term memory load only",
         "Rule 1: Strive for consistency only",
         "Rule 2: Cater to universal usability only",
-        "Rule 8: Reduce short-term memory load only",
         "Rule 6: Permit easy reversal of actions / Error prevention by preventing accidental termination of the user's workflow"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "Confirmation before potentially destructive actions (like exiting or deleting) allows users to cancel accidental clicks, supporting easy error reversal.",
       "explanation": "Confirmation before potentially destructive actions (like exiting or deleting) allows users to cancel accidental clicks, supporting easy error reversal.",
-      "distractorRationale": "Options other than \"Rule 6: Permit easy reversal of actions / Error prevention b\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2408,21 +2408,21 @@
       "code": "",
       "options": [
         "Users should feel that they are in charge of the system and that the system responds predictably to their explicit commands",
-        "The computer system should make autonomous decisions and navigate between forms without user initiation",
         "The CPU clock must synchronize with the monitor refresh rate",
-        "Database records should automatically delete themselves after 30 days"
+        "Database records should automatically delete themselves after 30 days",
+        "The computer system should make autonomous decisions and navigate between forms without user initiation"
       ],
       "opts": [
         "Users should feel that they are in charge of the system and that the system responds predictably to their explicit commands",
-        "The computer system should make autonomous decisions and navigate between forms without user initiation",
         "The CPU clock must synchronize with the monitor refresh rate",
-        "Database records should automatically delete themselves after 30 days"
+        "Database records should automatically delete themselves after 30 days",
+        "The computer system should make autonomous decisions and navigate between forms without user initiation"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Internal locus of control means users feel like initiators rather than responders. Unexpected behaviors, modal lockouts, or automated unsolicited pop-ups strip this control and cause dissatisfaction.",
       "explanation": "Internal locus of control means users feel like initiators rather than responders. Unexpected behaviors, modal lockouts, or automated unsolicited pop-ups strip this control and cause dissatisfaction.",
-      "distractorRationale": "Options other than \"Users should feel that they are in charge of the system and \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2464,7 +2464,7 @@
       "ans": 1,
       "exp": "Unsolicited automatic submissions or involuntary cursor shifts make users feel manipulated and powerless, severely violating internal locus of control.",
       "explanation": "Unsolicited automatic submissions or involuntary cursor shifts make users feel manipulated and powerless, severely violating internal locus of control.",
-      "distractorRationale": "Options other than \"A form that automatically changes the user's cursor position\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2491,22 +2491,22 @@
       "stem": "How does Shneiderman's 8th Golden Rule ('Reduce short-term memory load') explain why displaying a running ListBox of items with an active total label is superior to only showing the final bill at checkout?",
       "code": "",
       "options": [
+        "It speeds up arithmetic addition in the ALU",
         "ListBox controls require zero memory on the graphics card",
-        "It allows the user to memorize 50 items simultaneously",
         "Human short-term memory can only hold 7 ± 2 chunks of information; displaying current entries externally prevents cognitive overload",
-        "It speeds up arithmetic addition in the ALU"
+        "It allows the user to memorize 50 items simultaneously"
       ],
       "opts": [
+        "It speeds up arithmetic addition in the ALU",
         "ListBox controls require zero memory on the graphics card",
-        "It allows the user to memorize 50 items simultaneously",
         "Human short-term memory can only hold 7 ± 2 chunks of information; displaying current entries externally prevents cognitive overload",
-        "It speeds up arithmetic addition in the ALU"
+        "It allows the user to memorize 50 items simultaneously"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "Displaying current state, previous entries, and running totals externally on the screen frees the user from having to remember details in short-term memory (Miller's Rule of 7 ± 2).",
       "explanation": "Displaying current state, previous entries, and running totals externally on the screen frees the user from having to remember details in short-term memory (Miller's Rule of 7 ± 2).",
-      "distractorRationale": "Options other than \"Human short-term memory can only hold 7 ± 2 chunks of inform\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -2533,22 +2533,22 @@
       "stem": "A student builds a Windows Form containing 45 unorganized TextBoxes on a single screen without any tabs, grouping, or progression. Which HCI guideline is most severely breached?",
       "code": "",
       "options": [
-        "Rule 6: Permit easy reversal of actions only",
         "Rule 3: Offer informative feedback only",
         "Rule 2: Cater to universal usability only",
+        "Rule 6: Permit easy reversal of actions only",
         "Rule 8: Reduce short-term memory load (exceeding human cognitive processing capacity through excessive visual clutter)"
       ],
       "opts": [
-        "Rule 6: Permit easy reversal of actions only",
         "Rule 3: Offer informative feedback only",
         "Rule 2: Cater to universal usability only",
+        "Rule 6: Permit easy reversal of actions only",
         "Rule 8: Reduce short-term memory load (exceeding human cognitive processing capacity through excessive visual clutter)"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "Presenting dozens of raw inputs at once overwhelms working memory and visual attention. Dividing forms into tabs, wizards, or logical group boxes keeps cognitive load within human limits.",
       "explanation": "Presenting dozens of raw inputs at once overwhelms working memory and visual attention. Dividing forms into tabs, wizards, or logical group boxes keeps cognitive load within human limits.",
-      "distractorRationale": "Options other than \"Rule 8: Reduce short-term memory load (exceeding human cogni\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2575,22 +2575,22 @@
       "stem": "Under Shneiderman's 5th Golden Rule ('Prevent errors'), why is wrapping user input conversion in a try-catch (FormatException) block or using double.TryParse superior interface design?",
       "code": "",
       "options": [
+        "It intercepts invalid non-numeric inputs gracefully, prevents the application from crashing, and displays constructive feedback with focus redirected to the erroneous field",
         "It suppresses all compiler errors at build time so the project compiles regardless of syntax mistakes",
         "It forces the operating system to automatically retry the parse using a default value of 0.0 without notifying the user",
-        "It intercepts invalid non-numeric inputs gracefully, prevents the application from crashing, and displays constructive feedback with focus redirected to the erroneous field",
         "It disables Windows operating system error reporting and user notifications"
       ],
       "opts": [
+        "It intercepts invalid non-numeric inputs gracefully, prevents the application from crashing, and displays constructive feedback with focus redirected to the erroneous field",
         "It suppresses all compiler errors at build time so the project compiles regardless of syntax mistakes",
         "It forces the operating system to automatically retry the parse using a default value of 0.0 without notifying the user",
-        "It intercepts invalid non-numeric inputs gracefully, prevents the application from crashing, and displays constructive feedback with focus redirected to the erroneous field",
         "It disables Windows operating system error reporting and user notifications"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "Rule 5 states that system design should prevent users from making serious errors, and when errors do occur, detect them gracefully and offer clear, constructive guidance without terminating the application.",
       "explanation": "Rule 5 states that system design should prevent users from making serious errors, and when errors do occur, detect them gracefully and offer clear, constructive guidance without terminating the application.",
-      "distractorRationale": "Options other than \"It intercepts invalid non-numeric inputs gracefully, prevent\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_error_prevention",
         "def_tryparse",
@@ -2617,22 +2617,22 @@
       "stem": "When a user clicks 'btnCalculate' and lblAverage.Text immediately displays 'Average: 82.50%', which of Don Norman's conceptual user interface gulfs is bridged?",
       "code": "",
       "options": [
-        "The Gulf of Execution (determining how to formulate and perform the physical actions required by the system)",
-        "The Gulf of Affordance (perceiving what physical manipulations are possible on form controls)",
         "The Gulf of Intention (translating a high-level psychological goal into a concrete system input)",
-        "The Gulf of Evaluation (allowing the user to perceive and interpret the new state of the system and verify their goal was achieved)"
+        "The Gulf of Evaluation (allowing the user to perceive and interpret the new state of the system and verify their goal was achieved)",
+        "The Gulf of Execution (determining how to formulate and perform the physical actions required by the system)",
+        "The Gulf of Affordance (perceiving what physical manipulations are possible on form controls)"
       ],
       "opts": [
-        "The Gulf of Execution (determining how to formulate and perform the physical actions required by the system)",
-        "The Gulf of Affordance (perceiving what physical manipulations are possible on form controls)",
         "The Gulf of Intention (translating a high-level psychological goal into a concrete system input)",
-        "The Gulf of Evaluation (allowing the user to perceive and interpret the new state of the system and verify their goal was achieved)"
+        "The Gulf of Evaluation (allowing the user to perceive and interpret the new state of the system and verify their goal was achieved)",
+        "The Gulf of Execution (determining how to formulate and perform the physical actions required by the system)",
+        "The Gulf of Affordance (perceiving what physical manipulations are possible on form controls)"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "Don Norman's Gulf of Evaluation represents the difficulty users experience in assessing the system's state and determining if their intentions were met. Immediate, clear visual feedback bridges this gulf.",
       "explanation": "Don Norman's Gulf of Evaluation represents the difficulty users experience in assessing the system's state and determining if their intentions were met. Immediate, clear visual feedback bridges this gulf.",
-      "distractorRationale": "Options other than \"The Gulf of Evaluation (allowing the user to perceive and in\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_gulf_of_execution",
         "def_gulf_of_evaluation",
@@ -2674,7 +2674,7 @@
       "ans": 2,
       "exp": "Immediate, unmistakable visual feedback bridges the Gulf of Evaluation by making the system's updated internal state transparent and easy to interpret.",
       "explanation": "Immediate, unmistakable visual feedback bridges the Gulf of Evaluation by making the system's updated internal state transparent and easy to interpret.",
-      "distractorRationale": "Options other than \"The Gulf of Evaluation (enabling the user to effortlessly pe\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_gulf_of_execution",
         "def_gulf_of_evaluation",
@@ -2701,22 +2701,22 @@
       "stem": "Which design implementation in Visual C# Windows Forms best bridges the Gulf of Execution?",
       "code": "",
       "options": [
-        "Hiding button controls until the user hovers over an unmarked panel",
         "Using obscure abbreviations like 'btnX1' and 'lblZ' on the interface",
         "Removing all button click event handlers",
+        "Hiding button controls until the user hovers over an unmarked panel",
         "Using distinct, raised button controls labeled with active action verbs (e.g., 'Calculate Total', 'Clear Form', 'Exit')"
       ],
       "opts": [
-        "Hiding button controls until the user hovers over an unmarked panel",
         "Using obscure abbreviations like 'btnX1' and 'lblZ' on the interface",
         "Removing all button click event handlers",
+        "Hiding button controls until the user hovers over an unmarked panel",
         "Using distinct, raised button controls labeled with active action verbs (e.g., 'Calculate Total', 'Clear Form', 'Exit')"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "Clear visual affordances (buttons that look clickable) paired with explicit verbs tell the user exactly what physical action will achieve their intended goal, narrowing the Gulf of Execution.",
       "explanation": "Clear visual affordances (buttons that look clickable) paired with explicit verbs tell the user exactly what physical action will achieve their intended goal, narrowing the Gulf of Execution.",
-      "distractorRationale": "Options other than \"Using distinct, raised button controls labeled with active a\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_gulf_of_execution",
         "def_gulf_of_evaluation",
@@ -2744,21 +2744,21 @@
       "code": "",
       "options": [
         "The distance to the target and the physical width/size of the target",
-        "The color depth of the monitor and the RAM capacity",
         "The length of the variable name in the C# code",
-        "The speed of the network internet connection"
+        "The speed of the network internet connection",
+        "The color depth of the monitor and the RAM capacity"
       ],
       "opts": [
         "The distance to the target and the physical width/size of the target",
-        "The color depth of the monitor and the RAM capacity",
         "The length of the variable name in the C# code",
-        "The speed of the network internet connection"
+        "The speed of the network internet connection",
+        "The color depth of the monitor and the RAM capacity"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Fitts' Law models pointing time: MT = a + b * log2(2D / W), meaning larger targets (W) located closer to the pointer (D) are acquired significantly faster and with fewer errors.",
       "explanation": "Fitts' Law models pointing time: MT = a + b * log2(2D / W), meaning larger targets (W) located closer to the pointer (D) are acquired significantly faster and with fewer errors.",
-      "distractorRationale": "Options other than \"The distance to the target and the physical width/size of th\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2785,22 +2785,22 @@
       "stem": "How does Fitts' Law guide the sizing and placement of the primary 'Calculate' button on a data-entry form?",
       "code": "",
       "options": [
-        "Make the button tiny and hide it in the top corner of the screen",
+        "Require the user to drag the button across the screen before clicking",
         "Make the primary action button sufficiently large and place it directly adjacent to the input fields in the user's natural scanning path",
-        "Change the button position randomly after each click",
-        "Require the user to drag the button across the screen before clicking"
+        "Make the button tiny and hide it in the top corner of the screen",
+        "Change the button position randomly after each click"
       ],
       "opts": [
-        "Make the button tiny and hide it in the top corner of the screen",
+        "Require the user to drag the button across the screen before clicking",
         "Make the primary action button sufficiently large and place it directly adjacent to the input fields in the user's natural scanning path",
-        "Change the button position randomly after each click",
-        "Require the user to drag the button across the screen before clicking"
+        "Make the button tiny and hide it in the top corner of the screen",
+        "Change the button position randomly after each click"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "Larger target dimensions and closer spatial proximity minimize pointer acquisition time and reduce accidental misclicks.",
       "explanation": "Larger target dimensions and closer spatial proximity minimize pointer acquisition time and reduce accidental misclicks.",
-      "distractorRationale": "Options other than \"Make the primary action button sufficiently large and place \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2827,22 +2827,22 @@
       "stem": "Under the Hick-Hyman Law, what happens to user decision time as the number of unorganized choices on an interface increases?",
       "code": "",
       "options": [
+        "Decision time is completely unaffected by the number of alternatives",
         "Decision time drops to zero immediately",
-        "Users always choose the first option without thinking",
         "Decision time increases logarithmically with the number of available options",
-        "Decision time is completely unaffected by the number of alternatives"
+        "Users always choose the first option without thinking"
       ],
       "opts": [
+        "Decision time is completely unaffected by the number of alternatives",
         "Decision time drops to zero immediately",
-        "Users always choose the first option without thinking",
         "Decision time increases logarithmically with the number of available options",
-        "Decision time is completely unaffected by the number of alternatives"
+        "Users always choose the first option without thinking"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "Hick's Law: T = b * log2(n + 1). As the number of choices (n) increases, cognitive selection time grows. Structuring choices into logical groups or categories speeds decision-making.",
       "explanation": "Hick's Law: T = b * log2(n + 1). As the number of choices (n) increases, cognitive selection time grows. Structuring choices into logical groups or categories speeds decision-making.",
-      "distractorRationale": "Options other than \"Decision time increases logarithmically with the number of a\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_usability_measures",
         "def_universal_usability",
@@ -2884,7 +2884,7 @@
       "ans": 3,
       "exp": "Recognizing a choice among visible RadioButtons requires far less cognitive effort than recalling terms and typing free text, while eliminating input validation failures (Rule 5 & 8).",
       "explanation": "Recognizing a choice among visible RadioButtons requires far less cognitive effort than recalling terms and typing free text, while eliminating input validation failures (Rule 5 & 8).",
-      "distractorRationale": "Options other than \"It enforces mutual exclusion, provides immediate visual reco\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_radiobutton_checkbox_groupbox",
@@ -2911,22 +2911,22 @@
       "stem": "Which window in Visual Studio displays a hierarchical list of all files, forms, and references included in the current project?",
       "code": "",
       "options": [
-        "Properties Window",
         "Solution Explorer",
-        "Toolbox",
-        "Error List Window"
+        "Error List Window",
+        "Properties Window",
+        "Toolbox"
       ],
       "opts": [
-        "Properties Window",
         "Solution Explorer",
-        "Toolbox",
-        "Error List Window"
+        "Error List Window",
+        "Properties Window",
+        "Toolbox"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "The Solution Explorer displays the hierarchical tree of project files (e.g. Form1.cs, Form1.Designer.cs, Program.cs).",
       "explanation": "The Solution Explorer displays the hierarchical tree of project files (e.g. Form1.cs, Form1.Designer.cs, Program.cs).",
-      "distractorRationale": "Options other than \"Solution Explorer\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -2953,22 +2953,22 @@
       "stem": "Which window in the Visual Studio IDE allows you to examine and change the design-time properties of a selected form or control?",
       "code": "",
       "options": [
-        "Properties Window",
         "Solution Explorer",
+        "Properties Window",
         "Output Window",
         "Server Explorer"
       ],
       "opts": [
-        "Properties Window",
         "Solution Explorer",
+        "Properties Window",
         "Output Window",
         "Server Explorer"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "The Properties Window lists properties (Text, Name, Size, BackColor, etc.) of the currently selected component.",
       "explanation": "The Properties Window lists properties (Text, Name, Size, BackColor, etc.) of the currently selected component.",
-      "distractorRationale": "Options other than \"Properties Window\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -2995,22 +2995,22 @@
       "stem": "In Visual Studio, what is the official name of the primary design-time window in which you visually construct a Windows Forms user interface and place controls (such as Buttons, Labels, and TextBoxes) onto a visual canvas?",
       "code": "",
       "options": [
+        "Document Outline",
         "Solution Explorer",
         "Designer (Form Designer)",
-        "Properties Window",
-        "Document Outline"
+        "Properties Window"
       ],
       "opts": [
+        "Document Outline",
         "Solution Explorer",
         "Designer (Form Designer)",
-        "Properties Window",
-        "Document Outline"
+        "Properties Window"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "The Form Designer (or Designer) is the visual design surface in Visual Studio where developers visually place and configure Windows Forms controls (Chapter 1).",
-      "explanation": "The Form Designer (or Designer) is the visual design surface in Visual Studio where developers visually place and configure Windows Forms controls (Chapter 1).",
-      "distractorRationale": "Options other than \"Designer (Form Designer)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The Form Designer (or Designer) is the visual design surface in Visual Studio where developers visually place and configure Windows Forms controls.",
+      "explanation": "The Form Designer (or Designer) is the visual design surface in Visual Studio where developers visually place and configure Windows Forms controls.",
+      "distractorRationale": "",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -3037,22 +3037,22 @@
       "stem": "What is the correct chronological sequence of the Six-Phase Program Development Process?",
       "code": "",
       "options": [
-        "1. Understand Purpose -> 2. Design GUI -> 3. Design Logic -> 4. Write Code -> 5. Correct Syntax Errors -> 6. Test & Correct Logic Errors",
         "1. Design GUI -> 2. Write Code -> 3. Understand Purpose -> 4. Design Logic -> 5. Correct Syntax -> 6. Test",
         "1. Write Code -> 2. Design GUI -> 3. Correct Syntax -> 4. Design Logic -> 5. Understand Purpose -> 6. Test",
-        "1. Test -> 2. Correct Syntax -> 3. Write Code -> 4. Design Logic -> 5. Design GUI -> 6. Understand Purpose"
+        "1. Test -> 2. Correct Syntax -> 3. Write Code -> 4. Design Logic -> 5. Design GUI -> 6. Understand Purpose",
+        "1. Understand Purpose -> 2. Design GUI -> 3. Design Logic -> 4. Write Code -> 5. Correct Syntax Errors -> 6. Test & Correct Logic Errors"
       ],
       "opts": [
-        "1. Understand Purpose -> 2. Design GUI -> 3. Design Logic -> 4. Write Code -> 5. Correct Syntax Errors -> 6. Test & Correct Logic Errors",
         "1. Design GUI -> 2. Write Code -> 3. Understand Purpose -> 4. Design Logic -> 5. Correct Syntax -> 6. Test",
         "1. Write Code -> 2. Design GUI -> 3. Correct Syntax -> 4. Design Logic -> 5. Understand Purpose -> 6. Test",
-        "1. Test -> 2. Correct Syntax -> 3. Write Code -> 4. Design Logic -> 5. Design GUI -> 6. Understand Purpose"
+        "1. Test -> 2. Correct Syntax -> 3. Write Code -> 4. Design Logic -> 5. Design GUI -> 6. Understand Purpose",
+        "1. Understand Purpose -> 2. Design GUI -> 3. Design Logic -> 4. Write Code -> 5. Correct Syntax Errors -> 6. Test & Correct Logic Errors"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Visual C# specifies 6 distinct phases: Understand Purpose -> Design GUI -> Design Logic -> Write Code -> Correct Syntax Errors -> Test and Correct Logic Errors.",
       "explanation": "Visual C# specifies 6 distinct phases: Understand Purpose -> Design GUI -> Design Logic -> Write Code -> Correct Syntax Errors -> Test and Correct Logic Errors.",
-      "distractorRationale": "Options other than \"1. Understand Purpose -> 2. Design GUI -> 3. Design Logic ->\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3079,22 +3079,22 @@
       "stem": "Which control property determines the text caption visible to the user in a Form's title bar or on a Button's face?",
       "code": "",
       "options": [
-        "Name",
         "Text",
-        "Tag",
-        "Caption"
+        "Caption",
+        "Name",
+        "Tag"
       ],
       "opts": [
-        "Name",
         "Text",
-        "Tag",
-        "Caption"
+        "Caption",
+        "Name",
+        "Tag"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "The 'Text' property controls the display string on controls and the form's title bar caption. The 'Name' property is the code identifier.",
       "explanation": "The 'Text' property controls the display string on controls and the form's title bar caption. The 'Name' property is the code identifier.",
-      "distractorRationale": "Options other than \"Text\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
@@ -3120,22 +3120,22 @@
       "stem": "What standard Hungarian naming prefix must be assigned to a Button control?",
       "code": "",
       "options": [
-        "btn",
-        "btn_",
         "b",
-        "button"
+        "btn",
+        "button",
+        "btn_"
       ],
       "opts": [
-        "btn",
-        "btn_",
         "b",
-        "button"
+        "btn",
+        "button",
+        "btn_"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "The official NWU CMPG122 naming standard prescribes the three-letter prefix 'btn' (e.g. btnCalculate, btnExit).",
       "explanation": "The official NWU CMPG122 naming standard prescribes the three-letter prefix 'btn' (e.g. btnCalculate, btnExit).",
-      "distractorRationale": "Options other than \"btn\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -3162,22 +3162,22 @@
       "stem": "What statement written inside an Exit button's Click event handler cleanly closes the active Windows Form?",
       "code": "",
       "options": [
-        "this.Close();",
         "Application.Halt();",
         "Close.Form();",
+        "this.Close();",
         "Form.End();"
       ],
       "opts": [
-        "this.Close();",
         "Application.Halt();",
         "Close.Form();",
+        "this.Close();",
         "Form.End();"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "'this.Close();' executes the Close method on the current Form instance, terminating the form.",
       "explanation": "'this.Close();' executes the Close method on the current Form instance, terminating the form.",
-      "distractorRationale": "Options other than \"this.Close();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -3204,22 +3204,22 @@
       "stem": "Which PictureBox SizeMode property resizes the image proportionally to fit within the PictureBox bounds without distorting its aspect ratio?",
       "code": "",
       "options": [
+        "CenterImage",
         "StretchImage",
-        "Zoom",
         "Normal",
-        "CenterImage"
+        "Zoom"
       ],
       "opts": [
+        "CenterImage",
         "StretchImage",
-        "Zoom",
         "Normal",
-        "CenterImage"
+        "Zoom"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Zoom proportionally scales the image up or down to fit inside the PictureBox while preserving its aspect ratio. StretchImage distorts the ratio.",
       "explanation": "Zoom proportionally scales the image up or down to fit inside the PictureBox while preserving its aspect ratio. StretchImage distorts the ratio.",
-      "distractorRationale": "Options other than \"Zoom\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
@@ -3246,21 +3246,21 @@
       "code": "",
       "options": [
         "AutoSize",
-        "Normal",
         "StretchImage",
-        "Zoom"
+        "Zoom",
+        "Normal"
       ],
       "opts": [
         "AutoSize",
-        "Normal",
         "StretchImage",
-        "Zoom"
+        "Zoom",
+        "Normal"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "AutoSize causes the control itself to resize to match the loaded image dimensions.",
       "explanation": "AutoSize causes the control itself to resize to match the loaded image dimensions.",
-      "distractorRationale": "Options other than \"AutoSize\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
@@ -3287,21 +3287,21 @@
       "code": "",
       "options": [
         "Block comment (/* */)",
-        "Inline documentation comment (///)",
         "Line comment (//)",
+        "Inline documentation comment (///)",
         "Directive comment"
       ],
       "opts": [
         "Block comment (/* */)",
-        "Inline documentation comment (///)",
         "Line comment (//)",
+        "Inline documentation comment (///)",
         "Directive comment"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "A comment that begins with '//' and spans only to the end of that single line is formally termed a 'line comment', whereas a comment enclosed between '/*' and '*/' is a 'block comment'.",
       "explanation": "A comment that begins with '//' and spans only to the end of that single line is formally termed a 'line comment', whereas a comment enclosed between '/*' and '*/' is a 'block comment'.",
-      "distractorRationale": "Options other than \"Line comment (//)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3328,22 +3328,22 @@
       "stem": "What type of error is detected by the Visual C# compiler when code violates grammatical language rules (such as a missing semicolon)?",
       "code": "",
       "options": [
-        "Syntax error (compilation error)",
+        "Hardware failure",
         "Logic error",
-        "Runtime exception",
-        "Hardware failure"
+        "Syntax error (compilation error)",
+        "Runtime exception"
       ],
       "opts": [
-        "Syntax error (compilation error)",
+        "Hardware failure",
         "Logic error",
-        "Runtime exception",
-        "Hardware failure"
+        "Syntax error (compilation error)",
+        "Runtime exception"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Syntax errors violate C# grammar/spelling rules and are caught at compile time before execution begins.",
       "explanation": "Syntax errors violate C# grammar/spelling rules and are caught at compile time before execution begins.",
-      "distractorRationale": "Options other than \"Syntax error (compilation error)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3370,22 +3370,22 @@
       "stem": "If a program compiles cleanly and runs, but outputs 'Gross Pay = R 0.00' instead of 'R 2,000.00' due to a flawed calculation formula, what type of error is this?",
       "code": "",
       "options": [
-        "Logic error",
-        "Syntax error",
         "Compilation error",
-        "Lexical token error"
+        "Lexical token error",
+        "Syntax error",
+        "Logic error"
       ],
       "opts": [
-        "Logic error",
-        "Syntax error",
         "Compilation error",
-        "Lexical token error"
+        "Lexical token error",
+        "Syntax error",
+        "Logic error"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "A logic error produces incorrect results despite syntactically valid code and clean compilation.",
       "explanation": "A logic error produces incorrect results despite syntactically valid code and clean compilation.",
-      "distractorRationale": "Options other than \"Logic error\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3427,7 +3427,7 @@
       "ans": 0,
       "exp": "Non-visual controls do not have a visual form presence and reside in the Component Tray below the form.",
       "explanation": "Non-visual controls do not have a visual form presence and reside in the Component Tray below the form.",
-      "distractorRationale": "Options other than \"In the Component Tray at the bottom of the Designer window\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3454,22 +3454,22 @@
       "stem": "When a control or form is selected in the Visual Studio Form Designer, what are the small white or black squares that appear on its bounding box, used to resize its width and height, formally called?",
       "code": "",
       "options": [
-        "Border anchors",
-        "Docking margins",
         "Alignment grips",
-        "Sizing handles"
+        "Sizing handles",
+        "Border anchors",
+        "Docking margins"
       ],
       "opts": [
-        "Border anchors",
-        "Docking margins",
         "Alignment grips",
-        "Sizing handles"
+        "Sizing handles",
+        "Border anchors",
+        "Docking margins"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "In the Visual Studio Designer (Chapter 1), the eight small squares on a selected control's perimeter are called sizing handles.",
-      "explanation": "In the Visual Studio Designer (Chapter 1), the eight small squares on a selected control's perimeter are called sizing handles.",
-      "distractorRationale": "Options other than \"Sizing handles\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 1,
+      "ans": 1,
+      "exp": "In the Visual Studio Designer, the eight small squares on a selected control's perimeter are called sizing handles.",
+      "explanation": "In the Visual Studio Designer, the eight small squares on a selected control's perimeter are called sizing handles.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3496,22 +3496,22 @@
       "stem": "What standard Hungarian control prefix is prescribed for a TextBox control?",
       "code": "",
       "options": [
-        "txt",
+        "text",
         "tb",
-        "tBox",
-        "text"
+        "txt",
+        "tBox"
       ],
       "opts": [
-        "txt",
+        "text",
         "tb",
-        "tBox",
-        "text"
+        "txt",
+        "tBox"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "The official NWU prefix for TextBox controls is 'txt' (e.g. txtHours, txtPrice, txtSurname).",
       "explanation": "The official NWU prefix for TextBox controls is 'txt' (e.g. txtHours, txtPrice, txtSurname).",
-      "distractorRationale": "Options other than \"txt\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -3533,27 +3533,27 @@
       "difficulty": "Foundational",
       "marks": 2,
       "estimatedMinutes": 2,
-      "q": "When creating a traditional Windows Forms project in Visual Studio, why select 'Windows Forms App (.NET Framework)' (C#) rather than the non-Framework template?",
-      "title": "When creating a traditional Windows Forms project in Visual Studio, why select 'Windows Forms App (.NET Framework)' (C#) rather than the non-Framework template?",
-      "stem": "When creating a traditional Windows Forms project in Visual Studio, why select 'Windows Forms App (.NET Framework)' (C#) rather than the non-Framework template?",
+      "q": "In Visual Studio, what is the architectural difference between the 'Windows Forms App (.NET Framework)' project template and a Console App template when building a desktop utility?",
+      "title": "In Visual Studio, what is the architectural difference between the 'Windows Forms App (.NET Framework)' project template and a Console App template when building a desktop utility?",
+      "stem": "In Visual Studio, what is the architectural difference between the 'Windows Forms App (.NET Framework)' project template and a Console App template when building a desktop utility?",
       "code": "",
       "options": [
-        "The non-framework template targets .NET Core where the visual form designer behaves differently and is incompatible with the prescribed module grading environment",
-        ".NET Core does not allow creating buttons or picture boxes in Visual Studio",
-        "The (.NET Framework) template is written in Python, which is required for Test 1",
-        "Windows Forms App without .NET Framework cannot be saved to the desktop"
+        "Windows Forms App compiles C# directly without using any classes or methods, whereas Console App requires event handlers",
+        "Console App supports `Button`, `PictureBox`, and `GroupBox` controls on a visual canvas, whereas Windows Forms App only supports text files",
+        "Windows Forms App projects cannot declare `decimal` or `int` variables inside methods",
+        "Windows Forms App provides a visual Form Designer, Toolbox controls, and an event-driven message loop (`Application.Run`), whereas a Console App uses text-stream standard input/output (`Console.ReadLine`/`WriteLine`)"
       ],
       "opts": [
-        "The non-framework template targets .NET Core where the visual form designer behaves differently and is incompatible with the prescribed module grading environment",
-        ".NET Core does not allow creating buttons or picture boxes in Visual Studio",
-        "The (.NET Framework) template is written in Python, which is required for Test 1",
-        "Windows Forms App without .NET Framework cannot be saved to the desktop"
+        "Windows Forms App compiles C# directly without using any classes or methods, whereas Console App requires event handlers",
+        "Console App supports `Button`, `PictureBox`, and `GroupBox` controls on a visual canvas, whereas Windows Forms App only supports text files",
+        "Windows Forms App projects cannot declare `decimal` or `int` variables inside methods",
+        "Windows Forms App provides a visual Form Designer, Toolbox controls, and an event-driven message loop (`Application.Run`), whereas a Console App uses text-stream standard input/output (`Console.ReadLine`/`WriteLine`)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "The traditional .NET Framework Windows Forms template uses the classic in-process Windows Forms designer, whereas the .NET (Core) template uses an out-of-process designer with different project structures.",
-      "explanation": "The traditional .NET Framework Windows Forms template uses the classic in-process Windows Forms designer, whereas the .NET (Core) template uses an out-of-process designer with different project structures.",
-      "distractorRationale": "Options other than \"The non-framework template targets .NET Core where the visua\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 3,
+      "ans": 3,
+      "exp": "A Windows Forms project boots an event-driven GUI window via `Application.Run(new Form1())` with visual controls and Designer code, whereas a Console project runs sequentially in a terminal window.",
+      "explanation": "A Windows Forms project boots an event-driven GUI window via `Application.Run(new Form1())` with visual controls and Designer code, whereas a Console project runs sequentially in a terminal window.",
+      "distractorRationale": "Windows Forms still uses standard C# classes, methods, and primitive types; visual controls belong to `System.Windows.Forms`, not console streams.",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3580,22 +3580,22 @@
       "stem": "In the Visual Studio 'Configure your new project' dialog, why is it recommended to check 'Place solution and project in the same directory'?",
       "code": "",
       "options": [
-        "It enables automatic hardware acceleration for graphics",
         "It prevents an extra nested folder level, keeping the .sln and project files together for clean zipping and submission",
+        "It enables automatic hardware acceleration for graphics",
         "It makes the application run twice as fast on laboratory workstations",
         "It automatically renames all controls using Hungarian notation"
       ],
       "opts": [
-        "It enables automatic hardware acceleration for graphics",
         "It prevents an extra nested folder level, keeping the .sln and project files together for clean zipping and submission",
+        "It enables automatic hardware acceleration for graphics",
         "It makes the application run twice as fast on laboratory workstations",
         "It automatically renames all controls using Hungarian notation"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Checking this box places the solution file (.sln) and project contents into a single folder (e.g. 12345678_Prac1), making it simple to zip and preventing missing project file errors during grading.",
       "explanation": "Checking this box places the solution file (.sln) and project contents into a single folder (e.g. 12345678_Prac1), making it simple to zip and preventing missing project file errors during grading.",
-      "distractorRationale": "Options other than \"It prevents an extra nested folder level, keeping the .sln a\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3622,22 +3622,22 @@
       "stem": "When four PictureBoxes (Off.png, Red.png, Amber.png, Green.png) are stacked to represent a single traffic signal, what designer technique ensures the traffic light does not visibly jump when switching colours?",
       "code": "",
       "options": [
-        "Setting the opacity of the form to 50%",
         "Placing them on four separate tabs in a TabControl",
         "Setting identical pixel values for Location and Size in the Properties window rather than dragging by mouse",
-        "Calling Application.Restart() each time a button is clicked"
+        "Calling Application.Restart() each time a button is clicked",
+        "Setting the opacity of the form to 50%"
       ],
       "opts": [
-        "Setting the opacity of the form to 50%",
         "Placing them on four separate tabs in a TabControl",
         "Setting identical pixel values for Location and Size in the Properties window rather than dragging by mouse",
-        "Calling Application.Restart() each time a button is clicked"
+        "Calling Application.Restart() each time a button is clicked",
+        "Setting the opacity of the form to 50%"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "Dragging controls by mouse cannot reliably align them to the exact pixel. Typing the exact same Location (X, Y) and Size (Width, Height) in the Properties window guarantees seamless stacking.",
       "explanation": "Dragging controls by mouse cannot reliably align them to the exact pixel. Typing the exact same Location (X, Y) and Size (Width, Height) in the Properties window guarantees seamless stacking.",
-      "distractorRationale": "Options other than \"Setting identical pixel values for Location and Size in the \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
@@ -3665,20 +3665,20 @@
       "options": [
         "Delete the top PictureBox, modify the lower one, and then undo",
         "Hold Shift while clicking the Windows desktop wallpaper",
-        "Close Visual Studio and edit the .csproj file in Notepad",
-        "Use the drop-down control selector at the top of the Properties window"
+        "Use the drop-down control selector at the top of the Properties window",
+        "Close Visual Studio and edit the .csproj file in Notepad"
       ],
       "opts": [
         "Delete the top PictureBox, modify the lower one, and then undo",
         "Hold Shift while clicking the Windows desktop wallpaper",
-        "Close Visual Studio and edit the .csproj file in Notepad",
-        "Use the drop-down control selector at the top of the Properties window"
+        "Use the drop-down control selector at the top of the Properties window",
+        "Close Visual Studio and edit the .csproj file in Notepad"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "The drop-down object list at the top of the Visual Studio Properties window lists every control on the form by name, allowing instant selection of any layered or hidden control.",
       "explanation": "The drop-down object list at the top of the Visual Studio Properties window lists every control on the form by name, allowing instant selection of any layered or hidden control.",
-      "distractorRationale": "Options other than \"Use the drop-down control selector at the top of the Propert\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
@@ -3704,22 +3704,22 @@
       "stem": "Which PictureBox SizeMode property setting ensures graphics scale proportionally to fit the control without being cropped or distorted?",
       "code": "",
       "options": [
-        "Zoom",
-        "Normal",
         "AutoSize",
-        "StretchImage"
+        "StretchImage",
+        "Normal",
+        "Zoom"
       ],
       "opts": [
-        "Zoom",
-        "Normal",
         "AutoSize",
-        "StretchImage"
+        "StretchImage",
+        "Normal",
+        "Zoom"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "PictureBoxSizeMode.Zoom scales the whole image up or down to fit the control while maintaining its correct aspect ratio, preventing a squashed or cropped traffic light.",
       "explanation": "PictureBoxSizeMode.Zoom scales the whole image up or down to fit the control while maintaining its correct aspect ratio, preventing a squashed or cropped traffic light.",
-      "distractorRationale": "Options other than \"Zoom\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
@@ -3745,22 +3745,22 @@
       "stem": "Why does setting a PictureBox's SizeMode to 'StretchImage' often distort the displayed image?",
       "code": "",
       "options": [
-        "It causes a runtime crash if the image is in PNG format",
         "It forces the image to distort its aspect ratio to match the box dimensions, resulting in a squashed or stretched graphic",
         "It hides the PictureBox behind the Form background",
-        "It converts the image into grayscale"
+        "It converts the image into grayscale",
+        "It causes a runtime crash if the image is in PNG format"
       ],
       "opts": [
-        "It causes a runtime crash if the image is in PNG format",
         "It forces the image to distort its aspect ratio to match the box dimensions, resulting in a squashed or stretched graphic",
         "It hides the PictureBox behind the Form background",
-        "It converts the image into grayscale"
+        "It converts the image into grayscale",
+        "It causes a runtime crash if the image is in PNG format"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "StretchImage stretches the width and height independently to fill the control bounds, distorting the original image proportions unless the control has the exact same aspect ratio.",
       "explanation": "StretchImage stretches the width and height independently to fill the control bounds, distorting the original image proportions unless the control has the exact same aspect ratio.",
-      "distractorRationale": "Options other than \"It forces the image to distort its aspect ratio to match the\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
@@ -3786,22 +3786,22 @@
       "stem": "When a traffic light form launches, the dark traffic light (Off.png) must be visible and the other three lamps (picRed, picAmber, picGreen) hidden. How should this be configured at design time?",
       "code": "",
       "options": [
-        "Delete picRed, picAmber, and picGreen from the project until needed",
-        "Set Form1.Enabled to false",
+        "Set the Opacity of the three lamps to 99%",
         "Set picRed.Visible, picAmber.Visible, and picGreen.Visible to false in the Properties window",
-        "Set the Opacity of the three lamps to 99%"
+        "Delete picRed, picAmber, and picGreen from the project until needed",
+        "Set Form1.Enabled to false"
       ],
       "opts": [
-        "Delete picRed, picAmber, and picGreen from the project until needed",
-        "Set Form1.Enabled to false",
+        "Set the Opacity of the three lamps to 99%",
         "Set picRed.Visible, picAmber.Visible, and picGreen.Visible to false in the Properties window",
-        "Set the Opacity of the three lamps to 99%"
+        "Delete picRed, picAmber, and picGreen from the project until needed",
+        "Set Form1.Enabled to false"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "Setting the Visible property to false in the Properties window ensures the red, amber, and green PictureBoxes are hidden when the form initializes, showing only the off lamp.",
       "explanation": "Setting the Visible property to false in the Properties window ensures the red, amber, and green PictureBoxes are hidden when the form initializes, showing only the off lamp.",
-      "distractorRationale": "Options other than \"Set picRed.Visible, picAmber.Visible, and picGreen.Visible t\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
@@ -3827,22 +3827,22 @@
       "stem": "If a student accidentally double-clicks the Form canvas instead of a Button, creating 'private void Form1_Load(object sender, EventArgs e)', what happens if they simply delete that method from Form1.cs?",
       "code": "",
       "options": [
-        "Visual Studio automatically replaces it with a button click handler",
         "The Form permanently switches to full-screen mode",
         "Nothing happens; Visual Studio silently cleans up the reference",
-        "The project fails to build because Form1.Designer.cs still contains an event hook referencing the deleted method"
+        "The project fails to build because Form1.Designer.cs still contains an event hook referencing the deleted method",
+        "Visual Studio automatically replaces it with a button click handler"
       ],
       "opts": [
-        "Visual Studio automatically replaces it with a button click handler",
         "The Form permanently switches to full-screen mode",
         "Nothing happens; Visual Studio silently cleans up the reference",
-        "The project fails to build because Form1.Designer.cs still contains an event hook referencing the deleted method"
+        "The project fails to build because Form1.Designer.cs still contains an event hook referencing the deleted method",
+        "Visual Studio automatically replaces it with a button click handler"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "Double-clicking adds an event handler in Form1.cs and wires it up in Form1.Designer.cs ('this.Load += ...'). Deleting the method in Form1.cs leaves a broken reference in the designer, causing compiler errors.",
       "explanation": "Double-clicking adds an event handler in Form1.cs and wires it up in Form1.Designer.cs ('this.Load += ...'). Deleting the method in Form1.cs leaves a broken reference in the designer, causing compiler errors.",
-      "distractorRationale": "Options other than \"The project fails to build because Form1.Designer.cs still c\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -3869,22 +3869,22 @@
       "stem": "What is the recommended student response when an accidental Form1_Load method is scaffolded in Form1.cs?",
       "code": "",
       "options": [
-        "Either leave the empty method in Form1.cs (which is harmless) or clear the Load event in the Properties window Events tab before deleting the code",
+        "Rename Form1.cs to Form2.cs",
         "Restart Windows immediately",
         "Change the project language to Visual Basic",
-        "Rename Form1.cs to Form2.cs"
+        "Either leave the empty method in Form1.cs (which is harmless) or clear the Load event in the Properties window Events tab before deleting the code"
       ],
       "opts": [
-        "Either leave the empty method in Form1.cs (which is harmless) or clear the Load event in the Properties window Events tab before deleting the code",
+        "Rename Form1.cs to Form2.cs",
         "Restart Windows immediately",
         "Change the project language to Visual Basic",
-        "Rename Form1.cs to Form2.cs"
+        "Either leave the empty method in Form1.cs (which is harmless) or clear the Load event in the Properties window Events tab before deleting the code"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Leaving an empty event handler method does no harm and keeps the build intact. Alternatively, remove the wireup from the Properties window Events tab first.",
       "explanation": "Leaving an empty event handler method does no harm and keeps the build intact. Alternatively, remove the wireup from the Properties window Events tab first.",
-      "distractorRationale": "Options other than \"Either leave the empty method in Form1.cs (which is harmless\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3924,9 +3924,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "The .NET Framework is Microsoft's collection of classes and runtime environment upon which Visual C# Windows Forms applications are built and executed (Chapter 1).",
-      "explanation": "The .NET Framework is Microsoft's collection of classes and runtime environment upon which Visual C# Windows Forms applications are built and executed (Chapter 1).",
-      "distractorRationale": "Options other than \".NET Framework\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "The .NET Framework is Microsoft's collection of classes and runtime environment upon which Visual C# Windows Forms applications are built and executed.",
+      "explanation": "The .NET Framework is Microsoft's collection of classes and runtime environment upon which Visual C# Windows Forms applications are built and executed.",
+      "distractorRationale": "",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -3953,22 +3953,22 @@
       "stem": "Which two Form properties ensure a window has a fixed size that the user cannot resize or maximize?",
       "code": "",
       "options": [
-        "WindowState = Minimized and ControlBox = false",
-        "AutoSize = true and AutoSizeMode = GrowOnly",
+        "Locked = true and ShowIcon = false",
         "FormBorderStyle = FixedSingle (or FixedDialog) and MaximizeBox = false",
-        "Locked = true and ShowIcon = false"
+        "WindowState = Minimized and ControlBox = false",
+        "AutoSize = true and AutoSizeMode = GrowOnly"
       ],
       "opts": [
-        "WindowState = Minimized and ControlBox = false",
-        "AutoSize = true and AutoSizeMode = GrowOnly",
+        "Locked = true and ShowIcon = false",
         "FormBorderStyle = FixedSingle (or FixedDialog) and MaximizeBox = false",
-        "Locked = true and ShowIcon = false"
+        "WindowState = Minimized and ControlBox = false",
+        "AutoSize = true and AutoSizeMode = GrowOnly"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "Setting FormBorderStyle to FixedSingle prevents border dragging, and setting MaximizeBox to false disables the maximize button on the title bar.",
       "explanation": "Setting FormBorderStyle to FixedSingle prevents border dragging, and setting MaximizeBox to false disables the maximize button on the title bar.",
-      "distractorRationale": "Options other than \"FormBorderStyle = FixedSingle (or FixedDialog) and MaximizeB\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -3995,22 +3995,22 @@
       "stem": "Which Form property changes the text displayed in the application's top title bar from 'Form1' to 'Racing Light Trainer'?",
       "code": "",
       "options": [
-        "Name",
-        "Title",
         "Caption",
-        "Text"
+        "Name",
+        "Text",
+        "Title"
       ],
       "opts": [
-        "Name",
-        "Title",
         "Caption",
-        "Text"
+        "Name",
+        "Text",
+        "Title"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "In Windows Forms, the 'Text' property of the Form controls the string rendered in the title bar.",
       "explanation": "In Windows Forms, the 'Text' property of the Form controls the string rendered in the title bar.",
-      "distractorRationale": "Options other than \"Text\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4037,22 +4037,22 @@
       "stem": "Under standard Hungarian naming conventions, which identifier is properly named for a Button that prompts a driver to get ready?",
       "code": "",
       "options": [
-        "btnReady",
-        "Button_Ready",
         "ReadyButton",
-        "ready_btn"
+        "ready_btn",
+        "Button_Ready",
+        "btnReady"
       ],
       "opts": [
-        "btnReady",
-        "Button_Ready",
         "ReadyButton",
-        "ready_btn"
+        "ready_btn",
+        "Button_Ready",
+        "btnReady"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "NWU CMPG122 standards require a 3-letter lowercase prefix indicating control type ('btn') followed by a descriptive PascalCase name ('Ready').",
       "explanation": "NWU CMPG122 standards require a 3-letter lowercase prefix indicating control type ('btn') followed by a descriptive PascalCase name ('Ready').",
-      "distractorRationale": "Options other than \"btnReady\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4079,22 +4079,22 @@
       "stem": "Which of the following identifier names is ILLEGAL under C# lexical rules?",
       "code": "",
       "options": [
-        "picRedLamp",
         "3rdLight",
-        "_tempValue",
-        "lblResult"
+        "lblResult",
+        "picRedLamp",
+        "_tempValue"
       ],
       "opts": [
-        "picRedLamp",
         "3rdLight",
-        "_tempValue",
-        "lblResult"
+        "lblResult",
+        "picRedLamp",
+        "_tempValue"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "C# identifiers must begin with an alphabetic character or underscore; they cannot start with a numeric digit (e.g. '3rdLight').",
       "explanation": "C# identifiers must begin with an alphabetic character or underscore; they cannot start with a numeric digit (e.g. '3rdLight').",
-      "distractorRationale": "Options other than \"3rdLight\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -4121,22 +4121,22 @@
       "stem": "How do you create a keyboard access key (mnemonic) for the Stop button so the user can press Alt+S to activate it?",
       "code": "",
       "options": [
-        "Set the button's KeyPreview property to 'S'",
         "Set the button's AccessKey property to 'Alt+S'",
         "Set the button's Text property to '&Stop'",
-        "Prefix the button name with 's_'"
+        "Prefix the button name with 's_'",
+        "Set the button's KeyPreview property to 'S'"
       ],
       "opts": [
-        "Set the button's KeyPreview property to 'S'",
         "Set the button's AccessKey property to 'Alt+S'",
         "Set the button's Text property to '&Stop'",
-        "Prefix the button name with 's_'"
+        "Prefix the button name with 's_'",
+        "Set the button's KeyPreview property to 'S'"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "In Windows Forms, placing an ampersand ('&') immediately before a character in a Button's Text property (e.g. '&Stop') creates a keyboard mnemonic (Alt+S).",
       "explanation": "In Windows Forms, placing an ampersand ('&') immediately before a character in a Button's Text property (e.g. '&Stop') creates a keyboard mnemonic (Alt+S).",
-      "distractorRationale": "Options other than \"Set the button's Text property to '&Stop'\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -4163,22 +4163,22 @@
       "stem": "In Visual C# Windows Forms, which control property determines the numerical order in which controls receive keyboard focus when the user presses the Tab key?",
       "code": "",
       "options": [
-        "TabStop",
-        "TabIndex",
         "Name (Control Name)",
-        "FocusOrder"
+        "FocusOrder",
+        "TabIndex",
+        "TabStop"
       ],
       "opts": [
-        "TabStop",
-        "TabIndex",
         "Name (Control Name)",
-        "FocusOrder"
+        "FocusOrder",
+        "TabIndex",
+        "TabStop"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "The TabIndex property stores an integer specifying the order in which controls receive focus upon pressing Tab. The TabStop boolean property determines whether the control can receive focus via Tab at all (Chapter 2 & 3).",
-      "explanation": "The TabIndex property stores an integer specifying the order in which controls receive focus upon pressing Tab. The TabStop boolean property determines whether the control can receive focus via Tab at all (Chapter 2 & 3).",
-      "distractorRationale": "Options other than \"TabIndex\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 2,
+      "ans": 2,
+      "exp": "The TabIndex property stores an integer specifying the order in which controls receive focus upon pressing Tab. The TabStop boolean property determines whether the control can receive focus via Tab at all.",
+      "explanation": "The TabIndex property stores an integer specifying the order in which controls receive focus upon pressing Tab. The TabStop boolean property determines whether the control can receive focus via Tab at all.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4205,22 +4205,22 @@
       "stem": "Why does pressing the Tab key on a Windows Form never place keyboard focus onto a Label control?",
       "code": "",
       "options": [
-        "Labels have their TabStop property set to false by default because they do not accept keyboard input",
         "Labels are not drawn by the Windows operating system",
         "Labels do not have a TabIndex property",
-        "Labels automatically close the active form when focused"
+        "Labels automatically close the active form when focused",
+        "Labels have their TabStop property set to false by default because they do not accept keyboard input"
       ],
       "opts": [
-        "Labels have their TabStop property set to false by default because they do not accept keyboard input",
         "Labels are not drawn by the Windows operating system",
         "Labels do not have a TabIndex property",
-        "Labels automatically close the active form when focused"
+        "Labels automatically close the active form when focused",
+        "Labels have their TabStop property set to false by default because they do not accept keyboard input"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Labels are purely informational display controls; their TabStop property is false by default, so Tab navigation skips them.",
       "explanation": "Labels are purely informational display controls; their TabStop property is false by default, so Tab navigation skips them.",
-      "distractorRationale": "Options other than \"Labels have their TabStop property set to false by default b\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -4247,22 +4247,22 @@
       "stem": "When a Label (lblInstruction) displays strings of differing lengths ('STOP', 'GET READY', 'GO'), why should AutoSize be set to false and TextAlign to MiddleCenter?",
       "code": "",
       "options": [
-        "To allow the label to act as a button",
         "To prevent the label boundary from shifting unpredictably and keep each instruction centered in its display area",
-        "To enable multi-line text input from the keyboard",
-        "To automatically translate text into Afrikaans"
+        "To automatically translate text into Afrikaans",
+        "To allow the label to act as a button",
+        "To enable multi-line text input from the keyboard"
       ],
       "opts": [
-        "To allow the label to act as a button",
         "To prevent the label boundary from shifting unpredictably and keep each instruction centered in its display area",
-        "To enable multi-line text input from the keyboard",
-        "To automatically translate text into Afrikaans"
+        "To automatically translate text into Afrikaans",
+        "To allow the label to act as a button",
+        "To enable multi-line text input from the keyboard"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "With AutoSize set to false, the label has fixed dimensions. Combined with TextAlign = MiddleCenter, messages of varying character length remain perfectly centered without resizing the label.",
       "explanation": "With AutoSize set to false, the label has fixed dimensions. Combined with TextAlign = MiddleCenter, messages of varying character length remain perfectly centered without resizing the label.",
-      "distractorRationale": "Options other than \"To prevent the label boundary from shifting unpredictably an\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4289,22 +4289,22 @@
       "stem": "On a traffic light form with picRed, picAmber, picGreen, picDark, and lblInstruction, what code block should execute inside btnStop_Click when the user clicks Stop?",
       "code": "",
       "options": [
-        "picRed.Visible = false; picAmber.Visible = true; lblInstruction.Text = \"GO\";",
         "lblInstruction.Text = \"STOP\"; this.Close();",
         "picRed.Visible = true; picAmber.Visible = false; picGreen.Visible = false; picDark.Visible = false; lblInstruction.Text = \"STOP\";",
-        "picRed.Image = picDark.Image; lblInstruction.Visible = false;"
+        "picRed.Image = picDark.Image; lblInstruction.Visible = false;",
+        "picRed.Visible = false; picAmber.Visible = true; lblInstruction.Text = \"GO\";"
       ],
       "opts": [
-        "picRed.Visible = false; picAmber.Visible = true; lblInstruction.Text = \"GO\";",
         "lblInstruction.Text = \"STOP\"; this.Close();",
         "picRed.Visible = true; picAmber.Visible = false; picGreen.Visible = false; picDark.Visible = false; lblInstruction.Text = \"STOP\";",
-        "picRed.Image = picDark.Image; lblInstruction.Visible = false;"
+        "picRed.Image = picDark.Image; lblInstruction.Visible = false;",
+        "picRed.Visible = false; picAmber.Visible = true; lblInstruction.Text = \"GO\";"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "Clicking Stop must show only the red light, hide the amber, green, and dark lamps, and update the instruction label text to 'STOP'.",
       "explanation": "Clicking Stop must show only the red light, hide the amber, green, and dark lamps, and update the instruction label text to 'STOP'.",
-      "distractorRationale": "Options other than \"picRed.Visible = true; picAmber.Visible = false; picGreen.Vi\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4333,20 +4333,20 @@
       "options": [
         "To satisfy a compiler requirement for closing forms",
         "Because red buttons process code faster",
-        "To make the button text invisible",
-        "To provide an unmistakable visual warning that clicking this button terminates the current session"
+        "To provide an unmistakable visual warning that clicking this button terminates the current session",
+        "To make the button text invisible"
       ],
       "opts": [
         "To satisfy a compiler requirement for closing forms",
         "Because red buttons process code faster",
-        "To make the button text invisible",
-        "To provide an unmistakable visual warning that clicking this button terminates the current session"
+        "To provide an unmistakable visual warning that clicking this button terminates the current session",
+        "To make the button text invisible"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "In GUI design, high-consequence actions like exiting or deleting are highlighted in warning colors (such as red) to provide clear visual affordance and prevent accidental triggering.",
       "explanation": "In GUI design, high-consequence actions like exiting or deleting are highlighted in warning colors (such as red) to provide clear visual affordance and prevent accidental triggering.",
-      "distractorRationale": "Options other than \"To provide an unmistakable visual warning that clicking this\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4373,22 +4373,22 @@
       "stem": "What is the primary role of the InitializeComponent() method called inside the Form1 constructor?",
       "code": "",
       "options": [
-        "It runs the auto-generated code in Form1.Designer.cs that instantiates controls, sets properties, and attaches event handlers",
+        "It shuts down the Visual Studio IDE",
         "It connects to the remote assessment grading server",
         "It formats all numbers on the form as South African Rand",
-        "It shuts down the Visual Studio IDE"
+        "It runs the auto-generated code in Form1.Designer.cs that instantiates controls, sets properties, and attaches event handlers"
       ],
       "opts": [
-        "It runs the auto-generated code in Form1.Designer.cs that instantiates controls, sets properties, and attaches event handlers",
+        "It shuts down the Visual Studio IDE",
         "It connects to the remote assessment grading server",
         "It formats all numbers on the form as South African Rand",
-        "It shuts down the Visual Studio IDE"
+        "It runs the auto-generated code in Form1.Designer.cs that instantiates controls, sets properties, and attaches event handlers"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "InitializeComponent() is auto-generated by Visual Studio in Form1.Designer.cs to create controls, assign their initial properties, and bind event delegates.",
       "explanation": "InitializeComponent() is auto-generated by Visual Studio in Form1.Designer.cs to create controls, assign their initial properties, and bind event delegates.",
-      "distractorRationale": "Options other than \"It runs the auto-generated code in Form1.Designer.cs that in\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4415,22 +4415,22 @@
       "stem": "Why does Visual C# use the 'partial' keyword when defining 'public partial class Form1 : Form'?",
       "code": "",
       "options": [
-        "It indicates that the class is only partially compiled",
         "It allows the class implementation to be split across Form1.cs (user code) and Form1.Designer.cs (designer plumbing)",
         "It restricts the class to single-threaded execution",
-        "It forces all methods in the class to return void"
+        "It forces all methods in the class to return void",
+        "It indicates that the class is only partially compiled"
       ],
       "opts": [
-        "It indicates that the class is only partially compiled",
         "It allows the class implementation to be split across Form1.cs (user code) and Form1.Designer.cs (designer plumbing)",
         "It restricts the class to single-threaded execution",
-        "It forces all methods in the class to return void"
+        "It forces all methods in the class to return void",
+        "It indicates that the class is only partially compiled"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "The 'partial' keyword allows a single C# class definition to be partitioned across multiple source files, keeping designer-generated plumbing separate from human-written code.",
       "explanation": "The 'partial' keyword allows a single C# class definition to be partitioned across multiple source files, keeping designer-generated plumbing separate from human-written code.",
-      "distractorRationale": "Options other than \"It allows the class implementation to be split across Form1.\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4458,21 +4458,21 @@
       "code": "",
       "options": [
         "CS0029: Cannot implicitly convert type 'void' to 'method'",
-        "CS1002: ; expected",
         "CS0111: Type 'MainForm' already defines a member called 'btnClear_Click' with the same parameter types",
+        "CS1002: ; expected",
         "The code compiles cleanly and executes both handlers sequentially upon clicking"
       ],
       "opts": [
         "CS0029: Cannot implicitly convert type 'void' to 'method'",
-        "CS1002: ; expected",
         "CS0111: Type 'MainForm' already defines a member called 'btnClear_Click' with the same parameter types",
+        "CS1002: ; expected",
         "The code compiles cleanly and executes both handlers sequentially upon clicking"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "In C#, two methods in the same class cannot share the identical identifier and parameter list (CS0111). The exit button handler must have a unique identifier, such as btnExit_Click.",
       "explanation": "In C#, two methods in the same class cannot share the identical identifier and parameter list (CS0111). The exit button handler must have a unique identifier, such as btnExit_Click.",
-      "distractorRationale": "Options other than \"CS0111: Type 'MainForm' already defines a member called 'btn\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4499,22 +4499,22 @@
       "stem": "In the event handler signature 'private void btnGo_Click(object sender, EventArgs e)', what does the 'sender' parameter hold?",
       "code": "",
       "options": [
-        "The email address of the current user",
         "The time in milliseconds since the form loaded",
         "The return value of the previous calculation",
-        "A reference to the control that raised the event (in this case, btnGo)"
+        "A reference to the control that raised the event (in this case, btnGo)",
+        "The email address of the current user"
       ],
       "opts": [
-        "The email address of the current user",
         "The time in milliseconds since the form loaded",
         "The return value of the previous calculation",
-        "A reference to the control that raised the event (in this case, btnGo)"
+        "A reference to the control that raised the event (in this case, btnGo)",
+        "The email address of the current user"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "The 'sender' parameter contains a reference to the specific object/control that triggered the event notification.",
       "explanation": "The 'sender' parameter contains a reference to the specific object/control that triggered the event notification.",
-      "distractorRationale": "Options other than \"A reference to the control that raised the event (in this ca\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -4541,22 +4541,22 @@
       "stem": "Which file in a standard C# Windows Forms project contains the static Main() method that serves as the execution starting point?",
       "code": "",
       "options": [
-        "Program.cs",
         "Form1.cs",
         "Form1.Designer.cs",
-        "App.config"
+        "App.config",
+        "Program.cs"
       ],
       "opts": [
-        "Program.cs",
         "Form1.cs",
         "Form1.Designer.cs",
-        "App.config"
+        "App.config",
+        "Program.cs"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Program.cs contains the static void Main() entry point method that calls Application.Run(new Form1()).",
       "explanation": "Program.cs contains the static void Main() entry point method that calls Application.Run(new Form1()).",
-      "distractorRationale": "Options other than \"Program.cs\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4583,22 +4583,22 @@
       "stem": "Which keyboard shortcut in Visual Studio executes 'Save All', ensuring all modified code files and designer changes are saved before submission?",
       "code": "",
       "options": [
-        "Ctrl + S",
         "Ctrl + Shift + S",
-        "Alt + F4",
-        "F5"
+        "F5",
+        "Ctrl + S",
+        "Alt + F4"
       ],
       "opts": [
-        "Ctrl + S",
         "Ctrl + Shift + S",
-        "Alt + F4",
-        "F5"
+        "F5",
+        "Ctrl + S",
+        "Alt + F4"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Ctrl+Shift+S triggers 'Save All', saving all modified code, designer, and project files simultaneously, whereas Ctrl+S saves only the currently active document.",
       "explanation": "Ctrl+Shift+S triggers 'Save All', saving all modified code, designer, and project files simultaneously, whereas Ctrl+S saves only the currently active document.",
-      "distractorRationale": "Options other than \"Ctrl + Shift + S\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4625,22 +4625,22 @@
       "stem": "When a C# project is compiled, what intermediate format is produced before the CLR converts it into machine code?",
       "code": "",
       "options": [
-        "Native x86 Assembly",
         "Raw Java Bytecode",
         "Common Intermediate Language (CIL/MSIL)",
-        "Pure ASCII text"
+        "Pure ASCII text",
+        "Native x86 Assembly"
       ],
       "opts": [
-        "Native x86 Assembly",
         "Raw Java Bytecode",
         "Common Intermediate Language (CIL/MSIL)",
-        "Pure ASCII text"
+        "Pure ASCII text",
+        "Native x86 Assembly"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "The C# compiler compiles source code into Common Intermediate Language (CIL/MSIL), which the Common Language Runtime (CLR) JIT compiler translates to native machine code at runtime.",
       "explanation": "The C# compiler compiles source code into Common Intermediate Language (CIL/MSIL), which the Common Language Runtime (CLR) JIT compiler translates to native machine code at runtime.",
-      "distractorRationale": "Options other than \"Common Intermediate Language (CIL/MSIL)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4667,22 +4667,22 @@
       "stem": "In Visual C# object-oriented GUI programming, objects in a program have ________ (which represent data or attributes stored by the object) and ________ (which represent the operations, actions, or behaviors it can perform).",
       "code": "",
       "options": [
-        "data / propertys",
-        "attributes / constructors",
         "events / delegates",
-        "properties / methods"
+        "data / propertys",
+        "properties / methods",
+        "attributes / constructors"
       ],
       "opts": [
-        "data / propertys",
-        "attributes / constructors",
         "events / delegates",
-        "properties / methods"
+        "data / propertys",
+        "properties / methods",
+        "attributes / constructors"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "In object-oriented programming, objects encapsulate properties (which store data about the object) and methods (which define actions or operations the object can perform).",
       "explanation": "In object-oriented programming, objects encapsulate properties (which store data about the object) and methods (which define actions or operations the object can perform).",
-      "distractorRationale": "Options other than \"properties / methods\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4709,22 +4709,22 @@
       "stem": "When a syntax error is detected in the Visual Studio code editor as you type C# statements, how is the erroneous code visually flagged before the project is compiled?",
       "code": "",
       "options": [
-        "Underlined with a red jagged (squiggly) line",
-        "Underlined with a solid straight red line",
         "Underlined with a green wavy line",
-        "Highlighted with a yellow background banner"
+        "Highlighted with a yellow background banner",
+        "Underlined with a solid straight red line",
+        "Underlined with a red jagged (squiggly) line"
       ],
       "opts": [
-        "Underlined with a red jagged (squiggly) line",
-        "Underlined with a solid straight red line",
         "Underlined with a green wavy line",
-        "Highlighted with a yellow background banner"
+        "Highlighted with a yellow background banner",
+        "Underlined with a solid straight red line",
+        "Underlined with a red jagged (squiggly) line"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "Visual Studio highlights syntax and grammatical errors dynamically in the code editor with a red jagged (squiggly) line, indicating that compilation will fail unless resolved (Chapter 1).",
-      "explanation": "Visual Studio highlights syntax and grammatical errors dynamically in the code editor with a red jagged (squiggly) line, indicating that compilation will fail unless resolved (Chapter 1).",
-      "distractorRationale": "Options other than \"Underlined with a red jagged (squiggly) line\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Visual Studio highlights syntax and grammatical errors dynamically in the code editor with a red jagged (squiggly) line, indicating that compilation will fail unless resolved.",
+      "explanation": "Visual Studio highlights syntax and grammatical errors dynamically in the code editor with a red jagged (squiggly) line, indicating that compilation will fail unless resolved.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4751,22 +4751,22 @@
       "stem": "In the Visual Studio Designer, which tab in the Toolbox contains essential GUI elements like Button, CheckBox, Label, ListBox, and TextBox?",
       "code": "",
       "options": [
-        "Printing",
         "Common Controls",
-        "Data Connections",
-        "WPF Interop"
+        "WPF Interop",
+        "Printing",
+        "Data Connections"
       ],
       "opts": [
-        "Printing",
         "Common Controls",
-        "Data Connections",
-        "WPF Interop"
+        "WPF Interop",
+        "Printing",
+        "Data Connections"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "The 'Common Controls' category in the Visual Studio Toolbox houses the most frequently used Windows Forms controls.",
       "explanation": "The 'Common Controls' category in the Visual Studio Toolbox houses the most frequently used Windows Forms controls.",
-      "distractorRationale": "Options other than \"Common Controls\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -4794,21 +4794,21 @@
       "code": "",
       "options": [
         "BackColor",
-        "TextColor",
         "ForeColor",
+        "TextColor",
         "FontColor"
       ],
       "opts": [
         "BackColor",
-        "TextColor",
         "ForeColor",
+        "TextColor",
         "FontColor"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "ForeColor controls the text/foreground color of a control, whereas BackColor controls its background fill color.",
       "explanation": "ForeColor controls the text/foreground color of a control, whereas BackColor controls its background fill color.",
-      "distractorRationale": "Options other than \"ForeColor\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -4835,22 +4835,22 @@
       "stem": "What is the consequence of leaving controls with default Visual Studio names like 'button1' or 'pictureBox3' instead of using descriptive Hungarian identifiers?",
       "code": "",
       "options": [
-        "The program crashes on launch",
         "Visual Studio refuses to save the files",
         "The project is automatically converted to Visual Basic",
-        "Code readability and maintainability degrade, violating Hungarian naming conventions and code standards"
+        "Code readability and maintainability degrade, violating Hungarian naming conventions and code standards",
+        "The program crashes on launch"
       ],
       "opts": [
-        "The program crashes on launch",
         "Visual Studio refuses to save the files",
         "The project is automatically converted to Visual Basic",
-        "Code readability and maintainability degrade, violating Hungarian naming conventions and code standards"
+        "Code readability and maintainability degrade, violating Hungarian naming conventions and code standards",
+        "The program crashes on launch"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "Leaving default control names obscures control purpose in event handlers and violates Hungarian naming standards.",
       "explanation": "Leaving default control names obscures control purpose in event handlers and violates Hungarian naming standards.",
-      "distractorRationale": "Options other than \"Code readability and maintainability degrade, violating Hung\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
@@ -4876,22 +4876,22 @@
       "stem": "Which C# statement displays a modal message box with a caption and message string to inform the user?",
       "code": "",
       "options": [
-        "MessageBox.Show(\"Operation complete.\", \"Notice\");",
+        "Window.Prompt(\"Notice\", \"Message\");",
         "Console.WriteLine(\"Message\");",
         "Form.Alert(\"Operation complete.\");",
-        "Window.Prompt(\"Notice\", \"Message\");"
+        "MessageBox.Show(\"Operation complete.\", \"Notice\");"
       ],
       "opts": [
-        "MessageBox.Show(\"Operation complete.\", \"Notice\");",
+        "Window.Prompt(\"Notice\", \"Message\");",
         "Console.WriteLine(\"Message\");",
         "Form.Alert(\"Operation complete.\");",
-        "Window.Prompt(\"Notice\", \"Message\");"
+        "MessageBox.Show(\"Operation complete.\", \"Notice\");"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "MessageBox.Show() is the standard method in Windows Forms to present modal pop-up messages.",
       "explanation": "MessageBox.Show() is the standard method in Windows Forms to present modal pop-up messages.",
-      "distractorRationale": "Options other than \"MessageBox.Show(\"Operation complete.\", \"Notice\");\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4918,22 +4918,22 @@
       "stem": "How does Shneiderman's 1st Golden Rule ('Strive for consistency') apply to control design across Windows Forms applications?",
       "code": "",
       "options": [
-        "Every form must be painted red",
         "All buttons on all forms should use identical font styles, standard button heights, and consistent Hungarian naming prefixes",
+        "Every form must be painted red",
         "The user must be forced to use only keyboard arrows",
         "Every control must have a random background color"
       ],
       "opts": [
-        "Every form must be painted red",
         "All buttons on all forms should use identical font styles, standard button heights, and consistent Hungarian naming prefixes",
+        "Every form must be painted red",
         "The user must be forced to use only keyboard arrows",
         "Every control must have a random background color"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Consistency in fonts, sizing, terminology, and naming reduces cognitive load and allows users to predict interface behavior.",
       "explanation": "Consistency in fonts, sizing, terminology, and naming reduces cognitive load and allows users to predict interface behavior.",
-      "distractorRationale": "Options other than \"All buttons on all forms should use identical font styles, s\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -4960,22 +4960,22 @@
       "stem": "How does Shneiderman's 3rd Golden Rule ('Offer informative feedback') apply when the user clicks 'btnGo' on a traffic signal form?",
       "code": "",
       "options": [
-        "The program should remain silent and wait for the user to guess if it worked",
         "The form minimizes to the Windows taskbar",
         "The interface immediately switches the green light on and displays 'GO' in bold text to acknowledge the click",
-        "A sound card diagnostic routine runs in the background"
+        "A sound card diagnostic routine runs in the background",
+        "The program should remain silent and wait for the user to guess if it worked"
       ],
       "opts": [
-        "The program should remain silent and wait for the user to guess if it worked",
         "The form minimizes to the Windows taskbar",
         "The interface immediately switches the green light on and displays 'GO' in bold text to acknowledge the click",
-        "A sound card diagnostic routine runs in the background"
+        "A sound card diagnostic routine runs in the background",
+        "The program should remain silent and wait for the user to guess if it worked"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "Informative feedback requires that every user action receives an immediate, clear visual confirmation (green lamp lit, instruction updated).",
       "explanation": "Informative feedback requires that every user action receives an immediate, clear visual confirmation (green lamp lit, instruction updated).",
-      "distractorRationale": "Options other than \"The interface immediately switches the green light on and di\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -5002,22 +5002,22 @@
       "stem": "What characterizes the event-driven programming paradigm utilized in C# Windows Forms?",
       "code": "",
       "options": [
-        "Code executes strictly from line 1 to the end without stopping",
-        "Programs can only be run once per day",
         "Only the CPU clock triggers code execution",
-        "The application waits in an event loop and executes specific handler routines in response to user actions like clicks and keystrokes"
+        "Code executes strictly from line 1 to the end without stopping",
+        "The application waits in an event loop and executes specific handler routines in response to user actions like clicks and keystrokes",
+        "Programs can only be run once per day"
       ],
       "opts": [
-        "Code executes strictly from line 1 to the end without stopping",
-        "Programs can only be run once per day",
         "Only the CPU clock triggers code execution",
-        "The application waits in an event loop and executes specific handler routines in response to user actions like clicks and keystrokes"
+        "Code executes strictly from line 1 to the end without stopping",
+        "The application waits in an event loop and executes specific handler routines in response to user actions like clicks and keystrokes",
+        "Programs can only be run once per day"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "In event-driven applications, user actions (button clicks, text inputs, form loading) fire events that trigger registered event handler methods.",
       "explanation": "In event-driven applications, user actions (button clicks, text inputs, form loading) fire events that trigger registered event handler methods.",
-      "distractorRationale": "Options other than \"The application waits in an event loop and executes specific\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -5044,22 +5044,22 @@
       "stem": "Which Form property configures the form to open centered in the middle of the user's computer screen at launch?",
       "code": "",
       "options": [
-        "StartPosition = FormStartPosition.CenterScreen;",
         "CenterToScreen = true;",
         "Location = Point(0, 0);",
-        "WindowState = FormWindowState.Normal;"
+        "WindowState = FormWindowState.Normal;",
+        "StartPosition = FormStartPosition.CenterScreen;"
       ],
       "opts": [
-        "StartPosition = FormStartPosition.CenterScreen;",
         "CenterToScreen = true;",
         "Location = Point(0, 0);",
-        "WindowState = FormWindowState.Normal;"
+        "WindowState = FormWindowState.Normal;",
+        "StartPosition = FormStartPosition.CenterScreen;"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Setting StartPosition to FormStartPosition.CenterScreen ensures the form appears neatly centered on the primary display upon opening.",
       "explanation": "Setting StartPosition to FormStartPosition.CenterScreen ensures the form appears neatly centered on the primary display upon opening.",
-      "distractorRationale": "Options other than \"StartPosition = FormStartPosition.CenterScreen;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5086,22 +5086,22 @@
       "stem": "A ________ is a debugging tool in Visual Studio that pauses program execution at a specific line of code, allowing the programmer to inspect variable values in the Locals window and step through execution.",
       "code": "",
       "options": [
-        "locals window",
         "breakpoint",
         "auto-complete",
-        "sizing handle"
+        "sizing handle",
+        "locals window"
       ],
       "opts": [
-        "locals window",
         "breakpoint",
         "auto-complete",
-        "sizing handle"
+        "sizing handle",
+        "locals window"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "A breakpoint (represented by a red dot in the left margin) pauses program execution right before the marked line executes, allowing the developer to examine memory and step through statements (Chapter 2 & 3).",
-      "explanation": "A breakpoint (represented by a red dot in the left margin) pauses program execution right before the marked line executes, allowing the developer to examine memory and step through statements (Chapter 2 & 3).",
-      "distractorRationale": "Options other than \"breakpoint\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 0,
+      "ans": 0,
+      "exp": "A breakpoint (represented by a red dot in the left margin) pauses program execution right before the marked line executes, allowing the developer to examine memory and step through statements.",
+      "explanation": "A breakpoint (represented by a red dot in the left margin) pauses program execution right before the marked line executes, allowing the developer to examine memory and step through statements.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5128,22 +5128,22 @@
       "stem": "Which property of a Button can be set to false in code to prevent the user from clicking it, rendering it visually grayed out?",
       "code": "",
       "options": [
-        "Visible",
-        "ReadOnly",
+        "Locked",
         "Enabled",
-        "Locked"
+        "Visible",
+        "ReadOnly"
       ],
       "opts": [
-        "Visible",
-        "ReadOnly",
+        "Locked",
         "Enabled",
-        "Locked"
+        "Visible",
+        "ReadOnly"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "Setting Enabled to false disables user interaction and renders the control in a grayed-out inactive state.",
       "explanation": "Setting Enabled to false disables user interaction and renders the control in a grayed-out inactive state.",
-      "distractorRationale": "Options other than \"Enabled\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -5170,22 +5170,22 @@
       "stem": "To execute code one statement at a time during a debugging session in Visual Studio, entering into any called methods, you use the ________ feature, activated by pressing the F11 key.",
       "code": "",
       "options": [
-        "line-by-line tracing",
         "auto-stepping",
+        "breakpoint jumping",
         "single-stepping",
-        "breakpoint jumping"
+        "line-by-line tracing"
       ],
       "opts": [
-        "line-by-line tracing",
         "auto-stepping",
+        "breakpoint jumping",
         "single-stepping",
-        "breakpoint jumping"
+        "line-by-line tracing"
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "Pressing F11 in Visual Studio activates 'single-stepping' (Step Into), which advances program execution one statement at a time, entering into called methods for granular inspection (Chapter 2 & 3).",
-      "explanation": "Pressing F11 in Visual Studio activates 'single-stepping' (Step Into), which advances program execution one statement at a time, entering into called methods for granular inspection (Chapter 2 & 3).",
-      "distractorRationale": "Options other than \"single-stepping\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "Pressing F11 in Visual Studio activates 'single-stepping' (Step Into), which advances program execution one statement at a time, entering into called methods for granular inspection.",
+      "explanation": "Pressing F11 in Visual Studio activates 'single-stepping' (Step Into), which advances program execution one statement at a time, entering into called methods for granular inspection.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5225,9 +5225,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "Pseudocode (single word, no space) is an informal natural language description of an algorithm. A flowchart is its standardized graphical representation using geometric symbols (Chapter 1).",
-      "explanation": "Pseudocode (single word, no space) is an informal natural language description of an algorithm. A flowchart is its standardized graphical representation using geometric symbols (Chapter 1).",
-      "distractorRationale": "Options other than \"pseudocode / flowchart\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "Pseudocode (single word, no space) is an informal natural language description of an algorithm. A flowchart is its standardized graphical representation using geometric symbols.",
+      "explanation": "Pseudocode (single word, no space) is an informal natural language description of an algorithm. A flowchart is its standardized graphical representation using geometric symbols.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5254,22 +5254,22 @@
       "stem": "Which method on a Windows Forms control programmatically brings it to the top of the z-order so it is not obscured by other controls?",
       "code": "",
       "options": [
-        "SendToBack()",
         "BringToFront()",
+        "SendToBack()",
         "SetTopLevel(true)",
         "ShowAbove()"
       ],
       "opts": [
-        "SendToBack()",
         "BringToFront()",
+        "SendToBack()",
         "SetTopLevel(true)",
         "ShowAbove()"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "The BringToFront() method moves the target control to the front of the z-order layering stack.",
       "explanation": "The BringToFront() method moves the target control to the front of the z-order layering stack.",
-      "distractorRationale": "Options other than \"BringToFront()\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5296,22 +5296,22 @@
       "stem": "What happens when a user presses Alt plus the underlined letter on a button with an access key?",
       "code": "",
       "options": [
-        "The button text changes to uppercase",
-        "The button moves to the center of the screen",
+        "The active form closes without saving",
         "The button's Click event handler executes exactly as if the mouse clicked it",
-        "The active form closes without saving"
+        "The button text changes to uppercase",
+        "The button moves to the center of the screen"
       ],
       "opts": [
-        "The button text changes to uppercase",
-        "The button moves to the center of the screen",
+        "The active form closes without saving",
         "The button's Click event handler executes exactly as if the mouse clicked it",
-        "The active form closes without saving"
+        "The button text changes to uppercase",
+        "The button moves to the center of the screen"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "Pressing an access key combination (Alt + mnemonic) fires that button's Click event, facilitating rapid keyboard-only navigation.",
       "explanation": "Pressing an access key combination (Alt + mnemonic) fires that button's Click event, facilitating rapid keyboard-only navigation.",
-      "distractorRationale": "Options other than \"The button's Click event handler executes exactly as if the \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -5338,22 +5338,22 @@
       "stem": "The two primary categories of user interface in computer software are the ________ (which uses graphical windows, buttons, and menus) and the command line interface (CLI).",
       "code": "",
       "options": [
-        "graphical user interface (GUI)",
         "static user interface",
         "console batch interface",
+        "graphical user interface (GUI)",
         "natural voice interface"
       ],
       "opts": [
-        "graphical user interface (GUI)",
         "static user interface",
         "console batch interface",
+        "graphical user interface (GUI)",
         "natural voice interface"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "(Chapter 1) contrasts Graphical User Interfaces (GUIs), which allow users to interact via graphical elements, with Command Line Interfaces (CLIs), where users interact purely by typing text commands.",
-      "explanation": "(Chapter 1) contrasts Graphical User Interfaces (GUIs), which allow users to interact via graphical elements, with Command Line Interfaces (CLIs), where users interact purely by typing text commands.",
-      "distractorRationale": "Options other than \"graphical user interface (GUI)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 2,
+      "ans": 2,
+      "exp": " contrasts Graphical User Interfaces (GUIs), which allow users to interact via graphical elements, with Command Line Interfaces (CLIs), where users interact purely by typing text commands.",
+      "explanation": " contrasts Graphical User Interfaces (GUIs), which allow users to interact via graphical elements, with Command Line Interfaces (CLIs), where users interact purely by typing text commands.",
+      "distractorRationale": "",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -5380,22 +5380,22 @@
       "stem": "Which namespace directive must be present at the top of Form1.cs to access Form, Button, and PictureBox classes?",
       "code": "",
       "options": [
-        "using System.Windows.Forms;",
+        "using Microsoft.VisualBasic;",
         "using System.Web.UI;",
         "using System.Console.Graphics;",
-        "using Microsoft.VisualBasic;"
+        "using System.Windows.Forms;"
       ],
       "opts": [
-        "using System.Windows.Forms;",
+        "using Microsoft.VisualBasic;",
         "using System.Web.UI;",
         "using System.Console.Graphics;",
-        "using Microsoft.VisualBasic;"
+        "using System.Windows.Forms;"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "'using System.Windows.Forms;' imports the Windows Forms control class hierarchy into the source file.",
       "explanation": "'using System.Windows.Forms;' imports the Windows Forms control class hierarchy into the source file.",
-      "distractorRationale": "Options other than \"using System.Windows.Forms;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
@@ -5421,22 +5421,22 @@
       "stem": "What is the runtime effect of executing 'picAmber.Visible = false;' in an event handler?",
       "code": "",
       "options": [
-        "The picture box is deleted from memory",
         "The picture box and its image are hidden from view on the form",
-        "The image turns completely black",
-        "The image file on the hard drive is erased"
+        "The image file on the hard drive is erased",
+        "The picture box is deleted from memory",
+        "The image turns completely black"
       ],
       "opts": [
-        "The picture box is deleted from memory",
         "The picture box and its image are hidden from view on the form",
-        "The image turns completely black",
-        "The image file on the hard drive is erased"
+        "The image file on the hard drive is erased",
+        "The picture box is deleted from memory",
+        "The image turns completely black"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Setting Visible = false hides the control from the user interface while preserving its state and properties in memory.",
       "explanation": "Setting Visible = false hides the control from the user interface while preserving its state and properties in memory.",
-      "distractorRationale": "Options other than \"The picture box and its image are hidden from view on the fo\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_picturebox",
         "def_string_bool"
@@ -5462,22 +5462,22 @@
       "stem": "In the Visual Studio Properties window, what does clicking the lightning bolt icon display?",
       "code": "",
       "options": [
-        "CPU performance statistics",
         "Battery power level",
         "The list of available events for the currently selected control",
-        "Database connection status"
+        "Database connection status",
+        "CPU performance statistics"
       ],
       "opts": [
-        "CPU performance statistics",
         "Battery power level",
         "The list of available events for the currently selected control",
-        "Database connection status"
+        "Database connection status",
+        "CPU performance statistics"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "The lightning bolt icon switches the Properties window to show all events (e.g. Click, TextChanged, KeyPress) supported by the control.",
       "explanation": "The lightning bolt icon switches the Properties window to show all events (e.g. Click, TextChanged, KeyPress) supported by the control.",
-      "distractorRationale": "Options other than \"The list of available events for the currently selected cont\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -5504,22 +5504,22 @@
       "stem": "When you double-click a TextBox control on a form in the Designer, which default event handler method is scaffolded?",
       "code": "",
       "options": [
-        "Click",
-        "Enter",
         "Leave",
-        "TextChanged"
+        "Click",
+        "TextChanged",
+        "Enter"
       ],
       "opts": [
-        "Click",
-        "Enter",
         "Leave",
-        "TextChanged"
+        "Click",
+        "TextChanged",
+        "Enter"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "The default event for a TextBox in Visual Studio is TextChanged, which fires whenever the text inside the box is altered.",
       "explanation": "The default event for a TextBox in Visual Studio is TextChanged, which fires whenever the text inside the box is altered.",
-      "distractorRationale": "Options other than \"TextChanged\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -5546,22 +5546,22 @@
       "stem": "What is the effect of setting a Form's MaximizeBox property to false?",
       "code": "",
       "options": [
-        "The maximize button in the form title bar is disabled (grayed out) or removed",
-        "The minimize button disappears",
         "The form is automatically closed",
-        "The user cannot close the form"
+        "The user cannot close the form",
+        "The minimize button disappears",
+        "The maximize button in the form title bar is disabled (grayed out) or removed"
       ],
       "opts": [
-        "The maximize button in the form title bar is disabled (grayed out) or removed",
-        "The minimize button disappears",
         "The form is automatically closed",
-        "The user cannot close the form"
+        "The user cannot close the form",
+        "The minimize button disappears",
+        "The maximize button in the form title bar is disabled (grayed out) or removed"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Setting MaximizeBox = false prevents the user from expanding the form to fill the entire desktop screen.",
       "explanation": "Setting MaximizeBox = false prevents the user from expanding the form to fill the entire desktop screen.",
-      "distractorRationale": "Options other than \"The maximize button in the form title bar is disabled (graye\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5588,22 +5588,22 @@
       "stem": "The ________ feature in Visual Studio provides automatic code completion, parameter information, quick info tooltips, and member lists as code is typed into the code editor.",
       "code": "",
       "options": [
-        "Auto-complete",
         "IntelliSense",
+        "Auto-complete",
         "CodeDOM",
         "Live Share"
       ],
       "opts": [
-        "Auto-complete",
         "IntelliSense",
+        "Auto-complete",
         "CodeDOM",
         "Live Share"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "IntelliSense is Microsoft's trademarked code-completion technology in Visual Studio that displays matching methods, properties, and parameters as you type (Chapters 1 & 2).",
-      "explanation": "IntelliSense is Microsoft's trademarked code-completion technology in Visual Studio that displays matching methods, properties, and parameters as you type (Chapters 1 & 2).",
-      "distractorRationale": "Options other than \"IntelliSense\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 0,
+      "ans": 0,
+      "exp": "IntelliSense is Microsoft's trademarked code-completion technology in Visual Studio that displays matching methods, properties, and parameters as you type.",
+      "explanation": "IntelliSense is Microsoft's trademarked code-completion technology in Visual Studio that displays matching methods, properties, and parameters as you type.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -5631,21 +5631,21 @@
       "code": "",
       "options": [
         "decimal",
-        "double",
         "float",
-        "int"
+        "int",
+        "double"
       ],
       "opts": [
         "decimal",
-        "double",
         "float",
-        "int"
+        "int",
+        "double"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "The 'decimal' type is a 128-bit fixed-point type tailored for monetary calculations to eliminate floating-point representation anomalies.",
       "explanation": "The 'decimal' type is a 128-bit fixed-point type tailored for monetary calculations to eliminate floating-point representation anomalies.",
-      "distractorRationale": "Options other than \"decimal\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -5672,22 +5672,22 @@
       "stem": "What literal suffix must be appended to a real numeric literal in C# to indicate that it is of type decimal?",
       "code": "",
       "options": [
-        "m or M",
-        "d or D",
         "f or F",
-        "l or L"
+        "m or M",
+        "l or L",
+        "d or D"
       ],
       "opts": [
-        "m or M",
-        "d or D",
         "f or F",
-        "l or L"
+        "m or M",
+        "l or L",
+        "d or D"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "Decimal literals require the 'm' or 'M' suffix (e.g. 199.99m, 0.15m). Without a suffix, real numbers default to 'double'.",
       "explanation": "Decimal literals require the 'm' or 'M' suffix (e.g. 199.99m, 0.15m). Without a suffix, real numbers default to 'double'.",
-      "distractorRationale": "Options other than \"m or M\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -5714,22 +5714,22 @@
       "stem": "What is the result of the integer division expression '7 / 2' in Visual C#?",
       "code": "",
       "options": [
-        "3",
         "3.5",
         "4",
+        "3",
         "3.0"
       ],
       "opts": [
-        "3",
         "3.5",
         "4",
+        "3",
         "3.0"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "When both operands in division are integers, C# performs integer division and truncates the fractional part, resulting in 3.",
       "explanation": "When both operands in division are integers, C# performs integer division and truncates the fractional part, resulting in 3.",
-      "distractorRationale": "Options other than \"3\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -5756,22 +5756,22 @@
       "stem": "How can you force floating-point division between two integer variables 'int total' and 'int count'?",
       "code": "",
       "options": [
-        "(double)total / count",
         "total // count",
         "total / count / 1.0",
-        "Convert.ToInt32(total / count)"
+        "Convert.ToInt32(total / count)",
+        "(double)total / count"
       ],
       "opts": [
-        "(double)total / count",
         "total // count",
         "total / count / 1.0",
-        "Convert.ToInt32(total / count)"
+        "Convert.ToInt32(total / count)",
+        "(double)total / count"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Explicitly casting at least one operand to double (e.g. (double)total / count) forces floating-point division.",
       "explanation": "Explicitly casting at least one operand to double (e.g. (double)total / count) forces floating-point division.",
-      "distractorRationale": "Options other than \"(double)total / count\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -5799,21 +5799,21 @@
       "code": "",
       "options": [
         "\"C\" or \"c\"",
+        "\"P\" or \"p\"",
         "\"F\" or \"f\"",
-        "\"N\" or \"n\"",
-        "\"P\" or \"p\""
+        "\"N\" or \"n\""
       ],
       "opts": [
         "\"C\" or \"c\"",
+        "\"P\" or \"p\"",
         "\"F\" or \"f\"",
-        "\"N\" or \"n\"",
-        "\"P\" or \"p\""
+        "\"N\" or \"n\""
       ],
       "answer": 0,
       "ans": 0,
       "exp": "The \"C\" format specifier formats the number as currency using the computer's regional culture settings (e.g. R 1,250.00).",
       "explanation": "The \"C\" format specifier formats the number as currency using the computer's regional culture settings (e.g. R 1,250.00).",
-      "distractorRationale": "Options other than \"\"C\" or \"c\"\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -5840,22 +5840,22 @@
       "stem": "What output is produced by the expression '(0.175).ToString(\"P1\")'?",
       "code": "",
       "options": [
+        "\"0.175%\"",
         "\"17.5%\"",
         "\"0.2%\"",
-        "\"17.50%\"",
-        "\"0.175%\""
+        "\"17.50%\""
       ],
       "opts": [
+        "\"0.175%\"",
         "\"17.5%\"",
         "\"0.2%\"",
-        "\"17.50%\"",
-        "\"0.175%\""
+        "\"17.50%\""
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "The \"P\" format specifier multiplies the number by 100, appends '%', and \"P1\" formats with 1 decimal place: 17.5%.",
       "explanation": "The \"P\" format specifier multiplies the number by 100, appends '%', and \"P1\" formats with 1 decimal place: 17.5%.",
-      "distractorRationale": "Options other than \"\"17.5%\"\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -5882,22 +5882,22 @@
       "stem": "What exception is thrown by 'decimal.Parse(txtInput.Text)' if txtInput contains non-numeric text such as 'abc'?",
       "code": "",
       "options": [
-        "FormatException",
-        "OverflowException",
         "DivideByZeroException",
-        "NullReferenceException"
+        "NullReferenceException",
+        "FormatException",
+        "OverflowException"
       ],
       "opts": [
-        "FormatException",
-        "OverflowException",
         "DivideByZeroException",
-        "NullReferenceException"
+        "NullReferenceException",
+        "FormatException",
+        "OverflowException"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "FormatException is thrown when the string format does not conform to the expected numeric pattern.",
       "explanation": "FormatException is thrown when the string format does not conform to the expected numeric pattern.",
-      "distractorRationale": "Options other than \"FormatException\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -5923,22 +5923,22 @@
       "stem": "Which keyword is used to declare an identifier whose value is assigned at declaration and cannot be changed throughout execution?",
       "code": "",
       "options": [
-        "const",
-        "readonly",
         "static",
-        "fixed"
+        "fixed",
+        "readonly",
+        "const"
       ],
       "opts": [
-        "const",
-        "readonly",
         "static",
-        "fixed"
+        "fixed",
+        "readonly",
+        "const"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "The 'const' keyword creates a named constant whose value is immutable at compile time (e.g. const decimal VAT_RATE = 0.15m;).",
       "explanation": "The 'const' keyword creates a named constant whose value is immutable at compile time (e.g. const decimal VAT_RATE = 0.15m;).",
-      "distractorRationale": "Options other than \"const\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -5980,7 +5980,7 @@
       "ans": 0,
       "exp": "Local variables have method scope and lifetime. Field variables have class scope and exist as long as the form instance exists.",
       "explanation": "Local variables have method scope and lifetime. Field variables have class scope and exist as long as the form instance exists.",
-      "distractorRationale": "Options other than \"Local variables are declared inside a method and destroyed w\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -6006,22 +6006,22 @@
       "stem": "Which method call shifts keyboard input focus directly to a TextBox named txtHours and selects it?",
       "code": "",
       "options": [
+        "Focus.Set(txtHours);",
         "txtHours.Focus();",
         "txtHours.SelectAll();",
-        "txtHours.Active = true;",
-        "Focus.Set(txtHours);"
+        "txtHours.Active = true;"
       ],
       "opts": [
+        "Focus.Set(txtHours);",
         "txtHours.Focus();",
         "txtHours.SelectAll();",
-        "txtHours.Active = true;",
-        "Focus.Set(txtHours);"
+        "txtHours.Active = true;"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "The .Focus() method sets the active keyboard input focus to the specified control.",
       "explanation": "The .Focus() method sets the active keyboard input focus to the specified control.",
-      "distractorRationale": "Options other than \"txtHours.Focus();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -6043,27 +6043,27 @@
       "difficulty": "Foundational",
       "marks": 2,
       "estimatedMinutes": 2,
-      "q": "Which property controls the order in which controls receive focus when the user repeatedly presses the Tab key?",
-      "title": "Which property controls the order in which controls receive focus when the user repeatedly presses the Tab key?",
-      "stem": "Which property controls the order in which controls receive focus when the user repeatedly presses the Tab key?",
+      "q": "Which `bool` control property, when set to `false`, prevents a control from receiving keyboard focus when the user presses the `Tab` key while still allowing mouse clicks?",
+      "title": "Which `bool` control property, when set to `false`, prevents a control from receiving keyboard focus when the user presses the `Tab` key while still allowing mouse clicks?",
+      "stem": "Which `bool` control property, when set to `false`, prevents a control from receiving keyboard focus when the user presses the `Tab` key while still allowing mouse clicks?",
       "code": "",
       "options": [
         "TabIndex",
+        "Enabled",
         "TabStop",
-        "FocusIndex",
-        "OrderIndex"
+        "Visible"
       ],
       "opts": [
         "TabIndex",
+        "Enabled",
         "TabStop",
-        "FocusIndex",
-        "OrderIndex"
+        "Visible"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "TabIndex is an integer specifying the sequential tab order of controls on the form.",
-      "explanation": "TabIndex is an integer specifying the sequential tab order of controls on the form.",
-      "distractorRationale": "Options other than \"TabIndex\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Setting `TabStop = false` skips that control during `Tab`-key navigation without disabling or hiding the control (`Enabled = false` disables mouse clicks too).",
+      "explanation": "Setting `TabStop = false` skips that control during `Tab`-key navigation without disabling or hiding the control (`Enabled = false` disables mouse clicks too).",
+      "distractorRationale": "`TabIndex` sets the numeric order among tab-focusable controls; `Enabled = false` blocks all interaction; `Visible = false` hides the control completely.",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -6090,22 +6090,22 @@
       "stem": "If you have a Label or PictureBox that should NEVER receive keyboard focus during Tab navigation, what property should be set to false?",
       "code": "",
       "options": [
-        "TabStop",
-        "Enabled",
         "Visible",
-        "TabIndex"
+        "TabIndex",
+        "Enabled",
+        "TabStop"
       ],
       "opts": [
-        "TabStop",
-        "Enabled",
         "Visible",
-        "TabIndex"
+        "TabIndex",
+        "Enabled",
+        "TabStop"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Setting TabStop = false prevents the control from receiving focus via the Tab key.",
       "explanation": "Setting TabStop = false prevents the control from receiving focus via the Tab key.",
-      "distractorRationale": "Options other than \"TabStop\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -6132,22 +6132,22 @@
       "stem": "In the C# statement `answerLabel.Text = \"Theodore Roosevelt\";`, what is the formal name of the `=` symbol?",
       "code": "",
       "options": [
-        "Equality comparison operator (==)",
-        "Variable binder",
         "Assignment operator (=)",
-        "Relational operator"
+        "Relational operator",
+        "Equality comparison operator (==)",
+        "Variable binder"
       ],
       "opts": [
-        "Equality comparison operator (==)",
-        "Variable binder",
         "Assignment operator (=)",
-        "Relational operator"
+        "Relational operator",
+        "Equality comparison operator (==)",
+        "Variable binder"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "The '=' sign in C# is the assignment operator. It copies the expression on its right-hand side into the variable or property on its left-hand side. The '==' operator is used for equality comparison.",
       "explanation": "The '=' sign in C# is the assignment operator. It copies the expression on its right-hand side into the variable or property on its left-hand side. The '==' operator is used for equality comparison.",
-      "distractorRationale": "Options other than \"Assignment operator (=)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6174,22 +6174,22 @@
       "stem": "Which property of a Windows Form designates a button that is automatically clicked when the user presses the Escape (Esc) key?",
       "code": "",
       "options": [
-        "CancelButton",
         "AcceptButton",
+        "CancelButton",
         "ExitButton",
         "CloseButton"
       ],
       "opts": [
-        "CancelButton",
         "AcceptButton",
+        "CancelButton",
         "ExitButton",
         "CloseButton"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "CancelButton specifies the button automatically activated when the Esc key is pressed.",
       "explanation": "CancelButton specifies the button automatically activated when the Esc key is pressed.",
-      "distractorRationale": "Options other than \"CancelButton\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6216,22 +6216,22 @@
       "stem": "What method of the Math class computes the square root of a double value?",
       "code": "",
       "options": [
-        "Math.Sqrt()",
-        "Math.Pow()",
         "Math.Square()",
-        "Math.Root()"
+        "Math.Root()",
+        "Math.Sqrt()",
+        "Math.Pow()"
       ],
       "opts": [
-        "Math.Sqrt()",
-        "Math.Pow()",
         "Math.Square()",
-        "Math.Root()"
+        "Math.Root()",
+        "Math.Sqrt()",
+        "Math.Pow()"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Math.Sqrt(value) returns the positive square root of the specified number.",
       "explanation": "Math.Sqrt(value) returns the positive square root of the specified number.",
-      "distractorRationale": "Options other than \"Math.Sqrt()\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6258,22 +6258,22 @@
       "stem": "Why is 'decimal' the required C# data type for unit prices (pricePerKg, pricePerRoll) and total monetary costs, rather than 'float' or 'double'?",
       "code": "",
       "options": [
+        "Visual Studio does not permit using double variables inside button click event handlers",
         "The double type is too large to fit into computer RAM",
-        "The decimal type uses 128-bit base-10 fixed-point representation, eliminating binary floating-point rounding errors in monetary calculations",
         "The decimal type runs twice as fast as integer arithmetic",
-        "Visual Studio does not permit using double variables inside button click event handlers"
+        "The decimal type uses 128-bit base-10 fixed-point representation, eliminating binary floating-point rounding errors in monetary calculations"
       ],
       "opts": [
+        "Visual Studio does not permit using double variables inside button click event handlers",
         "The double type is too large to fit into computer RAM",
-        "The decimal type uses 128-bit base-10 fixed-point representation, eliminating binary floating-point rounding errors in monetary calculations",
         "The decimal type runs twice as fast as integer arithmetic",
-        "Visual Studio does not permit using double variables inside button click event handlers"
+        "The decimal type uses 128-bit base-10 fixed-point representation, eliminating binary floating-point rounding errors in monetary calculations"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Financial calculations demand exact precision. Binary floating-point types (float and double) suffer from representation errors with base-10 fractions (like 0.10), whereas decimal uses base-10 representation tailored for currency.",
       "explanation": "Financial calculations demand exact precision. Binary floating-point types (float and double) suffer from representation errors with base-10 fractions (like 0.10), whereas decimal uses base-10 representation tailored for currency.",
-      "distractorRationale": "Options other than \"The decimal type uses 128-bit base-10 fixed-point representa\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6300,22 +6300,22 @@
       "stem": "Why must a variable storing the number of whole bread rolls needed for an order be declared as an 'int' rather than a 'decimal'?",
       "code": "",
       "options": [
+        "Bread rolls are discrete physical items purchased in whole units; fractional rolls cannot be purchased from a bakery",
         "C# does not allow dividing decimals",
         "The int type automatically rounds numbers to four decimal places",
-        "Bread rolls are discrete physical items purchased in whole units; fractional rolls cannot be purchased from a bakery",
         "int variables use more memory than decimal variables"
       ],
       "opts": [
+        "Bread rolls are discrete physical items purchased in whole units; fractional rolls cannot be purchased from a bakery",
         "C# does not allow dividing decimals",
         "The int type automatically rounds numbers to four decimal places",
-        "Bread rolls are discrete physical items purchased in whole units; fractional rolls cannot be purchased from a bakery",
         "int variables use more memory than decimal variables"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "Choosing data types requires domain justification: rolls are discrete whole items (you cannot buy 0.3 of a roll), making int the only conceptually sound choice.",
       "explanation": "Choosing data types requires domain justification: rolls are discrete whole items (you cannot buy 0.3 of a roll), making int the only conceptually sound choice.",
-      "distractorRationale": "Options other than \"Bread rolls are discrete physical items purchased in whole u\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6343,21 +6343,21 @@
       "code": "",
       "options": [
         "Divide kilograms by 1000",
+        "Multiply kilograms by 1000 to convert kilograms into grams: worsKg * 1000m",
         "Add 120 to kilograms directly",
-        "Convert kilograms into pounds",
-        "Multiply kilograms by 1000 to convert kilograms into grams: worsKg * 1000m"
+        "Convert kilograms into pounds"
       ],
       "opts": [
         "Divide kilograms by 1000",
+        "Multiply kilograms by 1000 to convert kilograms into grams: worsKg * 1000m",
         "Add 120 to kilograms directly",
-        "Convert kilograms into pounds",
-        "Multiply kilograms by 1000 to convert kilograms into grams: worsKg * 1000m"
+        "Convert kilograms into pounds"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "Because roll capacity is measured in grams (120g) while butcher purchases are entered in kilograms, kilograms must be converted to grams by multiplying by 1000 before dividing.",
       "explanation": "Because roll capacity is measured in grams (120g) while butcher purchases are entered in kilograms, kilograms must be converted to grams by multiplying by 1000 before dividing.",
-      "distractorRationale": "Options other than \"Multiply kilograms by 1000 to convert kilograms into grams: \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6384,22 +6384,22 @@
       "stem": "If one bread roll holds a fixed 120 grams of wors, why does writing `int rolls = (int)(grams / 120);` directly in calculation code violate C# coding standards?",
       "code": "",
       "options": [
-        "120 is a magic number; fixed domain rules must be declared as a named constant (e.g. const decimal GRAMS_PER_ROLL = 120m;)",
-        "C# does not allow the number 120 in expressions",
         "Division must always use a while loop",
-        "Parentheses are illegal around division operations"
+        "Parentheses are illegal around division operations",
+        "120 is a magic number; fixed domain rules must be declared as a named constant (e.g. const decimal GRAMS_PER_ROLL = 120m;)",
+        "C# does not allow the number 120 in expressions"
       ],
       "opts": [
-        "120 is a magic number; fixed domain rules must be declared as a named constant (e.g. const decimal GRAMS_PER_ROLL = 120m;)",
-        "C# does not allow the number 120 in expressions",
         "Division must always use a while loop",
-        "Parentheses are illegal around division operations"
+        "Parentheses are illegal around division operations",
+        "120 is a magic number; fixed domain rules must be declared as a named constant (e.g. const decimal GRAMS_PER_ROLL = 120m;)",
+        "C# does not allow the number 120 in expressions"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Hardcoding unexplained numeric literals ('magic numbers') loses marks. Coding standards require declaring fixed problem domain constants with descriptive names.",
       "explanation": "Hardcoding unexplained numeric literals ('magic numbers') loses marks. Coding standards require declaring fixed problem domain constants with descriptive names.",
-      "distractorRationale": "Options other than \"120 is a magic number; fixed domain rules must be declared a\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -6427,21 +6427,21 @@
       "code": "",
       "options": [
         "var GRAMS_PER_ROLL = const 120;",
-        "const decimal GRAMS_PER_ROLL = 120m;",
         "decimal constant GRAMS_PER_ROLL = 120;",
-        "readonly 120 = GRAMS_PER_ROLL;"
+        "readonly 120 = GRAMS_PER_ROLL;",
+        "const decimal GRAMS_PER_ROLL = 120m;"
       ],
       "opts": [
         "var GRAMS_PER_ROLL = const 120;",
-        "const decimal GRAMS_PER_ROLL = 120m;",
         "decimal constant GRAMS_PER_ROLL = 120;",
-        "readonly 120 = GRAMS_PER_ROLL;"
+        "readonly 120 = GRAMS_PER_ROLL;",
+        "const decimal GRAMS_PER_ROLL = 120m;"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Named constants in C# use the 'const' keyword followed by the data type, an uppercase identifier, and an initialization value: 'const decimal GRAMS_PER_ROLL = 120m;'.",
       "explanation": "Named constants in C# use the 'const' keyword followed by the data type, an uppercase identifier, and an initialization value: 'const decimal GRAMS_PER_ROLL = 120m;'.",
-      "distractorRationale": "Options other than \"const decimal GRAMS_PER_ROLL = 120m;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6468,22 +6468,22 @@
       "stem": "If total grams is 2500m and GRAMS_PER_ROLL is 120m, what is the evaluated result of '(int)(2500m / 120m)' in C#?",
       "code": "",
       "options": [
-        "21",
-        "20.83",
         "20",
-        "25"
+        "25",
+        "21",
+        "20.83"
       ],
       "opts": [
-        "21",
-        "20.83",
         "20",
-        "25"
+        "25",
+        "21",
+        "20.83"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "2500 / 120 equals 20.833... Explicitly casting to (int) truncates the decimal fraction towards zero, leaving exactly 20 whole rolls filled.",
       "explanation": "2500 / 120 equals 20.833... Explicitly casting to (int) truncates the decimal fraction towards zero, leaving exactly 20 whole rolls filled.",
-      "distractorRationale": "Options other than \"20\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -6510,22 +6510,22 @@
       "stem": "What happens when you compile the C# statement 'decimal price = 85.50;' without an 'm' or 'M' suffix?",
       "code": "",
       "options": [
-        "It compiles and runs without error",
         "Visual Studio automatically inserts the 'm' suffix",
+        "Compiler error CS0664: Literal of type double cannot be implicitly converted to type decimal",
         "The variable is converted to an int",
-        "Compiler error CS0664: Literal of type double cannot be implicitly converted to type decimal"
+        "It compiles and runs without error"
       ],
       "opts": [
-        "It compiles and runs without error",
         "Visual Studio automatically inserts the 'm' suffix",
+        "Compiler error CS0664: Literal of type double cannot be implicitly converted to type decimal",
         "The variable is converted to an int",
-        "Compiler error CS0664: Literal of type double cannot be implicitly converted to type decimal"
+        "It compiles and runs without error"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "Real number literals with decimal points are treated as double by default in C#. Converting double to decimal requires an explicit 'm' suffix or cast.",
       "explanation": "Real number literals with decimal points are treated as double by default in C#. Converting double to decimal requires an explicit 'm' suffix or cast.",
-      "distractorRationale": "Options other than \"Compiler error CS0664: Literal of type double cannot be impl\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6552,22 +6552,22 @@
       "stem": "Given wors weight in kg, wors price/kg, and roll price/roll (where 1 roll holds 120g of wors), what is the logical sequence required to calculate the total braai cost?",
       "code": "",
       "options": [
-        "1. Wors cost = kg * price/kg; 2. Total grams = kg * 1000; 3. Rolls = grams / 120; 4. Rolls cost = rolls * price/roll; 5. Total = wors cost + rolls cost",
         "Calculate total cost first, then divide by rolls",
         "Multiply name by rolls, then add wors price",
+        "1. Wors cost = kg * price/kg; 2. Total grams = kg * 1000; 3. Rolls = grams / 120; 4. Rolls cost = rolls * price/roll; 5. Total = wors cost + rolls cost",
         "Divide price per roll by price per kg, then multiply by 120"
       ],
       "opts": [
-        "1. Wors cost = kg * price/kg; 2. Total grams = kg * 1000; 3. Rolls = grams / 120; 4. Rolls cost = rolls * price/roll; 5. Total = wors cost + rolls cost",
         "Calculate total cost first, then divide by rolls",
         "Multiply name by rolls, then add wors price",
+        "1. Wors cost = kg * price/kg; 2. Total grams = kg * 1000; 3. Rolls = grams / 120; 4. Rolls cost = rolls * price/roll; 5. Total = wors cost + rolls cost",
         "Divide price per roll by price per kg, then multiply by 120"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "The calculation pipeline computes the meat cost, converts weight from kilograms to grams, determines whole rolls filled, calculates the bread cost, and sums both costs.",
       "explanation": "The calculation pipeline computes the meat cost, converts weight from kilograms to grams, determines whole rolls filled, calculates the bread cost, and sums both costs.",
-      "distractorRationale": "Options other than \"1. Wors cost = kg * price/kg; 2. Total grams = kg * 1000; 3.\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6594,22 +6594,22 @@
       "stem": "Why is 'decimal.TryParse(txtWorsKg.Text, out decimal worsKg)' strongly preferred over 'decimal.Parse(txtWorsKg.Text)' in Windows Forms?",
       "code": "",
       "options": [
-        "TryParse converts text into upper case",
-        "TryParse returns a boolean indicating success or failure without crashing the application with an unhandled FormatException if the user enters non-numeric text",
         "TryParse automatically rounds negative numbers to positive",
-        "TryParse writes the value directly to the printer"
+        "TryParse writes the value directly to the printer",
+        "TryParse converts text into upper case",
+        "TryParse returns a boolean indicating success or failure without crashing the application with an unhandled FormatException if the user enters non-numeric text"
       ],
       "opts": [
-        "TryParse converts text into upper case",
-        "TryParse returns a boolean indicating success or failure without crashing the application with an unhandled FormatException if the user enters non-numeric text",
         "TryParse automatically rounds negative numbers to positive",
-        "TryParse writes the value directly to the printer"
+        "TryParse writes the value directly to the printer",
+        "TryParse converts text into upper case",
+        "TryParse returns a boolean indicating success or failure without crashing the application with an unhandled FormatException if the user enters non-numeric text"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "TryParse provides defensive input parsing: if the user enters letters or leaves the box blank, TryParse simply returns false rather than throwing a crashing FormatException.",
       "explanation": "TryParse provides defensive input parsing: if the user enters letters or leaves the box blank, TryParse simply returns false rather than throwing a crashing FormatException.",
-      "distractorRationale": "Options other than \"TryParse returns a boolean indicating success or failure wit\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -6635,22 +6635,22 @@
       "stem": "In the statement 'bool ok = decimal.TryParse(txtWorsKg.Text, out worsKg);', what is the purpose of the 'out' keyword?",
       "code": "",
       "options": [
+        "It specifies that worsKg is passed by reference to receive the parsed numeric result from inside the method",
         "It prints the variable to the debug console",
         "It deletes the variable from memory when the method exits",
-        "It specifies that worsKg is passed by reference to receive the parsed numeric result from inside the method",
         "It marks the variable as an output label"
       ],
       "opts": [
+        "It specifies that worsKg is passed by reference to receive the parsed numeric result from inside the method",
         "It prints the variable to the debug console",
         "It deletes the variable from memory when the method exits",
-        "It specifies that worsKg is passed by reference to receive the parsed numeric result from inside the method",
         "It marks the variable as an output label"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "The 'out' parameter modifier allows a method to return multiple values by writing results directly into the caller's variable.",
       "explanation": "The 'out' parameter modifier allows a method to return multiple values by writing results directly into the caller's variable.",
-      "distractorRationale": "Options other than \"It specifies that worsKg is passed by reference to receive t\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -6676,22 +6676,22 @@
       "stem": "If the user leaves txtWorsKg blank and clicks Calculate, what happens during 'decimal.TryParse(txtWorsKg.Text, out decimal worsKg)'?",
       "code": "",
       "options": [
-        "The computer beeps and shuts down",
-        "The method returns true and worsKg becomes null",
         "A fatal StackOverflowException is thrown",
-        "The method returns false and worsKg is set to its default value 0m"
+        "The method returns false and worsKg is set to its default value 0m",
+        "The computer beeps and shuts down",
+        "The method returns true and worsKg becomes null"
       ],
       "opts": [
-        "The computer beeps and shuts down",
-        "The method returns true and worsKg becomes null",
         "A fatal StackOverflowException is thrown",
-        "The method returns false and worsKg is set to its default value 0m"
+        "The method returns false and worsKg is set to its default value 0m",
+        "The computer beeps and shuts down",
+        "The method returns true and worsKg becomes null"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "When TryParse fails to parse an invalid or empty string, it returns false and populates the out variable with its type default (0m for decimal).",
       "explanation": "When TryParse fails to parse an invalid or empty string, it returns false and populates the out variable with its type default (0m for decimal).",
-      "distractorRationale": "Options other than \"The method returns false and worsKg is set to its default va\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -6717,22 +6717,22 @@
       "stem": "Which C# expression formats a decimal variable `totalCost` as South African Rand currency (e.g., 'R 282.50')?",
       "code": "",
       "options": [
-        "totalCost.ToString(\"C\")",
-        "totalCost.ToString(\"R\")",
         "totalCost.ToString(\"M\")",
-        "totalCost.ToRand()"
+        "totalCost.ToRand()",
+        "totalCost.ToString(\"C\")",
+        "totalCost.ToString(\"R\")"
       ],
       "opts": [
-        "totalCost.ToString(\"C\")",
-        "totalCost.ToString(\"R\")",
         "totalCost.ToString(\"M\")",
-        "totalCost.ToRand()"
+        "totalCost.ToRand()",
+        "totalCost.ToString(\"C\")",
+        "totalCost.ToString(\"R\")"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "The 'C' (Currency) format specifier formats a numeric value with the regional currency symbol (Rand in South Africa) and 2 decimal places.",
       "explanation": "The 'C' (Currency) format specifier formats a numeric value with the regional currency symbol (Rand in South Africa) and 2 decimal places.",
-      "distractorRationale": "Options other than \"totalCost.ToString(\"C\")\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -6759,22 +6759,22 @@
       "stem": "If 'decimal total = 282.5m;', what is the output of 'total.ToString(\"C\")' under South African regional settings?",
       "code": "",
       "options": [
-        "$282.50",
-        "R 282.50",
         "282.50 Rand",
-        "R282.5"
+        "R282.5",
+        "$282.50",
+        "R 282.50"
       ],
       "opts": [
-        "$282.50",
-        "R 282.50",
         "282.50 Rand",
-        "R282.5"
+        "R282.5",
+        "$282.50",
+        "R 282.50"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "The South African 'C' currency format formats the number with the 'R' prefix, space separator, and two fractional digits: 'R 282.50' (or 'R 282,50').",
       "explanation": "The South African 'C' currency format formats the number with the 'R' prefix, space separator, and two fractional digits: 'R 282.50' (or 'R 282,50').",
-      "distractorRationale": "Options other than \"R 282.50\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -6801,22 +6801,22 @@
       "stem": "What is the difference between 'total.ToString(\"C\")' and 'total.ToString(\"F2\")'?",
       "code": "",
       "options": [
+        "\"C\" includes the currency symbol (e.g. 'R'), whereas \"F2\" displays strictly the fixed-point number with 2 decimals and no currency symbol",
         "\"F2\" rounds to two significant digits while \"C\" truncates",
         "\"C\" only works on integers",
-        "\"C\" includes the currency symbol (e.g. 'R'), whereas \"F2\" displays strictly the fixed-point number with 2 decimals and no currency symbol",
         "There is no difference between them"
       ],
       "opts": [
+        "\"C\" includes the currency symbol (e.g. 'R'), whereas \"F2\" displays strictly the fixed-point number with 2 decimals and no currency symbol",
         "\"F2\" rounds to two significant digits while \"C\" truncates",
         "\"C\" only works on integers",
-        "\"C\" includes the currency symbol (e.g. 'R'), whereas \"F2\" displays strictly the fixed-point number with 2 decimals and no currency symbol",
         "There is no difference between them"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "\"C\" formats as regional currency with a symbol, while \"F\" (Fixed-point) formats purely as digits without currency indicators.",
       "explanation": "\"C\" formats as regional currency with a symbol, while \"F\" (Fixed-point) formats purely as digits without currency indicators.",
-      "distractorRationale": "Options other than \"\"C\" includes the currency symbol (e.g. 'R'), whereas \"F2\" di\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -6858,7 +6858,7 @@
       "ans": 1,
       "exp": "Notice the double quotation marks around \"g1\" and \"g2\". Because they are enclosed in quotes, they are string literals, not the variables g1 and g2. The + operator simply concatenates the letters together, producing \"g1g2\". The integer variables g1 and g2 are ignored completely.",
       "explanation": "Notice the double quotation marks around \"g1\" and \"g2\". Because they are enclosed in quotes, they are string literals, not the variables g1 and g2. The + operator simply concatenates the letters together, producing \"g1g2\". The integer variables g1 and g2 are ignored completely.",
-      "distractorRationale": "Options other than \"g1g2\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -6885,22 +6885,22 @@
       "stem": "How can a programmer prevent integer division truncation when dividing two integer variables 'int a = 7; int b = 2;'?",
       "code": "",
       "options": [
-        "double result = (double)a / b;",
-        "double result = a / b;",
         "double result = int.Parse(a / b);",
-        "double result = Math.Floor(a / b);"
+        "double result = Math.Floor(a / b);",
+        "double result = (double)a / b;",
+        "double result = a / b;"
       ],
       "opts": [
-        "double result = (double)a / b;",
-        "double result = a / b;",
         "double result = int.Parse(a / b);",
-        "double result = Math.Floor(a / b);"
+        "double result = Math.Floor(a / b);",
+        "double result = (double)a / b;",
+        "double result = a / b;"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Casting at least one operand to double (or decimal) forces C# to evaluate the expression using floating-point division: (double)7 / 2 evaluates to 3.5.",
       "explanation": "Casting at least one operand to double (or decimal) forces C# to evaluate the expression using floating-point division: (double)7 / 2 evaluates to 3.5.",
-      "distractorRationale": "Options other than \"double result = (double)a / b;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -6927,22 +6927,22 @@
       "stem": "What is the result of evaluating '17 % 5' in C#?",
       "code": "",
       "options": [
-        "3.4",
-        "2",
         "3",
-        "1"
+        "1",
+        "3.4",
+        "2"
       ],
       "opts": [
-        "3.4",
-        "2",
         "3",
-        "1"
+        "1",
+        "3.4",
+        "2"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "The modulus operator (%) calculates the integer division remainder: 17 divided by 5 is 3 with a remainder of 2.",
       "explanation": "The modulus operator (%) calculates the integer division remainder: 17 divided by 5 is 3 with a remainder of 2.",
-      "distractorRationale": "Options other than \"2\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -6969,22 +6969,22 @@
       "stem": "What is the key difference in scope between a local variable declared inside btnCalculate_Click and a class-level field declared in Form1?",
       "code": "",
       "options": [
-        "Local variables can be accessed by any program in Windows",
-        "Class-level fields can only hold strings",
         "Local variables exist only while the method executes; class-level fields exist for the lifetime of the form and can be accessed by all methods in the class",
-        "Local variables cannot be modified"
+        "Local variables cannot be modified",
+        "Local variables can be accessed by any program in Windows",
+        "Class-level fields can only hold strings"
       ],
       "opts": [
-        "Local variables can be accessed by any program in Windows",
-        "Class-level fields can only hold strings",
         "Local variables exist only while the method executes; class-level fields exist for the lifetime of the form and can be accessed by all methods in the class",
-        "Local variables cannot be modified"
+        "Local variables cannot be modified",
+        "Local variables can be accessed by any program in Windows",
+        "Class-level fields can only hold strings"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "Local variables are created on method entry and destroyed on exit. Class-level fields persist across multiple events and can be shared among handlers.",
       "explanation": "Local variables are created on method entry and destroyed on exit. Class-level fields persist across multiple events and can be shared among handlers.",
-      "distractorRationale": "Options other than \"Local variables exist only while the method executes; class-\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -7010,22 +7010,22 @@
       "stem": "What compiler error occurs if you declare a local variable 'decimal total;' inside an event handler and attempt to use it in an expression without initializing it first?",
       "code": "",
       "options": [
-        "CS0029: Cannot convert decimal to int",
         "CS1002: Semicolon expected",
+        "CS0165: Use of unassigned local variable 'total'",
         "CS0103: The name 'total' does not exist",
-        "CS0165: Use of unassigned local variable 'total'"
+        "CS0029: Cannot convert decimal to int"
       ],
       "opts": [
-        "CS0029: Cannot convert decimal to int",
         "CS1002: Semicolon expected",
+        "CS0165: Use of unassigned local variable 'total'",
         "CS0103: The name 'total' does not exist",
-        "CS0165: Use of unassigned local variable 'total'"
+        "CS0029: Cannot convert decimal to int"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "C# enforces definite assignment for local variables. Reading an uninitialized local variable generates compiler error CS0165.",
       "explanation": "C# enforces definite assignment for local variables. Reading an uninitialized local variable generates compiler error CS0165.",
-      "distractorRationale": "Options other than \"CS0165: Use of unassigned local variable 'total'\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -7051,22 +7051,22 @@
       "stem": "Unlike local variables, what default value do numeric class-level fields automatically receive when a Form instance is initialized?",
       "code": "",
       "options": [
-        "0 (or 0m)",
+        "Undefined",
         "-1",
-        "null",
-        "Undefined"
+        "0 (or 0m)",
+        "null"
       ],
       "opts": [
-        "0 (or 0m)",
+        "Undefined",
         "-1",
-        "null",
-        "Undefined"
+        "0 (or 0m)",
+        "null"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Class-level fields in C# are automatically initialized to their type's default value (0 for integers, 0.0 for floating-point, 0m for decimal, false for bool).",
       "explanation": "Class-level fields in C# are automatically initialized to their type's default value (0 for integers, 0.0 for floating-point, 0m for decimal, false for bool).",
-      "distractorRationale": "Options other than \"0 (or 0m)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -7092,22 +7092,22 @@
       "stem": "On a form with inputs txtName, txtWorsKg, txtPricePerKg, txtPricePerRoll and output lblTotalResult, which statements in btnClear_Click reset the form for another calculation?",
       "code": "",
       "options": [
+        "Application.Restart();",
         "this.Close();",
-        "txtName.Clear(); txtWorsKg.Clear(); txtPricePerKg.Clear(); txtPricePerRoll.Clear(); lblTotalResult.Text = \"\"; txtName.Focus();",
         "txtName.Text = \"0\"; txtWorsKg.Text = \"0\";",
-        "Application.Restart();"
+        "txtName.Clear(); txtWorsKg.Clear(); txtPricePerKg.Clear(); txtPricePerRoll.Clear(); lblTotalResult.Text = \"\"; txtName.Focus();"
       ],
       "opts": [
+        "Application.Restart();",
         "this.Close();",
-        "txtName.Clear(); txtWorsKg.Clear(); txtPricePerKg.Clear(); txtPricePerRoll.Clear(); lblTotalResult.Text = \"\"; txtName.Focus();",
         "txtName.Text = \"0\"; txtWorsKg.Text = \"0\";",
-        "Application.Restart();"
+        "txtName.Clear(); txtWorsKg.Clear(); txtPricePerKg.Clear(); txtPricePerRoll.Clear(); lblTotalResult.Text = \"\"; txtName.Focus();"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "A proper Clear routine empties all input textboxes, clears output result labels, and returns keyboard focus to the first input field (txtName.Focus()).",
       "explanation": "A proper Clear routine empties all input textboxes, clears output result labels, and returns keyboard focus to the first input field (txtName.Focus()).",
-      "distractorRationale": "Options other than \"txtName.Clear(); txtWorsKg.Clear(); txtPricePerKg.Clear(); t\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7134,22 +7134,22 @@
       "stem": "What does calling 'txtName.Focus();' accomplish in a Windows Forms application?",
       "code": "",
       "options": [
+        "It sets the active blinking keyboard cursor into txtName so the user can begin typing immediately without clicking",
         "It maximizes the textbox to fill the screen",
         "It changes the textbox background to yellow",
-        "It sets the active blinking keyboard cursor into txtName so the user can begin typing immediately without clicking",
         "It validates the textbox contents against a database"
       ],
       "opts": [
+        "It sets the active blinking keyboard cursor into txtName so the user can begin typing immediately without clicking",
         "It maximizes the textbox to fill the screen",
         "It changes the textbox background to yellow",
-        "It sets the active blinking keyboard cursor into txtName so the user can begin typing immediately without clicking",
         "It validates the textbox contents against a database"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "The Focus() method programmatically assigns keyboard focus to the specified control, optimizing usability and reducing mouse actions.",
       "explanation": "The Focus() method programmatically assigns keyboard focus to the specified control, optimizing usability and reducing mouse actions.",
-      "distractorRationale": "Options other than \"It sets the active blinking keyboard cursor into txtName so \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -7171,27 +7171,27 @@
       "difficulty": "Intermediate",
       "marks": 3,
       "estimatedMinutes": 2,
-      "q": "When justifying the choice of a variable's C# data type, why is replying 'because it compiled' an invalid engineering justification?",
-      "title": "When justifying the choice of a variable's C# data type, why is replying 'because it compiled' an invalid engineering justification?",
-      "stem": "When justifying the choice of a variable's C# data type, why is replying 'because it compiled' an invalid engineering justification?",
+      "q": "Why should a C# banking form declare currency variables as `decimal` (with the `m` suffix) rather than `double` even though both compile without syntax errors?",
+      "title": "Why should a C# banking form declare currency variables as `decimal` (with the `m` suffix) rather than `double` even though both compile without syntax errors?",
+      "stem": "Why should a C# banking form declare currency variables as `decimal` (with the `m` suffix) rather than `double` even though both compile without syntax errors?",
       "code": "",
       "options": [
-        "Compilers never check data types",
-        "All variables must be strings in C#",
-        "Demonstrators prefer Python over C#",
-        "Valid justifications must be grounded in domain logic: required precision, avoidance of floating-point rounding errors, memory footprint, and discrete versus continuous values"
+        "`decimal` executes faster hardware graphics rendering on `Label` controls than `double`",
+        "`double` uses base-2 binary floating-point representation which introduces rounding inaccuracies on base-10 cents (such as `0.1 + 0.2`), whereas `decimal` uses exact base-10 arithmetic",
+        "`double` variables cannot be formatted with `.ToString(\"F2\")` or `.ToString(\"C\")` in Windows Forms",
+        "`double` only stores whole integers and truncates all digits after the decimal point"
       ],
       "opts": [
-        "Compilers never check data types",
-        "All variables must be strings in C#",
-        "Demonstrators prefer Python over C#",
-        "Valid justifications must be grounded in domain logic: required precision, avoidance of floating-point rounding errors, memory footprint, and discrete versus continuous values"
+        "`decimal` executes faster hardware graphics rendering on `Label` controls than `double`",
+        "`double` uses base-2 binary floating-point representation which introduces rounding inaccuracies on base-10 cents (such as `0.1 + 0.2`), whereas `decimal` uses exact base-10 arithmetic",
+        "`double` variables cannot be formatted with `.ToString(\"F2\")` or `.ToString(\"C\")` in Windows Forms",
+        "`double` only stores whole integers and truncates all digits after the decimal point"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "Code compiling does not mean the design is sound (e.g. using double for money compiles but causes rounding errors). Types must be justified by business requirements.",
-      "explanation": "Code compiling does not mean the design is sound (e.g. using double for money compiles but causes rounding errors). Types must be justified by business requirements.",
-      "distractorRationale": "Options other than \"Valid justifications must be grounded in domain logic: requi\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Binary floating-point types (`double`, `float`) cannot represent many decimal fractions like `0.10` exactly in base 2, causing cumulative cent rounding errors in financial totals; `decimal` (`128-bit` base-10) represents monetary cents exactly.",
+      "explanation": "Binary floating-point types (`double`, `float`) cannot represent many decimal fractions like `0.10` exactly in base 2, causing cumulative cent rounding errors in financial totals; `decimal` (`128-bit` base-10) represents monetary cents exactly.",
+      "distractorRationale": "`double` supports fractional values and `.ToString()` formatting, and has no connection to Label rendering; its flaw for money is binary rounding error.",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7218,22 +7218,22 @@
       "stem": "Which C# primitive type stores an 8-byte (64-bit) floating-point number adhering to the IEEE 754 standard?",
       "code": "",
       "options": [
-        "double",
         "float",
         "decimal",
+        "double",
         "long"
       ],
       "opts": [
-        "double",
         "float",
         "decimal",
+        "double",
         "long"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "The 'double' keyword represents 64-bit IEEE 754 double-precision floating-point numbers, offering 15-17 digits of precision.",
       "explanation": "The 'double' keyword represents 64-bit IEEE 754 double-precision floating-point numbers, offering 15-17 digits of precision.",
-      "distractorRationale": "Options other than \"double\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7260,22 +7260,22 @@
       "stem": "Which statement correctly declares a class-level constant for South African VAT at 15%?",
       "code": "",
       "options": [
-        "decimal const VAT_RATE = 15%;",
-        "const decimal VAT_RATE = 0.15m;",
         "readonly VAT_RATE = 0.15;",
-        "static const decimal VAT_RATE := 0.15;"
+        "static const decimal VAT_RATE := 0.15;",
+        "decimal const VAT_RATE = 15%;",
+        "const decimal VAT_RATE = 0.15m;"
       ],
       "opts": [
-        "decimal const VAT_RATE = 15%;",
-        "const decimal VAT_RATE = 0.15m;",
         "readonly VAT_RATE = 0.15;",
-        "static const decimal VAT_RATE := 0.15;"
+        "static const decimal VAT_RATE := 0.15;",
+        "decimal const VAT_RATE = 15%;",
+        "const decimal VAT_RATE = 0.15m;"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "'const decimal VAT_RATE = 0.15m;' follows C# syntax: const keyword, type, uppercase identifier, and literal with 'm' suffix.",
       "explanation": "'const decimal VAT_RATE = 0.15m;' follows C# syntax: const keyword, type, uppercase identifier, and literal with 'm' suffix.",
-      "distractorRationale": "Options other than \"const decimal VAT_RATE = 0.15m;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -7301,22 +7301,22 @@
       "stem": "Why can a constant declared with the 'const' keyword NOT be reassigned inside an event handler?",
       "code": "",
       "options": [
+        "Constants are immutable values resolved at compile time whose values can never change during program execution",
         "Event handlers can only modify strings",
         "The CLR disables memory writes after form loading",
-        "Constants are immutable values resolved at compile time whose values can never change during program execution",
         "Constants only exist while the form is hidden"
       ],
       "opts": [
+        "Constants are immutable values resolved at compile time whose values can never change during program execution",
         "Event handlers can only modify strings",
         "The CLR disables memory writes after form loading",
-        "Constants are immutable values resolved at compile time whose values can never change during program execution",
         "Constants only exist while the form is hidden"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "Constants are read-only and immutable by definition. Attempting to reassign a const variable produces a compile-time error.",
       "explanation": "Constants are read-only and immutable by definition. Attempting to reassign a const variable produces a compile-time error.",
-      "distractorRationale": "Options other than \"Constants are immutable values resolved at compile time whos\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7344,21 +7344,21 @@
       "code": "",
       "options": [
         "Total Due: $450.75",
+        "Total Due: R 450.75",
         "Total Due: 450.75m",
-        "Total Due: {450.75:C}",
-        "Total Due: R 450.75"
+        "Total Due: {450.75:C}"
       ],
       "opts": [
         "Total Due: $450.75",
+        "Total Due: R 450.75",
         "Total Due: 450.75m",
-        "Total Due: {450.75:C}",
-        "Total Due: R 450.75"
+        "Total Due: {450.75:C}"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "String interpolation expressions prefixed with '$' evaluate expressions inside curly braces. The ':C' format specifier formats the decimal as currency with the regional symbol (R) and two decimal places (Chapter 3).",
-      "explanation": "String interpolation expressions prefixed with '$' evaluate expressions inside curly braces. The ':C' format specifier formats the decimal as currency with the regional symbol (R) and two decimal places (Chapter 3).",
-      "distractorRationale": "Options other than \"Total Due: R 450.75\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 1,
+      "ans": 1,
+      "exp": "String interpolation expressions prefixed with '$' evaluate expressions inside curly braces. The ':C' format specifier formats the decimal as currency with the regional symbol (R) and two decimal places.",
+      "explanation": "String interpolation expressions prefixed with '$' evaluate expressions inside curly braces. The ':C' format specifier formats the decimal as currency with the regional symbol (R) and two decimal places.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7385,22 +7385,22 @@
       "stem": "What string is produced by the interpolated expression '$\"Cost: {25.5m:C}\"' under South African locale settings?",
       "code": "",
       "options": [
-        "Cost: R 25.50",
+        "Cost: $25.50",
         "Cost: 25.5m",
-        "Cost: R25.5",
-        "Cost: $25.50"
+        "Cost: R 25.50",
+        "Cost: R25.5"
       ],
       "opts": [
-        "Cost: R 25.50",
+        "Cost: $25.50",
         "Cost: 25.5m",
-        "Cost: R25.5",
-        "Cost: $25.50"
+        "Cost: R 25.50",
+        "Cost: R25.5"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "The ':C' format specifier inside the interpolation hole formats the decimal literal 25.5m as South African Rand: 'Cost: R 25.50'.",
       "explanation": "The ':C' format specifier inside the interpolation hole formats the decimal literal 25.5m as South African Rand: 'Cost: R 25.50'.",
-      "distractorRationale": "Options other than \"Cost: R 25.50\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -7426,22 +7426,22 @@
       "stem": "To convert a string representation of a whole number directly to an int in Visual C# (throwing a FormatException if invalid), which built-in method is used?",
       "code": "",
       "options": [
-        "int.Parse()",
         ".toInt()",
         "int.Convert()",
-        "Integer.ValueOf()"
+        "Integer.ValueOf()",
+        "int.Parse()"
       ],
       "opts": [
-        "int.Parse()",
         ".toInt()",
         "int.Convert()",
-        "Integer.ValueOf()"
+        "Integer.ValueOf()",
+        "int.Parse()"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "In Chapters 2–3, string-to-integer conversion is performed via int.Parse(string). In Chapter 4, defensive parsing with int.TryParse(string, out int) is taught to prevent runtime exceptions.",
-      "explanation": "In Chapters 2–3, string-to-integer conversion is performed via int.Parse(string). In Chapter 4, defensive parsing with int.TryParse(string, out int) is taught to prevent runtime exceptions.",
-      "distractorRationale": "Options other than \"int.Parse()\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 3,
+      "ans": 3,
+      "exp": "String-to-integer conversion is performed via int.Parse(string). defensive parsing with int.TryParse(string, out int) is taught to prevent runtime exceptions.",
+      "explanation": "String-to-integer conversion is performed via int.Parse(string). defensive parsing with int.TryParse(string, out int) is taught to prevent runtime exceptions.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -7467,22 +7467,22 @@
       "stem": "When user input from `txtTest1` is converted using `double.Parse(txtTest1.Text)`, what is the syntactically correct C# `catch` clause to intercept invalid non-numeric inputs?",
       "code": "",
       "options": [
-        "catch except(ex e) { ... }",
         "catch (FormatException ex) { ... }",
-        "catch Exception: FormatException { ... }",
-        "catch (ex as FormatException) { ... }"
+        "catch (ex as FormatException) { ... }",
+        "catch except(ex e) { ... }",
+        "catch Exception: FormatException { ... }"
       ],
       "opts": [
-        "catch except(ex e) { ... }",
         "catch (FormatException ex) { ... }",
-        "catch Exception: FormatException { ... }",
-        "catch (ex as FormatException) { ... }"
+        "catch (ex as FormatException) { ... }",
+        "catch except(ex e) { ... }",
+        "catch Exception: FormatException { ... }"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "In C#, exception handling syntax requires 'catch (ExceptionType identifier)' such as 'catch (FormatException ex)'. Writing 'catch except(ex e)' is invalid C# syntax and causes compiler errors.",
       "explanation": "In C#, exception handling syntax requires 'catch (ExceptionType identifier)' such as 'catch (FormatException ex)'. Writing 'catch except(ex e)' is invalid C# syntax and causes compiler errors.",
-      "distractorRationale": "Options other than \"catch (FormatException ex) { ... }\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -7508,22 +7508,22 @@
       "stem": "What is the evaluated result of 'decimal res = 10m + 5m * 2m;' in C#?",
       "code": "",
       "options": [
-        "30m",
-        "100m",
         "25m",
-        "20m"
+        "20m",
+        "30m",
+        "100m"
       ],
       "opts": [
-        "30m",
-        "100m",
         "25m",
-        "20m"
+        "20m",
+        "30m",
+        "100m"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "Multiplication has higher precedence than addition: 5m * 2m evaluates to 10m, and 10m + 10m equals 20m.",
       "explanation": "Multiplication has higher precedence than addition: 5m * 2m evaluates to 10m, and 10m + 10m equals 20m.",
-      "distractorRationale": "Options other than \"20m\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7550,22 +7550,22 @@
       "stem": "What is the evaluated result of 'decimal res = (10m + 5m) * 2m;' in C#?",
       "code": "",
       "options": [
-        "30m",
-        "20m",
         "15m",
-        "25m"
+        "25m",
+        "30m",
+        "20m"
       ],
       "opts": [
-        "30m",
-        "20m",
         "15m",
-        "25m"
+        "25m",
+        "30m",
+        "20m"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Parentheses have the highest precedence: (10m + 5m) evaluates to 15m, which is then multiplied by 2m to yield 30m.",
       "explanation": "Parentheses have the highest precedence: (10m + 5m) evaluates to 15m, which is then multiplied by 2m to yield 30m.",
-      "distractorRationale": "Options other than \"30m\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7593,21 +7593,21 @@
       "code": "",
       "options": [
         "No, C# forbids mixing int and decimal completely",
-        "Yes, int to decimal is an implicit widening conversion because all 32-bit integers fit within 128-bit decimal without loss of precision",
         "Only if the int is negative",
-        "Only if an explicit cast is supplied"
+        "Only if an explicit cast is supplied",
+        "Yes, int to decimal is an implicit widening conversion because all 32-bit integers fit within 128-bit decimal without loss of precision"
       ],
       "opts": [
         "No, C# forbids mixing int and decimal completely",
-        "Yes, int to decimal is an implicit widening conversion because all 32-bit integers fit within 128-bit decimal without loss of precision",
         "Only if the int is negative",
-        "Only if an explicit cast is supplied"
+        "Only if an explicit cast is supplied",
+        "Yes, int to decimal is an implicit widening conversion because all 32-bit integers fit within 128-bit decimal without loss of precision"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "An implicit conversion exists from int to decimal because no magnitude or precision is lost (widening conversion).",
       "explanation": "An implicit conversion exists from int to decimal because no magnitude or precision is lost (widening conversion).",
-      "distractorRationale": "Options other than \"Yes, int to decimal is an implicit widening conversion becau\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7634,22 +7634,22 @@
       "stem": "Why does the statement `lblAverage.Text = dblAverage.toString(''n2'');` fail to compile in Visual C#?",
       "code": "",
       "options": [
-        "The 'n2' specifier is only valid for integers, not doubles",
-        "The ToString method cannot accept format strings without passing a CultureInfo object",
         "C# method names are case-sensitive (ToString, not toString) and string format specifiers require standard double quotes (\"n2\"), not paired single quotes (''n2'')",
-        "In C#, double values must be converted using Convert.ToString() rather than the instance method .ToString()"
+        "In C#, double values must be converted using Convert.ToString() rather than the instance method .ToString()",
+        "The 'n2' specifier is only valid for integers, not doubles",
+        "The ToString method cannot accept format strings without passing a CultureInfo object"
       ],
       "opts": [
-        "The 'n2' specifier is only valid for integers, not doubles",
-        "The ToString method cannot accept format strings without passing a CultureInfo object",
         "C# method names are case-sensitive (ToString, not toString) and string format specifiers require standard double quotes (\"n2\"), not paired single quotes (''n2'')",
-        "In C#, double values must be converted using Convert.ToString() rather than the instance method .ToString()"
+        "In C#, double values must be converted using Convert.ToString() rather than the instance method .ToString()",
+        "The 'n2' specifier is only valid for integers, not doubles",
+        "The ToString method cannot accept format strings without passing a CultureInfo object"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "C# is strictly case-sensitive: toString() causes CS1061 ('double does not contain a definition for toString'). Furthermore, string literals require double quotes (\"n2\"); paired single quotes (''n2'') create an invalid character literal syntax error.",
       "explanation": "C# is strictly case-sensitive: toString() causes CS1061 ('double does not contain a definition for toString'). Furthermore, string literals require double quotes (\"n2\"); paired single quotes (''n2'') create an invalid character literal syntax error.",
-      "distractorRationale": "Options other than \"C# method names are case-sensitive (ToString, not toString) \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -7676,22 +7676,22 @@
       "stem": "What compiler error does the Roslyn C# compiler raise for the statement `double dblAverage = ((dblTest1 + dblTest2) / 2.0).ToString(\"n2\");`?",
       "code": "",
       "options": [
-        "CS0103: The name 'dblAverage' does not exist in the current context",
-        "CS0266: Cannot implicitly convert type 'double' to 'int'",
         "No error is raised because C# automatically parses formatted strings into double variables",
-        "CS0029: Cannot implicitly convert type 'string' to 'double'"
+        "CS0029: Cannot implicitly convert type 'string' to 'double'",
+        "CS0103: The name 'dblAverage' does not exist in the current context",
+        "CS0266: Cannot implicitly convert type 'double' to 'int'"
       ],
       "opts": [
-        "CS0103: The name 'dblAverage' does not exist in the current context",
-        "CS0266: Cannot implicitly convert type 'double' to 'int'",
         "No error is raised because C# automatically parses formatted strings into double variables",
-        "CS0029: Cannot implicitly convert type 'string' to 'double'"
+        "CS0029: Cannot implicitly convert type 'string' to 'double'",
+        "CS0103: The name 'dblAverage' does not exist in the current context",
+        "CS0266: Cannot implicitly convert type 'double' to 'int'"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "Calling .ToString(\"n2\") returns a formatted string object. In C#, a string cannot be assigned to a double variable, producing compiler error CS0029. The formatted string should be assigned to lblAverage.Text.",
       "explanation": "Calling .ToString(\"n2\") returns a formatted string object. In C#, a string cannot be assigned to a double variable, producing compiler error CS0029. The formatted string should be assigned to lblAverage.Text.",
-      "distractorRationale": "Options other than \"CS0029: Cannot implicitly convert type 'string' to 'double'\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -7718,22 +7718,22 @@
       "stem": "When catching a `FormatException` for non-numeric text in `txtTest1`, what pair of method calls returns keyboard focus and highlights the invalid text for immediate replacement?",
       "code": "",
       "options": [
-        "txtTest1.Focus(); txtTest1.SelectAll();",
         "txtTest1.Clear(); txtTest1.Dispose();",
         "txtTest1.Hide(); txtTest1.Show();",
+        "txtTest1.Focus(); txtTest1.SelectAll();",
         "txtTest1.ResetText(); txtTest1.Undo();"
       ],
       "opts": [
-        "txtTest1.Focus(); txtTest1.SelectAll();",
         "txtTest1.Clear(); txtTest1.Dispose();",
         "txtTest1.Hide(); txtTest1.Show();",
+        "txtTest1.Focus(); txtTest1.SelectAll();",
         "txtTest1.ResetText(); txtTest1.Undo();"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Calling txtTest1.Focus() places the insertion cursor into the control, and txtTest1.SelectAll() selects the entire erroneous string so the student can immediately overwrite it without manual backspacing.",
       "explanation": "Calling txtTest1.Focus() places the insertion cursor into the control, and txtTest1.SelectAll() selects the entire erroneous string so the student can immediately overwrite it without manual backspacing.",
-      "distractorRationale": "Options other than \"txtTest1.Focus(); txtTest1.SelectAll();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -7760,22 +7760,22 @@
       "stem": "Which declaration creates a boolean flag variable initialized to false?",
       "code": "",
       "options": [
-        "boolean isValid = 0;",
-        "bool isValid = false;",
         "bit isValid = false;",
-        "int isValid = false;"
+        "int isValid = false;",
+        "boolean isValid = 0;",
+        "bool isValid = false;"
       ],
       "opts": [
-        "boolean isValid = 0;",
-        "bool isValid = false;",
         "bit isValid = false;",
-        "int isValid = false;"
+        "int isValid = false;",
+        "boolean isValid = 0;",
+        "bool isValid = false;"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "In C#, boolean variables are declared with the 'bool' keyword and take literal values 'true' or 'false'.",
       "explanation": "In C#, boolean variables are declared with the 'bool' keyword and take literal values 'true' or 'false'.",
-      "distractorRationale": "Options other than \"bool isValid = false;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7802,22 +7802,22 @@
       "stem": "Under standard Hungarian naming conventions, what is the control identifier for a TextBox accepting a student's surname?",
       "code": "",
       "options": [
-        "tb_Surname",
-        "SurnameTextBox",
         "txtSurname",
-        "textSurname"
+        "textSurname",
+        "tb_Surname",
+        "SurnameTextBox"
       ],
       "opts": [
-        "tb_Surname",
-        "SurnameTextBox",
         "txtSurname",
-        "textSurname"
+        "textSurname",
+        "tb_Surname",
+        "SurnameTextBox"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "NWU standard prefixes mandate 'txt' for TextBox controls, followed by PascalCase: 'txtSurname'.",
       "explanation": "NWU standard prefixes mandate 'txt' for TextBox controls, followed by PascalCase: 'txtSurname'.",
-      "distractorRationale": "Options other than \"txtSurname\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7844,22 +7844,22 @@
       "stem": "Under standard Hungarian naming conventions, what is the control identifier for a Label displaying calculated gross pay?",
       "code": "",
       "options": [
-        "lbl_pay",
         "GrossPayLabel",
+        "lblGrossPay",
         "labelGrossPay",
-        "lblGrossPay"
+        "lbl_pay"
       ],
       "opts": [
-        "lbl_pay",
         "GrossPayLabel",
+        "lblGrossPay",
         "labelGrossPay",
-        "lblGrossPay"
+        "lbl_pay"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "Labels use the 'lbl' prefix followed by descriptive PascalCase naming: 'lblGrossPay'.",
       "explanation": "Labels use the 'lbl' prefix followed by descriptive PascalCase naming: 'lblGrossPay'.",
-      "distractorRationale": "Options other than \"lblGrossPay\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -7886,22 +7886,22 @@
       "stem": "Why is 'Math.Round(val, 2, MidpointRounding.AwayFromZero)' commonly used in financial accounting?",
       "code": "",
       "options": [
-        "It rounds .005 up to .01 (standard commercial rounding) rather than rounding to the nearest even number (banker's rounding)",
+        "It eliminates all decimal places",
         "It converts negative numbers to positive",
-        "It automatically calculates VAT",
-        "It eliminates all decimal places"
+        "It rounds .005 up to .01 (standard commercial rounding) rather than rounding to the nearest even number (banker's rounding)",
+        "It automatically calculates VAT"
       ],
       "opts": [
-        "It rounds .005 up to .01 (standard commercial rounding) rather than rounding to the nearest even number (banker's rounding)",
+        "It eliminates all decimal places",
         "It converts negative numbers to positive",
-        "It automatically calculates VAT",
-        "It eliminates all decimal places"
+        "It rounds .005 up to .01 (standard commercial rounding) rather than rounding to the nearest even number (banker's rounding)",
+        "It automatically calculates VAT"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "MidpointRounding.AwayFromZero implements traditional arithmetic rounding (e.g. 2.5 rounds to 3), which matches standard commercial practice.",
       "explanation": "MidpointRounding.AwayFromZero implements traditional arithmetic rounding (e.g. 2.5 rounds to 3), which matches standard commercial practice.",
-      "distractorRationale": "Options other than \"It rounds .005 up to .01 (standard commercial rounding) rath\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -7929,21 +7929,21 @@
       "code": "",
       "options": [
         "15000.00",
-        "15,000",
         "R 15000",
-        "1.50E+04"
+        "1.50E+04",
+        "15,000"
       ],
       "opts": [
         "15000.00",
-        "15,000",
         "R 15000",
-        "1.50E+04"
+        "1.50E+04",
+        "15,000"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "The 'N0' format specifier formats a number with digit group separators (commas) and zero fractional decimal places: '15,000'.",
       "explanation": "The 'N0' format specifier formats a number with digit group separators (commas) and zero fractional decimal places: '15,000'.",
-      "distractorRationale": "Options other than \"15,000\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -7970,22 +7970,22 @@
       "stem": "What happens when the '+' operator is used with a string operand and a numeric operand in C#?",
       "code": "",
       "options": [
-        "A FormatException is thrown at runtime",
-        "The string is converted to a number and added",
         "String concatenation is performed; the numeric value is converted to a string and joined to the other string",
-        "Compiler error CS0019 occurs"
+        "The string is converted to a number and added",
+        "Compiler error CS0019 occurs",
+        "A FormatException is thrown at runtime"
       ],
       "opts": [
-        "A FormatException is thrown at runtime",
-        "The string is converted to a number and added",
         "String concatenation is performed; the numeric value is converted to a string and joined to the other string",
-        "Compiler error CS0019 occurs"
+        "The string is converted to a number and added",
+        "Compiler error CS0019 occurs",
+        "A FormatException is thrown at runtime"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "When either operand of '+' is a string, C# treats '+' as the string concatenation operator, converting the other operand to its string representation.",
       "explanation": "When either operand of '+' is a string, C# treats '+' as the string concatenation operator, converting the other operand to its string representation.",
-      "distractorRationale": "Options other than \"String concatenation is performed; the numeric value is conv\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8013,21 +8013,21 @@
       "code": "",
       "options": [
         "\"Subtotal: 70\"",
+        "\"Subtotal: 5020\"",
         "\"Subtotal: 1000\"",
-        "A compilation error",
-        "\"Subtotal: 5020\""
+        "A compilation error"
       ],
       "opts": [
         "\"Subtotal: 70\"",
+        "\"Subtotal: 5020\"",
         "\"Subtotal: 1000\"",
-        "A compilation error",
-        "\"Subtotal: 5020\""
+        "A compilation error"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "Evaluation proceeds left-to-right: '\"Subtotal: \" + 50' produces '\"Subtotal: 50\"', and concatenating 20 yields '\"Subtotal: 5020\"'.",
       "explanation": "Evaluation proceeds left-to-right: '\"Subtotal: \" + 50' produces '\"Subtotal: 50\"', and concatenating 20 yields '\"Subtotal: 5020\"'.",
-      "distractorRationale": "Options other than \"\"Subtotal: 5020\"\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8054,22 +8054,22 @@
       "stem": "How can '\"Subtotal: \" + 50 + 20' be corrected to display 'Subtotal: 70'?",
       "code": "",
       "options": [
-        "\"Subtotal: \" + (50 + 20)",
-        "\"Subtotal: \" + 50 - 20",
         "\"Subtotal: \" * (50 + 20)",
-        "\"Subtotal: \" + \"70\" - 20"
+        "\"Subtotal: \" + \"70\" - 20",
+        "\"Subtotal: \" + (50 + 20)",
+        "\"Subtotal: \" + 50 - 20"
       ],
       "opts": [
-        "\"Subtotal: \" + (50 + 20)",
-        "\"Subtotal: \" + 50 - 20",
         "\"Subtotal: \" * (50 + 20)",
-        "\"Subtotal: \" + \"70\" - 20"
+        "\"Subtotal: \" + \"70\" - 20",
+        "\"Subtotal: \" + (50 + 20)",
+        "\"Subtotal: \" + 50 - 20"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Enclosing the numbers in parentheses '(50 + 20)' forces arithmetic addition first before string concatenation.",
       "explanation": "Enclosing the numbers in parentheses '(50 + 20)' forces arithmetic addition first before string concatenation.",
-      "distractorRationale": "Options other than \"\"Subtotal: \" + (50 + 20)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8097,21 +8097,21 @@
       "code": "",
       "options": [
         "2",
-        "2.5",
         "2.0",
-        "3"
+        "3",
+        "2.5"
       ],
       "opts": [
         "2",
-        "2.5",
         "2.0",
-        "3"
+        "3",
+        "2.5"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Because 4.0 is a double literal, C# performs floating-point division, producing the exact double result 2.5.",
       "explanation": "Because 4.0 is a double literal, C# performs floating-point division, producing the exact double result 2.5.",
-      "distractorRationale": "Options other than \"2.5\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8138,22 +8138,22 @@
       "stem": "Which C# method returns true if a string variable is either null, empty, or contains only whitespace spaces?",
       "code": "",
       "options": [
-        "str.IsEmpty()",
-        "string.CheckEmpty(str)",
         "string.IsNullOrWhiteSpace(str)",
-        "str.HasNoText()"
+        "str.HasNoText()",
+        "str.IsEmpty()",
+        "string.CheckEmpty(str)"
       ],
       "opts": [
-        "str.IsEmpty()",
-        "string.CheckEmpty(str)",
         "string.IsNullOrWhiteSpace(str)",
-        "str.HasNoText()"
+        "str.HasNoText()",
+        "str.IsEmpty()",
+        "string.CheckEmpty(str)"
       ],
-      "answer": 2,
-      "ans": 2,
-      "exp": "string.IsNullOrWhiteSpace() evaluates whether a string is null, empty (\"\"), or consists entirely of whitespace characters.",
-      "explanation": "string.IsNullOrWhiteSpace() evaluates whether a string is null, empty (\"\"), or consists entirely of whitespace characters.",
-      "distractorRationale": "Options other than \"string.IsNullOrWhiteSpace(str)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 0,
+      "ans": 0,
+      "exp": "String.IsNullOrWhiteSpace() evaluates whether a string is null, empty (\"\"), or consists entirely of whitespace characters.",
+      "explanation": "String.IsNullOrWhiteSpace() evaluates whether a string is null, empty (\"\"), or consists entirely of whitespace characters.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8180,22 +8180,22 @@
       "stem": "What happens if a student uses 'decimal.Parse(\"\")' on an empty TextBox string without try-catch protection?",
       "code": "",
       "options": [
-        "The variable is assigned 0m silently",
         "The form reloads automatically",
+        "A FormatException is thrown, immediately terminating or crashing the application",
         "The textbox turns red",
-        "A FormatException is thrown, immediately terminating or crashing the application"
+        "The variable is assigned 0m silently"
       ],
       "opts": [
-        "The variable is assigned 0m silently",
         "The form reloads automatically",
+        "A FormatException is thrown, immediately terminating or crashing the application",
         "The textbox turns red",
-        "A FormatException is thrown, immediately terminating or crashing the application"
+        "The variable is assigned 0m silently"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "decimal.Parse cannot parse an empty string and throws an unhandled FormatException, causing a program crash.",
-      "explanation": "decimal.Parse cannot parse an empty string and throws an unhandled FormatException, causing a program crash.",
-      "distractorRationale": "Options other than \"A FormatException is thrown, immediately terminating or cras\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 1,
+      "ans": 1,
+      "exp": "Decimal.Parse cannot parse an empty string and throws an unhandled FormatException, causing a program crash.",
+      "explanation": "Decimal.Parse cannot parse an empty string and throws an unhandled FormatException, causing a program crash.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -8221,22 +8221,22 @@
       "stem": "Which C# statement formats a greeting label (`lblGreeting`) to display `'Braai master: '` followed by the trimmed name entered in `txtName`?",
       "code": "",
       "options": [
-        "lblGreeting.Text = $\"Braai master: {txtName.Text.Trim()}\";",
         "lblGreeting.Text = \"Braai master: user\";",
         "txtName.Text = lblGreeting.Text;",
+        "lblGreeting.Text = $\"Braai master: {txtName.Text.Trim()}\";",
         "lblGreeting.Name = txtName.Name;"
       ],
       "opts": [
-        "lblGreeting.Text = $\"Braai master: {txtName.Text.Trim()}\";",
         "lblGreeting.Text = \"Braai master: user\";",
         "txtName.Text = lblGreeting.Text;",
+        "lblGreeting.Text = $\"Braai master: {txtName.Text.Trim()}\";",
         "lblGreeting.Name = txtName.Name;"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "String interpolation or concatenation with txtName.Text.Trim() dynamically formats the personalized greeting in lblGreeting.Text.",
       "explanation": "String interpolation or concatenation with txtName.Text.Trim() dynamically formats the personalized greeting in lblGreeting.Text.",
-      "distractorRationale": "Options other than \"lblGreeting.Text = $\"Braai master: {txtName.Text.Trim()}\";\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -8263,22 +8263,22 @@
       "stem": "What operator in C# explicitly converts an expression from one data type to another, such as '(int)totalCost'?",
       "code": "",
       "options": [
+        "Null-coalescing operator",
         "Ternary operator",
-        "Cast operator",
         "Modulus operator",
-        "Null-coalescing operator"
+        "Cast operator"
       ],
       "opts": [
+        "Null-coalescing operator",
         "Ternary operator",
-        "Cast operator",
         "Modulus operator",
-        "Null-coalescing operator"
+        "Cast operator"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "The cast operator (parentheses enclosing a type name) explicitly instructs the compiler to convert a value to the specified type.",
       "explanation": "The cast operator (parentheses enclosing a type name) explicitly instructs the compiler to convert a value to the specified type.",
-      "distractorRationale": "Options other than \"Cast operator\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -8305,22 +8305,22 @@
       "stem": "What is the approximate maximum value that can be held by a standard 32-bit signed C# 'int' variable?",
       "code": "",
       "options": [
-        "Approximately 32,767",
-        "Approximately 65,535",
         "Approximately 2.14 billion (2,147,483,647)",
-        "Virtually unlimited"
+        "Approximately 65,535",
+        "Virtually unlimited",
+        "Approximately 32,767"
       ],
       "opts": [
-        "Approximately 32,767",
-        "Approximately 65,535",
         "Approximately 2.14 billion (2,147,483,647)",
-        "Virtually unlimited"
+        "Approximately 65,535",
+        "Virtually unlimited",
+        "Approximately 32,767"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "A signed 32-bit integer ranges from -2,147,483,648 to +2,147,483,647 (int.MaxValue).",
       "explanation": "A signed 32-bit integer ranges from -2,147,483,648 to +2,147,483,647 (int.MaxValue).",
-      "distractorRationale": "Options other than \"Approximately 2.14 billion (2,147,483,647)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8348,21 +8348,21 @@
       "code": "",
       "options": [
         "string",
+        "char",
         "byte",
-        "character",
-        "char"
+        "character"
       ],
       "opts": [
         "string",
+        "char",
         "byte",
-        "character",
-        "char"
+        "character"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "The 'char' type represents a single 16-bit Unicode character (e.g. 'A', '7', '$') written in single quotes.",
       "explanation": "The 'char' type represents a single 16-bit Unicode character (e.g. 'A', '7', '$') written in single quotes.",
-      "distractorRationale": "Options other than \"char\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8389,22 +8389,22 @@
       "stem": "What is the scope of a variable declared inside the body block of an 'if' statement?",
       "code": "",
       "options": [
-        "Block scope: it is accessible only inside that specific if block and ceases to exist once the block finishes",
+        "Method scope: accessible throughout the entire method",
         "Global scope: accessible to the whole Windows operating system",
-        "Class scope: accessible across all forms",
-        "Method scope: accessible throughout the entire method"
+        "Block scope: it is accessible only inside that specific if block and ceases to exist once the block finishes",
+        "Class scope: accessible across all forms"
       ],
       "opts": [
-        "Block scope: it is accessible only inside that specific if block and ceases to exist once the block finishes",
+        "Method scope: accessible throughout the entire method",
         "Global scope: accessible to the whole Windows operating system",
-        "Class scope: accessible across all forms",
-        "Method scope: accessible throughout the entire method"
+        "Block scope: it is accessible only inside that specific if block and ceases to exist once the block finishes",
+        "Class scope: accessible across all forms"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Variables declared within a code block (inside curly braces) have block scope and cannot be referenced outside those braces.",
       "explanation": "Variables declared within a code block (inside curly braces) have block scope and cannot be referenced outside those braces.",
-      "distractorRationale": "Options other than \"Block scope: it is accessible only inside that specific if b\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_try_catch",
         "def_scope_fields_vs_local"
@@ -8430,22 +8430,22 @@
       "stem": "Why should blank lines be used to separate input parsing, arithmetic calculations, and output display inside an event handler?",
       "code": "",
       "options": [
-        "Visual Studio requires blank lines to compile",
-        "Blank lines visually structure code into logical paragraphs, improving readability and maintainability",
         "Blank lines increase execution speed",
-        "Blank lines automatically reset memory"
+        "Blank lines automatically reset memory",
+        "Visual Studio requires blank lines to compile",
+        "Blank lines visually structure code into logical paragraphs, improving readability and maintainability"
       ],
       "opts": [
-        "Visual Studio requires blank lines to compile",
-        "Blank lines visually structure code into logical paragraphs, improving readability and maintainability",
         "Blank lines increase execution speed",
-        "Blank lines automatically reset memory"
+        "Blank lines automatically reset memory",
+        "Visual Studio requires blank lines to compile",
+        "Blank lines visually structure code into logical paragraphs, improving readability and maintainability"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Using blank lines to visually decouple reading input, processing calculations, and writing output makes code legible and aligns with NWU code standards.",
       "explanation": "Using blank lines to visually decouple reading input, processing calculations, and writing output makes code legible and aligns with NWU code standards.",
-      "distractorRationale": "Options other than \"Blank lines visually structure code into logical paragraphs,\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8472,22 +8472,22 @@
       "stem": "What property of a string object returns the total count of characters it contains?",
       "code": "",
       "options": [
+        "Length",
         "Count()",
         "Size",
-        "Length",
         "TotalChars"
       ],
       "opts": [
+        "Length",
         "Count()",
         "Size",
-        "Length",
         "TotalChars"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "The .Length property returns the number of characters in a string as an integer.",
       "explanation": "The .Length property returns the number of characters in a string as an integer.",
-      "distractorRationale": "Options other than \"Length\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8514,22 +8514,22 @@
       "stem": "Which unary operator increments an integer variable's value by exactly 1 in C#?",
       "code": "",
       "options": [
-        "--",
-        "+=",
         "**",
-        "++"
+        "++",
+        "--",
+        "+="
       ],
       "opts": [
-        "--",
-        "+=",
         "**",
-        "++"
+        "++",
+        "--",
+        "+="
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "The increment operator (++) increases the numeric value of its operand by 1.",
       "explanation": "The increment operator (++) increases the numeric value of its operand by 1.",
-      "distractorRationale": "Options other than \"++\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8556,22 +8556,22 @@
       "stem": "If wors costs R85.00/kg and bread rolls cost R3.50 each (at 120g of wors per roll), what is the cost breakdown for 1.5 kg of wors (1500g / 120g = 12 rolls)?",
       "code": "",
       "options": [
-        "Wors: R 127.50, Rolls: R 42.00, Total: R 169.50",
-        "Wors: R 100.00, Rolls: R 35.00, Total: R 135.00",
         "Wors: R 85.00, Rolls: R 42.00, Total: R 127.00",
-        "Wors: R 150.00, Rolls: R 50.00, Total: R 200.00"
+        "Wors: R 150.00, Rolls: R 50.00, Total: R 200.00",
+        "Wors: R 127.50, Rolls: R 42.00, Total: R 169.50",
+        "Wors: R 100.00, Rolls: R 35.00, Total: R 135.00"
       ],
       "opts": [
-        "Wors: R 127.50, Rolls: R 42.00, Total: R 169.50",
-        "Wors: R 100.00, Rolls: R 35.00, Total: R 135.00",
         "Wors: R 85.00, Rolls: R 42.00, Total: R 127.00",
-        "Wors: R 150.00, Rolls: R 50.00, Total: R 200.00"
+        "Wors: R 150.00, Rolls: R 50.00, Total: R 200.00",
+        "Wors: R 127.50, Rolls: R 42.00, Total: R 169.50",
+        "Wors: R 100.00, Rolls: R 35.00, Total: R 135.00"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "1.5 kg * R85 = R127.50. 1500g / 120g = 12 rolls. 12 rolls * R3.50 = R42.00. Total = R127.50 + R42.00 = R169.50.",
       "explanation": "1.5 kg * R85 = R127.50. 1500g / 120g = 12 rolls. 12 rolls * R3.50 = R42.00. Total = R127.50 + R42.00 = R169.50.",
-      "distractorRationale": "Options other than \"Wors: R 127.50, Rolls: R 42.00, Total: R 169.50\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8599,21 +8599,21 @@
       "code": "",
       "options": [
         "\\t",
-        "\\n",
         "\\r",
-        "\\b"
+        "\\b",
+        "\\n"
       ],
       "opts": [
         "\\t",
-        "\\n",
         "\\r",
-        "\\b"
+        "\\b",
+        "\\n"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "The escape sequence '\\n' inserts a linefeed (newline) character into a string.",
       "explanation": "The escape sequence '\\n' inserts a linefeed (newline) character into a string.",
-      "distractorRationale": "Options other than \"\\n\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -8640,22 +8640,22 @@
       "stem": "Which escape sequence inserts a horizontal tab space into a string?",
       "code": "",
       "options": [
-        "\\s",
-        "\\a",
         "\\t",
-        "\\n"
+        "\\n",
+        "\\s",
+        "\\a"
       ],
       "opts": [
-        "\\s",
-        "\\a",
         "\\t",
-        "\\n"
+        "\\n",
+        "\\s",
+        "\\a"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "The escape sequence '\\t' inserts a horizontal tab character.",
       "explanation": "The escape sequence '\\t' inserts a horizontal tab character.",
-      "distractorRationale": "Options other than \"\\t\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8682,22 +8682,22 @@
       "stem": "What C# statement should be called inside an event handler to exit immediately if validation detects invalid input?",
       "code": "",
       "options": [
-        "break;",
         "stop;",
+        "return;",
         "exit;",
-        "return;"
+        "break;"
       ],
       "opts": [
-        "break;",
         "stop;",
+        "return;",
         "exit;",
-        "return;"
+        "break;"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "The 'return;' statement immediately terminates execution of a void method, preventing subsequent calculations from running with invalid data.",
       "explanation": "The 'return;' statement immediately terminates execution of a void method, preventing subsequent calculations from running with invalid data.",
-      "distractorRationale": "Options other than \"return;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8724,22 +8724,22 @@
       "stem": "In Visual Studio, why should you use 'File -> Save All' (Ctrl+Shift+S) rather than 'File -> Save' (Ctrl+S) before packaging a Windows Forms project?",
       "code": "",
       "options": [
-        "Ctrl+S saves only the active code tab, leaving designer layout modifications unsaved on disk",
         "Ctrl+S corrupts the project file",
         "Ctrl+Shift+S compresses the folder into a zip file",
+        "Ctrl+S saves only the active code tab, leaving designer layout modifications unsaved on disk",
         "Ctrl+Shift+S submits the project directly to assessment"
       ],
       "opts": [
-        "Ctrl+S saves only the active code tab, leaving designer layout modifications unsaved on disk",
         "Ctrl+S corrupts the project file",
         "Ctrl+Shift+S compresses the folder into a zip file",
+        "Ctrl+S saves only the active code tab, leaving designer layout modifications unsaved on disk",
         "Ctrl+Shift+S submits the project directly to assessment"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Ctrl+S saves only the currently viewed file. If Form1.cs is open, recent Designer changes are not saved unless Save All (Ctrl+Shift+S) is used.",
       "explanation": "Ctrl+S saves only the currently viewed file. If Form1.cs is open, recent Designer changes are not saved unless Save All (Ctrl+Shift+S) is used.",
-      "distractorRationale": "Options other than \"Ctrl+S saves only the active code tab, leaving designer layo\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -8767,21 +8767,21 @@
       "code": "",
       "options": [
         "decimal.TryParse(string, out decimal result)",
+        "decimal.Convert(string)",
         "decimal.Parse(string)",
-        "Convert.ToDecimal(string)",
-        "decimal.Convert(string)"
+        "Convert.ToDecimal(string)"
       ],
       "opts": [
         "decimal.TryParse(string, out decimal result)",
+        "decimal.Convert(string)",
         "decimal.Parse(string)",
-        "Convert.ToDecimal(string)",
-        "decimal.Convert(string)"
+        "Convert.ToDecimal(string)"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "decimal.TryParse returns true if parsing succeeds and false if it fails, safely populating the 'out' variable without crashing.",
-      "explanation": "decimal.TryParse returns true if parsing succeeds and false if it fails, safely populating the 'out' variable without crashing.",
-      "distractorRationale": "Options other than \"decimal.TryParse(string, out decimal result)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "Decimal.TryParse returns true if parsing succeeds and false if it fails, safely populating the 'out' variable without crashing.",
+      "explanation": "Decimal.TryParse returns true if parsing succeeds and false if it fails, safely populating the 'out' variable without crashing.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -8808,22 +8808,22 @@
       "stem": "What does the 'TryParse' method return when parsing fails on an invalid string input?",
       "code": "",
       "options": [
-        "false (and sets the out variable to 0)",
         "true",
+        "false (and sets the out variable to 0)",
         "null",
         "Throws a FormatException"
       ],
       "opts": [
-        "false (and sets the out variable to 0)",
         "true",
+        "false (and sets the out variable to 0)",
         "null",
         "Throws a FormatException"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "TryParse returns boolean false upon failure and assigns 0 to the target out parameter.",
       "explanation": "TryParse returns boolean false upon failure and assigns 0 to the target out parameter.",
-      "distractorRationale": "Options other than \"false (and sets the out variable to 0)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_tryparse",
         "def_parse_methods",
@@ -8850,22 +8850,22 @@
       "stem": "Which relational operator checks whether two expressions are NOT equal in Visual C#?",
       "code": "",
       "options": [
-        "!=",
         "<>",
         "!==",
+        "!=",
         "NOT ="
       ],
       "opts": [
-        "!=",
         "<>",
         "!==",
+        "!=",
         "NOT ="
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "In C#, '!=' is the inequality operator. ('<>' is used in SQL or Basic, not C#).",
       "explanation": "In C#, '!=' is the inequality operator. ('<>' is used in SQL or Basic, not C#).",
-      "distractorRationale": "Options other than \"!=\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -8892,22 +8892,22 @@
       "stem": "Which logical operator represents logical AND with short-circuit evaluation in C#?",
       "code": "",
       "options": [
-        "&&",
-        "&",
         "AND",
-        "||"
+        "||",
+        "&",
+        "&&"
       ],
       "opts": [
-        "&&",
-        "&",
         "AND",
-        "||"
+        "||",
+        "&",
+        "&&"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "'&&' is the short-circuit conditional AND operator. If the left operand is false, the right operand is not evaluated.",
       "explanation": "'&&' is the short-circuit conditional AND operator. If the left operand is false, the right operand is not evaluated.",
-      "distractorRationale": "Options other than \"&&\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -8935,21 +8935,21 @@
       "code": "",
       "options": [
         "||",
-        "|",
         "OR",
-        "!"
+        "!",
+        "|"
       ],
       "opts": [
         "||",
-        "|",
         "OR",
-        "!"
+        "!",
+        "|"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "'||' is the conditional OR operator. If the left operand is true, evaluation short-circuits to true.",
       "explanation": "'||' is the conditional OR operator. If the left operand is true, evaluation short-circuits to true.",
-      "distractorRationale": "Options other than \"||\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -8976,22 +8976,22 @@
       "stem": "What happens during short-circuit evaluation of 'if (a > 10 && b < 20)' when 'a' is 5?",
       "code": "",
       "options": [
-        "Since 5 > 10 is false, 'b < 20' is never evaluated, saving execution time",
         "The entire condition evaluates to true",
+        "Since 5 > 10 is false, 'b < 20' is never evaluated, saving execution time",
         "Both sides are always evaluated regardless",
         "A compiler error is thrown"
       ],
       "opts": [
-        "Since 5 > 10 is false, 'b < 20' is never evaluated, saving execution time",
         "The entire condition evaluates to true",
+        "Since 5 > 10 is false, 'b < 20' is never evaluated, saving execution time",
         "Both sides are always evaluated regardless",
         "A compiler error is thrown"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "Short-circuit evaluation stops evaluating as soon as the outcome is guaranteed (false && anything is false).",
       "explanation": "Short-circuit evaluation stops evaluating as soon as the outcome is guaranteed (false && anything is false).",
-      "distractorRationale": "Options other than \"Since 5 > 10 is false, 'b < 20' is never evaluated, saving e\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9018,22 +9018,22 @@
       "stem": "How do RadioButton controls behave when placed inside the same container (such as a GroupBox or Form)?",
       "code": "",
       "options": [
-        "They are mutually exclusive: checking one automatically unchecks all other radio buttons in that container",
         "Multiple radio buttons can be checked simultaneously",
         "They behave identically to CheckBoxes",
+        "They are mutually exclusive: checking one automatically unchecks all other radio buttons in that container",
         "RadioButtons cannot be unchecked once clicked"
       ],
       "opts": [
-        "They are mutually exclusive: checking one automatically unchecks all other radio buttons in that container",
         "Multiple radio buttons can be checked simultaneously",
         "They behave identically to CheckBoxes",
+        "They are mutually exclusive: checking one automatically unchecks all other radio buttons in that container",
         "RadioButtons cannot be unchecked once clicked"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Radio buttons within the same container provide mutually exclusive selection: exactly one can be selected at a time.",
       "explanation": "Radio buttons within the same container provide mutually exclusive selection: exactly one can be selected at a time.",
-      "distractorRationale": "Options other than \"They are mutually exclusive: checking one automatically unch\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -9059,22 +9059,22 @@
       "stem": "How do CheckBox controls differ from RadioButton controls in a GUI?",
       "code": "",
       "options": [
-        "CheckBoxes allow independent, multiple selections; any number of checkboxes can be checked at the same time",
+        "CheckBoxes cannot trigger event handlers",
         "CheckBoxes are mutually exclusive",
         "CheckBoxes do not have a Checked property",
-        "CheckBoxes cannot trigger event handlers"
+        "CheckBoxes allow independent, multiple selections; any number of checkboxes can be checked at the same time"
       ],
       "opts": [
-        "CheckBoxes allow independent, multiple selections; any number of checkboxes can be checked at the same time",
+        "CheckBoxes cannot trigger event handlers",
         "CheckBoxes are mutually exclusive",
         "CheckBoxes do not have a Checked property",
-        "CheckBoxes cannot trigger event handlers"
+        "CheckBoxes allow independent, multiple selections; any number of checkboxes can be checked at the same time"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "CheckBoxes represent independent yes/no choices. Checking one does not affect any other checkbox.",
       "explanation": "CheckBoxes represent independent yes/no choices. Checking one does not affect any other checkbox.",
-      "distractorRationale": "Options other than \"CheckBoxes allow independent, multiple selections; any numbe\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -9101,21 +9101,21 @@
       "code": "",
       "options": [
         "Checked",
+        "State",
         "Selected",
-        "Value",
-        "State"
+        "Value"
       ],
       "opts": [
         "Checked",
+        "State",
         "Selected",
-        "Value",
-        "State"
+        "Value"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "The 'Checked' property holds a boolean value: True if selected, false if unselected.",
       "explanation": "The 'Checked' property holds a boolean value: True if selected, false if unselected.",
-      "distractorRationale": "Options other than \"Checked\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -9141,22 +9141,22 @@
       "stem": "What is the primary function of a GroupBox control in Visual C# form design?",
       "code": "",
       "options": [
-        "To visually group related controls and create separate mutually exclusive scopes for RadioButtons",
-        "To display animated GIFs",
         "To automatically validate text input",
-        "To speed up CPU calculations"
+        "To visually group related controls and create separate mutually exclusive scopes for RadioButtons",
+        "To speed up CPU calculations",
+        "To display animated GIFs"
       ],
       "opts": [
-        "To visually group related controls and create separate mutually exclusive scopes for RadioButtons",
-        "To display animated GIFs",
         "To automatically validate text input",
-        "To speed up CPU calculations"
+        "To visually group related controls and create separate mutually exclusive scopes for RadioButtons",
+        "To speed up CPU calculations",
+        "To display animated GIFs"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "GroupBox acts as a container control. Placing radio buttons inside different group boxes creates independent selection groups.",
       "explanation": "GroupBox acts as a container control. Placing radio buttons inside different group boxes creates independent selection groups.",
-      "distractorRationale": "Options other than \"To visually group related controls and create separate mutua\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -9182,22 +9182,22 @@
       "stem": "What statement must terminate each non-empty 'case' section in a C# switch structure to prevent fall-through?",
       "code": "",
       "options": [
-        "break;",
-        "exit;",
         "continue;",
-        "stop;"
+        "stop;",
+        "break;",
+        "exit;"
       ],
       "opts": [
-        "break;",
-        "exit;",
         "continue;",
-        "stop;"
+        "stop;",
+        "break;",
+        "exit;"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "C# enforces the 'no fall-through' rule: non-empty case blocks must terminate with a jump statement such as 'break;'.",
       "explanation": "C# enforces the 'no fall-through' rule: non-empty case blocks must terminate with a jump statement such as 'break;'.",
-      "distractorRationale": "Options other than \"break;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
@@ -9223,22 +9223,22 @@
       "stem": "Which section in a switch statement executes if none of the explicit 'case' values match the test expression?",
       "code": "",
       "options": [
-        "default:",
         "else:",
         "catch:",
-        "finally:"
+        "finally:",
+        "default:"
       ],
       "opts": [
-        "default:",
         "else:",
         "catch:",
-        "finally:"
+        "finally:",
+        "default:"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "The 'default:' section acts as the catch-all fallback if no case matches.",
       "explanation": "The 'default:' section acts as the catch-all fallback if no case matches.",
-      "distractorRationale": "Options other than \"default:\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
@@ -9279,7 +9279,7 @@
       "ans": 0,
       "exp": "SelectedIndex returns the integer index of the selected item (0 to Count-1), or -1 if no item is selected.",
       "explanation": "SelectedIndex returns the integer index of the selected item (0 to Count-1), or -1 if no item is selected.",
-      "distractorRationale": "Options other than \"SelectedIndex\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
@@ -9305,22 +9305,22 @@
       "stem": "What value does 'lstItems.SelectedIndex' return when NO item is currently selected in the ListBox?",
       "code": "",
       "options": [
+        "Throws an exception",
         "-1",
         "0",
-        "null",
-        "Throws an exception"
+        "null"
       ],
       "opts": [
+        "Throws an exception",
         "-1",
         "0",
-        "null",
-        "Throws an exception"
+        "null"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "When nothing is selected, SelectedIndex equals -1.",
       "explanation": "When nothing is selected, SelectedIndex equals -1.",
-      "distractorRationale": "Options other than \"-1\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
@@ -9346,22 +9346,22 @@
       "stem": "Which method call displays a standard modal alert dialog box in Visual C#?",
       "code": "",
       "options": [
-        "MessageBox.Show(\"Text\", \"Caption\");",
+        "Form.Message(\"Text\");",
         "Alert.Show(\"Text\");",
-        "Dialog.Display(\"Text\");",
-        "Form.Message(\"Text\");"
+        "MessageBox.Show(\"Text\", \"Caption\");",
+        "Dialog.Display(\"Text\");"
       ],
       "opts": [
-        "MessageBox.Show(\"Text\", \"Caption\");",
+        "Form.Message(\"Text\");",
         "Alert.Show(\"Text\");",
-        "Dialog.Display(\"Text\");",
-        "Form.Message(\"Text\");"
+        "MessageBox.Show(\"Text\", \"Caption\");",
+        "Dialog.Display(\"Text\");"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "MessageBox.Show() is the standard .NET Windows Forms method for displaying dialog boxes.",
       "explanation": "MessageBox.Show() is the standard .NET Windows Forms method for displaying dialog boxes.",
-      "distractorRationale": "Options other than \"MessageBox.Show(\"Text\", \"Caption\");\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9390,20 +9390,20 @@
       "options": [
         "int speedOver = limit - recordedSpeed;",
         "decimal speedOver = recordedSpeed / limit;",
-        "int speedOver = recordedSpeed - limit;",
-        "int speedOver = (recordedSpeed + limit) % 2;"
+        "int speedOver = (recordedSpeed + limit) % 2;",
+        "int speedOver = recordedSpeed - limit;"
       ],
       "opts": [
         "int speedOver = limit - recordedSpeed;",
         "decimal speedOver = recordedSpeed / limit;",
-        "int speedOver = recordedSpeed - limit;",
-        "int speedOver = (recordedSpeed + limit) % 2;"
+        "int speedOver = (recordedSpeed + limit) % 2;",
+        "int speedOver = recordedSpeed - limit;"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "Subtracting the zone speed limit from the recorded speed (recordedSpeed - limit) yields a positive integer when speeding and zero or negative when within the limit.",
       "explanation": "Subtracting the zone speed limit from the recorded speed (recordedSpeed - limit) yields a positive integer when speeding and zero or negative when within the limit.",
-      "distractorRationale": "Options other than \"int speedOver = recordedSpeed - limit;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9430,22 +9430,22 @@
       "stem": "In a speed trap calculator where `speedOver <= 0` indicates legal driving, what exact outputs are assigned to `lblKmOver`, `lblCategory`, and `lblFine`?",
       "code": "",
       "options": [
-        "lblKmOver.Text = \"-5 km/h\"; lblCategory.Text = \"Legal\"; lblFine.Text = \"R 0.00\";",
+        "lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Within the limit\"; lblFine.Text = \"No fine. Safe driving.\";",
         "lblKmOver.Text = \"OK\"; lblCategory.Text = \"Pass\"; lblFine.Text = \"None\";",
         "lblFine.Text = \"Warning: drive faster\";",
-        "lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Within the limit\"; lblFine.Text = \"No fine. Safe driving.\";"
+        "lblKmOver.Text = \"-5 km/h\"; lblCategory.Text = \"Legal\"; lblFine.Text = \"R 0.00\";"
       ],
       "opts": [
-        "lblKmOver.Text = \"-5 km/h\"; lblCategory.Text = \"Legal\"; lblFine.Text = \"R 0.00\";",
+        "lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Within the limit\"; lblFine.Text = \"No fine. Safe driving.\";",
         "lblKmOver.Text = \"OK\"; lblCategory.Text = \"Pass\"; lblFine.Text = \"None\";",
         "lblFine.Text = \"Warning: drive faster\";",
-        "lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Within the limit\"; lblFine.Text = \"No fine. Safe driving.\";"
+        "lblKmOver.Text = \"-5 km/h\"; lblCategory.Text = \"Legal\"; lblFine.Text = \"R 0.00\";"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "When speedOver <= 0, the driver is within the speed limit, so the labels display '0 km/h', 'Within the limit', and 'No fine. Safe driving.'.",
       "explanation": "When speedOver <= 0, the driver is within the speed limit, so the labels display '0 km/h', 'Within the limit', and 'No fine. Safe driving.'.",
-      "distractorRationale": "Options other than \"lblKmOver.Text = \"0 km/h\"; lblCategory.Text = \"Within the li\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9472,22 +9472,22 @@
       "stem": "Why should a multi-band speeding fine assessment (1-10, 11-20, 21-30, 31+ km/h over) be engineered as a connected `if-else-if` chain rather than separate unchained `if` statements?",
       "code": "",
       "options": [
+        "Connected chains prevent variables from going out of scope",
         "In a connected chain, once a test evaluates to true, remaining branches are skipped, allowing each condition to test only its upper boundary because lower values were already filtered out",
         "C# does not allow writing more than one independent if statement in the same method",
-        "Separate if statements execute 10 times slower in Windows Forms",
-        "Connected chains prevent variables from going out of scope"
+        "Separate if statements execute 10 times slower in Windows Forms"
       ],
       "opts": [
+        "Connected chains prevent variables from going out of scope",
         "In a connected chain, once a test evaluates to true, remaining branches are skipped, allowing each condition to test only its upper boundary because lower values were already filtered out",
         "C# does not allow writing more than one independent if statement in the same method",
-        "Separate if statements execute 10 times slower in Windows Forms",
-        "Connected chains prevent variables from going out of scope"
+        "Separate if statements execute 10 times slower in Windows Forms"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "A connected chain ensures mutually exclusive execution. Anyone reaching 'else if (speedOver <= 20)' has already failed '<= 10', so the lower bound is implicitly guaranteed.",
       "explanation": "A connected chain ensures mutually exclusive execution. Anyone reaching 'else if (speedOver <= 20)' has already failed '<= 10', so the lower bound is implicitly guaranteed.",
-      "distractorRationale": "Options other than \"In a connected chain, once a test evaluates to true, remaini\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9514,22 +9514,22 @@
       "stem": "Given speed fine bands (1-10: R250 Minor; 11-20: R750 Serious; 21-30: R1500 Severe; 31+: R3000 Court), what fine and category apply for traveling at 85 km/h in a 60 km/h Highway zone (25 km/h over) for a first-time offender?",
       "code": "",
       "options": [
-        "Fine: R 750, Category: \"Serious\"",
-        "Fine: R 1500, Category: \"Severe\"",
         "Fine: R 2500, Category: \"Court appearance\"",
-        "Fine: R 3000, Category: \"Severe - built-up area\""
+        "Fine: R 3000, Category: \"Severe - built-up area\"",
+        "Fine: R 1500, Category: \"Severe\"",
+        "Fine: R 750, Category: \"Serious\""
       ],
       "opts": [
-        "Fine: R 750, Category: \"Serious\"",
-        "Fine: R 1500, Category: \"Severe\"",
         "Fine: R 2500, Category: \"Court appearance\"",
-        "Fine: R 3000, Category: \"Severe - built-up area\""
+        "Fine: R 3000, Category: \"Severe - built-up area\"",
+        "Fine: R 1500, Category: \"Severe\"",
+        "Fine: R 750, Category: \"Serious\""
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "25 km/h over falls into the 21-30 band (R1500, 'Severe'). Highway is not a built-up area, and repeat offender is false, so no doubling or surcharge applies.",
       "explanation": "25 km/h over falls into the 21-30 band (R1500, 'Severe'). Highway is not a built-up area, and repeat offender is false, so no doubling or surcharge applies.",
-      "distractorRationale": "Options other than \"Fine: R 1500, Category: \"Severe\"\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9556,22 +9556,22 @@
       "stem": "In a municipal speed trap system with zones 'Highway', 'Rural', 'Town', and 'School', which two zones are classified as built-up areas?",
       "code": "",
       "options": [
+        "Only \"School\"",
         "\"Highway\" and \"Town\"",
         "\"School\" and \"Highway\"",
-        "\"School\" and \"Town\"",
-        "Only \"School\""
+        "\"School\" and \"Town\""
       ],
       "opts": [
+        "Only \"School\"",
         "\"Highway\" and \"Town\"",
         "\"School\" and \"Highway\"",
-        "\"School\" and \"Town\"",
-        "Only \"School\""
+        "\"School\" and \"Town\""
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "Both 'School' and 'Town' zones represent high-pedestrian built-up municipal areas where speeding penalties are stricter than on open highways or rural roads.",
       "explanation": "Both 'School' and 'Town' zones represent high-pedestrian built-up municipal areas where speeding penalties are stricter than on open highways or rural roads.",
-      "distractorRationale": "Options other than \"\"School\" and \"Town\"\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9598,22 +9598,22 @@
       "stem": "When fine doubling applies in built-up zones ('School' or 'Town') for speeds strictly exceeding 20 km/h over the limit, what exact compound condition triggers doubling and appending ' - built-up area'?",
       "code": "",
       "options": [
+        "The zone is a built-up area (\"School\" or \"Town\") AND speedOver is strictly greater than 20 km/h (speedOver > 20)",
         "The zone is a Highway and speedOver >= 20",
         "Whenever the driver was traveling at more than 10 km/h over the limit in any zone",
-        "Whenever the repeat offender answer is 'yes'",
-        "The zone is a built-up area (\"School\" or \"Town\") AND speedOver is strictly greater than 20 km/h (speedOver > 20)"
+        "Whenever the repeat offender answer is 'yes'"
       ],
       "opts": [
+        "The zone is a built-up area (\"School\" or \"Town\") AND speedOver is strictly greater than 20 km/h (speedOver > 20)",
         "The zone is a Highway and speedOver >= 20",
         "Whenever the driver was traveling at more than 10 km/h over the limit in any zone",
-        "Whenever the repeat offender answer is 'yes'",
-        "The zone is a built-up area (\"School\" or \"Town\") AND speedOver is strictly greater than 20 km/h (speedOver > 20)"
+        "Whenever the repeat offender answer is 'yes'"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "Both conditions must hold: isBuiltUp must be true AND the vehicle must exceed the limit by strictly more than 20 km/h.",
       "explanation": "Both conditions must hold: isBuiltUp must be true AND the vehicle must exceed the limit by strictly more than 20 km/h.",
-      "distractorRationale": "Options other than \"The zone is a built-up area (\"School\" or \"Town\") AND speedOv\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9640,22 +9640,22 @@
       "stem": "If a fine doubles in a built-up zone only when `speedOver > 20` (strictly more than 20 km/h over), what happens when a vehicle travels at 80 km/h in a 60 km/h School zone (exactly 20 km/h over, base fine R750)?",
       "code": "",
       "options": [
-        "The fine does NOT double because speedOver > 20 requires strictly MORE than 20 km/h over; exactly 20 km/h over remains at R750 (Serious)",
-        "The fine doubles to R1500 immediately",
         "The driver receives a court appearance summons",
-        "The fine is reduced to R250"
+        "The fine does NOT double because speedOver > 20 requires strictly MORE than 20 km/h over; exactly 20 km/h over remains at R750 (Serious)",
+        "The fine is reduced to R250",
+        "The fine doubles to R1500 immediately"
       ],
       "opts": [
-        "The fine does NOT double because speedOver > 20 requires strictly MORE than 20 km/h over; exactly 20 km/h over remains at R750 (Serious)",
-        "The fine doubles to R1500 immediately",
         "The driver receives a court appearance summons",
-        "The fine is reduced to R250"
+        "The fine does NOT double because speedOver > 20 requires strictly MORE than 20 km/h over; exactly 20 km/h over remains at R750 (Serious)",
+        "The fine is reduced to R250",
+        "The fine doubles to R1500 immediately"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "Because the doubling condition uses the strict inequality operator (speedOver > 20), an exact value of 20 km/h over evaluates to false and remains at the R750 Serious band.",
       "explanation": "Because the doubling condition uses the strict inequality operator (speedOver > 20), an exact value of 20 km/h over evaluates to false and remains at the R750 Serious band.",
-      "distractorRationale": "Options other than \"The fine does NOT double because speedOver > 20 requires str\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9682,22 +9682,22 @@
       "stem": "When a traffic fine doubles in a built-up area, what suffix string is appended to the offense category (e.g., turning 'Severe' into 'Severe - built-up area')?",
       "code": "",
       "options": [
-        "\" (DOUBLED)\"",
-        "\" - built-up area\"",
         "\" *BUILT UP*\"",
-        "\" [ZONE 1]\""
+        "\" [ZONE 1]\"",
+        "\" - built-up area\"",
+        "\" (DOUBLED)\""
       ],
       "opts": [
-        "\" (DOUBLED)\"",
-        "\" - built-up area\"",
         "\" *BUILT UP*\"",
-        "\" [ZONE 1]\""
+        "\" [ZONE 1]\"",
+        "\" - built-up area\"",
+        "\" (DOUBLED)\""
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Appending ' - built-up area' to the category string (e.g. 'Severe - built-up area') clearly indicates why the base fine was doubled.",
       "explanation": "Appending ' - built-up area' to the category string (e.g. 'Severe - built-up area') clearly indicates why the base fine was doubled.",
-      "distractorRationale": "Options other than \"\" - built-up area\"\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9724,22 +9724,22 @@
       "stem": "Where and how should a fixed R500.00 repeat offender surcharge constant be declared in a Windows Form class?",
       "code": "",
       "options": [
+        "In Program.cs as a static string",
         "Inside btnCheck_Click as a local int variable",
         "Inside txtRepeat.Text property window",
-        "At class level, outside every method, declared with the 'const' keyword: const decimal REPEAT_FINE = 500m;",
-        "In Program.cs as a static string"
+        "At class level, outside every method, declared with the 'const' keyword: const decimal REPEAT_FINE = 500m;"
       ],
       "opts": [
+        "In Program.cs as a static string",
         "Inside btnCheck_Click as a local int variable",
         "Inside txtRepeat.Text property window",
-        "At class level, outside every method, declared with the 'const' keyword: const decimal REPEAT_FINE = 500m;",
-        "In Program.cs as a static string"
+        "At class level, outside every method, declared with the 'const' keyword: const decimal REPEAT_FINE = 500m;"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "Class-level constants are declared outside all methods using the 'const' keyword and UPPER_SNAKE_CASE naming (const decimal REPEAT_FINE = 500m;).",
       "explanation": "Class-level constants are declared outside all methods using the 'const' keyword and UPPER_SNAKE_CASE naming (const decimal REPEAT_FINE = 500m;).",
-      "distractorRationale": "Options other than \"At class level, outside every method, declared with the 'con\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9766,22 +9766,22 @@
       "stem": "To validate that two test marks (`dblTest1` and `dblTest2`) are within the valid bounds of 0 to 100 inclusive, which `if` condition triggers an error message if EITHER mark is out of bounds?",
       "code": "",
       "options": [
-        "if (dblTest1 < 0 && dblTest1 > 100 && dblTest2 < 0 && dblTest2 > 100)",
         "if (dblTest1 < 0 || dblTest1 > 100 || dblTest2 < 0 || dblTest2 > 100)",
+        "if (dblTest1 < 0 && dblTest1 > 100 && dblTest2 < 0 && dblTest2 > 100)",
         "if (0 <= dblTest1 <= 100 || 0 <= dblTest2 <= 100)",
         "if (dblTest1 < 0 | dblTest1 > 100 & dblTest2 < 0 | dblTest2 > 100)"
       ],
       "opts": [
-        "if (dblTest1 < 0 && dblTest1 > 100 && dblTest2 < 0 && dblTest2 > 100)",
         "if (dblTest1 < 0 || dblTest1 > 100 || dblTest2 < 0 || dblTest2 > 100)",
+        "if (dblTest1 < 0 && dblTest1 > 100 && dblTest2 < 0 && dblTest2 > 100)",
         "if (0 <= dblTest1 <= 100 || 0 <= dblTest2 <= 100)",
         "if (dblTest1 < 0 | dblTest1 > 100 & dblTest2 < 0 | dblTest2 > 100)"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "To detect if either mark is invalid, each boundary condition is evaluated with the logical OR operator '||'. Chained relational comparisons like '0 <= dblTest1 <= 100' are illegal in C# (CS0019).",
       "explanation": "To detect if either mark is invalid, each boundary condition is evaluated with the logical OR operator '||'. Chained relational comparisons like '0 <= dblTest1 <= 100' are illegal in C# (CS0019).",
-      "distractorRationale": "Options other than \"if (dblTest1 < 0 || dblTest1 > 100 || dblTest2 < 0 || dblTes\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_tryparse",
         "def_parse_methods",
@@ -9808,22 +9808,22 @@
       "stem": "How does 'txtRepeat.Text.CompareTo(\"yes\") == 0' determine if the driver is a repeat offender?",
       "code": "",
       "options": [
+        "CompareTo throws a FormatException if strings do not match",
         "CompareTo returns 0 when the calling string and argument are identical in alphabetical sort order",
         "CompareTo returns true or false directly",
-        "CompareTo returns 0 only when the string is empty",
-        "CompareTo throws a FormatException if strings do not match"
+        "CompareTo returns 0 only when the string is empty"
       ],
       "opts": [
+        "CompareTo throws a FormatException if strings do not match",
         "CompareTo returns 0 when the calling string and argument are identical in alphabetical sort order",
         "CompareTo returns true or false directly",
-        "CompareTo returns 0 only when the string is empty",
-        "CompareTo throws a FormatException if strings do not match"
+        "CompareTo returns 0 only when the string is empty"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "String.CompareTo returns 0 if two strings are identical in value and case, a negative integer if the caller precedes the argument, and positive if it follows.",
       "explanation": "String.CompareTo returns 0 if two strings are identical in value and case, a negative integer if the caller precedes the argument, and positive if it follows.",
-      "distractorRationale": "Options other than \"CompareTo returns 0 when the calling string and argument are\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9850,22 +9850,22 @@
       "stem": "Why should you avoid writing an empty `else { }` block when checking an optional condition such as repeat offender status (`if (isRepeat) fine += REPEAT_FINE;`)?",
       "code": "",
       "options": [
-        "Empty else blocks cause compiler error CS0101",
-        "Writing empty 'else { }' blocks is poor coding style that clutters code and adds zero functional value; a single-alternative if is correct",
         "Visual Studio deletes empty else blocks during compilation",
-        "Else blocks can only be used with numbers"
+        "Else blocks can only be used with numbers",
+        "Writing empty 'else { }' blocks is poor coding style that clutters code and adds zero functional value; a single-alternative if is correct",
+        "Empty else blocks cause compiler error CS0101"
       ],
       "opts": [
-        "Empty else blocks cause compiler error CS0101",
-        "Writing empty 'else { }' blocks is poor coding style that clutters code and adds zero functional value; a single-alternative if is correct",
         "Visual Studio deletes empty else blocks during compilation",
-        "Else blocks can only be used with numbers"
+        "Else blocks can only be used with numbers",
+        "Writing empty 'else { }' blocks is poor coding style that clutters code and adds zero functional value; a single-alternative if is correct",
+        "Empty else blocks cause compiler error CS0101"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "A single-alternative if statement ('if (isRepeat) fine += REPEAT_FINE;') is the cleanest construct when no action is needed on false. An empty else block loses marks.",
       "explanation": "A single-alternative if statement ('if (isRepeat) fine += REPEAT_FINE;') is the cleanest construct when no action is needed on false. An empty else block loses marks.",
-      "distractorRationale": "Options other than \"Writing empty 'else { }' blocks is poor coding style that cl\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9894,20 +9894,20 @@
       "options": [
         "Panels cannot hold Label controls",
         "GroupBoxes automatically calculate speeding fines",
-        "A GroupBox has a built-in bordered frame and a Text property to display a titled caption ('Finding'), whereas a Panel has no caption property",
-        "Panels only work on Windows 7"
+        "Panels only work on Windows 7",
+        "A GroupBox has a built-in bordered frame and a Text property to display a titled caption ('Finding'), whereas a Panel has no caption property"
       ],
       "opts": [
         "Panels cannot hold Label controls",
         "GroupBoxes automatically calculate speeding fines",
-        "A GroupBox has a built-in bordered frame and a Text property to display a titled caption ('Finding'), whereas a Panel has no caption property",
-        "Panels only work on Windows 7"
+        "Panels only work on Windows 7",
+        "A GroupBox has a built-in bordered frame and a Text property to display a titled caption ('Finding'), whereas a Panel has no caption property"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "GroupBox controls provide a visible boundary with an integrated title text caption ('Finding'). Panels do not support header text captions.",
       "explanation": "GroupBox controls provide a visible boundary with an integrated title text caption ('Finding'). Panels do not support header text captions.",
-      "distractorRationale": "Options other than \"A GroupBox has a built-in bordered frame and a Text property\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -9924,31 +9924,31 @@
       "topicTitle": "Relational & Logical Operators: = vs ==, && vs ||, ! vs !=",
       "learningObjective": "Construct accurate boolean conditions using relational (==, !=, <, >, <=, >=) and logical (&&, ||, !) operators.",
       "type": "mcq",
-      "questionType": "application-scenario",
+      "questionType": "logic-problem",
       "difficulty": "Intermediate",
       "marks": 3,
       "estimatedMinutes": 2,
-      "q": "Which logical operator in C# represents short-circuit logical AND?",
-      "title": "Which logical operator in C# represents short-circuit logical AND?",
-      "stem": "Which logical operator in C# represents short-circuit logical AND?",
+      "q": "Why does `if (count > 0 && total / count >= 50)` safely prevent a `DivideByZeroException` when `count` is `0`?",
+      "title": "Why does `if (count > 0 && total / count >= 50)` safely prevent a `DivideByZeroException` when `count` is `0`?",
+      "stem": "Why does `if (count > 0 && total / count >= 50)` safely prevent a `DivideByZeroException` when `count` is `0`?",
       "code": "",
       "options": [
-        "||",
-        "!",
-        "&",
-        "&&"
+        "Because `&&` uses short-circuit evaluation: when `count > 0` is `false`, C# skips evaluating `total / count >= 50` completely",
+        "Because `&&` evaluates the right-hand side first and automatically catches `DivideByZeroException`",
+        "Because C# integer division by zero returns `0` instead of throwing an exception inside `if` statements",
+        "Because `>=` has higher operator precedence than `/` so division happens after the `if` block"
       ],
       "opts": [
-        "||",
-        "!",
-        "&",
-        "&&"
+        "Because `&&` uses short-circuit evaluation: when `count > 0` is `false`, C# skips evaluating `total / count >= 50` completely",
+        "Because `&&` evaluates the right-hand side first and automatically catches `DivideByZeroException`",
+        "Because C# integer division by zero returns `0` instead of throwing an exception inside `if` statements",
+        "Because `>=` has higher operator precedence than `/` so division happens after the `if` block"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "The '&&' operator performs short-circuit logical AND, evaluating to true only if both sub-expressions are true.",
-      "explanation": "The '&&' operator performs short-circuit logical AND, evaluating to true only if both sub-expressions are true.",
-      "distractorRationale": "Options other than \"&&\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 0,
+      "ans": 0,
+      "exp": "The short-circuit logical AND (`&&`) evaluates its left operand first. When `count == 0`, `count > 0` is `false`, so the overall AND result is already known to be `false` and `total / count` is never executed.",
+      "explanation": "The short-circuit logical AND (`&&`) evaluates its left operand first. When `count == 0`, `count > 0` is `false`, so the overall AND result is already known to be `false` and `total / count` is never executed.",
+      "distractorRationale": "Dividing an `int` or `decimal` by `0` throws `DivideByZeroException` if evaluated, and `/` has higher precedence than `>=`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -9966,31 +9966,31 @@
       "topicTitle": "Relational & Logical Operators: = vs ==, && vs ||, ! vs !=",
       "learningObjective": "Construct accurate boolean conditions using relational (==, !=, <, >, <=, >=) and logical (&&, ||, !) operators.",
       "type": "mcq",
-      "questionType": "application-scenario",
+      "questionType": "input-validation",
       "difficulty": "Advanced",
       "marks": 4,
       "estimatedMinutes": 3,
-      "q": "Which logical operator in C# represents short-circuit logical OR?",
-      "title": "Which logical operator in C# represents short-circuit logical OR?",
-      "stem": "Which logical operator in C# represents short-circuit logical OR?",
+      "q": "A form must reject an exam percentage `mark` when it is outside the valid inclusive range `0` to `100`. Which `if` condition correctly detects an out-of-range mark?",
+      "title": "A form must reject an exam percentage `mark` when it is outside the valid inclusive range `0` to `100`. Which `if` condition correctly detects an out-of-range mark?",
+      "stem": "A form must reject an exam percentage `mark` when it is outside the valid inclusive range `0` to `100`. Which `if` condition correctly detects an out-of-range mark?",
       "code": "",
       "options": [
-        "||",
-        "&&",
-        "!",
-        "|"
+        "if (mark <= 0 || mark >= 100)",
+        "if (mark < 0 || mark > 100)",
+        "if (!(mark < 0 && mark > 100))",
+        "if (mark < 0 && mark > 100)"
       ],
       "opts": [
-        "||",
-        "&&",
-        "!",
-        "|"
+        "if (mark <= 0 || mark >= 100)",
+        "if (mark < 0 || mark > 100)",
+        "if (!(mark < 0 && mark > 100))",
+        "if (mark < 0 && mark > 100)"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "The '||' operator performs short-circuit logical OR, evaluating to true if at least one sub-expression is true.",
-      "explanation": "The '||' operator performs short-circuit logical OR, evaluating to true if at least one sub-expression is true.",
-      "distractorRationale": "Options other than \"||\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 1,
+      "ans": 1,
+      "exp": "A single number cannot be simultaneously `< 0` AND `> 100`, so outside-range checks must use logical OR (`||`). Using `<` and `>` keeps boundary values `0` and `100` valid.",
+      "explanation": "A single number cannot be simultaneously `< 0` AND `> 100`, so outside-range checks must use logical OR (`||`). Using `<` and `>` keeps boundary values `0` and `100` valid.",
+      "distractorRationale": "`mark < 0 && mark > 100` is a contradiction (always `false`); `<= 0 || >= 100` wrongly rejects valid boundary scores `0` and `100`.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10018,21 +10018,21 @@
       "code": "",
       "options": [
         "The computer shuts down if an expression is too long",
-        "If the first operand of '&&' is false, or the first of '||' is true, the second operand is never evaluated because the overall result is already determined",
         "All conditions in an expression are evaluated in parallel by multiple CPU cores",
+        "If the first operand of '&&' is false, or the first of '||' is true, the second operand is never evaluated because the overall result is already determined",
         "Expressions with errors are automatically converted to true"
       ],
       "opts": [
         "The computer shuts down if an expression is too long",
-        "If the first operand of '&&' is false, or the first of '||' is true, the second operand is never evaluated because the overall result is already determined",
         "All conditions in an expression are evaluated in parallel by multiple CPU cores",
+        "If the first operand of '&&' is false, or the first of '||' is true, the second operand is never evaluated because the overall result is already determined",
         "Expressions with errors are automatically converted to true"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Short-circuit evaluation stops evaluating composite boolean expressions as soon as the outcome is guaranteed, preventing runtime errors (e.g. division by zero or null dereferences).",
       "explanation": "Short-circuit evaluation stops evaluating composite boolean expressions as soon as the outcome is guaranteed, preventing runtime errors (e.g. division by zero or null dereferences).",
-      "distractorRationale": "Options other than \"If the first operand of '&&' is false, or the first of '||' \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10059,22 +10059,22 @@
       "stem": "What is the evaluated boolean value of '!(10 > 4)' in C#?",
       "code": "",
       "options": [
+        "1",
         "true",
         "null",
-        "false",
-        "1"
+        "false"
       ],
       "opts": [
+        "1",
         "true",
         "null",
-        "false",
-        "1"
+        "false"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "10 > 4 is true. The logical NOT operator (!) reverses the truth value, resulting in false.",
       "explanation": "10 > 4 is true. The logical NOT operator (!) reverses the truth value, resulting in false.",
-      "distractorRationale": "Options other than \"false\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10092,31 +10092,31 @@
       "topicTitle": "Relational & Logical Operators: = vs ==, && vs ||, ! vs !=",
       "learningObjective": "Construct accurate boolean conditions using relational (==, !=, <, >, <=, >=) and logical (&&, ||, !) operators.",
       "type": "mcq",
-      "questionType": "application-scenario",
+      "questionType": "input-validation",
       "difficulty": "Advanced",
       "marks": 4,
       "estimatedMinutes": 3,
-      "q": "Which relational operator in C# checks whether two values are NOT equal?",
-      "title": "Which relational operator in C# checks whether two values are NOT equal?",
-      "stem": "Which relational operator in C# checks whether two values are NOT equal?",
+      "q": "What is the role of the `!` operator in `if (!int.TryParse(txtQty.Text, out int qty))`?",
+      "title": "What is the role of the `!` operator in `if (!int.TryParse(txtQty.Text, out int qty))`?",
+      "stem": "What is the role of the `!` operator in `if (!int.TryParse(txtQty.Text, out int qty))`?",
       "code": "",
       "options": [
-        "<>",
-        "==",
-        "!==",
-        "!="
+        "It negates the `bool` return value of `TryParse`, entering the `if` error-handling block whenever parsing fails (`false` becomes `true`)",
+        "It converts negative integers in `qty` into positive integers automatically",
+        "It compares `txtQty.Text` for inequality against `qty` before converting the string",
+        "It forces `TryParse` to throw a `FormatException` if `txtQty.Text` is empty"
       ],
       "opts": [
-        "<>",
-        "==",
-        "!==",
-        "!="
+        "It negates the `bool` return value of `TryParse`, entering the `if` error-handling block whenever parsing fails (`false` becomes `true`)",
+        "It converts negative integers in `qty` into positive integers automatically",
+        "It compares `txtQty.Text` for inequality against `qty` before converting the string",
+        "It forces `TryParse` to throw a `FormatException` if `txtQty.Text` is empty"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "'!=' is the inequality relational operator in C#.",
-      "explanation": "'!=' is the inequality relational operator in C#.",
-      "distractorRationale": "Options other than \"!=\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 0,
+      "ans": 0,
+      "exp": "`int.TryParse` returns `true` when conversion succeeds and `false` when it fails. Applying logical NOT (`!`) makes `!false` evaluate to `true`, allowing a clean guard clause for invalid input.",
+      "explanation": "`int.TryParse` returns `true` when conversion succeeds and `false` when it fails. Applying logical NOT (`!`) makes `!false` evaluate to `true`, allowing a clean guard clause for invalid input.",
+      "distractorRationale": "Inequality is `!=` (not `!`), `TryParse` never throws `FormatException`, and `!` operates only on `bool` expressions, not numeric signs.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10143,22 +10143,22 @@
       "stem": "What common compilation error occurs if a student mistakenly writes 'if (speed = 80)' instead of 'if (speed == 80)' in C#?",
       "code": "",
       "options": [
-        "Compiler error CS0029: Cannot implicitly convert type 'int' to 'bool'",
-        "The code compiles and executes silently",
         "Visual Studio converts speed to a string",
-        "A warning is logged but execution proceeds"
+        "Compiler error CS0029: Cannot implicitly convert type 'int' to 'bool'",
+        "A warning is logged but execution proceeds",
+        "The code compiles and executes silently"
       ],
       "opts": [
-        "Compiler error CS0029: Cannot implicitly convert type 'int' to 'bool'",
-        "The code compiles and executes silently",
         "Visual Studio converts speed to a string",
-        "A warning is logged but execution proceeds"
+        "Compiler error CS0029: Cannot implicitly convert type 'int' to 'bool'",
+        "A warning is logged but execution proceeds",
+        "The code compiles and executes silently"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "'=' is the assignment operator. 'speed = 80' returns an int (80), which cannot be implicitly converted to the bool required by an if statement.",
       "explanation": "'=' is the assignment operator. 'speed = 80' returns an int (80), which cannot be implicitly converted to the bool required by an if statement.",
-      "distractorRationale": "Options other than \"Compiler error CS0029: Cannot implicitly convert type 'int' \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10185,22 +10185,22 @@
       "stem": "Which GUI control displays a list of selectable route options (`lstRoutes`) where the active selection index is read via `SelectedIndex`?",
       "code": "",
       "options": [
+        "Timer (tmrRoutes)",
         "TextBox (txtRoutes)",
         "ListBox (lstRoutes)",
-        "PictureBox (picRoutes)",
-        "Timer (tmrRoutes)"
+        "PictureBox (picRoutes)"
       ],
       "opts": [
+        "Timer (tmrRoutes)",
         "TextBox (txtRoutes)",
         "ListBox (lstRoutes)",
-        "PictureBox (picRoutes)",
-        "Timer (tmrRoutes)"
+        "PictureBox (picRoutes)"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "A ListBox control (lstRoutes) displays a selectable list of items where the active zero-based selection index is read via SelectedIndex.",
       "explanation": "A ListBox control (lstRoutes) displays a selectable list of items where the active zero-based selection index is read via SelectedIndex.",
-      "distractorRationale": "Options other than \"ListBox (lstRoutes)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
@@ -10228,20 +10228,20 @@
       "options": [
         "lstRoutes.Items.Count > 0",
         "lstRoutes.Text == \"Selected\"",
-        "lstRoutes.SelectedIndex != -1",
-        "lstRoutes.Focused == true"
+        "lstRoutes.Focused == true",
+        "lstRoutes.SelectedIndex != -1"
       ],
       "opts": [
         "lstRoutes.Items.Count > 0",
         "lstRoutes.Text == \"Selected\"",
-        "lstRoutes.SelectedIndex != -1",
-        "lstRoutes.Focused == true"
+        "lstRoutes.Focused == true",
+        "lstRoutes.SelectedIndex != -1"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "When no item is selected in a ListBox, SelectedIndex is -1. Checking 'SelectedIndex != -1' ensures a valid item has been picked.",
       "explanation": "When no item is selected in a ListBox, SelectedIndex is -1. Checking 'SelectedIndex != -1' ensures a valid item has been picked.",
-      "distractorRationale": "Options other than \"lstRoutes.SelectedIndex != -1\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
@@ -10258,31 +10258,31 @@
       "topicTitle": "ListBox Selection: SelectedIndex vs SelectedItem",
       "learningObjective": "Construct accurate boolean conditions using relational (==, !=, <, >, <=, >=) and logical (&&, ||, !) operators.",
       "type": "mcq",
-      "questionType": "application-scenario",
+      "questionType": "concept-comparison",
       "difficulty": "Foundational",
       "marks": 2,
       "estimatedMinutes": 2,
-      "q": "What value does the SelectedIndex property of a ListBox hold when the user has NOT selected any item?",
-      "title": "What value does the SelectedIndex property of a ListBox hold when the user has NOT selected any item?",
-      "stem": "What value does the SelectedIndex property of a ListBox hold when the user has NOT selected any item?",
+      "q": "What is the exact difference between `lstCities.SelectedIndex` and `lstCities.SelectedItem` on a Windows Forms `ListBox`?",
+      "title": "What is the exact difference between `lstCities.SelectedIndex` and `lstCities.SelectedItem` on a Windows Forms `ListBox`?",
+      "stem": "What is the exact difference between `lstCities.SelectedIndex` and `lstCities.SelectedItem` on a Windows Forms `ListBox`?",
       "code": "",
       "options": [
-        "0",
-        "null",
-        "999",
-        "-1"
+        "`SelectedIndex` returns the zero-based `int` position (`-1` if none selected), whereas `SelectedItem` returns the selected item `object` (`null` if none selected)",
+        "`SelectedIndex` returns a `1`-based `string`, whereas `SelectedItem` returns a `bool` indicating whether the ListBox is empty",
+        "`SelectedIndex` counts total items in the ListBox, whereas `SelectedItem` deletes the highlighted entry",
+        "`SelectedIndex` and `SelectedItem` both return `\"\"` (empty string) when no item is selected"
       ],
       "opts": [
-        "0",
-        "null",
-        "999",
-        "-1"
+        "`SelectedIndex` returns the zero-based `int` position (`-1` if none selected), whereas `SelectedItem` returns the selected item `object` (`null` if none selected)",
+        "`SelectedIndex` returns a `1`-based `string`, whereas `SelectedItem` returns a `bool` indicating whether the ListBox is empty",
+        "`SelectedIndex` counts total items in the ListBox, whereas `SelectedItem` deletes the highlighted entry",
+        "`SelectedIndex` and `SelectedItem` both return `\"\"` (empty string) when no item is selected"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "SelectedIndex is 0-indexed. When no selection exists, it defaults to -1.",
-      "explanation": "SelectedIndex is 0-indexed. When no selection exists, it defaults to -1.",
-      "distractorRationale": "Options other than \"-1\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 0,
+      "ans": 0,
+      "exp": "`SelectedIndex` is an `int` (`0` for the first item, `-1` when nothing is selected). `SelectedItem` is an `object` reference (`null` when nothing is selected, so calling `lstCities.SelectedItem.ToString()` without checking `SelectedIndex != -1` throws `NullReferenceException`).",
+      "explanation": "`SelectedIndex` is an `int` (`0` for the first item, `-1` when nothing is selected). `SelectedItem` is an `object` reference (`null` when nothing is selected, so calling `lstCities.SelectedItem.ToString()` without checking `SelectedIndex != -1` throws `NullReferenceException`).",
+      "distractorRationale": "ListBox indexing is zero-based (`0..Count-1`), total item count is `lstCities.Items.Count`, and unselected state is `-1` / `null`.",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
@@ -10299,31 +10299,31 @@
       "topicTitle": "ListBox Selection: SelectedIndex vs SelectedItem",
       "learningObjective": "Construct accurate boolean conditions using relational (==, !=, <, >, <=, >=) and logical (&&, ||, !) operators.",
       "type": "mcq",
-      "questionType": "application-scenario",
+      "questionType": "code-tracing",
       "difficulty": "Foundational",
       "marks": 2,
       "estimatedMinutes": 2,
-      "q": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the first item in `lstRoutes` ('Sunset Leisure Cruise') is selected?",
-      "title": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the first item in `lstRoutes` ('Sunset Leisure Cruise') is selected?",
-      "stem": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the first item in `lstRoutes` ('Sunset Leisure Cruise') is selected?",
-      "code": "",
+      "q": "What `decimal` value is stored in `price` after the `switch` statement below executes when the first item in `lstRoutes` (`SelectedIndex == 0`) is selected?",
+      "title": "What `decimal` value is stored in `price` after the `switch` statement below executes when the first item in `lstRoutes` (`SelectedIndex == 0`) is selected?",
+      "stem": "What `decimal` value is stored in `price` after the `switch` statement below executes when the first item in `lstRoutes` (`SelectedIndex == 0`) is selected?",
+      "code": "decimal price = 0m;\nswitch (lstRoutes.SelectedIndex)\n{\n    case 0: price = 250m; break;\n    case 1: price = 400m; break;\n    case 2: price = 800m; break;\n}",
       "options": [
-        "R 250",
-        "R 400",
-        "R 800",
-        "R 150"
+        "0m",
+        "250m",
+        "800m",
+        "400m"
       ],
       "opts": [
-        "R 250",
-        "R 400",
-        "R 800",
-        "R 150"
+        "0m",
+        "250m",
+        "800m",
+        "400m"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "ListBox items are 0-indexed, so selecting the first item sets SelectedIndex to 0, matching case 0 and assigning 250m (R 250).",
-      "explanation": "ListBox items are 0-indexed, so selecting the first item sets SelectedIndex to 0, matching case 0 and assigning 250m (R 250).",
-      "distractorRationale": "Options other than \"R 250\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 1,
+      "ans": 1,
+      "exp": "ListBox indices are zero-based, so selecting the first item sets `SelectedIndex` to `0`, matching `case 0:` and assigning `250m` to `price` before `break;` exits the `switch`.",
+      "explanation": "ListBox indices are zero-based, so selecting the first item sets `SelectedIndex` to `0`, matching `case 0:` and assigning `250m` to `price` before `break;` exits the `switch`.",
+      "distractorRationale": "`400m` corresponds to `case 1` (the second item), `800m` to `case 2` (the third item), and `0m` would only remain if no `case` matched.",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
@@ -10340,31 +10340,31 @@
       "topicTitle": "ListBox Selection: SelectedIndex vs SelectedItem",
       "learningObjective": "Construct accurate boolean conditions using relational (==, !=, <, >, <=, >=) and logical (&&, ||, !) operators.",
       "type": "mcq",
-      "questionType": "application-scenario",
+      "questionType": "code-tracing",
       "difficulty": "Foundational",
       "marks": 2,
       "estimatedMinutes": 2,
-      "q": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the second item in `lstRoutes` ('Speedboat Adventure') is selected?",
-      "title": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the second item in `lstRoutes` ('Speedboat Adventure') is selected?",
-      "stem": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the second item in `lstRoutes` ('Speedboat Adventure') is selected?",
-      "code": "",
+      "q": "If the user clicks Calculate without selecting any item in `lstRoutes` (`SelectedIndex == -1`), what does `lblFee.Text` display after the code below runs?",
+      "title": "If the user clicks Calculate without selecting any item in `lstRoutes` (`SelectedIndex == -1`), what does `lblFee.Text` display after the code below runs?",
+      "stem": "If the user clicks Calculate without selecting any item in `lstRoutes` (`SelectedIndex == -1`), what does `lblFee.Text` display after the code below runs?",
+      "code": "decimal fee;\nswitch (lstRoutes.SelectedIndex)\n{\n    case 0: fee = 250m; break;\n    case 1: fee = 400m; break;\n    default: fee = -1m; break;\n}\nlblFee.Text = fee < 0m ? \"Select route\" : fee.ToString(\"F2\");",
       "options": [
-        "R 250",
-        "R 400",
-        "R 800",
-        "R 500"
+        "250.00",
+        "-1.00",
+        "Select route",
+        "0.00"
       ],
       "opts": [
-        "R 250",
-        "R 400",
-        "R 800",
-        "R 500"
+        "250.00",
+        "-1.00",
+        "Select route",
+        "0.00"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "Because ListBox items are 0-indexed, selecting the second item sets SelectedIndex to 1, matching case 1 and assigning 400m (R 400).",
-      "explanation": "Because ListBox items are 0-indexed, selecting the second item sets SelectedIndex to 1, matching case 1 and assigning 400m (R 400).",
-      "distractorRationale": "Options other than \"R 400\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 2,
+      "ans": 2,
+      "exp": "When no ListBox item is selected, `SelectedIndex` is `-1`. Neither `case 0` nor `case 1` matches, so `default:` assigns `fee = -1m`, and `fee < 0m` evaluates to `true`, displaying `\"Select route\"`.",
+      "explanation": "When no ListBox item is selected, `SelectedIndex` is `-1`. Neither `case 0` nor `case 1` matches, so `default:` assigns `fee = -1m`, and `fee < 0m` evaluates to `true`, displaying `\"Select route\"`.",
+      "distractorRationale": "`default:` catches `-1`, and the conditional expression checks `fee < 0m` before formatting `fee`.",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
@@ -10381,31 +10381,31 @@
       "topicTitle": "ListBox Selection: SelectedIndex vs SelectedItem",
       "learningObjective": "Construct accurate boolean conditions using relational (==, !=, <, >, <=, >=) and logical (&&, ||, !) operators.",
       "type": "mcq",
-      "questionType": "application-scenario",
+      "questionType": "error-identification",
       "difficulty": "Foundational",
       "marks": 2,
       "estimatedMinutes": 2,
-      "q": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the third item in `lstRoutes` ('Private Pontoon Charter') is selected?",
-      "title": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the third item in `lstRoutes` ('Private Pontoon Charter') is selected?",
-      "stem": "Given `switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }`, what value is assigned to `price` when the third item in `lstRoutes` ('Private Pontoon Charter') is selected?",
-      "code": "",
+      "q": "Why does the C# compiler reject the `switch` statement below with error `CS0163` (`Control cannot fall through from one case label to another`)?",
+      "title": "Why does the C# compiler reject the `switch` statement below with error `CS0163` (`Control cannot fall through from one case label to another`)?",
+      "stem": "Why does the C# compiler reject the `switch` statement below with error `CS0163` (`Control cannot fall through from one case label to another`)?",
+      "code": "switch (tier)\n{\n    case 1:\n        discount = 0.05m;\n    case 2:\n        discount = 0.10m;\n        break;\n}",
       "options": [
-        "R 250",
-        "R 400",
-        "R 800",
-        "R 1200"
+        "`decimal` assignments are not permitted inside `switch` blocks",
+        "Every `switch` statement fails to compile unless a `default:` label is written first",
+        "`switch` statements in C# cannot test `int` variables such as `tier`",
+        "C# forbids implicit fall-through from a non-empty `case` block; `case 1:` executes `discount = 0.05m;` without ending with `break;` or `return`"
       ],
       "opts": [
-        "R 250",
-        "R 400",
-        "R 800",
-        "R 1200"
+        "`decimal` assignments are not permitted inside `switch` blocks",
+        "Every `switch` statement fails to compile unless a `default:` label is written first",
+        "`switch` statements in C# cannot test `int` variables such as `tier`",
+        "C# forbids implicit fall-through from a non-empty `case` block; `case 1:` executes `discount = 0.05m;` without ending with `break;` or `return`"
       ],
-      "answer": 2,
-      "ans": 2,
-      "exp": "Because ListBox items are 0-indexed, selecting the third item sets SelectedIndex to 2, matching case 2 and assigning 800m (R 800).",
-      "explanation": "Because ListBox items are 0-indexed, selecting the third item sets SelectedIndex to 2, matching case 2 and assigning 800m (R 800).",
-      "distractorRationale": "Options other than \"R 800\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Unlike C/C++, C# prevents accidental fall-through bugs by requiring every non-empty `case` section to terminate explicitly with `break;`, `return`, or `throw`.",
+      "explanation": "Unlike C/C++, C# prevents accidental fall-through bugs by requiring every non-empty `case` section to terminate explicitly with `break;`, `return`, or `throw`.",
+      "distractorRationale": "C# `switch` supports `int`, `string`, `char`, and `enum` selectors, allows `decimal` assignments inside cases, and does not require `default:` to compile.",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
@@ -10431,22 +10431,22 @@
       "stem": "Given `lstRoutes` with index 0 = R250, index 1 = R400, and index 2 = R800, how should the base ticket price be assigned using a `switch` statement on the selected index?",
       "code": "",
       "options": [
-        "switch (txtPassengers.Text) { case \"1\": price = 250m; break; }",
+        "switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }",
         "switch (btnBook.Text) { case \"Book\": price = 250m; break; }",
         "switch (this.BackColor) { case Color.Orange: price = 400m; break; }",
-        "switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }"
+        "switch (txtPassengers.Text) { case \"1\": price = 250m; break; }"
       ],
       "opts": [
-        "switch (txtPassengers.Text) { case \"1\": price = 250m; break; }",
+        "switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }",
         "switch (btnBook.Text) { case \"Book\": price = 250m; break; }",
         "switch (this.BackColor) { case Color.Orange: price = 400m; break; }",
-        "switch (lstRoutes.SelectedIndex) { case 0: price = 250m; break; case 1: price = 400m; break; case 2: price = 800m; break; }"
+        "switch (txtPassengers.Text) { case \"1\": price = 250m; break; }"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "A switch statement on lstRoutes.SelectedIndex branches on the zero-based item indices (0, 1, 2) to assign the corresponding decimal ticket price.",
       "explanation": "A switch statement on lstRoutes.SelectedIndex branches on the zero-based item indices (0, 1, 2) to assign the corresponding decimal ticket price.",
-      "distractorRationale": "Options other than \"switch (lstRoutes.SelectedIndex) { case 0: price = 250m; bre\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
@@ -10472,22 +10472,22 @@
       "stem": "In C#, what happens if a case block in a switch statement contains executable statements but omits a break, return, or goto statement?",
       "code": "",
       "options": [
+        "The application throws a SwitchFallthroughException at runtime",
         "Compiler error CS0163: Control cannot fall through from one case label to another",
         "The code falls through silently to the next case as in C++",
-        "Visual Studio automatically inserts a break statement",
-        "The application throws a SwitchFallthroughException at runtime"
+        "Visual Studio automatically inserts a break statement"
       ],
       "opts": [
+        "The application throws a SwitchFallthroughException at runtime",
         "Compiler error CS0163: Control cannot fall through from one case label to another",
         "The code falls through silently to the next case as in C++",
-        "Visual Studio automatically inserts a break statement",
-        "The application throws a SwitchFallthroughException at runtime"
+        "Visual Studio automatically inserts a break statement"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "Unlike C/C++, C# enforces strict no-fall-through semantics. Every non-empty case block must end with a jump statement like break or return.",
       "explanation": "Unlike C/C++, C# enforces strict no-fall-through semantics. Every non-empty case block must end with a jump statement like break or return.",
-      "distractorRationale": "Options other than \"Compiler error CS0163: Control cannot fall through from one \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
@@ -10513,22 +10513,22 @@
       "stem": "Which C# `if` statement applies a 10% group discount to `totalBill` when the validated integer `passengers` is 6 or more?",
       "code": "",
       "options": [
-        "if (passengers > 6) { totalBill = totalBill * 0.10m; }",
-        "if (passengers >= 6) { totalBill -= totalBill * 0.10m; }",
         "if (passengers == 6) { totalBill = totalBill - 10m; }",
-        "if (passengers <= 6) { totalBill *= 1.10m; }"
+        "if (passengers <= 6) { totalBill *= 1.10m; }",
+        "if (passengers >= 6) { totalBill -= totalBill * 0.10m; }",
+        "if (passengers > 6) { totalBill = totalBill * 0.10m; }"
       ],
       "opts": [
-        "if (passengers > 6) { totalBill = totalBill * 0.10m; }",
-        "if (passengers >= 6) { totalBill -= totalBill * 0.10m; }",
         "if (passengers == 6) { totalBill = totalBill - 10m; }",
-        "if (passengers <= 6) { totalBill *= 1.10m; }"
+        "if (passengers <= 6) { totalBill *= 1.10m; }",
+        "if (passengers >= 6) { totalBill -= totalBill * 0.10m; }",
+        "if (passengers > 6) { totalBill = totalBill * 0.10m; }"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "The relational operator >= includes 6 ('6 or more'), and subtracting totalBill * 0.10m (or multiplying by 0.90m) reduces totalBill by 10%.",
       "explanation": "The relational operator >= includes 6 ('6 or more'), and subtracting totalBill * 0.10m (or multiplying by 0.90m) reduces totalBill by 10%.",
-      "distractorRationale": "Options other than \"if (passengers >= 6) { totalBill -= totalBill * 0.10m; }\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10555,22 +10555,22 @@
       "stem": "Inside a `CheckedChanged` event handler, which C# code sets the Form background color to `Orange` when `radSunset` is selected and `PowderBlue` otherwise?",
       "code": "",
       "options": [
+        "switch (radSunset) { case true: BackColor = Orange; break; }",
         "if (radSunset.Selected) { Form.BackColor = \"Orange\"; } else { Form.BackColor = \"PowderBlue\"; }",
         "if (radSunset.Text == \"Checked\") { this.Color = Color.Orange; }",
-        "if (radSunset.Checked) { this.BackColor = Color.Orange; } else { this.BackColor = Color.PowderBlue; }",
-        "switch (radSunset) { case true: BackColor = Orange; break; }"
+        "if (radSunset.Checked) { this.BackColor = Color.Orange; } else { this.BackColor = Color.PowderBlue; }"
       ],
       "opts": [
+        "switch (radSunset) { case true: BackColor = Orange; break; }",
         "if (radSunset.Selected) { Form.BackColor = \"Orange\"; } else { Form.BackColor = \"PowderBlue\"; }",
         "if (radSunset.Text == \"Checked\") { this.Color = Color.Orange; }",
-        "if (radSunset.Checked) { this.BackColor = Color.Orange; } else { this.BackColor = Color.PowderBlue; }",
-        "switch (radSunset) { case true: BackColor = Orange; break; }"
+        "if (radSunset.Checked) { this.BackColor = Color.Orange; } else { this.BackColor = Color.PowderBlue; }"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "RadioButton selection is tested via the boolean Checked property, and the current form's background color is updated via this.BackColor = Color.Orange / Color.PowderBlue.",
       "explanation": "RadioButton selection is tested via the boolean Checked property, and the current form's background color is updated via this.BackColor = Color.Orange / Color.PowderBlue.",
-      "distractorRationale": "Options other than \"if (radSunset.Checked) { this.BackColor = Color.Orange; } el\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -10596,22 +10596,22 @@
       "stem": "Why are RadioButtons inside the same container mutually exclusive by default?",
       "code": "",
       "options": [
+        "Windows Forms ensures that checking any one RadioButton in a shared parent automatically unchecks all other RadioButtons in that container",
         "RadioButtons delete other buttons when clicked",
         "RadioButtons can only hold numbers",
-        "Only one button can be visible at a time",
-        "Windows Forms ensures that checking any one RadioButton in a shared parent automatically unchecks all other RadioButtons in that container"
+        "Only one button can be visible at a time"
       ],
       "opts": [
+        "Windows Forms ensures that checking any one RadioButton in a shared parent automatically unchecks all other RadioButtons in that container",
         "RadioButtons delete other buttons when clicked",
         "RadioButtons can only hold numbers",
-        "Only one button can be visible at a time",
-        "Windows Forms ensures that checking any one RadioButton in a shared parent automatically unchecks all other RadioButtons in that container"
+        "Only one button can be visible at a time"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "RadioButtons represent mutually exclusive choices: selecting one unselects all sibling RadioButtons sharing the same parent container.",
       "explanation": "RadioButtons represent mutually exclusive choices: selecting one unselects all sibling RadioButtons sharing the same parent container.",
-      "distractorRationale": "Options other than \"Windows Forms ensures that checking any one RadioButton in a\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -10637,22 +10637,22 @@
       "stem": "If an application requires two separate independent groups of RadioButtons on the same form (e.g. TimeSlot and PaymentMethod), how should they be designed?",
       "code": "",
       "options": [
+        "Place them on different monitor displays",
         "Place each group inside its own container control, such as a GroupBox or Panel",
         "Use CheckBoxes instead of RadioButtons",
-        "Separate them with empty labels",
-        "Place them on different monitor displays"
+        "Separate them with empty labels"
       ],
       "opts": [
+        "Place them on different monitor displays",
         "Place each group inside its own container control, such as a GroupBox or Panel",
         "Use CheckBoxes instead of RadioButtons",
-        "Separate them with empty labels",
-        "Place them on different monitor displays"
+        "Separate them with empty labels"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "Placing RadioButton sets into distinct container controls (like GroupBoxes) isolates their mutual exclusivity to that container.",
       "explanation": "Placing RadioButton sets into distinct container controls (like GroupBoxes) isolates their mutual exclusivity to that container.",
-      "distractorRationale": "Options other than \"Place each group inside its own container control, such as a\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -10678,22 +10678,22 @@
       "stem": "What is the primary operational difference between a RadioButton and a CheckBox?",
       "code": "",
       "options": [
+        "RadioButtons do not have a Checked property",
         "RadioButtons are square while CheckBoxes are circular",
         "RadioButtons allow only one selection from a mutually exclusive group, whereas CheckBoxes allow multiple independent options to be checked simultaneously",
-        "CheckBoxes cannot be clicked with a mouse",
-        "RadioButtons do not have a Checked property"
+        "CheckBoxes cannot be clicked with a mouse"
       ],
       "opts": [
+        "RadioButtons do not have a Checked property",
         "RadioButtons are square while CheckBoxes are circular",
         "RadioButtons allow only one selection from a mutually exclusive group, whereas CheckBoxes allow multiple independent options to be checked simultaneously",
-        "CheckBoxes cannot be clicked with a mouse",
-        "RadioButtons do not have a Checked property"
+        "CheckBoxes cannot be clicked with a mouse"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "RadioButtons force a 1-of-N mutually exclusive choice; CheckBoxes represent independent binary (on/off) toggles allowing 0, 1, or many selections.",
       "explanation": "RadioButtons force a 1-of-N mutually exclusive choice; CheckBoxes represent independent binary (on/off) toggles allowing 0, 1, or many selections.",
-      "distractorRationale": "Options other than \"RadioButtons allow only one selection from a mutually exclus\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -10719,22 +10719,22 @@
       "stem": "What defensive input validation rule must be enforced on a passenger count TextBox (`txtPassengers`) before calculating ticket totals?",
       "code": "",
       "options": [
-        "It must be an even number",
         "It cannot exceed 2 passengers",
-        "It must parse to an integer using int.TryParse and the resulting passenger count must be at least 1 (passengers >= 1)",
-        "It must be spelled in words (e.g. 'two')"
+        "It must be spelled in words (e.g. 'two')",
+        "It must be an even number",
+        "It must parse to an integer using int.TryParse and the resulting passenger count must be at least 1 (passengers >= 1)"
       ],
       "opts": [
-        "It must be an even number",
         "It cannot exceed 2 passengers",
-        "It must parse to an integer using int.TryParse and the resulting passenger count must be at least 1 (passengers >= 1)",
-        "It must be spelled in words (e.g. 'two')"
+        "It must be spelled in words (e.g. 'two')",
+        "It must be an even number",
+        "It must parse to an integer using int.TryParse and the resulting passenger count must be at least 1 (passengers >= 1)"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "Defensive validation requires parsing txtPassengers.Text with int.TryParse and verifying that the resulting passenger count is at least 1 (passengers >= 1).",
       "explanation": "Defensive validation requires parsing txtPassengers.Text with int.TryParse and verifying that the resulting passenger count is at least 1 (passengers >= 1).",
-      "distractorRationale": "Options other than \"It must parse to an integer using int.TryParse and the resul\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10756,27 +10756,27 @@
       "difficulty": "Intermediate",
       "marks": 3,
       "estimatedMinutes": 2,
-      "q": "Why is `txtPassengers.Focus();` called immediately after displaying an error message for an invalid passenger count?",
-      "title": "Why is `txtPassengers.Focus();` called immediately after displaying an error message for an invalid passenger count?",
-      "stem": "Why is `txtPassengers.Focus();` called immediately after displaying an error message for an invalid passenger count?",
+      "q": "Why is `txtPassengers.Focus();` called right after `MessageBox.Show(...)` inside an input-validation guard clause?",
+      "title": "Why is `txtPassengers.Focus();` called right after `MessageBox.Show(...)` inside an input-validation guard clause?",
+      "stem": "Why is `txtPassengers.Focus();` called right after `MessageBox.Show(...)` inside an input-validation guard clause?",
       "code": "",
       "options": [
-        "To erase the hard drive",
-        "To print the error message on paper",
-        "To close the form window",
-        "To return the blinking cursor to the invalid textbox so the user can correct their input immediately without reaching for the mouse"
+        "To place keyboard focus back inside `txtPassengers` so the user can immediately type a corrected value without clicking the TextBox",
+        "To re-trigger `btnCalculate_Click` automatically in a loop until valid digits are entered",
+        "To clear all text inside `txtPassengers` and reset its `TabIndex` property to `0`",
+        "To lock `txtPassengers` into read-only mode until the form is restarted"
       ],
       "opts": [
-        "To erase the hard drive",
-        "To print the error message on paper",
-        "To close the form window",
-        "To return the blinking cursor to the invalid textbox so the user can correct their input immediately without reaching for the mouse"
+        "To place keyboard focus back inside `txtPassengers` so the user can immediately type a corrected value without clicking the TextBox",
+        "To re-trigger `btnCalculate_Click` automatically in a loop until valid digits are entered",
+        "To clear all text inside `txtPassengers` and reset its `TabIndex` property to `0`",
+        "To lock `txtPassengers` into read-only mode until the form is restarted"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "Setting focus back to the offending control is standard defensive GUI design, reducing physical effort and cognitive friction (Shneiderman HCI).",
-      "explanation": "Setting focus back to the offending control is standard defensive GUI design, reducing physical effort and cognitive friction (Shneiderman HCI).",
-      "distractorRationale": "Options other than \"To return the blinking cursor to the invalid textbox so the \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 0,
+      "ans": 0,
+      "exp": "After dismissing the `MessageBox`, focus would otherwise remain on the Calculate `Button`. Calling `txtPassengers.Focus()` restores the insertion cursor directly to the invalid `TextBox`.",
+      "explanation": "After dismissing the `MessageBox`, focus would otherwise remain on the Calculate `Button`. Calling `txtPassengers.Focus()` restores the insertion cursor directly to the invalid `TextBox`.",
+      "distractorRationale": "`Focus()` neither clears text (that is `Clear()`), changes `ReadOnly`, nor re-invokes `Click` handlers.",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10803,22 +10803,22 @@
       "stem": "What does calling 'txtPassengers.SelectAll();' do when input validation fails?",
       "code": "",
       "options": [
-        "Highlights the entire text inside the textbox so typing a new character immediately overwrites the invalid input",
-        "Copies the text to the Windows clipboard",
         "Selects all textboxes on the form simultaneously",
-        "Deletes the textbox from the form"
+        "Highlights the entire text inside the textbox so typing a new character immediately overwrites the invalid input",
+        "Deletes the textbox from the form",
+        "Copies the text to the Windows clipboard"
       ],
       "opts": [
-        "Highlights the entire text inside the textbox so typing a new character immediately overwrites the invalid input",
-        "Copies the text to the Windows clipboard",
         "Selects all textboxes on the form simultaneously",
-        "Deletes the textbox from the form"
+        "Highlights the entire text inside the textbox so typing a new character immediately overwrites the invalid input",
+        "Deletes the textbox from the form",
+        "Copies the text to the Windows clipboard"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "SelectAll() highlights all text in the textbox, allowing instant replacement without manually pressing backspace.",
       "explanation": "SelectAll() highlights all text in the textbox, allowing instant replacement without manually pressing backspace.",
-      "distractorRationale": "Options other than \"Highlights the entire text inside the textbox so typing a ne\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10845,22 +10845,22 @@
       "stem": "Given speed fine bands (21-30 km/h over = R1500 Severe; Highway does not double; repeat offender adds R500), what is the total fine for traveling at 105 km/h against an 80 km/h Highway limit (25 km/h over) as a repeat offender?",
       "code": "",
       "options": [
-        "R 1500",
-        "R 2000 (Base R1500 + R500 repeat fine)",
         "R 3000",
-        "R 3500"
+        "R 3500",
+        "R 2000 (Base R1500 + R500 repeat fine)",
+        "R 1500"
       ],
       "opts": [
-        "R 1500",
-        "R 2000 (Base R1500 + R500 repeat fine)",
         "R 3000",
-        "R 3500"
+        "R 3500",
+        "R 2000 (Base R1500 + R500 repeat fine)",
+        "R 1500"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "25 km/h over lands in the 21-30 band (Severe = R1500). Highway is not built-up, so fine does not double. Repeat offender adds R500: R1500 + R500 = R2000.",
       "explanation": "25 km/h over lands in the 21-30 band (Severe = R1500). Highway is not built-up, so fine does not double. Repeat offender adds R500: R1500 + R500 = R2000.",
-      "distractorRationale": "Options other than \"R 2000 (Base R1500 + R500 repeat fine)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10889,20 +10889,20 @@
       "options": [
         "R 2000",
         "R 4000",
-        "R 3500 (Base R1500 doubled to R3000, plus R500 repeat fine)",
-        "R 2500"
+        "R 2500",
+        "R 3500 (Base R1500 doubled to R3000, plus R500 repeat fine)"
       ],
       "opts": [
         "R 2000",
         "R 4000",
-        "R 3500 (Base R1500 doubled to R3000, plus R500 repeat fine)",
-        "R 2500"
+        "R 2500",
+        "R 3500 (Base R1500 doubled to R3000, plus R500 repeat fine)"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "25 over in School (built-up > 20) doubles base R1500 to R3000. Repeat offender adds R500 on top: R3000 + R500 = R3500.",
       "explanation": "25 over in School (built-up > 20) doubles base R1500 to R3000. Repeat offender adds R500 on top: R3000 + R500 = R3500.",
-      "distractorRationale": "Options other than \"R 3500 (Base R1500 doubled to R3000, plus R500 repeat fine)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10929,22 +10929,22 @@
       "stem": "Which C# expression correctly tests whether an integer variable 'mark' is between 0 and 100 inclusive?",
       "code": "",
       "options": [
-        "0 <= mark <= 100",
-        "mark >= 0 || mark <= 100",
+        "mark >= 0 && mark <= 100",
         "mark BETWEEN 0 AND 100",
-        "mark >= 0 && mark <= 100"
+        "0 <= mark <= 100",
+        "mark >= 0 || mark <= 100"
       ],
       "opts": [
-        "0 <= mark <= 100",
-        "mark >= 0 || mark <= 100",
+        "mark >= 0 && mark <= 100",
         "mark BETWEEN 0 AND 100",
-        "mark >= 0 && mark <= 100"
+        "0 <= mark <= 100",
+        "mark >= 0 || mark <= 100"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "In C#, range boundary checks must be joined by the '&&' operator: 'mark >= 0 && mark <= 100'.",
       "explanation": "In C#, range boundary checks must be joined by the '&&' operator: 'mark >= 0 && mark <= 100'.",
-      "distractorRationale": "Options other than \"mark >= 0 && mark <= 100\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -10971,22 +10971,22 @@
       "stem": "Why does the expression '0 <= mark <= 100' cause a compilation error in C#?",
       "code": "",
       "options": [
-        "C# evaluates left-to-right: '0 <= mark' produces a boolean, and comparing a boolean to an integer ('bool <= 100') is illegal syntax",
-        "Numbers cannot be compared to 0 in C#",
         "The '<=' operator can only be used once per line",
-        "C# requires all inequalities to use the word 'AND'"
+        "C# evaluates left-to-right: '0 <= mark' produces a boolean, and comparing a boolean to an integer ('bool <= 100') is illegal syntax",
+        "C# requires all inequalities to use the word 'AND'",
+        "Numbers cannot be compared to 0 in C#"
       ],
       "opts": [
-        "C# evaluates left-to-right: '0 <= mark' produces a boolean, and comparing a boolean to an integer ('bool <= 100') is illegal syntax",
-        "Numbers cannot be compared to 0 in C#",
         "The '<=' operator can only be used once per line",
-        "C# requires all inequalities to use the word 'AND'"
+        "C# evaluates left-to-right: '0 <= mark' produces a boolean, and comparing a boolean to an integer ('bool <= 100') is illegal syntax",
+        "C# requires all inequalities to use the word 'AND'",
+        "Numbers cannot be compared to 0 in C#"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "Binary relational operators evaluate from left to right yielding a bool. C# does not support chained mathematical inequalities.",
       "explanation": "Binary relational operators evaluate from left to right yielding a bool. C# does not support chained mathematical inequalities.",
-      "distractorRationale": "Options other than \"C# evaluates left-to-right: '0 <= mark' produces a boolean, \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11013,22 +11013,22 @@
       "stem": "What is the key functional difference between '&' and '&&' in C# boolean expressions?",
       "code": "",
       "options": [
-        "'&' only works on strings",
-        "'&&' is short-circuiting (stops if the first operand is false), while '&' always evaluates both operands regardless of the first",
         "'&&' can only compare two variables",
-        "There is no difference in C#"
+        "There is no difference in C#",
+        "'&&' is short-circuiting (stops if the first operand is false), while '&' always evaluates both operands regardless of the first",
+        "'&' only works on strings"
       ],
       "opts": [
-        "'&' only works on strings",
-        "'&&' is short-circuiting (stops if the first operand is false), while '&' always evaluates both operands regardless of the first",
         "'&&' can only compare two variables",
-        "There is no difference in C#"
+        "There is no difference in C#",
+        "'&&' is short-circuiting (stops if the first operand is false), while '&' always evaluates both operands regardless of the first",
+        "'&' only works on strings"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "'&&' is the short-circuit logical AND operator, whereas '&' is the logical/bitwise AND operator that evaluates both operands unconditionally.",
       "explanation": "'&&' is the short-circuit logical AND operator, whereas '&' is the logical/bitwise AND operator that evaluates both operands unconditionally.",
-      "distractorRationale": "Options other than \"'&&' is short-circuiting (stops if the first operand is fals\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11055,22 +11055,22 @@
       "stem": "What is the key functional difference between '|' and '||' in C# boolean expressions?",
       "code": "",
       "options": [
+        "There is no difference",
         "'|' is used for division while '||' is for addition",
         "'||' only works on numbers",
-        "'||' is short-circuiting (stops if the first operand is true), while '|' always evaluates both operands unconditionally",
-        "There is no difference"
+        "'||' is short-circuiting (stops if the first operand is true), while '|' always evaluates both operands unconditionally"
       ],
       "opts": [
+        "There is no difference",
         "'|' is used for division while '||' is for addition",
         "'||' only works on numbers",
-        "'||' is short-circuiting (stops if the first operand is true), while '|' always evaluates both operands unconditionally",
-        "There is no difference"
+        "'||' is short-circuiting (stops if the first operand is true), while '|' always evaluates both operands unconditionally"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "'||' skips evaluation of the second operand if the first is true. '|' always evaluates both sides unconditionally.",
       "explanation": "'||' skips evaluation of the second operand if the first is true. '|' always evaluates both sides unconditionally.",
-      "distractorRationale": "Options other than \"'||' is short-circuiting (stops if the first operand is true\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11097,22 +11097,22 @@
       "stem": "In a nested if structure without explicit curly braces, which 'if' statement does an 'else' clause automatically pair with?",
       "code": "",
       "options": [
+        "The closest preceding 'if' within the same block that does not already have an associated 'else'",
         "The very first 'if' in the method",
         "The 'if' that appears at the same indentation level",
-        "It causes a compiler syntax error",
-        "The closest preceding 'if' within the same block that does not already have an associated 'else'"
+        "It causes a compiler syntax error"
       ],
       "opts": [
+        "The closest preceding 'if' within the same block that does not already have an associated 'else'",
         "The very first 'if' in the method",
         "The 'if' that appears at the same indentation level",
-        "It causes a compiler syntax error",
-        "The closest preceding 'if' within the same block that does not already have an associated 'else'"
+        "It causes a compiler syntax error"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "The 'dangling else' rule in C# matches an else with the nearest preceding unmatched if in the same lexical scope.",
       "explanation": "The 'dangling else' rule in C# matches an else with the nearest preceding unmatched if in the same lexical scope.",
-      "distractorRationale": "Options other than \"The closest preceding 'if' within the same block that does n\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
@@ -11138,22 +11138,22 @@
       "stem": "How can a developer unambiguously resolve the 'dangling else' problem and ensure an else matches the intended outer if?",
       "code": "",
       "options": [
-        "By enclosing the inner if statement and its body inside curly braces { }",
-        "By pressing Tab three times",
         "By adding a comment above the else",
-        "By declaring all variables as static"
+        "By enclosing the inner if statement and its body inside curly braces { }",
+        "By declaring all variables as static",
+        "By pressing Tab three times"
       ],
       "opts": [
-        "By enclosing the inner if statement and its body inside curly braces { }",
-        "By pressing Tab three times",
         "By adding a comment above the else",
-        "By declaring all variables as static"
+        "By enclosing the inner if statement and its body inside curly braces { }",
+        "By declaring all variables as static",
+        "By pressing Tab three times"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "Explicit curly braces establish clear block boundaries, leaving no ambiguity about which if statement owns the else.",
       "explanation": "Explicit curly braces establish clear block boundaries, leaving no ambiguity about which if statement owns the else.",
-      "distractorRationale": "Options other than \"By enclosing the inner if statement and its body inside curl\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11180,22 +11180,22 @@
       "stem": "What happens when 'bool ok = (10 > 2) || (5 / 0 == 1);' is evaluated in C#?",
       "code": "",
       "options": [
+        "Compiler error CS0020 occurs",
         "A DivideByZeroException crashes the application",
         "'ok' becomes true without error because short-circuit evaluation skips '(5 / 0 == 1)'",
-        "The expression evaluates to false",
-        "Compiler error CS0020 occurs"
+        "The expression evaluates to false"
       ],
       "opts": [
+        "Compiler error CS0020 occurs",
         "A DivideByZeroException crashes the application",
         "'ok' becomes true without error because short-circuit evaluation skips '(5 / 0 == 1)'",
-        "The expression evaluates to false",
-        "Compiler error CS0020 occurs"
+        "The expression evaluates to false"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Because 10 > 2 is true, the '||' short-circuits immediately, never evaluating the illegal division by zero.",
       "explanation": "Because 10 > 2 is true, the '||' short-circuits immediately, never evaluating the illegal division by zero.",
-      "distractorRationale": "Options other than \"'ok' becomes true without error because short-circuit evalua\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11224,20 +11224,20 @@
       "options": [
         "C# TryParse automatically replaces empty strings with 100",
         "The 'out' keyword bypasses boolean evaluation entirely",
-        "The '&&' operator short-circuits: if TryParse returns false, the subsequent conditions 'm1 >= 0' and 'm1 <= 100' are never evaluated",
-        "The compiler converts the if statement into a background try-catch block"
+        "The compiler converts the if statement into a background try-catch block",
+        "The '&&' operator short-circuits: if TryParse returns false, the subsequent conditions 'm1 >= 0' and 'm1 <= 100' are never evaluated"
       ],
       "opts": [
         "C# TryParse automatically replaces empty strings with 100",
         "The 'out' keyword bypasses boolean evaluation entirely",
-        "The '&&' operator short-circuits: if TryParse returns false, the subsequent conditions 'm1 >= 0' and 'm1 <= 100' are never evaluated",
-        "The compiler converts the if statement into a background try-catch block"
+        "The compiler converts the if statement into a background try-catch block",
+        "The '&&' operator short-circuits: if TryParse returns false, the subsequent conditions 'm1 >= 0' and 'm1 <= 100' are never evaluated"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "Logical AND ('&&') performs short-circuit evaluation. If the first operand evaluates to false (as when TryParse fails), evaluation terminates immediately, ensuring the uninitialized or default value of m1 is never erroneously validated.",
       "explanation": "Logical AND ('&&') performs short-circuit evaluation. If the first operand evaluates to false (as when TryParse fails), evaluation terminates immediately, ensuring the uninitialized or default value of m1 is never erroneously validated.",
-      "distractorRationale": "Options other than \"The '&&' operator short-circuits: if TryParse returns false,\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_tryparse",
         "def_parse_methods",
@@ -11264,22 +11264,22 @@
       "stem": "In C#, what is a boolean flag variable?",
       "code": "",
       "options": [
-        "A variable that prints an image of the South African flag",
+        "A bool variable used to signal whether a specific condition or state has been met (e.g. bool isSpeeding = speedOver > 0;)",
         "A variable that can hold three different values",
         "A variable that only exists in memory for 1 second",
-        "A bool variable used to signal whether a specific condition or state has been met (e.g. bool isSpeeding = speedOver > 0;)"
+        "A variable that prints an image of the South African flag"
       ],
       "opts": [
-        "A variable that prints an image of the South African flag",
+        "A bool variable used to signal whether a specific condition or state has been met (e.g. bool isSpeeding = speedOver > 0;)",
         "A variable that can hold three different values",
         "A variable that only exists in memory for 1 second",
-        "A bool variable used to signal whether a specific condition or state has been met (e.g. bool isSpeeding = speedOver > 0;)"
+        "A variable that prints an image of the South African flag"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "A flag is a boolean variable whose value (true/false) indicates whether a condition has occurred or an option is active.",
       "explanation": "A flag is a boolean variable whose value (true/false) indicates whether a condition has occurred or an option is active.",
-      "distractorRationale": "Options other than \"A bool variable used to signal whether a specific condition \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11306,22 +11306,22 @@
       "stem": "If 8 passengers book 'Speedboat Adventure' (R400.00 per person) and bookings of 6 or more passengers receive a 10% group discount, what is the calculated final total?",
       "code": "",
       "options": [
+        "R 3000",
         "R 2880 (Subtotal R3200 minus R320 discount)",
         "R 3200",
-        "R 2500",
-        "R 3000"
+        "R 2500"
       ],
       "opts": [
+        "R 3000",
         "R 2880 (Subtotal R3200 minus R320 discount)",
         "R 3200",
-        "R 2500",
-        "R 3000"
+        "R 2500"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "Subtotal = 8 * R400 = R3200. Because passengers >= 6, a 10% discount applies (R320). Final = R3200 - R320 = R2880.",
       "explanation": "Subtotal = 8 * R400 = R3200. Because passengers >= 6, a 10% discount applies (R320). Final = R3200 - R320 = R2880.",
-      "distractorRationale": "Options other than \"R 2880 (Subtotal R3200 minus R320 discount)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11348,22 +11348,22 @@
       "stem": "What C# statement in `btnClear_Click` deselects any currently highlighted item in the ListBox `lstRoutes`?",
       "code": "",
       "options": [
+        "lstRoutes.ClearSelectedItems = true;",
         "lstRoutes.SelectedItem = \"None\";",
         "lstRoutes.SelectedIndex = -1;",
-        "lstRoutes.Items.Delete();",
-        "lstRoutes.ClearSelectedItems = true;"
+        "lstRoutes.Items.Delete();"
       ],
       "opts": [
+        "lstRoutes.ClearSelectedItems = true;",
         "lstRoutes.SelectedItem = \"None\";",
         "lstRoutes.SelectedIndex = -1;",
-        "lstRoutes.Items.Delete();",
-        "lstRoutes.ClearSelectedItems = true;"
+        "lstRoutes.Items.Delete();"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Setting SelectedIndex to -1 removes any active highlighting, leaving no item selected in the ListBox.",
       "explanation": "Setting SelectedIndex to -1 removes any active highlighting, leaving no item selected in the ListBox.",
-      "distractorRationale": "Options other than \"lstRoutes.SelectedIndex = -1;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
@@ -11391,20 +11391,20 @@
       "options": [
         "lstRoutes.Clear();",
         "lstRoutes.Items.RemoveAll();",
-        "lstRoutes.Items.Clear();",
-        "lstRoutes.Reset();"
+        "lstRoutes.Reset();",
+        "lstRoutes.Items.Clear();"
       ],
       "opts": [
         "lstRoutes.Clear();",
         "lstRoutes.Items.RemoveAll();",
-        "lstRoutes.Items.Clear();",
-        "lstRoutes.Reset();"
+        "lstRoutes.Reset();",
+        "lstRoutes.Items.Clear();"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "The Items collection of a ListBox exposes Clear() to remove all member objects.",
       "explanation": "The Items collection of a ListBox exposes Clear() to remove all member objects.",
-      "distractorRationale": "Options other than \"lstRoutes.Items.Clear();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_listbox_selection",
         "def_error_prevention"
@@ -11430,22 +11430,22 @@
       "stem": "How can an event handler check whether a RadioButton named 'radSunset' is currently selected by the user?",
       "code": "",
       "options": [
-        "if (radSunset.Selected == 1)",
+        "if (radSunset.Checked)",
         "if (radSunset.Text == \"True\")",
         "if (radSunset.Value == true)",
-        "if (radSunset.Checked)"
+        "if (radSunset.Selected == 1)"
       ],
       "opts": [
-        "if (radSunset.Selected == 1)",
+        "if (radSunset.Checked)",
         "if (radSunset.Text == \"True\")",
         "if (radSunset.Value == true)",
-        "if (radSunset.Checked)"
+        "if (radSunset.Selected == 1)"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "The 'Checked' property of a RadioButton is a boolean returning true if selected, false otherwise.",
       "explanation": "The 'Checked' property of a RadioButton is a boolean returning true if selected, false otherwise.",
-      "distractorRationale": "Options other than \"if (radSunset.Checked)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -11471,22 +11471,22 @@
       "stem": "Which C# property sets or gets the background surface color of a Windows Form?",
       "code": "",
       "options": [
-        "this.BackColor",
         "this.Color",
+        "this.BackColor",
         "this.BackgroundFill",
         "this.CanvasColor"
       ],
       "opts": [
-        "this.BackColor",
         "this.Color",
+        "this.BackColor",
         "this.BackgroundFill",
         "this.CanvasColor"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "The BackColor property determines the background color of forms and controls in Windows Forms.",
       "explanation": "The BackColor property determines the background color of forms and controls in Windows Forms.",
-      "distractorRationale": "Options other than \"this.BackColor\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11513,22 +11513,22 @@
       "stem": "When should a developer prefer a C# switch statement over a long chain of if-else-if statements?",
       "code": "",
       "options": [
+        "When reading from a file",
         "When checking complex relational inequalities with multiple variables (e.g. x > 5 && y < 10)",
         "When testing a single discrete variable (like an int, string, or char) against multiple constant candidate values",
-        "When repeating code 100 times",
-        "When reading from a file"
+        "When repeating code 100 times"
       ],
       "opts": [
+        "When reading from a file",
         "When checking complex relational inequalities with multiple variables (e.g. x > 5 && y < 10)",
         "When testing a single discrete variable (like an int, string, or char) against multiple constant candidate values",
-        "When repeating code 100 times",
-        "When reading from a file"
+        "When repeating code 100 times"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Switch statements are ideal for multi-way branching when comparing a single discrete selector expression against constant case values.",
       "explanation": "Switch statements are ideal for multi-way branching when comparing a single discrete selector expression against constant case values.",
-      "distractorRationale": "Options other than \"When testing a single discrete variable (like an int, string\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
@@ -11554,22 +11554,22 @@
       "stem": "What is the purpose of the 'default:' section in a C# switch statement?",
       "code": "",
       "options": [
-        "It executes before every other case",
         "It runs only if an exception is thrown",
-        "It executes when none of the explicitly defined case constants match the evaluated selector value",
-        "It defines the default background color of the form"
+        "It defines the default background color of the form",
+        "It executes before every other case",
+        "It executes when none of the explicitly defined case constants match the evaluated selector value"
       ],
       "opts": [
-        "It executes before every other case",
         "It runs only if an exception is thrown",
-        "It executes when none of the explicitly defined case constants match the evaluated selector value",
-        "It defines the default background color of the form"
+        "It defines the default background color of the form",
+        "It executes before every other case",
+        "It executes when none of the explicitly defined case constants match the evaluated selector value"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "The default section is the fallback branch in a switch statement, analogous to the trailing else in an if-else-if chain.",
       "explanation": "The default section is the fallback branch in a switch statement, analogous to the trailing else in an if-else-if chain.",
-      "distractorRationale": "Options other than \"It executes when none of the explicitly defined case constan\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
@@ -11595,22 +11595,22 @@
       "stem": "In a speed trap calculator where `speedOver = recordedSpeed - limit`, what `speedOver` value, category, and fine apply when a vehicle travels at 60 km/h in a 60 km/h zone?",
       "code": "",
       "options": [
-        "speedOver is 0; category is \"Minor\" and fine is R250",
-        "speedOver is 1; category is \"Serious\"",
+        "speedOver is 0; category is \"Within the limit\" and fine is \"No fine. Safe driving.\"",
         "A warning letter is printed",
-        "speedOver is 0; category is \"Within the limit\" and fine is \"No fine. Safe driving.\""
+        "speedOver is 0; category is \"Minor\" and fine is R250",
+        "speedOver is 1; category is \"Serious\""
       ],
       "opts": [
-        "speedOver is 0; category is \"Minor\" and fine is R250",
-        "speedOver is 1; category is \"Serious\"",
+        "speedOver is 0; category is \"Within the limit\" and fine is \"No fine. Safe driving.\"",
         "A warning letter is printed",
-        "speedOver is 0; category is \"Within the limit\" and fine is \"No fine. Safe driving.\""
+        "speedOver is 0; category is \"Minor\" and fine is R250",
+        "speedOver is 1; category is \"Serious\""
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "60 - 60 = 0. When speedOver <= 0, the driver is within the limit, incurring no fine.",
       "explanation": "60 - 60 = 0. When speedOver <= 0, the driver is within the limit, incurring no fine.",
-      "distractorRationale": "Options other than \"speedOver is 0; category is \"Within the limit\" and fine is \"\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11637,22 +11637,22 @@
       "stem": "Why does 'txtZone.Text == \"School\"' evaluate to false if the officer typed 'school' with a lowercase 's'?",
       "code": "",
       "options": [
-        "C# string comparisons using the equality operator (==) are strictly case-sensitive",
-        "Strings cannot be compared using ==",
         "Visual Studio automatically capitalizes all text",
-        "TextBoxes do not support lowercase letters"
+        "C# string comparisons using the equality operator (==) are strictly case-sensitive",
+        "TextBoxes do not support lowercase letters",
+        "Strings cannot be compared using =="
       ],
       "opts": [
-        "C# string comparisons using the equality operator (==) are strictly case-sensitive",
-        "Strings cannot be compared using ==",
         "Visual Studio automatically capitalizes all text",
-        "TextBoxes do not support lowercase letters"
+        "C# string comparisons using the equality operator (==) are strictly case-sensitive",
+        "TextBoxes do not support lowercase letters",
+        "Strings cannot be compared using =="
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "String equality in C# compares characters by their exact Unicode/ASCII values; 'S' (ASCII 83) does not equal 's' (ASCII 115).",
       "explanation": "String equality in C# compares characters by their exact Unicode/ASCII values; 'S' (ASCII 83) does not equal 's' (ASCII 115).",
-      "distractorRationale": "Options other than \"C# string comparisons using the equality operator (==) are s\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
@@ -11679,21 +11679,21 @@
       "code": "",
       "options": [
         "txtZone.Text = \"school\"",
-        "txtZone.Text.ToLower() == \"school\"",
         "txtZone.Text.NoCase()",
+        "txtZone.Text.ToLower() == \"school\"",
         "txtZone.Text.IgnoreCaps()"
       ],
       "opts": [
         "txtZone.Text = \"school\"",
-        "txtZone.Text.ToLower() == \"school\"",
         "txtZone.Text.NoCase()",
+        "txtZone.Text.ToLower() == \"school\"",
         "txtZone.Text.IgnoreCaps()"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Converting both strings to lower case (using .ToLower()) normalizes character casing, allowing reliable case-insensitive equality comparison.",
       "explanation": "Converting both strings to lower case (using .ToLower()) normalizes character casing, allowing reliable case-insensitive equality comparison.",
-      "distractorRationale": "Options other than \"txtZone.Text.ToLower() == \"school\"\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
@@ -11719,22 +11719,22 @@
       "stem": "What does the C# conditional (ternary) operator 'condition ? expr1 : expr2' do?",
       "code": "",
       "options": [
+        "Prints both expressions to a label",
         "Repeats expr1 while condition is true",
         "Declares a three-dimensional array",
-        "Evaluates the condition and returns expr1 if true, or expr2 if false",
-        "Prints both expressions to a label"
+        "Evaluates the condition and returns expr1 if true, or expr2 if false"
       ],
       "opts": [
+        "Prints both expressions to a label",
         "Repeats expr1 while condition is true",
         "Declares a three-dimensional array",
-        "Evaluates the condition and returns expr1 if true, or expr2 if false",
-        "Prints both expressions to a label"
+        "Evaluates the condition and returns expr1 if true, or expr2 if false"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "The conditional ternary operator (?:) provides a concise single-line expression alternative to a dual-alternative if-else statement.",
       "explanation": "The conditional ternary operator (?:) provides a concise single-line expression alternative to a dual-alternative if-else statement.",
-      "distractorRationale": "Options other than \"Evaluates the condition and returns expr1 if true, or expr2 \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11761,22 +11761,22 @@
       "stem": "In `btnClear_Click`, which C# statement resets the Form's background color back to its default Windows system control color?",
       "code": "",
       "options": [
-        "this.BackColor = Color.White;",
-        "this.BackColor = Color.None;",
+        "this.BackColor = SystemColors.Control;",
         "this.ResetColor();",
-        "this.BackColor = SystemColors.Control;"
+        "this.BackColor = Color.White;",
+        "this.BackColor = Color.None;"
       ],
       "opts": [
-        "this.BackColor = Color.White;",
-        "this.BackColor = Color.None;",
+        "this.BackColor = SystemColors.Control;",
         "this.ResetColor();",
-        "this.BackColor = SystemColors.Control;"
+        "this.BackColor = Color.White;",
+        "this.BackColor = Color.None;"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "SystemColors.Control represents the standard default background color of Windows Forms surfaces.",
       "explanation": "SystemColors.Control represents the standard default background color of Windows Forms surfaces.",
-      "distractorRationale": "Options other than \"this.BackColor = SystemColors.Control;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
@@ -11802,22 +11802,22 @@
       "stem": "By De Morgan's Laws, what is the logical equivalent of `!(A && B)`?",
       "code": "",
       "options": [
-        "!A || !B",
-        "!A && !B",
         "A || B",
-        "!A && B"
+        "!A || !B",
+        "!A && B",
+        "!A && !B"
       ],
       "opts": [
-        "!A || !B",
-        "!A && !B",
         "A || B",
-        "!A && B"
+        "!A || !B",
+        "!A && B",
+        "!A && !B"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "De Morgan's Laws state: the negation of a conjunction '!(A && B)' is logically equivalent to the disjunction of the negations '!A || !B'.",
       "explanation": "De Morgan's Laws state: the negation of a conjunction '!(A && B)' is logically equivalent to the disjunction of the negations '!A || !B'.",
-      "distractorRationale": "Options other than \"!A || !B\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11844,22 +11844,22 @@
       "stem": "By De Morgan's Laws, what is the logical equivalent of `!(A || B)`?",
       "code": "",
       "options": [
+        "!A || B",
         "!A || !B",
         "!A && !B",
-        "A && B",
-        "!A || B"
+        "A && B"
       ],
       "opts": [
+        "!A || B",
         "!A || !B",
         "!A && !B",
-        "A && B",
-        "!A || B"
+        "A && B"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "De Morgan's Laws state: the negation of a disjunction '!(A || B)' is logically equivalent to the conjunction of the negations '!A && !B'.",
       "explanation": "De Morgan's Laws state: the negation of a disjunction '!(A || B)' is logically equivalent to the conjunction of the negations '!A && !B'.",
-      "distractorRationale": "Options other than \"!A && !B\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -11887,21 +11887,21 @@
       "code": "",
       "options": [
         "Because its continuation condition is tested BEFORE the loop body executes; if false initially, the body never runs",
+        "Because it cannot be stopped once started",
         "Because it executes before the form loads",
-        "Because it always runs at least once before testing",
-        "Because it cannot be stopped once started"
+        "Because it always runs at least once before testing"
       ],
       "opts": [
         "Because its continuation condition is tested BEFORE the loop body executes; if false initially, the body never runs",
+        "Because it cannot be stopped once started",
         "Because it executes before the form loads",
-        "Because it always runs at least once before testing",
-        "Because it cannot be stopped once started"
+        "Because it always runs at least once before testing"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "A while loop is pre-test: it tests the condition prior to each iteration. If false on entry, body executes zero times.",
       "explanation": "A while loop is pre-test: it tests the condition prior to each iteration. If false on entry, body executes zero times.",
-      "distractorRationale": "Options other than \"Because its continuation condition is tested BEFORE the loop\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -11928,22 +11928,22 @@
       "stem": "Why is the 'do-while' loop classified as a 'post-test loop'?",
       "code": "",
       "options": [
+        "Because it requires a post-dated check",
         "Because its condition is tested AFTER the loop body executes, guaranteeing at least one execution",
         "Because it executes after the form closes",
-        "Because it is slower than a while loop",
-        "Because it requires a post-dated check"
+        "Because it is slower than a while loop"
       ],
       "opts": [
+        "Because it requires a post-dated check",
         "Because its condition is tested AFTER the loop body executes, guaranteeing at least one execution",
         "Because it executes after the form closes",
-        "Because it is slower than a while loop",
-        "Because it requires a post-dated check"
+        "Because it is slower than a while loop"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "A do-while loop is post-test: the body executes first, then the condition is tested at the bottom.",
       "explanation": "A do-while loop is post-test: the body executes first, then the condition is tested at the bottom.",
-      "distractorRationale": "Options other than \"Because its condition is tested AFTER the loop body executes\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -11970,22 +11970,22 @@
       "stem": "What punctuation mark MUST be placed at the very end of a 'do-while' loop statement in C#?",
       "code": "",
       "options": [
-        "Semicolon (;)",
-        "Colon (:)",
         "Period (.)",
-        "No punctuation allowed"
+        "No punctuation allowed",
+        "Semicolon (;)",
+        "Colon (:)"
       ],
       "opts": [
-        "Semicolon (;)",
-        "Colon (:)",
         "Period (.)",
-        "No punctuation allowed"
+        "No punctuation allowed",
+        "Semicolon (;)",
+        "Colon (:)"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Syntax rule: do { ... } while (condition); requires a terminating semicolon.",
       "explanation": "Syntax rule: do { ... } while (condition); requires a terminating semicolon.",
-      "distractorRationale": "Options other than \"Semicolon (;)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12012,22 +12012,22 @@
       "stem": "What is the difference between prefix '++count' and postfix 'count++' in C#?",
       "code": "",
       "options": [
-        "Postfix uses the current value in the surrounding expression before incrementing; prefix increments the value first before using it",
+        "Postfix only works on integers, prefix works on decimals",
         "Prefix multiplies by 2, postfix adds 1",
         "There is no difference in any context",
-        "Postfix only works on integers, prefix works on decimals"
+        "Postfix uses the current value in the surrounding expression before incrementing; prefix increments the value first before using it"
       ],
       "opts": [
-        "Postfix uses the current value in the surrounding expression before incrementing; prefix increments the value first before using it",
+        "Postfix only works on integers, prefix works on decimals",
         "Prefix multiplies by 2, postfix adds 1",
         "There is no difference in any context",
-        "Postfix only works on integers, prefix works on decimals"
+        "Postfix uses the current value in the surrounding expression before incrementing; prefix increments the value first before using it"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "In postfix (count++), value is evaluated first, then incremented. In prefix (++count), value is incremented first, then evaluated.",
       "explanation": "In postfix (count++), value is evaluated first, then incremented. In prefix (++count), value is incremented first, then evaluated.",
-      "distractorRationale": "Options other than \"Postfix uses the current value in the surrounding expression\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12055,21 +12055,21 @@
       "code": "",
       "options": [
         "The application enters an infinite loop, freezing the user interface thread and becoming unresponsive",
-        "The compiler automatically adds a break statement",
         "Windows terminates the computer",
-        "The loop automatically runs backward"
+        "The loop automatically runs backward",
+        "The compiler automatically adds a break statement"
       ],
       "opts": [
         "The application enters an infinite loop, freezing the user interface thread and becoming unresponsive",
-        "The compiler automatically adds a break statement",
         "Windows terminates the computer",
-        "The loop automatically runs backward"
+        "The loop automatically runs backward",
+        "The compiler automatically adds a break statement"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "An infinite loop occurs when the condition never evaluates to false, causing the UI thread to hang.",
       "explanation": "An infinite loop occurs when the condition never evaluates to false, causing the UI thread to hang.",
-      "distractorRationale": "Options other than \"The application enters an infinite loop, freezing the user i\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12096,22 +12096,22 @@
       "stem": "What are the three core expressions in a standard C# 'for' loop header: 'for (exp1; exp2; exp3)'?",
       "code": "",
       "options": [
-        "Initialization; Condition (test); Update (increment/decrement)",
-        "Declaration; Multiplication; Division",
         "Start; Stop; Pause",
-        "Input; Process; Output"
+        "Initialization; Condition (test); Update (increment/decrement)",
+        "Input; Process; Output",
+        "Declaration; Multiplication; Division"
       ],
       "opts": [
-        "Initialization; Condition (test); Update (increment/decrement)",
-        "Declaration; Multiplication; Division",
         "Start; Stop; Pause",
-        "Input; Process; Output"
+        "Initialization; Condition (test); Update (increment/decrement)",
+        "Input; Process; Output",
+        "Declaration; Multiplication; Division"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "The for loop header consists of: 1. Initialization, 2. Boolean test condition, 3. Update expression.",
       "explanation": "The for loop header consists of: 1. Initialization, 2. Boolean test condition, 3. Update expression.",
-      "distractorRationale": "Options other than \"Initialization; Condition (test); Update (increment/decremen\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12133,27 +12133,27 @@
       "difficulty": "Intermediate",
       "marks": 3,
       "estimatedMinutes": 2,
-      "q": "Which method call removes ALL items from a ListBox control named lstResults?",
-      "title": "Which method call removes ALL items from a ListBox control named lstResults?",
-      "stem": "Which method call removes ALL items from a ListBox control named lstResults?",
+      "q": "Which C# snippet safely removes ONLY the currently highlighted item from `lstTasks` without throwing an `ArgumentOutOfRangeException` when nothing is selected?",
+      "title": "Which C# snippet safely removes ONLY the currently highlighted item from `lstTasks` without throwing an `ArgumentOutOfRangeException` when nothing is selected?",
+      "stem": "Which C# snippet safely removes ONLY the currently highlighted item from `lstTasks` without throwing an `ArgumentOutOfRangeException` when nothing is selected?",
       "code": "",
       "options": [
-        "lstResults.Items.Clear();",
-        "lstResults.Clear();",
-        "lstResults.Items.RemoveAll();",
-        "lstResults.Reset();"
+        "lstTasks.Items.RemoveAt(-1);",
+        "lstTasks.Items.Clear(lstTasks.SelectedIndex);",
+        "if (lstTasks.SelectedIndex != -1) { lstTasks.Items.RemoveAt(lstTasks.SelectedIndex); }",
+        "if (lstTasks.Items.Count == 0) { lstTasks.Items.RemoveAt(0); }"
       ],
       "opts": [
-        "lstResults.Items.Clear();",
-        "lstResults.Clear();",
-        "lstResults.Items.RemoveAll();",
-        "lstResults.Reset();"
+        "lstTasks.Items.RemoveAt(-1);",
+        "lstTasks.Items.Clear(lstTasks.SelectedIndex);",
+        "if (lstTasks.SelectedIndex != -1) { lstTasks.Items.RemoveAt(lstTasks.SelectedIndex); }",
+        "if (lstTasks.Items.Count == 0) { lstTasks.Items.RemoveAt(0); }"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "lstResults.Items.Clear() empties the Items collection of the ListBox.",
-      "explanation": "lstResults.Items.Clear() empties the Items collection of the ListBox.",
-      "distractorRationale": "Options other than \"lstResults.Items.Clear();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 2,
+      "ans": 2,
+      "exp": "`RemoveAt(index)` requires a valid zero-based index (`0` to `Count - 1`). Checking `SelectedIndex != -1` first ensures an item is actually selected before removing it.",
+      "explanation": "`RemoveAt(index)` requires a valid zero-based index (`0` to `Count - 1`). Checking `SelectedIndex != -1` first ensures an item is actually selected before removing it.",
+      "distractorRationale": "`RemoveAt(-1)` and `RemoveAt(0)` on an empty ListBox throw `ArgumentOutOfRangeException`, and `Items.Clear()` takes zero arguments and removes all items.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12180,22 +12180,22 @@
       "stem": "Which method call appends a new entry to the end of a ListBox named lstSummary?",
       "code": "",
       "options": [
-        "lstSummary.Items.Add(item);",
+        "lstSummary.Insert(item);",
         "lstSummary.Add(item);",
         "lstSummary.Append(item);",
-        "lstSummary.Insert(item);"
+        "lstSummary.Items.Add(item);"
       ],
       "opts": [
-        "lstSummary.Items.Add(item);",
+        "lstSummary.Insert(item);",
         "lstSummary.Add(item);",
         "lstSummary.Append(item);",
-        "lstSummary.Insert(item);"
+        "lstSummary.Items.Add(item);"
       ],
-      "answer": 0,
-      "ans": 0,
-      "exp": "lstSummary.Items.Add() adds an item to the ListBox collection.",
-      "explanation": "lstSummary.Items.Add() adds an item to the ListBox collection.",
-      "distractorRationale": "Options other than \"lstSummary.Items.Add(item);\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 3,
+      "ans": 3,
+      "exp": "LstSummary.Items.Add() adds an item to the ListBox collection.",
+      "explanation": "LstSummary.Items.Add() adds an item to the ListBox collection.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12223,21 +12223,21 @@
       "code": "",
       "options": [
         "Form_Load",
-        "Form_Click",
         "Form_Paint",
-        "Form_Closed"
+        "Form_Closed",
+        "Form_Click"
       ],
       "opts": [
         "Form_Load",
-        "Form_Click",
         "Form_Paint",
-        "Form_Closed"
+        "Form_Closed",
+        "Form_Click"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "The Load event occurs before a form is displayed for the first time; ideal for prepopulating controls.",
       "explanation": "The Load event occurs before a form is displayed for the first time; ideal for prepopulating controls.",
-      "distractorRationale": "Options other than \"Form_Load\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12264,22 +12264,22 @@
       "stem": "In programming, what is an 'accumulator' variable?",
       "code": "",
       "options": [
+        "A hardware component in the mouse",
         "A variable used to keep a running total of values added across loop iterations, typically initialized to 0",
         "A variable that counts loop iterations by 1",
-        "A constant that never changes",
-        "A hardware component in the mouse"
+        "A constant that never changes"
       ],
       "opts": [
+        "A hardware component in the mouse",
         "A variable used to keep a running total of values added across loop iterations, typically initialized to 0",
         "A variable that counts loop iterations by 1",
-        "A constant that never changes",
-        "A hardware component in the mouse"
+        "A constant that never changes"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "An accumulator accumulates numbers into a running total (e.g. total += amount;) and must be initialized to 0.",
       "explanation": "An accumulator accumulates numbers into a running total (e.g. total += amount;) and must be initialized to 0.",
-      "distractorRationale": "Options other than \"A variable used to keep a running total of values added acro\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12306,22 +12306,22 @@
       "stem": "What is a 'sentinel value' in loop processing?",
       "code": "",
       "options": [
-        "A special predetermined value that signals the end of user input and terminates the loop (e.g. entering -1 to stop)",
         "A variable that locks the screen",
         "A syntax error code",
+        "A special predetermined value that signals the end of user input and terminates the loop (e.g. entering -1 to stop)",
         "A security password"
       ],
       "opts": [
-        "A special predetermined value that signals the end of user input and terminates the loop (e.g. entering -1 to stop)",
         "A variable that locks the screen",
         "A syntax error code",
+        "A special predetermined value that signals the end of user input and terminates the loop (e.g. entering -1 to stop)",
         "A security password"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "A sentinel value is a distinct dummy value that signals loop termination when the exact quantity of inputs is unknown.",
       "explanation": "A sentinel value is a distinct dummy value that signals loop termination when the exact quantity of inputs is unknown.",
-      "distractorRationale": "Options other than \"A special predetermined value that signals the end of user i\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12348,22 +12348,22 @@
       "stem": "How do you iterate through all items in a ListBox using a count-controlled for loop?",
       "code": "",
       "options": [
-        "for (int i = 0; i < lstItems.Items.Count; i++) { ... }",
         "for (int i = 1; i <= lstItems.Items.Count; i++) { ... }",
         "for (int i = 0; i < lstItems.Length; i++) { ... }",
-        "while (lstItems.Next()) { ... }"
+        "while (lstItems.Next()) { ... }",
+        "for (int i = 0; i < lstItems.Items.Count; i++) { ... }"
       ],
       "opts": [
-        "for (int i = 0; i < lstItems.Items.Count; i++) { ... }",
         "for (int i = 1; i <= lstItems.Items.Count; i++) { ... }",
         "for (int i = 0; i < lstItems.Length; i++) { ... }",
-        "while (lstItems.Next()) { ... }"
+        "while (lstItems.Next()) { ... }",
+        "for (int i = 0; i < lstItems.Items.Count; i++) { ... }"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "ListBox items are zero-indexed from 0 to Items.Count - 1. Loop header is 'for (int i = 0; i < lstItems.Items.Count; i++)'.",
       "explanation": "ListBox items are zero-indexed from 0 to Items.Count - 1. Loop header is 'for (int i = 0; i < lstItems.Items.Count; i++)'.",
-      "distractorRationale": "Options other than \"for (int i = 0; i < lstItems.Items.Count; i++) { ... }\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12391,21 +12391,21 @@
       "code": "",
       "options": [
         "Block scope: 'i' exists only inside the for loop body and is destroyed upon loop completion",
-        "Class scope: visible to all methods in the form",
         "Global scope across all project files",
-        "Field scope"
+        "Field scope",
+        "Class scope: visible to all methods in the form"
       ],
       "opts": [
         "Block scope: 'i' exists only inside the for loop body and is destroyed upon loop completion",
-        "Class scope: visible to all methods in the form",
         "Global scope across all project files",
-        "Field scope"
+        "Field scope",
+        "Class scope: visible to all methods in the form"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Variables declared in the for loop initialization header have block scope limited to the loop.",
       "explanation": "Variables declared in the for loop initialization header have block scope limited to the loop.",
-      "distractorRationale": "Options other than \"Block scope: 'i' exists only inside the for loop body and is\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12432,22 +12432,22 @@
       "stem": "Which of the following demonstrates the combined addition assignment operator?",
       "code": "",
       "options": [
-        "total += price;",
         "total =+ price;",
+        "total += price;",
         "total ++ price;",
         "total := price;"
       ],
       "opts": [
-        "total += price;",
         "total =+ price;",
+        "total += price;",
         "total ++ price;",
         "total := price;"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "'total += price;' is equivalent to 'total = total + price;'.",
       "explanation": "'total += price;' is equivalent to 'total = total + price;'.",
-      "distractorRationale": "Options other than \"total += price;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12474,22 +12474,22 @@
       "stem": "What property of a ListBox returns the total number of items currently stored in the list?",
       "code": "",
       "options": [
-        "lstBox.Items.Count",
-        "lstBox.Length",
         "lstBox.Size",
-        "lstBox.Items.Length"
+        "lstBox.Items.Length",
+        "lstBox.Items.Count",
+        "lstBox.Length"
       ],
       "opts": [
-        "lstBox.Items.Count",
-        "lstBox.Length",
         "lstBox.Size",
-        "lstBox.Items.Length"
+        "lstBox.Items.Length",
+        "lstBox.Items.Count",
+        "lstBox.Length"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "The Items collection provides the '.Count' integer property indicating the number of items.",
       "explanation": "The Items collection provides the '.Count' integer property indicating the number of items.",
-      "distractorRationale": "Options other than \"lstBox.Items.Count\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12516,22 +12516,22 @@
       "stem": "In Visual C#, what is the fundamental behavioral difference between a 'while' loop and a 'do-while' loop?",
       "code": "",
       "options": [
-        "A 'while' loop can only count backwards",
         "A 'do-while' loop cannot contain if statements",
         "A 'while' loop requires an array to run",
+        "A 'while' loop can only count backwards",
         "A 'while' loop tests its condition before each iteration (pre-test) and may execute zero times, whereas a 'do-while' loop tests its condition after each iteration (post-test) and always executes at least once"
       ],
       "opts": [
-        "A 'while' loop can only count backwards",
         "A 'do-while' loop cannot contain if statements",
         "A 'while' loop requires an array to run",
+        "A 'while' loop can only count backwards",
         "A 'while' loop tests its condition before each iteration (pre-test) and may execute zero times, whereas a 'do-while' loop tests its condition after each iteration (post-test) and always executes at least once"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "Pre-test loops (while, for) evaluate conditions prior to body entry; post-test loops (do-while) evaluate after body execution, guaranteeing at least one run.",
       "explanation": "Pre-test loops (while, for) evaluate conditions prior to body entry; post-test loops (do-while) evaluate after body execution, guaranteeing at least one run.",
-      "distractorRationale": "Options other than \"A 'while' loop tests its condition before each iteration (pr\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12559,21 +12559,21 @@
       "code": "",
       "options": [
         "The semicolon is required by C# grammar to mark the formal end of the do-while statement",
+        "It forces the loop to iterate an infinite number of times",
         "It pauses execution for one second",
-        "It resets all local variables to zero",
-        "It forces the loop to iterate an infinite number of times"
+        "It resets all local variables to zero"
       ],
       "opts": [
         "The semicolon is required by C# grammar to mark the formal end of the do-while statement",
+        "It forces the loop to iterate an infinite number of times",
         "It pauses execution for one second",
-        "It resets all local variables to zero",
-        "It forces the loop to iterate an infinite number of times"
+        "It resets all local variables to zero"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Because the loop condition appears at the bottom of the block, C# syntax mandates a semicolon to terminate the do-while statement.",
       "explanation": "Because the loop condition appears at the bottom of the block, C# syntax mandates a semicolon to terminate the do-while statement.",
-      "distractorRationale": "Options other than \"The semicolon is required by C# grammar to mark the formal e\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12600,22 +12600,22 @@
       "stem": "What are the three control expressions defined inside a standard C# for loop header: 'for (1; 2; 3)'?",
       "code": "",
       "options": [
-        "1: Input textbox, 2: Output label, 3: Button",
-        "1: Initialization expression, 2: Boolean test condition, 3: Update/increment expression",
         "1: File name, 2: File size, 3: File type",
-        "1: Start point, 2: Font size, 3: Form title"
+        "1: Initialization expression, 2: Boolean test condition, 3: Update/increment expression",
+        "1: Start point, 2: Font size, 3: Form title",
+        "1: Input textbox, 2: Output label, 3: Button"
       ],
       "opts": [
-        "1: Input textbox, 2: Output label, 3: Button",
-        "1: Initialization expression, 2: Boolean test condition, 3: Update/increment expression",
         "1: File name, 2: File size, 3: File type",
-        "1: Start point, 2: Font size, 3: Form title"
+        "1: Initialization expression, 2: Boolean test condition, 3: Update/increment expression",
+        "1: Start point, 2: Font size, 3: Form title",
+        "1: Input textbox, 2: Output label, 3: Button"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "The for loop header consists of: initialization (runs once), test condition (checked before each iteration), and update (executed after each iteration).",
       "explanation": "The for loop header consists of: initialization (runs once), test condition (checked before each iteration), and update (executed after each iteration).",
-      "distractorRationale": "Options other than \"1: Initialization expression, 2: Boolean test condition, 3: \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12642,22 +12642,22 @@
       "stem": "In what exact chronological order are the components of a 'for' loop executed during the very first iteration?",
       "code": "",
       "options": [
+        "Initialization -> Update -> Loop body -> Condition test",
         "Update -> Initialization -> Condition test -> Loop body",
-        "Loop body -> Condition test -> Initialization -> Update",
         "Initialization -> Boolean condition test -> Loop body execution -> Update expression",
-        "Initialization -> Update -> Loop body -> Condition test"
+        "Loop body -> Condition test -> Initialization -> Update"
       ],
       "opts": [
+        "Initialization -> Update -> Loop body -> Condition test",
         "Update -> Initialization -> Condition test -> Loop body",
-        "Loop body -> Condition test -> Initialization -> Update",
         "Initialization -> Boolean condition test -> Loop body execution -> Update expression",
-        "Initialization -> Update -> Loop body -> Condition test"
+        "Loop body -> Condition test -> Initialization -> Update"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "Initialization runs first. The condition is evaluated; if true, the body executes, followed by the update expression.",
       "explanation": "Initialization runs first. The condition is evaluated; if true, the body executes, followed by the update expression.",
-      "distractorRationale": "Options other than \"Initialization -> Boolean condition test -> Loop body execut\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12684,22 +12684,22 @@
       "stem": "In what exact sequence do components of a 'for' loop execute during the second and subsequent iterations?",
       "code": "",
       "options": [
-        "Initialization -> Boolean condition test -> Loop body",
         "Loop body -> Initialization -> Update",
         "Update -> Initialization -> Boolean test",
+        "Initialization -> Boolean condition test -> Loop body",
         "Boolean condition test -> Loop body execution -> Update expression"
       ],
       "opts": [
-        "Initialization -> Boolean condition test -> Loop body",
         "Loop body -> Initialization -> Update",
         "Update -> Initialization -> Boolean test",
+        "Initialization -> Boolean condition test -> Loop body",
         "Boolean condition test -> Loop body execution -> Update expression"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "After iteration 1, initialization never runs again. Each subsequent cycle runs: condition check, loop body (if true), and update expression.",
       "explanation": "After iteration 1, initialization never runs again. Each subsequent cycle runs: condition check, loop body (if true), and update expression.",
-      "distractorRationale": "Options other than \"Boolean condition test -> Loop body execution -> Update expr\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12717,31 +12717,31 @@
       "topicTitle": "Prefix/Postfix ++/--, Counters, Accumulators & ListBox Iteration",
       "learningObjective": "Write and trace while, do-while, and for loops, distinguishing pretest from posttest execution.",
       "type": "mcq",
-      "questionType": "concept-comparison",
+      "questionType": "code-tracing",
       "difficulty": "Foundational",
       "marks": 2,
       "estimatedMinutes": 2,
-      "q": "What is the operational difference between postfix increment ('count++') and prefix increment ('++count') when used inside an expression?",
-      "title": "What is the operational difference between postfix increment ('count++') and prefix increment ('++count') when used inside an expression?",
-      "stem": "What is the operational difference between postfix increment ('count++') and prefix increment ('++count') when used inside an expression?",
-      "code": "",
+      "q": "What text is assigned to `lblOut.Text` after the prefix and postfix increment statements below execute?",
+      "title": "What text is assigned to `lblOut.Text` after the prefix and postfix increment statements below execute?",
+      "stem": "What text is assigned to `lblOut.Text` after the prefix and postfix increment statements below execute?",
+      "code": "int a = 5;\nint b = a++;\nint c = ++a;\nlblOut.Text = $\"{a},{b},{c}\";",
       "options": [
-        "Postfix ('count++') uses the current value in the surrounding expression first, then increments; prefix ('++count') increments first, then uses the updated value",
-        "Postfix only works with negative numbers",
-        "Prefix adds 2 instead of 1",
-        "Postfix creates an infinite loop"
+        "7,5,7",
+        "7,5,6",
+        "7,6,7",
+        "6,5,7"
       ],
       "opts": [
-        "Postfix ('count++') uses the current value in the surrounding expression first, then increments; prefix ('++count') increments first, then uses the updated value",
-        "Postfix only works with negative numbers",
-        "Prefix adds 2 instead of 1",
-        "Postfix creates an infinite loop"
+        "7,5,7",
+        "7,5,6",
+        "7,6,7",
+        "6,5,7"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Postfix evaluates then increments. Prefix increments then evaluates.",
-      "explanation": "Postfix evaluates then increments. Prefix increments then evaluates.",
-      "distractorRationale": "Options other than \"Postfix ('count++') uses the current value in the surroundin\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "`int b = a++;` (postfix) assigns `a`'s current value `5` to `b` first and then increments `a` to `6`. Next, `int c = ++a;` (prefix) increments `a` from `6` to `7` first and assigns `7` to `c`, yielding `\"7,5,7\"`.",
+      "explanation": "`int b = a++;` (postfix) assigns `a`'s current value `5` to `b` first and then increments `a` to `6`. Next, `int c = ++a;` (prefix) increments `a` from `6` to `7` first and assigns `7` to `c`, yielding `\"7,5,7\"`.",
+      "distractorRationale": "`7,6,7` treats `a++` as prefix; `7,5,6` treats `++a` as postfix; `a` is incremented twice in total (`5 -> 6 -> 7`).",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12781,9 +12781,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "The loop accumulates all 3 items: total = 0 + 70 + 80 + 90 = 240.0. After the loop, average = 240.0 / 3 = 80.0 (Chapter 5).",
-      "explanation": "The loop accumulates all 3 items: total = 0 + 70 + 80 + 90 = 240.0. After the loop, average = 240.0 / 3 = 80.0 (Chapter 5).",
-      "distractorRationale": "Options other than \"total = 240.0; average = 80.0\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "The loop accumulates all 3 items: total = 0 + 70 + 80 + 90 = 240.0. After the loop, average = 240.0 / 3 = 80.0.",
+      "explanation": "The loop accumulates all 3 items: total = 0 + 70 + 80 + 90 = 240.0. After the loop, average = 240.0 / 3 = 80.0.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12810,22 +12810,22 @@
       "stem": "What compiler error occurs if an accumulator variable 'decimal total;' is declared inside an event handler but not initialized before being used inside a loop ('total += amount;')?",
       "code": "",
       "options": [
-        "Compiler error CS1002: Semicolon expected",
         "Compiler error CS0029: Cannot convert double to int",
+        "Compiler error CS0103: The name 'total' does not exist",
         "Compiler error CS0165: Use of unassigned local variable 'total'",
-        "Compiler error CS0103: The name 'total' does not exist"
+        "Compiler error CS1002: Semicolon expected"
       ],
       "opts": [
-        "Compiler error CS1002: Semicolon expected",
         "Compiler error CS0029: Cannot convert double to int",
+        "Compiler error CS0103: The name 'total' does not exist",
         "Compiler error CS0165: Use of unassigned local variable 'total'",
-        "Compiler error CS0103: The name 'total' does not exist"
+        "Compiler error CS1002: Semicolon expected"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "C# requires local variables to be assigned before reading. An accumulator must be initialized (e.g. 'decimal total = 0m;') prior to entering the loop.",
       "explanation": "C# requires local variables to be assigned before reading. An accumulator must be initialized (e.g. 'decimal total = 0m;') prior to entering the loop.",
-      "distractorRationale": "Options other than \"Compiler error CS0165: Use of unassigned local variable 'tot\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12854,20 +12854,20 @@
       "options": [
         "It is an accumulator variable that sums the numbers 1 to 10, terminating with value 55",
         "It is a counter variable initialized to 1, incremented by 1 each iteration, and its value is 10 because the loop condition specifies count <= 10",
-        "It is a counter variable initialized to 1, incremented by 1 each iteration, and its value is 11 when the loop condition evaluates to false and terminates",
-        "It is a sentinel variable that terminates when the user enters a sentinel exit condition"
+        "It is a sentinel variable that terminates when the user enters a sentinel exit condition",
+        "It is a counter variable initialized to 1, incremented by 1 each iteration, and its value is 11 when the loop condition evaluates to false and terminates"
       ],
       "opts": [
         "It is an accumulator variable that sums the numbers 1 to 10, terminating with value 55",
         "It is a counter variable initialized to 1, incremented by 1 each iteration, and its value is 10 because the loop condition specifies count <= 10",
-        "It is a counter variable initialized to 1, incremented by 1 each iteration, and its value is 11 when the loop condition evaluates to false and terminates",
-        "It is a sentinel variable that terminates when the user enters a sentinel exit condition"
+        "It is a sentinel variable that terminates when the user enters a sentinel exit condition",
+        "It is a counter variable initialized to 1, incremented by 1 each iteration, and its value is 11 when the loop condition evaluates to false and terminates"
       ],
-      "answer": 2,
-      "ans": 2,
-      "exp": "In a count-controlled for loop, 'count' is the loop control variable (counter). It increments after each iteration body executes, and when count reaches 11, the condition 'count <= 10' becomes false, exiting the loop (Chapter 5).",
-      "explanation": "In a count-controlled for loop, 'count' is the loop control variable (counter). It increments after each iteration body executes, and when count reaches 11, the condition 'count <= 10' becomes false, exiting the loop (Chapter 5).",
-      "distractorRationale": "Options other than \"It is a counter variable initialized to 1, incremented by 1 \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 3,
+      "ans": 3,
+      "exp": "In a count-controlled for loop, 'count' is the loop control variable (counter). It increments after each iteration body executes, and when count reaches 11, the condition 'count <= 10' becomes false, exiting the loop.",
+      "explanation": "In a count-controlled for loop, 'count' is the loop control variable (counter). It increments after each iteration body executes, and when count reaches 11, the condition 'count <= 10' becomes false, exiting the loop.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -12885,31 +12885,31 @@
       "topicTitle": "while, do-while & for Loops (Pretest vs Posttest)",
       "learningObjective": "Write and trace while, do-while, and for loops, distinguishing pretest from posttest execution.",
       "type": "mcq",
-      "questionType": "application-scenario",
+      "questionType": "loop-execution",
       "difficulty": "Foundational",
       "marks": 2,
       "estimatedMinutes": 2,
-      "q": "What is a sentinel value in C# repetition structures?",
-      "title": "What is a sentinel value in C# repetition structures?",
-      "stem": "What is a sentinel value in C# repetition structures?",
-      "code": "",
+      "q": "An array `entries` simulates user inputs terminated by the sentinel `-1`. What is displayed in `lblTotal` after the loop below executes?",
+      "title": "An array `entries` simulates user inputs terminated by the sentinel `-1`. What is displayed in `lblTotal` after the loop below executes?",
+      "stem": "An array `entries` simulates user inputs terminated by the sentinel `-1`. What is displayed in `lblTotal` after the loop below executes?",
+      "code": "int[] entries = { 12, 8, 5, -1, 100 };\nint idx = 0;\nint sum = 0;\nwhile (entries[idx] != -1)\n{\n    sum += entries[idx];\n    idx++;\n}\nlblTotal.Text = sum.ToString();",
       "options": [
-        "A distinctive placeholder value (such as -1 or 999) that signals the end of user data input and prompts loop termination",
-        "The maximum value an integer can store",
-        "A virus detection routine in .NET",
-        "The name of the main form in a project"
+        "25",
+        "124",
+        "125",
+        "24"
       ],
       "opts": [
-        "A distinctive placeholder value (such as -1 or 999) that signals the end of user data input and prompts loop termination",
-        "The maximum value an integer can store",
-        "A virus detection routine in .NET",
-        "The name of the main form in a project"
+        "25",
+        "124",
+        "125",
+        "24"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "A sentinel is an agreed-upon special value outside the normal range of input data that signals when a loop should stop accepting input.",
-      "explanation": "A sentinel is an agreed-upon special value outside the normal range of input data that signals when a loop should stop accepting input.",
-      "distractorRationale": "Options other than \"A distinctive placeholder value (such as -1 or 999) that sig\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "The pretest `while` checks `entries[idx] != -1` before adding: it adds `12 + 8 + 5 = 25`, then sees `-1` at `idx == 3` and exits immediately—neither adding `-1` (`24`) nor reading `100` after the sentinel.",
+      "explanation": "The pretest `while` checks `entries[idx] != -1` before adding: it adds `12 + 8 + 5 = 25`, then sees `-1` at `idx == 3` and exits immediately—neither adding `-1` (`24`) nor reading `100` after the sentinel.",
+      "distractorRationale": "`24` occurs when a buggy `do-while` adds the `-1` sentinel before checking; `124` and `125` ignore the sentinel stop condition.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12936,22 +12936,22 @@
       "stem": "What is the primary cause of an infinite loop in a while loop construct?",
       "code": "",
       "options": [
-        "The form is minimized by the user",
+        "A button on the form has its Visible property set to false",
         "The loop continuation condition never evaluates to false, often because the counter update statement was omitted from the loop body",
-        "The computer has insufficient hard drive space",
-        "A button on the form has its Visible property set to false"
+        "The form is minimized by the user",
+        "The computer has insufficient hard drive space"
       ],
       "opts": [
-        "The form is minimized by the user",
+        "A button on the form has its Visible property set to false",
         "The loop continuation condition never evaluates to false, often because the counter update statement was omitted from the loop body",
-        "The computer has insufficient hard drive space",
-        "A button on the form has its Visible property set to false"
+        "The form is minimized by the user",
+        "The computer has insufficient hard drive space"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "An infinite loop occurs when the loop condition remains perpetually true, typically because the code fails to modify the loop control variable inside the body.",
       "explanation": "An infinite loop occurs when the loop condition remains perpetually true, typically because the code fails to modify the loop control variable inside the body.",
-      "distractorRationale": "Options other than \"The loop continuation condition never evaluates to false, of\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -12993,7 +12993,7 @@
       "ans": 2,
       "exp": "An off-by-one bug occurs when the loop boundary condition is misconfigured, causing the loop body to execute N+1 or N-1 times instead of N.",
       "explanation": "An off-by-one bug occurs when the loop boundary condition is misconfigured, causing the loop body to execute N+1 or N-1 times instead of N.",
-      "distractorRationale": "Options other than \"A logic error where a loop executes one iteration too many o\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13035,7 +13035,7 @@
       "ans": 3,
       "exp": "The loop executes for i = 0, 1, 2, 3, and 4 (exactly 5 times). When i reaches 5, the condition '5 < 5' is false and the loop terminates.",
       "explanation": "The loop executes for i = 0, 1, 2, 3, and 4 (exactly 5 times). When i reaches 5, the condition '5 < 5' is false and the loop terminates.",
-      "distractorRationale": "Options other than \"5 times (for i = 0, 1, 2, 3, 4)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13063,21 +13063,21 @@
       "code": "",
       "options": [
         "5 times (for i = 1, 2, 3, 4, 5)",
-        "4 times",
         "6 times",
-        "Infinite times"
+        "Infinite times",
+        "4 times"
       ],
       "opts": [
         "5 times (for i = 1, 2, 3, 4, 5)",
-        "4 times",
         "6 times",
-        "Infinite times"
+        "Infinite times",
+        "4 times"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "The loop executes for i = 1, 2, 3, 4, and 5 (5 times total). When i reaches 6, '6 <= 5' is false and the loop terminates.",
       "explanation": "The loop executes for i = 1, 2, 3, 4, and 5 (5 times total). When i reaches 6, '6 <= 5' is false and the loop terminates.",
-      "distractorRationale": "Options other than \"5 times (for i = 1, 2, 3, 4, 5)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13104,22 +13104,22 @@
       "stem": "If 'int i;' is declared before the loop 'for (i = 0; i < 5; i++) { }', what is the value of 'i' immediately after the loop terminates?",
       "code": "",
       "options": [
-        "4",
+        "-1",
         "5",
-        "0",
-        "-1"
+        "4",
+        "0"
       ],
       "opts": [
-        "4",
+        "-1",
         "5",
-        "0",
-        "-1"
+        "4",
+        "0"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "The loop increments i to 5, at which point '5 < 5' is false, causing loop termination with i retaining the value 5.",
       "explanation": "The loop increments i to 5, at which point '5 < 5' is false, causing loop termination with i retaining the value 5.",
-      "distractorRationale": "Options other than \"5\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13146,22 +13146,22 @@
       "stem": "If a loop control variable is declared in the for loop header ('for (int count = 0; count < 10; count++)'), can 'count' be used outside the loop?",
       "code": "",
       "options": [
-        "Yes, it remains available throughout the entire method",
         "Yes, it becomes a class-level field",
+        "Only if the loop iterated at least once",
         "No, 'count' has block scope limited strictly to the for loop header and body; referencing it outside causes compiler error CS0103",
-        "Only if the loop iterated at least once"
+        "Yes, it remains available throughout the entire method"
       ],
       "opts": [
-        "Yes, it remains available throughout the entire method",
         "Yes, it becomes a class-level field",
+        "Only if the loop iterated at least once",
         "No, 'count' has block scope limited strictly to the for loop header and body; referencing it outside causes compiler error CS0103",
-        "Only if the loop iterated at least once"
+        "Yes, it remains available throughout the entire method"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "Variables declared in the initialization section of a for loop header have scope confined to the loop construct itself.",
       "explanation": "Variables declared in the initialization section of a for loop header have scope confined to the loop construct itself.",
-      "distractorRationale": "Options other than \"No, 'count' has block scope limited strictly to the for loop\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13203,7 +13203,7 @@
       "ans": 3,
       "exp": "Counting down starts at 10, tests that i >= 1, and decrements with i-- after each iteration.",
       "explanation": "Counting down starts at 10, tests that i >= 1, and decrements with i-- after each iteration.",
-      "distractorRationale": "Options other than \"for (int i = 10; i >= 1; i--)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13231,21 +13231,21 @@
       "code": "",
       "options": [
         "for (int i = 2; i <= 20; i += 2)",
+        "for (int i = 2; i == 20; i += 2)",
         "for (int i = 2; i < 20; i++)",
-        "for (int i = 0; i <= 20; i * 2)",
-        "for (int i = 2; i == 20; i += 2)"
+        "for (int i = 0; i <= 20; i * 2)"
       ],
       "opts": [
         "for (int i = 2; i <= 20; i += 2)",
+        "for (int i = 2; i == 20; i += 2)",
         "for (int i = 2; i < 20; i++)",
-        "for (int i = 0; i <= 20; i * 2)",
-        "for (int i = 2; i == 20; i += 2)"
+        "for (int i = 0; i <= 20; i * 2)"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Starting at 2, terminating when i exceeds 20, and stepping by 2 ('i += 2') yields 2, 4, 6, ..., 20.",
       "explanation": "Starting at 2, terminating when i exceeds 20, and stepping by 2 ('i += 2') yields 2, 4, 6, ..., 20.",
-      "distractorRationale": "Options other than \"for (int i = 2; i <= 20; i += 2)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13272,22 +13272,22 @@
       "stem": "What happens when a 'break;' statement is encountered inside a loop body?",
       "code": "",
       "options": [
-        "The computer restarts",
-        "The loop terminates immediately, and execution jumps to the statement directly following the loop",
         "The current iteration is skipped and the loop starts again",
-        "All variables in the program are reset to null"
+        "The loop terminates immediately, and execution jumps to the statement directly following the loop",
+        "All variables in the program are reset to null",
+        "The computer restarts"
       ],
       "opts": [
-        "The computer restarts",
-        "The loop terminates immediately, and execution jumps to the statement directly following the loop",
         "The current iteration is skipped and the loop starts again",
-        "All variables in the program are reset to null"
+        "The loop terminates immediately, and execution jumps to the statement directly following the loop",
+        "All variables in the program are reset to null",
+        "The computer restarts"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "The 'break' statement immediately exits the innermost enclosing loop, bypassing any remaining iterations.",
       "explanation": "The 'break' statement immediately exits the innermost enclosing loop, bypassing any remaining iterations.",
-      "distractorRationale": "Options other than \"The loop terminates immediately, and execution jumps to the \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13329,7 +13329,7 @@
       "ans": 2,
       "exp": "The 'continue' statement bypasses any statements remaining in the current iteration and advances to the next loop iteration.",
       "explanation": "The 'continue' statement bypasses any statements remaining in the current iteration and advances to the next loop iteration.",
-      "distractorRationale": "Options other than \"The remainder of the current iteration is skipped, and contr\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13356,22 +13356,22 @@
       "stem": "Which C# statement adds a new text item to a ListBox named lstResults?",
       "code": "",
       "options": [
+        "lstResults.Text += \"New Item\";",
         "lstResults.Add(\"New Item\");",
         "lstResults.Items.InsertItem(\"New Item\");",
-        "lstResults.Text += \"New Item\";",
         "lstResults.Items.Add(\"New Item\");"
       ],
       "opts": [
+        "lstResults.Text += \"New Item\";",
         "lstResults.Add(\"New Item\");",
         "lstResults.Items.InsertItem(\"New Item\");",
-        "lstResults.Text += \"New Item\";",
         "lstResults.Items.Add(\"New Item\");"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "Items are appended to a ListBox through its Items collection using 'lstResults.Items.Add(...)'.",
       "explanation": "Items are appended to a ListBox through its Items collection using 'lstResults.Items.Add(...)'.",
-      "distractorRationale": "Options other than \"lstResults.Items.Add(\"New Item\");\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13389,31 +13389,31 @@
       "topicTitle": "while, do-while & for Loops (Pretest vs Posttest)",
       "learningObjective": "Write and trace while, do-while, and for loops, distinguishing pretest from posttest execution.",
       "type": "mcq",
-      "questionType": "application-scenario",
+      "questionType": "loop-execution",
       "difficulty": "Advanced",
       "marks": 4,
       "estimatedMinutes": 3,
-      "q": "Which C# statement removes all items from a ListBox named lstResults?",
-      "title": "Which C# statement removes all items from a ListBox named lstResults?",
-      "stem": "Which C# statement removes all items from a ListBox named lstResults?",
-      "code": "",
+      "q": "What text is displayed in `lblSum` if `lstAmounts.Items` contains `\"15.50\"`, `\"4.50\"`, and `\"10.00\"` when the loop below executes?",
+      "title": "What text is displayed in `lblSum` if `lstAmounts.Items` contains `\"15.50\"`, `\"4.50\"`, and `\"10.00\"` when the loop below executes?",
+      "stem": "What text is displayed in `lblSum` if `lstAmounts.Items` contains `\"15.50\"`, `\"4.50\"`, and `\"10.00\"` when the loop below executes?",
+      "code": "decimal sum = 0m;\nfor (int i = 0; i < lstAmounts.Items.Count; i++)\n{\n    sum += decimal.Parse(lstAmounts.Items[i].ToString());\n}\nlblSum.Text = sum.ToString(\"F2\");",
       "options": [
-        "lstResults.Items.Clear();",
-        "lstResults.Clear();",
-        "lstResults.Items.DeleteAll();",
-        "lstResults.Reset();"
+        "30.00",
+        "10.00",
+        "3.00",
+        "20.00"
       ],
       "opts": [
-        "lstResults.Items.Clear();",
-        "lstResults.Clear();",
-        "lstResults.Items.DeleteAll();",
-        "lstResults.Reset();"
+        "30.00",
+        "10.00",
+        "3.00",
+        "20.00"
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "Calling lstResults.Items.Clear() empties the Items collection of the ListBox.",
-      "explanation": "Calling lstResults.Items.Clear() empties the Items collection of the ListBox.",
-      "distractorRationale": "Options other than \"lstResults.Items.Clear();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "The loop iterates across indices `0`, `1`, and `2` (`Count == 3`), accumulating `15.50m + 4.50m + 10.00m = 30.00m`, formatted with `\"F2\"` as `\"30.00\"`.",
+      "explanation": "The loop iterates across indices `0`, `1`, and `2` (`Count == 3`), accumulating `15.50m + 4.50m + 10.00m = 30.00m`, formatted with `\"F2\"` as `\"30.00\"`.",
+      "distractorRationale": "`20.00` misses the last iteration (`i < Count - 1` off-by-one), `10.00` overwrites instead of accumulating (`=` vs `+=`), and `3.00` counts items instead of summing values.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13440,22 +13440,22 @@
       "stem": "Which property returns the total count of items currently populated in lstResults?",
       "code": "",
       "options": [
-        "lstResults.Length",
-        "lstResults.Items.Count",
         "lstResults.Items.Size",
-        "lstResults.TotalItems"
+        "lstResults.Items.Count",
+        "lstResults.TotalItems",
+        "lstResults.Length"
       ],
       "opts": [
-        "lstResults.Length",
-        "lstResults.Items.Count",
         "lstResults.Items.Size",
-        "lstResults.TotalItems"
+        "lstResults.Items.Count",
+        "lstResults.TotalItems",
+        "lstResults.Length"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "The .Count property on the Items collection returns an integer indicating how many items the ListBox contains.",
       "explanation": "The .Count property on the Items collection returns an integer indicating how many items the ListBox contains.",
-      "distractorRationale": "Options other than \"lstResults.Items.Count\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13497,7 +13497,7 @@
       "ans": 2,
       "exp": "ListBox collections are 0-indexed in C#; the first element resides at index 0.",
       "explanation": "ListBox collections are 0-indexed in C#; the first element resides at index 0.",
-      "distractorRationale": "Options other than \"0 (ListBoxes are zero-indexed)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13524,22 +13524,22 @@
       "stem": "If a ListBox contains N items, what is the index of the last item in the list?",
       "code": "",
       "options": [
+        "0",
         "N",
         "N + 1",
-        "0",
         "N - 1 (or lstResults.Items.Count - 1)"
       ],
       "opts": [
+        "0",
         "N",
         "N + 1",
-        "0",
         "N - 1 (or lstResults.Items.Count - 1)"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "Because indexing begins at 0, the final element in an N-item collection is located at index N - 1.",
       "explanation": "Because indexing begins at 0, the final element in an N-item collection is located at index N - 1.",
-      "distractorRationale": "Options other than \"N - 1 (or lstResults.Items.Count - 1)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13581,7 +13581,7 @@
       "ans": 0,
       "exp": "Accessing an index outside the valid range [0, Count-1] throws an ArgumentOutOfRangeException.",
       "explanation": "Accessing an index outside the valid range [0, Count-1] throws an ArgumentOutOfRangeException.",
-      "distractorRationale": "Options other than \"ArgumentOutOfRangeException\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13623,7 +13623,7 @@
       "ans": 1,
       "exp": "Checking SelectedIndex != -1 verifies an item is selected before calling SelectedItem.ToString(), preventing NullReferenceExceptions.",
       "explanation": "Checking SelectedIndex != -1 verifies an item is selected before calling SelectedItem.ToString(), preventing NullReferenceExceptions.",
-      "distractorRationale": "Options other than \"if (lstResults.SelectedIndex != -1) { string item = lstResul\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13650,22 +13650,22 @@
       "stem": "Which for loop header correctly iterates through every item in a ListBox named lstScores?",
       "code": "",
       "options": [
-        "for (int i = 1; i <= lstScores.Items.Count; i++)",
         "for (int i = 0; i <= lstScores.Items.Count; i++)",
+        "for (int i = lstScores.Items.Count; i > 0; i++)",
         "for (int i = 0; i < lstScores.Items.Count; i++)",
-        "for (int i = lstScores.Items.Count; i > 0; i++)"
+        "for (int i = 1; i <= lstScores.Items.Count; i++)"
       ],
       "opts": [
-        "for (int i = 1; i <= lstScores.Items.Count; i++)",
         "for (int i = 0; i <= lstScores.Items.Count; i++)",
+        "for (int i = lstScores.Items.Count; i > 0; i++)",
         "for (int i = 0; i < lstScores.Items.Count; i++)",
-        "for (int i = lstScores.Items.Count; i > 0; i++)"
+        "for (int i = 1; i <= lstScores.Items.Count; i++)"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "Valid indices range from 0 to Count - 1. Using 'i = 0; i < lstScores.Items.Count; i++' visits each valid element safely.",
       "explanation": "Valid indices range from 0 to Count - 1. Using 'i = 0; i < lstScores.Items.Count; i++' visits each valid element safely.",
-      "distractorRationale": "Options other than \"for (int i = 0; i < lstScores.Items.Count; i++)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13692,22 +13692,22 @@
       "stem": "How can numeric values stored as text in a ListBox (lstScores) be summed using an accumulator in a loop?",
       "code": "",
       "options": [
-        "decimal total = lstScores.Items.Count * 100;",
         "decimal total = lstScores.Items.Sum(); without declaring total",
         "decimal total; total += lstScores.SelectedIndex;",
+        "decimal total = lstScores.Items.Count * 100;",
         "decimal total = 0m;\nfor (int i = 0; i < lstScores.Items.Count; i++)\n{\n    total += decimal.Parse(lstScores.Items[i].ToString());\n}"
       ],
       "opts": [
-        "decimal total = lstScores.Items.Count * 100;",
         "decimal total = lstScores.Items.Sum(); without declaring total",
         "decimal total; total += lstScores.SelectedIndex;",
+        "decimal total = lstScores.Items.Count * 100;",
         "decimal total = 0m;\nfor (int i = 0; i < lstScores.Items.Count; i++)\n{\n    total += decimal.Parse(lstScores.Items[i].ToString());\n}"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "Initialize total to 0m, iterate through items from 0 to Count-1, extract each item as a string, parse it to decimal, and add to total.",
       "explanation": "Initialize total to 0m, iterate through items from 0 to Count-1, extract each item as a string, parse it to decimal, and add to total.",
-      "distractorRationale": "Options other than \"decimal total = 0m;\nfor (int i = 0; i < lstScores.Items.Coun\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13735,21 +13735,21 @@
       "code": "",
       "options": [
         "Verify that lstScores.Items.Count > 0 before dividing",
+        "Ensure that the computer is connected to the internet",
         "Check if the form has a title bar",
-        "Verify that the user entered a positive name",
-        "Ensure that the computer is connected to the internet"
+        "Verify that the user entered a positive name"
       ],
       "opts": [
         "Verify that lstScores.Items.Count > 0 before dividing",
+        "Ensure that the computer is connected to the internet",
         "Check if the form has a title bar",
-        "Verify that the user entered a positive name",
-        "Ensure that the computer is connected to the internet"
+        "Verify that the user entered a positive name"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "If the ListBox is empty (Count == 0), dividing by Count throws a DivideByZeroException for integers or produces NaN for floating point.",
       "explanation": "If the ListBox is empty (Count == 0), dividing by Count throws a DivideByZeroException for integers or produces NaN for floating point.",
-      "distractorRationale": "Options other than \"Verify that lstScores.Items.Count > 0 before dividing\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13776,22 +13776,22 @@
       "stem": "What insidious bug is created by accidentally placing a semicolon at the end of a while loop header: 'while (count < 10); { count++; }'?",
       "code": "",
       "options": [
-        "The code fails to compile with CS1002",
+        "Visual Studio deletes the while statement",
         "The semicolon forms an empty loop body; since count is never incremented, the loop hangs indefinitely in an infinite loop",
-        "The block '{ count++; }' executes 10 times immediately",
-        "Visual Studio deletes the while statement"
+        "The code fails to compile with CS1002",
+        "The block '{ count++; }' executes 10 times immediately"
       ],
       "opts": [
-        "The code fails to compile with CS1002",
+        "Visual Studio deletes the while statement",
         "The semicolon forms an empty loop body; since count is never incremented, the loop hangs indefinitely in an infinite loop",
-        "The block '{ count++; }' executes 10 times immediately",
-        "Visual Studio deletes the while statement"
+        "The code fails to compile with CS1002",
+        "The block '{ count++; }' executes 10 times immediately"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "A semicolon after while(...) creates an empty statement as the loop body. The loop endlessly tests 'count < 10' without ever incrementing count.",
       "explanation": "A semicolon after while(...) creates an empty statement as the loop body. The loop endlessly tests 'count < 10' without ever incrementing count.",
-      "distractorRationale": "Options other than \"The semicolon forms an empty loop body; since count is never\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13833,7 +13833,7 @@
       "ans": 2,
       "exp": "The semicolon acts as an empty loop body, cycling i from 0 to 5. The following block executes as normal sequential code exactly once.",
       "explanation": "The semicolon acts as an empty loop body, cycling i from 0 to 5. The following block executes as normal sequential code exactly once.",
-      "distractorRationale": "Options other than \"The loop executes all 5 iterations doing nothing; then the b\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -13875,7 +13875,7 @@
       "ans": 3,
       "exp": "Clearing the ListBox ensures no residual items or prices from a prior transaction contaminate the new transaction.",
       "explanation": "Clearing the ListBox ensures no residual items or prices from a prior transaction contaminate the new transaction.",
-      "distractorRationale": "Options other than \"To remove all scanned items from the previous customer from \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13903,21 +13903,21 @@
       "code": "",
       "options": [
         "for (int i = 1; i <= 10; i++) { lstTable.Items.Add($\"5 x {i} = {5 * i}\"); }",
-        "lstTable.Items.Add(5 * 10);",
         "for (int i = 10; i < 1; i++) { lstTable.Items.Add(5 * i); }",
-        "while (i <= 10) { lstTable.Items.Add(5); }"
+        "while (i <= 10) { lstTable.Items.Add(5); }",
+        "lstTable.Items.Add(5 * 10);"
       ],
       "opts": [
         "for (int i = 1; i <= 10; i++) { lstTable.Items.Add($\"5 x {i} = {5 * i}\"); }",
-        "lstTable.Items.Add(5 * 10);",
         "for (int i = 10; i < 1; i++) { lstTable.Items.Add(5 * i); }",
-        "while (i <= 10) { lstTable.Items.Add(5); }"
+        "while (i <= 10) { lstTable.Items.Add(5); }",
+        "lstTable.Items.Add(5 * 10);"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "A for loop counting from 1 to 10 dynamically evaluates and appends each formatted multiplication product.",
       "explanation": "A for loop counting from 1 to 10 dynamically evaluates and appends each formatted multiplication product.",
-      "distractorRationale": "Options other than \"for (int i = 1; i <= 10; i++) { lstTable.Items.Add($\"5 x {i}\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13959,7 +13959,7 @@
       "ans": 1,
       "exp": "Compound growth is an iterative accumulation: each period's interest increases the base principal for subsequent calculations.",
       "explanation": "Compound growth is an iterative accumulation: each period's interest increases the base principal for subsequent calculations.",
-      "distractorRationale": "Options other than \"Interest earned in each year is added to the principal balan\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -13986,22 +13986,22 @@
       "stem": "In an investment simulator, how can yearly balances be appended to a ListBox with tab separation and Rand currency formatting?",
       "code": "",
       "options": [
+        "lstGrowth.Items.Insert(year, balance);",
         "lstGrowth.Items.Add(year + balance);",
-        "lstGrowth.Text = balance.ToString();",
         "lstGrowth.Items.Add($\"Year {year}:\\t{balance:C}\");",
-        "lstGrowth.Items.Insert(year, balance);"
+        "lstGrowth.Text = balance.ToString();"
       ],
       "opts": [
+        "lstGrowth.Items.Insert(year, balance);",
         "lstGrowth.Items.Add(year + balance);",
-        "lstGrowth.Text = balance.ToString();",
         "lstGrowth.Items.Add($\"Year {year}:\\t{balance:C}\");",
-        "lstGrowth.Items.Insert(year, balance);"
+        "lstGrowth.Text = balance.ToString();"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "String interpolation with the tab escape sequence '\\t' and currency specifier ':C' formats tabular monetary output cleanly.",
       "explanation": "String interpolation with the tab escape sequence '\\t' and currency specifier ':C' formats tabular monetary output cleanly.",
-      "distractorRationale": "Options other than \"lstGrowth.Items.Add($\"Year {year}:\\t{balance:C}\");\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14028,22 +14028,22 @@
       "stem": "Which loop construct is best suited when the exact number of iterations is known before entering the loop?",
       "code": "",
       "options": [
+        "infinite loop",
         "while loop",
         "do-while loop",
-        "infinite loop",
         "for loop"
       ],
       "opts": [
+        "infinite loop",
         "while loop",
         "do-while loop",
-        "infinite loop",
         "for loop"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "The count-controlled for loop is ideal when the iteration count is predetermined (e.g. iterating N times or over an array).",
       "explanation": "The count-controlled for loop is ideal when the iteration count is predetermined (e.g. iterating N times or over an array).",
-      "distractorRationale": "Options other than \"for loop\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14071,21 +14071,21 @@
       "code": "",
       "options": [
         "while (or do-while) loop",
-        "for loop counting to 100",
         "switch statement",
-        "single if statement"
+        "single if statement",
+        "for loop counting to 100"
       ],
       "opts": [
         "while (or do-while) loop",
-        "for loop counting to 100",
         "switch statement",
-        "single if statement"
+        "single if statement",
+        "for loop counting to 100"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Condition-controlled loops (while and do-while) are designed for situations where the number of attempts is indeterminate.",
       "explanation": "Condition-controlled loops (while and do-while) are designed for situations where the number of attempts is indeterminate.",
-      "distractorRationale": "Options other than \"while (or do-while) loop\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14112,22 +14112,22 @@
       "stem": "Consider the following nested loop structure in Visual C#:\nHow many total items will be added to `lstLog` upon loop completion?",
       "code": "for (int student = 1; student <= 3; student++)\n{\n    for (int test = 1; test <= 2; test++)\n    {\n        lstLog.Items.Add($\"Student {student}, Test {test}\");\n    }\n}",
       "options": [
-        "5 items (3 outer iterations + 2 inner iterations)",
         "2 items (only the inner loop adds items)",
+        "6 items (for each of the 3 outer iterations, the inner loop executes 2 times: 3 * 2 = 6)",
         "12 items (3 * 2 * 2)",
-        "6 items (for each of the 3 outer iterations, the inner loop executes 2 times: 3 * 2 = 6)"
+        "5 items (3 outer iterations + 2 inner iterations)"
       ],
       "opts": [
-        "5 items (3 outer iterations + 2 inner iterations)",
         "2 items (only the inner loop adds items)",
+        "6 items (for each of the 3 outer iterations, the inner loop executes 2 times: 3 * 2 = 6)",
         "12 items (3 * 2 * 2)",
-        "6 items (for each of the 3 outer iterations, the inner loop executes 2 times: 3 * 2 = 6)"
+        "5 items (3 outer iterations + 2 inner iterations)"
       ],
-      "answer": 3,
-      "ans": 3,
-      "exp": "In a nested loop, for every single iteration of the outer loop, the inner loop executes its full cycle from start to finish. With 3 outer iterations and 2 inner iterations, the inner statement executes 3 * 2 = 6 times (Chapter 5).",
-      "explanation": "In a nested loop, for every single iteration of the outer loop, the inner loop executes its full cycle from start to finish. With 3 outer iterations and 2 inner iterations, the inner statement executes 3 * 2 = 6 times (Chapter 5).",
-      "distractorRationale": "Options other than \"6 items (for each of the 3 outer iterations, the inner loop \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 1,
+      "ans": 1,
+      "exp": "In a nested loop, for every single iteration of the outer loop, the inner loop executes its full cycle from start to finish. With 3 outer iterations and 2 inner iterations, the inner statement executes 3 * 2 = 6 times.",
+      "explanation": "In a nested loop, for every single iteration of the outer loop, the inner loop executes its full cycle from start to finish. With 3 outer iterations and 2 inner iterations, the inner statement executes 3 * 2 = 6 times.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -14169,7 +14169,7 @@
       "ans": 2,
       "exp": "The inner loop runs 3 times on each of the outer loop's 5 iterations, totaling 5 * 3 = 15 executions.",
       "explanation": "The inner loop runs 3 times on each of the outer loop's 5 iterations, totaling 5 * 3 = 15 executions.",
-      "distractorRationale": "Options other than \"15 times (5 * 3)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14211,7 +14211,7 @@
       "ans": 3,
       "exp": "The '+=' operator adds the right-hand value to the variable on the left and reassigns the sum to that variable.",
       "explanation": "The '+=' operator adds the right-hand value to the variable on the left and reassigns the sum to that variable.",
-      "distractorRationale": "Options other than \"+=\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14239,21 +14239,21 @@
       "code": "",
       "options": [
         "*=",
+        "^=",
         "=*",
-        "**",
-        "^="
+        "**"
       ],
       "opts": [
         "*=",
+        "^=",
         "=*",
-        "**",
-        "^="
+        "**"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "The '*=' operator performs in-place multiplication on the target variable.",
       "explanation": "The '*=' operator performs in-place multiplication on the target variable.",
-      "distractorRationale": "Options other than \"*=\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14280,22 +14280,22 @@
       "stem": "How can a loop find the highest numeric score stored in a ListBox named lstScores?",
       "code": "",
       "options": [
-        "Sort the form alphabetically",
+        "Call lstScores.Items.Clear()",
         "Initialize a variable 'highest' with the first item, iterate through remaining items, and update 'highest' whenever an item exceeds it",
-        "Sum all numbers and divide by 2",
-        "Call lstScores.Items.Clear()"
+        "Sort the form alphabetically",
+        "Sum all numbers and divide by 2"
       ],
       "opts": [
-        "Sort the form alphabetically",
+        "Call lstScores.Items.Clear()",
         "Initialize a variable 'highest' with the first item, iterate through remaining items, and update 'highest' whenever an item exceeds it",
-        "Sum all numbers and divide by 2",
-        "Call lstScores.Items.Clear()"
+        "Sort the form alphabetically",
+        "Sum all numbers and divide by 2"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "The standard linear search algorithm initializes the extreme value candidate with element 0, then updates candidate whenever a larger value is found.",
       "explanation": "The standard linear search algorithm initializes the extreme value candidate with element 0, then updates candidate whenever a larger value is found.",
-      "distractorRationale": "Options other than \"Initialize a variable 'highest' with the first item, iterate\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14322,22 +14322,22 @@
       "stem": "When finding the maximum value among a series of positive test scores entered by a user, what initial value should the 'highest' accumulator hold before the loop?",
       "code": "",
       "options": [
-        "100",
         "int.MaxValue",
+        "-999999",
         "0 (or the first score in the series)",
-        "-999999"
+        "100"
       ],
       "opts": [
-        "100",
         "int.MaxValue",
+        "-999999",
         "0 (or the first score in the series)",
-        "-999999"
+        "100"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "Initializing with 0 or the first actual score ensures that any valid positive score will be equal to or greater than the initial candidate.",
       "explanation": "Initializing with 0 or the first actual score ensures that any valid positive score will be equal to or greater than the initial candidate.",
-      "distractorRationale": "Options other than \"0 (or the first score in the series)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -14359,27 +14359,27 @@
       "difficulty": "Advanced",
       "marks": 4,
       "estimatedMinutes": 3,
-      "q": "What happens if 'while (false)' is written in C#?",
-      "title": "What happens if 'while (false)' is written in C#?",
-      "stem": "What happens if 'while (false)' is written in C#?",
+      "q": "What happens at compile time and runtime if `while (false) { count++; }` is written in C#?",
+      "title": "What happens at compile time and runtime if `while (false) { count++; }` is written in C#?",
+      "stem": "What happens at compile time and runtime if `while (false) { count++; }` is written in C#?",
       "code": "",
       "options": [
-        "The loop executes once",
-        "The loop executes infinitely",
-        "The operating system crashes",
-        "The loop condition is false from the start; the loop body never executes, and the compiler flags unreachable code if statements follow inside"
+        "The loop body executes once before checking `false`, incrementing `count` by `1`",
+        "The loop runs infinitely because `false` can never transition to `true`",
+        "A `FormatException` is thrown at runtime when entering the `while` header",
+        "Because the pretest condition is `false` initially, the loop body executes `0` times and the C# compiler reports warning `CS0162` (`Unreachable code detected`) on `count++;`"
       ],
       "opts": [
-        "The loop executes once",
-        "The loop executes infinitely",
-        "The operating system crashes",
-        "The loop condition is false from the start; the loop body never executes, and the compiler flags unreachable code if statements follow inside"
+        "The loop body executes once before checking `false`, incrementing `count` by `1`",
+        "The loop runs infinitely because `false` can never transition to `true`",
+        "A `FormatException` is thrown at runtime when entering the `while` header",
+        "Because the pretest condition is `false` initially, the loop body executes `0` times and the C# compiler reports warning `CS0162` (`Unreachable code detected`) on `count++;`"
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "A pre-test while loop checks its condition first. If false initially, body statements execute zero times.",
-      "explanation": "A pre-test while loop checks its condition first. If false initially, body statements execute zero times.",
-      "distractorRationale": "Options other than \"The loop condition is false from the start; the loop body ne\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "`while` is a pretest loop: `false` is evaluated before the first iteration, so `{ count++; }` never executes and the compiler warns that the body is unreachable (`CS0162`).",
+      "explanation": "`while` is a pretest loop: `false` is evaluated before the first iteration, so `{ count++; }` never executes and the compiler warns that the body is unreachable (`CS0162`).",
+      "distractorRationale": "Executing once before testing describes `do { count++; } while (false);`, not `while (false)`.",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14407,21 +14407,21 @@
       "code": "",
       "options": [
         "The loop body executes exactly once because the post-test condition is only evaluated after the first iteration",
-        "The loop body never executes",
         "The loop runs infinitely",
-        "It causes a compilation error"
+        "It causes a compilation error",
+        "The loop body never executes"
       ],
       "opts": [
         "The loop body executes exactly once because the post-test condition is only evaluated after the first iteration",
-        "The loop body never executes",
         "The loop runs infinitely",
-        "It causes a compilation error"
+        "It causes a compilation error",
+        "The loop body never executes"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Post-test do-while loops execute the body unconditionally on the first pass before evaluating the test expression.",
       "explanation": "Post-test do-while loops execute the body unconditionally on the first pass before evaluating the test expression.",
-      "distractorRationale": "Options other than \"The loop body executes exactly once because the post-test co\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14448,22 +14448,22 @@
       "stem": "Why is it considered bad programming practice to alter the loop control variable manually inside the body of a for loop?",
       "code": "",
       "options": [
-        "The C# compiler refuses to compile the project",
+        "It automatically changes the loop to a while loop",
         "It obscures loop termination logic, making execution flow difficult to trace and greatly increasing the risk of off-by-one or infinite loop bugs",
-        "It deletes the variable from memory",
-        "It automatically changes the loop to a while loop"
+        "The C# compiler refuses to compile the project",
+        "It deletes the variable from memory"
       ],
       "opts": [
-        "The C# compiler refuses to compile the project",
+        "It automatically changes the loop to a while loop",
         "It obscures loop termination logic, making execution flow difficult to trace and greatly increasing the risk of off-by-one or infinite loop bugs",
-        "It deletes the variable from memory",
-        "It automatically changes the loop to a while loop"
+        "The C# compiler refuses to compile the project",
+        "It deletes the variable from memory"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "For loops are designed for predictable iteration managed by their header. Modifying the counter inside the body compromises readability and predictability.",
       "explanation": "For loops are designed for predictable iteration managed by their header. Modifying the counter inside the body compromises readability and predictability.",
-      "distractorRationale": "Options other than \"It obscures loop termination logic, making execution flow di\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14505,7 +14505,7 @@
       "ans": 2,
       "exp": "Items.Remove(object) searches for and removes the first matching item object from the collection.",
       "explanation": "Items.Remove(object) searches for and removes the first matching item object from the collection.",
-      "distractorRationale": "Options other than \"lstItems.Items.Remove(\"ItemText\");\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14532,22 +14532,22 @@
       "stem": "Which method removes an item from a ListBox by its zero-based numerical index position?",
       "code": "",
       "options": [
-        "lstItems.Items.Remove(index);",
         "lstItems.Items.DeleteIndex(index);",
         "lstItems.Items[index] = null;",
+        "lstItems.Items.Remove(index);",
         "lstItems.Items.RemoveAt(index);"
       ],
       "opts": [
-        "lstItems.Items.Remove(index);",
         "lstItems.Items.DeleteIndex(index);",
         "lstItems.Items[index] = null;",
+        "lstItems.Items.Remove(index);",
         "lstItems.Items.RemoveAt(index);"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "Items.RemoveAt(int index) removes the item occupying the specified index location.",
       "explanation": "Items.RemoveAt(int index) removes the item occupying the specified index location.",
-      "distractorRationale": "Options other than \"lstItems.Items.RemoveAt(index);\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14575,21 +14575,21 @@
       "code": "",
       "options": [
         "lstItems.Items.Insert(0, \"First Item\");",
+        "lstItems.Items.Prepend(\"First Item\");",
         "lstItems.Items.AddTop(\"First Item\");",
-        "lstItems.Items[0] = \"First Item\";",
-        "lstItems.Items.Prepend(\"First Item\");"
+        "lstItems.Items[0] = \"First Item\";"
       ],
       "opts": [
         "lstItems.Items.Insert(0, \"First Item\");",
+        "lstItems.Items.Prepend(\"First Item\");",
         "lstItems.Items.AddTop(\"First Item\");",
-        "lstItems.Items[0] = \"First Item\";",
-        "lstItems.Items.Prepend(\"First Item\");"
+        "lstItems.Items[0] = \"First Item\";"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Items.Insert(index, item) inserts an element at the specified position, shifting existing items downwards.",
       "explanation": "Items.Insert(index, item) inserts an element at the specified position, shifting existing items downwards.",
-      "distractorRationale": "Options other than \"lstItems.Items.Insert(0, \"First Item\");\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14631,7 +14631,7 @@
       "ans": 1,
       "exp": "Setting the 'Sorted' property to true automatically sorts text entries alphabetically as they are added.",
       "explanation": "Setting the 'Sorted' property to true automatically sorts text entries alphabetically as they are added.",
-      "distractorRationale": "Options other than \"Sorted\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14658,22 +14658,22 @@
       "stem": "What does the method call 'lstItems.Items.Contains(\"Apples\")' return?",
       "code": "",
       "options": [
-        "The index position where \"Apples\" is stored",
         "The total count of apples",
+        "A new ListBox with only apples",
         "A bool (true if \"Apples\" exists in the ListBox, false otherwise)",
-        "A new ListBox with only apples"
+        "The index position where \"Apples\" is stored"
       ],
       "opts": [
-        "The index position where \"Apples\" is stored",
         "The total count of apples",
+        "A new ListBox with only apples",
         "A bool (true if \"Apples\" exists in the ListBox, false otherwise)",
-        "A new ListBox with only apples"
+        "The index position where \"Apples\" is stored"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "Items.Contains(object) checks for item membership, returning a boolean true or false.",
       "explanation": "Items.Contains(object) checks for item membership, returning a boolean true or false.",
-      "distractorRationale": "Options other than \"A bool (true if \"Apples\" exists in the ListBox, false otherw\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14700,22 +14700,22 @@
       "stem": "If a ListBox has SelectionMode set to MultiSimple or MultiExtended, which collection holds all indices selected by the user?",
       "code": "",
       "options": [
-        "lstItems.SelectedItemsList",
         "lstItems.CheckedIndices",
         "lstItems.MultiSelections",
+        "lstItems.SelectedItemsList",
         "lstItems.SelectedIndices"
       ],
       "opts": [
-        "lstItems.SelectedItemsList",
         "lstItems.CheckedIndices",
         "lstItems.MultiSelections",
+        "lstItems.SelectedItemsList",
         "lstItems.SelectedIndices"
       ],
       "answer": 3,
       "ans": 3,
       "exp": "SelectedIndices contains the collection of zero-based index numbers for all highlighted items in a multi-selection ListBox.",
       "explanation": "SelectedIndices contains the collection of zero-based index numbers for all highlighted items in a multi-selection ListBox.",
-      "distractorRationale": "Options other than \"lstItems.SelectedIndices\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14743,21 +14743,21 @@
       "code": "",
       "options": [
         "Repeatedly updating the GUI thread inside a tight loop causes UI freezing and severe performance degradation",
+        "The monitor will turn off",
         "Visual Studio will delete the form",
-        "ListBoxes can never hold more than 100 items",
-        "The monitor will turn off"
+        "ListBoxes can never hold more than 100 items"
       ],
       "opts": [
         "Repeatedly updating the GUI thread inside a tight loop causes UI freezing and severe performance degradation",
+        "The monitor will turn off",
         "Visual Studio will delete the form",
-        "ListBoxes can never hold more than 100 items",
-        "The monitor will turn off"
+        "ListBoxes can never hold more than 100 items"
       ],
       "answer": 0,
       "ans": 0,
       "exp": "Excessive GUI repainting on the UI thread starves the message pump, causing responsiveness issues unless batched (e.g. with BeginUpdate/EndUpdate).",
       "explanation": "Excessive GUI repainting on the UI thread starves the message pump, causing responsiveness issues unless batched (e.g. with BeginUpdate/EndUpdate).",
-      "distractorRationale": "Options other than \"Repeatedly updating the GUI thread inside a tight loop cause\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14784,22 +14784,22 @@
       "stem": "How does Shneiderman's 8th Golden Rule ('Reduce short-term memory load') apply to displaying accumulated transaction items in a ListBox?",
       "code": "",
       "options": [
-        "The user must memorize all product barcodes",
-        "Presenting all scanned items and subtotals persistently in a scrollable list frees users from having to remember entered transactions while continuing work",
         "All items should disappear immediately after scanning",
-        "The application should only display one number at a time"
+        "Presenting all scanned items and subtotals persistently in a scrollable list frees users from having to remember entered transactions while continuing work",
+        "The application should only display one number at a time",
+        "The user must memorize all product barcodes"
       ],
       "opts": [
-        "The user must memorize all product barcodes",
-        "Presenting all scanned items and subtotals persistently in a scrollable list frees users from having to remember entered transactions while continuing work",
         "All items should disappear immediately after scanning",
-        "The application should only display one number at a time"
+        "Presenting all scanned items and subtotals persistently in a scrollable list frees users from having to remember entered transactions while continuing work",
+        "The application should only display one number at a time",
+        "The user must memorize all product barcodes"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "Visible history in a ListBox offloads cognitive load from human short-term memory into the interface display.",
       "explanation": "Visible history in a ListBox offloads cognitive load from human short-term memory into the interface display.",
-      "distractorRationale": "Options other than \"Presenting all scanned items and subtotals persistently in a\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -14841,7 +14841,7 @@
       "ans": 0,
       "exp": "RadioButtons grouped inside a common container (such as a GroupBox) exhibit mutually exclusive behavior: selecting one automatically unchecks all other radio buttons in that group (Visual C# Ch 4.10).",
       "explanation": "RadioButtons grouped inside a common container (such as a GroupBox) exhibit mutually exclusive behavior: selecting one automatically unchecks all other radio buttons in that group (Visual C# Ch 4.10).",
-      "distractorRationale": "Options other than \"To ensure mutual exclusion so that selecting one vehicle cat\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -14882,7 +14882,7 @@
       "ans": 1,
       "exp": "NWU standard Hungarian prefix for TextBoxes is 'txt' (txtDays). As the primary initial input field, TabIndex should be set to 0 so the cursor begins in this field on launch (Visual C# Ch 2 & Ch 3).",
       "explanation": "NWU standard Hungarian prefix for TextBoxes is 'txt' (txtDays). As the primary initial input field, TabIndex should be set to 0 so the cursor begins in this field on launch (Visual C# Ch 2 & Ch 3).",
-      "distractorRationale": "Options other than \"Name: txtDays, TabIndex: 0\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -14922,9 +14922,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "int.TryParse returns a boolean indicating success and populates the variable via an out parameter, completely avoiding runtime crash exceptions on non-numeric input (Visual C# Ch 4.9).",
-      "explanation": "int.TryParse returns a boolean indicating success and populates the variable via an out parameter, completely avoiding runtime crash exceptions on non-numeric input (Visual C# Ch 4.9).",
-      "distractorRationale": "Options other than \"if (int.TryParse(txtDays.Text, out days))\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "Int.TryParse returns a boolean indicating success and populates the variable via an out parameter, completely avoiding runtime crash exceptions on non-numeric input (Visual C# Ch 4.9).",
+      "explanation": "Int.TryParse returns a boolean indicating success and populates the variable via an out parameter, completely avoiding runtime crash exceptions on non-numeric input (Visual C# Ch 4.9).",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -14966,7 +14966,7 @@
       "ans": 3,
       "exp": "At an SUV daily rate of R650.00/day, the base charge for 4 days is 4 * R650.00 = R2,600.00.",
       "explanation": "At an SUV daily rate of R650.00/day, the base charge for 4 days is 4 * R650.00 = R2,600.00.",
-      "distractorRationale": "Options other than \"R 2,600.00\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -15008,7 +15008,7 @@
       "ans": 0,
       "exp": "With an included allowance of 150 km per day, freeKms is calculated as days * 150m (Visual C# Ch 3.5).",
       "explanation": "With an included allowance of 150 km per day, freeKms is calculated as days * 150m (Visual C# Ch 3.5).",
-      "distractorRationale": "Options other than \"decimal freeKms = days * 150m;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -15050,7 +15050,7 @@
       "ans": 1,
       "exp": "Excess kilometers = 500 km - 300 km = 200 km. At R3.50/km, the excess surcharge is 200 * R3.50 = R700.00.",
       "explanation": "Excess kilometers = 500 km - 300 km = 200 km. At R3.50/km, the excess surcharge is 200 * R3.50 = R700.00.",
-      "distractorRationale": "Options other than \"R 700.00\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -15092,7 +15092,7 @@
       "ans": 2,
       "exp": "CheckBox controls provide a boolean Checked property. At R80.00 per day: if (chkGps.Checked) total += days * 80m; (Visual C# Ch 4.10).",
       "explanation": "CheckBox controls provide a boolean Checked property. At R80.00 per day: if (chkGps.Checked) total += days * 80m; (Visual C# Ch 4.10).",
-      "distractorRationale": "Options other than \"if (chkGps.Checked) { total += days * 80m; }\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -15133,7 +15133,7 @@
       "ans": 3,
       "exp": "The \"C\" or \"c\" format specifier formats a numeric value as currency including currency symbols (R), thousands separators, and two decimal places (Visual C# Ch 3.5).",
       "explanation": "The \"C\" or \"c\" format specifier formats a numeric value as currency including currency symbols (R), thousands separators, and two decimal places (Visual C# Ch 3.5).",
-      "distractorRationale": "Options other than \"lblTotalDue.Text = totalDue.ToString(\"C\");\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -15175,7 +15175,7 @@
       "ans": 0,
       "exp": "Standard Windows Forms event handler signatures accept (object sender, EventArgs e) and return void (Visual C# Ch 2.4).",
       "explanation": "Standard Windows Forms event handler signatures accept (object sender, EventArgs e) and return void (Visual C# Ch 2.4).",
-      "distractorRationale": "Options other than \"private void btnClear_Click(object sender, EventArgs e)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -15217,7 +15217,7 @@
       "ans": 1,
       "exp": "Proper form reset clears all input TextBoxes, resets the default radio button (Sedan), unchecks optional CheckBoxes, clears output labels and ListBoxes, and restores focus to txtDays (Visual C# Ch 2 & Ch 3).",
       "explanation": "Proper form reset clears all input TextBoxes, resets the default radio button (Sedan), unchecks optional CheckBoxes, clears output labels and ListBoxes, and restores focus to txtDays (Visual C# Ch 2 & Ch 3).",
-      "distractorRationale": "Options other than \"txtDays.Clear(); txtKms.Clear(); rdoSedan.Checked = true; ch\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -15259,7 +15259,7 @@
       "ans": 2,
       "exp": "'this.Close();' closes the current form instance and releases its Windows resources (Visual C# Ch 2.4).",
       "explanation": "'this.Close();' closes the current form instance and releases its Windows resources (Visual C# Ch 2.4).",
-      "distractorRationale": "Options other than \"this.Close();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -15301,7 +15301,7 @@
       "ans": 3,
       "exp": "Validating days <= 0 with an informative MessageBox, setting focus, selecting all text, and executing 'return;' prevents invalid calculations from executing (Visual C# Ch 4.9).",
       "explanation": "Validating days <= 0 with an informative MessageBox, setting focus, selecting all text, and executing 'return;' prevents invalid calculations from executing (Visual C# Ch 4.9).",
-      "distractorRationale": "Options other than \"if (days <= 0) { MessageBox.Show(\"Rental days must be greate\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -15343,7 +15343,7 @@
       "ans": 0,
       "exp": "TryParse returns false when the string is empty or contains non-numeric text, safely preventing unhandled runtime conversion crashes (Visual C# Ch 4.9).",
       "explanation": "TryParse returns false when the string is empty or contains non-numeric text, safely preventing unhandled runtime conversion crashes (Visual C# Ch 4.9).",
-      "distractorRationale": "Options other than \"false, preventing an unhandled FormatException crash\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_tryparse",
         "def_parse_methods",
@@ -15385,7 +15385,7 @@
       "ans": 1,
       "exp": "Named constants (const) replace magic numbers with descriptive identifiers, enhancing maintainability and readability (Visual C# Ch 3.6).",
       "explanation": "Named constants (const) replace magic numbers with descriptive identifiers, enhancing maintainability and readability (Visual C# Ch 3.6).",
-      "distractorRationale": "Options other than \"To prevent magic numbers, improve code readability, and allo\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -15427,7 +15427,7 @@
       "ans": 2,
       "exp": "ListBox items are added via the collection method 'lstReceipt.Items.Add(...)'. The .Text property only refers to the currently selected item (Visual C# Ch 4.11).",
       "explanation": "ListBox items are added via the collection method 'lstReceipt.Items.Add(...)'. The .Text property only refers to the currently selected item (Visual C# Ch 4.11).",
-      "distractorRationale": "Options other than \"lstReceipt.Items.Add(\"Base Rental: \" + baseCost.ToString(\"C\"\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -15469,7 +15469,7 @@
       "ans": 3,
       "exp": "Shneiderman's Rule 6 states that actions should be reversible to relieve user anxiety and prevent accidental work loss upon destructive operations like exiting (Shneiderman Ch 2).",
       "explanation": "Shneiderman's Rule 6 states that actions should be reversible to relieve user anxiety and prevent accidental work loss upon destructive operations like exiting (Shneiderman Ch 2).",
-      "distractorRationale": "Options other than \"Rule 6: Permit easy reversal of actions (and error preventio\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_eight_golden_rules",
         "def_informative_feedback",
@@ -15511,7 +15511,7 @@
       "ans": 0,
       "exp": "Standard NWU Hungarian naming conventions require 'txt' prefix followed by PascalCase descriptor: txtCredits (Visual C# Ch 2).",
       "explanation": "Standard NWU Hungarian naming conventions require 'txt' prefix followed by PascalCase descriptor: txtCredits (Visual C# Ch 2).",
-      "distractorRationale": "Options other than \"txtCredits\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -15553,7 +15553,7 @@
       "ans": 1,
       "exp": "At R850.00 per credit for Natural & Agricultural Sciences, 12 credits * R850.00 = R10,200.00.",
       "explanation": "At R850.00 per credit for Natural & Agricultural Sciences, 12 credits * R850.00 = R10,200.00.",
-      "distractorRationale": "Options other than \"R 10,200.00\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -15595,7 +15595,7 @@
       "ans": 2,
       "exp": "RadioButtons expose the boolean Checked property, so an if-else-if chain testing rdoScience.Checked and rdoCommerce.Checked assigns the corresponding faculty levy (Visual C# Ch 4.10).",
       "explanation": "RadioButtons expose the boolean Checked property, so an if-else-if chain testing rdoScience.Checked and rdoCommerce.Checked assigns the corresponding faculty levy (Visual C# Ch 4.10).",
-      "distractorRationale": "Options other than \"if (rdoScience.Checked) levy = 2500m; else if (rdoCommerce.C\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -15636,7 +15636,7 @@
       "ans": 3,
       "exp": "A 25% discount deducts (tuition * 0.25m) from the tuition: netTuition = tuition - (tuition * 0.25m) or tuition * 0.75m (Visual C# Ch 3.4).",
       "explanation": "A 25% discount deducts (tuition * 0.25m) from the tuition: netTuition = tuition - (tuition * 0.25m) or tuition * 0.75m (Visual C# Ch 3.4).",
-      "distractorRationale": "Options other than \"netTuition = tuition - (tuition * 0.25m);\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -15678,7 +15678,7 @@
       "ans": 0,
       "exp": "A 4-month semester payment plan divides the balance into 4 monthly installments for Months 1 through 4 (Visual C# Ch 5).",
       "explanation": "A 4-month semester payment plan divides the balance into 4 monthly installments for Months 1 through 4 (Visual C# Ch 5).",
-      "distractorRationale": "Options other than \"Exactly 4 monthly installment items\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -15720,7 +15720,7 @@
       "ans": 1,
       "exp": "A for loop initializing at month = 1 with condition month <= 4 and increment month++ iterates exactly 4 times for months 1, 2, 3, 4 (Visual C# Ch 5.5).",
       "explanation": "A for loop initializing at month = 1 with condition month <= 4 and increment month++ iterates exactly 4 times for months 1, 2, 3, 4 (Visual C# Ch 5.5).",
-      "distractorRationale": "Options other than \"for (int month = 1; month <= 4; month++)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -15762,7 +15762,7 @@
       "ans": 2,
       "exp": "Items.Add() is the collection method for inserting entries into a ListBox. String interpolation with :C formats the amount as South African currency (Visual C# Ch 4.11).",
       "explanation": "Items.Add() is the collection method for inserting entries into a ListBox. String interpolation with :C formats the amount as South African currency (Visual C# Ch 4.11).",
-      "distractorRationale": "Options other than \"lstInstallments.Items.Add($\"Month {m}: {monthlyAmount:C}\");\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -15804,7 +15804,7 @@
       "ans": 3,
       "exp": "The condition credits < 1 || credits > 25 catches any value outside the valid range [1, 25], displays an error message, restores focus, and halts (Visual C# Ch 4.9).",
       "explanation": "The condition credits < 1 || credits > 25 catches any value outside the valid range [1, 25], displays an error message, restores focus, and halts (Visual C# Ch 4.9).",
-      "distractorRationale": "Options other than \"if (credits < 1 || credits > 25) { MessageBox.Show(\"Credits \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -15846,7 +15846,7 @@
       "ans": 0,
       "exp": "The Focus() method moves keyboard focus to the specified control (Visual C# Ch 3.8).",
       "explanation": "The Focus() method moves keyboard focus to the specified control (Visual C# Ch 3.8).",
-      "distractorRationale": "Options other than \"txtCredits.Focus();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -15888,7 +15888,7 @@
       "ans": 1,
       "exp": "SelectAll() highlights all text in the TextBox so typing immediately replaces the contents (Visual C# Ch 3.8).",
       "explanation": "SelectAll() highlights all text in the TextBox so typing immediately replaces the contents (Visual C# Ch 3.8).",
-      "distractorRationale": "Options other than \"txtCredits.SelectAll();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_tab_index",
         "def_focus_method",
@@ -15930,7 +15930,7 @@
       "ans": 2,
       "exp": "FormatException occurs when the format of an argument is invalid and cannot be converted to the target numeric type (Visual C# Ch 3.7).",
       "explanation": "FormatException occurs when the format of an argument is invalid and cannot be converted to the target numeric type (Visual C# Ch 3.7).",
-      "distractorRationale": "Options other than \"FormatException\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_tryparse",
         "def_parse_methods",
@@ -15972,7 +15972,7 @@
       "ans": 3,
       "exp": "The Checked property is of type bool and returns true if ticked, false otherwise (Visual C# Ch 4.10).",
       "explanation": "The Checked property is of type bool and returns true if ticked, false otherwise (Visual C# Ch 4.10).",
-      "distractorRationale": "Options other than \"chkResidence.Checked\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -16013,7 +16013,7 @@
       "ans": 0,
       "exp": "Setting Enabled = chkBursary.Checked enables the input when checked and disables it when unchecked, preventing invalid bursary entries (Visual C# Ch 4.10).",
       "explanation": "Setting Enabled = chkBursary.Checked enables the input when checked and disables it when unchecked, preventing invalid bursary entries (Visual C# Ch 4.10).",
-      "distractorRationale": "Options other than \"txtBursaryPercent.Enabled = chkBursary.Checked;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -16054,7 +16054,7 @@
       "ans": 1,
       "exp": "\"F2\" formats as fixed-point with exactly 2 decimal places without currency symbols (Visual C# Ch 3.5).",
       "explanation": "\"F2\" formats as fixed-point with exactly 2 decimal places without currency symbols (Visual C# Ch 3.5).",
-      "distractorRationale": "Options other than \"\"F2\"\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -16096,7 +16096,7 @@
       "ans": 2,
       "exp": "Calculations requiring user-initiated form processing belong in the calculate button click event handler (Visual C# Ch 2.4).",
       "explanation": "Calculations requiring user-initiated form processing belong in the calculate button click event handler (Visual C# Ch 2.4).",
-      "distractorRationale": "Options other than \"Inside the btnCalculate_Click event handler\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -16138,7 +16138,7 @@
       "ans": 3,
       "exp": "Rule 3 requires systems to provide clear, informative feedback for every user action, ensuring transparency and confidence in calculation results (Shneiderman Ch 2).",
       "explanation": "Rule 3 requires systems to provide clear, informative feedback for every user action, ensuring transparency and confidence in calculation results (Shneiderman Ch 2).",
-      "distractorRationale": "Options other than \"Rule 3: Offer informative feedback\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_if_else_nested",
         "def_switch_statement"
@@ -16179,7 +16179,7 @@
       "ans": 0,
       "exp": "NWU standard Hungarian prefix for RadioButtons is 'rdo' or 'rad' (Visual C# Ch 4.10).",
       "explanation": "NWU standard Hungarian prefix for RadioButtons is 'rdo' or 'rad' (Visual C# Ch 4.10).",
-      "distractorRationale": "Options other than \"rdoStandard (or radStandard)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -16220,7 +16220,7 @@
       "ans": 1,
       "exp": "VIP membership is R600.00/month (with free private locker) and Personal Trainer coaching is R250.00/month. Subtotal = 600 + 250 = R850.00.",
       "explanation": "VIP membership is R600.00/month (with free private locker) and Personal Trainer coaching is R250.00/month. Subtotal = 600 + 250 = R850.00.",
-      "distractorRationale": "Options other than \"R 850.00\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -16262,7 +16262,7 @@
       "ans": 2,
       "exp": "15% tax is calculated by multiplying the subtotal by 0.15m (Visual C# Ch 3.4).",
       "explanation": "15% tax is calculated by multiplying the subtotal by 0.15m (Visual C# Ch 3.4).",
-      "distractorRationale": "Options other than \"decimal vat = subtotal * 0.15m;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -16304,7 +16304,7 @@
       "ans": 3,
       "exp": "VAT = R850.00 * 0.15 = R127.50. Monthly total = R850.00 + R127.50 = R977.50.",
       "explanation": "VAT = R850.00 * 0.15 = R127.50. Monthly total = R850.00 + R127.50 = R977.50.",
-      "distractorRationale": "Options other than \"R 977.50\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -16346,7 +16346,7 @@
       "ans": 0,
       "exp": "A count-controlled loop running from m = 1 to 12 computes cumulative cost (m * monthlyTotal) and adds it to lstDebitOrders (Visual C# Ch 5.5).",
       "explanation": "A count-controlled loop running from m = 1 to 12 computes cumulative cost (m * monthlyTotal) and adds it to lstDebitOrders (Visual C# Ch 5.5).",
-      "distractorRationale": "Options other than \"for (int m = 1; m <= 12; m++) { lstDebitOrders.Items.Add($\"M\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -16388,7 +16388,7 @@
       "ans": 1,
       "exp": "Validating that at least one radio button is checked prevents unhandled null reference or zero-rate calculation errors (Visual C# Ch 4.10).",
       "explanation": "Validating that at least one radio button is checked prevents unhandled null reference or zero-rate calculation errors (Visual C# Ch 4.10).",
-      "distractorRationale": "Options other than \"Display a MessageBox prompting the user to select a tier and\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -16429,7 +16429,7 @@
       "ans": 2,
       "exp": "Logical AND with negation (!rdoStandard.Checked && !rdoPremium.Checked && !rdoVip.Checked) evaluates to true when all radio buttons in the group are unchecked (Visual C# Ch 4.6).",
       "explanation": "Logical AND with negation (!rdoStandard.Checked && !rdoPremium.Checked && !rdoVip.Checked) evaluates to true when all radio buttons in the group are unchecked (Visual C# Ch 4.6).",
-      "distractorRationale": "Options other than \"if (!rdoStandard.Checked && !rdoPremium.Checked && !rdoVip.C\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -16468,9 +16468,9 @@
       ],
       "answer": 3,
       "ans": 3,
-      "exp": "lstDebitOrders.Items.Clear() removes all existing items from the ListBox collection (Visual C# Ch 4.11).",
-      "explanation": "lstDebitOrders.Items.Clear() removes all existing items from the ListBox collection (Visual C# Ch 4.11).",
-      "distractorRationale": "Options other than \"lstDebitOrders.Items.Clear();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "LstDebitOrders.Items.Clear() removes all existing items from the ListBox collection (Visual C# Ch 4.11).",
+      "explanation": "LstDebitOrders.Items.Clear() removes all existing items from the ListBox collection (Visual C# Ch 4.11).",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -16510,9 +16510,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "decimal provides 128-bit exact representation for base-10 financial amounts, avoiding floating-point rounding errors (Visual C# Ch 3.2).",
-      "explanation": "decimal provides 128-bit exact representation for base-10 financial amounts, avoiding floating-point rounding errors (Visual C# Ch 3.2).",
-      "distractorRationale": "Options other than \"decimal offers 128-bit precision and eliminates binary float\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "Decimal provides 128-bit exact representation for base-10 financial amounts, avoiding floating-point rounding errors (Visual C# Ch 3.2).",
+      "explanation": "Decimal provides 128-bit exact representation for base-10 financial amounts, avoiding floating-point rounding errors (Visual C# Ch 3.2).",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -16554,7 +16554,7 @@
       "ans": 1,
       "exp": "\"P1\" multiplies the value by 100, appends the % symbol, and displays 1 decimal digit: \"15.0%\" (Visual C# Ch 3.5).",
       "explanation": "\"P1\" multiplies the value by 100, appends the % symbol, and displays 1 decimal digit: \"15.0%\" (Visual C# Ch 3.5).",
-      "distractorRationale": "Options other than \"(0.15m).ToString(\"P1\")\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -16596,7 +16596,7 @@
       "ans": 2,
       "exp": "BackColor sets the background color of the form or control (Visual C# Ch 3.8).",
       "explanation": "BackColor sets the background color of the form or control (Visual C# Ch 3.8).",
-      "distractorRationale": "Options other than \"BackColor\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -16638,7 +16638,7 @@
       "ans": 3,
       "exp": "ForeColor determines the text/font color displayed in Windows Forms controls (Visual C# Ch 3.8).",
       "explanation": "ForeColor determines the text/font color displayed in Windows Forms controls (Visual C# Ch 3.8).",
-      "distractorRationale": "Options other than \"ForeColor\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -16680,7 +16680,7 @@
       "ans": 0,
       "exp": "FixedSingle produces a fixed, single-line border that cannot be resized by dragging (Visual C# Ch 2.3).",
       "explanation": "FixedSingle produces a fixed, single-line border that cannot be resized by dragging (Visual C# Ch 2.3).",
-      "distractorRationale": "Options other than \"It prevents the user from resizing the window by dragging it\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_windows_form",
         "def_button_control",
@@ -16722,7 +16722,7 @@
       "ans": 1,
       "exp": "Setting StartPosition to CenterScreen positions the form in the center of the display when shown (Visual C# Ch 2.3).",
       "explanation": "Setting StartPosition to CenterScreen positions the form in the center of the display when shown (Visual C# Ch 2.3).",
-      "distractorRationale": "Options other than \"StartPosition = FormStartPosition.CenterScreen;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -16764,7 +16764,7 @@
       "ans": 2,
       "exp": "MessageBox.Show returns a DialogResult enum. Testing result == DialogResult.Yes ensures the form closes only upon user confirmation (Visual C# Ch 4.9).",
       "explanation": "MessageBox.Show returns a DialogResult enum. Testing result == DialogResult.Yes ensures the form closes only upon user confirmation (Visual C# Ch 4.9).",
-      "distractorRationale": "Options other than \"DialogResult result = MessageBox.Show(\"Are you sure you want\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -16806,7 +16806,7 @@
       "ans": 3,
       "exp": "Rule 5 focuses on designing systems to prevent user error before illegal states or crash exceptions occur (Shneiderman Ch 2).",
       "explanation": "Rule 5 focuses on designing systems to prevent user error before illegal states or crash exceptions occur (Shneiderman Ch 2).",
-      "distractorRationale": "Options other than \"Rule 5: Prevent errors\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -16848,7 +16848,7 @@
       "ans": 0,
       "exp": "Standard Hungarian notation requires 'txt' prefix followed by descriptive PascalCase identifier: txtNights (Visual C# Ch 2).",
       "explanation": "Standard Hungarian notation requires 'txt' prefix followed by descriptive PascalCase identifier: txtNights (Visual C# Ch 2).",
-      "distractorRationale": "Options other than \"txtNights\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -16890,7 +16890,7 @@
       "ans": 1,
       "exp": "At R950.00 per night for a Standard Room, 3 nights * R950.00 = R2,850.00.",
       "explanation": "At R950.00 per night for a Standard Room, 3 nights * R950.00 = R2,850.00.",
-      "distractorRationale": "Options other than \"R 2,850.00\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -16932,7 +16932,7 @@
       "ans": 2,
       "exp": "At R120.00 per guest per night, 3 nights * 2 guests * R120.00 = R720.00.",
       "explanation": "At R120.00 per guest per night, 3 nights * 2 guests * R120.00 = R720.00.",
-      "distractorRationale": "Options other than \"3 * 2 * 120m = R720.00\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -16974,7 +16974,7 @@
       "ans": 3,
       "exp": "RadioButtons in a GroupBox guarantee mutual exclusion so that selecting one room tier automatically deselects the others (Visual C# Ch 4.10).",
       "explanation": "RadioButtons in a GroupBox guarantee mutual exclusion so that selecting one room tier automatically deselects the others (Visual C# Ch 4.10).",
-      "distractorRationale": "Options other than \"RadioButtons enclosed inside a GroupBox (grpRoomType)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -17014,9 +17014,9 @@
       ],
       "answer": 0,
       "ans": 0,
-      "exp": "nights >= 1 && nights <= 30 verifies that nights falls within the inclusive interval [1, 30] (Visual C# Ch 4.6).",
-      "explanation": "nights >= 1 && nights <= 30 verifies that nights falls within the inclusive interval [1, 30] (Visual C# Ch 4.6).",
-      "distractorRationale": "Options other than \"if (nights >= 1 && nights <= 30)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "Nights >= 1 && nights <= 30 verifies that nights falls within the inclusive interval [1, 30] (Visual C# Ch 4.6).",
+      "explanation": "Nights >= 1 && nights <= 30 verifies that nights falls within the inclusive interval [1, 30] (Visual C# Ch 4.6).",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -17056,9 +17056,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "int.TryParse returns false on bad input rather than throwing an exception (Visual C# Ch 4.9).",
-      "explanation": "int.TryParse returns false on bad input rather than throwing an exception (Visual C# Ch 4.9).",
-      "distractorRationale": "Options other than \"int.TryParse(txtGuests.Text, out guests)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "Int.TryParse returns false on bad input rather than throwing an exception (Visual C# Ch 4.9).",
+      "explanation": "Int.TryParse returns false on bad input rather than throwing an exception (Visual C# Ch 4.9).",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -17098,9 +17098,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "rand.Next(min, maxExclusive) excludes the upper bound. To include 9999, the upper bound must be 10000 (Visual C# Ch 5.7).",
-      "explanation": "rand.Next(min, maxExclusive) excludes the upper bound. To include 9999, the upper bound must be 10000 (Visual C# Ch 5.7).",
-      "distractorRationale": "Options other than \"int refNo = rand.Next(1000, 10000);\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "Rand.Next(min, maxExclusive) excludes the upper bound. To include 9999, the upper bound must be 10000 (Visual C# Ch 5.7).",
+      "explanation": "Rand.Next(min, maxExclusive) excludes the upper bound. To include 9999, the upper bound must be 10000 (Visual C# Ch 5.7).",
+      "distractorRationale": "",
       "definitions": [
         "def_random_class",
         "def_form_load"
@@ -17141,7 +17141,7 @@
       "ans": 3,
       "exp": "Instantiating Random repeatedly in short intervals causes identical system clock seeds, generating identical sequences (Visual C# Ch 5.7).",
       "explanation": "Instantiating Random repeatedly in short intervals causes identical system clock seeds, generating identical sequences (Visual C# Ch 5.7).",
-      "distractorRationale": "Options other than \"To prevent rapid successive clicks from creating new generat\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_random_class",
         "def_form_load"
@@ -17182,7 +17182,7 @@
       "ans": 0,
       "exp": "ToString(\"C\") formats numbers with local currency symbol, grouping separators, and two decimal places (Visual C# Ch 3.5).",
       "explanation": "ToString(\"C\") formats numbers with local currency symbol, grouping separators, and two decimal places (Visual C# Ch 3.5).",
-      "distractorRationale": "Options other than \"lblTotalDue.Text = total.ToString(\"C\");\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_textbox_control",
         "def_parse_methods",
@@ -17224,7 +17224,7 @@
       "ans": 1,
       "exp": "The collection method lstReceipt.Items.Clear() empties all items from the control (Visual C# Ch 4.11).",
       "explanation": "The collection method lstReceipt.Items.Clear() empties all items from the control (Visual C# Ch 4.11).",
-      "distractorRationale": "Options other than \"lstReceipt.Items.Clear();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -17266,7 +17266,7 @@
       "ans": 2,
       "exp": "When no item is selected, SelectedIndex equals -1. Testing != -1 ensures a valid item is chosen (Visual C# Ch 4.11).",
       "explanation": "When no item is selected, SelectedIndex equals -1. Testing != -1 ensures a valid item is chosen (Visual C# Ch 4.11).",
-      "distractorRationale": "Options other than \"if (lstRooms.SelectedIndex != -1)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -17308,7 +17308,7 @@
       "ans": 3,
       "exp": "Accessing a collection index outside [0, Count - 1] throws ArgumentOutOfRangeException (Visual C# Ch 4.11).",
       "explanation": "Accessing a collection index outside [0, Count - 1] throws ArgumentOutOfRangeException (Visual C# Ch 4.11).",
-      "distractorRationale": "Options other than \"ArgumentOutOfRangeException\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -17350,7 +17350,7 @@
       "ans": 0,
       "exp": "Enabled = false disables interaction while keeping the control visible (Visual C# Ch 4.10).",
       "explanation": "Enabled = false disables interaction while keeping the control visible (Visual C# Ch 4.10).",
-      "distractorRationale": "Options other than \"btnConfirm.Enabled = false;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_relational_operators",
         "def_assign_vs_equal",
@@ -17392,7 +17392,7 @@
       "ans": 1,
       "exp": "Disabled controls are rendered with grayed-out text and border and do not respond to events (Visual C# Ch 4.10).",
       "explanation": "Disabled controls are rendered with grayed-out text and border and do not respond to events (Visual C# Ch 4.10).",
-      "distractorRationale": "Options other than \"The button text and border appear dimmed/grayed-out and do n\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -17434,7 +17434,7 @@
       "ans": 2,
       "exp": "Disabling destructive or premature actions until prerequisites are met proactively prevents errors (Shneiderman Ch 2).",
       "explanation": "Disabling destructive or premature actions until prerequisites are met proactively prevents errors (Shneiderman Ch 2).",
-      "distractorRationale": "Options other than \"Rule 5: Prevent errors\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -17476,7 +17476,7 @@
       "ans": 3,
       "exp": "'this.Close();' terminates the form instance safely (Visual C# Ch 2.4).",
       "explanation": "'this.Close();' terminates the form instance safely (Visual C# Ch 2.4).",
-      "distractorRationale": "Options other than \"this.Close();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -17518,7 +17518,7 @@
       "ans": 0,
       "exp": "Hungarian naming requires 'txt' prefix: txtPrice (Visual C# Ch 2).",
       "explanation": "Hungarian naming requires 'txt' prefix: txtPrice (Visual C# Ch 2).",
-      "distractorRationale": "Options other than \"txtPrice\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -17558,9 +17558,9 @@
       ],
       "answer": 1,
       "ans": 1,
-      "exp": "int.TryParse safely parses string to int without throwing FormatException (Visual C# Ch 4.9).",
-      "explanation": "int.TryParse safely parses string to int without throwing FormatException (Visual C# Ch 4.9).",
-      "distractorRationale": "Options other than \"int.TryParse(txtQuantity.Text, out qty)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "Int.TryParse safely parses string to int without throwing FormatException (Visual C# Ch 4.9).",
+      "explanation": "Int.TryParse safely parses string to int without throwing FormatException (Visual C# Ch 4.9).",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -17602,7 +17602,7 @@
       "ans": 2,
       "exp": "3 units * R150.00 = R450.00.",
       "explanation": "3 units * R150.00 = R450.00.",
-      "distractorRationale": "Options other than \"R 450.00\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -17644,7 +17644,7 @@
       "ans": 3,
       "exp": "Purchasing 10 or more units qualifies for a 15% discount: if (qty >= 10) discount = subtotal * 0.15m; (Visual C# Ch 4.5).",
       "explanation": "Purchasing 10 or more units qualifies for a 15% discount: if (qty >= 10) discount = subtotal * 0.15m; (Visual C# Ch 4.5).",
-      "distractorRationale": "Options other than \"if (qty >= 10) { discount = subtotal * 0.15m; }\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -17686,7 +17686,7 @@
       "ans": 0,
       "exp": "Explicit cast (int)(netTotal / 50m) truncates the decimal portion, returning complete R50 blocks as whole integer points (Visual C# Ch 3.3).",
       "explanation": "Explicit cast (int)(netTotal / 50m) truncates the decimal portion, returning complete R50 blocks as whole integer points (Visual C# Ch 3.3).",
-      "distractorRationale": "Options other than \"int points = (int)(netTotal / 50m);\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -17728,7 +17728,7 @@
       "ans": 1,
       "exp": "ListBox is specifically designed for holding collections of scrollable text items (Visual C# Ch 4.11).",
       "explanation": "ListBox is specifically designed for holding collections of scrollable text items (Visual C# Ch 4.11).",
-      "distractorRationale": "Options other than \"ListBox (lstReceipt)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -17768,9 +17768,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "lstReceipt.Items.Add(...) is the method for appending items to a ListBox (Visual C# Ch 4.11).",
-      "explanation": "lstReceipt.Items.Add(...) is the method for appending items to a ListBox (Visual C# Ch 4.11).",
-      "distractorRationale": "Options other than \"lstReceipt.Items.Add(item + \" x \" + qty + \" = \" + lineTotal.\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "LstReceipt.Items.Add(...) is the method for appending items to a ListBox (Visual C# Ch 4.11).",
+      "explanation": "LstReceipt.Items.Add(...) is the method for appending items to a ListBox (Visual C# Ch 4.11).",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -17812,7 +17812,7 @@
       "ans": 3,
       "exp": "Class-level field variables persist for the lifetime of the form and retain values across multiple button click events (Visual C# Ch 3.6).",
       "explanation": "Class-level field variables persist for the lifetime of the form and retain values across multiple button click events (Visual C# Ch 3.6).",
-      "distractorRationale": "Options other than \"A private class-level field variable: private decimal _sessi\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -17854,7 +17854,7 @@
       "ans": 0,
       "exp": "Local variables exist only during method execution and are deallocated upon method exit (Visual C# Ch 3.6).",
       "explanation": "Local variables exist only during method execution and are deallocated upon method exit (Visual C# Ch 3.6).",
-      "distractorRationale": "Options other than \"It is destroyed and its memory is deallocated; its value doe\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -17896,7 +17896,7 @@
       "ans": 1,
       "exp": "Reassigning _currentCartTotal = 0m resets the transaction accumulator. Declaring 'decimal _currentCartTotal = 0m;' creates a local shadow variable that fails to reset the field (Visual C# Ch 3.6).",
       "explanation": "Reassigning _currentCartTotal = 0m resets the transaction accumulator. Declaring 'decimal _currentCartTotal = 0m;' creates a local shadow variable that fails to reset the field (Visual C# Ch 3.6).",
-      "distractorRationale": "Options other than \"_currentCartTotal = 0m;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -17936,9 +17936,9 @@
       ],
       "answer": 2,
       "ans": 2,
-      "exp": "string.IsNullOrWhiteSpace checks for null, empty string (\"\"), and strings containing only whitespace characters (Visual C# Ch 4.9).",
-      "explanation": "string.IsNullOrWhiteSpace checks for null, empty string (\"\"), and strings containing only whitespace characters (Visual C# Ch 4.9).",
-      "distractorRationale": "Options other than \"if (string.IsNullOrWhiteSpace(txtItemName.Text))\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "exp": "String.IsNullOrWhiteSpace checks for null, empty string (\"\"), and strings containing only whitespace characters (Visual C# Ch 4.9).",
+      "explanation": "String.IsNullOrWhiteSpace checks for null, empty string (\"\"), and strings containing only whitespace characters (Visual C# Ch 4.9).",
+      "distractorRationale": "",
       "definitions": [
         "def_hungarian_notation",
         "def_control_name_vs_text",
@@ -17980,7 +17980,7 @@
       "ans": 3,
       "exp": "\"D5\" formats integer numbers with at least 5 digits, padding with leading zeros if necessary: \"00125\" (Visual C# Ch 3.5).",
       "explanation": "\"D5\" formats integer numbers with at least 5 digits, padding with leading zeros if necessary: \"00125\" (Visual C# Ch 3.5).",
-      "distractorRationale": "Options other than \"(125).ToString(\"D5\")\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ide",
         "def_toolbox",
@@ -18022,7 +18022,7 @@
       "ans": 0,
       "exp": "CheckBox.Checked returns a boolean (true if checked, false if unchecked) (Visual C# Ch 4.10).",
       "explanation": "CheckBox.Checked returns a boolean (true if checked, false if unchecked) (Visual C# Ch 4.10).",
-      "distractorRationale": "Options other than \"chkGoldCard.Checked\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_radiobutton_checkbox_groupbox",
         "def_if_else_nested"
@@ -18063,7 +18063,7 @@
       "ans": 1,
       "exp": "Deducting 5% leaves 95% of the balance: subtotal * 0.95m or subtotal - (subtotal * 0.05m) (Visual C# Ch 3.4).",
       "explanation": "Deducting 5% leaves 95% of the balance: subtotal * 0.95m or subtotal - (subtotal * 0.05m) (Visual C# Ch 3.4).",
-      "distractorRationale": "Options other than \"netTotal = subtotal * 0.95m;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_operator_precedence",
         "def_integer_division",
@@ -18105,7 +18105,7 @@
       "ans": 2,
       "exp": "MessageBoxButtons.YesNo and MessageBoxButtons.OKCancel provide two-option confirmation dialogs (Visual C# Ch 4.9).",
       "explanation": "MessageBoxButtons.YesNo and MessageBoxButtons.OKCancel provide two-option confirmation dialogs (Visual C# Ch 4.9).",
-      "distractorRationale": "Options other than \"MessageBoxButtons.YesNo (or MessageBoxButtons.OKCancel)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_event_driven_programming",
         "def_event_handler",
@@ -18147,7 +18147,7 @@
       "ans": 3,
       "exp": "Rule 4 states sequences of actions should be organized into groups with a beginning, middle, and end, yielding closure upon completion; Rule 3 offers informative feedback (Shneiderman Ch 2).",
       "explanation": "Rule 4 states sequences of actions should be organized into groups with a beginning, middle, and end, yielding closure upon completion; Rule 3 offers informative feedback (Shneiderman Ch 2).",
-      "distractorRationale": "Options other than \"Rule 4: Design dialogs to yield closure & Rule 3: Offer info\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_int_type",
         "def_double_type",
@@ -18174,22 +18174,22 @@
       "stem": "Which directive must be placed at the top of a C# source file to use the `StreamWriter`, `StreamReader`, and `File` classes?",
       "code": "",
       "options": [
-        "using System.IO;",
         "using System.Files;",
         "using System.Data.Streams;",
+        "using System.IO;",
         "using System.Windows.Storage;"
       ],
       "opts": [
-        "using System.IO;",
         "using System.Files;",
         "using System.Data.Streams;",
+        "using System.IO;",
         "using System.Windows.Storage;"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "The `System.IO` namespace provides the `.NET` classes required for file input and output, including `StreamWriter`, `StreamReader`, and `File`.",
       "explanation": "The `System.IO` namespace provides the `.NET` classes required for file input and output, including `StreamWriter`, `StreamReader`, and `File`.",
-      "distractorRationale": "Options other than \"using System.IO;\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18216,22 +18216,22 @@
       "stem": "What happens when `outputFile = File.CreateText(\"courses.txt\");` executes and `courses.txt` already exists on disk?",
       "code": "",
       "options": [
+        "Windows automatically renames the new file to `courses(1).txt`.",
         "A runtime exception is thrown because the file already exists.",
-        "Its existing contents are erased and replaced with a new empty text file.",
         "New data written to `outputFile` is added to the end of the existing file.",
-        "Windows automatically renames the new file to `courses(1).txt`."
+        "Its existing contents are erased and replaced with a new empty text file."
       ],
       "opts": [
+        "Windows automatically renames the new file to `courses(1).txt`.",
         "A runtime exception is thrown because the file already exists.",
-        "Its existing contents are erased and replaced with a new empty text file.",
         "New data written to `outputFile` is added to the end of the existing file.",
-        "Windows automatically renames the new file to `courses(1).txt`."
+        "Its existing contents are erased and replaced with a new empty text file."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "`File.CreateText` creates a text file with the given name; if the file already exists, its previous contents are erased. Use `File.AppendText` to preserve existing contents.",
       "explanation": "`File.CreateText` creates a text file with the given name; if the file already exists, its previous contents are erased. Use `File.AppendText` to preserve existing contents.",
-      "distractorRationale": "Options other than \"Its existing contents are erased and replaced with a new emp\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18258,22 +18258,22 @@
       "stem": "Which method opens an existing text file for writing and places new data at the end without erasing the current contents?",
       "code": "",
       "options": [
-        "File.OpenText(\"Names.txt\")",
-        "File.CreateText(\"Names.txt\")",
         "File.AppendText(\"Names.txt\")",
-        "File.WriteEnd(\"Names.txt\")"
+        "File.CreateText(\"Names.txt\")",
+        "File.WriteEnd(\"Names.txt\")",
+        "File.OpenText(\"Names.txt\")"
       ],
       "opts": [
-        "File.OpenText(\"Names.txt\")",
-        "File.CreateText(\"Names.txt\")",
         "File.AppendText(\"Names.txt\")",
-        "File.WriteEnd(\"Names.txt\")"
+        "File.CreateText(\"Names.txt\")",
+        "File.WriteEnd(\"Names.txt\")",
+        "File.OpenText(\"Names.txt\")"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "`File.AppendText` opens a text file (or creates it if it does not exist) and returns a `StreamWriter` that appends new data to the end of the file.",
       "explanation": "`File.AppendText` opens a text file (or creates it if it does not exist) and returns a `StreamWriter` that appends new data to the end of the file.",
-      "distractorRationale": "Options other than \"File.AppendText(\"Names.txt\")\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -18300,22 +18300,22 @@
       "stem": "How does `outputFile.WriteLine(\"Calculus I\");` differ from `outputFile.Write(\"Calculus I\");`?",
       "code": "",
       "options": [
-        "`WriteLine` erases the previous line before writing, whereas `Write` appends.",
-        "`Write` only accepts numeric values, whereas `WriteLine` accepts strings.",
         "`WriteLine` closes the file automatically after writing, whereas `Write` keeps it open.",
-        "`WriteLine` appends a newline character after the data, whereas `Write` does not."
+        "`WriteLine` appends a newline character after the data, whereas `Write` does not.",
+        "`WriteLine` erases the previous line before writing, whereas `Write` appends.",
+        "`Write` only accepts numeric values, whereas `WriteLine` accepts strings."
       ],
       "opts": [
-        "`WriteLine` erases the previous line before writing, whereas `Write` appends.",
-        "`Write` only accepts numeric values, whereas `WriteLine` accepts strings.",
         "`WriteLine` closes the file automatically after writing, whereas `Write` keeps it open.",
-        "`WriteLine` appends a newline character after the data, whereas `Write` does not."
+        "`WriteLine` appends a newline character after the data, whereas `Write` does not.",
+        "`WriteLine` erases the previous line before writing, whereas `Write` appends.",
+        "`Write` only accepts numeric values, whereas `WriteLine` accepts strings."
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "`StreamWriter.WriteLine` writes the data to the file followed by a newline character, whereas `StreamWriter.Write` writes the item without a trailing newline.",
       "explanation": "`StreamWriter.WriteLine` writes the data to the file followed by a newline character, whereas `StreamWriter.Write` writes the item without a trailing newline.",
-      "distractorRationale": "Options other than \"`WriteLine` appends a newline character after the data, wher\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18342,22 +18342,22 @@
       "stem": "Which statement properly uses a verbatim string literal to create a file at `C:\\Users\\chris\\Names.txt` without escaping backslashes?",
       "code": "",
       "options": [
-        "outputFile = File.CreateText(@\"C:\\Users\\chris\\Names.txt\");",
-        "outputFile = File.CreateText($\"C:\\Users\\chris\\Names.txt\");",
         "outputFile = File.CreateText(#\"C:\\Users\\chris\\Names.txt\");",
-        "outputFile = File.CreateText(&\"C:\\Users\\chris\\Names.txt\");"
+        "outputFile = File.CreateText(&\"C:\\Users\\chris\\Names.txt\");",
+        "outputFile = File.CreateText(@\"C:\\Users\\chris\\Names.txt\");",
+        "outputFile = File.CreateText($\"C:\\Users\\chris\\Names.txt\");"
       ],
       "opts": [
-        "outputFile = File.CreateText(@\"C:\\Users\\chris\\Names.txt\");",
-        "outputFile = File.CreateText($\"C:\\Users\\chris\\Names.txt\");",
         "outputFile = File.CreateText(#\"C:\\Users\\chris\\Names.txt\");",
-        "outputFile = File.CreateText(&\"C:\\Users\\chris\\Names.txt\");"
+        "outputFile = File.CreateText(&\"C:\\Users\\chris\\Names.txt\");",
+        "outputFile = File.CreateText(@\"C:\\Users\\chris\\Names.txt\");",
+        "outputFile = File.CreateText($\"C:\\Users\\chris\\Names.txt\");"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Prefixing a string literal with `@` tells the C# compiler to treat backslashes literally as path separators rather than escape sequences.",
       "explanation": "Prefixing a string literal with `@` tells the C# compiler to treat backslashes literally as path separators rather than escape sequences.",
-      "distractorRationale": "Options other than \"outputFile = File.CreateText(@\"C:\\Users\\chris\\Names.txt\");\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18385,21 +18385,21 @@
       "code": "",
       "options": [
         "inputFile = File.ReadText(\"students.txt\");",
-        "inputFile = File.OpenText(\"students.txt\");",
         "inputFile = File.CreateText(\"students.txt\");",
-        "inputFile = new File(\"students.txt\");"
+        "inputFile = new File(\"students.txt\");",
+        "inputFile = File.OpenText(\"students.txt\");"
       ],
       "opts": [
         "inputFile = File.ReadText(\"students.txt\");",
-        "inputFile = File.OpenText(\"students.txt\");",
         "inputFile = File.CreateText(\"students.txt\");",
-        "inputFile = new File(\"students.txt\");"
+        "inputFile = new File(\"students.txt\");",
+        "inputFile = File.OpenText(\"students.txt\");"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "`File.OpenText(\"students.txt\")` opens an existing UTF-8 text file for reading and returns a `StreamReader` reference.",
       "explanation": "`File.OpenText(\"students.txt\")` opens an existing UTF-8 text file for reading and returns a `StreamReader` reference.",
-      "distractorRationale": "Options other than \"inputFile = File.OpenText(\"students.txt\");\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18426,22 +18426,22 @@
       "stem": "Which `while` loop header reads every line from a `StreamReader` named `inputFile` until the end of the file is reached?",
       "code": "",
       "options": [
-        "while (inputFile.EndOfStream == true)",
-        "while (inputFile.ReadLine() == false)",
         "while (!inputFile.EndOfStream)",
-        "while (inputFile.Length > 0)"
+        "while (inputFile.Length > 0)",
+        "while (inputFile.EndOfStream == true)",
+        "while (inputFile.ReadLine() == false)"
       ],
       "opts": [
-        "while (inputFile.EndOfStream == true)",
-        "while (inputFile.ReadLine() == false)",
         "while (!inputFile.EndOfStream)",
-        "while (inputFile.Length > 0)"
+        "while (inputFile.Length > 0)",
+        "while (inputFile.EndOfStream == true)",
+        "while (inputFile.ReadLine() == false)"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "`StreamReader.EndOfStream` is a `bool` property that is `false` while unread data remains and becomes `true` at the end of the file. Therefore `while (!inputFile.EndOfStream)` (or `while (inputFile.EndOfStream == false)`) loops until all lines are read.",
       "explanation": "`StreamReader.EndOfStream` is a `bool` property that is `false` while unread data remains and becomes `true` at the end of the file. Therefore `while (!inputFile.EndOfStream)` (or `while (inputFile.EndOfStream == false)`) loops until all lines are read.",
-      "distractorRationale": "Options other than \"while (!inputFile.EndOfStream)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18468,22 +18468,22 @@
       "stem": "Which `StreamReader` method reads a complete line of characters from the current stream and returns it as a `string`?",
       "code": "",
       "options": [
-        "inputFile.Read()",
-        "inputFile.GetLine()",
         "inputFile.NextLine()",
-        "inputFile.ReadLine()"
+        "inputFile.ReadLine()",
+        "inputFile.Read()",
+        "inputFile.GetLine()"
       ],
       "opts": [
-        "inputFile.Read()",
-        "inputFile.GetLine()",
         "inputFile.NextLine()",
-        "inputFile.ReadLine()"
+        "inputFile.ReadLine()",
+        "inputFile.Read()",
+        "inputFile.GetLine()"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "`StreamReader.ReadLine()` reads a line of characters from the current stream and returns the data as a `string`, whereas `Read()` reads only the next character.",
       "explanation": "`StreamReader.ReadLine()` reads a line of characters from the current stream and returns the data as a `string`, whereas `Read()` reads only the next character.",
-      "distractorRationale": "Options other than \"inputFile.ReadLine()\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -18510,22 +18510,22 @@
       "stem": "When you add an `OpenFileDialog` or `SaveFileDialog` control to a form in Visual Studio, where does it appear at design time?",
       "code": "",
       "options": [
-        "In the component tray at the bottom of the Designer window.",
-        "In the top-left corner of the form's title bar.",
         "Inside the Solution Explorer folder tree.",
-        "Directly in the center of the Windows Form canvas."
+        "Directly in the center of the Windows Form canvas.",
+        "In the component tray at the bottom of the Designer window.",
+        "In the top-left corner of the form's title bar."
       ],
       "opts": [
-        "In the component tray at the bottom of the Designer window.",
-        "In the top-left corner of the form's title bar.",
         "Inside the Solution Explorer folder tree.",
-        "Directly in the center of the Windows Form canvas."
+        "Directly in the center of the Windows Form canvas.",
+        "In the component tray at the bottom of the Designer window.",
+        "In the top-left corner of the form's title bar."
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Because `OpenFileDialog` and `SaveFileDialog` are invisible controls that do not appear on the form surface at runtime, Visual Studio places them in the component tray below the Form Designer.",
       "explanation": "Because `OpenFileDialog` and `SaveFileDialog` are invisible controls that do not appear on the form surface at runtime, Visual Studio places them in the component tray below the Form Designer.",
-      "distractorRationale": "Options other than \"In the component tray at the bottom of the Designer window.\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_file_dialogs",
         "def_dialog_result",
@@ -18552,22 +18552,22 @@
       "stem": "Which `if` statement verifies that the user clicked the **Open** button (rather than **Cancel**) in an `OpenFileDialog` named `openFile`?",
       "code": "",
       "options": [
-        "if (openFile.ShowDialog() == true)",
-        "if (openFile.ShowDialog() == DialogResult.OK)",
         "if (openFile.Clicked == DialogResult.Open)",
-        "if (openFile.FileName != \"\")"
+        "if (openFile.FileName != \"\")",
+        "if (openFile.ShowDialog() == true)",
+        "if (openFile.ShowDialog() == DialogResult.OK)"
       ],
       "opts": [
-        "if (openFile.ShowDialog() == true)",
-        "if (openFile.ShowDialog() == DialogResult.OK)",
         "if (openFile.Clicked == DialogResult.Open)",
-        "if (openFile.FileName != \"\")"
+        "if (openFile.FileName != \"\")",
+        "if (openFile.ShowDialog() == true)",
+        "if (openFile.ShowDialog() == DialogResult.OK)"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "`ShowDialog()` displays the dialog box and returns `DialogResult.OK` if the user clicks Open/Save, or `DialogResult.Cancel` if the user clicks Cancel.",
       "explanation": "`ShowDialog()` displays the dialog box and returns `DialogResult.OK` if the user clicks Open/Save, or `DialogResult.Cancel` if the user clicks Cancel.",
-      "distractorRationale": "Options other than \"if (openFile.ShowDialog() == DialogResult.OK)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_file_dialogs",
         "def_dialog_result",
@@ -18594,22 +18594,22 @@
       "stem": "After `openFile.ShowDialog()` returns `DialogResult.OK`, which property of `openFile` holds the selected file's path and name?",
       "code": "",
       "options": [
-        "openFile.Path",
-        "openFile.SelectedFile",
         "openFile.FileName",
-        "openFile.Text"
+        "openFile.Text",
+        "openFile.Path",
+        "openFile.SelectedFile"
       ],
       "opts": [
-        "openFile.Path",
-        "openFile.SelectedFile",
         "openFile.FileName",
-        "openFile.Text"
+        "openFile.Text",
+        "openFile.Path",
+        "openFile.SelectedFile"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "When a user selects a file in an `OpenFileDialog` or `SaveFileDialog`, the full path and filename are stored in the control's `Filename` (or `FileName`) property.",
       "explanation": "When a user selects a file in an `OpenFileDialog` or `SaveFileDialog`, the full path and filename are stored in the control's `Filename` (or `FileName`) property.",
-      "distractorRationale": "Options other than \"openFile.FileName\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_file_dialogs",
         "def_dialog_result",
@@ -18636,22 +18636,22 @@
       "stem": "Which property of an `OpenFileDialog` control specifies the folder that is initially displayed when the dialog opens?",
       "code": "",
       "options": [
-        "openFile.StartFolder",
-        "openFile.DefaultPath",
         "openFile.DirectoryName",
-        "openFile.InitialDirectory"
+        "openFile.InitialDirectory",
+        "openFile.StartFolder",
+        "openFile.DefaultPath"
       ],
       "opts": [
-        "openFile.StartFolder",
-        "openFile.DefaultPath",
         "openFile.DirectoryName",
-        "openFile.InitialDirectory"
+        "openFile.InitialDirectory",
+        "openFile.StartFolder",
+        "openFile.DefaultPath"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "The `InitialDirectory` property (e.g., `openFile.InitialDirectory = @\"C:\\Data\";`) sets the initial directory displayed by the file dialog box.",
       "explanation": "The `InitialDirectory` property (e.g., `openFile.InitialDirectory = @\"C:\\Data\";`) sets the initial directory displayed by the file dialog box.",
-      "distractorRationale": "Options other than \"openFile.InitialDirectory\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_file_dialogs",
         "def_dialog_result",
@@ -18678,22 +18678,22 @@
       "stem": "Given `Random rand = new Random();`, what is the exact range of possible integers returned by `rand.Next(10);`?",
       "code": "",
       "options": [
-        "0 through 9 inclusive",
         "1 through 10 inclusive",
         "0 through 10 inclusive",
+        "0 through 9 inclusive",
         "1 through 9 inclusive"
       ],
       "opts": [
-        "0 through 9 inclusive",
         "1 through 10 inclusive",
         "0 through 10 inclusive",
+        "0 through 9 inclusive",
         "1 through 9 inclusive"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "When passing a single upper bound `max` to `rand.Next(max)`, the generated integer ranges from `0` up to `max - 1`. Thus `rand.Next(10)` produces a number from `0` to `9`.",
       "explanation": "When passing a single upper bound `max` to `rand.Next(max)`, the generated integer ranges from `0` up to `max - 1`. Thus `rand.Next(10)` produces a number from `0` to `9`.",
-      "distractorRationale": "Options other than \"0 through 9 inclusive\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_random_class",
         "def_form_load"
@@ -18719,22 +18719,22 @@
       "stem": "Given `Random rand = new Random();`, what type and range of value does `rand.NextDouble()` return?",
       "code": "",
       "options": [
+        "A `double` floating-point number between `-1.0` and `1.0`.",
         "An `int` between `0` and `100`.",
-        "A `double` floating-point number between `0.0` and `1.0`.",
         "A `decimal` currency value between `0.0m` and `10.0m`.",
-        "A `double` floating-point number between `-1.0` and `1.0`."
+        "A `double` floating-point number between `0.0` and `1.0`."
       ],
       "opts": [
+        "A `double` floating-point number between `-1.0` and `1.0`.",
         "An `int` between `0` and `100`.",
-        "A `double` floating-point number between `0.0` and `1.0`.",
         "A `decimal` currency value between `0.0m` and `10.0m`.",
-        "A `double` floating-point number between `-1.0` and `1.0`."
+        "A `double` floating-point number between `0.0` and `1.0`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "`Random.NextDouble()` returns a random `double` floating-point number in the range `0.0` up to (but not including) `1.0`.",
       "explanation": "`Random.NextDouble()` returns a random `double` floating-point number in the range `0.0` up to (but not including) `1.0`.",
-      "distractorRationale": "Options other than \"A `double` floating-point number between `0.0` and `1.0`.\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_random_class",
         "def_form_load"
@@ -18760,22 +18760,22 @@
       "stem": "Given `Random rand = new Random();`, which expression generates a random integer from `1` to `6` inclusive?",
       "code": "",
       "options": [
+        "rand.Next(1, 7)",
         "rand.Next(6)",
         "rand.Next(1, 6)",
-        "rand.Next(1, 7)",
         "rand.Next(0, 6)"
       ],
       "opts": [
+        "rand.Next(1, 7)",
         "rand.Next(6)",
         "rand.Next(1, 6)",
-        "rand.Next(1, 7)",
         "rand.Next(0, 6)"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "In `rand.Next(min, max)`, the lower bound `min` is inclusive and the upper bound `max` is exclusive (or `rand.Next(6) + 1`). Therefore `rand.Next(1, 7)` yields integers from `1` through `6`.",
       "explanation": "In `rand.Next(min, max)`, the lower bound `min` is inclusive and the upper bound `max` is exclusive (or `rand.Next(6) + 1`). Therefore `rand.Next(1, 7)` yields integers from `1` through `6`.",
-      "distractorRationale": "Options other than \"rand.Next(1, 7)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_random_class",
         "def_form_load"
@@ -18802,21 +18802,21 @@
       "code": "",
       "options": [
         "Every time the user clicks any button on the form.",
+        "Automatically when the form is loaded into memory at startup before it is displayed.",
         "Only when the user closes the form.",
-        "Whenever a text box on the form receives keyboard focus.",
-        "Automatically when the form is loaded into memory at startup before it is displayed."
+        "Whenever a text box on the form receives keyboard focus."
       ],
       "opts": [
         "Every time the user clicks any button on the form.",
+        "Automatically when the form is loaded into memory at startup before it is displayed.",
         "Only when the user closes the form.",
-        "Whenever a text box on the form receives keyboard focus.",
-        "Automatically when the form is loaded into memory at startup before it is displayed."
+        "Whenever a text box on the form receives keyboard focus."
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "When a Windows Forms application launches, the form is loaded into memory and the `Load` event fires before the form becomes visible on screen.",
       "explanation": "When a Windows Forms application launches, the form is loaded into memory and the `Load` event fires before the form becomes visible on screen.",
-      "distractorRationale": "Options other than \"Automatically when the form is loaded into memory at startup\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_random_class",
         "def_form_load"
@@ -18842,22 +18842,22 @@
       "stem": "What is the last value displayed by `MessageBox.Show(count.ToString());` in `for (int count = 10; count >= 0; count--)`?",
       "code": "",
       "options": [
-        "0",
-        "1",
         "10",
-        "-1"
+        "-1",
+        "0",
+        "1"
       ],
       "opts": [
-        "0",
-        "1",
         "10",
-        "-1"
+        "-1",
+        "0",
+        "1"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "The loop starts at `10` and decrements `count` by `1` after each iteration while `count >= 0` is true. The last iteration executes with `count == 0`, after which `count` becomes `-1` and the loop terminates.",
       "explanation": "The loop starts at `10` and decrements `count` by `1` after each iteration while `count >= 0` is true. The last iteration executes with `count == 0`, after which `count` becomes `-1` and the loop terminates.",
-      "distractorRationale": "Options other than \"0\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_increment_decrement",
         "def_accumulators_counters",
@@ -18885,21 +18885,21 @@
       "code": "",
       "options": [
         "3 times",
-        "4 times",
         "30 times",
-        "31 times"
+        "31 times",
+        "4 times"
       ],
       "opts": [
         "3 times",
-        "4 times",
         "30 times",
-        "31 times"
+        "31 times",
+        "4 times"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "`count` takes the values `0`, `10`, `20`, and `30` — executing the loop body 4 times before `count` becomes `40` and fails `count <= 30`.",
       "explanation": "`count` takes the values `0`, `10`, `20`, and `30` — executing the loop body 4 times before `count` becomes `40` and fails `count <= 30`.",
-      "distractorRationale": "Options other than \"4 times\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -18926,22 +18926,22 @@
       "stem": "What are the three steps that every program must follow when working with a file for data storage?",
       "code": "",
       "options": [
-        "Compile the file, execute the file, delete the file.",
-        "Declare the file, format the file, print the file.",
         "Open the file, process the file, close the file.",
-        "Copy the file, parse the file, archive the file."
+        "Declare the file, format the file, print the file.",
+        "Copy the file, parse the file, archive the file.",
+        "Compile the file, execute the file, delete the file."
       ],
       "opts": [
-        "Compile the file, execute the file, delete the file.",
-        "Declare the file, format the file, print the file.",
         "Open the file, process the file, close the file.",
-        "Copy the file, parse the file, archive the file."
+        "Declare the file, format the file, print the file.",
+        "Copy the file, parse the file, archive the file.",
+        "Compile the file, execute the file, delete the file."
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "File processing always requires three steps: (1) Open the file to create a connection, (2) Process the file by reading or writing data, and (3) Close the file to disconnect it from the program.",
       "explanation": "File processing always requires three steps: (1) Open the file to create a connection, (2) Process the file by reading or writing data, and (3) Close the file to disconnect it from the program.",
-      "distractorRationale": "Options other than \"Open the file, process the file, close the file.\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_while_loop",
         "def_do_while_loop",
@@ -18968,22 +18968,22 @@
       "stem": "Why is it important to call `outputFile.Close();` after writing data to a `StreamWriter`?",
       "code": "",
       "options": [
-        "It automatically deletes temporary variables from the form.",
-        "It converts the text file into an encrypted binary file.",
         "It clears all items from the form's ListBox control.",
-        "It flushes any buffered data to disk and disconnects the file from the program."
+        "It flushes any buffered data to disk and disconnects the file from the program.",
+        "It automatically deletes temporary variables from the form.",
+        "It converts the text file into an encrypted binary file."
       ],
       "opts": [
-        "It automatically deletes temporary variables from the form.",
-        "It converts the text file into an encrypted binary file.",
         "It clears all items from the form's ListBox control.",
-        "It flushes any buffered data to disk and disconnects the file from the program."
+        "It flushes any buffered data to disk and disconnects the file from the program.",
+        "It automatically deletes temporary variables from the form.",
+        "It converts the text file into an encrypted binary file."
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 1,
+      "ans": 1,
       "exp": "Failing to call `outputFile.Close()` can leave unwritten data sitting in the memory buffer, resulting in an incomplete or locked file on disk.",
       "explanation": "Failing to call `outputFile.Close()` can leave unwritten data sitting in the memory buffer, resulting in an incomplete or locked file on disk.",
-      "distractorRationale": "Options other than \"It flushes any buffered data to disk and disconnects the fil\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_streamwriter",
         "def_streamreader",
@@ -19011,21 +19011,21 @@
       "code": "",
       "options": [
         "A `void` method performs an action without returning a value, whereas a value-returning method returns a value of its declared type to the caller.",
+        "A `void` method must be declared `public`, whereas a value-returning method must be declared `private`.",
         "A `void` method cannot accept any parameters, whereas a value-returning method must accept at least one parameter.",
-        "A `void` method can only be called once per program run, whereas a value-returning method can be called inside loops.",
-        "A `void` method must be declared `public`, whereas a value-returning method must be declared `private`."
+        "A `void` method can only be called once per program run, whereas a value-returning method can be called inside loops."
       ],
       "opts": [
         "A `void` method performs an action without returning a value, whereas a value-returning method returns a value of its declared type to the caller.",
+        "A `void` method must be declared `public`, whereas a value-returning method must be declared `private`.",
         "A `void` method cannot accept any parameters, whereas a value-returning method must accept at least one parameter.",
-        "A `void` method can only be called once per program run, whereas a value-returning method can be called inside loops.",
-        "A `void` method must be declared `public`, whereas a value-returning method must be declared `private`."
+        "A `void` method can only be called once per program run, whereas a value-returning method can be called inside loops."
       ],
       "answer": 0,
       "ans": 0,
       "exp": "A `void` method executes statements and returns nothing, whereas a value-returning method declares a return type (`int`, `string`, `bool`, etc.) and uses a `return` statement to send a result back to the calling statement.",
       "explanation": "A `void` method executes statements and returns nothing, whereas a value-returning method declares a return type (`int`, `string`, `bool`, etc.) and uses a `return` statement to send a result back to the calling statement.",
-      "distractorRationale": "Options other than \"A `void` method performs an action without returning a value\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
@@ -19051,22 +19051,22 @@
       "stem": "In C#, what is the distinction between a **parameter** and an **argument**?",
       "code": "",
       "options": [
-        "A parameter is always a `string`, whereas an argument is always an `int`.",
+        "Parameters are used only with `void` methods, whereas arguments are used only with value-returning methods.",
         "A parameter is the variable declared in the method header, whereas an argument is the value or variable passed when the method is called.",
-        "An argument is declared in the method header, whereas a parameter is passed inside the method call.",
-        "Parameters are used only with `void` methods, whereas arguments are used only with value-returning methods."
+        "A parameter is always a `string`, whereas an argument is always an `int`.",
+        "An argument is declared in the method header, whereas a parameter is passed inside the method call."
       ],
       "opts": [
-        "A parameter is always a `string`, whereas an argument is always an `int`.",
+        "Parameters are used only with `void` methods, whereas arguments are used only with value-returning methods.",
         "A parameter is the variable declared in the method header, whereas an argument is the value or variable passed when the method is called.",
-        "An argument is declared in the method header, whereas a parameter is passed inside the method call.",
-        "Parameters are used only with `void` methods, whereas arguments are used only with value-returning methods."
+        "A parameter is always a `string`, whereas an argument is always an `int`.",
+        "An argument is declared in the method header, whereas a parameter is passed inside the method call."
       ],
       "answer": 1,
       "ans": 1,
       "exp": "A parameter is the receiving variable declared inside the method header's parentheses (e.g., `int totalSeconds`), whereas an argument is the actual value or variable supplied in the method call (e.g., `FormatTime(65)`).",
       "explanation": "A parameter is the receiving variable declared inside the method header's parentheses (e.g., `int totalSeconds`), whereas an argument is the actual value or variable supplied in the method call (e.g., `FormatTime(65)`).",
-      "distractorRationale": "Options other than \"A parameter is the variable declared in the method header, w\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_parameters_vs_arguments",
         "def_pass_by_value"
@@ -19107,7 +19107,7 @@
       "ans": 2,
       "exp": "When an argument is passed by value (without `ref` or `out`), the parameter `val` receives a separate copy of `num`. Modifying `val` inside `DoubleValue` has no effect on `num` in the caller.",
       "explanation": "When an argument is passed by value (without `ref` or `out`), the parameter `val` receives a separate copy of `num`. Modifying `val` inside `DoubleValue` has no effect on `num` in the caller.",
-      "distractorRationale": "Options other than \"`lblOut` displays `10` because `num` was passed by value (on\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
@@ -19148,7 +19148,7 @@
       "ans": 3,
       "exp": "Because `amount` is a `ref` parameter, it refers directly to the caller's `total` variable in memory. Adding `25` to `amount` changes `total` from `100` to `125`.",
       "explanation": "Because `amount` is a `ref` parameter, it refers directly to the caller's `total` variable in memory. Adding `25` to `amount` changes `total` from `100` to `125`.",
-      "distractorRationale": "Options other than \"125\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19176,21 +19176,21 @@
       "code": "",
       "options": [
         "A `ref` argument must be initialized before the call; an `out` argument does not need to be initialized before the call, but the method must assign it a value before returning.",
-        "An `out` argument must be initialized before the call; a `ref` argument cannot be initialized before the call.",
         "Neither `ref` nor `out` arguments need to be initialized or assigned inside the method.",
-        "`ref` is only required in the method header, whereas `out` is only required in the method call."
+        "`ref` is only required in the method header, whereas `out` is only required in the method call.",
+        "An `out` argument must be initialized before the call; a `ref` argument cannot be initialized before the call."
       ],
       "opts": [
         "A `ref` argument must be initialized before the call; an `out` argument does not need to be initialized before the call, but the method must assign it a value before returning.",
-        "An `out` argument must be initialized before the call; a `ref` argument cannot be initialized before the call.",
         "Neither `ref` nor `out` arguments need to be initialized or assigned inside the method.",
-        "`ref` is only required in the method header, whereas `out` is only required in the method call."
+        "`ref` is only required in the method header, whereas `out` is only required in the method call.",
+        "An `out` argument must be initialized before the call; a `ref` argument cannot be initialized before the call."
       ],
       "answer": 0,
       "ans": 0,
       "exp": "A variable passed as a `ref` argument must be assigned a value before calling the method. A variable passed as an `out` argument need not be initialized prior to the call, but the called method is required by the compiler (`CS0177`) to assign it a value before returning.",
       "explanation": "A variable passed as a `ref` argument must be assigned a value before calling the method. A variable passed as an `out` argument need not be initialized prior to the call, but the called method is required by the compiler (`CS0177`) to assign it a value before returning.",
-      "distractorRationale": "Options other than \"A `ref` argument must be initialized before the call; an `ou\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19217,22 +19217,22 @@
       "stem": "Given the method header `private void RecordLap(int seconds, ref int fastest, ref int total)`, which call statement is valid?",
       "code": "",
       "options": [
-        "RecordLap(enteredSeconds, fastestSeconds, totalSeconds);",
-        "RecordLap(enteredSeconds, ref fastestSeconds, ref totalSeconds);",
         "RecordLap(ref enteredSeconds, ref fastestSeconds, ref totalSeconds);",
-        "RecordLap(int enteredSeconds, ref int fastestSeconds, ref int totalSeconds);"
+        "RecordLap(enteredSeconds, ref fastestSeconds, ref totalSeconds);",
+        "RecordLap(int enteredSeconds, ref int fastestSeconds, ref int totalSeconds);",
+        "RecordLap(enteredSeconds, fastestSeconds, totalSeconds);"
       ],
       "opts": [
-        "RecordLap(enteredSeconds, fastestSeconds, totalSeconds);",
-        "RecordLap(enteredSeconds, ref fastestSeconds, ref totalSeconds);",
         "RecordLap(ref enteredSeconds, ref fastestSeconds, ref totalSeconds);",
-        "RecordLap(int enteredSeconds, ref int fastestSeconds, ref int totalSeconds);"
+        "RecordLap(enteredSeconds, ref fastestSeconds, ref totalSeconds);",
+        "RecordLap(int enteredSeconds, ref int fastestSeconds, ref int totalSeconds);",
+        "RecordLap(enteredSeconds, fastestSeconds, totalSeconds);"
       ],
       "answer": 1,
       "ans": 1,
       "exp": "In C#, the `ref` keyword must match between the method header and the method call (`ref fastestSeconds, ref totalSeconds`), and data types (`int`) are never repeated inside the call statement.",
       "explanation": "In C#, the `ref` keyword must match between the method header and the method call (`ref fastestSeconds, ref totalSeconds`), and data types (`int`) are never repeated inside the call statement.",
-      "distractorRationale": "Options other than \"RecordLap(enteredSeconds, ref fastestSeconds, ref totalSecon\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19259,22 +19259,22 @@
       "stem": "Given `private bool ReadSeconds(string text, out int seconds)`, how should `btnAddLap_Click` call this method to validate `txtSeconds.Text`?",
       "code": "",
       "options": [
+        "if (ReadSeconds(string txtSeconds.Text, out int enteredSeconds) == false)",
         "if (!ReadSeconds(txtSeconds.Text, enteredSeconds))",
-        "if (!ReadSeconds(out txtSeconds.Text, out enteredSeconds))",
         "if (!ReadSeconds(txtSeconds.Text, out enteredSeconds))",
-        "if (ReadSeconds(string txtSeconds.Text, out int enteredSeconds) == false)"
+        "if (!ReadSeconds(out txtSeconds.Text, out enteredSeconds))"
       ],
       "opts": [
+        "if (ReadSeconds(string txtSeconds.Text, out int enteredSeconds) == false)",
         "if (!ReadSeconds(txtSeconds.Text, enteredSeconds))",
-        "if (!ReadSeconds(out txtSeconds.Text, out enteredSeconds))",
         "if (!ReadSeconds(txtSeconds.Text, out enteredSeconds))",
-        "if (ReadSeconds(string txtSeconds.Text, out int enteredSeconds) == false)"
+        "if (!ReadSeconds(out txtSeconds.Text, out enteredSeconds))"
       ],
       "answer": 2,
       "ans": 2,
       "exp": "The first argument (`txtSeconds.Text`) is passed by value and the second argument (`out enteredSeconds`) must include the `out` keyword to match the parameter declaration.",
       "explanation": "The first argument (`txtSeconds.Text`) is passed by value and the second argument (`out enteredSeconds`) must include the `out` keyword to match the parameter declaration.",
-      "distractorRationale": "Options other than \"if (!ReadSeconds(txtSeconds.Text, out enteredSeconds))\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19301,22 +19301,22 @@
       "stem": "Why does the following method fail to compile?",
       "code": "private bool ReadSeconds(string text, out int seconds)\n{\n    if (int.TryParse(text, out seconds) && seconds >= 1 && seconds <= 3600)\n    {\n        return true;\n    }\n    return false;\n}",
       "options": [
-        "It compiles without any error because `int.TryParse(text, out seconds)` already assigns `seconds` before the `&&` check.",
+        "A method with an `out` parameter must have a `void` return type.",
         "`out` parameters cannot be used inside a method that returns `bool`.",
         "`int.TryParse` requires `ref seconds` instead of `out seconds`.",
-        "A method with an `out` parameter must have a `void` return type."
+        "It compiles without any error because `int.TryParse(text, out seconds)` already assigns `seconds` before the `&&` check."
       ],
       "opts": [
-        "It compiles without any error because `int.TryParse(text, out seconds)` already assigns `seconds` before the `&&` check.",
+        "A method with an `out` parameter must have a `void` return type.",
         "`out` parameters cannot be used inside a method that returns `bool`.",
         "`int.TryParse` requires `ref seconds` instead of `out seconds`.",
-        "A method with an `out` parameter must have a `void` return type."
+        "It compiles without any error because `int.TryParse(text, out seconds)` already assigns `seconds` before the `&&` check."
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Because `int.TryParse(text, out seconds)` executes first in the `if` condition, `seconds` is definitely assigned (to the parsed integer on success, or `0` on failure) before either `return` statement is reached, so it compiles cleanly! Setting `seconds = 0;` before `return false;` is also good practice to guarantee `0` when out of range.",
       "explanation": "Because `int.TryParse(text, out seconds)` executes first in the `if` condition, `seconds` is definitely assigned (to the parsed integer on success, or `0` on failure) before either `return` statement is reached, so it compiles cleanly! Setting `seconds = 0;` before `return false;` is also good practice to guarantee `0` when out of range.",
-      "distractorRationale": "Options other than \"It compiles without any error because `int.TryParse(text, ou\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19343,22 +19343,22 @@
       "stem": "Given `private string FormatTime(int totalSeconds)` which converts `65` to `\"1:05\"` and `59` to `\"0:59\"`, which expressions calculate `minutes` and `seconds`?",
       "code": "",
       "options": [
-        "int minutes = totalSeconds * 60; int seconds = totalSeconds / 60;",
         "int minutes = totalSeconds / 60; int seconds = totalSeconds % 60;",
+        "int minutes = totalSeconds * 60; int seconds = totalSeconds / 60;",
         "int minutes = totalSeconds % 60; int seconds = totalSeconds / 60;",
         "int minutes = totalSeconds / 100; int seconds = totalSeconds % 100;"
       ],
       "opts": [
-        "int minutes = totalSeconds * 60; int seconds = totalSeconds / 60;",
         "int minutes = totalSeconds / 60; int seconds = totalSeconds % 60;",
+        "int minutes = totalSeconds * 60; int seconds = totalSeconds / 60;",
         "int minutes = totalSeconds % 60; int seconds = totalSeconds / 60;",
         "int minutes = totalSeconds / 100; int seconds = totalSeconds % 100;"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Integer division `totalSeconds / 60` gives the whole number of minutes (`65 / 60 == 1`), and the remainder operator `totalSeconds % 60` gives the leftover seconds (`65 % 60 == 5`).",
       "explanation": "Integer division `totalSeconds / 60` gives the whole number of minutes (`65 / 60 == 1`), and the remainder operator `totalSeconds % 60` gives the leftover seconds (`65 % 60 == 5`).",
-      "distractorRationale": "Options other than \"int minutes = totalSeconds / 60; int seconds = totalSeconds \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
@@ -19385,21 +19385,21 @@
       "code": "",
       "options": [
         "Because seconds cannot exceed `10` in a minute.",
-        "To round the seconds up to the nearest multiple of `10`.",
         "To insert a leading zero (`minutes + \":0\" + seconds`) so `65` seconds formats as `\"1:05\"` instead of `\"1:5\"`.",
+        "To round the seconds up to the nearest multiple of `10`.",
         "To prevent a division-by-zero exception when `seconds` is `0`."
       ],
       "opts": [
         "Because seconds cannot exceed `10` in a minute.",
-        "To round the seconds up to the nearest multiple of `10`.",
         "To insert a leading zero (`minutes + \":0\" + seconds`) so `65` seconds formats as `\"1:05\"` instead of `\"1:5\"`.",
+        "To round the seconds up to the nearest multiple of `10`.",
         "To prevent a division-by-zero exception when `seconds` is `0`."
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "When `seconds` is `0` through `9`, concatenating `minutes + \":\" + seconds` would produce `\"1:5\"`. Checking `if (seconds < 10)` and returning `minutes + \":0\" + seconds` ensures two-digit seconds (`\"1:05\"`).",
       "explanation": "When `seconds` is `0` through `9`, concatenating `minutes + \":\" + seconds` would produce `\"1:5\"`. Checking `if (seconds < 10)` and returning `minutes + \":0\" + seconds` ensures two-digit seconds (`\"1:05\"`).",
-      "distractorRationale": "Options other than \"To insert a leading zero (`minutes + \":0\" + seconds`) so `65\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
@@ -19425,22 +19425,22 @@
       "stem": "In `private void RecordLap(int seconds, ref int fastest, ref int total)`, why is the condition written as `if (fastest == 0 || seconds < fastest)` before setting `fastest = seconds;`?",
       "code": "",
       "options": [
-        "Because a lap of `0` seconds is the fastest possible lap.",
-        "Because `fastest` must be reset to `0` on every click.",
         "Because `ref` parameters are automatically reset to `0` when a method starts.",
-        "Because `fastest` starts at `0` before the first lap is recorded, so the first lap must become `fastest` even though `seconds > 0`."
+        "Because a lap of `0` seconds is the fastest possible lap.",
+        "Because `fastest` starts at `0` before the first lap is recorded, so the first lap must become `fastest` even though `seconds > 0`.",
+        "Because `fastest` must be reset to `0` on every click."
       ],
       "opts": [
-        "Because a lap of `0` seconds is the fastest possible lap.",
-        "Because `fastest` must be reset to `0` on every click.",
         "Because `ref` parameters are automatically reset to `0` when a method starts.",
-        "Because `fastest` starts at `0` before the first lap is recorded, so the first lap must become `fastest` even though `seconds > 0`."
+        "Because a lap of `0` seconds is the fastest possible lap.",
+        "Because `fastest` starts at `0` before the first lap is recorded, so the first lap must become `fastest` even though `seconds > 0`.",
+        "Because `fastest` must be reset to `0` on every click."
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "When `fastestSeconds` is initialized to `0` at class level, checking only `if (seconds < fastest)` would never be true for positive lap times! Checking `fastest == 0 || seconds < fastest` ensures the first lap sets the initial benchmark.",
       "explanation": "When `fastestSeconds` is initialized to `0` at class level, checking only `if (seconds < fastest)` would never be true for positive lap times! Checking `fastest == 0 || seconds < fastest` ensures the first lap sets the initial benchmark.",
-      "distractorRationale": "Options other than \"Because `fastest` starts at `0` before the first lap is reco\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19467,22 +19467,22 @@
       "stem": "Suppose `fastest` is `62` and `total` is `127`. After calling `RecordLap(58, ref fastest, ref total);` where `RecordLap` adds `seconds` to `total` and updates `fastest` if `seconds < fastest`, what are the values of `fastest` and `total`?",
       "code": "",
       "options": [
-        "fastest is 58 and total is 185",
+        "fastest is 62 and total is 69",
         "fastest is 62 and total is 185",
         "fastest is 58 and total is 127",
-        "fastest is 62 and total is 69"
+        "fastest is 58 and total is 185"
       ],
       "opts": [
-        "fastest is 58 and total is 185",
+        "fastest is 62 and total is 69",
         "fastest is 62 and total is 185",
         "fastest is 58 and total is 127",
-        "fastest is 62 and total is 69"
+        "fastest is 58 and total is 185"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "`total` increases by `58` (`127 + 58 = 185`), and because `58 < 62`, `fastest` is updated to `58`.",
       "explanation": "`total` increases by `58` (`127 + 58 = 185`), and because `58 < 62`, `fastest` is updated to `58`.",
-      "distractorRationale": "Options other than \"fastest is 58 and total is 185\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19509,22 +19509,22 @@
       "stem": "Three laps of `62`, `65`, and `58` seconds have been recorded (`totalSeconds = 185`, `lapCount = 3`). What does `FormatTime(totalSeconds / lapCount)` return?",
       "code": "",
       "options": [
-        "\"1:02\"",
         "\"1:01\"",
         "\"0:61\"",
-        "\"1:10\""
+        "\"1:10\"",
+        "\"1:02\""
       ],
       "opts": [
-        "\"1:02\"",
         "\"1:01\"",
         "\"0:61\"",
-        "\"1:10\""
+        "\"1:10\"",
+        "\"1:02\""
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Integer division `185 / 3` truncates the fractional part to `61` seconds. Passing `61` to `FormatTime` computes `61 / 60 = 1` minute and `61 % 60 = 1` second, formatted with a leading zero as `\"1:01\"`.",
       "explanation": "Integer division `185 / 3` truncates the fractional part to `61` seconds. Passing `61` to `FormatTime` computes `61 / 60 = 1` minute and `61 % 60 = 1` second, formatted with a leading zero as `\"1:01\"`.",
-      "distractorRationale": "Options other than \"\"1:01\"\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
@@ -19550,22 +19550,22 @@
       "stem": "Why must `lapCount`, `fastestSeconds`, and `totalSeconds` be declared inside the `Form1` class outside any method rather than inside `btnAddLap_Click`?",
       "code": "",
       "options": [
-        "Because local variables cannot be passed as `ref` arguments.",
         "Because C# does not allow `int` variables inside event handlers.",
         "So that they retain their values from one click of `btnAddLap` to the next.",
-        "Because `InitializeComponent()` requires at least three class-level fields."
+        "Because `InitializeComponent()` requires at least three class-level fields.",
+        "Because local variables cannot be passed as `ref` arguments."
       ],
       "opts": [
-        "Because local variables cannot be passed as `ref` arguments.",
         "Because C# does not allow `int` variables inside event handlers.",
         "So that they retain their values from one click of `btnAddLap` to the next.",
-        "Because `InitializeComponent()` requires at least three class-level fields."
+        "Because `InitializeComponent()` requires at least three class-level fields.",
+        "Because local variables cannot be passed as `ref` arguments."
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "Local variables declared inside `btnAddLap_Click` are recreated on every click and destroyed when the handler ends. Class-level fields persist in memory for the lifetime of the form across multiple button clicks.",
       "explanation": "Local variables declared inside `btnAddLap_Click` are recreated on every click and destroyed when the handler ends. Class-level fields persist in memory for the lifetime of the form across multiple button clicks.",
-      "distractorRationale": "Options other than \"So that they retain their values from one click of `btnAddLa\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
@@ -19593,20 +19593,20 @@
       "options": [
         "calculate_discount",
         "calculateDiscount",
-        "mthCalculateDiscount",
-        "CalculateDiscount"
+        "CalculateDiscount",
+        "mthCalculateDiscount"
       ],
       "opts": [
         "calculate_discount",
         "calculateDiscount",
-        "mthCalculateDiscount",
-        "CalculateDiscount"
+        "CalculateDiscount",
+        "mthCalculateDiscount"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "In C# and `.NET` naming standards, method names use **PascalCase** (`UpperCamelCase`), starting with a capital letter for each word (`CalculateDiscount`, `ReadSeconds`, `FormatTime`).",
       "explanation": "In C# and `.NET` naming standards, method names use **PascalCase** (`UpperCamelCase`), starting with a capital letter for each word (`CalculateDiscount`, `ReadSeconds`, `FormatTime`).",
-      "distractorRationale": "Options other than \"CalculateDiscount\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
@@ -19632,22 +19632,22 @@
       "stem": "What is wrong with the following method definition?",
       "code": "private void CalculateVat(decimal price)\n{\n    return price * 0.15m;\n}",
       "options": [
-        "The method header specifies `void`, but the body returns a `decimal` value (should be `private decimal CalculateVat(decimal price)`).",
         "A method parameter cannot have the `decimal` data type.",
         "`0.15m` must be cast to `int` before multiplying.",
-        "The `return` keyword can only be used inside event handlers."
+        "The `return` keyword can only be used inside event handlers.",
+        "The method header specifies `void`, but the body returns a `decimal` value (should be `private decimal CalculateVat(decimal price)`)."
       ],
       "opts": [
-        "The method header specifies `void`, but the body returns a `decimal` value (should be `private decimal CalculateVat(decimal price)`).",
         "A method parameter cannot have the `decimal` data type.",
         "`0.15m` must be cast to `int` before multiplying.",
-        "The `return` keyword can only be used inside event handlers."
+        "The `return` keyword can only be used inside event handlers.",
+        "The method header specifies `void`, but the body returns a `decimal` value (should be `private decimal CalculateVat(decimal price)`)."
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "A method declared with a `void` return type cannot return a value (`CS0127`). To return `price * 0.15m`, the return type in the method header must be `decimal`.",
       "explanation": "A method declared with a `void` return type cannot return a value (`CS0127`). To return `price * 0.15m`, the return type in the method header must be `decimal`.",
-      "distractorRationale": "Options other than \"The method header specifies `void`, but the body returns a `\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_void_vs_value_method",
         "def_method_overloading"
@@ -19673,22 +19673,22 @@
       "stem": "Given `private decimal CalcTotal(decimal sub, decimal tax) { return sub + tax; }`, which statement properly calls `CalcTotal` and displays the result as currency?",
       "code": "",
       "options": [
-        "CalcTotal(100m, 15m).lblTotal.Text;",
         "lblTotal.Text = CalcTotal(100m, 15m).ToString(\"C\");",
-        "lblTotal.Text = void CalcTotal(100m, 15m);",
-        "decimal CalcTotal(100m, 15m) = lblTotal.Text;"
+        "decimal CalcTotal(100m, 15m) = lblTotal.Text;",
+        "CalcTotal(100m, 15m).lblTotal.Text;",
+        "lblTotal.Text = void CalcTotal(100m, 15m);"
       ],
       "opts": [
-        "CalcTotal(100m, 15m).lblTotal.Text;",
         "lblTotal.Text = CalcTotal(100m, 15m).ToString(\"C\");",
-        "lblTotal.Text = void CalcTotal(100m, 15m);",
-        "decimal CalcTotal(100m, 15m) = lblTotal.Text;"
+        "decimal CalcTotal(100m, 15m) = lblTotal.Text;",
+        "CalcTotal(100m, 15m).lblTotal.Text;",
+        "lblTotal.Text = void CalcTotal(100m, 15m);"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Because `CalcTotal(100m, 15m)` evaluates to a `decimal` value (`115m`), you can assign its return value to a `decimal` variable or call `.ToString(\"C\")` directly on the returned result.",
       "explanation": "Because `CalcTotal(100m, 15m)` evaluates to a `decimal` value (`115m`), you can assign its return value to a `decimal` variable or call `.ToString(\"C\")` directly on the returned result.",
-      "distractorRationale": "Options other than \"lblTotal.Text = CalcTotal(100m, 15m).ToString(\"C\");\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_void_vs_value_method",
         "def_method_overloading"
@@ -19714,22 +19714,22 @@
       "stem": "What does `IsValidAge(16)` return given the method below?",
       "code": "private bool IsValidAge(int age)\n{\n    return age >= 18 && age <= 65;\n}",
       "options": [
-        "16",
-        "true",
+        "18",
         "false",
-        "18"
+        "16",
+        "true"
       ],
       "opts": [
-        "16",
-        "true",
+        "18",
         "false",
-        "18"
+        "16",
+        "true"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "The relational expression `16 >= 18 && 16 <= 65` evaluates to `false`, which the `return` statement sends back as a `bool`.",
       "explanation": "The relational expression `16 >= 18 && 16 <= 65` evaluates to `false`, which the `return` statement sends back as a `bool`.",
-      "distractorRationale": "Options other than \"false\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_void_vs_value_method",
         "def_method_overloading"
@@ -19755,22 +19755,22 @@
       "stem": "While debugging at a breakpoint on a line that calls `RecordLap(...)`, which debugger command enters `RecordLap` so you can trace its statements line by line?",
       "code": "",
       "options": [
-        "Step Out (Shift+F11)",
         "Step Over (F10)",
         "Continue (F5)",
-        "Step Into (F11)"
+        "Step Into (F11)",
+        "Step Out (Shift+F11)"
       ],
       "opts": [
-        "Step Out (Shift+F11)",
         "Step Over (F10)",
         "Continue (F5)",
-        "Step Into (F11)"
+        "Step Into (F11)",
+        "Step Out (Shift+F11)"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "**Step Into (F11)** moves execution into the called method's body, whereas **Step Over (F10)** executes the entire method call as a single step and stops on the next line in the caller.",
       "explanation": "**Step Into (F11)** moves execution into the called method's body, whereas **Step Over (F10)** executes the entire method call as a single step and stops on the next line in the caller.",
-      "distractorRationale": "Options other than \"Step Into (F11)\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_debugger_stepping",
         "def_scope_fields_vs_local"
@@ -19796,22 +19796,22 @@
       "stem": "Which method header is valid in C# for a method that accepts a customer's name and two `decimal` amounts?",
       "code": "",
       "options": [
-        "private void PrintReceipt(string name, decimal sub, decimal vat)",
-        "private void PrintReceipt(string name, decimal sub, vat)",
         "private void PrintReceipt(name: string, sub: decimal, vat: decimal)",
-        "private void PrintReceipt(string name; decimal sub; decimal vat)"
+        "private void PrintReceipt(string name; decimal sub; decimal vat)",
+        "private void PrintReceipt(string name, decimal sub, vat)",
+        "private void PrintReceipt(string name, decimal sub, decimal vat)"
       ],
       "opts": [
-        "private void PrintReceipt(string name, decimal sub, decimal vat)",
-        "private void PrintReceipt(string name, decimal sub, vat)",
         "private void PrintReceipt(name: string, sub: decimal, vat: decimal)",
-        "private void PrintReceipt(string name; decimal sub; decimal vat)"
+        "private void PrintReceipt(string name; decimal sub; decimal vat)",
+        "private void PrintReceipt(string name, decimal sub, vat)",
+        "private void PrintReceipt(string name, decimal sub, decimal vat)"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "In a C# parameter list, parameters are separated by commas, and **every** parameter must have its own explicit data type (`string name, decimal sub, decimal vat`).",
       "explanation": "In a C# parameter list, parameters are separated by commas, and **every** parameter must have its own explicit data type (`string name, decimal sub, decimal vat`).",
-      "distractorRationale": "Options other than \"private void PrintReceipt(string name, decimal sub, decimal \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
@@ -19837,22 +19837,22 @@
       "stem": "Given `private double CalcArea(double radius)`, what happens if you call `CalcArea(5)` with an `int` argument `5`?",
       "code": "",
       "options": [
-        "The program crashes at runtime with an `InvalidCastException`.",
         "C# automatically widens the `int` value `5` to `double` (`5.0`) and executes the method.",
-        "The compiler rejects the call because `int` can never be converted to `double`.",
-        "The argument `5` is truncated to `0.0`."
+        "The argument `5` is truncated to `0.0`.",
+        "The program crashes at runtime with an `InvalidCastException`.",
+        "The compiler rejects the call because `int` can never be converted to `double`."
       ],
       "opts": [
-        "The program crashes at runtime with an `InvalidCastException`.",
         "C# automatically widens the `int` value `5` to `double` (`5.0`) and executes the method.",
-        "The compiler rejects the call because `int` can never be converted to `double`.",
-        "The argument `5` is truncated to `0.0`."
+        "The argument `5` is truncated to `0.0`.",
+        "The program crashes at runtime with an `InvalidCastException`.",
+        "The compiler rejects the call because `int` can never be converted to `double`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "C# automatically performs a widening conversion from `int` to `double` when passing an `int` argument to a `double` by-value parameter because no precision is lost.",
       "explanation": "C# automatically performs a widening conversion from `int` to `double` when passing an `int` argument to a `double` by-value parameter because no precision is lost.",
-      "distractorRationale": "Options other than \"C# automatically widens the `int` value `5` to `double` (`5.\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_parameters_vs_arguments",
         "def_pass_by_value"
@@ -19879,21 +19879,21 @@
       "code": "",
       "options": [
         "`ref` parameters can only be used with `string` variables.",
-        "`UpdateTotal` must return a `double` instead of `void`.",
         "A `ref` or `out` argument must match the parameter's data type (`double`) exactly; implicit widening from `int` to `double` is not allowed.",
+        "`UpdateTotal` must return a `double` instead of `void`.",
         "`score` must be declared as a `const` before passing by reference."
       ],
       "opts": [
         "`ref` parameters can only be used with `string` variables.",
-        "`UpdateTotal` must return a `double` instead of `void`.",
         "A `ref` or `out` argument must match the parameter's data type (`double`) exactly; implicit widening from `int` to `double` is not allowed.",
+        "`UpdateTotal` must return a `double` instead of `void`.",
         "`score` must be declared as a `const` before passing by reference."
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "Unlike pass-by-value parameters, `ref` and `out` parameters pass the memory address of the caller's variable, so the variable's type must match the parameter type identically (`double`).",
       "explanation": "Unlike pass-by-value parameters, `ref` and `out` parameters pass the memory address of the caller's variable, so the variable's type must match the parameter type identically (`double`).",
-      "distractorRationale": "Options other than \"A `ref` or `out` argument must match the parameter's data ty\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19920,22 +19920,22 @@
       "stem": "What does `lblOut` display after the following code executes?",
       "code": "int q, r;\nDivideWithRemainder(17, 5, out q, out r);\nlblOut.Text = q + \" R \" + r;\n\nprivate void DivideWithRemainder(int dividend, int divisor, out int quotient, out int remainder)\n{\n    quotient = dividend / divisor;\n    remainder = dividend % divisor;\n}",
       "options": [
-        "3.4 R 2",
         "2 R 3",
         "5 R 17",
-        "3 R 2"
+        "3 R 2",
+        "3.4 R 2"
       ],
       "opts": [
-        "3.4 R 2",
         "2 R 3",
         "5 R 17",
-        "3 R 2"
+        "3 R 2",
+        "3.4 R 2"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "`17 / 5` using integer division assigns `3` to `quotient` (`q`), and `17 % 5` assigns `2` to `remainder` (`r`). Therefore `lblOut.Text` becomes `\"3 R 2\"`.",
       "explanation": "`17 / 5` using integer division assigns `3` to `quotient` (`q`), and `17 % 5` assigns `2` to `remainder` (`r`). Therefore `lblOut.Text` becomes `\"3 R 2\"`.",
-      "distractorRationale": "Options other than \"3 R 2\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -19962,22 +19962,22 @@
       "stem": "Where is a parameter declared in `private string FormatTime(int totalSeconds)` accessible?",
       "code": "",
       "options": [
-        "Only inside the body of the `FormatTime` method.",
         "Inside every method in the `Form1` class.",
         "Only inside `btnAddLap_Click`.",
-        "Across all forms in the Visual Studio project."
+        "Across all forms in the Visual Studio project.",
+        "Only inside the body of the `FormatTime` method."
       ],
       "opts": [
-        "Only inside the body of the `FormatTime` method.",
         "Inside every method in the `Form1` class.",
         "Only inside `btnAddLap_Click`.",
-        "Across all forms in the Visual Studio project."
+        "Across all forms in the Visual Studio project.",
+        "Only inside the body of the `FormatTime` method."
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "A parameter's scope is limited strictly to the body of the method in which it is declared.",
       "explanation": "A parameter's scope is limited strictly to the body of the method in which it is declared.",
-      "distractorRationale": "Options other than \"Only inside the body of the `FormatTime` method.\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_parameters_vs_arguments",
         "def_pass_by_value"
@@ -20003,22 +20003,22 @@
       "stem": "How can a `void` method terminate its execution early (for example, when validation fails) and return control immediately to the caller?",
       "code": "",
       "options": [
-        "By executing `break;` outside any loop or switch.",
         "By executing `return;` with no value after the keyword.",
         "By executing `return false;`.",
-        "By executing `continue;`."
+        "By executing `continue;`.",
+        "By executing `break;` outside any loop or switch."
       ],
       "opts": [
-        "By executing `break;` outside any loop or switch.",
         "By executing `return;` with no value after the keyword.",
         "By executing `return false;`.",
-        "By executing `continue;`."
+        "By executing `continue;`.",
+        "By executing `break;` outside any loop or switch."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "In a `void` method, a standalone `return;` statement immediately exits the method and returns control to the caller without returning a value.",
       "explanation": "In a `void` method, a standalone `return;` statement immediately exits the method and returns control to the caller without returning a value.",
-      "distractorRationale": "Options other than \"By executing `return;` with no value after the keyword.\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_void_vs_value_method",
         "def_method_overloading"
@@ -20044,22 +20044,22 @@
       "stem": "Why does the compiler report error `CS0161 ('not all code paths return a value')` on the method below?",
       "code": "private string GetStatus(int mark)\n{\n    if (mark >= 50)\n    {\n        return \"Pass\";\n    }\n}",
       "options": [
-        "`string` methods cannot accept `int` parameters.",
-        "`\"Pass\"` must be enclosed in single quotes.",
+        "`GetStatus` must be declared `public`.",
         "If `mark < 50`, the `if` condition is false and the method reaches the closing brace without executing a `return` statement.",
-        "`GetStatus` must be declared `public`."
+        "`string` methods cannot accept `int` parameters.",
+        "`\"Pass\"` must be enclosed in single quotes."
       ],
       "opts": [
-        "`string` methods cannot accept `int` parameters.",
-        "`\"Pass\"` must be enclosed in single quotes.",
+        "`GetStatus` must be declared `public`.",
         "If `mark < 50`, the `if` condition is false and the method reaches the closing brace without executing a `return` statement.",
-        "`GetStatus` must be declared `public`."
+        "`string` methods cannot accept `int` parameters.",
+        "`\"Pass\"` must be enclosed in single quotes."
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "A value-returning method must guarantee a `return` statement on **every** possible execution path. Adding `else { return \"Fail\"; }` or `return \"Fail\";` after the `if` block resolves `CS0161`.",
       "explanation": "A value-returning method must guarantee a `return` statement on **every** possible execution path. Adding `else { return \"Fail\"; }` or `return \"Fail\";` after the `if` block resolves `CS0161`.",
-      "distractorRationale": "Options other than \"If `mark < 50`, the `if` condition is false and the method r\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_void_vs_value_method",
         "def_method_overloading"
@@ -20087,20 +20087,20 @@
       "options": [
         "It eliminates the need to declare variables with data types.",
         "It allows controls to work without event handlers.",
-        "It bypasses C# compiler type checking.",
-        "It reduces code duplication (reuse), simplifies debugging, and makes the program easier to read and maintain."
+        "It reduces code duplication (reuse), simplifies debugging, and makes the program easier to read and maintain.",
+        "It bypasses C# compiler type checking."
       ],
       "opts": [
         "It eliminates the need to declare variables with data types.",
         "It allows controls to work without event handlers.",
-        "It bypasses C# compiler type checking.",
-        "It reduces code duplication (reuse), simplifies debugging, and makes the program easier to read and maintain."
+        "It reduces code duplication (reuse), simplifies debugging, and makes the program easier to read and maintain.",
+        "It bypasses C# compiler type checking."
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 2,
+      "ans": 2,
       "exp": "Modularizing code into focused methods promotes code reuse, isolates logic for easier testing/debugging, and improves readability.",
       "explanation": "Modularizing code into focused methods promotes code reuse, isolates logic for easier testing/debugging, and improves readability.",
-      "distractorRationale": "Options other than \"It reduces code duplication (reuse), simplifies debugging, a\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
@@ -20126,22 +20126,22 @@
       "stem": "Given `private string FormatTime(int totalSeconds)`, is `FormatTime(totalSeconds / lapCount)` a valid method call?",
       "code": "",
       "options": [
-        "Yes; for a pass-by-value parameter, C# evaluates the arithmetic expression `totalSeconds / lapCount` first and passes the resulting `int` value.",
         "No; method arguments must always be single variable names, never arithmetic expressions.",
         "No; `totalSeconds / lapCount` requires the `ref` keyword.",
-        "Yes, but only if `totalSeconds` and `lapCount` are `string` variables."
+        "Yes, but only if `totalSeconds` and `lapCount` are `string` variables.",
+        "Yes; for a pass-by-value parameter, C# evaluates the arithmetic expression `totalSeconds / lapCount` first and passes the resulting `int` value."
       ],
       "opts": [
-        "Yes; for a pass-by-value parameter, C# evaluates the arithmetic expression `totalSeconds / lapCount` first and passes the resulting `int` value.",
         "No; method arguments must always be single variable names, never arithmetic expressions.",
         "No; `totalSeconds / lapCount` requires the `ref` keyword.",
-        "Yes, but only if `totalSeconds` and `lapCount` are `string` variables."
+        "Yes, but only if `totalSeconds` and `lapCount` are `string` variables.",
+        "Yes; for a pass-by-value parameter, C# evaluates the arithmetic expression `totalSeconds / lapCount` first and passes the resulting `int` value."
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "Pass-by-value parameters accept any expression that evaluates to a compatible data type, whereas `ref` and `out` parameters require an actual variable.",
       "explanation": "Pass-by-value parameters accept any expression that evaluates to a compatible data type, whereas `ref` and `out` parameters require an actual variable.",
-      "distractorRationale": "Options other than \"Yes; for a pass-by-value parameter, C# evaluates the arithme\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
@@ -20167,22 +20167,22 @@
       "stem": "Given `private void AddTax(ref decimal amount)`, why does `AddTax(ref 100.00m);` fail to compile?",
       "code": "",
       "options": [
-        "`100.00m` is a `double` literal rather than a `decimal` literal.",
         "A `ref` or `out` argument must be a variable with a memory location that the method can modify, not a constant literal.",
         "`AddTax` must be called inside a `while` loop.",
-        "The `ref` keyword must be placed after `100.00m`."
+        "The `ref` keyword must be placed after `100.00m`.",
+        "`100.00m` is a `double` literal rather than a `decimal` literal."
       ],
       "opts": [
-        "`100.00m` is a `double` literal rather than a `decimal` literal.",
         "A `ref` or `out` argument must be a variable with a memory location that the method can modify, not a constant literal.",
         "`AddTax` must be called inside a `while` loop.",
-        "The `ref` keyword must be placed after `100.00m`."
+        "The `ref` keyword must be placed after `100.00m`.",
+        "`100.00m` is a `double` literal rather than a `decimal` literal."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Because `ref` and `out` parameters write back to the caller's storage location in memory, the argument passed must be a modifiable variable, not a literal or constant.",
       "explanation": "Because `ref` and `out` parameters write back to the caller's storage location in memory, the argument passed must be a modifiable variable, not a literal or constant.",
-      "distractorRationale": "Options other than \"A `ref` or `out` argument must be a variable with a memory l\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -20209,22 +20209,22 @@
       "stem": "In a Lap Timer form that stores `lapCount`, `fastestSeconds`, and `totalSeconds` as class-level fields, what must `btnClear_Click` do in addition to clearing `txtSeconds`, `lstLaps`, `lblFastest`, and `lblAverage`?",
       "code": "",
       "options": [
-        "Call `InitializeComponent();` a second time.",
-        "Call `this.Close();` to restart the application.",
+        "Delete the `ReadSeconds`, `FormatTime`, and `RecordLap` methods.",
         "Reset `lapCount = 0;`, `fastestSeconds = 0;`, and `totalSeconds = 0;` so the next lap starts a fresh session at Lap 1.",
-        "Delete the `ReadSeconds`, `FormatTime`, and `RecordLap` methods."
+        "Call `InitializeComponent();` a second time.",
+        "Call `this.Close();` to restart the application."
       ],
       "opts": [
-        "Call `InitializeComponent();` a second time.",
-        "Call `this.Close();` to restart the application.",
+        "Delete the `ReadSeconds`, `FormatTime`, and `RecordLap` methods.",
         "Reset `lapCount = 0;`, `fastestSeconds = 0;`, and `totalSeconds = 0;` so the next lap starts a fresh session at Lap 1.",
-        "Delete the `ReadSeconds`, `FormatTime`, and `RecordLap` methods."
+        "Call `InitializeComponent();` a second time.",
+        "Call `this.Close();` to restart the application."
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "Clearing only the visual controls leaves the old running values in the class-level fields. Resetting `lapCount`, `fastestSeconds`, and `totalSeconds` to `0` ensures the next session starts cleanly at `Lap 1`.",
       "explanation": "Clearing only the visual controls leaves the old running values in the class-level fields. Resetting `lapCount`, `fastestSeconds`, and `totalSeconds` to `0` ensures the next session starts cleanly at `Lap 1`.",
-      "distractorRationale": "Options other than \"Reset `lapCount = 0;`, `fastestSeconds = 0;`, and `totalSeco\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_method_structure",
         "def_void_vs_value_method"
@@ -20250,22 +20250,22 @@
       "stem": "Before displaying a second form class named `ResultsForm` in a Windows Forms project, which statement creates an instance of it in memory?",
       "code": "",
       "options": [
-        "ResultsForm frmResults = Form.Create(\"ResultsForm\");",
-        "Form.Open(ResultsForm);",
+        "ResultsForm frmResults = new ResultsForm();",
         "ResultsForm frmResults = ResultsForm.Show();",
-        "ResultsForm frmResults = new ResultsForm();"
+        "ResultsForm frmResults = Form.Create(\"ResultsForm\");",
+        "Form.Open(ResultsForm);"
       ],
       "opts": [
-        "ResultsForm frmResults = Form.Create(\"ResultsForm\");",
-        "Form.Open(ResultsForm);",
+        "ResultsForm frmResults = new ResultsForm();",
         "ResultsForm frmResults = ResultsForm.Show();",
-        "ResultsForm frmResults = new ResultsForm();"
+        "ResultsForm frmResults = Form.Create(\"ResultsForm\");",
+        "Form.Open(ResultsForm);"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "Each form in a project is a class. Just like any other class object, you must instantiate it using the `new` operator (`ResultsForm frmResults = new ResultsForm();`) before calling `ShowDialog()` or `Show()`.",
       "explanation": "Each form in a project is a class. Just like any other class object, you must instantiate it using the `new` operator (`ResultsForm frmResults = new ResultsForm();`) before calling `ShowDialog()` or `Show()`.",
-      "distractorRationale": "Options other than \"ResultsForm frmResults = new ResultsForm();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_partial_form_classes",
         "def_program_cs",
@@ -20292,22 +20292,22 @@
       "stem": "How does displaying a form with `frmResults.ShowDialog();` (modal) differ from `frmResults.Show();` (modeless)?",
       "code": "",
       "options": [
+        "`Show()` automatically closes the startup form, whereas `ShowDialog()` hides it.",
         "`ShowDialog()` prevents the user from clicking on any other form in the application until `frmResults` is closed, whereas `Show()` allows the user to switch focus freely between forms.",
         "`Show()` blocks all other forms, whereas `ShowDialog()` allows switching between forms.",
-        "`ShowDialog()` can only display message boxes, not custom Windows Forms.",
-        "`Show()` automatically closes the startup form, whereas `ShowDialog()` hides it."
+        "`ShowDialog()` can only display message boxes, not custom Windows Forms."
       ],
       "opts": [
+        "`Show()` automatically closes the startup form, whereas `ShowDialog()` hides it.",
         "`ShowDialog()` prevents the user from clicking on any other form in the application until `frmResults` is closed, whereas `Show()` allows the user to switch focus freely between forms.",
         "`Show()` blocks all other forms, whereas `ShowDialog()` allows switching between forms.",
-        "`ShowDialog()` can only display message boxes, not custom Windows Forms.",
-        "`Show()` automatically closes the startup form, whereas `ShowDialog()` hides it."
+        "`ShowDialog()` can only display message boxes, not custom Windows Forms."
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "A **modal** form (`ShowDialog()`) retains exclusive focus until closed, whereas a **modeless** form (`Show()`) permits the user to interact with other open forms at the same time.",
       "explanation": "A **modal** form (`ShowDialog()`) retains exclusive focus until closed, whereas a **modeless** form (`Show()`) permits the user to interact with other open forms at the same time.",
-      "distractorRationale": "Options other than \"`ShowDialog()` prevents the user from clicking on any other \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
@@ -20333,22 +20333,22 @@
       "stem": "Consider the two statements below inside a button's `Click` event handler:\nWhen does `lblStatus.Text = \"Done\";` execute?",
       "code": "frmResults.ShowDialog();\nlblStatus.Text = \"Done\";",
       "options": [
-        "Immediately before `frmResults` appears on screen.",
-        "Only after the user closes `frmResults`.",
         "At the exact same millisecond that `frmResults` opens.",
-        "Never, because `ShowDialog()` terminates the event handler."
+        "Never, because `ShowDialog()` terminates the event handler.",
+        "Only after the user closes `frmResults`.",
+        "Immediately before `frmResults` appears on screen."
       ],
       "opts": [
-        "Immediately before `frmResults` appears on screen.",
-        "Only after the user closes `frmResults`.",
         "At the exact same millisecond that `frmResults` opens.",
-        "Never, because `ShowDialog()` terminates the event handler."
+        "Never, because `ShowDialog()` terminates the event handler.",
+        "Only after the user closes `frmResults`.",
+        "Immediately before `frmResults` appears on screen."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "When `ShowDialog()` is called, execution of the calling method pauses at that line and only resumes with the statements following `ShowDialog()` after the modal form is closed.",
       "explanation": "When `ShowDialog()` is called, execution of the calling method pauses at that line and only resumes with the statements following `ShowDialog()` after the modal form is closed.",
-      "distractorRationale": "Options other than \"Only after the user closes `frmResults`.\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
@@ -20374,22 +20374,22 @@
       "stem": "Consider the two statements below inside a button's `Click` event handler:\nWhen does `lblStatus.Text = \"Done\";` execute?",
       "code": "frmResults.Show();\nlblStatus.Text = \"Done\";",
       "options": [
-        "Only after the user closes `frmResults`.",
         "Only when the application exits.",
-        "Immediately after `frmResults` is displayed, while `frmResults` is still open on screen.",
-        "Only if the user clicks Cancel on `frmResults`."
+        "Only if the user clicks Cancel on `frmResults`.",
+        "Only after the user closes `frmResults`.",
+        "Immediately after `frmResults` is displayed, while `frmResults` is still open on screen."
       ],
       "opts": [
-        "Only after the user closes `frmResults`.",
         "Only when the application exits.",
-        "Immediately after `frmResults` is displayed, while `frmResults` is still open on screen.",
-        "Only if the user clicks Cancel on `frmResults`."
+        "Only if the user clicks Cancel on `frmResults`.",
+        "Only after the user closes `frmResults`.",
+        "Immediately after `frmResults` is displayed, while `frmResults` is still open on screen."
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "Because `Show()` displays a modeless form, it does not pause the calling method. The statement `lblStatus.Text = \"Done\";` runs immediately after `Show()` opens the form.",
       "explanation": "Because `Show()` displays a modeless form, it does not pause the calling method. The statement `lblStatus.Text = \"Done\";` runs immediately after `Show()` opens the form.",
-      "distractorRationale": "Options other than \"Immediately after `frmResults` is displayed, while `frmResul\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
@@ -20415,22 +20415,22 @@
       "stem": "By default, why does `frmResults.lblTotal.Text = \"R 500.00\";` written inside `Form1` cause a compiler protection-level error (`CS0122`)?",
       "code": "",
       "options": [
+        "Controls placed on a form have their `Modifiers` property set to `Private` by default; changing `lblTotal`'s `Modifiers` property to `Public` allows `Form1` to access it.",
         "Labels on a second form do not have a `Text` property.",
         "Controls placed on a form have their `Modifiers` property set to `Static` by default.",
-        "`Form1` must inherit from `ResultsForm` to access its labels.",
-        "Controls placed on a form have their `Modifiers` property set to `Private` by default; changing `lblTotal`'s `Modifiers` property to `Public` allows `Form1` to access it."
+        "`Form1` must inherit from `ResultsForm` to access its labels."
       ],
       "opts": [
+        "Controls placed on a form have their `Modifiers` property set to `Private` by default; changing `lblTotal`'s `Modifiers` property to `Public` allows `Form1` to access it.",
         "Labels on a second form do not have a `Text` property.",
         "Controls placed on a form have their `Modifiers` property set to `Static` by default.",
-        "`Form1` must inherit from `ResultsForm` to access its labels.",
-        "Controls placed on a form have their `Modifiers` property set to `Private` by default; changing `lblTotal`'s `Modifiers` property to `Public` allows `Form1` to access it."
+        "`Form1` must inherit from `ResultsForm` to access its labels."
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "Visual Studio declares form controls as `private` fields by default (`Modifiers = Private`). Setting a control's `Modifiers` property to `Public` changes its declaration to `public`, making `frmResults.lblTotal.Text` accessible from `Form1`.",
       "explanation": "Visual Studio declares form controls as `private` fields by default (`Modifiers = Private`). Setting a control's `Modifiers` property to `Public` changes its declaration to `public`, making `frmResults.lblTotal.Text` accessible from `Form1`.",
-      "distractorRationale": "Options other than \"Controls placed on a form have their `Modifiers` property se\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_partial_form_classes",
         "def_program_cs",
@@ -20457,22 +20457,22 @@
       "stem": "In a Visual C# Windows Forms project, which file and statement specify the startup form that launches when the application begins?",
       "code": "",
       "options": [
-        "`Program.cs` via `Application.Run(new Form1());`",
         "`Form1.Designer.cs` via `this.StartPosition = FormStartPosition.CenterScreen;`",
+        "`Program.cs` via `Application.Run(new Form1());`",
         "`App.config` via `<startupForm name=\"Form1\" />`",
         "`AssemblyInfo.cs` via `[assembly: StartupForm(Form1)]`"
       ],
       "opts": [
-        "`Program.cs` via `Application.Run(new Form1());`",
         "`Form1.Designer.cs` via `this.StartPosition = FormStartPosition.CenterScreen;`",
+        "`Program.cs` via `Application.Run(new Form1());`",
         "`App.config` via `<startupForm name=\"Form1\" />`",
         "`AssemblyInfo.cs` via `[assembly: StartupForm(Form1)]`"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "The `Main` method inside `Program.cs` is the application's entry point and calls `Application.Run(new Form1());` to launch the startup form.",
       "explanation": "The `Main` method inside `Program.cs` is the application's entry point and calls `Application.Run(new Form1());` to launch the startup form.",
-      "distractorRationale": "Options other than \"`Program.cs` via `Application.Run(new Form1());`\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_partial_form_classes",
         "def_program_cs",
@@ -20499,22 +20499,22 @@
       "stem": "Which statement makes the current form invisible on screen without closing it or destroying its object in memory?",
       "code": "",
       "options": [
+        "this.Minimize();",
         "this.Close();",
         "this.Hide();",
-        "this.Dispose();",
-        "this.Minimize();"
+        "this.Dispose();"
       ],
       "opts": [
+        "this.Minimize();",
         "this.Close();",
         "this.Hide();",
-        "this.Dispose();",
-        "this.Minimize();"
+        "this.Dispose();"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "`this.Hide();` hides the form from view (setting its `Visible` property to `false`) while preserving the form instance in memory, whereas `this.Close();` closes the form.",
       "explanation": "`this.Hide();` hides the form from view (setting its `Visible` property to `false`) while preserving the form instance in memory, whereas `this.Close();` closes the form.",
-      "distractorRationale": "Options other than \"this.Hide();\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_partial_form_classes",
         "def_program_cs",
@@ -20541,22 +20541,22 @@
       "stem": "In a multiform project where `Form1` is the startup form and `Form2` is currently open as a modeless window, what happens if `this.Close();` is executed inside `Form1`?",
       "code": "",
       "options": [
+        "`Form1` is minimized to the taskbar.",
         "Only `Form1` closes and `Form2` becomes the new startup form.",
         "A runtime exception is thrown because `Form2` is still open.",
-        "The entire application terminates and `Form2` is closed as well.",
-        "`Form1` is minimized to the taskbar."
+        "The entire application terminates and `Form2` is closed as well."
       ],
       "opts": [
+        "`Form1` is minimized to the taskbar.",
         "Only `Form1` closes and `Form2` becomes the new startup form.",
         "A runtime exception is thrown because `Form2` is still open.",
-        "The entire application terminates and `Form2` is closed as well.",
-        "`Form1` is minimized to the taskbar."
+        "The entire application terminates and `Form2` is closed as well."
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "Because the application's message loop in `Program.cs` is bound to the startup form (`Application.Run(new Form1())`), closing the startup form ends the entire application.",
       "explanation": "Because the application's message loop in `Program.cs` is bound to the startup form (`Application.Run(new Form1())`), closing the startup form ends the entire application.",
-      "distractorRationale": "Options other than \"The entire application terminates and `Form2` is closed as w\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_close_vs_hide",
         "def_this_close",
@@ -20583,22 +20583,22 @@
       "stem": "How does a form's `Activated` event differ from its `Load` event in a multiform application?",
       "code": "",
       "options": [
-        "`Activated` fires only once when the form is created, whereas `Load` fires every time the user clicks the form.",
+        "`Load` fires only once when the form is first loaded into memory, whereas `Activated` fires every time the form becomes the active window (including when switching back from another form).",
         "`Activated` fires only when the form is closed.",
         "There is no difference; both fire at the exact same times.",
-        "`Load` fires only once when the form is first loaded into memory, whereas `Activated` fires every time the form becomes the active window (including when switching back from another form)."
+        "`Activated` fires only once when the form is created, whereas `Load` fires every time the user clicks the form."
       ],
       "opts": [
-        "`Activated` fires only once when the form is created, whereas `Load` fires every time the user clicks the form.",
+        "`Load` fires only once when the form is first loaded into memory, whereas `Activated` fires every time the form becomes the active window (including when switching back from another form).",
         "`Activated` fires only when the form is closed.",
         "There is no difference; both fire at the exact same times.",
-        "`Load` fires only once when the form is first loaded into memory, whereas `Activated` fires every time the form becomes the active window (including when switching back from another form)."
+        "`Activated` fires only once when the form is created, whereas `Load` fires every time the user clicks the form."
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "The `Load` event occurs once per form instance when it is loaded into memory. The `Activated` event occurs every time the form receives focus from another form or application.",
       "explanation": "The `Load` event occurs once per form instance when it is loaded into memory. The `Activated` event occurs every time the form receives focus from another form or application.",
-      "distractorRationale": "Options other than \"`Load` fires only once when the form is first loaded into me\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_form_lifecycle",
         "def_form_load"
@@ -20624,22 +20624,22 @@
       "stem": "Which form event occurs *just before* a form closes and allows you to prompt the user or cancel the close operation?",
       "code": "",
       "options": [
-        "FormClosing",
-        "FormClosed",
         "Deactivate",
-        "Disposed"
+        "FormClosing",
+        "Disposed",
+        "FormClosed"
       ],
       "opts": [
-        "FormClosing",
-        "FormClosed",
         "Deactivate",
-        "Disposed"
+        "FormClosing",
+        "Disposed",
+        "FormClosed"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "`FormClosing` fires while the form is in the process of closing (allowing cancellation via `e.Cancel = true;`), whereas `FormClosed` fires after the form has already closed.",
       "explanation": "`FormClosing` fires while the form is in the process of closing (allowing cancellation via `e.Cancel = true;`), whereas `FormClosed` fires after the form has already closed.",
-      "distractorRationale": "Options other than \"FormClosing\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_partial_form_classes",
         "def_program_cs",
@@ -20666,22 +20666,22 @@
       "stem": "Which menu command in Visual Studio adds a second Windows Form to your current project?",
       "code": "",
       "options": [
+        "Debug -> New Window",
         "File -> New -> Solution",
         "Project -> Add Form (Windows Forms)...",
-        "Build -> Add Second Form",
-        "Debug -> New Window"
+        "Build -> Add Second Form"
       ],
       "opts": [
+        "Debug -> New Window",
         "File -> New -> Solution",
         "Project -> Add Form (Windows Forms)...",
-        "Build -> Add Second Form",
-        "Debug -> New Window"
+        "Build -> Add Second Form"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Selecting `Project -> Add Form (Windows Forms)...` (or right-clicking the project in Solution Explorer and choosing `Add -> Form (Windows Forms)...`) adds a new form class to the project.",
       "explanation": "Selecting `Project -> Add Form (Windows Forms)...` (or right-clicking the project in Solution Explorer and choosing `Add -> Form (Windows Forms)...`) adds a new form class to the project.",
-      "distractorRationale": "Options other than \"Project -> Add Form (Windows Forms)...\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_partial_form_classes",
         "def_program_cs",
@@ -20708,22 +20708,22 @@
       "stem": "Why does `lblGreeting` on `GreetingForm` appear blank while the user is viewing `frmGreet` in the code below?",
       "code": "GreetingForm frmGreet = new GreetingForm();\nfrmGreet.ShowDialog();\nfrmGreet.lblGreeting.Text = \"Welcome, \" + txtName.Text;",
       "options": [
+        "Because `txtName.Text` cannot be concatenated with a string literal.",
         "Because `new GreetingForm()` automatically clears all public labels.",
         "Because `ShowDialog()` does not support Label controls.",
-        "Because `ShowDialog()` pauses execution until `frmGreet` is closed, so the assignment to `lblGreeting.Text` happens *after* the user has already closed the form.",
-        "Because `txtName.Text` cannot be concatenated with a string literal."
+        "Because `ShowDialog()` pauses execution until `frmGreet` is closed, so the assignment to `lblGreeting.Text` happens *after* the user has already closed the form."
       ],
       "opts": [
+        "Because `txtName.Text` cannot be concatenated with a string literal.",
         "Because `new GreetingForm()` automatically clears all public labels.",
         "Because `ShowDialog()` does not support Label controls.",
-        "Because `ShowDialog()` pauses execution until `frmGreet` is closed, so the assignment to `lblGreeting.Text` happens *after* the user has already closed the form.",
-        "Because `txtName.Text` cannot be concatenated with a string literal."
+        "Because `ShowDialog()` pauses execution until `frmGreet` is closed, so the assignment to `lblGreeting.Text` happens *after* the user has already closed the form."
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "To display data on a modal form, you must assign `frmGreet.lblGreeting.Text` **before** calling `frmGreet.ShowDialog();`, because lines after `ShowDialog()` do not run until the modal form closes.",
       "explanation": "To display data on a modal form, you must assign `frmGreet.lblGreeting.Text` **before** calling `frmGreet.ShowDialog();`, because lines after `ShowDialog()` do not run until the modal form closes.",
-      "distractorRationale": "Options other than \"Because `ShowDialog()` pauses execution until `frmGreet` is \" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
@@ -20749,22 +20749,22 @@
       "stem": "A user types a discount code into a public TextBox `txtPromo` on a modal form `PromoForm` and closes the modal form. Why can `Form1` still read `frmPromo.txtPromo.Text` on the line immediately after `frmPromo.ShowDialog();`?",
       "code": "",
       "options": [
+        "Because closing a modal form hides it and returns from `ShowDialog()`, while the `frmPromo` object still exists in memory until `frmPromo` goes out of scope.",
         "Because Visual Studio saves all TextBoxes to a text file automatically.",
         "It cannot; `frmPromo` is erased from memory the instant it closes.",
-        "Because `txtPromo` is a `static` keyword.",
-        "Because closing a modal form hides it and returns from `ShowDialog()`, while the `frmPromo` object still exists in memory until `frmPromo` goes out of scope."
+        "Because `txtPromo` is a `static` keyword."
       ],
       "opts": [
+        "Because closing a modal form hides it and returns from `ShowDialog()`, while the `frmPromo` object still exists in memory until `frmPromo` goes out of scope.",
         "Because Visual Studio saves all TextBoxes to a text file automatically.",
         "It cannot; `frmPromo` is erased from memory the instant it closes.",
-        "Because `txtPromo` is a `static` keyword.",
-        "Because closing a modal form hides it and returns from `ShowDialog()`, while the `frmPromo` object still exists in memory until `frmPromo` goes out of scope."
+        "Because `txtPromo` is a `static` keyword."
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "When a form displayed via `ShowDialog()` is closed, `ShowDialog()` returns control to the caller while the `frmPromo` object and its public controls/properties remain accessible in memory.",
       "explanation": "When a form displayed via `ShowDialog()` is closed, `ShowDialog()` returns control to the caller while the `frmPromo` object and its public controls/properties remain accessible in memory.",
-      "distractorRationale": "Options other than \"Because closing a modal form hides it and returns from `Show\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_cross_form_modifiers",
         "def_form_instantiation"
@@ -20790,22 +20790,22 @@
       "stem": "When you add a new form named `InvoiceForm` to a project, which two C# code files are created for that form?",
       "code": "",
       "options": [
-        "`InvoiceForm.cs` (event handlers and custom logic) and `InvoiceForm.Designer.cs` (auto-generated control declarations and `InitializeComponent()`)",
         "`InvoiceForm.exe` and `InvoiceForm.dll`",
+        "`InvoiceForm.cs` (event handlers and custom logic) and `InvoiceForm.Designer.cs` (auto-generated control declarations and `InitializeComponent()`)",
         "`InvoiceForm.html` and `InvoiceForm.css`",
         "`InvoiceForm.main` and `InvoiceForm.sub`"
       ],
       "opts": [
-        "`InvoiceForm.cs` (event handlers and custom logic) and `InvoiceForm.Designer.cs` (auto-generated control declarations and `InitializeComponent()`)",
         "`InvoiceForm.exe` and `InvoiceForm.dll`",
+        "`InvoiceForm.cs` (event handlers and custom logic) and `InvoiceForm.Designer.cs` (auto-generated control declarations and `InitializeComponent()`)",
         "`InvoiceForm.html` and `InvoiceForm.css`",
         "`InvoiceForm.main` and `InvoiceForm.sub`"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "Every Windows Form is split across two partial class files: `FormName.cs` for developer code and `FormName.Designer.cs` for the Visual Studio Designer's `InitializeComponent()` layout code.",
       "explanation": "Every Windows Form is split across two partial class files: `FormName.cs` for developer code and `FormName.Designer.cs` for the Visual Studio Designer's `InitializeComponent()` layout code.",
-      "distractorRationale": "Options other than \"`InvoiceForm.cs` (event handlers and custom logic) and `Invo\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
@@ -20826,27 +20826,27 @@
       "difficulty": "Advanced",
       "marks": 4,
       "estimatedMinutes": 3,
-      "q": "Why is a Windows Form class declared as `public partial class Form1 : Form`?",
-      "title": "Why is a Windows Form class declared as `public partial class Form1 : Form`?",
-      "stem": "Why is a Windows Form class declared as `public partial class Form1 : Form`?",
+      "q": "A modeless `HelpForm` instance stored in a class-level field `private HelpForm frmHelp = new HelpForm();` is shown via `frmHelp.Show();`. What happens if the user closes `frmHelp` via `this.Close();` vs `this.Hide();` and later clicks Open Help again?",
+      "title": "A modeless `HelpForm` instance stored in a class-level field `private HelpForm frmHelp = new HelpForm();` is shown via `frmHelp.Show();`. What happens if the user closes `frmHelp` via `this.Close();` vs `this.Hide();` and later clicks Open Help again?",
+      "stem": "A modeless `HelpForm` instance stored in a class-level field `private HelpForm frmHelp = new HelpForm();` is shown via `frmHelp.Show();`. What happens if the user closes `frmHelp` via `this.Close();` vs `this.Hide();` and later clicks Open Help again?",
       "code": "",
       "options": [
-        "Because the form only occupies part of the computer's screen.",
-        "Because the `Form1` class definition is split across two source files (`Form1.cs` and `Form1.Designer.cs`) that the compiler merges into one class.",
-        "Because the form cannot be instantiated with `new`.",
-        "Because the form has no event handlers."
+        "Both `this.Close()` and `this.Hide()` terminate the entire multiform application immediately, just like closing the startup form",
+        "`this.Close()` clears only `TextBox` controls, whereas `this.Hide()` resets all `Public` modifiers back to `Private`",
+        "`this.Close()` disposes a modeless form so calling `frmHelp.Show()` again throws `ObjectDisposedException`, whereas `this.Hide()` keeps the instance alive in memory so `frmHelp.Show()` re-displays it cleanly",
+        "`this.Hide()` permanently deletes `frmHelp` from RAM, whereas `this.Close()` merely minimizes it to the taskbar"
       ],
       "opts": [
-        "Because the form only occupies part of the computer's screen.",
-        "Because the `Form1` class definition is split across two source files (`Form1.cs` and `Form1.Designer.cs`) that the compiler merges into one class.",
-        "Because the form cannot be instantiated with `new`.",
-        "Because the form has no event handlers."
+        "Both `this.Close()` and `this.Hide()` terminate the entire multiform application immediately, just like closing the startup form",
+        "`this.Close()` clears only `TextBox` controls, whereas `this.Hide()` resets all `Public` modifiers back to `Private`",
+        "`this.Close()` disposes a modeless form so calling `frmHelp.Show()` again throws `ObjectDisposedException`, whereas `this.Hide()` keeps the instance alive in memory so `frmHelp.Show()` re-displays it cleanly",
+        "`this.Hide()` permanently deletes `frmHelp` from RAM, whereas `this.Close()` merely minimizes it to the taskbar"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "The `partial` keyword allows a single class (`Form1`) to be divided across multiple `.cs` files (`Form1.cs` and `Form1.Designer.cs`) so designer-generated code stays separate from your event handler code.",
-      "explanation": "The `partial` keyword allows a single class (`Form1`) to be divided across multiple `.cs` files (`Form1.cs` and `Form1.Designer.cs`) so designer-generated code stays separate from your event handler code.",
-      "distractorRationale": "Options other than \"Because the `Form1` class definition is split across two sou\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "answer": 2,
+      "ans": 2,
+      "exp": "Closing a modeless form (`Show()`) calls `Dispose()`, destroying its Win32 window handle; `Hide()` sets `Visible = false` without disposing the form instance so its state and controls remain reusable.",
+      "explanation": "Closing a modeless form (`Show()`) calls `Dispose()`, destroying its Win32 window handle; `Hide()` sets `Visible = false` without disposing the form instance so its state and controls remain reusable.",
+      "distractorRationale": "Only closing the startup form passed to `Application.Run(...)` exits the whole application; closing a secondary form disposes just that form.",
       "definitions": [
         "def_cross_form_modifiers",
         "def_form_instantiation"
@@ -20872,22 +20872,22 @@
       "stem": "In `ReceiptForm`, you declare `public decimal TotalDue;` at class level. How can `MainForm` pass `450.00m` into `TotalDue` before showing `ReceiptForm`?",
       "code": "",
       "options": [
-        "ReceiptForm.TotalDue = 450.00m; ReceiptForm.ShowDialog();",
         "this.TotalDue = 450.00m;",
-        "ReceiptForm frmReceipt = new ReceiptForm(); frmReceipt.TotalDue = 450.00m; frmReceipt.ShowDialog();",
-        "new ReceiptForm(450.00m).Close();"
+        "new ReceiptForm(450.00m).Close();",
+        "ReceiptForm.TotalDue = 450.00m; ReceiptForm.ShowDialog();",
+        "ReceiptForm frmReceipt = new ReceiptForm(); frmReceipt.TotalDue = 450.00m; frmReceipt.ShowDialog();"
       ],
       "opts": [
-        "ReceiptForm.TotalDue = 450.00m; ReceiptForm.ShowDialog();",
         "this.TotalDue = 450.00m;",
-        "ReceiptForm frmReceipt = new ReceiptForm(); frmReceipt.TotalDue = 450.00m; frmReceipt.ShowDialog();",
-        "new ReceiptForm(450.00m).Close();"
+        "new ReceiptForm(450.00m).Close();",
+        "ReceiptForm.TotalDue = 450.00m; ReceiptForm.ShowDialog();",
+        "ReceiptForm frmReceipt = new ReceiptForm(); frmReceipt.TotalDue = 450.00m; frmReceipt.ShowDialog();"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "Because `TotalDue` is an instance field on `ReceiptForm`, you first instantiate `ReceiptForm frmReceipt = new ReceiptForm();`, assign `frmReceipt.TotalDue = 450.00m;`, and then call `frmReceipt.ShowDialog();`.",
       "explanation": "Because `TotalDue` is an instance field on `ReceiptForm`, you first instantiate `ReceiptForm frmReceipt = new ReceiptForm();`, assign `frmReceipt.TotalDue = 450.00m;`, and then call `frmReceipt.ShowDialog();`.",
-      "distractorRationale": "Options other than \"ReceiptForm frmReceipt = new ReceiptForm(); frmReceipt.Total\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_cross_form_modifiers",
         "def_form_instantiation"
@@ -20913,22 +20913,22 @@
       "stem": "Suppose `MainForm` sets `frmReceipt.TotalDue = 450.00m;` and then calls `frmReceipt.ShowDialog();`. Inside `ReceiptForm`, which event handler is ideal for copying `TotalDue.ToString(\"C\")` into `lblTotal.Text` just before `ReceiptForm` appears?",
       "code": "",
       "options": [
-        "ReceiptForm_FormClosed",
-        "ReceiptForm_Deactivate",
+        "ReceiptForm_Load",
         "btnClose_Click",
-        "ReceiptForm_Load"
+        "ReceiptForm_FormClosed",
+        "ReceiptForm_Deactivate"
       ],
       "opts": [
-        "ReceiptForm_FormClosed",
-        "ReceiptForm_Deactivate",
+        "ReceiptForm_Load",
         "btnClose_Click",
-        "ReceiptForm_Load"
+        "ReceiptForm_FormClosed",
+        "ReceiptForm_Deactivate"
       ],
-      "answer": 3,
-      "ans": 3,
+      "answer": 0,
+      "ans": 0,
       "exp": "`ReceiptForm_Load` executes when `ShowDialog()` or `Show()` loads `ReceiptForm` for display — after `frmReceipt.TotalDue = 450.00m;` has already been assigned by `MainForm`.",
       "explanation": "`ReceiptForm_Load` executes when `ShowDialog()` or `Show()` loads `ReceiptForm` for display — after `frmReceipt.TotalDue = 450.00m;` has already been assigned by `MainForm`.",
-      "distractorRationale": "Options other than \"ReceiptForm_Load\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
@@ -20954,22 +20954,22 @@
       "stem": "Why does `SummaryForm.ShowDialog();` cause compiler error `CS0120 ('An object reference is required for the non-static field, method, or property')`?",
       "code": "",
       "options": [
+        "Because `ShowDialog()` can only be called inside `Program.cs`.",
         "Because `ShowDialog()` is an instance method that must be called on an instantiated form object (`SummaryForm frm = new SummaryForm(); frm.ShowDialog();`), not on the class name `SummaryForm`.",
         "Because `ShowDialog()` requires a `string` filename argument.",
-        "Because `SummaryForm` must be renamed to `Form2`.",
-        "Because `ShowDialog()` can only be called inside `Program.cs`."
+        "Because `SummaryForm` must be renamed to `Form2`."
       ],
       "opts": [
+        "Because `ShowDialog()` can only be called inside `Program.cs`.",
         "Because `ShowDialog()` is an instance method that must be called on an instantiated form object (`SummaryForm frm = new SummaryForm(); frm.ShowDialog();`), not on the class name `SummaryForm`.",
         "Because `ShowDialog()` requires a `string` filename argument.",
-        "Because `SummaryForm` must be renamed to `Form2`.",
-        "Because `ShowDialog()` can only be called inside `Program.cs`."
+        "Because `SummaryForm` must be renamed to `Form2`."
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 1,
+      "ans": 1,
       "exp": "`SummaryForm` is a class type, not an instance. You must create an object with `new SummaryForm()` and call `.ShowDialog()` on that object variable.",
       "explanation": "`SummaryForm` is a class type, not an instance. You must create an object with `new SummaryForm()` and call `.ShowDialog()` on that object variable.",
-      "distractorRationale": "Options other than \"Because `ShowDialog()` is an instance method that must be ca\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
@@ -20996,21 +20996,21 @@
       "code": "",
       "options": [
         "The startup form (`Form1`).",
-        "The current instance of `SummaryForm` in which the code is executing.",
         "Every open form in the application.",
+        "The current instance of `SummaryForm` in which the code is executing.",
         "The button control that was clicked."
       ],
       "opts": [
         "The startup form (`Form1`).",
-        "The current instance of `SummaryForm` in which the code is executing.",
         "Every open form in the application.",
+        "The current instance of `SummaryForm` in which the code is executing.",
         "The button control that was clicked."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Inside any form class method, `this` refers to the currently executing form instance. Calling `this.Close();` inside `SummaryForm` closes only that `SummaryForm` window.",
       "explanation": "Inside any form class method, `this` refers to the currently executing form instance. Calling `this.Close();` inside `SummaryForm` closes only that `SummaryForm` window.",
-      "distractorRationale": "Options other than \"The current instance of `SummaryForm` in which the code is e\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_close_vs_hide",
         "def_this_close",
@@ -21037,22 +21037,22 @@
       "stem": "On a modal form `ConfirmForm`, if you set a button `btnOk`'s `DialogResult` property to `DialogResult.OK` in the Properties window, what happens when the user clicks `btnOk` at runtime?",
       "code": "",
       "options": [
+        "It clears all TextBoxes on the startup form.",
         "The application crashes unless you write a `btnOk_Click` event handler.",
         "It opens an `OpenFileDialog` control.",
-        "It automatically closes the modal `ConfirmForm` and causes `frmConfirm.ShowDialog()` to return `DialogResult.OK` to the calling form.",
-        "It clears all TextBoxes on the startup form."
+        "It automatically closes the modal `ConfirmForm` and causes `frmConfirm.ShowDialog()` to return `DialogResult.OK` to the calling form."
       ],
       "opts": [
+        "It clears all TextBoxes on the startup form.",
         "The application crashes unless you write a `btnOk_Click` event handler.",
         "It opens an `OpenFileDialog` control.",
-        "It automatically closes the modal `ConfirmForm` and causes `frmConfirm.ShowDialog()` to return `DialogResult.OK` to the calling form.",
-        "It clears all TextBoxes on the startup form."
+        "It automatically closes the modal `ConfirmForm` and causes `frmConfirm.ShowDialog()` to return `DialogResult.OK` to the calling form."
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "Setting a button's `DialogResult` property on a modal form causes clicking that button to close the modal dialog automatically and return that `DialogResult` value from `ShowDialog()`.",
       "explanation": "Setting a button's `DialogResult` property on a modal form causes clicking that button to close the modal dialog automatically and return that `DialogResult` value from `ShowDialog()`.",
-      "distractorRationale": "Options other than \"It automatically closes the modal `ConfirmForm` and causes `\" violate C# type, operator, control property, or HCI semantics explained above.",
+      "distractorRationale": "",
       "definitions": [
         "def_form_instantiation",
         "def_modal_vs_modeless"
@@ -21079,18 +21079,18 @@
       "code": "",
       "options": [
         "using System.Data;",
-        "using System.IO;",
         "using System.Files;",
+        "using System.IO;",
         "using System.Text.Streams;"
       ],
       "opts": [
         "using System.Data;",
-        "using System.IO;",
         "using System.Files;",
+        "using System.IO;",
         "using System.Text.Streams;"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "`StreamWriter`, `StreamReader`, and the `File` class reside in the `System.IO` namespace.",
       "explanation": "`StreamWriter`, `StreamReader`, and the `File` class reside in the `System.IO` namespace.",
       "distractorRationale": "`System.Data` is for data tables; `System.Files` and `System.Text.Streams` do not exist in the .NET base class library.",
@@ -21119,19 +21119,19 @@
       "stem": "Suppose `log.txt` already exists on disk and contains three lines of text. What happens when the code below executes?",
       "code": "StreamWriter writer = File.CreateText(\"log.txt\");\nwriter.WriteLine(\"Session Started\");\nwriter.Close();",
       "options": [
-        "An `IOException` is thrown because `log.txt` already exists.",
         "The three existing lines are preserved and `\"Session Started\"` is added as line 4.",
-        "The existing file is overwritten so `log.txt` contains only `\"Session Started\"`.",
-        "A second file named `log(1).txt` is created automatically."
+        "A second file named `log(1).txt` is created automatically.",
+        "An `IOException` is thrown because `log.txt` already exists.",
+        "The existing file is overwritten so `log.txt` contains only `\"Session Started\"`."
       ],
       "opts": [
-        "An `IOException` is thrown because `log.txt` already exists.",
         "The three existing lines are preserved and `\"Session Started\"` is added as line 4.",
-        "The existing file is overwritten so `log.txt` contains only `\"Session Started\"`.",
-        "A second file named `log(1).txt` is created automatically."
+        "A second file named `log(1).txt` is created automatically.",
+        "An `IOException` is thrown because `log.txt` already exists.",
+        "The existing file is overwritten so `log.txt` contains only `\"Session Started\"`."
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 3,
+      "ans": 3,
       "exp": "`File.CreateText` creates the file if it does not exist, or truncates and overwrites the entire existing file if it already exists. Use `File.AppendText` when existing lines must be kept.",
       "explanation": "`File.CreateText` creates the file if it does not exist, or truncates and overwrites the entire existing file if it already exists. Use `File.AppendText` when existing lines must be kept.",
       "distractorRationale": "`File.AppendText` appends as line 4; `File.CreateText` never throws solely because the file exists and never renames files.",
@@ -21159,19 +21159,19 @@
       "stem": "How many lines will `output.txt` contain after the following code finishes executing?",
       "code": "StreamWriter outFile = File.CreateText(\"output.txt\");\noutFile.Write(\"A\");\noutFile.Write(\"B\");\noutFile.WriteLine(\"C\");\noutFile.WriteLine(\"D\");\noutFile.Close();",
       "options": [
-        "4 lines: A, B, C, D",
         "2 lines: ABC on line 1, and D on line 2",
-        "1 line: ABCD",
-        "3 lines: AB on line 1, C on line 2, and D on line 3"
+        "3 lines: AB on line 1, C on line 2, and D on line 3",
+        "4 lines: A, B, C, D",
+        "1 line: ABCD"
       ],
       "opts": [
-        "4 lines: A, B, C, D",
         "2 lines: ABC on line 1, and D on line 2",
-        "1 line: ABCD",
-        "3 lines: AB on line 1, C on line 2, and D on line 3"
+        "3 lines: AB on line 1, C on line 2, and D on line 3",
+        "4 lines: A, B, C, D",
+        "1 line: ABCD"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "`Write(\"A\")` and `Write(\"B\")` do not append a newline, so `\"C\"` from `WriteLine(\"C\")` completes line 1 as `\"ABC\"` and ends that line. `WriteLine(\"D\")` writes `\"D\"` on line 2.",
       "explanation": "`Write(\"A\")` and `Write(\"B\")` do not append a newline, so `\"C\"` from `WriteLine(\"C\")` completes line 1 as `\"ABC\"` and ends that line. `WriteLine(\"D\")` writes `\"D\"` on line 2.",
       "distractorRationale": "`Write()` stays on the current line whereas `WriteLine()` writes text followed by a line terminator.",
@@ -21199,16 +21199,16 @@
       "stem": "Why does `File.OpenText(\"C:\\temp\\notes.txt\")` fail even when `C:\\temp\\notes.txt` exists on the computer?",
       "code": "",
       "options": [
-        "`File.OpenText` only accepts relative filenames, never drive letters.",
-        "Without the `@` verbatim prefix or doubled backslashes, `\\t` is interpreted as a Tab character and `\\n` as a Newline character.",
         "`File.OpenText` returns a `StreamWriter` instead of a `StreamReader`.",
-        "Text filenames in C# must use uppercase `.TXT` extensions."
+        "Without the `@` verbatim prefix or doubled backslashes, `\\t` is interpreted as a Tab character and `\\n` as a Newline character.",
+        "Text filenames in C# must use uppercase `.TXT` extensions.",
+        "`File.OpenText` only accepts relative filenames, never drive letters."
       ],
       "opts": [
-        "`File.OpenText` only accepts relative filenames, never drive letters.",
-        "Without the `@` verbatim prefix or doubled backslashes, `\\t` is interpreted as a Tab character and `\\n` as a Newline character.",
         "`File.OpenText` returns a `StreamWriter` instead of a `StreamReader`.",
-        "Text filenames in C# must use uppercase `.TXT` extensions."
+        "Without the `@` verbatim prefix or doubled backslashes, `\\t` is interpreted as a Tab character and `\\n` as a Newline character.",
+        "Text filenames in C# must use uppercase `.TXT` extensions.",
+        "`File.OpenText` only accepts relative filenames, never drive letters."
       ],
       "answer": 1,
       "ans": 1,
@@ -21240,19 +21240,19 @@
       "stem": "Suppose `numbers.txt` contains four lines: `10`, `20`, `30`, and `40`. What is displayed in `lblSum` after the buggy loop below runs?",
       "code": "StreamReader reader = File.OpenText(\"numbers.txt\");\nint sum = 0;\nwhile (!reader.EndOfStream)\n{\n    reader.ReadLine();\n    sum += int.Parse(reader.ReadLine());\n}\nreader.Close();\nlblSum.Text = sum.ToString();",
       "options": [
+        "50",
         "100",
         "60",
-        "40",
-        "50"
+        "40"
       ],
       "opts": [
+        "50",
         "100",
         "60",
-        "40",
-        "50"
+        "40"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "`reader.ReadLine()` is called TWICE per iteration! Iteration 1 discards `\"10\"` and adds `20`; Iteration 2 discards `\"30\"` and adds `40`, producing `20 + 40 = 60` (and if the file had an odd number of lines, the second `ReadLine()` would return `null` and throw `ArgumentNullException`!).",
       "explanation": "`reader.ReadLine()` is called TWICE per iteration! Iteration 1 discards `\"10\"` and adds `20`; Iteration 2 discards `\"30\"` and adds `40`, producing `20 + 40 = 60` (and if the file had an odd number of lines, the second `ReadLine()` would return `null` and throw `ArgumentNullException`!).",
       "distractorRationale": "`100` would occur only if `ReadLine()` were called once per pass and stored in a string variable.",
@@ -21276,27 +21276,27 @@
       "difficulty": "Foundational",
       "marks": 2,
       "estimatedMinutes": 2,
-      "q": "When you drag an `OpenFileDialog` or `SaveFileDialog` tool from the Visual Studio Toolbox onto a Windows Form, where does it appear?",
-      "title": "When you drag an `OpenFileDialog` or `SaveFileDialog` tool from the Visual Studio Toolbox onto a Windows Form, where does it appear?",
-      "stem": "When you drag an `OpenFileDialog` or `SaveFileDialog` tool from the Visual Studio Toolbox onto a Windows Form, where does it appear?",
+      "q": "Which `Filter` string correctly configures an `OpenFileDialog` (`ofdInput`) to offer `'Text Files (*.txt)'` first and `'All Files (*.*)'` second?",
+      "title": "Which `Filter` string correctly configures an `OpenFileDialog` (`ofdInput`) to offer `'Text Files (*.txt)'` first and `'All Files (*.*)'` second?",
+      "stem": "Which `Filter` string correctly configures an `OpenFileDialog` (`ofdInput`) to offer `'Text Files (*.txt)'` first and `'All Files (*.*)'` second?",
       "code": "",
       "options": [
-        "Centered in the middle of the Form as a permanent text box",
-        "In the Component Tray beneath the Form Designer surface",
-        "Inside `Program.cs` only, with no visual icon in the Designer",
-        "Inside the Solution Explorer `Properties` folder"
+        "ofdInput.Filter = \"*.txt, *.*\";",
+        "ofdInput.Filter = \"Text Files: *.txt; All Files: *.*\";",
+        "ofdInput.FileName = \"Text Files (*.txt)|*.txt\";",
+        "ofdInput.Filter = \"Text Files (*.txt)|*.txt|All Files (*.*)|*.*\";"
       ],
       "opts": [
-        "Centered in the middle of the Form as a permanent text box",
-        "In the Component Tray beneath the Form Designer surface",
-        "Inside `Program.cs` only, with no visual icon in the Designer",
-        "Inside the Solution Explorer `Properties` folder"
+        "ofdInput.Filter = \"*.txt, *.*\";",
+        "ofdInput.Filter = \"Text Files: *.txt; All Files: *.*\";",
+        "ofdInput.FileName = \"Text Files (*.txt)|*.txt\";",
+        "ofdInput.Filter = \"Text Files (*.txt)|*.txt|All Files (*.*)|*.*\";"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "`OpenFileDialog` and `SaveFileDialog` are non-visual components at design time, so Visual Studio places them in the **Component Tray** at the bottom of the Form Designer.",
-      "explanation": "`OpenFileDialog` and `SaveFileDialog` are non-visual components at design time, so Visual Studio places them in the **Component Tray** at the bottom of the Form Designer.",
-      "distractorRationale": "Dialog components have no permanent rectangular footprint on the form until `ShowDialog()` is called at runtime.",
+      "answer": 3,
+      "ans": 3,
+      "exp": "Windows Forms file dialog `Filter` strings alternate `Description|Pattern` pairs separated by vertical pipe characters (`|`) with no spaces around the pipe before the pattern.",
+      "explanation": "Windows Forms file dialog `Filter` strings alternate `Description|Pattern` pairs separated by vertical pipe characters (`|`) with no spaces around the pipe before the pattern.",
+      "distractorRationale": "Commas or colons without `|` pipe pairs throw an `ArgumentException` (`Filter string you provided is not valid`), and `FileName` stores the selected file path, not filter masks.",
       "definitions": [
         "def_file_dialogs",
         "def_toolbox"
@@ -21322,19 +21322,19 @@
       "stem": "Which `if` statement correctly opens the file chosen by the user in an `OpenFileDialog` named `ofdData` only when the user clicks **Open/OK**?",
       "code": "",
       "options": [
-        "if (ofdData.ShowDialog() == true)\n{\n    StreamReader sr = File.OpenText(ofdData.FileName);\n}",
         "if (ofdData.ShowDialog() == DialogResult.OK)\n{\n    StreamReader sr = File.OpenText(ofdData.FileName);\n}",
         "if (ofdData.OpenFile() == DialogResult.OK)\n{\n    StreamReader sr = new StreamReader(ofdData.Text);\n}",
-        "if (ofdData.Show() == DialogResult.Yes)\n{\n    StreamReader sr = File.OpenText(ofdData.Path);\n}"
+        "if (ofdData.Show() == DialogResult.Yes)\n{\n    StreamReader sr = File.OpenText(ofdData.Path);\n}",
+        "if (ofdData.ShowDialog() == true)\n{\n    StreamReader sr = File.OpenText(ofdData.FileName);\n}"
       ],
       "opts": [
-        "if (ofdData.ShowDialog() == true)\n{\n    StreamReader sr = File.OpenText(ofdData.FileName);\n}",
         "if (ofdData.ShowDialog() == DialogResult.OK)\n{\n    StreamReader sr = File.OpenText(ofdData.FileName);\n}",
         "if (ofdData.OpenFile() == DialogResult.OK)\n{\n    StreamReader sr = new StreamReader(ofdData.Text);\n}",
-        "if (ofdData.Show() == DialogResult.Yes)\n{\n    StreamReader sr = File.OpenText(ofdData.Path);\n}"
+        "if (ofdData.Show() == DialogResult.Yes)\n{\n    StreamReader sr = File.OpenText(ofdData.Path);\n}",
+        "if (ofdData.ShowDialog() == true)\n{\n    StreamReader sr = File.OpenText(ofdData.FileName);\n}"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "`ShowDialog()` returns a `DialogResult` value (`DialogResult.OK` when confirmed), and the selected path is stored in `ofdData.FileName` (with capital `F` and capital `N`).",
       "explanation": "`ShowDialog()` returns a `DialogResult` value (`DialogResult.OK` when confirmed), and the selected path is stored in `ofdData.FileName` (with capital `F` and capital `N`).",
       "distractorRationale": "`ShowDialog()` does not return `bool`, `.FileName` has wrong casing, and `FileDialog` has no `.Text` or `.Path` property.",
@@ -21354,31 +21354,31 @@
       "topicTitle": "OpenFileDialog, SaveFileDialog & Component Tray",
       "learningObjective": "Write and trace while, do-while, and for loops, distinguishing pretest from posttest execution.",
       "type": "mcq",
-      "questionType": "concept-comparison",
+      "questionType": "file-handling",
       "difficulty": "Foundational",
       "marks": 2,
       "estimatedMinutes": 2,
-      "q": "Which property of an `OpenFileDialog` or `SaveFileDialog` sets the folder initially displayed when the dialog opens?",
-      "title": "Which property of an `OpenFileDialog` or `SaveFileDialog` sets the folder initially displayed when the dialog opens?",
-      "stem": "Which property of an `OpenFileDialog` or `SaveFileDialog` sets the folder initially displayed when the dialog opens?",
+      "q": "Why does `File.OpenText(@\"C:\\Data\\Marks.txt\")` compile cleanly in C#, whereas `File.OpenText(\"C:\\Data\\Marks.txt\")` without `@` fails to compile?",
+      "title": "Why does `File.OpenText(@\"C:\\Data\\Marks.txt\")` compile cleanly in C#, whereas `File.OpenText(\"C:\\Data\\Marks.txt\")` without `@` fails to compile?",
+      "stem": "Why does `File.OpenText(@\"C:\\Data\\Marks.txt\")` compile cleanly in C#, whereas `File.OpenText(\"C:\\Data\\Marks.txt\")` without `@` fails to compile?",
       "code": "",
       "options": [
-        "StartFolder",
-        "DefaultPath",
-        "InitialDirectory",
-        "RootDirectory"
+        "`File.OpenText` only accepts verbatim strings and rejects `C:\\\\Data\\\\Marks.txt` with doubled backslashes",
+        "Without the `@` verbatim prefix, `\\D` and `\\M` inside a regular string literal are parsed as unrecognized escape sequences (`CS1009`); `@` treats backslashes literally",
+        "Without `@`, C# opens the file over a network socket instead of the local file system",
+        "The `@` prefix automatically creates `Marks.txt` on disk if the folder `C:\\Data` does not exist"
       ],
       "opts": [
-        "StartFolder",
-        "DefaultPath",
-        "InitialDirectory",
-        "RootDirectory"
+        "`File.OpenText` only accepts verbatim strings and rejects `C:\\\\Data\\\\Marks.txt` with doubled backslashes",
+        "Without the `@` verbatim prefix, `\\D` and `\\M` inside a regular string literal are parsed as unrecognized escape sequences (`CS1009`); `@` treats backslashes literally",
+        "Without `@`, C# opens the file over a network socket instead of the local file system",
+        "The `@` prefix automatically creates `Marks.txt` on disk if the folder `C:\\Data` does not exist"
       ],
-      "answer": 2,
-      "ans": 2,
-      "exp": "Setting `ofd.InitialDirectory = @\"C:\\Data\";` configures the starting directory shown when `ShowDialog()` opens.",
-      "explanation": "Setting `ofd.InitialDirectory = @\"C:\\Data\";` configures the starting directory shown when `ShowDialog()` opens.",
-      "distractorRationale": "`StartFolder`, `DefaultPath`, and `RootDirectory` are not properties of `OpenFileDialog`/`SaveFileDialog`.",
+      "answer": 1,
+      "ans": 1,
+      "exp": "In a standard C# string literal, `\\` starts an escape sequence (`\\n`, `\\t`, `\\\\`). Writing `@\"...\"` defines a verbatim string literal in which backslashes are literal path separators.",
+      "explanation": "In a standard C# string literal, `\\` starts an escape sequence (`\\n`, `\\t`, `\\\\`). Writing `@\"...\"` defines a verbatim string literal in which backslashes are literal path separators.",
+      "distractorRationale": "Doubled backslashes `\"C:\\\\Data\\\\Marks.txt\"` also compile validly, and `@` is purely a lexical string feature—it does not create missing files or directories.",
       "definitions": [
         "def_file_dialogs"
       ],
@@ -21403,19 +21403,19 @@
       "stem": "A raffle has ticket numbers from **100** to **500** inclusive. Given `Random rand = new Random();`, which expression generates every valid ticket number with equal probability?",
       "code": "",
       "options": [
+        "rand.Next(500) + 100",
         "rand.Next(100, 500)",
         "rand.Next(100, 501)",
-        "rand.Next(99, 500)",
-        "rand.Next(500) + 100"
+        "rand.Next(99, 500)"
       ],
       "opts": [
+        "rand.Next(500) + 100",
         "rand.Next(100, 500)",
         "rand.Next(100, 501)",
-        "rand.Next(99, 500)",
-        "rand.Next(500) + 100"
+        "rand.Next(99, 500)"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "In `rand.Next(minValue, maxValue)`, `minValue` is inclusive (`100`) and `maxValue` is strictly exclusive (`501`), producing integers `100` through `500` inclusive.",
       "explanation": "In `rand.Next(minValue, maxValue)`, `minValue` is inclusive (`100`) and `maxValue` is strictly exclusive (`501`), producing integers `100` through `500` inclusive.",
       "distractorRationale": "`Next(100, 500)` excludes `500`; `Next(99, 500)` includes `99` and excludes `500`; `Next(500) + 100` produces `100..599`.",
@@ -21443,19 +21443,19 @@
       "stem": "What text is assigned to `lblOut.Text` after the following code executes?",
       "code": "int x = 3;\nint y = x++ + ++x;\nlblOut.Text = $\"{x},{y}\";",
       "options": [
-        "5,8",
         "5,7",
         "4,7",
-        "5,6"
+        "5,6",
+        "5,8"
       ],
       "opts": [
-        "5,8",
         "5,7",
         "4,7",
-        "5,6"
+        "5,6",
+        "5,8"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "C# evaluates operands strictly left-to-right: `x++` evaluates to `3` and increments `x` to `4`; next, `++x` increments `x` from `4` to `5` and evaluates to `5`. Thus `y = 3 + 5 = 8` and `x = 5`, outputting `\"5,8\"`.",
       "explanation": "C# evaluates operands strictly left-to-right: `x++` evaluates to `3` and increments `x` to `4`; next, `++x` increments `x` from `4` to `5` and evaluates to `5`. Thus `y = 3 + 5 = 8` and `x = 5`, outputting `\"5,8\"`.",
       "distractorRationale": "Left-to-right operand evaluation means `++x` sees `x == 4` (already incremented by `x++`), yielding `3 + 5 = 8`.",
@@ -21484,18 +21484,18 @@
       "code": "",
       "options": [
         "Namespace, class keyword, variable type, and return statement",
-        "Access modifier, return type, method name, and parameter list in parentheses",
         "Event delegate, sender object, return value, and semicolon",
+        "Access modifier, return type, method name, and parameter list in parentheses",
         "Visibility tag, data literal, control prefix, and curly braces"
       ],
       "opts": [
         "Namespace, class keyword, variable type, and return statement",
-        "Access modifier, return type, method name, and parameter list in parentheses",
         "Event delegate, sender object, return value, and semicolon",
+        "Access modifier, return type, method name, and parameter list in parentheses",
         "Visibility tag, data literal, control prefix, and curly braces"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "A C# method header specifies (1) access modifier (`private`/`public`), (2) return type (`void`, `int`, `decimal`, etc.), (3) PascalCase method name, and (4) parenthesised parameter list—with NO trailing semicolon.",
       "explanation": "A C# method header specifies (1) access modifier (`private`/`public`), (2) return type (`void`, `int`, `decimal`, etc.), (3) PascalCase method name, and (4) parenthesised parameter list—with NO trailing semicolon.",
       "distractorRationale": "Curly braces and `return` statements belong to the method body, and a semicolon after a regular method header causes a syntax error.",
@@ -21524,18 +21524,18 @@
       "code": "private void ShowBanner();\n{\n    lblTitle.Text = \"Welcome\";\n}",
       "options": [
         "`void` methods must always accept `object sender, EventArgs e`.",
-        "There is an illegal semicolon `;` immediately after `ShowBanner()` in the method header.",
         "`ShowBanner` must be declared `public` to access `lblTitle`.",
-        "A `void` method must end with `return 0;`."
+        "A `void` method must end with `return 0;`.",
+        "There is an illegal semicolon `;` immediately after `ShowBanner()` in the method header."
       ],
       "opts": [
         "`void` methods must always accept `object sender, EventArgs e`.",
-        "There is an illegal semicolon `;` immediately after `ShowBanner()` in the method header.",
         "`ShowBanner` must be declared `public` to access `lblTitle`.",
-        "A `void` method must end with `return 0;`."
+        "A `void` method must end with `return 0;`.",
+        "There is an illegal semicolon `;` immediately after `ShowBanner()` in the method header."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Putting a semicolon at the end of a regular method header (`private void ShowBanner();`) makes the compiler treat it as a bodyless declaration (CS0501). Remove the semicolon before `{`.",
       "explanation": "Putting a semicolon at the end of a regular method header (`private void ShowBanner();`) makes the compiler treat it as a bodyless declaration (CS0501). Remove the semicolon before `{`.",
       "distractorRationale": "Custom `void` methods need no parameters, can be `private`, and never return a numeric value.",
@@ -21564,19 +21564,19 @@
       "stem": "What happens at the **return point** when a `void` helper method finishes executing its last statement?",
       "code": "",
       "options": [
-        "The entire Windows Forms application closes immediately.",
         "Execution jumps back to the caller statement immediately following the method call.",
-        "Execution restarts from the first line of `Form1_Load`.",
-        "The compiler automatically refreshes all TextBoxes on the form."
+        "The compiler automatically refreshes all TextBoxes on the form.",
+        "The entire Windows Forms application closes immediately.",
+        "Execution restarts from the first line of `Form1_Load`."
       ],
       "opts": [
-        "The entire Windows Forms application closes immediately.",
         "Execution jumps back to the caller statement immediately following the method call.",
-        "Execution restarts from the first line of `Form1_Load`.",
-        "The compiler automatically refreshes all TextBoxes on the form."
+        "The compiler automatically refreshes all TextBoxes on the form.",
+        "The entire Windows Forms application closes immediately.",
+        "Execution restarts from the first line of `Form1_Load`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "When a method is called, the runtime records the return address on the call stack; when the method finishes, execution resumes at the statement right after the call.",
       "explanation": "When a method is called, the runtime records the return address on the call stack; when the method finishes, execution resumes at the statement right after the call.",
       "distractorRationale": "Only closing the startup form exits the app, and `Form1_Load` does not re-run after helper calls.",
@@ -21604,16 +21604,16 @@
       "stem": "Is `return;` (with no expression) legal inside a `void` method in C#?",
       "code": "",
       "options": [
-        "No—the `return` keyword is strictly forbidden inside `void` methods.",
+        "Only if `return null;` is written instead.",
         "Yes—a bare `return;` immediately exits the `void` method and returns control to the caller.",
-        "Only if the `void` method is a `Click` event handler.",
-        "Only if `return null;` is written instead."
+        "No—the `return` keyword is strictly forbidden inside `void` methods.",
+        "Only if the `void` method is a `Click` event handler."
       ],
       "opts": [
-        "No—the `return` keyword is strictly forbidden inside `void` methods.",
+        "Only if `return null;` is written instead.",
         "Yes—a bare `return;` immediately exits the `void` method and returns control to the caller.",
-        "Only if the `void` method is a `Click` event handler.",
-        "Only if `return null;` is written instead."
+        "No—the `return` keyword is strictly forbidden inside `void` methods.",
+        "Only if the `void` method is a `Click` event handler."
       ],
       "answer": 1,
       "ans": 1,
@@ -21644,19 +21644,19 @@
       "stem": "Why does the C# compiler reject the method below with error **CS0161** (`not all code paths return a value`)?",
       "code": "private string ClassifyTemp(double temp)\n{\n    if (temp >= 30.0)\n        return \"Hot\";\n    else if (temp < 30.0)\n        return \"Mild\";\n}",
       "options": [
-        "`string` cannot be used as a method return type in C#.",
-        "The compiler does not prove `else if (temp < 30.0)` covers all cases (for example `double.NaN` or missing final `else`), so a fallback `else` or final `return` is required.",
         "`return` statements cannot appear inside `if` branches.",
-        "`temp` must be passed with `ref`."
+        "`temp` must be passed with `ref`.",
+        "The compiler does not prove `else if (temp < 30.0)` covers all cases (for example `double.NaN` or missing final `else`), so a fallback `else` or final `return` is required.",
+        "`string` cannot be used as a method return type in C#."
       ],
       "opts": [
-        "`string` cannot be used as a method return type in C#.",
-        "The compiler does not prove `else if (temp < 30.0)` covers all cases (for example `double.NaN` or missing final `else`), so a fallback `else` or final `return` is required.",
         "`return` statements cannot appear inside `if` branches.",
-        "`temp` must be passed with `ref`."
+        "`temp` must be passed with `ref`.",
+        "The compiler does not prove `else if (temp < 30.0)` covers all cases (for example `double.NaN` or missing final `else`), so a fallback `else` or final `return` is required.",
+        "`string` cannot be used as a method return type in C#."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "C# static flow analysis requires an unconditional `else` branch or a final `return` statement so every syntactically reachable path returns a `string` (moreover, for `double.NaN`, both `>= 30.0` and `< 30.0` are `false`!).",
       "explanation": "C# static flow analysis requires an unconditional `else` branch or a final `return` statement so every syntactically reachable path returns a `string` (moreover, for `double.NaN`, both `>= 30.0` and `< 30.0` are `false`!).",
       "distractorRationale": "`string` return types and `return` inside `if` are valid; replacing `else if (temp < 30.0)` with `else` fixes CS0161.",
@@ -21684,19 +21684,19 @@
       "stem": "A student writes the code below, compiles with 0 errors, clicks the button, and sees `R 200.00` instead of `R 230.00`. Why?",
       "code": "private decimal AddVat(decimal amount)\n{\n    return amount * 1.15m;\n}\n\nprivate void btnCalc_Click(object sender, EventArgs e)\n{\n    decimal price = 200m;\n    AddVat(price);\n    lblTotal.Text = price.ToString(\"C\");\n}",
       "options": [
-        "`1.15m` is rounded down to `1` by `decimal` multiplication.",
-        "`AddVat(price);` returns `230.00m`, but the caller discards the return value instead of assigning `price = AddVat(price);`.",
         "`AddVat` must be declared `public` to return a `decimal`.",
-        "`price` was reset by `.ToString(\"C\")`."
+        "`price` was reset by `.ToString(\"C\")`.",
+        "`1.15m` is rounded down to `1` by `decimal` multiplication.",
+        "`AddVat(price);` returns `230.00m`, but the caller discards the return value instead of assigning `price = AddVat(price);`."
       ],
       "opts": [
-        "`1.15m` is rounded down to `1` by `decimal` multiplication.",
-        "`AddVat(price);` returns `230.00m`, but the caller discards the return value instead of assigning `price = AddVat(price);`.",
         "`AddVat` must be declared `public` to return a `decimal`.",
-        "`price` was reset by `.ToString(\"C\")`."
+        "`price` was reset by `.ToString(\"C\")`.",
+        "`1.15m` is rounded down to `1` by `decimal` multiplication.",
+        "`AddVat(price);` returns `230.00m`, but the caller discards the return value instead of assigning `price = AddVat(price);`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "`price` is passed by value, and `AddVat(price);` returns `230.00m` to the call site. Because the return value is never assigned (`price = AddVat(price);`), `price` stays `200m`.",
       "explanation": "`price` is passed by value, and `AddVat(price);` returns `230.00m` to the call site. Because the return value is never assigned (`price = AddVat(price);`), `price` stays `200m`.",
       "distractorRationale": "Discarding a value-returning method’s result compiles without error in C#, making it a classic exam logic bug.",
@@ -21725,19 +21725,19 @@
       "stem": "Given `private decimal CalcFee(int hours, decimal rate)`, which statement inside `btnCompute_Click` calls `CalcFee` with `5` hours and `R 120.00` per hour?",
       "code": "",
       "options": [
-        "decimal fee = CalcFee(int 5, decimal 120.00m);",
         "decimal fee = CalcFee(5, 120.00m);",
+        "decimal fee = CalcFee(int 5, decimal 120.00m);",
         "CalcFee(5, 120.00m) = decimal fee;",
         "decimal fee = private CalcFee(5, 120.00m);"
       ],
       "opts": [
-        "decimal fee = CalcFee(int 5, decimal 120.00m);",
         "decimal fee = CalcFee(5, 120.00m);",
+        "decimal fee = CalcFee(int 5, decimal 120.00m);",
         "CalcFee(5, 120.00m) = decimal fee;",
         "decimal fee = private CalcFee(5, 120.00m);"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Method calls supply only argument expressions in matching order (`CalcFee(5, 120.00m)`); parameter data types and access modifiers belong exclusively in the method header.",
       "explanation": "Method calls supply only argument expressions in matching order (`CalcFee(5, 120.00m)`); parameter data types and access modifiers belong exclusively in the method header.",
       "distractorRationale": "Writing `int` or `decimal` or `private` inside a method call causes a C# syntax error.",
@@ -21806,19 +21806,19 @@
       "stem": "What is displayed in `lblOut` when the code below runs?",
       "code": "private int ComputeDiff(int first, int second)\n{\n    return first - second;\n}\n\nprivate void btnGo_Click(object sender, EventArgs e)\n{\n    int second = 20;\n    int first = 8;\n    lblOut.Text = ComputeDiff(second, first).ToString();\n}",
       "options": [
+        "0",
         "-12",
         "12",
-        "28",
-        "0"
+        "28"
       ],
       "opts": [
+        "0",
         "-12",
         "12",
-        "28",
-        "0"
+        "28"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Arguments match parameters **by position**, not by variable name! The first argument `second` (`20`) binds to parameter `first`, and the second argument `first` (`8`) binds to parameter `second`, computing `20 - 8 = 12`.",
       "explanation": "Arguments match parameters **by position**, not by variable name! The first argument `second` (`20`) binds to parameter `first`, and the second argument `first` (`8`) binds to parameter `second`, computing `20 - 8 = 12`.",
       "distractorRationale": "Students who match by identifier name instead of argument position mistakenly compute `8 - 20 = -12`.",
@@ -21846,19 +21846,19 @@
       "stem": "Why does the code below fail to compile?",
       "code": "private void AddPenalty(ref int points)\n{\n    points += 5;\n}\n\nprivate void btnApply_Click(object sender, EventArgs e)\n{\n    int score;\n    AddPenalty(ref score);\n    lblScore.Text = score.ToString();\n}",
       "options": [
+        "`ref` should be written in the method header only, not in `AddPenalty(ref score);`.",
         "`ref` cannot be used with `int` variables.",
-        "`score` is uninitialised before being passed as a `ref` argument (compiler error CS0165).",
         "`AddPenalty` must return an `int` when using `ref`.",
-        "`ref` should be written in the method header only, not in `AddPenalty(ref score);`."
+        "`score` is uninitialised before being passed as a `ref` argument (compiler error CS0165)."
       ],
       "opts": [
+        "`ref` should be written in the method header only, not in `AddPenalty(ref score);`.",
         "`ref` cannot be used with `int` variables.",
-        "`score` is uninitialised before being passed as a `ref` argument (compiler error CS0165).",
         "`AddPenalty` must return an `int` when using `ref`.",
-        "`ref` should be written in the method header only, not in `AddPenalty(ref score);`."
+        "`score` is uninitialised before being passed as a `ref` argument (compiler error CS0165)."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "C# strictly requires any variable passed with `ref` to be definitely assigned a value **before** the method call (`int score = 0;`).",
       "explanation": "C# strictly requires any variable passed with `ref` to be definitely assigned a value **before** the method call (`int score = 0;`).",
       "distractorRationale": "An `out` argument can be uninitialised before the call, whereas a `ref` argument must already be initialised.",
@@ -21886,19 +21886,19 @@
       "stem": "Why does the method below fail to compile with error **CS0177**?",
       "code": "private void CheckDiscount(decimal spend, out decimal rate)\n{\n    if (spend >= 1000m)\n    {\n        rate = 0.15m;\n    }\n}",
       "options": [
-        "`out` parameters are allowed only in `bool`-returning methods.",
         "When `spend < 1000m`, `rate` is never assigned a value before the method returns.",
+        "`out` parameters are allowed only in `bool`-returning methods.",
         "`spend` must also be marked `out`.",
         "`0.15m` cannot be assigned to a `decimal`."
       ],
       "opts": [
-        "`out` parameters are allowed only in `bool`-returning methods.",
         "When `spend < 1000m`, `rate` is never assigned a value before the method returns.",
+        "`out` parameters are allowed only in `bool`-returning methods.",
         "`spend` must also be marked `out`.",
         "`0.15m` cannot be assigned to a `decimal`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "An `out` parameter MUST be assigned a value on **every** reachable return path before control leaves the method (e.g., adding `else { rate = 0m; }`).",
       "explanation": "An `out` parameter MUST be assigned a value on **every** reachable return path before control leaves the method (e.g., adding `else { rate = 0m; }`).",
       "distractorRationale": "`out` works on both `void` and value-returning methods, and `spend` is a normal input value parameter.",
@@ -21969,19 +21969,19 @@
       "stem": "Given `private void ResetCounter(ref int count) { count = 0; }`, why does `ResetCounter(0);` fail to compile?",
       "code": "",
       "options": [
-        "`0` is a `double` literal rather than an `int`.",
-        "A `ref` or `out` argument must be an assignable variable—never a constant literal or arithmetic expression.",
         "`ResetCounter` must be `static`.",
-        "`count = 0;` is not allowed inside a `void` method."
+        "`count = 0;` is not allowed inside a `void` method.",
+        "A `ref` or `out` argument must be an assignable variable—never a constant literal or arithmetic expression.",
+        "`0` is a `double` literal rather than an `int`."
       ],
       "opts": [
-        "`0` is a `double` literal rather than an `int`.",
-        "A `ref` or `out` argument must be an assignable variable—never a constant literal or arithmetic expression.",
         "`ResetCounter` must be `static`.",
-        "`count = 0;` is not allowed inside a `void` method."
+        "`count = 0;` is not allowed inside a `void` method.",
+        "A `ref` or `out` argument must be an assignable variable—never a constant literal or arithmetic expression.",
+        "`0` is a `double` literal rather than an `int`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Because `ref` and `out` pass the memory address of a variable so the callee can write to it, passing a literal like `0` or an expression like `x + 1` causes compiler error CS1510.",
       "explanation": "Because `ref` and `out` pass the memory address of a variable so the callee can write to it, passing a literal like `0` or an expression like `x + 1` causes compiler error CS1510.",
       "distractorRationale": "`0` is an `int` literal, not a variable storage location.",
@@ -22009,19 +22009,19 @@
       "stem": "Given `private void Swap(ref int first, ref int second)`, which call from `btnSwap_Click` is syntactically valid for `int a = 3, b = 9;`?",
       "code": "",
       "options": [
-        "Swap(a, b);",
-        "Swap(ref a, ref b);",
         "Swap(ref int a, ref int b);",
-        "ref Swap(a, b);"
+        "ref Swap(a, b);",
+        "Swap(a, b);",
+        "Swap(ref a, ref b);"
       ],
       "opts": [
-        "Swap(a, b);",
-        "Swap(ref a, ref b);",
         "Swap(ref int a, ref int b);",
-        "ref Swap(a, b);"
+        "ref Swap(a, b);",
+        "Swap(a, b);",
+        "Swap(ref a, ref b);"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "C# requires the `ref` keyword in **both** the parameter declaration and every corresponding argument at the call site: `Swap(ref a, ref b);`.",
       "explanation": "C# requires the `ref` keyword in **both** the parameter declaration and every corresponding argument at the call site: `Swap(ref a, ref b);`.",
       "distractorRationale": "`Swap(a, b);` triggers CS1620 (`Argument must be passed with the ref keyword`); `ref int a` is invalid because `a` is already declared.",
@@ -22049,19 +22049,19 @@
       "stem": "What is wrong with the `Swap` implementation below when `a = 5` and `b = 9`?",
       "code": "private void Swap(ref int a, ref int b)\n{\n    a = b;\n    b = a;\n}",
       "options": [
-        "Compiler error because two `ref` parameters cannot have the same type.",
         "Logic error: `a = b;` overwrites `a` with `9` before saving the original `5` in a `temp` variable, leaving BOTH `a` and `b` equal to `9`!",
-        "`a` and `b` remain `5` and `9` because `Swap` is `void`.",
-        "Runtime `StackOverflowException`."
+        "Runtime `StackOverflowException`.",
+        "Compiler error because two `ref` parameters cannot have the same type.",
+        "`a` and `b` remain `5` and `9` because `Swap` is `void`."
       ],
       "opts": [
-        "Compiler error because two `ref` parameters cannot have the same type.",
         "Logic error: `a = b;` overwrites `a` with `9` before saving the original `5` in a `temp` variable, leaving BOTH `a` and `b` equal to `9`!",
-        "`a` and `b` remain `5` and `9` because `Swap` is `void`.",
-        "Runtime `StackOverflowException`."
+        "Runtime `StackOverflowException`.",
+        "Compiler error because two `ref` parameters cannot have the same type.",
+        "`a` and `b` remain `5` and `9` because `Swap` is `void`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Without `int temp = a; a = b; b = temp;`, assigning `a = b;` destroys `a`’s original value (`5`), so `b = a;` sets `b` to `9` as well.",
       "explanation": "Without `int temp = a; a = b; b = temp;`, assigning `a = b;` destroys `a`’s original value (`5`), so `b = a;` sets `b` to `9` as well.",
       "distractorRationale": "It compiles cleanly (0 syntax errors) and mutates the caller variables via `ref`, making it a pure logic error.",
@@ -22090,16 +22090,16 @@
       "stem": "Which pair of method headers inside `Form1` represents **valid** C# method overloading?",
       "code": "",
       "options": [
-        "`private int Calc(int x)` and `private double Calc(int y)`",
+        "`private decimal Calc(int qty)` and `private decimal Calc(int count)`",
         "`private decimal Calc(decimal price)` and `private decimal Calc(decimal price, decimal discountRate)`",
-        "`private void Calc(int x)` and `public int Calc(int x)`",
-        "`private decimal Calc(int qty)` and `private decimal Calc(int count)`"
+        "`private int Calc(int x)` and `private double Calc(int y)`",
+        "`private void Calc(int x)` and `public int Calc(int x)`"
       ],
       "opts": [
-        "`private int Calc(int x)` and `private double Calc(int y)`",
+        "`private decimal Calc(int qty)` and `private decimal Calc(int count)`",
         "`private decimal Calc(decimal price)` and `private decimal Calc(decimal price, decimal discountRate)`",
-        "`private void Calc(int x)` and `public int Calc(int x)`",
-        "`private decimal Calc(int qty)` and `private decimal Calc(int count)`"
+        "`private int Calc(int x)` and `private double Calc(int y)`",
+        "`private void Calc(int x)` and `public int Calc(int x)`"
       ],
       "answer": 1,
       "ans": 1,
@@ -22131,18 +22131,18 @@
       "code": "",
       "options": [
         "Step Over (F10)",
-        "Step Into (F11)",
         "Step Out (Shift+F11)",
+        "Step Into (F11)",
         "Continue (F5)"
       ],
       "opts": [
         "Step Over (F10)",
-        "Step Into (F11)",
         "Step Out (Shift+F11)",
+        "Step Into (F11)",
         "Continue (F5)"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "**Step Into (`F11`)** moves the debugger into the called method and pauses at its opening brace/first statement.",
       "explanation": "**Step Into (`F11`)** moves the debugger into the called method and pauses at its opening brace/first statement.",
       "distractorRationale": "Step Over (`F10`) runs `CalculateNetPay` without pausing inside it; Step Out (`Shift+F11`) finishes the current method; Continue (`F5`) runs freely until the next breakpoint.",
@@ -22170,19 +22170,19 @@
       "stem": "You are paused at a breakpoint on `FormatHeader();`—a helper method you already verified works properly. Which command executes `FormatHeader()` completely and pauses on the very next line in the caller?",
       "code": "",
       "options": [
-        "Step Over (F10)",
         "Step Into (F11)",
         "Step Out (Shift+F11)",
-        "Stop Debugging (Shift+F5)"
+        "Stop Debugging (Shift+F5)",
+        "Step Over (F10)"
       ],
       "opts": [
-        "Step Over (F10)",
         "Step Into (F11)",
         "Step Out (Shift+F11)",
-        "Stop Debugging (Shift+F5)"
+        "Stop Debugging (Shift+F5)",
+        "Step Over (F10)"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 3,
+      "ans": 3,
       "exp": "**Step Over (`F10`)** executes the entire called method in one step without entering it line-by-line, stopping at the next statement in the current method.",
       "explanation": "**Step Over (`F10`)** executes the entire called method in one step without entering it line-by-line, stopping at the next statement in the current method.",
       "distractorRationale": "Step Over still executes `FormatHeader()` completely—it never skips the call!",
@@ -22210,19 +22210,19 @@
       "stem": "While single-stepping inside a 30-line helper method `ValidateOrder()`, you have already found what you needed on line 4. Which command executes the rest of `ValidateOrder()` without stepping line-by-line and pauses back at the caller?",
       "code": "",
       "options": [
-        "Step Into (F11)",
-        "Step Over (F10)",
         "Step Out (Shift+F11)",
-        "Restart (Ctrl+Shift+F5)"
+        "Step Over (F10)",
+        "Restart (Ctrl+Shift+F5)",
+        "Step Into (F11)"
       ],
       "opts": [
-        "Step Into (F11)",
-        "Step Over (F10)",
         "Step Out (Shift+F11)",
-        "Restart (Ctrl+Shift+F5)"
+        "Step Over (F10)",
+        "Restart (Ctrl+Shift+F5)",
+        "Step Into (F11)"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "**Step Out (`Shift+F11`)** completes the remaining statements of the currently executing method and breaks back at the caller’s return point.",
       "explanation": "**Step Out (`Shift+F11`)** completes the remaining statements of the currently executing method and breaks back at the caller’s return point.",
       "distractorRationale": "Step Over (`F10`) would only advance to line 5 of `ValidateOrder()`.",
@@ -22291,19 +22291,19 @@
       "stem": "Why does `PrintTotal()` fail to compile in the code below?",
       "code": "private void btnCalc_Click(object sender, EventArgs e)\n{\n    decimal grandTotal = 450.00m;\n    PrintTotal();\n}\n\nprivate void PrintTotal()\n{\n    lblOut.Text = grandTotal.ToString(\"C\");\n}",
       "options": [
+        "`lblOut` is inaccessible inside `PrintTotal()`.",
         "`ToString(\"C\")` cannot be called inside a helper method.",
         "`grandTotal` is a local variable scoped strictly to `btnCalc_Click` and is invisible inside `PrintTotal()`.",
-        "`PrintTotal()` must be declared above `btnCalc_Click` in the file.",
-        "`lblOut` is inaccessible inside `PrintTotal()`."
+        "`PrintTotal()` must be declared above `btnCalc_Click` in the file."
       ],
       "opts": [
+        "`lblOut` is inaccessible inside `PrintTotal()`.",
         "`ToString(\"C\")` cannot be called inside a helper method.",
         "`grandTotal` is a local variable scoped strictly to `btnCalc_Click` and is invisible inside `PrintTotal()`.",
-        "`PrintTotal()` must be declared above `btnCalc_Click` in the file.",
-        "`lblOut` is inaccessible inside `PrintTotal()`."
+        "`PrintTotal()` must be declared above `btnCalc_Click` in the file."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "A local variable declared inside `btnCalc_Click` exists only within `btnCalc_Click` (CS0103). Pass `grandTotal` as a parameter `PrintTotal(decimal total)` instead.",
       "explanation": "A local variable declared inside `btnCalc_Click` exists only within `btnCalc_Click` (CS0103). Pass `grandTotal` as a parameter `PrintTotal(decimal total)` instead.",
       "distractorRationale": "C# allows calling methods declared below the caller in the same class, and form controls like `lblOut` are class-level fields accessible to all methods of `Form1`.",
@@ -22332,19 +22332,19 @@
       "stem": "You need a single validation method `TryGetDimensions` that reads width and height from two TextBoxes, outputs BOTH numeric values to the caller, and returns `true` only if both are valid positive `double` numbers. Which signature is best?",
       "code": "",
       "options": [
-        "private double TryGetDimensions(string wText, string hText)",
-        "private bool TryGetDimensions(string wText, string hText, out double width, out double height)",
         "private void TryGetDimensions(ref bool valid, double width, double height)",
-        "private string TryGetDimensions(out string wText, out string hText)"
+        "private string TryGetDimensions(out string wText, out string hText)",
+        "private double TryGetDimensions(string wText, string hText)",
+        "private bool TryGetDimensions(string wText, string hText, out double width, out double height)"
       ],
       "opts": [
-        "private double TryGetDimensions(string wText, string hText)",
-        "private bool TryGetDimensions(string wText, string hText, out double width, out double height)",
         "private void TryGetDimensions(ref bool valid, double width, double height)",
-        "private string TryGetDimensions(out string wText, out string hText)"
+        "private string TryGetDimensions(out string wText, out string hText)",
+        "private double TryGetDimensions(string wText, string hText)",
+        "private bool TryGetDimensions(string wText, string hText, out double width, out double height)"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Returning `bool` while outputting `out double width, out double height` mirrors C#’s own `TryParse` idiom—cleanly usable inside `if (TryGetDimensions(txtW.Text, txtH.Text, out double w, out double h))`.",
       "explanation": "Returning `bool` while outputting `out double width, out double height` mirrors C#’s own `TryParse` idiom—cleanly usable inside `if (TryGetDimensions(txtW.Text, txtH.Text, out double w, out double h))`.",
       "distractorRationale": "A single return value cannot return two `double`s and a `bool`, and value parameters (`double width`) cannot send parsed results back to the caller.",
@@ -22374,19 +22374,19 @@
       "stem": "What value is displayed in `lblPoints` after `btnAward_Click` executes?",
       "code": "private int CalcTierPoints(decimal spend)\n{\n    if (spend >= 1000m)\n        return 100;\n    if (spend >= 500m)\n        return 40;\n    return 10;\n}\n\nprivate void btnAward_Click(object sender, EventArgs e)\n{\n    int total = CalcTierPoints(1200m) + CalcTierPoints(600m) + CalcTierPoints(200m);\n    lblPoints.Text = total.ToString();\n}",
       "options": [
-        "190",
         "150",
+        "190",
         "160",
         "110"
       ],
       "opts": [
-        "190",
         "150",
+        "190",
         "160",
         "110"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Because `return` immediately exits the method, `CalcTierPoints(1200m)` returns `100` (it does NOT also add `40` or `10`), `CalcTierPoints(600m)` returns `40`, and `CalcTierPoints(200m)` returns `10`. Sum: `100 + 40 + 10 = 150`.",
       "explanation": "Because `return` immediately exits the method, `CalcTierPoints(1200m)` returns `100` (it does NOT also add `40` or `10`), `CalcTierPoints(600m)` returns `40`, and `CalcTierPoints(200m)` returns `10`. Sum: `100 + 40 + 10 = 150`.",
       "distractorRationale": "`190` mistakenly thinks `1200m` falls through into `>= 500m` as well, forgetting `return` exits immediately.",
@@ -22415,19 +22415,19 @@
       "stem": "What is displayed in `lblOut` when the code below executes?",
       "code": "private void Step(ref int n)\n{\n    n = n * 2 + 1;\n}\n\nprivate void btnRun_Click(object sender, EventArgs e)\n{\n    int k = 3;\n    for (int i = 0; i < 3; i++)\n    {\n        Step(ref k);\n    }\n    lblOut.Text = k.ToString();\n}",
       "options": [
-        "7",
-        "15",
+        "9",
         "31",
-        "9"
+        "7",
+        "15"
       ],
       "opts": [
-        "7",
-        "15",
+        "9",
         "31",
-        "9"
+        "7",
+        "15"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 1,
+      "ans": 1,
       "exp": "Pass 1 (`i=0`): `k = 3*2 + 1 = 7`. Pass 2 (`i=1`): `k = 7*2 + 1 = 15`. Pass 3 (`i=2`): `k = 15*2 + 1 = 31`. Loop ends at `i=3`, displaying `31`.",
       "explanation": "Pass 1 (`i=0`): `k = 3*2 + 1 = 7`. Pass 2 (`i=1`): `k = 7*2 + 1 = 15`. Pass 3 (`i=2`): `k = 15*2 + 1 = 31`. Loop ends at `i=3`, displaying `31`.",
       "distractorRationale": "`7` is after 1 pass; `15` is after 2 passes; `31` is after all 3 passes (`i = 0, 1, 2`).",
@@ -22456,19 +22456,19 @@
       "stem": "Given `private double Hypotenuse(double a, double b)`, what happens when calling `Hypotenuse(3, 4)` with two `int` arguments?",
       "code": "",
       "options": [
-        "Compilation fails because `3` and `4` are `int`, not `double`.",
-        "It compiles cleanly because C# implicitly widens `int` arguments (`3` and `4`) to `double` parameters (`3.0` and `4.0`).",
         "It throws an `InvalidCastException` at runtime.",
-        "It truncates the return value to `int`."
+        "It truncates the return value to `int`.",
+        "It compiles cleanly because C# implicitly widens `int` arguments (`3` and `4`) to `double` parameters (`3.0` and `4.0`).",
+        "Compilation fails because `3` and `4` are `int`, not `double`."
       ],
       "opts": [
-        "Compilation fails because `3` and `4` are `int`, not `double`.",
-        "It compiles cleanly because C# implicitly widens `int` arguments (`3` and `4`) to `double` parameters (`3.0` and `4.0`).",
         "It throws an `InvalidCastException` at runtime.",
-        "It truncates the return value to `int`."
+        "It truncates the return value to `int`.",
+        "It compiles cleanly because C# implicitly widens `int` arguments (`3` and `4`) to `double` parameters (`3.0` and `4.0`).",
+        "Compilation fails because `3` and `4` are `int`, not `double`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "C# allows implicit widening conversions from `int` to `double` when passing arguments, so `Hypotenuse(3, 4)` passes `3.0` and `4.0` and returns `double` (`5.0`).",
       "explanation": "C# allows implicit widening conversions from `int` to `double` when passing arguments, so `Hypotenuse(3, 4)` passes `3.0` and `4.0` and returns `double` (`5.0`).",
       "distractorRationale": "Note that implicit widening does NOT apply to `ref` or `out` parameters (`ref` requires an exact type match!), only to value arguments.",
@@ -22498,18 +22498,18 @@
       "code": "",
       "options": [
         "`n` is implicitly widened to `double`, becomes `6.0`, and truncates back to `6`.",
-        "Compilation fails (`CS1503`): `ref` and `out` arguments must match the parameter data type **exactly** (`double`, not `int`).",
         "`n` stays `4`.",
-        "A runtime `FormatException` occurs."
+        "A runtime `FormatException` occurs.",
+        "Compilation fails (`CS1503`): `ref` and `out` arguments must match the parameter data type **exactly** (`double`, not `int`)."
       ],
       "opts": [
         "`n` is implicitly widened to `double`, becomes `6.0`, and truncates back to `6`.",
-        "Compilation fails (`CS1503`): `ref` and `out` arguments must match the parameter data type **exactly** (`double`, not `int`).",
         "`n` stays `4`.",
-        "A runtime `FormatException` occurs."
+        "A runtime `FormatException` occurs.",
+        "Compilation fails (`CS1503`): `ref` and `out` arguments must match the parameter data type **exactly** (`double`, not `int`)."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Unlike pass-by-value, `ref` and `out` pass a direct memory reference to the variable itself—an `int` variable is 4 bytes whereas a `double` is 8 bytes, so C# requires exact type equality (`double`) for `ref`/`out` arguments.",
       "explanation": "Unlike pass-by-value, `ref` and `out` pass a direct memory reference to the variable itself—an `int` variable is 4 bytes whereas a `double` is 8 bytes, so C# requires exact type equality (`double`) for `ref`/`out` arguments.",
       "distractorRationale": "Implicit numeric widening applies only when copying a value, never when aliasing a storage location via `ref`/`out`.",
@@ -22537,19 +22537,19 @@
       "stem": "What text is assigned to `lblCode.Text` after the code below executes?",
       "code": "private string BuildTag(string dept, int code)\n{\n    return $\"{dept.Trim().ToUpper()}-{code:D3}\";\n}\n\nprivate void btnMake_Click(object sender, EventArgs e)\n{\n    lblCode.Text = BuildTag(\"  it \", 7);\n}",
       "options": [
-        "\"  IT -7\"",
         "\"IT-007\"",
-        "\"it-007\"",
-        "\"IT-700\""
+        "\"IT-700\"",
+        "\"  IT -7\"",
+        "\"it-007\""
       ],
       "opts": [
-        "\"  IT -7\"",
         "\"IT-007\"",
-        "\"it-007\"",
-        "\"IT-700\""
+        "\"IT-700\"",
+        "\"  IT -7\"",
+        "\"it-007\""
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "`dept.Trim()` removes leading/trailing spaces (`\"it\"`), `.ToUpper()` converts to `\"IT\"`, and `{code:D3}` zero-pads integer `7` to 3 digits (`\"007\"`), returning `\"IT-007\"`.",
       "explanation": "`dept.Trim()` removes leading/trailing spaces (`\"it\"`), `.ToUpper()` converts to `\"IT\"`, and `{code:D3}` zero-pads integer `7` to 3 digits (`\"007\"`), returning `\"IT-007\"`.",
       "distractorRationale": "`D3` pads whole integers on the left with leading zeros (`007`), not trailing zeros.",
@@ -22578,16 +22578,16 @@
       "stem": "What is the primary engineering benefit of **modularising** a 150-line `btnSubmit_Click` event handler into smaller helper methods?",
       "code": "",
       "options": [
-        "It allows C# code to bypass compiler type checking.",
+        "It eliminates the need for `Form1.Designer.cs`.",
         "It reduces code duplication, improves readability, and lets each subtask be tested and debugged independently.",
-        "It automatically converts `double` calculations into `decimal`.",
-        "It eliminates the need for `Form1.Designer.cs`."
+        "It allows C# code to bypass compiler type checking.",
+        "It automatically converts `double` calculations into `decimal`."
       ],
       "opts": [
-        "It allows C# code to bypass compiler type checking.",
+        "It eliminates the need for `Form1.Designer.cs`.",
         "It reduces code duplication, improves readability, and lets each subtask be tested and debugged independently.",
-        "It automatically converts `double` calculations into `decimal`.",
-        "It eliminates the need for `Form1.Designer.cs`."
+        "It allows C# code to bypass compiler type checking.",
+        "It automatically converts `double` calculations into `decimal`."
       ],
       "answer": 1,
       "ans": 1,
@@ -22618,19 +22618,19 @@
       "stem": "What is displayed in `lblResult` when `btnSplit_Click` executes?",
       "code": "private void SplitSeconds(int totalSec, out int mins, out int secs)\n{\n    mins = totalSec / 60;\n    secs = totalSec % 60;\n}\n\nprivate void btnSplit_Click(object sender, EventArgs e)\n{\n    SplitSeconds(205, out int m, out int s);\n    lblResult.Text = $\"{m}m {s}s\";\n}",
       "options": [
-        "3.4m 5s",
-        "3m 25s",
         "3m 41s",
-        "2m 85s"
+        "2m 85s",
+        "3m 25s",
+        "3.4m 5s"
       ],
       "opts": [
-        "3.4m 5s",
-        "3m 25s",
         "3m 41s",
-        "2m 85s"
+        "2m 85s",
+        "3m 25s",
+        "3.4m 5s"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Integer division `205 / 60` truncates to `3` (`3 * 60 = 180`), and modulus `205 % 60` gives the remainder `25`, producing `\"3m 25s\"`.",
       "explanation": "Integer division `205 / 60` truncates to `3` (`3 * 60 = 180`), and modulus `205 % 60` gives the remainder `25`, producing `\"3m 25s\"`.",
       "distractorRationale": "`205 / 60` is `int / int` (`3`), and `205 - 180 = 25` seconds (not `0.416 * 100`).",
@@ -22660,19 +22660,19 @@
       "stem": "Why does the method below fail to compile?",
       "code": "private int CalculateVat(decimal price)\n{\n    return price * 0.15m;\n}",
       "options": [
+        "`return` requires parentheses around `price * 0.15m`.",
         "`0.15m` is a `double` literal.",
-        "The expression `price * 0.15m` evaluates to `decimal`, which cannot be implicitly converted to the declared `int` return type (`CS0266`).",
         "A `private` method cannot accept a `decimal` parameter.",
-        "`return` requires parentheses around `price * 0.15m`."
+        "The expression `price * 0.15m` evaluates to `decimal`, which cannot be implicitly converted to the declared `int` return type (`CS0266`)."
       ],
       "opts": [
+        "`return` requires parentheses around `price * 0.15m`.",
         "`0.15m` is a `double` literal.",
-        "The expression `price * 0.15m` evaluates to `decimal`, which cannot be implicitly converted to the declared `int` return type (`CS0266`).",
         "A `private` method cannot accept a `decimal` parameter.",
-        "`return` requires parentheses around `price * 0.15m`."
+        "The expression `price * 0.15m` evaluates to `decimal`, which cannot be implicitly converted to the declared `int` return type (`CS0266`)."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "The returned expression’s type (`decimal`) must be compatible with the method header’s return type (`decimal`, not `int`). Change the header to `private decimal CalculateVat(decimal price)`.",
       "explanation": "The returned expression’s type (`decimal`) must be compatible with the method header’s return type (`decimal`, not `int`). Change the header to `private decimal CalculateVat(decimal price)`.",
       "distractorRationale": "`return` never requires parentheses, and `0.15m` is already a `decimal` literal.",
@@ -22701,19 +22701,19 @@
       "stem": "Consider a class-level field `private int counter = 10;` on `Form1`. What does `lblOut` display when `btnClick_Click` runs once?",
       "code": "private int counter = 10;\n\nprivate void Helper(int counter)\n{\n    counter = counter + 5;\n}\n\nprivate void btnClick_Click(object sender, EventArgs e)\n{\n    Helper(counter);\n    lblOut.Text = counter.ToString();\n}",
       "options": [
-        "15",
         "10",
+        "15",
         "5",
         "Compiler error due to duplicate variable name `counter`"
       ],
       "opts": [
-        "15",
         "10",
+        "15",
         "5",
         "Compiler error due to duplicate variable name `counter`"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Inside `Helper(int counter)`, the parameter `counter` **shadows** the class-level field `this.counter` and receives a pass-by-value copy (`10`). Updating that parameter leaves `this.counter` unchanged at `10`!",
       "explanation": "Inside `Helper(int counter)`, the parameter `counter` **shadows** the class-level field `this.counter` and receives a pass-by-value copy (`10`). Updating that parameter leaves `this.counter` unchanged at `10`!",
       "distractorRationale": "Parameter shadowing of a class field is legal in C# and leaves `this.counter` unmodified unless `this.counter` or `ref` is used.",
@@ -22742,16 +22742,16 @@
       "stem": "Can a value-returning method be called directly inside another expression or method argument, such as `lblTotal.Text = CalcTotal(qty, price).ToString(\"C\");`?",
       "code": "",
       "options": [
-        "No—the return value must always be stored in a separate local variable first.",
-        "Yes—a value-returning method call evaluates to a value of its return type and can be chained or nested inside expressions.",
         "Only if the method returns `string`.",
-        "Only if the method is `static`."
+        "Yes—a value-returning method call evaluates to a value of its return type and can be chained or nested inside expressions.",
+        "Only if the method is `static`.",
+        "No—the return value must always be stored in a separate local variable first."
       ],
       "opts": [
-        "No—the return value must always be stored in a separate local variable first.",
-        "Yes—a value-returning method call evaluates to a value of its return type and can be chained or nested inside expressions.",
         "Only if the method returns `string`.",
-        "Only if the method is `static`."
+        "Yes—a value-returning method call evaluates to a value of its return type and can be chained or nested inside expressions.",
+        "Only if the method is `static`.",
+        "No—the return value must always be stored in a separate local variable first."
       ],
       "answer": 1,
       "ans": 1,
@@ -22782,19 +22782,19 @@
       "stem": "Inside a method with an `out int result` parameter, what happens if the method tries to **read** `result` (e.g., `int x = result + 1;`) BEFORE assigning any value to `result`?",
       "code": "",
       "options": [
+        "A runtime `NullReferenceException` is thrown.",
         "`result` automatically starts at `0`, so `x` becomes `1`.",
         "Compilation fails (`CS0269`: Use of unassigned `out` parameter `result`) because an `out` parameter enters the method treated as unassigned.",
-        "`result` retains whatever value the caller had before the call.",
-        "A runtime `NullReferenceException` is thrown."
+        "`result` retains whatever value the caller had before the call."
       ],
       "opts": [
+        "A runtime `NullReferenceException` is thrown.",
         "`result` automatically starts at `0`, so `x` becomes `1`.",
         "Compilation fails (`CS0269`: Use of unassigned `out` parameter `result`) because an `out` parameter enters the method treated as unassigned.",
-        "`result` retains whatever value the caller had before the call.",
-        "A runtime `NullReferenceException` is thrown."
+        "`result` retains whatever value the caller had before the call."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Inside the called method, an `out` parameter is considered **unassigned** upon entry—the method must assign to it before reading it or returning! If the callee needs to read the incoming value first, use `ref` instead.",
       "explanation": "Inside the called method, an `out` parameter is considered **unassigned** upon entry—the method must assign to it before reading it or returning! If the callee needs to read the incoming value first, use `ref` instead.",
       "distractorRationale": "Preserving and reading the caller’s incoming value is the exact role of `ref`, not `out`.",
@@ -22823,19 +22823,19 @@
       "stem": "What does `lblGrade` display when `btnEval_Click` runs?",
       "code": "private double AverageBestTwo(double t1, double t2, double t3)\n{\n    double lowest = Math.Min(t1, Math.Min(t2, t3));\n    return (t1 + t2 + t3 - lowest) / 2.0;\n}\n\nprivate void btnEval_Click(object sender, EventArgs e)\n{\n    lblGrade.Text = AverageBestTwo(60.0, 84.0, 76.0).ToString(\"F1\");\n}",
       "options": [
-        "73.3",
-        "80.0",
         "70.0",
-        "72.0"
+        "72.0",
+        "73.3",
+        "80.0"
       ],
       "opts": [
-        "73.3",
-        "80.0",
         "70.0",
-        "72.0"
+        "72.0",
+        "73.3",
+        "80.0"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "`lowest` is `Math.Min(60.0, Math.Min(84.0, 76.0)) = 60.0`. Subtracting `60.0` leaves `84.0 + 76.0 = 160.0`, and `160.0 / 2.0 = 80.0`, formatted with `\"F1\"` as `\"80.0\"`.",
       "explanation": "`lowest` is `Math.Min(60.0, Math.Min(84.0, 76.0)) = 60.0`. Subtracting `60.0` leaves `84.0 + 76.0 = 160.0`, and `160.0 / 2.0 = 80.0`, formatted with `\"F1\"` as `\"80.0\"`.",
       "distractorRationale": "`73.3` averages all three marks instead of dropping the lowest mark.",
@@ -22865,19 +22865,19 @@
       "stem": "Why does `int result = DisplaySummary(total);` fail to compile when `DisplaySummary` is declared as `private void DisplaySummary(decimal amount)`?",
       "code": "",
       "options": [
-        "`total` should be passed with `out`.",
         "A `void` method returns no value (`CS0029`: Cannot implicitly convert type `void` to `int`).",
-        "`DisplaySummary` must have zero parameters if it is `void`.",
-        "`int` variables cannot store method results."
+        "`int` variables cannot store method results.",
+        "`total` should be passed with `out`.",
+        "`DisplaySummary` must have zero parameters if it is `void`."
       ],
       "opts": [
-        "`total` should be passed with `out`.",
         "A `void` method returns no value (`CS0029`: Cannot implicitly convert type `void` to `int`).",
-        "`DisplaySummary` must have zero parameters if it is `void`.",
-        "`int` variables cannot store method results."
+        "`int` variables cannot store method results.",
+        "`total` should be passed with `out`.",
+        "`DisplaySummary` must have zero parameters if it is `void`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Because `DisplaySummary` has return type `void`, calling it produces no value and must stand alone as a statement (`DisplaySummary(total);`).",
       "explanation": "Because `DisplaySummary` has return type `void`, calling it produces no value and must stand alone as a statement (`DisplaySummary(total);`).",
       "distractorRationale": "`void` methods may accept any number of parameters, and `int` variables readily store results of `int`-returning methods.",
@@ -22946,19 +22946,19 @@
       "stem": "What is displayed in `lblOut` when `btnCalc_Click` runs?",
       "code": "private bool TryDivide(int num, int den, out double quotient)\n{\n    if (den == 0)\n    {\n        quotient = 0.0;\n        return false;\n    }\n    quotient = (double)num / den;\n    return true;\n}\n\nprivate void btnCalc_Click(object sender, EventArgs e)\n{\n    if (TryDivide(7, 2, out double q1) && !TryDivide(5, 0, out double q2))\n    {\n        lblOut.Text = $\"{q1:F1}|{q2:F1}\";\n    }\n}",
       "options": [
-        "3.0|0.0",
-        "3.5|0.0",
         "3.5|NaN",
-        "Nothing—DivideByZeroException is thrown"
+        "Nothing—DivideByZeroException is thrown",
+        "3.5|0.0",
+        "3.0|0.0"
       ],
       "opts": [
-        "3.0|0.0",
-        "3.5|0.0",
         "3.5|NaN",
-        "Nothing—DivideByZeroException is thrown"
+        "Nothing—DivideByZeroException is thrown",
+        "3.5|0.0",
+        "3.0|0.0"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "`TryDivide(7, 2, out q1)` casts `(double)7 / 2 = 3.5` and returns `true`. `TryDivide(5, 0, out q2)` hits `den == 0`, assigns `q2 = 0.0`, and returns `false` so `!false` is `true`. Both succeed, displaying `\"3.5|0.0\"`.",
       "explanation": "`TryDivide(7, 2, out q1)` casts `(double)7 / 2 = 3.5` and returns `true`. `TryDivide(5, 0, out q2)` hits `den == 0`, assigns `q2 = 0.0`, and returns `false` so `!false` is `true`. Both succeed, displaying `\"3.5|0.0\"`.",
       "distractorRationale": "`(double)num / den` avoids integer truncation (`3.5`, not `3.0`), and `den == 0` guards against division by zero.",
@@ -22988,19 +22988,19 @@
       "stem": "What does `lblFinal` display after `btnChain_Click` executes?",
       "code": "private int Square(int n)\n{\n    return n * n;\n}\n\nprivate int AddOne(int n)\n{\n    return n + 1;\n}\n\nprivate void btnChain_Click(object sender, EventArgs e)\n{\n    int ans = Square(AddOne(3));\n    lblFinal.Text = ans.ToString();\n}",
       "options": [
-        "10",
-        "16",
         "12",
-        "7"
+        "7",
+        "10",
+        "16"
       ],
       "opts": [
-        "10",
-        "16",
         "12",
-        "7"
+        "7",
+        "10",
+        "16"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Inner arguments evaluate first: `AddOne(3)` returns `4`, and then `Square(4)` returns `4 * 4 = 16`.",
       "explanation": "Inner arguments evaluate first: `AddOne(3)` returns `4`, and then `Square(4)` returns `4 * 4 = 16`.",
       "distractorRationale": "`10` evaluates `AddOne(Square(3))` (`9 + 1`) in reverse order.",
@@ -23029,19 +23029,19 @@
       "stem": "When declaring a helper method inside `Form1` that is called only by other methods within `Form1`, which access modifier follows good encapsulation practice?",
       "code": "",
       "options": [
-        "public",
         "private",
-        "external",
-        "global"
+        "global",
+        "public",
+        "external"
       ],
       "opts": [
-        "public",
         "private",
-        "external",
-        "global"
+        "global",
+        "public",
+        "external"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "`private` restricts the helper method so only code inside `Form1` can invoke it, keeping internal implementation details hidden from outside classes.",
       "explanation": "`private` restricts the helper method so only code inside `Form1` can invoke it, keeping internal implementation details hidden from outside classes.",
       "distractorRationale": "`external` and `global` are not C# member access modifiers (`public` exposes the method outside `Form1`).",
@@ -23109,19 +23109,19 @@
       "stem": "Which statement accurately summarises C# parameter-passing rules?",
       "code": "",
       "options": [
+        "`ref` and `out` are written in the method header only and omitted in the method call.",
         "C# passes all numeric variables by reference by default unless `val` is written.",
         "C# passes arguments by value by default; `ref` requires initialisation before the call, while `out` does not require prior initialisation but must be assigned before the method returns.",
-        "`out` requires initialisation before the call, whereas `ref` does not.",
-        "`ref` and `out` are written in the method header only and omitted in the method call."
+        "`out` requires initialisation before the call, whereas `ref` does not."
       ],
       "opts": [
+        "`ref` and `out` are written in the method header only and omitted in the method call.",
         "C# passes all numeric variables by reference by default unless `val` is written.",
         "C# passes arguments by value by default; `ref` requires initialisation before the call, while `out` does not require prior initialisation but must be assigned before the method returns.",
-        "`out` requires initialisation before the call, whereas `ref` does not.",
-        "`ref` and `out` are written in the method header only and omitted in the method call."
+        "`out` requires initialisation before the call, whereas `ref` does not."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Default = pass-by-value (copy); `ref` = caller must initialise first, callee may read/modify; `out` = caller need not initialise first, callee must assign before returning; both require keywords in header and call.",
       "explanation": "Default = pass-by-value (copy); `ref` = caller must initialise first, callee may read/modify; `out` = caller need not initialise first, callee must assign before returning; both require keywords in header and call.",
       "distractorRationale": "C# has no `val` keyword, never swaps `ref`/`out` initialisation rules, and always requires `ref`/`out` at the call site.",
@@ -23151,19 +23151,19 @@
       "stem": "During debugging, execution is paused at `decimal vat = GetVat(price);`. You press **F10 (Step Over)**. What value is in `vat` on the next line if `price` is `100m` and `GetVat` returns `price * 0.15m`?",
       "code": "",
       "options": [
+        "Debugging stops immediately.",
         "`0m`, because Step Over skips executing `GetVat(price)`.",
-        "`15.00m`, because Step Over executes `GetVat(price)` completely in a single step without pausing inside `GetVat`.",
         "`100m`, because Step Over copies the argument directly.",
-        "Debugging stops immediately."
+        "`15.00m`, because Step Over executes `GetVat(price)` completely in a single step without pausing inside `GetVat`."
       ],
       "opts": [
+        "Debugging stops immediately.",
         "`0m`, because Step Over skips executing `GetVat(price)`.",
-        "`15.00m`, because Step Over executes `GetVat(price)` completely in a single step without pausing inside `GetVat`.",
         "`100m`, because Step Over copies the argument directly.",
-        "Debugging stops immediately."
+        "`15.00m`, because Step Over executes `GetVat(price)` completely in a single step without pausing inside `GetVat`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "A very common misconception is that \"Step Over\" skips running the method. In reality, **Step Over (`F10`)** executes `GetVat(100m)` in full and assigns `15.00m` to `vat`, merely without stepping line-by-line inside `GetVat`.",
       "explanation": "A very common misconception is that \"Step Over\" skips running the method. In reality, **Step Over (`F10`)** executes `GetVat(100m)` in full and assigns `15.00m` to `vat`, merely without stepping line-by-line inside `GetVat`.",
       "distractorRationale": "Step Over never skips execution of the statement!",
@@ -23191,19 +23191,19 @@
       "stem": "What does `lblShipping` display after `btnQuote_Click` runs?",
       "code": "private decimal CalcShipping(decimal orderTotal, bool express)\n{\n    if (orderTotal >= 500m && !express)\n        return 0m;\n    return express ? 120m : 60m;\n}\n\nprivate void btnQuote_Click(object sender, EventArgs e)\n{\n    decimal fee = CalcShipping(650m, true);\n    lblShipping.Text = fee.ToString(\"C\");\n}",
       "options": [
-        "R 0.00",
         "R 120.00",
         "R 60.00",
-        "R 180.00"
+        "R 180.00",
+        "R 0.00"
       ],
       "opts": [
-        "R 0.00",
         "R 120.00",
         "R 60.00",
-        "R 180.00"
+        "R 180.00",
+        "R 0.00"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Although `orderTotal >= 500m` is `true` (`650m`), `express` is `true` so `!express` is `false`. The `if` condition fails, and `express ? 120m : 60m` returns `120m` (`R 120.00`).",
       "explanation": "Although `orderTotal >= 500m` is `true` (`650m`), `express` is `true` so `!express` is `false`. The `if` condition fails, and `express ? 120m : 60m` returns `120m` (`R 120.00`).",
       "distractorRationale": "Free shipping (`0m`) applies only when `!express` is `true` (standard delivery).",
@@ -23232,16 +23232,16 @@
       "stem": "What text appears in `lblStats` after `btnRecord_Click` runs?",
       "code": "private void UpdateMinMax(int val, ref int min, ref int max)\n{\n    if (val < min) min = val;\n    if (val > max) max = val;\n}\n\nprivate void btnRecord_Click(object sender, EventArgs e)\n{\n    int[] readings = { 18, 25, 12, 30, 21 };\n    int lo = readings[0];\n    int hi = readings[0];\n    for (int i = 1; i < readings.Length; i++)\n    {\n        UpdateMinMax(readings[i], ref lo, ref hi);\n    }\n    lblStats.Text = $\"{lo}-{hi}\";\n}",
       "options": [
-        "18-30",
+        "12-21",
         "12-30",
-        "0-30",
-        "12-21"
+        "18-30",
+        "0-30"
       ],
       "opts": [
-        "18-30",
+        "12-21",
         "12-30",
-        "0-30",
-        "12-21"
+        "18-30",
+        "0-30"
       ],
       "answer": 1,
       "ans": 1,
@@ -23273,19 +23273,19 @@
       "stem": "A method `PopulateList(ListBox lst, int max)` runs `for (int i = 1; i <= max; i++) lst.Items.Add(i);`. Why does `lstNumbers` on `Form1` show `1..5` after calling `PopulateList(lstNumbers, 5);` even without `ref`?",
       "code": "",
       "options": [
-        "`ListBox` is a C# primitive value type.",
-        "`ListBox` is a reference-type object: passing `lstNumbers` by value copies the **reference** pointing to the same `ListBox` control on `Form1`, so `.Items.Add(i)` mutates that control’s items.",
         "Visual Studio silently inserts `ref` before all control parameters.",
-        "`Items` is a `static` property shared by all forms."
+        "`Items` is a `static` property shared by all forms.",
+        "`ListBox` is a reference-type object: passing `lstNumbers` by value copies the **reference** pointing to the same `ListBox` control on `Form1`, so `.Items.Add(i)` mutates that control’s items.",
+        "`ListBox` is a C# primitive value type."
       ],
       "opts": [
-        "`ListBox` is a C# primitive value type.",
-        "`ListBox` is a reference-type object: passing `lstNumbers` by value copies the **reference** pointing to the same `ListBox` control on `Form1`, so `.Items.Add(i)` mutates that control’s items.",
         "Visual Studio silently inserts `ref` before all control parameters.",
-        "`Items` is a `static` property shared by all forms."
+        "`Items` is a `static` property shared by all forms.",
+        "`ListBox` is a reference-type object: passing `lstNumbers` by value copies the **reference** pointing to the same `ListBox` control on `Form1`, so `.Items.Add(i)` mutates that control’s items.",
+        "`ListBox` is a C# primitive value type."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "In C#, classes like `ListBox` and `Form` are reference types. Passing a reference variable by value copies the reference (address) to the same underlying control instance in memory, so calling `.Items.Add(...)` updates that `ListBox` directly.",
       "explanation": "In C#, classes like `ListBox` and `Form` are reference types. Passing a reference variable by value copies the reference (address) to the same underlying control instance in memory, so calling `.Items.Add(...)` updates that `ListBox` directly.",
       "distractorRationale": "Visual Studio never adds hidden `ref` keywords, and `Items` is an instance property on that specific `ListBox`.",
@@ -23309,27 +23309,27 @@
       "difficulty": "Foundational",
       "marks": 2,
       "estimatedMinutes": 2,
-      "q": "Why are `Form1.cs` and `Form1.Designer.cs` both declared with the `partial` keyword (`public partial class Form1 : Form`)?",
-      "title": "Why are `Form1.cs` and `Form1.Designer.cs` both declared with the `partial` keyword (`public partial class Form1 : Form`)?",
-      "stem": "Why are `Form1.cs` and `Form1.Designer.cs` both declared with the `partial` keyword (`public partial class Form1 : Form`)?",
+      "q": "In a multiform Windows Forms project where two modeless forms (`Form1` and `DashboardForm`) remain open simultaneously, how does the `Activated` event differ from the `Load` event?",
+      "title": "In a multiform Windows Forms project where two modeless forms (`Form1` and `DashboardForm`) remain open simultaneously, how does the `Activated` event differ from the `Load` event?",
+      "stem": "In a multiform Windows Forms project where two modeless forms (`Form1` and `DashboardForm`) remain open simultaneously, how does the `Activated` event differ from the `Load` event?",
       "code": "",
       "options": [
-        "Because `Form1` is only half-compiled until runtime.",
-        "The `partial` keyword splits one single `Form1` class across two files so Visual Studio’s auto-generated control layout (`Designer.cs`) stays cleanly separated from your event-handler code (`Form1.cs`).",
-        "Because every secondary form must inherit from `Form1`.",
-        "To make all controls on `Form1` `public` automatically."
+        "`Load` fires only once when a form instance first opens, whereas `Activated` fires every time the user switches window focus back to that form",
+        "`Activated` only exists on modal `ShowDialog()` forms and never fires on modeless `Show()` forms",
+        "`Activated` fires before the form's constructor `InitializeComponent()`, whereas `Load` fires when the form closes",
+        "`Load` fires every time a button is clicked on the form, whereas `Activated` fires only once at program startup"
       ],
       "opts": [
-        "Because `Form1` is only half-compiled until runtime.",
-        "The `partial` keyword splits one single `Form1` class across two files so Visual Studio’s auto-generated control layout (`Designer.cs`) stays cleanly separated from your event-handler code (`Form1.cs`).",
-        "Because every secondary form must inherit from `Form1`.",
-        "To make all controls on `Form1` `public` automatically."
+        "`Load` fires only once when a form instance first opens, whereas `Activated` fires every time the user switches window focus back to that form",
+        "`Activated` only exists on modal `ShowDialog()` forms and never fires on modeless `Show()` forms",
+        "`Activated` fires before the form's constructor `InitializeComponent()`, whereas `Load` fires when the form closes",
+        "`Load` fires every time a button is clicked on the form, whereas `Activated` fires only once at program startup"
       ],
-      "answer": 1,
-      "ans": 1,
-      "exp": "At compile time, the C# compiler merges both `partial class Form1` files into a single `Form1` class while keeping IDE-generated `InitializeComponent()` code uncluttered from developer logic.",
-      "explanation": "At compile time, the C# compiler merges both `partial class Form1` files into a single `Form1` class while keeping IDE-generated `InitializeComponent()` code uncluttered from developer logic.",
-      "distractorRationale": "Each form inherits from `System.Windows.Forms.Form` (not `Form1`), and controls remain `private` by default.",
+      "answer": 0,
+      "ans": 0,
+      "exp": "A form instance raises `Load` once prior to its initial display, whereas `Activated` fires repeatedly whenever the form becomes the active foreground window within the application—making `Activated` useful for refreshing shared displays.",
+      "explanation": "A form instance raises `Load` once prior to its initial display, whereas `Activated` fires repeatedly whenever the form becomes the active foreground window within the application—making `Activated` useful for refreshing shared displays.",
+      "distractorRationale": "`InitializeComponent()` runs in the constructor before `Load` and `Activated`, and closing events are `FormClosing` / `FormClosed`.",
       "definitions": [
         "def_partial_form_classes"
       ],
@@ -23354,16 +23354,16 @@
       "stem": "A student adds a line in `Form1`’s constructor **above** `InitializeComponent();` as shown below. What happens when the program starts?",
       "code": "public Form1()\n{\n    lblWelcome.Text = \"Ready\";\n    InitializeComponent();\n}",
       "options": [
-        "`lblWelcome` displays `\"Ready\"` normally.",
+        "`InitializeComponent()` is skipped.",
         "A `NullReferenceException` is thrown at runtime because `lblWelcome` is `null` until `InitializeComponent()` instantiates the form’s controls!",
-        "Compilation fails with a syntax error.",
-        "`InitializeComponent()` is skipped."
+        "`lblWelcome` displays `\"Ready\"` normally.",
+        "Compilation fails with a syntax error."
       ],
       "opts": [
-        "`lblWelcome` displays `\"Ready\"` normally.",
+        "`InitializeComponent()` is skipped.",
         "A `NullReferenceException` is thrown at runtime because `lblWelcome` is `null` until `InitializeComponent()` instantiates the form’s controls!",
-        "Compilation fails with a syntax error.",
-        "`InitializeComponent()` is skipped."
+        "`lblWelcome` displays `\"Ready\"` normally.",
+        "Compilation fails with a syntax error."
       ],
       "answer": 1,
       "ans": 1,
@@ -23396,18 +23396,18 @@
       "code": "",
       "options": [
         "LoginForm.ShowDialog();",
-        "Application.Run(new LoginForm());",
         "Startup.Form = LoginForm;",
+        "Application.Run(new LoginForm());",
         "Application.Start(\"LoginForm.cs\");"
       ],
       "opts": [
         "LoginForm.ShowDialog();",
-        "Application.Run(new LoginForm());",
         "Startup.Form = LoginForm;",
+        "Application.Run(new LoginForm());",
         "Application.Start(\"LoginForm.cs\");"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "`Application.Run(new LoginForm());` inside `Program.cs` instantiates `LoginForm` as the primary startup window and begins the Windows Forms message loop.",
       "explanation": "`Application.Run(new LoginForm());` inside `Program.cs` instantiates `LoginForm` as the primary startup window and begins the Windows Forms message loop.",
       "distractorRationale": "`LoginForm.ShowDialog()` fails because `ShowDialog` is an instance method, and `Application.Start` does not exist in Windows Forms.",
@@ -23435,19 +23435,19 @@
       "stem": "After adding `AboutForm.cs` to the project, why does writing `AboutForm.ShowDialog();` inside `btnAbout_Click` cause compiler error **CS0120**?",
       "code": "",
       "options": [
+        "`ShowDialog()` requires a string filename argument.",
         "`ShowDialog()` only works on `OpenFileDialog`, not `Form`.",
-        "`AboutForm` is a **class** (blueprint), not an object instance—you must instantiate an object first with `AboutForm frmAbout = new AboutForm(); frmAbout.ShowDialog();`.",
         "`AboutForm` must be registered in `Program.cs` first.",
-        "`ShowDialog()` requires a string filename argument."
+        "`AboutForm` is a **class** (blueprint), not an object instance—you must instantiate an object first with `AboutForm frmAbout = new AboutForm(); frmAbout.ShowDialog();`."
       ],
       "opts": [
+        "`ShowDialog()` requires a string filename argument.",
         "`ShowDialog()` only works on `OpenFileDialog`, not `Form`.",
-        "`AboutForm` is a **class** (blueprint), not an object instance—you must instantiate an object first with `AboutForm frmAbout = new AboutForm(); frmAbout.ShowDialog();`.",
         "`AboutForm` must be registered in `Program.cs` first.",
-        "`ShowDialog()` requires a string filename argument."
+        "`AboutForm` is a **class** (blueprint), not an object instance—you must instantiate an object first with `AboutForm frmAbout = new AboutForm(); frmAbout.ShowDialog();`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "`ShowDialog()` and `Show()` are non-static instance methods on `Form`, so you must create a `Form` object in memory using `new AboutForm()` before calling `ShowDialog()`.",
       "explanation": "`ShowDialog()` and `Show()` are non-static instance methods on `Form`, so you must create a `Form` object in memory using `new AboutForm()` before calling `ShowDialog()`.",
       "distractorRationale": "Secondary forms do not need registration in `Program.cs`, and `Form.ShowDialog()` takes zero arguments.",
@@ -23476,19 +23476,19 @@
       "stem": "Which statement **accurately** describes what happens when `frmDetails.ShowDialog();` is called from `Form1`?",
       "code": "",
       "options": [
-        "It freezes the entire Windows operating system so the user cannot switch to a web browser or calculator.",
         "It displays `frmDetails` as a **modal** form within the application: other forms in the same application cannot receive focus, and subsequent statements in the calling method wait until `frmDetails` is closed or hidden.",
+        "It freezes the entire Windows operating system so the user cannot switch to a web browser or calculator.",
         "It displays `frmDetails` as a modeless form and immediately runs the next line of code in `Form1`.",
         "It closes `Form1` permanently before opening `frmDetails`."
       ],
       "opts": [
-        "It freezes the entire Windows operating system so the user cannot switch to a web browser or calculator.",
         "It displays `frmDetails` as a **modal** form within the application: other forms in the same application cannot receive focus, and subsequent statements in the calling method wait until `frmDetails` is closed or hidden.",
+        "It freezes the entire Windows operating system so the user cannot switch to a web browser or calculator.",
         "It displays `frmDetails` as a modeless form and immediately runs the next line of code in `Form1`.",
         "It closes `Form1` permanently before opening `frmDetails`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Modal `ShowDialog()` scopes modality to your application’s windows (NOT the entire operating system!) and suspends execution at the call site until `frmDetails` is dismissed.",
       "explanation": "Modal `ShowDialog()` scopes modality to your application’s windows (NOT the entire operating system!) and suspends execution at the call site until `frmDetails` is dismissed.",
       "distractorRationale": "Users can still use other Windows applications normally; only other forms of the same process are blocked while the modal dialog is active.",
@@ -23557,19 +23557,19 @@
       "stem": "Suppose `InputForm` has a `Public` TextBox `txtUserEntry` (initially `\"\"`) where the user is supposed to type their name and click OK. What happens if `Form1` uses modeless `Show()` instead of `ShowDialog()` below?",
       "code": "InputForm frmIn = new InputForm();\nfrmIn.Show();\nlblGreeting.Text = \"Hello \" + frmIn.txtUserEntry.Text;",
       "options": [
-        "`lblGreeting` waits until the user closes `InputForm` and then shows `\"Hello Alice\"`.",
-        "Because `Show()` is **modeless**, line 3 executes **immediately** (milliseconds after `InputForm` opens, before the user has typed anything!), setting `lblGreeting.Text` to `\"Hello \"`.",
         "Compiler error because `txtUserEntry` cannot be read after `Show()`.",
-        "`InputForm` never appears on screen."
+        "`InputForm` never appears on screen.",
+        "Because `Show()` is **modeless**, line 3 executes **immediately** (milliseconds after `InputForm` opens, before the user has typed anything!), setting `lblGreeting.Text` to `\"Hello \"`.",
+        "`lblGreeting` waits until the user closes `InputForm` and then shows `\"Hello Alice\"`."
       ],
       "opts": [
-        "`lblGreeting` waits until the user closes `InputForm` and then shows `\"Hello Alice\"`.",
-        "Because `Show()` is **modeless**, line 3 executes **immediately** (milliseconds after `InputForm` opens, before the user has typed anything!), setting `lblGreeting.Text` to `\"Hello \"`.",
         "Compiler error because `txtUserEntry` cannot be read after `Show()`.",
-        "`InputForm` never appears on screen."
+        "`InputForm` never appears on screen.",
+        "Because `Show()` is **modeless**, line 3 executes **immediately** (milliseconds after `InputForm` opens, before the user has typed anything!), setting `lblGreeting.Text` to `\"Hello \"`.",
+        "`lblGreeting` waits until the user closes `InputForm` and then shows `\"Hello Alice\"`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Modeless `Show()` returns control to the caller immediately without waiting for user interaction, so `frmIn.txtUserEntry.Text` is read while still empty (`\"\"`). Reading modal dialog results requires `frmIn.ShowDialog();`!",
       "explanation": "Modeless `Show()` returns control to the caller immediately without waiting for user interaction, so `frmIn.txtUserEntry.Text` is read while still empty (`\"\"`). Reading modal dialog results requires `frmIn.ShowDialog();`!",
       "distractorRationale": "Only `ShowDialog()` waits for the user to finish interacting with `InputForm` before executing line 3.",
@@ -23598,18 +23598,18 @@
       "code": "",
       "options": [
         "Public",
-        "Private",
         "Static",
-        "Global"
+        "Global",
+        "Private"
       ],
       "opts": [
         "Public",
-        "Private",
         "Static",
-        "Global"
+        "Global",
+        "Private"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Visual Studio sets `Modifiers = Private` by default (`private System.Windows.Forms.Label lblTotal;` in `Designer.cs`), restricting direct access to code inside that same form class.",
       "explanation": "Visual Studio sets `Modifiers = Private` by default (`private System.Windows.Forms.Label lblTotal;` in `Designer.cs`), restricting direct access to code inside that same form class.",
       "distractorRationale": "`Public` must be chosen explicitly if external classes access the control field directly.",
@@ -23637,19 +23637,19 @@
       "stem": "In CMPG122 assessments, setting a control’s `Modifiers` property to `Public` allows `frm2.lblOutput.Text = ...;` from `Form1`. Why do production C# software teams generally prefer passing values via **constructor parameters or public properties** on `Form2` instead?",
       "code": "",
       "options": [
-        "Because `Modifiers = Public` causes a syntax error in .NET.",
         "Exposing UI controls directly as `Public` tightly couples `Form1` to `Form2`’s internal widget names/types, whereas properties or constructors preserve encapsulation so `Form2`’s UI can change safely.",
         "Because `Public` controls cannot display formatted currency strings.",
-        "Because `Modifiers = Public` disables `ShowDialog()`."
+        "Because `Modifiers = Public` disables `ShowDialog()`.",
+        "Because `Modifiers = Public` causes a syntax error in .NET."
       ],
       "opts": [
-        "Because `Modifiers = Public` causes a syntax error in .NET.",
         "Exposing UI controls directly as `Public` tightly couples `Form1` to `Form2`’s internal widget names/types, whereas properties or constructors preserve encapsulation so `Form2`’s UI can change safely.",
         "Because `Public` controls cannot display formatted currency strings.",
-        "Because `Modifiers = Public` disables `ShowDialog()`."
+        "Because `Modifiers = Public` disables `ShowDialog()`.",
+        "Because `Modifiers = Public` causes a syntax error in .NET."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "While `Modifiers = Public` is the direct introductory technique taught in the module, keeping controls `Private` and exposing clean data properties/constructors avoids tight UI coupling in larger production systems.",
       "explanation": "While `Modifiers = Public` is the direct introductory technique taught in the module, keeping controls `Private` and exposing clean data properties/constructors avoids tight UI coupling in larger production systems.",
       "distractorRationale": "`Modifiers = Public` compiles and works with `ShowDialog()` and formatting, so the distinction is software architecture & encapsulation.",
@@ -23677,16 +23677,16 @@
       "stem": "A student sets `lblResult`’s `Modifiers` to `Public` on `ReceiptForm`, writes the code below in `Form1`, and wonders why `ReceiptForm` opens with a blank `lblResult`!",
       "code": "ReceiptForm frmA = new ReceiptForm();\nfrmA.lblResult.Text = \"R 499.00\";\n\nReceiptForm frmB = new ReceiptForm();\nfrmB.ShowDialog();",
       "options": [
-        "`lblResult` cannot store `\"R 499.00\"`.",
+        "`ReceiptForm` can only be instantiated once per program.",
         "Two **separate** instances of `ReceiptForm` were created with `new`: `\"R 499.00\"` was assigned to `frmA`, while the brand-new blank instance `frmB` was displayed!",
-        "`ShowDialog()` clears all `Public` labels automatically.",
-        "`ReceiptForm` can only be instantiated once per program."
+        "`lblResult` cannot store `\"R 499.00\"`.",
+        "`ShowDialog()` clears all `Public` labels automatically."
       ],
       "opts": [
-        "`lblResult` cannot store `\"R 499.00\"`.",
+        "`ReceiptForm` can only be instantiated once per program.",
         "Two **separate** instances of `ReceiptForm` were created with `new`: `\"R 499.00\"` was assigned to `frmA`, while the brand-new blank instance `frmB` was displayed!",
-        "`ShowDialog()` clears all `Public` labels automatically.",
-        "`ReceiptForm` can only be instantiated once per program."
+        "`lblResult` cannot store `\"R 499.00\"`.",
+        "`ShowDialog()` clears all `Public` labels automatically."
       ],
       "answer": 1,
       "ans": 1,
@@ -23718,19 +23718,19 @@
       "stem": "`Form1` is the startup form passed to `Application.Run(new Form1())`. What happens when the user clicks a button on `Form1` containing the two lines below?",
       "code": "DashboardForm frmDash = new DashboardForm();\nfrmDash.Show();\nthis.Close();",
       "options": [
-        "`Form1` closes cleanly and `frmDash` remains open for the user.",
-        "Closing `Form1` (the startup form) ends `Application.Run(...)`, immediately terminating the **entire application**—so `frmDash` flashes and closes right along with it!",
         "`this.Close()` closes `frmDash` while keeping `Form1` open.",
-        "A compile-time error occurs."
+        "A compile-time error occurs.",
+        "Closing `Form1` (the startup form) ends `Application.Run(...)`, immediately terminating the **entire application**—so `frmDash` flashes and closes right along with it!",
+        "`Form1` closes cleanly and `frmDash` remains open for the user."
       ],
       "opts": [
-        "`Form1` closes cleanly and `frmDash` remains open for the user.",
-        "Closing `Form1` (the startup form) ends `Application.Run(...)`, immediately terminating the **entire application**—so `frmDash` flashes and closes right along with it!",
         "`this.Close()` closes `frmDash` while keeping `Form1` open.",
-        "A compile-time error occurs."
+        "A compile-time error occurs.",
+        "Closing `Form1` (the startup form) ends `Application.Run(...)`, immediately terminating the **entire application**—so `frmDash` flashes and closes right along with it!",
+        "`Form1` closes cleanly and `frmDash` remains open for the user."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "When the startup form passed to `Application.Run(...)` closes, the main message loop exits and the whole application terminates—closing all open modeless forms too! Use `this.Hide();` if `Form1` should disappear without ending the process (and ensure `Form1` closes when `frmDash` closes).",
       "explanation": "When the startup form passed to `Application.Run(...)` closes, the main message loop exits and the whole application terminates—closing all open modeless forms too! Use `this.Hide();` if `Form1` should disappear without ending the process (and ensure `Form1` closes when `frmDash` closes).",
       "distractorRationale": "`this` inside `Form1` refers to `Form1`, whose closure terminates the application.",
@@ -23760,19 +23760,19 @@
       "stem": "How does `this.Hide();` differ from `this.Close();` on a Windows Form?",
       "code": "",
       "options": [
-        "`this.Hide()` deletes the form’s `.cs` file, whereas `this.Close()` minimizes it to the taskbar.",
-        "`this.Hide()` sets the form’s `Visible` state to `false` while preserving the form object and its control values in memory; `this.Close()` closes the window (and disposes modeless instances / exits if startup form).",
         "They are 100% identical aliases in Windows Forms.",
-        "`this.Hide()` works only on `Button` controls."
+        "`this.Hide()` works only on `Button` controls.",
+        "`this.Hide()` deletes the form’s `.cs` file, whereas `this.Close()` minimizes it to the taskbar.",
+        "`this.Hide()` sets the form’s `Visible` state to `false` while preserving the form object and its control values in memory; `this.Close()` closes the window (and disposes modeless instances / exits if startup form)."
       ],
       "opts": [
-        "`this.Hide()` deletes the form’s `.cs` file, whereas `this.Close()` minimizes it to the taskbar.",
-        "`this.Hide()` sets the form’s `Visible` state to `false` while preserving the form object and its control values in memory; `this.Close()` closes the window (and disposes modeless instances / exits if startup form).",
         "They are 100% identical aliases in Windows Forms.",
-        "`this.Hide()` works only on `Button` controls."
+        "`this.Hide()` works only on `Button` controls.",
+        "`this.Hide()` deletes the form’s `.cs` file, whereas `this.Close()` minimizes it to the taskbar.",
+        "`this.Hide()` sets the form’s `Visible` state to `false` while preserving the form object and its control values in memory; `this.Close()` closes the window (and disposes modeless instances / exits if startup form)."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "`Hide()` conceals the window without destroying the form instance, so it can be re-displayed with `Show()`/`ShowDialog()` or have its control values read by another form.",
       "explanation": "`Hide()` conceals the window without destroying the form instance, so it can be re-displayed with `Show()`/`ShowDialog()` or have its control values read by another form.",
       "distractorRationale": "Taskbar minimization uses `WindowState = FormWindowState.Minimized`, not `Close()` or `Hide()`.",
@@ -23800,19 +23800,19 @@
       "stem": "`Form1` opens `SettingsForm` modally via `frmSettings.ShowDialog();`. Inside `SettingsForm`, clicking **Save** executes `this.Hide();`. What happens next in `Form1`?",
       "code": "",
       "options": [
-        "`Form1` stays frozen forever because `this.Close()` was not called.",
         "`this.Hide()` dismisses the modal loop so execution in `Form1` immediately resumes on the line after `frmSettings.ShowDialog();`, with all `frmSettings` control values intact in memory!",
+        "`Form1` stays frozen forever because `this.Close()` was not called.",
         "The entire application terminates.",
         "An `InvalidOperationException` is thrown."
       ],
       "opts": [
-        "`Form1` stays frozen forever because `this.Close()` was not called.",
         "`this.Hide()` dismisses the modal loop so execution in `Form1` immediately resumes on the line after `frmSettings.ShowDialog();`, with all `frmSettings` control values intact in memory!",
+        "`Form1` stays frozen forever because `this.Close()` was not called.",
         "The entire application terminates.",
         "An `InvalidOperationException` is thrown."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Hiding a modal form satisfies modal dismissal, returning control to the statement right after `ShowDialog()` in `Form1` while keeping `frmSettings` undisposed so `Form1` can safely read its controls.",
       "explanation": "Hiding a modal form satisfies modal dismissal, returning control to the statement right after `ShowDialog()` in `Form1` while keeping `frmSettings` undisposed so `Form1` can safely read its controls.",
       "distractorRationale": "Both `Close()` and `Hide()` (or setting `DialogResult`) end a modal `ShowDialog()` wait.",
@@ -23841,16 +23841,16 @@
       "stem": "In what chronological order do methods/events execute the very first time a new Form is instantiated and displayed on screen?",
       "code": "",
       "options": [
-        "`Form_Activated` -> `Form_Load` -> Constructor (`InitializeComponent`)",
-        "Constructor (`InitializeComponent`) -> `Form_Load` -> `Form_Activated`",
         "`Form_Load` -> Constructor (`InitializeComponent`) -> `Form_FormClosing`",
-        "`Form_Activated` -> Constructor (`InitializeComponent`) -> `Form_Load`"
+        "Constructor (`InitializeComponent`) -> `Form_Load` -> `Form_Activated`",
+        "`Form_Activated` -> Constructor (`InitializeComponent`) -> `Form_Load`",
+        "`Form_Activated` -> `Form_Load` -> Constructor (`InitializeComponent`)"
       ],
       "opts": [
-        "`Form_Activated` -> `Form_Load` -> Constructor (`InitializeComponent`)",
-        "Constructor (`InitializeComponent`) -> `Form_Load` -> `Form_Activated`",
         "`Form_Load` -> Constructor (`InitializeComponent`) -> `Form_FormClosing`",
-        "`Form_Activated` -> Constructor (`InitializeComponent`) -> `Form_Load`"
+        "Constructor (`InitializeComponent`) -> `Form_Load` -> `Form_Activated`",
+        "`Form_Activated` -> Constructor (`InitializeComponent`) -> `Form_Load`",
+        "`Form_Activated` -> `Form_Load` -> Constructor (`InitializeComponent`)"
       ],
       "answer": 1,
       "ans": 1,
@@ -23883,18 +23883,18 @@
       "code": "",
       "options": [
         "`Load`",
-        "`Activated`",
         "`FormClosing`",
+        "`Activated`",
         "`InitializeComponent`"
       ],
       "opts": [
         "`Load`",
-        "`Activated`",
         "`FormClosing`",
+        "`Activated`",
         "`InitializeComponent`"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "`Load` runs **only once** when a form instance first opens; **`Activated`** fires every time the form becomes the active window (including switching back from another modeless form).",
       "explanation": "`Load` runs **only once** when a form instance first opens; **`Activated`** fires every time the form becomes the active window (including switching back from another modeless form).",
       "distractorRationale": "Putting focus-return refresh code inside `Load` fails because `Load` does not fire again when refocusing an already-loaded form.",
@@ -23924,18 +23924,18 @@
       "code": "",
       "options": [
         "this.CancelClose();",
-        "e.Cancel = true;",
         "return false;",
-        "Application.KeepAlive = true;"
+        "Application.KeepAlive = true;",
+        "e.Cancel = true;"
       ],
       "opts": [
         "this.CancelClose();",
-        "e.Cancel = true;",
         "return false;",
-        "Application.KeepAlive = true;"
+        "Application.KeepAlive = true;",
+        "e.Cancel = true;"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "`FormClosingEventArgs e` exposes a boolean `Cancel` property; setting `e.Cancel = true;` cancels the pending close operation so the form stays open.",
       "explanation": "`FormClosingEventArgs e` exposes a boolean `Cancel` property; setting `e.Cancel = true;` cancels the pending close operation so the form stays open.",
       "distractorRationale": "Event handlers are `void` (so `return false;` will not compile), and `FormClosed` occurs after closure when cancellation is no longer possible.",
@@ -23963,19 +23963,19 @@
       "stem": "`LoginForm` (the startup form) validates a password, executes `this.Hide(); MainForm frm = new MainForm(); frm.Show();`, and later the user clicks the **X** button on `MainForm`. What subtle bug occurs?",
       "code": "",
       "options": [
-        "`LoginForm` automatically reappears.",
         "`MainForm` closes, leaving **zero visible windows** on screen while the hidden startup `LoginForm` keeps the `.exe` process running silently in the background!",
-        "Visual Studio deletes `LoginForm.cs`.",
-        "A compile-time error prevents `this.Hide()` inside a startup form."
+        "A compile-time error prevents `this.Hide()` inside a startup form.",
+        "`LoginForm` automatically reappears.",
+        "Visual Studio deletes `LoginForm.cs`."
       ],
       "opts": [
-        "`LoginForm` automatically reappears.",
         "`MainForm` closes, leaving **zero visible windows** on screen while the hidden startup `LoginForm` keeps the `.exe` process running silently in the background!",
-        "Visual Studio deletes `LoginForm.cs`.",
-        "A compile-time error prevents `this.Hide()` inside a startup form."
+        "A compile-time error prevents `this.Hide()` inside a startup form.",
+        "`LoginForm` automatically reappears.",
+        "Visual Studio deletes `LoginForm.cs`."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Because `LoginForm` was only **hidden** (never closed), `Application.Run(new LoginForm())` never ends when modeless `MainForm` closes! Fix by using `this.Hide(); frm.ShowDialog(); this.Close();` (or calling `Application.Exit()` in `MainForm_FormClosed`).",
       "explanation": "Because `LoginForm` was only **hidden** (never closed), `Application.Run(new LoginForm())` never ends when modeless `MainForm` closes! Fix by using `this.Hide(); frm.ShowDialog(); this.Close();` (or calling `Application.Exit()` in `MainForm_FormClosed`).",
       "distractorRationale": "Using modal `frm.ShowDialog();` followed by `this.Close();` in `LoginForm` cleanly exits the startup form as soon as `MainForm` closes!",
@@ -24005,16 +24005,16 @@
       "stem": "Trace the exact sequence appended to `lstLog` when the user clicks `btnOpen_Click` and then 5 seconds later closes `DetailsForm`:",
       "code": "private void btnOpen_Click(object sender, EventArgs e)\n{\n    lstLog.Items.Add(\"1-Before\");\n    DetailsForm frm = new DetailsForm();\n    frm.ShowDialog();\n    lstLog.Items.Add(\"2-After\");\n}",
       "options": [
-        "`1-Before` and `2-After` both appear immediately BEFORE `DetailsForm` is closed.",
-        "`1-Before` appears immediately, `DetailsForm` opens modally and blocks, and `2-After` is added ONLY AFTER the user closes `DetailsForm` 5 seconds later.",
         "`2-After` appears first, then `1-Before`.",
-        "`2-After` never runs because `ShowDialog()` exits `btnOpen_Click`."
+        "`1-Before` appears immediately, `DetailsForm` opens modally and blocks, and `2-After` is added ONLY AFTER the user closes `DetailsForm` 5 seconds later.",
+        "`2-After` never runs because `ShowDialog()` exits `btnOpen_Click`.",
+        "`1-Before` and `2-After` both appear immediately BEFORE `DetailsForm` is closed."
       ],
       "opts": [
-        "`1-Before` and `2-After` both appear immediately BEFORE `DetailsForm` is closed.",
-        "`1-Before` appears immediately, `DetailsForm` opens modally and blocks, and `2-After` is added ONLY AFTER the user closes `DetailsForm` 5 seconds later.",
         "`2-After` appears first, then `1-Before`.",
-        "`2-After` never runs because `ShowDialog()` exits `btnOpen_Click`."
+        "`1-Before` appears immediately, `DetailsForm` opens modally and blocks, and `2-After` is added ONLY AFTER the user closes `DetailsForm` 5 seconds later.",
+        "`2-After` never runs because `ShowDialog()` exits `btnOpen_Click`.",
+        "`1-Before` and `2-After` both appear immediately BEFORE `DetailsForm` is closed."
       ],
       "answer": 1,
       "ans": 1,
@@ -24046,18 +24046,18 @@
       "code": "",
       "options": [
         "`Form1` is in `System.Forms` and `InvoiceForm` is in `System.Invoices`",
-        "Both belong to the same project namespace `BillingSystem`, so `Form1` can instantiate `new InvoiceForm()` directly without an extra `using` directive",
         "Each form gets an isolated random namespace",
+        "Both belong to the same project namespace `BillingSystem`, so `Form1` can instantiate `new InvoiceForm()` directly without an extra `using` directive",
         "`InvoiceForm` has no namespace"
       ],
       "opts": [
         "`Form1` is in `System.Forms` and `InvoiceForm` is in `System.Invoices`",
-        "Both belong to the same project namespace `BillingSystem`, so `Form1` can instantiate `new InvoiceForm()` directly without an extra `using` directive",
         "Each form gets an isolated random namespace",
+        "Both belong to the same project namespace `BillingSystem`, so `Form1` can instantiate `new InvoiceForm()` directly without an extra `using` directive",
         "`InvoiceForm` has no namespace"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "All forms added to the project share the project’s root namespace (`namespace BillingSystem`), making `InvoiceForm` directly visible inside `Form1.cs`.",
       "explanation": "All forms added to the project share the project’s root namespace (`namespace BillingSystem`), making `InvoiceForm` directly visible inside `Form1.cs`.",
       "distractorRationale": "Classes within the same namespace reference one another directly without extra `using` directives.",
@@ -24087,18 +24087,18 @@
       "code": "",
       "options": [
         "SummaryForm.lblVat.Text = vat.ToString(\"C\");\nSummaryForm.lblTotal.Text = total.ToString(\"C\");\nSummaryForm.ShowDialog();",
-        "SummaryForm frmSum = new SummaryForm();\nfrmSum.lblVat.Text = vat.ToString(\"C\");\nfrmSum.lblTotal.Text = total.ToString(\"C\");\nfrmSum.ShowDialog();",
         "SummaryForm frmSum = new SummaryForm();\nfrmSum.ShowDialog();\nfrmSum.lblVat = vat;\nfrmSum.lblTotal = total;",
-        "new SummaryForm().Show();\nlblVat.Text = vat.ToString(\"C\");"
+        "new SummaryForm().Show();\nlblVat.Text = vat.ToString(\"C\");",
+        "SummaryForm frmSum = new SummaryForm();\nfrmSum.lblVat.Text = vat.ToString(\"C\");\nfrmSum.lblTotal.Text = total.ToString(\"C\");\nfrmSum.ShowDialog();"
       ],
       "opts": [
         "SummaryForm.lblVat.Text = vat.ToString(\"C\");\nSummaryForm.lblTotal.Text = total.ToString(\"C\");\nSummaryForm.ShowDialog();",
-        "SummaryForm frmSum = new SummaryForm();\nfrmSum.lblVat.Text = vat.ToString(\"C\");\nfrmSum.lblTotal.Text = total.ToString(\"C\");\nfrmSum.ShowDialog();",
         "SummaryForm frmSum = new SummaryForm();\nfrmSum.ShowDialog();\nfrmSum.lblVat = vat;\nfrmSum.lblTotal = total;",
-        "new SummaryForm().Show();\nlblVat.Text = vat.ToString(\"C\");"
+        "new SummaryForm().Show();\nlblVat.Text = vat.ToString(\"C\");",
+        "SummaryForm frmSum = new SummaryForm();\nfrmSum.lblVat.Text = vat.ToString(\"C\");\nfrmSum.lblTotal.Text = total.ToString(\"C\");\nfrmSum.ShowDialog();"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "(1) Instantiate `frmSum = new SummaryForm();`, (2) assign formatted strings to `.Text` on `frmSum`’s `Public` labels **before** showing, and (3) call `frmSum.ShowDialog();`.",
       "explanation": "(1) Instantiate `frmSum = new SummaryForm();`, (2) assign formatted strings to `.Text` on `frmSum`’s `Public` labels **before** showing, and (3) call `frmSum.ShowDialog();`.",
       "distractorRationale": "Option A calls instance members statically; Option C assigns after `ShowDialog()` and assigns `decimal` to `Label`; Option D omits the `frmSum.` object qualifier.",
@@ -24128,19 +24128,19 @@
       "stem": "What return type does `Form.ShowDialog()` return, and how can a modal dialog signal whether the user clicked **Confirm** vs **Cancel**?",
       "code": "",
       "options": [
-        "`bool` (`true` or `false`)",
         "`DialogResult` (e.g., `DialogResult.OK` or `DialogResult.Cancel`, set via the button’s `DialogResult` property or `this.DialogResult = DialogResult.OK;`)",
         "`int` (`1` or `0`)",
-        "`void` (returns nothing)"
+        "`void` (returns nothing)",
+        "`bool` (`true` or `false`)"
       ],
       "opts": [
-        "`bool` (`true` or `false`)",
         "`DialogResult` (e.g., `DialogResult.OK` or `DialogResult.Cancel`, set via the button’s `DialogResult` property or `this.DialogResult = DialogResult.OK;`)",
         "`int` (`1` or `0`)",
-        "`void` (returns nothing)"
+        "`void` (returns nothing)",
+        "`bool` (`true` or `false`)"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "Just like `OpenFileDialog.ShowDialog()`, `Form.ShowDialog()` returns `DialogResult`! Setting `this.DialogResult = DialogResult.OK;` inside a modal form’s Confirm button automatically closes/hides the modal dialog and returns `DialogResult.OK` to `Form1`!",
       "explanation": "Just like `OpenFileDialog.ShowDialog()`, `Form.ShowDialog()` returns `DialogResult`! Setting `this.DialogResult = DialogResult.OK;` inside a modal form’s Confirm button automatically closes/hides the modal dialog and returns `DialogResult.OK` to `Form1`!",
       "distractorRationale": "`Form.Show()` is `void`, whereas `Form.ShowDialog()` returns `DialogResult`.",
@@ -24169,16 +24169,16 @@
       "stem": "Suppose `HelpForm frmHelp = new HelpForm();` is opened **modelessly** via `frmHelp.Show();`, the user closes `HelpForm` with its **X** button, and later clicks Help again running `frmHelp.Show();` on that **same** closed `frmHelp` variable. What happens?",
       "code": "",
       "options": [
-        "`frmHelp` reopens normally.",
+        "Nothing happens and no error occurs.",
         "An `ObjectDisposedException` is thrown (`Cannot access a disposed object`) because closing a **modeless** form disposes its window handle!",
-        "`Form1` closes instead.",
-        "Nothing happens and no error occurs."
+        "`frmHelp` reopens normally.",
+        "`Form1` closes instead."
       ],
       "opts": [
-        "`frmHelp` reopens normally.",
+        "Nothing happens and no error occurs.",
         "An `ObjectDisposedException` is thrown (`Cannot access a disposed object`) because closing a **modeless** form disposes its window handle!",
-        "`Form1` closes instead.",
-        "Nothing happens and no error occurs."
+        "`frmHelp` reopens normally.",
+        "`Form1` closes instead."
       ],
       "answer": 1,
       "ans": 1,
@@ -24211,18 +24211,18 @@
       "code": "",
       "options": [
         "`OrderForm.html`, `OrderForm.css`, and `OrderForm.js`",
-        "`OrderForm.cs` (event handlers & logic), `OrderForm.Designer.cs` (auto-generated control code), and `OrderForm.resx` (embedded form resources/icons)",
         "`OrderForm.exe`, `OrderForm.dll`, and `OrderForm.txt`",
+        "`OrderForm.cs` (event handlers & logic), `OrderForm.Designer.cs` (auto-generated control code), and `OrderForm.resx` (embedded form resources/icons)",
         "`OrderForm.main`, `OrderForm.header`, and `OrderForm.body`"
       ],
       "opts": [
         "`OrderForm.html`, `OrderForm.css`, and `OrderForm.js`",
-        "`OrderForm.cs` (event handlers & logic), `OrderForm.Designer.cs` (auto-generated control code), and `OrderForm.resx` (embedded form resources/icons)",
         "`OrderForm.exe`, `OrderForm.dll`, and `OrderForm.txt`",
+        "`OrderForm.cs` (event handlers & logic), `OrderForm.Designer.cs` (auto-generated control code), and `OrderForm.resx` (embedded form resources/icons)",
         "`OrderForm.main`, `OrderForm.header`, and `OrderForm.body`"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 2,
+      "ans": 2,
       "exp": "Every Windows Form consists of `.cs` (developer C# code), `.Designer.cs` (`InitializeComponent()` partial class), and `.resx` (XML resource file).",
       "explanation": "Every Windows Form consists of `.cs` (developer C# code), `.Designer.cs` (`InitializeComponent()` partial class), and `.resx` (XML resource file).",
       "distractorRationale": "`.exe` is the compiled output assembly in `bin/Debug`, not a per-form source file.",
@@ -24251,19 +24251,19 @@
       "stem": "`OrderForm` opens `DiscountForm` modally. On `DiscountForm`, `radStaff` (`Modifiers = Public`) is checked by the user before clicking an OK button that calls `this.Hide();`. What does `lblRate` on `OrderForm` display?",
       "code": "DiscountForm frmDisc = new DiscountForm();\nfrmDisc.ShowDialog();\ndecimal rate = frmDisc.radStaff.Checked ? 0.20m : 0.05m;\nlblRate.Text = rate.ToString(\"P0\");",
       "options": [
-        "5%",
-        "20%",
         "0.20%",
-        "Compiler error because `Checked` cannot be read across forms"
+        "Compiler error because `Checked` cannot be read across forms",
+        "5%",
+        "20%"
       ],
       "opts": [
-        "5%",
-        "20%",
         "0.20%",
-        "Compiler error because `Checked` cannot be read across forms"
+        "Compiler error because `Checked` cannot be read across forms",
+        "5%",
+        "20%"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "`ShowDialog()` waits while the user checks `radStaff` and clicks OK (`this.Hide()`). Then `frmDisc.radStaff.Checked` is `true`, setting `rate = 0.20m`, which `.ToString(\"P0\")` formats as `\"20%\"` (or `\"20 %\"`).",
       "explanation": "`ShowDialog()` waits while the user checks `radStaff` and clicks OK (`this.Hide()`). Then `frmDisc.radStaff.Checked` is `true`, setting `rate = 0.20m`, which `.ToString(\"P0\")` formats as `\"20%\"` (or `\"20 %\"`).",
       "distractorRationale": "`\"P0\"` multiplies `0.20m` by `100` with `0` decimal places (`20%`).",
@@ -24293,19 +24293,19 @@
       "stem": "On `SummaryForm`, a student populates `lblHeader.Text` inside `SummaryForm_Load` by overwriting it with `\"Default Summary\"`. In `Form1`, they run the code below. What appears in `lblHeader` when `SummaryForm` opens?",
       "code": "SummaryForm frm = new SummaryForm();\nfrm.lblHeader.Text = \"VIP Customer Invoice\";\nfrm.ShowDialog();",
       "options": [
-        "`\"VIP Customer Invoice\"`, because `SummaryForm_Load` already ran during `new SummaryForm()`.",
         "`\"Default Summary\"`, because `SummaryForm_Load` executes when `frm.ShowDialog()` opens the form for the first time—**overwriting** `\"VIP Customer Invoice\"`!",
-        "Both strings concatenated together.",
-        "An empty string."
+        "An empty string.",
+        "`\"VIP Customer Invoice\"`, because `SummaryForm_Load` already ran during `new SummaryForm()`.",
+        "Both strings concatenated together."
       ],
       "opts": [
-        "`\"VIP Customer Invoice\"`, because `SummaryForm_Load` already ran during `new SummaryForm()`.",
         "`\"Default Summary\"`, because `SummaryForm_Load` executes when `frm.ShowDialog()` opens the form for the first time—**overwriting** `\"VIP Customer Invoice\"`!",
-        "Both strings concatenated together.",
-        "An empty string."
+        "An empty string.",
+        "`\"VIP Customer Invoice\"`, because `SummaryForm_Load` already ran during `new SummaryForm()`.",
+        "Both strings concatenated together."
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 0,
+      "ans": 0,
       "exp": "`new SummaryForm()` runs ONLY the constructor (`InitializeComponent()`). `SummaryForm_Load` fires later during `frm.ShowDialog()`, so unconditionally assigning `lblHeader.Text = \"Default Summary\"` inside `Load` overwrites the value set by `Form1`!",
       "explanation": "`new SummaryForm()` runs ONLY the constructor (`InitializeComponent()`). `SummaryForm_Load` fires later during `frm.ShowDialog()`, so unconditionally assigning `lblHeader.Text = \"Default Summary\"` inside `Load` overwrites the value set by `Form1`!",
       "distractorRationale": "Understanding that `Constructor` runs at `new` while `Load` runs at `Show`/`ShowDialog` prevents subtle cross-form overwrite bugs.",
@@ -24375,19 +24375,19 @@
       "stem": "Suppose `ReceiptForm` keeps `lblTotal` as `Private` (`Modifiers = Private`) and instead defines a parameterized constructor `public ReceiptForm(decimal amount) : this() { lblTotal.Text = amount.ToString(\"C\"); }`. How does `Form1` open it with `R 320.00`?",
       "code": "",
       "options": [
-        "ReceiptForm frm = new ReceiptForm(320.00m);\nfrm.ShowDialog();",
-        "ReceiptForm frm = new ReceiptForm();\nfrm.lblTotal.Text = 320.00m.ToString(\"C\");\nfrm.ShowDialog();",
         "ReceiptForm.ShowDialog(320.00m);",
-        "ReceiptForm frm = ReceiptForm(320.00m);"
+        "ReceiptForm frm = ReceiptForm(320.00m);",
+        "ReceiptForm frm = new ReceiptForm(320.00m);\nfrm.ShowDialog();",
+        "ReceiptForm frm = new ReceiptForm();\nfrm.lblTotal.Text = 320.00m.ToString(\"C\");\nfrm.ShowDialog();"
       ],
       "opts": [
-        "ReceiptForm frm = new ReceiptForm(320.00m);\nfrm.ShowDialog();",
-        "ReceiptForm frm = new ReceiptForm();\nfrm.lblTotal.Text = 320.00m.ToString(\"C\");\nfrm.ShowDialog();",
         "ReceiptForm.ShowDialog(320.00m);",
-        "ReceiptForm frm = ReceiptForm(320.00m);"
+        "ReceiptForm frm = ReceiptForm(320.00m);",
+        "ReceiptForm frm = new ReceiptForm(320.00m);\nfrm.ShowDialog();",
+        "ReceiptForm frm = new ReceiptForm();\nfrm.lblTotal.Text = 320.00m.ToString(\"C\");\nfrm.ShowDialog();"
       ],
-      "answer": 0,
-      "ans": 0,
+      "answer": 2,
+      "ans": 2,
       "exp": "Passing `320.00m` directly to `new ReceiptForm(320.00m)` calls `: this()` (`InitializeComponent()`) first and sets the private `lblTotal.Text` cleanly without exposing controls as `Public`.",
       "explanation": "Passing `320.00m` directly to `new ReceiptForm(320.00m)` calls `: this()` (`InitializeComponent()`) first and sets the private `lblTotal.Text` cleanly without exposing controls as `Public`.",
       "distractorRationale": "Option B fails to compile (`CS0122`) because `lblTotal` has `Modifiers = Private`.",
@@ -24417,19 +24417,19 @@
       "stem": "Inside `Form2`’s `btnBack_Click` event handler, what does the keyword `this` in `this.Close();` refer to?",
       "code": "",
       "options": [
-        "Always the startup `Form1` instance",
-        "The currently executing `Form2` instance whose button was clicked",
         "The `btnBack` Button control",
-        "The `Program` class"
+        "The `Program` class",
+        "Always the startup `Form1` instance",
+        "The currently executing `Form2` instance whose button was clicked"
       ],
       "opts": [
-        "Always the startup `Form1` instance",
-        "The currently executing `Form2` instance whose button was clicked",
         "The `btnBack` Button control",
-        "The `Program` class"
+        "The `Program` class",
+        "Always the startup `Form1` instance",
+        "The currently executing `Form2` instance whose button was clicked"
       ],
-      "answer": 1,
-      "ans": 1,
+      "answer": 3,
+      "ans": 3,
       "exp": "Inside any instance method of `Form2`, `this` refers to that `Form2` object; `sender` refers to the `btnBack` control that raised the event.",
       "explanation": "Inside any instance method of `Form2`, `this` refers to that `Form2` object; `sender` refers to the `btnBack` control that raised the event.",
       "distractorRationale": "Closing `Form2` via `this.Close();` closes only `Form2`, leaving `Form1` open.",
@@ -24458,19 +24458,19 @@
       "stem": "`CartForm` has a `Public` ListBox `lstSummary`. `Form1` runs the loop below before calling `frmCart.ShowDialog();`. How many items appear in `frmCart.lstSummary`?",
       "code": "CartForm frmCart = new CartForm();\nstring[] items = { \"Bread\", \"\", \"Milk\", \"  \", \"Eggs\" };\nfor (int i = 0; i < items.Length; i++)\n{\n    if (!string.IsNullOrWhiteSpace(items[i]))\n    {\n        frmCart.lstSummary.Items.Add(items[i]);\n    }\n}\nfrmCart.ShowDialog();",
       "options": [
-        "5",
-        "4",
         "3",
-        "0"
+        "0",
+        "5",
+        "4"
       ],
       "opts": [
-        "5",
-        "4",
         "3",
-        "0"
+        "0",
+        "5",
+        "4"
       ],
-      "answer": 2,
-      "ans": 2,
+      "answer": 0,
+      "ans": 0,
       "exp": "`string.IsNullOrWhiteSpace` returns `true` for BOTH `\"\"` and `\"  \"`, so `\"Bread\"`, `\"Milk\"`, and `\"Eggs\"` pass `!string.IsNullOrWhiteSpace(...)`, adding **3** items to `frmCart.lstSummary`.",
       "explanation": "`string.IsNullOrWhiteSpace` returns `true` for BOTH `\"\"` and `\"  \"`, so `\"Bread\"`, `\"Milk\"`, and `\"Eggs\"` pass `!string.IsNullOrWhiteSpace(...)`, adding **3** items to `frmCart.lstSummary`.",
       "distractorRationale": "`string.IsNullOrEmpty` would let `\"  \"` through (`4`), whereas `IsNullOrWhiteSpace` filters whitespace-only strings too (`3`).",
@@ -24500,16 +24500,16 @@
       "stem": "Why must unsaved-data confirmation (`e.Cancel = true;`) be placed in `FormClosing` rather than `FormClosed`?",
       "code": "",
       "options": [
-        "`FormClosed` fires before `Form_Load`.",
-        "By the time `FormClosed` fires, the window has **already** closed and `FormClosedEventArgs` has no `Cancel` property—only `FormClosing` runs *before* closure and provides `FormClosingEventArgs.Cancel`.",
         "`FormClosed` cannot call `MessageBox.Show()`.",
-        "`FormClosing` only runs on secondary forms."
+        "By the time `FormClosed` fires, the window has **already** closed and `FormClosedEventArgs` has no `Cancel` property—only `FormClosing` runs *before* closure and provides `FormClosingEventArgs.Cancel`.",
+        "`FormClosing` only runs on secondary forms.",
+        "`FormClosed` fires before `Form_Load`."
       ],
       "opts": [
-        "`FormClosed` fires before `Form_Load`.",
-        "By the time `FormClosed` fires, the window has **already** closed and `FormClosedEventArgs` has no `Cancel` property—only `FormClosing` runs *before* closure and provides `FormClosingEventArgs.Cancel`.",
         "`FormClosed` cannot call `MessageBox.Show()`.",
-        "`FormClosing` only runs on secondary forms."
+        "By the time `FormClosed` fires, the window has **already** closed and `FormClosedEventArgs` has no `Cancel` property—only `FormClosing` runs *before* closure and provides `FormClosingEventArgs.Cancel`.",
+        "`FormClosing` only runs on secondary forms.",
+        "`FormClosed` fires before `Form_Load`."
       ],
       "answer": 1,
       "ans": 1,

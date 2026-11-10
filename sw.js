@@ -3,7 +3,7 @@
  * Versioned app-shell cache with safe non-disruptive update handling
  * (never forces reloads during active examination sessions).
  */
-const CACHE_NAME = 'cmpg122-shell-v9.0.0';
+const CACHE_NAME = 'cmpg122-shell-v9.1.0';
 const APP_SHELL_ASSETS = [
   './',
   './index.html',
@@ -39,7 +39,7 @@ self.addEventListener('activate', (event) => {
           .filter((key) => key.startsWith('cmpg122-shell-') && key !== CACHE_NAME)
           .map((oldKey) => caches.delete(oldKey))
       )
-    )
+    ).then(() => self.clients.claim())
   );
 });
 
@@ -53,7 +53,7 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.match(event.request).then((cached) => {
+    caches.match(event.request, { ignoreSearch: true }).then((cached) => {
       if (cached) {
         // Stale-while-revalidate background refresh for local shell files
         fetch(event.request)

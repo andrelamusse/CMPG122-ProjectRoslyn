@@ -6,13 +6,13 @@
 
 :root,
 [data-theme="dark"] {
-  /* Brand & Accent Tokens */
-  --accent-primary: #7c5cff;
-  --accent-primary-strong: #6d4aff;
-  --accent-primary-hover: #8b6eff;
+  /* Brand & Accent Tokens (WCAG 2.2 AA >= 4.5:1 against #ffffff & surface-1) */
+  --accent-primary: #6b48ff;
+  --accent-primary-strong: #5532ee;
+  --accent-primary-hover: #5e3bf5;
   --accent-primary-soft: rgba(124, 92, 255, 0.16);
   --accent-secondary: #38bdf8;
-  --accent-tertiary: #a78bfa;
+  --accent-tertiary: #c4b5fd;
 
   /* Background & Surface Hierarchy */
   --bg-app: #090d16;
@@ -162,8 +162,8 @@
   --content-max-width: 1460px;
 
   --z-sticky: 20;
-  --z-sidebar: 40;
   --z-bottom-nav: 45;
+  --z-sidebar: 50;
   --z-drawer: 60;
   --z-modal: 80;
   --z-toast: 95;
@@ -814,7 +814,7 @@ button:disabled {
 }
 .q-su-pill {
   background: var(--accent-primary-soft);
-  color: var(--accent-primary);
+  color: var(--accent-tertiary);
   border-color: transparent;
 }
 .q-topic-pill {
@@ -1014,12 +1014,12 @@ button:disabled {
 .q-option-btn.opt-correct .opt-radio-ring {
   border-color: var(--status-success-text);
   background: var(--status-success-text);
-  color: #052e16;
+  color: var(--bg-app);
 }
 .q-option-btn.opt-incorrect .opt-radio-ring {
   border-color: var(--status-error-text);
   background: var(--status-error-text);
-  color: #ffffff;
+  color: var(--text-on-accent);
 }
 
 .opt-text {
@@ -1077,6 +1077,10 @@ button:disabled {
   border-color: var(--status-error-border);
   background: var(--status-error-bg);
 }
+.q-feedback-panel.feedback-neutral {
+  border-color: var(--status-warning-border);
+  background: var(--status-warning-bg);
+}
 .q-feedback-header {
   display: flex;
   align-items: center;
@@ -1086,6 +1090,7 @@ button:disabled {
 }
 .feedback-correct .q-feedback-header { color: var(--status-success-text); }
 .feedback-incorrect .q-feedback-header { color: var(--status-error-text); }
+.feedback-neutral .q-feedback-header { color: var(--status-warning-text); }
 .q-correct-summary {
   margin-left: auto;
   font-size: 0.76rem;

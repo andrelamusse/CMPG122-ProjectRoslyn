@@ -17,7 +17,7 @@ globs: ["**/*.js", "**/*.html", "**/*.md", "**/*.py"]
   - **SU1 (Weeks 1–2):** Visual Studio IDE, 6-Phase Development Cycle, Hungarian notation prefixes (`btn`, `lbl`, `txt`, `pic`, `rad`/`rdo`, `chk`/`cb`, `lst`, `grp`).
   - **SU2 (Weeks 3–4):** Data types (`decimal` with `m` suffix for currency, `int`, `double`), integer division & casting, `.ToString("C"/"F2"/"N2"/"P1")`, `Math` methods, `try-catch`, `const` & class-level fields.
   - **SU3 (Weeks 5–6):** Selection structures (`if-else`, `switch`), relational/logical operators, defensive `TryParse` with `out`, `RadioButton`, `CheckBox`, `ListBox.SelectedIndex`.
-  - **SU4 (Weeks 7–9):** Loops (`while`, `do-while`, `for`), `++`/`--`, `Random` (`Next`, `NextDouble`), `Form1_Load`, Text File I/O (`using System.IO;`, `StreamWriter`, `File.CreateText`, `File.AppendText`, `StreamReader`, `File.OpenText`, `EndOfStream`), `OpenFileDialog` & `SaveFileDialog` (`Component tray`, `ShowDialog() == DialogResult.OK`, `.Filename`, `.InitialDirectory`).
+  - **SU4 (Weeks 7–9):** Loops (`while`, `do-while`, `for`), `++`/`--`, `Random` (`Next`, `NextDouble`), `Form1_Load`, Text File I/O (`using System.IO;`, `StreamWriter`, `File.CreateText`, `File.AppendText`, `StreamReader`, `File.OpenText`, `EndOfStream`), `OpenFileDialog` & `SaveFileDialog` (`Component tray`, `ShowDialog() == DialogResult.OK`, `.FileName`, `.InitialDirectory`).
   - **SU5 (Weeks 10–11):** Modularizing with Methods (`void` vs value-returning, parameters vs arguments, Pass-by-Value vs `ref` vs `out` parameters, debugger stepping).
   - **SU6 (Weeks 11–12):** Multiform Projects (`new Form2()`, modal `ShowDialog()` vs modeless `Show()`, `Modifiers = Public` for cross-form control access, `Close()` vs `Hide()`, `Program.cs` startup form).
 

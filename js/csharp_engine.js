@@ -1,10 +1,10 @@
 /**
  * NWU CMPG122 C# Diagnostics Engine & CodeGrade Virtual Test Sandbox
  * =========================================================================
- * Comprehensive client-side C# static analyzer, syntax linter, Roslyn-style
- * error flagger, and virtual test runner for Visual C# (Gaddis 4th Edition).
- * 100% Standalone • Zero Server/CORS Dependencies • Offline Compatible
- */
+  * Comprehensive client-side C# static analyzer, syntax linter, Roslyn-style
+  * error flagger, and virtual test runner for Visual C# Windows Forms.
+  * 100% Standalone • Zero Server/CORS Dependencies • Offline Compatible
+  */
 
 (function(root, factory) {
   const exports = factory();
@@ -54,32 +54,43 @@
     'pic': 'PictureBox',
     'img': 'PictureBox',
     'tmr': 'Timer',
-    'pnl': 'Panel'
+    'pnl': 'Panel',
+    'ofd': 'OpenFileDialog',
+    'sfd': 'SaveFileDialog'
   };
 
-  // Standard PascalCase Polyfills on String.prototype for C# compatibility
-  String.prototype.Trim = function() { return this.trim(); };
-  String.prototype.ToUpper = function() { return this.toUpperCase(); };
-  String.prototype.ToLower = function() { return this.toLowerCase(); };
-  String.prototype.Contains = function(s) { return this.includes(s); };
-  String.prototype.StartsWith = function(s) { return this.startsWith(s); };
-  String.prototype.EndsWith = function(s) { return this.endsWith(s); };
-  String.prototype.CompareTo = function(s) {
+  function defineHiddenMethod(proto, name, fn) {
+    Object.defineProperty(proto, name, {
+      value: fn,
+      enumerable: false,
+      configurable: true,
+      writable: true
+    });
+  }
+
+  // Non-enumerable PascalCase Polyfills on String/Number/Boolean prototypes for C# sandbox compatibility
+  defineHiddenMethod(String.prototype, 'Trim', function() { return this.trim(); });
+  defineHiddenMethod(String.prototype, 'ToUpper', function() { return this.toUpperCase(); });
+  defineHiddenMethod(String.prototype, 'ToLower', function() { return this.toLowerCase(); });
+  defineHiddenMethod(String.prototype, 'Contains', function(s) { return this.includes(s); });
+  defineHiddenMethod(String.prototype, 'StartsWith', function(s) { return this.startsWith(s); });
+  defineHiddenMethod(String.prototype, 'EndsWith', function(s) { return this.endsWith(s); });
+  defineHiddenMethod(String.prototype, 'CompareTo', function(s) {
     const a = String(this);
     const b = String(s);
     if (a < b) return -1;
     if (a > b) return 1;
     return 0;
-  };
-  String.prototype.Substring = function(start, len) {
+  });
+  defineHiddenMethod(String.prototype, 'Substring', function(start, len) {
     if (len === undefined) return this.substring(start);
     return this.substring(start, start + len);
-  };
-  String.prototype.PadLeft = function(len, ch) { return this.padStart(len, ch || ' '); };
-  String.prototype.PadRight = function(len, ch) { return this.padEnd(len, ch || ' '); };
-  String.prototype.IndexOf = function(s, start) { return this.indexOf(s, start); };
-  String.prototype.LastIndexOf = function(s, start) { return this.lastIndexOf(s, start); };
-  String.prototype.Replace = function(oldVal, newVal) { return this.split(oldVal).join(newVal); };
+  });
+  defineHiddenMethod(String.prototype, 'PadLeft', function(len, ch) { return this.padStart(len, ch || ' '); });
+  defineHiddenMethod(String.prototype, 'PadRight', function(len, ch) { return this.padEnd(len, ch || ' '); });
+  defineHiddenMethod(String.prototype, 'IndexOf', function(s, start) { return this.indexOf(s, start); });
+  defineHiddenMethod(String.prototype, 'LastIndexOf', function(s, start) { return this.lastIndexOf(s, start); });
+  defineHiddenMethod(String.prototype, 'Replace', function(oldVal, newVal) { return this.split(oldVal).join(newVal); });
   String.IsNullOrEmpty = function(s) { return s === null || s === undefined || s === ''; };
   String.IsNullOrWhiteSpace = function(s) { return s === null || s === undefined || String(s).trim() === ''; };
   String.Format = function(formatStr, ...args) {
@@ -110,30 +121,31 @@
   if (!Object.getOwnPropertyDescriptor(String.prototype, 'Length')) {
     Object.defineProperty(String.prototype, 'Length', {
       get: function() { return this.length; },
+      enumerable: false,
       configurable: true
     });
   }
   if (!Object.getOwnPropertyDescriptor(Array.prototype, 'Length')) {
     Object.defineProperty(Array.prototype, 'Length', {
       get: function() { return this.length; },
+      enumerable: false,
       configurable: true
     });
   }
 
-  // Standard C# Number Format Polyfills
-  Number.prototype._toCurrency = function() {
+  defineHiddenMethod(Number.prototype, '_toCurrency', function() {
     return 'R ' + this.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  };
-  Number.prototype._toFixed = function(digits) {
+  });
+  defineHiddenMethod(Number.prototype, '_toFixed', function(digits) {
     return this.toFixed(digits);
-  };
-  Number.prototype._toNumber = function(digits) {
+  });
+  defineHiddenMethod(Number.prototype, '_toNumber', function(digits) {
     return this.toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits });
-  };
-  Number.prototype._toPercent = function(digits) {
+  });
+  defineHiddenMethod(Number.prototype, '_toPercent', function(digits) {
     return (this * 100).toFixed(digits) + '%';
-  };
-  Number.prototype.ToString = function(format) {
+  });
+  defineHiddenMethod(Number.prototype, 'ToString', function(format) {
     if (!format) return this.toString();
     const f = String(format).trim().toUpperCase();
     if (f === 'C') return this._toCurrency();
@@ -150,10 +162,10 @@
       return this._toPercent(isNaN(d) ? 1 : d);
     }
     return this.toString();
-  };
-  Boolean.prototype.ToString = function() {
+  });
+  defineHiddenMethod(Boolean.prototype, 'ToString', function() {
     return this ? 'True' : 'False';
-  };
+  });
 
   /**
    * 1. CSHARP TOKENIZER & LEXER
@@ -432,18 +444,41 @@
     });
 
     // 2. Line-by-Line Semicolon & Statement Ending Checks (CS1002)
+    function stripSingleLineCommentSafe(lineStr) {
+      let inStr = false;
+      let quoteCh = '';
+      let isVerbatim = false;
+      for (let k = 0; k < lineStr.length; k++) {
+        const ch = lineStr[k];
+        if (inStr) {
+          if (!isVerbatim && ch === '\\') { k++; continue; }
+          if (isVerbatim && ch === '"' && lineStr[k + 1] === '"') { k++; continue; }
+          if (ch === quoteCh) { inStr = false; isVerbatim = false; }
+        } else {
+          if (ch === '/' && lineStr[k + 1] === '/') {
+            return lineStr.slice(0, k);
+          }
+          if (ch === '@' && lineStr[k + 1] === '"') {
+            inStr = true;
+            quoteCh = '"';
+            isVerbatim = true;
+            k++;
+          } else if (ch === '"' || ch === "'") {
+            inStr = true;
+            quoteCh = ch;
+            isVerbatim = false;
+          }
+        }
+      }
+      return lineStr;
+    }
+
     let parenDepth = 0;
     let controlParenActive = false;
 
     lines.forEach((rawLine, idx) => {
       const lineNum = idx + 1;
-      let clean = rawLine.trim();
-
-      // Remove comments
-      const commentIdx = clean.indexOf('//');
-      if (commentIdx !== -1) {
-        clean = clean.slice(0, commentIdx).trim();
-      }
+      const clean = stripSingleLineCommentSafe(rawLine).trim();
 
       if (!clean) return; // Skip blank lines
 
@@ -771,6 +806,22 @@
       return '`' + converted + '`';
     });
 
+    // 1b. Verbatim C# string literals @"..." -> escaped JS string literal (handle doubled "" quotes too)
+    js = js.replace(/@"((?:[^"]|"")*)"/g, (_m, inner) => JSON.stringify(inner.replace(/""/g, '"')));
+
+    // Track declared C# int variables before type erasure so int / int division truncates like C#
+    const intVars = new Set();
+    const outIntRe = /\bout\s+int\s+([a-zA-Z_][a-zA-Z0-9_]*)\b/g;
+    let im;
+    while ((im = outIntRe.exec(js)) !== null) intVars.add(im[1]);
+    const intDeclLineRe = /\b(?:const\s+)?int\s+(?!\s*\[)([^;{()]+?)(?=[;)])/g;
+    while ((im = intDeclLineRe.exec(js)) !== null) {
+      im[1].split(',').forEach(seg => {
+        const vm = seg.trim().match(/^([a-zA-Z_][a-zA-Z0-9_]*)\b/);
+        if (vm) intVars.add(vm[1]);
+      });
+    }
+
     // 2. Identify and hoist inline out variables: e.g. out decimal hours, out var count
     const inlineOutVars = new Set();
     const outTypedRegex = /\bout\s+(?:decimal|double|int|string|bool|float|long|char|var)\s+([a-zA-Z_][a-zA-Z0-9_]*)\b/g;
@@ -782,14 +833,13 @@
     js = js.replace(/\bout\s+(?:decimal|double|int|string|bool|float|long|char|var)\s+([a-zA-Z_][a-zA-Z0-9_]*)\b/g, 'out $1');
 
     // 3. Transpile C# array declarations:
-    // double[] dailyKm = { ... }; or new double[] { ... }
     js = js.replace(/\b(?:decimal|double|int|string|bool|float|long|char)\s*\[\s*\]\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*\{([^}]+)\}/g, 'let $1 = [$2]');
     js = js.replace(/\b(?:decimal|double|int|string|bool|float|long|char)\s*\[\s*\]\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*new\s+(?:decimal|double|int|string|bool|float|long|char)\s*\[\s*\]\s*\{([^}]+)\}/g, 'let $1 = [$2]');
     js = js.replace(/\b(?:decimal|double|int|string|bool|float|long|char)\s*\[\s*\]\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*new\s+(?:decimal|double|int|string|bool|float|long|char)\s*\[([^\]]+)\]/g, 'let $1 = new Array($2).fill(0)');
     js = js.replace(/\b(?:decimal|double|int|string|bool|float|long|char)\s*\[\s*\]\s+([a-zA-Z_][a-zA-Z0-9_]*)/g, 'let $1');
 
-    // 4. Transpile C# type declarations (handling const/readonly, primitive types, StreamWriter/StreamReader, Random, and Form types)
-    js = js.replace(/\b(?:(const|readonly)\s+)?(?:decimal|double|int|string|bool|float|long|char|DialogResult|Color|StreamWriter|StreamReader|Random|[A-Z][a-zA-Z0-9_]*Form)\s+([a-zA-Z_][a-zA-Z0-9_]*)/g, (match, isConst, varName) => {
+    // 4. Transpile C# type declarations (handling const/readonly, primitive types, StreamWriter/StreamReader, dialogs, Random, and Form types)
+    js = js.replace(/\b(?:(const|readonly)\s+)?(?:decimal|double|int|string|bool|float|long|char|DialogResult|Color|StreamWriter|StreamReader|OpenFileDialog|SaveFileDialog|Random|[A-Z][a-zA-Z0-9_]*Form)\s+([a-zA-Z_][a-zA-Z0-9_]*)/g, (match, isConst, varName) => {
       return (isConst ? 'const ' : 'let ') + varName;
     });
 
@@ -808,22 +858,50 @@
     // 5. foreach loops: foreach (string item in lst.Items) -> for (let item of lst.Items)
     js = js.replace(/\bforeach\s*\(\s*(?:(?:string|int|decimal|double|bool|var|[a-zA-Z0-9_]+)\s+)?([a-zA-Z_][a-zA-Z0-9_]*)\s+in\s+([^)]+)\)/g, 'for (let $1 of $2)');
 
+    // Explicit numeric casts BEFORE int-division check so (double)a / b becomes Number(a) / b (float division!)
+    // while (double)(a / b) becomes Number(a / b) -> Number(Math.trunc(a / b))!
+    js = js.replace(/\(\s*int\s*\)\s*([a-zA-Z0-9_\.]+\s*\([^)]*\))/g, 'Math.trunc($1)');
+    js = js.replace(/\(\s*(?:double|decimal|float)\s*\)\s*([a-zA-Z0-9_\.]+\s*\([^)]*\))/g, 'Number($1)');
+    js = js.replace(/\(\s*int\s*\)\s*(?=\()/g, 'Math.trunc');
+    js = js.replace(/\(\s*(?:double|decimal|float)\s*\)\s*(?=\()/g, 'Number');
+    js = js.replace(/\(\s*int\s*\)\s*([a-zA-Z0-9_\.]+)(?!\s*\()/g, 'Math.trunc($1)');
+    js = js.replace(/\(\s*(?:double|decimal|float)\s*\)\s*([a-zA-Z0-9_\.]+)(?!\s*\()/g, 'Number($1)');
+
+    // Mask comments & string/template literals before integer-division and loop-guard transforms
+    const maskedLiterals = [];
+    const maskLiterals = (input) => input.replace(/(\/\/[^\n]*|\/\*[\s\S]*?\*\/|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)/g, (m) => {
+      const tok = `\x01CSLIT_${maskedLiterals.length}\x01`;
+      maskedLiterals.push(m);
+      return tok;
+    });
+    const unmaskLiterals = (input) => input.replace(/\x01CSLIT_(\d+)\x01/g, (_m, idx) => maskedLiterals[Number(idx)]);
+
+    js = maskLiterals(js);
+
+    // 5b. C# Integer Division Truncation (int / int -> Math.trunc(lhs / rhs)) BEFORE stripping m/d/f suffixes!
+    const isIntAtom = (tok) => {
+      if (/^\d+$/.test(tok)) return true; // Pure integer literal without . or m/d/f suffix
+      if (intVars.has(tok)) return true;
+      if (/\.(?:Count|Length|SelectedIndex)$/.test(tok)) return true;
+      return false;
+    };
+    let prevDiv;
+    let safetyPass = 0;
+    do {
+      prevDiv = js;
+      js = js.replace(/(?<![.\w$])([a-zA-Z_][a-zA-Z0-9_.]*|\d+(?:\.\d+)?[mMdDfF]?)\s*\/\s*(?![/*=])([a-zA-Z_][a-zA-Z0-9_.]*|\d+(?:\.\d+)?[mMdDfF]?)(?![.\w$])/g, (full, lhs, rhs) => {
+        if (isIntAtom(lhs) && isIntAtom(rhs)) {
+          return `Math.trunc(${lhs} / ${rhs})`;
+        }
+        return full;
+      });
+      safetyPass++;
+    } while (js !== prevDiv && safetyPass < 6);
+
+    js = unmaskLiterals(js);
+
     // 6. Handle numeric literals with C# suffixes: 100.5m -> 100.5, 0.15m -> 0.15, 10d -> 10, 40.0m -> 40.0
     js = js.replace(/(\d+(?:\.\d+)?)[mMDdfF]\b/g, '$1');
-
-    // Explicit numeric casts:
-    // 1. (int)func(...) -> Math.trunc(func(...))
-    js = js.replace(/\(\s*int\s*\)\s*([a-zA-Z0-9_\.]+\s*\([^)]*\))/g, 'Math.trunc($1)');
-    // 2. (double|decimal|float)func(...) -> Number(func(...))
-    js = js.replace(/\(\s*(?:double|decimal|float)\s*\)\s*([a-zA-Z0-9_\.]+\s*\([^)]*\))/g, 'Number($1)');
-    // 3. (int)(expr) -> Math.trunc(expr)
-    js = js.replace(/\(\s*int\s*\)\s*(?=\()/g, 'Math.trunc');
-    // 4. (double|decimal|float)(expr) -> Number(expr)
-    js = js.replace(/\(\s*(?:double|decimal|float)\s*\)\s*(?=\()/g, 'Number');
-    // 5. (int)ident -> Math.trunc(ident)
-    js = js.replace(/\(\s*int\s*\)\s*([a-zA-Z0-9_\.]+)(?!\s*\()/g, 'Math.trunc($1)');
-    // 6. (double|decimal|float)ident -> Number(ident)
-    js = js.replace(/\(\s*(?:double|decimal|float)\s*\)\s*([a-zA-Z0-9_\.]+)(?!\s*\()/g, 'Number($1)');
 
     // 7. String methods & helpers
     js = js.replace(/\b(?:string|String)\.IsNullOrEmpty\s*\(\s*([^)]+)\s*\)/g, '(!($1) || ($1).length === 0)');
@@ -862,9 +940,6 @@
     js = js.replace(/\.ToString\s*\(\s*["']P(\d)?["']\s*\)/gi, '._toPercent($1 || 1)');
     js = js.replace(/\.ToString\s*\(\s*\)/g, '.toString()');
 
-    // Verbatim C# string literals @"..." -> escaped JS string literal
-    js = js.replace(/@"([^"]*)"/g, (_m, inner) => JSON.stringify(inner));
-
     // MessageBox.Show(...) -> _msgBox(...)
     js = js.replace(/\bMessageBox\.Show\s*\(/g, '_msgBox(');
 
@@ -872,52 +947,121 @@
     js = js.replace(/\bthis\.Close\s*\(\s*\)/g, '_closeForm()');
     js = js.replace(/\bthis\.Hide\s*\(\s*\)/g, '_hideForm()');
 
-    // Infinite-loop guard on brace-delimited while / for / do loops
-    js = js.replace(/\b(while\s*\([^)]*\)|for\s*\([^)]*\)|do)\s*\{/g, '$1 { _guardLoop(); ');
+    // 9. Balanced-delimiter Infinite-Loop Guard on braced AND braceless while / for / do loops
+    maskedLiterals.length = 0;
+    const maskedForLoops = maskLiterals(js);
+    js = unmaskLiterals(injectLoopGuardsBalanced(maskedForLoops));
 
     return js;
   }
 
-  function runSingleTestCase(transpiledJs, tc, context) {
-    // Standard C# String Polyfills
-    String.prototype.Trim = function() { return this.trim(); };
-    String.prototype.ToUpper = function() { return this.toUpperCase(); };
-    String.prototype.ToLower = function() { return this.toLowerCase(); };
-    String.prototype.Contains = function(s) { return this.includes(s); };
-    String.prototype.StartsWith = function(s) { return this.startsWith(s); };
-    String.prototype.EndsWith = function(s) { return this.endsWith(s); };
-    String.prototype.CompareTo = function(s) {
-      const a = String(this);
-      const b = String(s);
-      if (a < b) return -1;
-      if (a > b) return 1;
-      return 0;
-    };
-    String.prototype.Substring = function(start, len) {
-      if (len === undefined) return this.substring(start);
-      return this.substring(start, start + len);
-    };
-    String.prototype.PadLeft = function(len, ch) { return this.padStart(len, ch || ' '); };
-    String.prototype.PadRight = function(len, ch) { return this.padEnd(len, ch || ' '); };
-    String.prototype.IndexOf = function(s, start) { return this.indexOf(s, start); };
-    String.prototype.LastIndexOf = function(s, start) { return this.lastIndexOf(s, start); };
-    String.prototype.Replace = function(oldVal, newVal) { return this.split(oldVal).join(newVal); };
-    String.IsNullOrEmpty = function(s) { return s === null || s === undefined || s === ''; };
-    String.IsNullOrWhiteSpace = function(s) { return s === null || s === undefined || String(s).trim() === ''; };
+  function injectLoopGuardsBalanced(s) {
+    function findMatching(str, openPos, openCh, closeCh) {
+      let depth = 1;
+      for (let k = openPos + 1; k < str.length; k++) {
+        if (str[k] === openCh) depth++;
+        else if (str[k] === closeCh) {
+          depth--;
+          if (depth === 0) return k;
+        }
+      }
+      return -1;
+    }
 
-    // Standard C# Number Format Polyfills
-    Number.prototype._toCurrency = function() {
-      return 'R ' + this.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    };
-    Number.prototype._toFixed = function(digits) {
-      return this.toFixed(digits);
-    };
-    Number.prototype._toNumber = function(digits) {
-      return this.toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits });
-    };
-    Number.prototype._toPercent = function(digits) {
-      return (this * 100).toFixed(digits) + '%';
-    };
+    function skipSpaces(str, pos) {
+      while (pos < str.length && /\s/.test(str[pos])) pos++;
+      return pos;
+    }
+
+    function findSingleStatementEnd(str, startPos) {
+      let pDepth = 0;
+      let bDepth = 0;
+      for (let k = startPos; k < str.length; k++) {
+        const ch = str[k];
+        if (ch === '(') pDepth++;
+        else if (ch === ')') pDepth = Math.max(0, pDepth - 1);
+        else if (ch === '{') bDepth++;
+        else if (ch === '}') {
+          bDepth = Math.max(0, bDepth - 1);
+          if (pDepth === 0 && bDepth === 0) {
+            const after = skipSpaces(str, k + 1);
+            if (!str.slice(after).startsWith('else')) return k + 1;
+          }
+        } else if (ch === ';' && pDepth === 0 && bDepth === 0) {
+          return k + 1;
+        }
+      }
+      return str.length;
+    }
+
+    const doWhileFooters = new Set();
+    let out = '';
+    let i = 0;
+
+    while (i < s.length) {
+      const prevCh = i > 0 ? s[i - 1] : '';
+      const atBoundary = !/[a-zA-Z0-9_$]/.test(prevCh);
+
+      if (atBoundary && /^do(?![a-zA-Z0-9_$])/.test(s.slice(i))) {
+        const bodyPos = skipSpaces(s, i + 2);
+        if (s[bodyPos] === '{') {
+          const closeBrace = findMatching(s, bodyPos, '{', '}');
+          if (closeBrace !== -1) {
+            const afterClose = skipSpaces(s, closeBrace + 1);
+            if (/^while(?![a-zA-Z0-9_$])/.test(s.slice(afterClose))) {
+              doWhileFooters.add(afterClose);
+            }
+          }
+          out += 'do { _guardLoop(); ';
+          i = bodyPos + 1;
+          continue;
+        } else if (bodyPos < s.length) {
+          const stmtEnd = findSingleStatementEnd(s, bodyPos);
+          const afterStmt = skipSpaces(s, stmtEnd);
+          if (/^while(?![a-zA-Z0-9_$])/.test(s.slice(afterStmt))) {
+            doWhileFooters.add(afterStmt);
+          }
+          out += 'do { _guardLoop(); ' + injectLoopGuardsBalanced(s.slice(bodyPos, stmtEnd)) + ' } ';
+          i = stmtEnd;
+          continue;
+        }
+      }
+
+      const loopKwMatch = atBoundary ? s.slice(i).match(/^(while|for)(?![a-zA-Z0-9_$])/) : null;
+      if (loopKwMatch && !(loopKwMatch[1] === 'while' && doWhileFooters.has(i))) {
+        const kw = loopKwMatch[1];
+        const openParen = skipSpaces(s, i + kw.length);
+        if (s[openParen] === '(') {
+          const closeParen = findMatching(s, openParen, '(', ')');
+          if (closeParen !== -1) {
+            out += s.slice(i, closeParen + 1);
+            const bodyPos = skipSpaces(s, closeParen + 1);
+            if (s[bodyPos] === '{') {
+              out += ' { _guardLoop(); ';
+              i = bodyPos + 1;
+              continue;
+            } else if (s[bodyPos] === ';') {
+              out += ' { _guardLoop(); }';
+              i = bodyPos + 1;
+              continue;
+            } else if (bodyPos < s.length) {
+              const stmtEnd = findSingleStatementEnd(s, bodyPos);
+              out += ' { _guardLoop(); ' + injectLoopGuardsBalanced(s.slice(bodyPos, stmtEnd)) + ' }';
+              i = stmtEnd;
+              continue;
+            }
+          }
+        }
+      }
+
+      out += s[i];
+      i++;
+    }
+
+    return out;
+  }
+
+  function runSingleTestCase(transpiledJs, tc, context) {
 
     function createListBoxItems(initialItems = []) {
       const itemsArray = (Array.isArray(initialItems) ? [...initialItems] : []).map(x => String(x));
@@ -1041,6 +1185,21 @@
           }
         };
       }
+      if (name.startsWith('ofd') || name.startsWith('sfd')) {
+        const defaultName = name.startsWith('sfd') ? 'Report.txt' : 'Data.txt';
+        const fn = (initialVal && typeof initialVal === 'object' && initialVal.FileName)
+          ? String(initialVal.FileName)
+          : (typeof initialVal === 'string' && initialVal ? initialVal : defaultName);
+        const dialogResult = (initialVal && typeof initialVal === 'object' && initialVal.DialogResult !== undefined)
+          ? initialVal.DialogResult
+          : 1; // DialogResult.OK
+        return {
+          FileName: fn,
+          InitialDirectory: '',
+          Filter: '',
+          ShowDialog: function() { return dialogResult; }
+        };
+      }
       return initialVal;
     }
 
@@ -1122,6 +1281,12 @@
             Close: function() { this._closed = true; }
           };
         }
+      },
+      OpenFileDialog: function() {
+        return { FileName: 'Data.txt', InitialDirectory: '', Filter: '', ShowDialog: function() { return 1; } };
+      },
+      SaveFileDialog: function() {
+        return { FileName: 'Report.txt', InitialDirectory: '', Filter: '', ShowDialog: function() { return 1; } };
       },
       Random: function() {
         return {
@@ -1325,7 +1490,7 @@
       pointsEarned: valEarned,
       pointsMax: valWeight,
       passed: valPassed,
-      notes: valPassed ? 'Robust numeric validation implemented.' : 'Uses raw Parse() without exception guard. CodeGrade deducts marks for crash risk.'
+      notes: valPassed ? 'Robust numeric validation implemented.' : 'Uses raw Parse() without exception guard (risks unhandled FormatException on non-numeric input).'
     });
 
     // 3. Test Cases & Business Logic (35%)
