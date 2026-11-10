@@ -1,1157 +1,459 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>CMPG 122 • Real-Time Cloud Telemetry & Admin Analytics | NWU</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CMPG122 — Private Admin Telemetry Dashboard</title>
   <style>
-    .admin-wrapper {
-      max-width: 1100px;
-      margin: 1.5rem auto;
-      padding: 0 1.25rem 3rem 1.25rem;
+    :root {
+      --bg-primary: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #162033;
+      --border-subtle: #1f2937;
+      --text-primary: #f9fafb;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --accent-purple: #8b5cf6;
+      --accent-emerald: #10b981;
+      --accent-sky: #0ea5e9;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
     }
-    .admin-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-      margin-bottom: 1.75rem;
-      box-shadow: var(--shadow-sm);
-    }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem;
-      margin-top: 1.5rem;
-    }
-    .stat-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .stat-box::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--accent-azure);
-    }
-    .stat-box.cyan::before { background: var(--accent-cyan); }
-    .stat-box.emerald::before { background: var(--accent-emerald); }
-    .stat-box.amber::before { background: var(--accent-amber); }
-    .stat-box.purple::before { background: #ab47bc; }
-    
-    .stat-label {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .stat-val {
-      font-family: var(--font-mono);
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--accent-azure);
-      line-height: 1.1;
-    }
-    .stat-val.cyan { color: var(--accent-cyan); }
-    .stat-val.emerald { color: var(--accent-emerald); }
-    .stat-val.amber { color: var(--accent-amber); }
-    .stat-val.purple { color: #ce93d8; }
 
-    .stat-sub {
-      font-size: 0.78rem;
-      color: var(--text-faint);
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    .pulse-dot {
-      display: inline-block;
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem;
+      line-height: 1.5;
+    }
+
+    .dashboard-shell {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .dashboard-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .header-title-group h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .header-title-group p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    .live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--accent-emerald);
+      font-size: 0.8125rem;
+      font-weight: 600;
+    }
+
+    .live-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--accent-emerald);
+      background-color: var(--accent-emerald);
       box-shadow: 0 0 8px var(--accent-emerald);
-      margin-right: 6px;
       animation: pulse 2s infinite;
     }
+
     @keyframes pulse {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-      100% { opacity: 1; transform: scale(1); }
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.92); }
     }
-    .telemetry-row {
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .metric-card:hover {
+      background: var(--bg-card-hover);
+      border-color: #374151;
+    }
+
+    .metric-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+    }
+
+    .metric-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.65rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-sub {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .val-active { color: var(--accent-emerald); }
+    .val-devices { color: var(--accent-sky); }
+    .val-time { color: var(--accent-purple); }
+    .val-answered { color: var(--accent-amber); }
+    .val-correct { color: var(--accent-emerald); }
+    .val-wrong { color: var(--accent-rose); }
+
+    .accuracy-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.15rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(244, 63, 94, 0.14);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      color: #fda4af;
+      font-weight: 600;
+      font-size: 0.78rem;
+    }
+
+    .dashboard-footer {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-subtle);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border-subtle);
-      font-size: 0.9rem;
-    }
-    .telemetry-row:last-child {
-      border-bottom: none;
-    }
-    .badge-status {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.25rem 0.65rem;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      background: rgba(46, 160, 67, 0.15);
-      color: var(--accent-emerald);
-      border: 1px solid rgba(46, 160, 67, 0.3);
-    }
-    .engagement-bar-wrap {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 999px;
-      height: 18px;
-      overflow: hidden;
-      margin: 0.75rem 0 0.5rem 0;
-      position: relative;
-    }
-    .engagement-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #00acc1, #4caf50);
-      width: 0%;
-      transition: width 1s ease-in-out;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
     }
   </style>
 </head>
 <body>
+  <div class="dashboard-shell">
+    <header class="dashboard-header">
+      <div class="header-title-group">
+        <h1>CMPG122 Live Telemetry Monitor</h1>
+        <p>Private Real-Time Student Presence, IP-Deduplicated Devices &amp; Question Accuracy</p>
+      </div>
+      <div class="live-pill" id="liveStatusPill">
+        <span class="live-dot"></span>
+        <span id="livePollText">Live Auto-Refresh (3.5s)</span>
+      </div>
+    </header>
 
-  <!-- Top Institutional Banner -->
-  <div style="background:#090d16; border-bottom:1px solid var(--border-subtle); padding:0.4rem 1.5rem; font-size:0.75rem; color:var(--text-faint); display:flex; justify-content:space-between; align-items:center;">
-    <span>North-West University • Faculty of Natural and Agricultural Sciences • School of Computer Science & Information Systems</span>
-    <span><span class="pulse-dot"></span>Live Global Cloud Polling (3s Interval) • Production V7.00</span>
+    <main class="metrics-grid" aria-label="Core Live Telemetry Metrics">
+      <!-- 1. Live Active Users -->
+      <section class="metric-card" id="cardActiveUsers">
+        <div>
+          <div class="metric-label">1. Live Active Users (Right Now)</div>
+          <div class="metric-value val-active" id="metricActiveUsers">0</div>
+        </div>
+        <div class="metric-sub">
+          <span>Active heartbeat within last 60s (1-min idle cutoff)</span>
+        </div>
+      </section>
+
+      <!-- 2. Total Users / Devices Logged In -->
+      <section class="metric-card" id="cardTotalDevices">
+        <div>
+          <div class="metric-label">2. Total Users / Devices Logged In</div>
+          <div class="metric-value val-devices" id="metricTotalDevices">0</div>
+        </div>
+        <div class="metric-sub">
+          <span>Unique IP SHA-256 deduplicated devices</span>
+        </div>
+      </section>
+
+      <!-- 3. Total Active Usage Time -->
+      <section class="metric-card" id="cardActiveTime">
+        <div>
+          <div class="metric-label">3. Total Active Usage Time</div>
+          <div class="metric-value val-time" id="metricActiveTime">0h 0m</div>
+        </div>
+        <div class="metric-sub">
+          <span>Strictly excludes idle time &gt; 1 min</span>
+          <span id="metricActiveSecondsSub">0s active</span>
+        </div>
+      </section>
+
+      <!-- 4. Total Questions Answered -->
+      <section class="metric-card" id="cardQuestionsAnswered">
+        <div>
+          <div class="metric-label">4. Total Questions Answered</div>
+          <div class="metric-value val-answered" id="metricQuestionsAnswered">0</div>
+        </div>
+        <div class="metric-sub">
+          <span>Cumulative question submissions</span>
+        </div>
+      </section>
+
+      <!-- 5. Total Correct Answers -->
+      <section class="metric-card" id="cardCorrectAnswers">
+        <div>
+          <div class="metric-label">5. Total Correct Answers</div>
+          <div class="metric-value val-correct" id="metricCorrectAnswers">0</div>
+        </div>
+        <div class="metric-sub">
+          <span>Verified correct submissions</span>
+        </div>
+      </section>
+
+      <!-- 6. Total Wrong Answers (& Overall Accuracy %) -->
+      <section class="metric-card" id="cardWrongAnswers">
+        <div>
+          <div class="metric-label">6. Total Wrong Answers</div>
+          <div class="metric-value val-wrong" id="metricWrongAnswers">0</div>
+        </div>
+        <div class="metric-sub">
+          <span>Incorrect submissions</span>
+          <span class="accuracy-badge" id="metricAccuracyBadge">Accuracy: 0.0%</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="dashboard-footer">
+      <span>15s presence heartbeat &bull; 60s idle cutoff &bull; SHA-256 IP deduplication</span>
+      <span id="lastUpdatedStamp">Last updated: --</span>
+    </footer>
   </div>
 
-  <!-- Header -->
-  <header class="app-header">
-    <div class="nav-container">
-      <div class="brand-group" onclick="window.location.href='index.html'" style="cursor:pointer;">
-        <div class="brand-logo">C#</div>
-        <div class="brand-info">
-          <h1>CMPG 122 <span class="brand-badge" style="background:linear-gradient(135deg, #ab47bc, #00acc1);">ADMIN</span></h1>
-          <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">Live Global Telemetry & System Analytics Portal</span>
-        </div>
-      </div>
-
-      <div class="header-actions">
-        <button class="action-btn" id="btnCopyClassLink" onclick="copyClassLink()">🔗 Copy Class Link</button>
-        <a href="https://github.com/andrelamusse/CMPG122-ProjectRoslyn" target="_blank" class="action-btn" style="text-decoration:none;">📁 GitHub Repo</a>
-        <a href="index.html" class="action-btn" style="text-decoration:none;">🚀 Student Testbed</a>
-        <button class="action-btn" id="themeToggle">☀️ Light</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="admin-wrapper">
-
-    <!-- Official Live Deployment Endpoints Card -->
-    <div class="admin-card" style="border-left: 4px solid var(--accent-azure);">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-        <div>
-          <h2 style="font-size:1.3rem; font-weight:800; color:var(--text-main); margin-bottom:0.25rem;">
-            🌐 Official Deployment & Repository Endpoints
-          </h2>
-          <p style="color:var(--text-muted); font-size:0.85rem;">
-            Verified production web apps, live telemetry dashboards, and source code repositories for NWU CMPG122.
-          </p>
-        </div>
-        <span class="badge-status">Production V7.00 • Active</span>
-      </div>
-
-      <div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.88rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; background:var(--bg-card); padding:0.85rem 1.1rem; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
-            <span style="font-size:1.4rem;">🌐</span>
-            <div>
-              <div style="font-weight:700; color:var(--text-main);">Live Student Web Application:</div>
-              <div style="font-family:var(--font-mono); font-size:0.82rem; color:var(--accent-azure); word-break:break-all;">https://andrelamusse.github.io/CMPG122-ProjectRoslyn/</div>
-            </div>
-          </div>
-          <div style="display:flex; gap:0.5rem;">
-            <button class="action-btn" onclick="copyText('https://andrelamusse.github.io/CMPG122-ProjectRoslyn/', this)">📋 Copy</button>
-            <a href="https://andrelamusse.github.io/CMPG122-ProjectRoslyn/" target="_blank" class="action-btn" style="text-decoration:none; background:var(--accent-azure); color:#fff;">🚀 Launch App</a>
-          </div>
-        </div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; background:var(--bg-card); padding:0.85rem 1.1rem; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
-            <span style="font-size:1.4rem;">📊</span>
-            <div>
-              <div style="font-weight:700; color:var(--text-main);">Live Admin Analytics Dashboard:</div>
-              <div style="font-family:var(--font-mono); font-size:0.82rem; color:var(--accent-cyan); word-break:break-all;">https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html</div>
-            </div>
-          </div>
-          <div style="display:flex; gap:0.5rem;">
-            <button class="action-btn" onclick="copyText('https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html', this)">📋 Copy</button>
-            <a href="https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html" target="_blank" class="action-btn" style="text-decoration:none;">📊 Live Portal</a>
-          </div>
-        </div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; background:var(--bg-card); padding:0.85rem 1.1rem; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
-            <span style="font-size:1.4rem;">📁</span>
-            <div>
-              <div style="font-weight:700; color:var(--text-main);">Official GitHub Repository:</div>
-              <div style="font-family:var(--font-mono); font-size:0.82rem; color:var(--accent-emerald); word-break:break-all;">https://github.com/andrelamusse/CMPG122-ProjectRoslyn</div>
-            </div>
-          </div>
-          <div style="display:flex; gap:0.5rem;">
-            <button class="action-btn" onclick="copyText('https://github.com/andrelamusse/CMPG122-ProjectRoslyn', this)">📋 Copy</button>
-            <a href="https://github.com/andrelamusse/CMPG122-ProjectRoslyn" target="_blank" class="action-btn" style="text-decoration:none;">📁 View Code</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Master Specification & System Prompt Card -->
-    <div class="admin-card" style="border-left: 4px solid #ab47bc;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem;">
-        <div>
-          <h2 style="font-size:1.3rem; font-weight:800; color:var(--text-main); margin-bottom:0.25rem;">
-            🤖 Master Engineering Specification & AI Prompt (V7.05 - "PROJECT ROSLYN")
-          </h2>
-          <p style="color:var(--text-muted); font-size:0.85rem;">
-            Canonical architectural specification governing Project Roslyn and the NWU CMPG122 assessment suite.
-          </p>
-        </div>
-        <div style="display:flex; gap:0.5rem;">
-          <button class="action-btn" id="btnCopyPrompt" onclick="copyMasterPrompt()" style="background:#ab47bc; color:#fff; font-weight:700;">
-            📋 Copy Master Prompt
-          </button>
-          <button class="action-btn" onclick="togglePromptView()">
-            <span id="promptToggleText">▼ Show Prompt</span>
-          </button>
-        </div>
-      </div>
-      <div id="masterPromptViewer" style="display:none; background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:1.25rem; max-height:480px; overflow-y:auto; font-family:var(--font-mono); font-size:0.82rem; line-height:1.6; white-space:pre-wrap; color:var(--text-main);"># 🚀 NWU CMPG122 (Visual C# UI Programming) Ultimate Exam Engine &amp; Mastery Suite
-
-## THE DEFINITIVE HYPER-CHARGED MASTER PROMPT (V7.05 - &quot;PROJECT ROSLYN&quot;)
-
-/boost  /goal  /teamwork-preview  /learn  /grill-me 
-
-
-
-
-
----
-
-### EXECUTIVE DIRECTIVES &amp; ANTIGRAVITY AGENT WORKFLOW
-
-You are an elite **Principal Educational Software Architect**, **Lead C# Compiler &amp; Tooling Engineer**, and **Senior HCI Specialist** partnering with North-West University (NWU). Your mission is to audit, maintain, and expand the official, 100% zero-dependency, completely offline-first **CMPG122 User Interface Programming in Visual C# (Weeks 1–7)** Active Assessment and Exam Simulation Suite (**&quot;Project Roslyn&quot;**).
-
-When executing tasks under this prompt, leverage the full Antigravity command suite:
-
-- /boost — Engage deep architectural reasoning, multi-perspective verification, and rigorous AST-level transpiler audits before modifying files.
-
-- /goal  — Maintain an uninterrupted, self-directed completion loop until all test suites, audits, and deployments pass with 100% distinction.
-
-- `/teamwork-preview` — Coordinate concurrent subagents across UI/UX ergonomics, C# runtime sandboxing, and pedagogical question validation.
-
-- /learn  — Persist all zero-leak student blinding invariants, regex edge cases, and CodeGrade transpiler patches across sessions.
-
-- /grill-me  — Stress-test proposed exam questions against NWU marking rubrics and cognitive load boundaries before commits.
-
----
-
-### SECTION 1: RESEARCH-BACKED UI/UX APP DESIGN &amp; COGNITIVE ERGONOMICS
-
-The UI/UX architecture must strictly adhere to verified educational psychology and human-computer interaction (HCI) research to minimize extraneous cognitive load while maximizing germane schema acquisition:
-
-+----------------------------------------------------------------------------------------------------+ | TOP NAVBAR &amp; TELEMETRY HUD | | [NWU CMPG122 Logo] [Paper Title: 2024 Car Rental] [⏳ 42:15 Remaining] [📶 Cloud Synced] | +----------------------------------------------------------------------------------------------------+ | [📖 Scenario &amp; Rates Drawer] | Q1 [✅] Q2 [✅] Q3 [⭐] Q4 [ ] ... Q16 [ ] | [⏭️ Next Unanswered] | +----------------------------------------------------------------------------------------------------+ | MAIN VIEWPORT: CONTINUOUS SINGLE-SHEET EXAMINATION DOCUMENT | | | | +----------------------------------------------------------------------------------------------+ | | | QUESTION 1 [4 Marks] -- Defensive Parsing &amp; Data Typing (Sedan Rental Days) | | | | ------------------------------------------------------------------------------------------ | | | | Scenario Extract: &quot;The rental duration must be parsed defensively from txtRentalDays...&quot; | | | | ( ) A. int days = int.Parse(txtRentalDays.Text); | | | | (*) B. if (!int.TryParse(txtRentalDays.Text, out int days) || days &lt;= 0) { ... } | | | | ( ) C. decimal days = Convert.ToDecimal(txtRentalDays.Text); | | | | ( ) D. int days = txtRentalDays.Text; | | | +----------------------------------------------------------------------------------------------+ | | | | +----------------------------------------------------------------------------------------------+ | | | QUESTION 2 [6 Marks] -- RadioButton Mutual Exclusivity &amp; Rates Assignment | | | | ... | | +----------------------------------------------------------------------------------------------------+
-
-
-
-
-
-#### 1.1 Cognitive Load Theory (Sweller) &amp; Split-Attention Elimination
-
-- **Docked Reference Drawer (`#scenarioDrawer`):** Never force a student to flip back to page 1 or memorize numbers. The complete scenario prompt, pricing tables, allowance rules, and GUI control naming matrices must be accessible via a persistent slide-out drawer or sticky reference panel toggleable from the palette bar.
-
-- **Scaffolding Without Answer Giveaways:** Provide realistic visual context (control naming tables, event signatures, read-only UI code skeletons) without leaking algorithmic logic, variable typing, or formula solutions in the question stems.
-
-#### 1.2 Continuous Single-Sheet Examination Invariant
-
-- **Zero Carousel Steppers for Official Papers:** Official examination papers (`exam_2021_nov`, `exam_2022_dec`, `exam_2023_dec`, `exam_2024_dec`, `exam_2024_pec`) must **NEVER** render as single-question paginated steppers (&quot;Q 1 of 16&quot; with &quot;Next&quot; buttons).
-
-- **Single Vertical Document:** All questions (1 through N) must render stacked vertically on a continuous, scrollable examination paper matching an authentic printed NWU Test 1 paper.
-
-- **Sticky Quick-Jump Docked Matrix:** Positioned immediately below the header with real-time `IntersectionObserver` scroll-spy:
-
-  - Slate: Unanswered (`.unanswered`)
-
-  - Neon Blue: Answered (`.answered`)
-
-  - Glowing Amber: Flagged for Review (`.flagged`)
-
-  - Glowing Cyan Border: Active Viewport Card (`.current-card`)
-
-- **Action Buttons:** Persistent &quot;⏭️ Next Unanswered&quot; circular navigation and a single &quot;📋 Submit Complete Exam Paper&quot; at the document foot.
-
-#### 1.3 Fitts’s Law, Hick’s Law &amp; Visual Hierarchy
-
-- **Target Size &amp; Hit Areas:** Radio options must have a minimum target height of `48px` with full card-width clickability (`padding: 14px 18px`), rounded corners (`8px`), and high-contrast hover/active states.
-
-- **Dark IDE Aesthetic (VS Code Charcoal):**
-
-  - Background Base: `#121418`
-
-  - Card &amp; Surface: `#1a1e24`
-
-  - Borders &amp; Outlines: `#2d333b`
-
-  - Neon Azure: `#007acc` | Neon Teal: `#00bcd4` | Emerald: `#4caf50` | Amber: `#ffb74d` | Coral: `#f44336`
-
-- **Typography:** Google Font `Inter` for UI readability, `JetBrains Mono` / `Fira Code` for syntax blocks. Line height strictly `1.55` to eliminate visual crowding.
-
-#### 1.4 Shneiderman’s 8 Golden Rules of Interface Design (Study Unit 7 Direct Alignment)
-
-1. **Consistency:** Identical typography, button hierarchy, and feedback badges across all Study Units.
-
-2. **Universal Usability:** High contrast ratio (WCAG AAA compliant: `&gt; 7:1`), readable on 320px mobile screens up to 4K displays.
-
-3. **Informative Feedback:** Instant visual state changes upon radio selection, auto-save state indicators, and compiler error diagnostics.
-
-4. **Design Dialogs to Yield Closure:** Comprehensive post-submission review modal with total score, percentage, distinction badge, and detailed question-by-question rationales.
-
-5. **Prevent Errors:** Defensive type validation, disable empty submission without explicit confirmation, and sanitize inputs.
-
-6. **Permit Easy Reversal of Actions:** Instant unchecking/changing of radio buttons, toggleable review flags, and safe code editor resets.
-
-7. **Support Internal Locus of Control:** Students freely navigate any question in any order; timer remains visible; scenario drawer opens without obscuring question context on desktop.
-
-8. **Reduce Short-Term Memory Load:** Retain answers in `localStorage` in real time; preserve state across unintentional page refreshes.
-
----
-
-### SECTION 2: ABSOLUTE CURRICULUM BOUNDARIES (WEEKS 1–7 ONLY)
-
-Assessments must be strictly bounded to Tony Gaddis (*Starting Out With Visual C#*, Chapters 1–5), Study Units 1–4, and Study Unit 7 (HCI).
-
-╔══════════════════════════════════════════════════════════════════════════════════════════════════════╗ ║ CURRICULUM ENFORCEMENT MATRIX ║ ╠══════════════════════════════════════════════════════════════════════════════════════════════════════╣ ║ STRICTLY IN-SCOPE (Test 1 / Weeks 1-7) │ STRICTLY EXCLUDED (Test 2 / Exam Only) ║ ╠═════════════════════════════════════════════════╪════════════════════════════════════════════════════╣ ║ • Gaddis Ch 1-5: Visual Studio IDE &amp; WinForms │ • Custom multi-tier OOP classes (class Student) ║ ║ • Primitive types: int, decimal, double, bool │ • Inheritance, polymorphism, virtual/override ║ ║ • Hungarian notation: txt, lbl, btn, lst, chk │ • Database connectivity (ADO.NET, SQL, OLEDB) ║ ║ • Defensive parsing: decimal.TryParse() │ • LINQ queries (from x in data where...) ║ ║ • Scope: Local, class-level (form-level) fields│ • File I/O streams (StreamReader, StreamWriter) ║ ║ • Control structures: if/else, switch, ternary │ • Multi-dimensional / Jagged arrays (int[,]) ║ ║ • Loops: while, for, do-while │ • Generics (List, Dictionary&lt;TKey, TValue&gt;) ║ ║ • WinForms controls: Form, TextBox, Label, │ • Custom delegates, Events, Lambda expressions ║ ║ Button, GroupBox, RadioButton, CheckBox, │ • Async/await, multi-threading, Tasks ║ ║ ListBox, PictureBox, MessageBox, Timer │ • WPF, ASP.NET, Blazor, MAUI frameworks ║ ║ • ListBox operations: .Items.Add(), .Clear(), │ ║ ║ .Items.Count, .SelectedIndex, .SelectedItem │ ║ ║ • Formatting: .ToString(&quot;C&quot;), (&quot;N2&quot;), (&quot;P0&quot;) │ ║ ║ • HCI (Unit 7): Shneiderman&#x27;s 8 Golden Rules, │ ║ ║ Norman&#x27;s Gulf of Execution/Evaluation │ ║ ╚═════════════════════════════════════════════════╧════════════════════════════════════════════════════╝
-
-
-
-
-
----
-
-### SECTION 3: AUTHENTIC NWU EXAM SCENARIOS &amp; DATA ENGINE
-
-All official exam papers must be rooted in authentic NWU past papers with complete, exact scenarios:
-
-```json
-
-{
-
-  &quot;exam_2024_dec&quot;: {
-
-    &quot;title&quot;: &quot;NWU CMPG122 Test 1 (December 2024) - Potchefstroom Safari Vehicle Rentals&quot;,
-
-    &quot;scenario&quot;: &quot;Potch Safaris rents vehicles across 3 tiers: Sedan (R450/day), Luxury SUV (R650/day), and 4x4 Bakkie (R750/day). Each rental includes a free allowance of 150 km/day. Excess kilometers are billed at R3.50/km. Optional extras: GPS Navigation unit at R80/day flat rate; Comprehensive Collision Waiver (Insurance) at R120/day flat rate. If rental duration exceeds 7 days, a 10% long-term discount applies to base vehicle rental. 15% VAT applies to final subtotal.&quot;,
-
-    &quot;rates&quot;: {
-
-      &quot;Sedan&quot;: 450.00,
-
-      &quot;SUV&quot;: 650.00,
-
-      &quot;Bakkie&quot;: 750.00,
-
-      &quot;FreeKmPerDay&quot;: 150,
-
-      &quot;ExcessPerKm&quot;: 3.50,
-
-      &quot;GPSDaily&quot;: 80.00,
-
-      &quot;InsuranceDaily&quot;: 120.00,
-
-      &quot;LongTermDiscountThresholdDays&quot;: 7,
-
-      &quot;LongTermDiscountRate&quot;: 0.10,
-
-      &quot;VatRate&quot;: 0.15
-
-    },
-
-    &quot;controls&quot;: [
-
-      {&quot;name&quot;: &quot;txtCustomerName&quot;, &quot;type&quot;: &quot;TextBox&quot;, &quot;purpose&quot;: &quot;Customer full name&quot;},
-
-      {&quot;name&quot;: &quot;txtDays&quot;, &quot;type&quot;: &quot;TextBox&quot;, &quot;purpose&quot;: &quot;Rental duration in days&quot;},
-
-      {&quot;name&quot;: &quot;txtKilometers&quot;, &quot;type&quot;: &quot;TextBox&quot;, &quot;purpose&quot;: &quot;Total kilometers traveled&quot;},
-
-      {&quot;name&quot;: &quot;radSedan&quot;, &quot;type&quot;: &quot;RadioButton&quot;, &quot;purpose&quot;: &quot;Select Sedan category&quot;},
-
-      {&quot;name&quot;: &quot;radSUV&quot;, &quot;type&quot;: &quot;RadioButton&quot;, &quot;purpose&quot;: &quot;Select Luxury SUV category&quot;},
-
-      {&quot;name&quot;: &quot;radBakkie&quot;, &quot;type&quot;: &quot;RadioButton&quot;, &quot;purpose&quot;: &quot;Select 4x4 Bakkie category&quot;},
-
-      {&quot;name&quot;: &quot;chkGPS&quot;, &quot;type&quot;: &quot;CheckBox&quot;, &quot;purpose&quot;: &quot;Include GPS navigation&quot;},
-
-      {&quot;name&quot;: &quot;chkInsurance&quot;, &quot;type&quot;: &quot;CheckBox&quot;, &quot;purpose&quot;: &quot;Include Comprehensive Insurance&quot;},
-
-      {&quot;name&quot;: &quot;btnCalculate&quot;, &quot;type&quot;: &quot;Button&quot;, &quot;purpose&quot;: &quot;Process billing &amp; display invoice&quot;},
-
-      {&quot;name&quot;: &quot;lstOutput&quot;, &quot;type&quot;: &quot;ListBox&quot;, &quot;purpose&quot;: &quot;Tabular summary and invoice breakdown&quot;},
-
-      {&quot;name&quot;: &quot;lblTotalDue&quot;, &quot;type&quot;: &quot;Label&quot;, &quot;purpose&quot;: &quot;Final calculated payable amount&quot;}
-
-    ]
-
-  },
-
-  &quot;exam_2023_dec&quot;: {
-
-    &quot;title&quot;: &quot;NWU CMPG122 Test 1 (December 2023) - Academic Tuition &amp; Bursary Calculator&quot;,
-
-    &quot;scenario&quot;: &quot;The Faculty of Natural and Agricultural Sciences bills modules at R850.00 per academic credit. Compulsory lab levies are R2,500.00 per semester for practical modules. If a student achieves an average entrance mark &gt;= 75%, an Academic Merit Bursary grants a 25% discount on net tuition (excluding lab levy). Semester fee installment projection displays in lstPaymentSchedule broken into 4 equal monthly payments.&quot;,
-
-    &quot;rates&quot;: {
-
-      &quot;CostPerCredit&quot;: 850.00,
-
-      &quot;LabLevy&quot;: 2500.00,
-
-      &quot;BursaryThreshold&quot;: 75.0,
-
-      &quot;BursaryDiscount&quot;: 0.25,
-
-      &quot;InstallmentMonths&quot;: 4
-
-    }
-
-  },
-
-  &quot;exam_2022_dec&quot;: {
-
-    &quot;title&quot;: &quot;NWU CMPG122 Test 1 (December 2022) - FitLife Gym Membership Billing&quot;,
-
-    &quot;scenario&quot;: &quot;FitLife offers 3 tiers: Standard (R350/mo), Premium (R500/mo), and VIP (R650/mo). Personal Trainer add-on: R250/mo. Locker rental: R75/mo. 12-month advance contract gives 1 month free (billed for 11 months). 15% VAT applicable.&quot;,
-
-    &quot;rates&quot;: {
-
-      &quot;Standard&quot;: 350.00, &quot;Premium&quot;: 500.00, &quot;VIP&quot;: 650.00,
-
-      &quot;Trainer&quot;: 250.00, &quot;Locker&quot;: 75.00, &quot;AnnualContractMonths&quot;: 11, &quot;VatRate&quot;: 0.15
-
-    }
-
-  },
-
-  &quot;exam_2021_nov&quot;: {
-
-    &quot;title&quot;: &quot;NWU CMPG122 Test 1 (November 2021) - Riverside Luxury Lodge &amp; Conference&quot;,
-
-    &quot;scenario&quot;: &quot;Accommodation: Standard Chalet (R950/night), Deluxe Suite (R1450/night), River Penthouse (R2200/night). Buffet breakfast: R120/person/day. Tourism levy: 2% of room subtotal. Generate 4-digit booking reference using Random (1000-9999).&quot;,
-
-    &quot;rates&quot;: {
-
-      &quot;Standard&quot;: 950.00, &quot;Deluxe&quot;: 1450.00, &quot;Penthouse&quot;: 2200.00,
-
-      &quot;BreakfastPerPersonPerDay&quot;: 120.00, &quot;TourismLevy&quot;: 0.02
-
-    }
-
-  },
-
-  &quot;exam_2024_pec&quot;: {
-
-    &quot;title&quot;: &quot;NWU CMPG122 Special Exam (2024) - Campus Bookstore POS&quot;,
-
-    &quot;scenario&quot;: &quot;Items: Prescribed Textbook (R650.00), Scientific Calculator (R320.00), Lab Notebook (R85.00), USB Drive (R150.00). Tiered volume discount: 5-9 items = 5%; 10+ items = 10%. Student Loyalty Card: additional 5% off subtotal after volume discount. Cash tender calculation with change denomination breakdown.&quot;,
-
-    &quot;rates&quot;: {
-
-      &quot;Textbook&quot;: 650.00, &quot;Calculator&quot;: 320.00, &quot;Notebook&quot;: 85.00, &quot;USB&quot;: 150.00,
-
-      &quot;Tier1Qty&quot;: 5, &quot;Tier1Disc&quot;: 0.05, &quot;Tier2Qty&quot;: 10, &quot;Tier2Disc&quot;: 0.10, &quot;LoyaltyDisc&quot;: 0.05
-
-    }
-
-  }
-
-}
-
-Question Balance &amp; Quality Invariants:
-
-Zero Synthetic Questions: Absolutely zero placeholder questions (Concept #, regarding #, or Applied Principle #). Every question must test a concrete, named C# syntax element, GUI event handler, defensive validation rule, or HCI usability principle.
-
-Answer Distribution: Balanced answer key distribution across every 16-question paper (strictly 4 A&#x27;s, 4 B&#x27;s, 4 C&#x27;s, 4 D&#x27;s) to prevent gaming.
-
-Plausible Distractors: Distractors must reflect authentic first-year student errors (e.g., using = instead of ==, omitting out in TryParse, forgetting .ToString(&quot;C&quot;), off-by-one errors in for loops, string concatenation bugs, or incorrect control prefixes).
-
-SECTION 4: CODEGRADE PRACTICAL LABS &amp; SCAFFOLDING ARCHITECTURE
-
-To ensure students master authentic NWU practical assignments without getting bogged down in repetitive boilerplate, provide complete read-only scaffolding with editable in-scope logic zones:
-
-
-
-csharp
-
-
-
-// =========================================================================
-
-// READ-ONLY ENVIRONMENT SCAFFOLDING (Pre-populated Context)
-
-// =========================================================================
-
-using System;
-
-using System.Drawing;
-
-using System.Windows.Forms;
-
-namespace NWU_CMPG122_AssessmentSuite
-
-{
-
-    public partial class MainForm : Form
-
-    {
-
-        // Form-level accumulator and control declarations
-
-        private decimal mdecGrandTotal = 0m;
-
-        private int mintTransactionCount = 0;
-
-        public MainForm()
-
-        {
-
-            InitializeComponent();
-
-        }
-
-        private void btnProcess_Click(object sender, EventArgs e)
-
-        {
-
-            // &gt;&gt;&gt; STUDENT EDITABLE ZONE BEGINS HERE &lt;&lt;&lt;
-
-            // Instructions:
-
-            // 1. Defensively parse txtQuantity.Text using int.TryParse.
-
-            // 2. Validate that quantity is strictly greater than 0.
-
-            // 3. Determine selected vehicle category via radSedan / radSUV / radBakkie.
-
-            // 4. Calculate subtotal, VAT (15%), and update mdecGrandTotal.
-
-            // 5. Output formatted line to lstSummary and display message box.
-
-            
-
-            // [STUDENT CODE GOES HERE]
-
-            
-
-            // &gt;&gt;&gt; STUDENT EDITABLE ZONE ENDS HERE &lt;&lt;&lt;
-
-        }
-
-    }
-
-}
-
-Prescribed NWU Practicals:
-
-Prac 1: Racing Light Reaction Trainer (scenario_racing_light)
-
-Form background color manipulation (this.BackColor = Color.Red / Green / Yellow).
-
-PictureBox visibility toggling (picRed.Visible = true).
-
-Timer ticks, tick counters, random interval activation.
-
-Prac 2: Braai Master 3000 Temperature &amp; Meat Calculator (scenario_braai_master)
-
-Radio buttons for cooking preference (Rare, Medium, Well-Done).
-
-CheckBoxes for side dishes (Pap &amp; Sheba R25, Garlic Bread R30, Chakalaka R20).
-
-Input parsing with decimal.TryParse and MessageBox.Show error routing.
-
-Prac 4: SpeedTrap Potchefstroom R30 Camera (scenario_speedtrap)
-
-Speed limit threshold (e.g., 60 km/h or 120 km/h).
-
-Speed penalty calculation: R50 base + R20 per km/h over limit.
-
-Court summons warning if speed &gt;= 40 km/h over limit.
-
-Prac 5: Vaal River Cruise Booking Agent (scenario_vaal_cruise)
-
-Passenger count parsing, adult/child tiered pricing, optional buffet lunch.
-
-ListBox summary formatting with column tabs (\t) and currency formatting (C).
-
-SECTION 5: C# RUNTIME AST TRANSPILER &amp; SANDBOX (csharp_engine.js)
-
-The client-side browser execution engine must simulate a real C# compiler with exact diagnostics:
-
-
-
-
-
-+-----------------------------------------------------------------------------+
-
-|                         C# SANDBOX EXECUTION PIPELINE                       |
-
-+-----------------------------------------------------------------------------+
-
-| 1. Student Code Input (Raw snippet OR complete class scaffold)              |
-
-|        │                                                                    |
-
-|        ▼                                                                    |
-
-| 2. Scaffolding Unwrapper (Bracket-aware / Comment-aware)                    |
-
-|    - Strips outer `class`, `namespace`, `private void btn...` headers      |
-
-|    - Normalizes Allman braces while preserving internal indentation         |
-
-|        │                                                                    |
-
-|        ▼                                                                    |
-
-| 3. Roslyn Linter &amp; Static Diagnostic Phase                                  |
-
-|    - CS1002: Missing semicolon `; expected` (ignoring valid headers)        |
-
-|    - CS0103: Variable does not exist in current context                     |
-
-|    - CS0029: Cannot implicitly convert type &#x27;string&#x27; to &#x27;int&#x27;               |
-
-|    - CS1501: No overload for method &#x27;TryParse&#x27; takes N arguments            |
-
-|        │                                                                    |
-
-|        ▼                                                                    |
-
-| 4. Transpilation to Safe ECMAScript 2022+                                   |
-
-|    - `decimal.TryParse(str, out val)` -&gt; Emulated out parameter binding     |
-
-|    - `(int)Math.Round(...)` -&gt; `Math.trunc(Math.round(...))`                |
-
-|    - `MessageBox.Show(msg, title)` -&gt; Sandboxed visual toast dialog         |
-
-|    - WinForms Mock Objects: `txtInput.Text`, `lblResult.Text`,              |
-
-|      `lstBox.Items.Add()`, `radBtn.Checked`, `this.BackColor`               |
-
-|        │                                                                    |
-
-|        ▼                                                                    |
-
-| 5. Isolated Sandbox Execution with Timeout Guard (2000ms max)               |
-
-|    - Captures stdout, mock UI state mutations, and outputs assertion logs   |
-
-+-----------------------------------------------------------------------------+
-
-Transpiler Invariants:
-
-Bracket &amp; Comment Safety: When stripping outer scaffolding, comments containing braces (// { or /* } */) must never break bracket counting logic.
-
-Form Property Bindings: Mock this.BackColor, this.Close(), this.Text, picBox.Visible, picBox.SizeMode, timer.Start(), timer.Stop().
-
-Numeric Overflow &amp; Typing: Emulate C# integer truncation for division (5 / 2 == 2, not 2.5). Emulate decimal rounding conventions (MidpointRounding.AwayFromZero when formatted with ToString(&quot;C&quot;)).
-
-SECTION 6: STUDENT BLINDING &amp; SECURITY INVARIANTS
-
-To preserve academic integrity and assessment isolation:
-
-
-
-Strict Blinding of Student UI (index.html):
-
-index.html must NEVER contain hyperlinks, buttons, or script tags referencing admin.html, GitHub repositories, build logs, or solution keys.
-
-The header displays only: NWU branding, student telemetry status (e.g., 🟢 Cloud Connected), current unit/exam title, and the exam controls.
-
-Isolation of Administrative Tools:
-
-Administrative telemetry, data census generators, model answer inspect tools, and deployment management reside exclusively in admin.html.
-
-admin.html is accessible only via direct URL navigation by course lecturers or developers.
-
-Escalation Routing:
-
-Official lecturer support channel: WhatsApp https://wa.me/27660673757 (&quot;066 067 3757&quot;).
-
-Direct mail: Course coordinator academic email.
-
-SECTION 7: OFFLINE-FIRST MOBILE BUNDLER (module_app_cli.py)
-
-The suite must provide two production deployment targets:
-
-
-
-Modular Web App (CMPG122_App/):
-
-Clean separation of concerns: index.html, admin.html, css/style.css, js/app.js, js/data.js, js/csharp_engine.js.
-
-Deployed directly to GitHub Pages or local web server.
-
-100% Offline Standalone Single-File Bundle (CMPG122_Test1_StudyGuide.html):
-
-Zero external requests (all CSS, SVGs, Google Fonts fallback, JavaScript, and exam databases inline-embedded).
-
-Zero CORS issues when opened directly from Windows Explorer (file:///C:/...) or mobile storage.
-
-Generated automatically via:
-
-bash
-
-
-
-python module_app_cli.py build-mobile
-
-Validated via:
-
-bash
-
-
-
-python module_app_cli.py audit
-
-SECTION 8: FULL SYSTEM VERIFICATION CHECKLIST
-
-Before any release, commit, or pull request, execute and verify the entire quality pipeline:
-
-
-
-
-
-[ ] 1. AUDIT CENSUS: Run `python module_app_cli.py audit`. Confirm all 430+ questions pass validation.
-
-[ ] 2. PLACEHOLDER PURGE: 0 matches for &quot;Concept #&quot;, &quot;regarding #&quot;, or &quot;Applied Principle #&quot; across all files.
-
-[ ] 3. CONTINUOUS SHEET VERIFICATION: Open all 5 exam papers. Confirm all 16 questions render vertically on a single sheet.
-
-[ ] 4. DOCKED SCENARIO DRAWER: Confirm `#scenarioDrawer` slides out smoothly, contains complete rate tables, and does not freeze DOM.
-
-[ ] 5. SCROLL-SPY DOCK: Scroll through paper. Confirm quick-jump matrix reflects active card (`.current-card`), answered state, and flag state.
-
-[ ] 6. CODEGRADE RUNTIME: Verify that all 12 model practical solutions pass in `csharp_engine.js` with 100% Distinction and 0 lint errors.
-
-[ ] 7. STUDENT BLINDING: Inspect `index.html` source. Confirm 0 occurrences of &quot;admin.html&quot; or GitHub repo links.
-
-[ ] 8. BUNDLE HEALTH: Rebuild `CMPG122_Test1_StudyGuide.html`. Confirm file size ~900KB and opens offline in Chrome, Edge, and mobile browsers.
-
-[ ] 9. LIVE ENDPOINTS: Verify HTTP 200 on student web app and admin console.
-
-This Master Prompt represents the permanent, non-negotiable architectural standard for NWU CMPG122 &quot;Project Roslyn&quot;. Execute with zero regressions and absolute fidelity to the NWU curriculum.
-
-
-
-
-
----
-
-### Quick Action Summary
-
-1. **Integrated Antigravity Commands:** The prompt features explicit `/boost`, `/goal`, `/teamwork-preview`, `/learn`, and `/grill-me` directives in the executive header and workflow guidelines.
-
-2. **HCI &amp; Design Logic:** Grounded in Sweller&#x27;s Cognitive Load Theory, Shneiderman&#x27;s 8 Golden Rules, Fitts&#x27;s Law, and Gestalt grouping.
-
-3. **Continuous Exam Sheet Architecture:** Full vertical-scroll single-sheet specification with the docked sticky quick-jump matrix and slide-out Scenario &amp; Rates Reference Drawer (`#scenarioDrawer`).
-
-4. **Authentic Scope &amp; Scaffolding:** Hardcoded 2021–2024 past paper scenarios (Car Rental, Tuition, Gym, Hotel, POS) and practicals (Racing Light, Braai Master, SpeedTrap, Vaal Cruise) with read-only scaffolding and zero placeholder questions.
-</div>
-    </div>
-
-    <!-- Global Real-Time Cloud Telemetry Card -->
-    <div class="admin-card">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
-        <div>
-          <h2 style="font-size:1.4rem; font-weight:800; color:var(--text-main); margin-bottom:0.35rem;">
-            ☁️ Real-Time Global Cloud Telemetry (CountAPI Live)
-          </h2>
-          <p style="color:var(--text-muted); font-size:0.88rem;">
-            Tracking unique university devices, continuous deep-study learners (≥ 5 mins), cumulative minutes, and submitted exam simulations.
-          </p>
-        </div>
-        <div style="display:flex; gap:0.5rem; align-items:center;">
-          <span class="badge-status" id="cloudStatusBadge">
-            <span class="pulse-dot"></span> POLLING (3s)
-          </span>
-        </div>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-box">
-          <span class="stat-label">Total Unique Devices</span>
-          <span class="stat-val" id="cloudDevices">--</span>
-          <span class="stat-sub">Deduplicated First-Visit Devices</span>
-        </div>
-
-        <div class="stat-box cyan">
-          <span class="stat-label">Active Learners (&ge; 5m)</span>
-          <span class="stat-val cyan" id="cloudActive">--</span>
-          <span class="stat-sub">Continuous Study &ge; 300 Seconds</span>
-        </div>
-
-        <div class="stat-box emerald">
-          <span class="stat-label">Avg Time / Active Learner</span>
-          <span class="stat-val emerald" id="cloudAvgTime">--</span>
-          <span class="stat-sub">Minutes per Engaged Student</span>
-        </div>
-
-        <div class="stat-box amber">
-          <span class="stat-label">Total Cumulative Time</span>
-          <span class="stat-val amber" id="cloudTotalTime">--</span>
-          <span class="stat-sub">Aggregate Student Study Minutes</span>
-        </div>
-
-        <div class="stat-box purple">
-          <span class="stat-label">Assessments Completed</span>
-          <span class="stat-val purple" id="cloudCompleted">--</span>
-          <span class="stat-sub">Official Past Paper Submissions</span>
-        </div>
-      </div>
-
-      <!-- Active Engagement Ratio Bar -->
-      <div style="margin-top:1.5rem; background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:1.25rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.88rem; font-weight:700;">
-          <span>Active Engagement Ratio (Engaged &ge; 5m vs Total Devices)</span>
-          <span id="engagementRatioText" style="color:var(--accent-emerald); font-family:var(--font-mono);">0%</span>
-        </div>
-        <div class="engagement-bar-wrap">
-          <div class="engagement-bar-fill" id="engagementBarFill"></div>
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-faint); margin-top:0.35rem;">
-          <span>0% Fleeting Clicks</span>
-          <span>Target: &gt; 40% Deep Study Sessions</span>
-          <span>100% Fully Engaged</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Executive Overview Card -->
-    <div class="admin-card">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
-        <div>
-          <h2 style="font-size:1.3rem; font-weight:800; color:var(--text-main); margin-bottom:0.35rem;">
-            📊 Curriculum Exhaustion Census (Weeks 1–7)
-          </h2>
-          <p style="color:var(--text-muted); font-size:0.88rem;">
-            Verified curriculum matrix covering 100% of SU7, SU1, SU2, SU3, SU4, and Official 2021–2024 Exam Simulations.
-          </p>
-        </div>
-        <button class="btn-practice" onclick="runLiveEngineAudit()" style="padding:0.45rem 1rem; font-size:0.82rem;">
-          ⚡ Run In-Browser Engine Audit
-        </button>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-box">
-          <span class="stat-label">Total Curriculum Questions</span>
-          <span class="stat-val" id="admTotalQuestions">500</span>
-          <span class="stat-sub">100% Census Passed (Weeks 1–12)</span>
-        </div>
-
-        <div class="stat-box cyan">
-          <span class="stat-label">Official Exam Papers</span>
-          <span class="stat-val cyan" id="admTotalExams">5</span>
-          <span class="stat-sub">2021–2024 Past Papers Integrated</span>
-        </div>
-
-        <div class="stat-box emerald">
-          <span class="stat-label">CodeGrade Scenarios</span>
-          <span class="stat-val emerald" id="admTotalCodeScenarios">12</span>
-          <span class="stat-sub">100% Zero-Defect Model Solutions</span>
-        </div>
-
-        <div class="stat-box purple">
-          <span class="stat-label">Code Audit Bug Scenarios</span>
-          <span class="stat-val purple" id="admTotalAuditScenarios">6</span>
-          <span class="stat-sub">All 5 Bug Taxonomies Active</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Live In-Browser System Audit Results -->
-    <div class="admin-card" id="cardAuditReport" style="display:none;">
-      <h3 style="font-size:1.1rem; font-weight:800; color:var(--text-main); margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
-        <span>🔍 Live Browser Engine Self-Test Results</span>
-        <span class="badge-status" id="admAuditStatus">ALL PASS</span>
-      </h3>
-      <div id="admAuditLog" style="font-family:var(--font-mono); font-size:0.82rem; background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:1rem; line-height:1.6; max-height:260px; overflow-y:auto;">
-      </div>
-    </div>
-
-    <!-- Curriculum Distribution Breakdown -->
-    <div class="admin-card">
-      <h3 style="font-size:1.15rem; font-weight:800; color:var(--text-main); margin-bottom:1rem;">
-        📚 Curriculum Exhaustion Distribution (Weeks 1–12 • SU1–SU7)
-      </h3>
-      
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.25rem;">
-        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:1.25rem;">
-          <h4 style="font-size:0.9rem; font-weight:700; color:var(--accent-azure); margin-bottom:0.75rem;">Study Unit Allocations</h4>
-          <div class="telemetry-row">
-            <span><strong>SU7:</strong> Human-Computer Interaction (HCI)</span>
-            <span class="tag tag-su7">65 Questions</span>
-          </div>
-          <div class="telemetry-row">
-            <span><strong>SU1:</strong> Intro to Programming & Visual C# GUI</span>
-            <span class="tag tag-su1">65 Questions</span>
-          </div>
-          <div class="telemetry-row">
-            <span><strong>SU2:</strong> Processing Data, Variables & Math</span>
-            <span class="tag tag-su2">75 Questions</span>
-          </div>
-          <div class="telemetry-row">
-            <span><strong>SU3:</strong> Making Decisions & Validation</span>
-            <span class="tag tag-su3">75 Questions</span>
-          </div>
-          <div class="telemetry-row">
-            <span><strong>SU4:</strong> Loops, Files, Dialogs & Random Numbers</span>
-            <span class="tag tag-su4">90 Questions</span>
-          </div>
-          <div class="telemetry-row">
-            <span><strong>SU5:</strong> Modularizing with Methods (ref / out)</span>
-            <span class="tag tag-su1">30 Questions</span>
-          </div>
-          <div class="telemetry-row">
-            <span><strong>SU6:</strong> Multiform Projects (ShowDialog / Show)</span>
-            <span class="tag tag-su2">20 Questions</span>
-          </div>
-          <div class="telemetry-row">
-            <span><strong>Official Past Exam Papers:</strong> 2021–2024 Simulations</span>
-            <span class="tag tag-exam">80 Questions</span>
-          </div>
-        </div>
-
-        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:1.25rem;">
-          <h4 style="font-size:0.9rem; font-weight:700; color:var(--accent-emerald); margin-bottom:0.75rem;">C# Compiler & Grading Architecture</h4>
-          <div class="telemetry-row">
-            <span>Roslyn Syntax Analyzer (CS1002, CS1513, etc.)</span>
-            <span class="badge-status">Active</span>
-          </div>
-          <div class="telemetry-row">
-            <span>NWU Code Standards Linter (NWU_CONV01, etc.)</span>
-            <span class="badge-status">Active</span>
-          </div>
-          <div class="telemetry-row">
-            <span>Virtual DOM/Event Execution Sandbox</span>
-            <span class="badge-status">Active</span>
-          </div>
-          <div class="telemetry-row">
-            <span>AST Longest Common Subsequence (LCS) Line Aligner</span>
-            <span class="badge-status">Active</span>
-          </div>
-          <div class="telemetry-row">
-            <span>Invariance Normalizer (Trivia & Semicolon Spacing)</span>
-            <span class="badge-status">Active</span>
-          </div>
-          <div class="telemetry-row">
-            <span>Anti-Fraud & Regression Detector</span>
-            <span class="badge-status">Active</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </main>
-
-  <script src="js/data/definitions_data.js"></script>
-  <script src="js/data/curriculum.js"></script>
-  <script src="js/data/questions_bank.js"></script>
-  <script src="js/data/code_labs_data.js"></script>
-  <script src="js/data.js"></script>
-  <script src="js/csharp_engine.js"></script>
+  <script>
+    // Ensure opening the admin dashboard never registers as a student session
+    window.CMPG122_DISABLE_STUDENT_TRACKER = true;
+  </script>
   <script src="js/telemetry.js"></script>
   <script>
-    // Theme toggle
-    const themeBtn = document.getElementById('themeToggle');
-    if (themeBtn) {
-      themeBtn.addEventListener('click', () => {
-        const cur = document.documentElement.getAttribute('data-theme') || 'dark';
-        const next = cur === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('cmpg122_theme', next);
-        themeBtn.textContent = next === 'dark' ? '☀️ Light' : '🌙 Dark';
-      });
-      const savedTheme = localStorage.getItem('cmpg122_theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        themeBtn.textContent = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+    (function () {
+      'use strict';
+
+      const POLL_INTERVAL_MS = 3500; // 3.5 seconds live auto-refresh (within 3-5s requirement)
+      const ACTIVE_WINDOW_MS = 60000; // 60 seconds heartbeat window
+      const LEDGER_KEY = 'cmpg122_telemetry_ledger_v2';
+      const CLOUD_STREAM_URL = 'https://ntfy.sh/nwu_cmpg122_roslyn_telemetry_v2/json?poll=1&since=all';
+
+      const cloudDevices = new Map();
+
+      function mergeRecord(targetMap, hash, incoming) {
+        if (!hash || typeof hash !== 'string') return;
+        const existing = targetMap.get(hash) || {
+          deviceHash: hash,
+          firstSeen: incoming.firstSeen || incoming.ts || Date.now(),
+          lastSeen: 0,
+          lastHeartbeat: 0,
+          activeSeconds: 0,
+          answered: 0,
+          correct: 0,
+          wrong: 0
+        };
+
+        const inTs = Number(incoming.lastSeen || incoming.ts || 0);
+        if (incoming.leave && inTs >= existing.lastSeen) {
+          existing.lastHeartbeat = 0;
+          existing.lastSeen = inTs;
+        } else {
+          const inHb = Number(incoming.lastHeartbeat !== undefined ? incoming.lastHeartbeat : (incoming.hb !== undefined ? incoming.hb : inTs));
+          if (inHb > existing.lastHeartbeat) {
+            existing.lastHeartbeat = inHb;
+          }
+          if (inTs > existing.lastSeen) {
+            existing.lastSeen = inTs;
+          }
+        }
+
+        existing.activeSeconds = Math.max(existing.activeSeconds, Number(incoming.activeSeconds !== undefined ? incoming.activeSeconds : incoming.sec) || 0);
+        existing.answered = Math.max(existing.answered, Number(incoming.answered !== undefined ? incoming.answered : incoming.ans) || 0);
+        existing.correct = Math.max(existing.correct, Number(incoming.correct !== undefined ? incoming.correct : incoming.cor) || 0);
+        existing.wrong = Math.max(existing.wrong, Number(incoming.wrong !== undefined ? incoming.wrong : incoming.wrg) || 0);
+
+        targetMap.set(hash, existing);
       }
-    }
 
-    // Copy arbitrary text with visual feedback
-    function copyText(txt, btn) {
-      navigator.clipboard.writeText(txt).then(() => {
-        if (btn) {
-          const orig = btn.innerHTML;
-          btn.innerHTML = '✅ Copied!';
-          setTimeout(() => { btn.innerHTML = orig; }, 2000);
-        }
-      }).catch(() => {
-        prompt('Copy this link:', txt);
-      });
-    }
-
-    // Master Prompt toggle and copy
-    function togglePromptView() {
-      const el = document.getElementById('masterPromptViewer');
-      const txt = document.getElementById('promptToggleText');
-      if (el.style.display === 'none') {
-        el.style.display = 'block';
-        txt.textContent = '▲ Hide Prompt';
-      } else {
-        el.style.display = 'none';
-        txt.textContent = '▼ Show Prompt';
+      function readLocalDevices() {
+        const map = new Map();
+        try {
+          const raw = localStorage.getItem(LEDGER_KEY);
+          if (!raw) return map;
+          const parsed = JSON.parse(raw);
+          const devices = (parsed && parsed.devices && typeof parsed.devices === 'object') ? parsed.devices : {};
+          const keys = Object.keys(devices);
+          for (let i = 0; i < keys.length; i++) {
+            const k = keys[i];
+            const d = devices[k];
+            if (d && typeof d === 'object') {
+              mergeRecord(map, k, d);
+            }
+          }
+        } catch (_e) {}
+        return map;
       }
-    }
 
-    function copyMasterPrompt() {
-      const el = document.getElementById('masterPromptViewer');
-      const btn = document.getElementById('btnCopyPrompt');
-      if (!el) return;
-      navigator.clipboard.writeText(el.textContent).then(() => {
-        if (btn) {
-          const orig = btn.innerHTML;
-          btn.innerHTML = '✅ Prompt Copied!';
-          setTimeout(() => { btn.innerHTML = orig; }, 2500);
-        }
-      }).catch(() => {
-        alert('Could not copy automatically. Please select the text and copy manually.');
-      });
-    }
+      async function pollCloudRelay() {
+        if (typeof fetch !== 'function') return;
+        if (typeof navigator !== 'undefined' && navigator.onLine === false) return;
+        if (typeof location !== 'undefined' && location.protocol === 'file:') return;
+        try {
+          const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+          const timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 2800) : null;
+          const res = await fetch(CLOUD_STREAM_URL, {
+            cache: 'no-store',
+            signal: ctrl ? ctrl.signal : undefined
+          });
+          if (timer) clearTimeout(timer);
+          if (!res || !res.ok) return;
+          const text = await res.text();
+          const lines = text.split('\n');
+          for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (!line) continue;
+            try {
+              const env = JSON.parse(line);
+              if (env && env.event === 'message' && typeof env.message === 'string') {
+                const pkt = JSON.parse(env.message);
+                if (pkt && pkt.d) {
+                  mergeRecord(cloudDevices, pkt.d, {
+                    ts: pkt.ts || (env.time ? env.time * 1000 : Date.now()),
+                    hb: pkt.t === 'leave' ? 0 : (pkt.hb || pkt.ts || (env.time ? env.time * 1000 : 0)),
+                    leave: pkt.t === 'leave',
+                    sec: pkt.sec || 0,
+                    ans: pkt.ans || 0,
+                    cor: pkt.cor || 0,
+                    wrg: pkt.wrg || 0
+                  });
+                }
+              }
+            } catch (_inner) {}
+          }
+        } catch (_e) {}
+      }
 
-    // Copy Class Link with feedback
-    function copyClassLink() {
-      const btn = document.getElementById('btnCopyClassLink');
-      const url = window.location.origin + window.location.pathname.replace('admin.html', 'index.html');
-      navigator.clipboard.writeText(url).then(() => {
-        const orig = btn.innerHTML;
-        btn.innerHTML = '✅ Copied!';
-        setTimeout(() => { btn.innerHTML = orig; }, 2000);
-      }).catch(() => {
-        prompt('Copy this student testbed link:', url);
-      });
-    }
+      function formatHoursMinutes(totalSeconds) {
+        const sec = Math.max(0, Math.floor(Number(totalSeconds) || 0));
+        const hours = Math.floor(sec / 3600);
+        const minutes = Math.floor((sec % 3600) / 60);
+        return hours + 'h ' + minutes + 'm';
+      }
 
-    // Real-Time Cloud Telemetry Polling (every 3000ms)
-    async function updateDashboard() {
-      if (!window.AxiomTelemetry || !window.AxiomTelemetry.getLiveCloudMetrics) return;
+      function renderMetrics() {
+        const combined = new Map();
 
-      const metrics = await window.AxiomTelemetry.getLiveCloudMetrics();
-      if (!metrics) return;
-
-      const devEl = document.getElementById('cloudDevices');
-      const actEl = document.getElementById('cloudActive');
-      const avgEl = document.getElementById('cloudAvgTime');
-      const totEl = document.getElementById('cloudTotalTime');
-      const compEl = document.getElementById('cloudCompleted');
-      const ratioEl = document.getElementById('engagementRatioText');
-      const barFill = document.getElementById('engagementBarFill');
-
-      if (devEl) devEl.textContent = metrics.totalDevices.toLocaleString();
-      if (actEl) actEl.textContent = metrics.activeUsers.toLocaleString();
-      if (avgEl) avgEl.textContent = metrics.avgActiveMinutes + ' min';
-      if (totEl) totEl.textContent = metrics.totalMinutes.toLocaleString() + ' min';
-      if (compEl) compEl.textContent = metrics.totalCompleted.toLocaleString();
-
-      const ratio = metrics.totalDevices > 0 ? Math.min(100, Math.round((metrics.activeUsers / metrics.totalDevices) * 100)) : 0;
-      if (ratioEl) ratioEl.textContent = ratio + '%';
-      if (barFill) barFill.style.width = ratio + '%';
-    }
-
-    function runLiveEngineAudit() {
-      const card = document.getElementById('cardAuditReport');
-      const logEl = document.getElementById('admAuditLog');
-      card.style.display = 'block';
-      logEl.innerHTML = '<span style="color:var(--text-muted)">Running in-browser verification suite...</span><br>';
-      
-      const DATA = window.CMPG122_DATA;
-      const Engine = window.CSharpEngine;
-      const Auditor = Engine ? Engine.CSharpCodeAuditor : null;
-
-      let log = '';
-      let allPass = true;
-
-      log += '[+] Initializing client-side Node/Browser QA Census...<br>';
-      log += `[+] Dataset: ${DATA.moduleCode} (${DATA.questions.length} questions verified across SU1-SU7)<br>`;
-      
-      // Test Roslyn analyzer
-      const diagBad = Engine.analyzeDiagnostics('int x = 10');
-      const hasSemiErr = diagBad.some(d => d.code === 'CS1002');
-      log += hasSemiErr 
-        ? '<span style="color:var(--accent-emerald)">[PASS] Roslyn Analyzer: CS1002 missing semicolon caught.</span><br>'
-        : '<span style="color:var(--danger-text)">[FAIL] Roslyn Analyzer check failed.</span><br>';
-      if (!hasSemiErr) allPass = false;
-
-      // Test CodeGrade Model Solutions
-      let codePassCount = 0;
-      const scKeys = Object.keys(DATA.codeScenarios);
-      scKeys.forEach(k => {
-        const sc = DATA.codeScenarios[k];
-        const res = Engine.evaluateCodeGrade(sc.modelSolution, sc);
-        if (res.percentage === 100) {
-          codePassCount++;
-        }
-      });
-      log += codePassCount === scKeys.length
-        ? `<span style="color:var(--accent-emerald)">[PASS] CodeGrade Sandbox: ${codePassCount}/${scKeys.length} model solutions scored 100%.</span><br>`
-        : `<span style="color:var(--accent-amber)">[WARN] CodeGrade Sandbox: ${codePassCount}/${scKeys.length} passed 100%.</span><br>`;
-      if (codePassCount < scKeys.length) allPass = false;
-
-      // Test CSharpCodeAuditor
-      if (Auditor) {
-        const norm1 = Auditor.normalizeLine("x = 5;");
-        const norm2 = Auditor.normalizeLine("x = 5 ;");
-        const semiOk = (norm1 === norm2);
-        log += semiOk
-          ? '<span style="color:var(--accent-emerald)">[PASS] Code Auditor: Semicolon and whitespace invariance verified.</span><br>'
-          : '<span style="color:var(--danger-text)">[FAIL] Semicolon invariance failed.</span><br>';
-        if (!semiOk) allPass = false;
-
-        let auditPassCount = 0;
-        (DATA.auditScenarios || []).forEach(sc => {
-          const r = Auditor.gradeSubmission(sc.canonicalSolution, sc.canonicalSolution, sc.errorCatalog, sc.initialCode);
-          if (r.score === 100) auditPassCount++;
+        cloudDevices.forEach(function (val, key) {
+          mergeRecord(combined, key, val);
         });
-        log += `<span style="color:var(--accent-emerald)">[PASS] Code Auditor: ${auditPassCount}/${(DATA.auditScenarios || []).length} scenarios verified with 100% canonical solutions.</span><br>`;
+
+        const localMap = readLocalDevices();
+        localMap.forEach(function (val, key) {
+          mergeRecord(combined, key, val);
+        });
+
+        const now = Date.now();
+        let activeNow = 0;
+        let totalDevices = combined.size;
+        let totalActiveSeconds = 0;
+        let totalAnswered = 0;
+        let totalCorrect = 0;
+        let totalWrong = 0;
+
+        combined.forEach(function (d) {
+          if (d.lastHeartbeat && (now - d.lastHeartbeat) <= ACTIVE_WINDOW_MS) {
+            activeNow += 1;
+          }
+          totalActiveSeconds += Number(d.activeSeconds) || 0;
+          totalAnswered += Number(d.answered) || 0;
+          totalCorrect += Number(d.correct) || 0;
+          totalWrong += Number(d.wrong) || 0;
+        });
+
+        if (totalAnswered < (totalCorrect + totalWrong)) {
+          totalAnswered = totalCorrect + totalWrong;
+        }
+
+        const accuracy = totalAnswered > 0
+          ? ((totalCorrect / totalAnswered) * 100).toFixed(1)
+          : '0.0';
+
+        document.getElementById('metricActiveUsers').textContent = activeNow.toLocaleString();
+        document.getElementById('metricTotalDevices').textContent = totalDevices.toLocaleString();
+        document.getElementById('metricActiveTime').textContent = formatHoursMinutes(totalActiveSeconds);
+        document.getElementById('metricActiveSecondsSub').textContent = totalActiveSeconds.toLocaleString() + 's active';
+        document.getElementById('metricQuestionsAnswered').textContent = totalAnswered.toLocaleString();
+        document.getElementById('metricCorrectAnswers').textContent = totalCorrect.toLocaleString();
+        document.getElementById('metricWrongAnswers').textContent = totalWrong.toLocaleString();
+        document.getElementById('metricAccuracyBadge').textContent = 'Accuracy: ' + accuracy + '%';
+
+        const stamp = new Date().toLocaleTimeString();
+        document.getElementById('lastUpdatedStamp').textContent = 'Last updated: ' + stamp;
       }
 
-      log += allPass 
-        ? '<strong style="color:var(--accent-emerald)"><br>✓ 100% Client-Side Engine Audit Verified (Zero Failures).</strong>'
-        : '<strong style="color:var(--danger-text)"><br>⚠ Engine Audit completed with warnings.</strong>';
+      async function refreshCycle() {
+        renderMetrics();
+        await pollCloudRelay();
+        renderMetrics();
+      }
 
-      logEl.innerHTML = log;
-      document.getElementById('admAuditStatus').textContent = allPass ? '100% PASS' : 'WARNINGS';
-      document.getElementById('admAuditStatus').style.background = allPass ? 'rgba(46,160,67,0.15)' : 'rgba(217,119,6,0.15)';
-      document.getElementById('admAuditStatus').style.color = allPass ? 'var(--accent-emerald)' : 'var(--accent-amber)';
-    }
+      window.addEventListener('storage', function (ev) {
+        if (!ev || !ev.key || ev.key === LEDGER_KEY) {
+          renderMetrics();
+        }
+      });
 
-    window.addEventListener('DOMContentLoaded', () => {
-      updateDashboard();
-      setInterval(updateDashboard, 3000);
-    });
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          const ch = new BroadcastChannel('cmpg122_telemetry_channel_v2');
+          ch.onmessage = function () {
+            renderMetrics();
+          };
+        }
+      } catch (_e) {}
+
+      refreshCycle();
+      setInterval(refreshCycle, POLL_INTERVAL_MS);
+    })();
   </script>
 </body>
 </html>

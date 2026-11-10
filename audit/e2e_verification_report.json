@@ -22,5 +22,6 @@
   "consoleErrors": [],
   "pageErrors": [],
   "customQuizShortcutsAndWeights": true,
-  "edgeCrossBrowser": "Skipped/Note: E2E ASSERTION FAILED: Edge must render all 7 Study Unit cards"
+  "adminTelemetryDashboard": true,
+  "edgeCrossBrowser": true
 }

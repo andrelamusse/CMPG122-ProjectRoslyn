@@ -41,6 +41,7 @@ SCRIPT_SEQUENCE = [
     'js/modules/keyboard_shortcuts.js',
     'js/modules/question_renderer.js',
     'js/app.js',
+    'js/telemetry.js',
 ]
 
 
@@ -158,7 +159,8 @@ const learnerRelFiles = [
   'js/data/questions_bank.js',
   'js/data/code_labs_data.js',
   'js/csharp_engine.js',
-  'js/app.js'
+  'js/app.js',
+  'js/telemetry.js'
 ];
 learnerRelFiles.forEach(rel => {
   const txt = fs.readFileSync(path.join(appDir, rel), 'utf8');
@@ -306,6 +308,63 @@ function normDupTokens(s) {
 const standaloneTokenCache = [];
 const optLetters = ['A', 'B', 'C', 'D', 'E', 'F'];
 
+function isCodeParenPrefix(prefix) {
+  const prevToken = (prefix.trim().match(/([A-Za-z0-9_`]+)$/) || [])[1] || '';
+  if (/^(if|for|while|switch|catch)$/.test(prevToken)) return true;
+  const backticksBefore = (prefix.match(/`/g) || []).length;
+  if (backticksBefore % 2 === 1) return true;
+  if (prefix.length > 0 && !/\s$/.test(prefix)) return true;
+  return false;
+}
+
+function hasProseParenthetical(str) {
+  const s = String(str || '');
+  let prefix = '';
+  let i = 0;
+  while (i < s.length) {
+    if (s[i] === '(') {
+      let depth = 1;
+      let j = i + 1;
+      while (j < s.length && depth > 0) {
+        if (s[j] === '(') depth++;
+        else if (s[j] === ')') depth--;
+        j++;
+      }
+      if (depth === 0 && !isCodeParenPrefix(prefix)) {
+        return true;
+      }
+    }
+    prefix += s[i];
+    i++;
+  }
+  return false;
+}
+
+function auditOptionSymmetry(itemId, opts, answerIdx) {
+  if (!Array.isArray(opts) || typeof answerIdx !== 'number' || answerIdx < 0 || answerIdx >= opts.length) return;
+  const ans = String(opts[answerIdx] || '');
+  const dists = opts.filter((_, i) => i !== answerIdx).map(d => String(d || ''));
+  if (dists.length === 0) return;
+  const ansLen = ans.length;
+  const maxD = Math.max(...dists.map(d => d.length));
+  const minD = Math.min(...dists.map(d => d.length));
+  const avgD = dists.reduce((a, b) => a + b.length, 0) / dists.length;
+  if (ansLen > 25 && (ansLen > maxD * 1.28 || ansLen > avgD * 1.38)) {
+    fail(itemId, `Option length giveaway: correct option (${ansLen} chars) is disproportionately longer than distractors (max=${maxD}, avg=${Math.round(avgD)})`);
+  }
+  if (minD > 25 && minD > ansLen * 1.45) {
+    fail(itemId, `Short-option giveaway: correct option (${ansLen} chars) is disproportionately shorter than distractors (min=${minD})`);
+  }
+  if (hasProseParenthetical(ans) && !dists.some(hasProseParenthetical)) {
+    fail(itemId, `Asymmetric parenthetical coaching giveaway in correct option: ${ans}`);
+  }
+  opts.forEach((o, oi) => {
+    if (/\b[A-Za-z0-9_]+Form\.(html|css|main|header|body|sub)\b/i.test(String(o))) {
+      fail(itemId, `Implausible non-C# form file extension in options[${oi}]: ${o}`);
+    }
+  });
+}
+
 (DATA.questions || []).forEach((q, idx) => {
   const qId = q && q.id ? String(q.id) : `INDEX_${idx}`;
   if (!q || typeof q !== 'object') {
@@ -354,6 +413,8 @@ const optLetters = ['A', 'B', 'C', 'D', 'E', 'F'];
     if (exactOpts.size !== opts.length) fail(qId, 'Duplicate options inside single question');
     if (typeof q.answer !== 'number' || q.answer < 0 || q.answer >= opts.length) {
       fail(qId, `Answer index ${q.answer} out of bounds [0..${opts.length - 1}]`);
+    } else {
+      auditOptionSymmetry(qId, opts, q.answer);
     }
   }
 
@@ -527,6 +588,7 @@ scenarioKeys.forEach(scKey => {
   }
   verifyRenderedTextIntegrity(se.id, 'question', se.question || se.prompt || '');
   verifyRenderedTextIntegrity(se.id, 'explanation', se.explanation);
+  auditOptionSymmetry(se.id, se.options, se.answer);
 });
 (DATA.auditScenarios || []).forEach(asc => {
   const ascBlob = [asc.title, asc.description].join(' | ');

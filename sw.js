@@ -22,7 +22,8 @@ const APP_SHELL_ASSETS = [
   './js/modules/exam_engine.js',
   './js/modules/keyboard_shortcuts.js',
   './js/modules/question_renderer.js',
-  './js/app.js'
+  './js/app.js',
+  './js/telemetry.js'
 ];
 
 self.addEventListener('install', (event) => {
@@ -53,6 +54,7 @@ self.addEventListener('message', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  if (!event.request.url.startsWith(self.location.origin)) return;
 
   event.respondWith(
     caches.open(CACHE_NAME).then((cache) =>

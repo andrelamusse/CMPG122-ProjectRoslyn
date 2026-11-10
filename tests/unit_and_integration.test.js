@@ -620,4 +620,93 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
     assert.ok(swSrc.includes('caches.open(CACHE_NAME).then((cache) =>'), 'sw.js fetch handler must scope lookups to caches.open(CACHE_NAME)');
     assert.ok(appSrc.includes("postMessage({ type: 'SKIP_WAITING' })"), 'app.js must post SKIP_WAITING to waiting/installed workers');
   });
+
+  it('enforces psychometric option-length symmetry, zero asymmetric parenthetical coaching, and realistic C# file extensions across all 585 questions and 24 Spot-the-Error items', () => {
+    function isCodeParen(prefix) {
+      const prevToken = (prefix.trim().match(/([A-Za-z0-9_`]+)$/) || [])[1] || '';
+      if (/^(if|for|while|switch|catch)$/.test(prevToken)) return true;
+      const backticksBefore = (prefix.match(/`/g) || []).length;
+      if (backticksBefore % 2 === 1) return true;
+      if (prefix.length > 0 && !/\s$/.test(prefix)) return true;
+      return false;
+    }
+    function hasProseParen(str) {
+      const s = String(str || '');
+      let prefix = '';
+      let i = 0;
+      while (i < s.length) {
+        if (s[i] === '(') {
+          let depth = 1;
+          let j = i + 1;
+          while (j < s.length && depth > 0) {
+            if (s[j] === '(') depth++;
+            else if (s[j] === ')') depth--;
+            j++;
+          }
+          if (depth === 0 && !isCodeParen(prefix)) return true;
+        }
+        prefix += s[i];
+        i++;
+      }
+      return false;
+    }
+
+    for (const q of DATA.questions) {
+      const opts = q.options;
+      const ans = opts[q.answer];
+      const dists = opts.filter((_, idx) => idx !== q.answer);
+      const ansLen = ans.length;
+      const maxD = Math.max(...dists.map(d => d.length));
+      const minD = Math.min(...dists.map(d => d.length));
+      const avgD = dists.reduce((a, b) => a + b.length, 0) / dists.length;
+
+      assert.ok(!(ansLen > 25 && (ansLen > maxD * 1.28 || ansLen > avgD * 1.38)), `${q.id} option length giveaway: ansLen=${ansLen}, maxD=${maxD}, avgD=${Math.round(avgD)}`);
+      assert.ok(!(minD > 25 && minD > ansLen * 1.45), `${q.id} short option giveaway: ansLen=${ansLen}, minD=${minD}`);
+      assert.equal(hasProseParen(ans) && !dists.some(hasProseParen), false, `${q.id} has asymmetric parenthetical prose in correct answer: ${ans}`);
+      for (const o of opts) {
+        assert.equal(/\b[A-Za-z0-9_]+Form\.(html|css|main|header|body|sub)\b/i.test(o), false, `${q.id} has implausible non-C# form file extension: ${o}`);
+      }
+    }
+
+    for (const se of DATA.spotErrors) {
+      const opts = se.options;
+      const ans = opts[se.answer];
+      const dists = opts.filter((_, idx) => idx !== se.answer);
+      const ansLen = ans.length;
+      const maxD = Math.max(...dists.map(d => d.length));
+      const minD = Math.min(...dists.map(d => d.length));
+      const avgD = dists.reduce((a, b) => a + b.length, 0) / dists.length;
+
+      assert.ok(!(ansLen > 25 && (ansLen > maxD * 1.28 || ansLen > avgD * 1.38)), `${se.id} SpotError option length giveaway: ansLen=${ansLen}, maxD=${maxD}`);
+      assert.ok(!(minD > 25 && minD > ansLen * 1.45), `${se.id} SpotError short option giveaway: ansLen=${ansLen}, minD=${minD}`);
+      assert.equal(hasProseParen(ans) && !dists.some(hasProseParen), false, `${se.id} SpotError has asymmetric parenthetical prose: ${ans}`);
+    }
+  });
+
+  it('verifies silent telemetry engine (1-minute idle cutoff, SHA-256 IP deduplication, question hooks, and strict student blinding)', async () => {
+    const fs = require('node:fs');
+    const path = require('node:path');
+    const telemetry = require(path.join(__dirname, '..', 'js', 'telemetry.js'));
+
+    // 1. SHA-256 deterministic hashing
+    const h1 = await telemetry.sha256Hex('cmpg122_ip_salt_v2::196.21.45.10');
+    const h2 = telemetry.sha256HexSync('cmpg122_ip_salt_v2::196.21.45.10');
+    assert.equal(h1.length, 64);
+    assert.equal(h1, h2);
+
+    // 2. Strict 60-second (60000ms) idle cutoff
+    const baseTs = 1700000000000;
+    telemetry.setLastActivityTimeForTest(baseTs);
+    assert.equal(telemetry.isIdle(baseTs + 30000), false, 'Should be active within 30s of interaction');
+    assert.equal(telemetry.isIdle(baseTs + 60000), false, 'Should be active at exactly 60s');
+    assert.equal(telemetry.isIdle(baseTs + 60001), true, 'Must pause immediately after 60s (60001ms) without interaction');
+
+    // 3. Student app blinding check
+    const indexSrc = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+    const telemetrySrc = fs.readFileSync(path.join(__dirname, '..', 'js', 'telemetry.js'), 'utf8');
+    const adminSrc = fs.readFileSync(path.join(__dirname, '..', 'admin.html'), 'utf8');
+    assert.equal(/admin\.html/i.test(indexSrc), false, 'index.html must be 100% blinded from admin.html');
+    assert.equal(/admin\.html/i.test(telemetrySrc), false, 'js/telemetry.js must not reference admin.html');
+    assert.ok(adminSrc.includes('metricActiveUsers') && adminSrc.includes('metricTotalDevices') && adminSrc.includes('metricActiveTime') && adminSrc.includes('metricQuestionsAnswered') && adminSrc.includes('metricCorrectAnswers') && adminSrc.includes('metricWrongAnswers'), 'admin.html must expose all 6 core live telemetry metrics');
+  });
 });

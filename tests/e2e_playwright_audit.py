@@ -634,6 +634,43 @@ def run_suite():
 
             print(f"[+] Verified Zero Horizontal Overflow & Zero Bounding-Box Clipping (including 120% Scale & Active Past Exam Paper) across all {len(REQUIRED_VIEWPORTS)} viewports.")
 
+            # Private Admin Telemetry Dashboard (admin.html) & Silent Background Tracker (js/telemetry.js) Verification
+            assert_true('admin.html' not in page.content().lower(), 'Student index.html DOM must never reference admin.html')
+            idle_paused = page.evaluate('''() => {
+              const t = window.CMPG122_TELEMETRY;
+              if (!t) return false;
+              const now = Date.now();
+              t.setLastActivityTimeForTest(now - 65000);
+              const tickedWhenIdle = t.tickActiveSecond(now);
+              t.setLastActivityTimeForTest(now);
+              const tickedWhenActive = t.tickActiveSecond(now);
+              return (tickedWhenIdle === false && tickedWhenActive === true);
+            }''')
+            assert_true(idle_paused is True, 'Telemetry 1-minute (60s) idle cutoff must pause active timer when idle > 60s and resume when active')
+
+            admin_page = context.new_page()
+            admin_errors = []
+            admin_page.on('pageerror', lambda err: admin_errors.append(str(err)))
+            admin_page.goto(f'{base_url}/admin.html', wait_until='domcontentloaded')
+            admin_page.wait_for_timeout(400)
+            active_users_val = int(admin_page.locator('#metricActiveUsers').inner_text().replace(',', '').strip())
+            total_devices_val = int(admin_page.locator('#metricTotalDevices').inner_text().replace(',', '').strip())
+            active_time_txt = admin_page.locator('#metricActiveTime').inner_text().strip()
+            total_ans_val = int(admin_page.locator('#metricQuestionsAnswered').inner_text().replace(',', '').strip())
+            total_cor_val = int(admin_page.locator('#metricCorrectAnswers').inner_text().replace(',', '').strip())
+            total_wrg_val = int(admin_page.locator('#metricWrongAnswers').inner_text().replace(',', '').strip())
+            acc_badge_txt = admin_page.locator('#metricAccuracyBadge').inner_text().strip()
+
+            assert_true(active_users_val >= 1, f'Expected >=1 Live Active Users on admin.html, got {active_users_val}')
+            assert_true(total_devices_val >= 1, f'Expected >=1 IP-deduplicated Total Devices on admin.html, got {total_devices_val}')
+            assert_true('h ' in active_time_txt and active_time_txt.endswith('m'), f'Expected Hours & Minutes format (Xh Ym), got {active_time_txt}')
+            assert_true(total_ans_val >= 5 and total_ans_val == (total_cor_val + total_wrg_val), f'Expected answered == correct + wrong >= 5, got {total_ans_val} ({total_cor_val} + {total_wrg_val})')
+            assert_true('Accuracy:' in acc_badge_txt and '%' in acc_badge_txt, f'Expected Accuracy % badge on admin.html, got {acc_badge_txt}')
+            assert_true(len(admin_errors) == 0, f'admin.html threw JS errors: {admin_errors}')
+            admin_page.close()
+            results_summary['adminTelemetryDashboard'] = True
+            print(f'[+] Verified Private Admin Telemetry Dashboard (admin.html): Active={active_users_val}, Devices={total_devices_val}, Time={active_time_txt}, Answered={total_ans_val} ({total_cor_val}C/{total_wrg_val}W, {acc_badge_txt}).')
+
             # Standalone Mobile/Offline Bundle Verification on file://
             assert_true(STANDALONE_HTML.exists(), f'Missing standalone bundle {STANDALONE_HTML}')
             file_page = context.new_page()
