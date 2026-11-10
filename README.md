@@ -2,6 +2,9 @@
 
 Comprehensive offline-capable learning, C# code-tracing, technical definitions, and examination platform covering the 12-week NWU CMPG122 curriculum (`SU7` and `SU1`–`SU6`).
 
+- **Live Platform:** [https://andrelamusse.github.io/CMPG122-ProjectRoslyn/](https://andrelamusse.github.io/CMPG122-ProjectRoslyn/)
+- **GitHub Repository:** [https://github.com/andrelamusse/CMPG122-ProjectRoslyn](https://github.com/andrelamusse/CMPG122-ProjectRoslyn)
+
 ## Modular Architecture
 
 - `index.html` — Clean, accessible learner application shell (zero administrative or external network dependencies)
