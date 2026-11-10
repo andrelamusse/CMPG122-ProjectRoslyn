@@ -621,8 +621,10 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
     assert.ok(appSrc.includes("postMessage({ type: 'SKIP_WAITING' })"), 'app.js must post SKIP_WAITING to waiting/installed workers');
   });
 
-  it('enforces psychometric option-length symmetry, zero asymmetric parenthetical coaching, zero canned suffixes, and realistic C# file extensions across all 585 questions and 24 Spot-the-Error items', () => {
+  it('enforces psychometric option-length symmetry, zero asymmetric parenthetical coaching, zero canned suffixes, zero mojibake, and realistic distractors across all 585 questions and 24 Spot-the-Error items', () => {
     const cannedOptionSuffixRe = /within the current form class instance|before returning to the calling method|before updating the target UI control|on the active Windows Form canvas|during standard GUI event execution|when the Windows Forms control processes the action|when evaluating operator task performance on screen|under \.NET runtime execution|when evaluating the numeric expression in the handler|when executing the loop body in the event handler|when processing the event handler on the active form|when opening or closing forms in the Windows Forms project/i;
+    const mojibakeRe = /â€”|â€“|â€™|â€œ|â€\x9d|Â±|Â°|Ã—|Ã·|Â\s|[\u00c2\u00c3\u00e2]/i;
+    const cartoonishDistractorRe = /deletes?\b.*\.(cs|exe|sln)|internet\s+connection|ram\s+capacity|mouse\s+buttons|gulf\s+of\s+compilation|gulf\s+of\s+hardware/i;
     function isCodeParen(prefix) {
       const prevToken = (prefix.trim().match(/([A-Za-z0-9_`]+)$/) || [])[1] || '';
       if (/^(if|for|while|switch|catch)$/.test(prevToken)) return true;
@@ -663,12 +665,15 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
       const avgD = dists.reduce((a, b) => a + b.length, 0) / dists.length;
 
       if (ansLen > maxD) longestCorrectCount++;
-      assert.ok(!(ansLen > 25 && (ansLen > maxD * 1.28 || ansLen > avgD * 1.38)), `${q.id} option length giveaway: ansLen=${ansLen}, maxD=${maxD}, avgD=${Math.round(avgD)}`);
+      assert.ok(!(ansLen > 25 && (ansLen > maxD * 1.15 || ansLen > avgD * 1.25)), `${q.id} option length giveaway: ansLen=${ansLen}, maxD=${maxD}, avgD=${Math.round(avgD)}`);
       assert.ok(!(minD > 25 && minD > ansLen * 1.45), `${q.id} short option giveaway: ansLen=${ansLen}, minD=${minD}`);
       assert.equal(hasProseParen(ans) && !dists.some(hasProseParen), false, `${q.id} has asymmetric parenthetical prose in correct answer: ${ans}`);
+      const qBlob = [q.stem, q.code || '', ...opts, q.explanation, q.distractorRationale].join(' | ');
+      assert.equal(mojibakeRe.test(qBlob), false, `${q.id} contains UTF-8 mojibake sequence`);
       for (const o of opts) {
         assert.equal(/\b[A-Za-z0-9_]+Form\.(html|css|main|header|body|sub)\b/i.test(o), false, `${q.id} has implausible non-C# form file extension: ${o}`);
         assert.equal(cannedOptionSuffixRe.test(o), false, `${q.id} has canned boilerplate distractor suffix: ${o}`);
+        assert.equal(cartoonishDistractorRe.test(o), false, `${q.id} has cartoonish distractor: ${o}`);
       }
     }
     const longestShare = longestCorrectCount / DATA.questions.length;
@@ -683,7 +688,7 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
       const minD = Math.min(...dists.map(d => d.length));
       const avgD = dists.reduce((a, b) => a + b.length, 0) / dists.length;
 
-      assert.ok(!(ansLen > 25 && (ansLen > maxD * 1.28 || ansLen > avgD * 1.38)), `${se.id} SpotError option length giveaway: ansLen=${ansLen}, maxD=${maxD}`);
+      assert.ok(!(ansLen > 25 && (ansLen > maxD * 1.15 || ansLen > avgD * 1.25)), `${se.id} SpotError option length giveaway: ansLen=${ansLen}, maxD=${maxD}`);
       assert.ok(!(minD > 25 && minD > ansLen * 1.45), `${se.id} SpotError short option giveaway: ansLen=${ansLen}, minD=${minD}`);
       assert.equal(hasProseParen(ans) && !dists.some(hasProseParen), false, `${se.id} SpotError has asymmetric parenthetical prose: ${ans}`);
     }

@@ -197,6 +197,8 @@ const roboticFluffRe = /according to the specification|based on the specificatio
 const roboticDrRe = /violate C# type, operator, control property, or HCI semantics/i;
 const outOfScopeRe = /\b(SqlConnection|SqlCommand|BinaryReader|BinaryWriter|async|await)\b/;
 const nonAsciiCodeRe = /[\u2013\u2014\u2018\u2019\u201C\u201D]/;
+const mojibakeRe = /â€”|â€“|â€™|â€œ|â€\x9d|Â±|Â°|Ã—|Ã·|Â\s|[\u00c2\u00c3\u00e2]/i;
+const cartoonishDistractorRe = /deletes?\b.*\.(cs|exe|sln)|internet\s+connection|ram\s+capacity|mouse\s+buttons|gulf\s+of\s+compilation|gulf\s+of\s+hardware/i;
 
 const defsEng = new DefsMod.DefinitionsEngine(DATA.definitions || []);
 function verifyRenderedTextIntegrity(ownerId, fieldName, rawText) {
@@ -246,6 +248,9 @@ const validTopics = new Set();
       if (roboticFluffRe.test(txt || '')) {
         fail(t.id, `Topic prose contains prohibited meta-citation: ${(txt || '').match(roboticFluffRe)[0]}`);
       }
+      if (mojibakeRe.test(txt || '')) {
+        fail(t.id, `Topic prose contains UTF-8 mojibake: ${(txt || '').match(mojibakeRe)[0]}`);
+      }
       verifyRenderedTextIntegrity(t.id, `prose[${pIdx}]`, txt);
     });
   });
@@ -272,6 +277,9 @@ if (validDefs.size < 45) fail('DEFINITIONS_COUNT', `Expected comprehensive defin
   const defBlob = [d.term, d.plainEnglish, d.technicalDefinition, d.syntax || '', d.example, d.misconception].join(' | ');
   if (roboticFluffRe.test(defBlob)) {
     fail(d.id, `Definition contains prohibited meta-citation: ${defBlob.match(roboticFluffRe)[0]}`);
+  }
+  if (mojibakeRe.test(defBlob)) {
+    fail(d.id, `Definition contains UTF-8 mojibake: ${defBlob.match(mojibakeRe)[0]}`);
   }
   if (d.syntax && nonAsciiCodeRe.test(d.syntax)) {
     fail(d.id, 'Definition C# syntax contains non-ASCII dash or smart quote');
@@ -353,7 +361,7 @@ function auditOptionSymmetry(itemId, opts, answerIdx, isMainQuestion) {
   const minD = Math.min(...dists.map(d => d.length));
   const avgD = dists.reduce((a, b) => a + b.length, 0) / dists.length;
   if (isMainQuestion && ansLen > maxD) longestIsCorrectCount += 1;
-  if (ansLen > 25 && (ansLen > maxD * 1.28 || ansLen > avgD * 1.38)) {
+  if (ansLen > 25 && (ansLen > maxD * 1.15 || ansLen > avgD * 1.25)) {
     fail(itemId, `Option length giveaway: correct option (${ansLen} chars) is disproportionately longer than distractors (max=${maxD}, avg=${Math.round(avgD)})`);
   }
   if (minD > 25 && minD > ansLen * 1.45) {
@@ -369,6 +377,9 @@ function auditOptionSymmetry(itemId, opts, answerIdx, isMainQuestion) {
     }
     if (cannedOptionSuffixRe.test(oStr)) {
       fail(itemId, `Robotic boilerplate distractor suffix in options[${oi}]: ${o}`);
+    }
+    if (cartoonishDistractorRe.test(oStr)) {
+      fail(itemId, `Cartoonish or implausible distractor in options[${oi}]: ${o}`);
     }
   });
 }
@@ -462,6 +473,7 @@ function auditOptionSymmetry(itemId, opts, answerIdx, isMainQuestion) {
   const combinedText = [stem, q.code || '', ...(opts || []), exp, dr].join(' | ');
   if (crossRefRe.test(combinedText)) fail(qId, 'Contains prohibited cross-question dependency wording');
   if (roboticFluffRe.test(combinedText)) fail(qId, `Contains prohibited meta-fluff: ${combinedText.match(roboticFluffRe)[0]}`);
+  if (mojibakeRe.test(combinedText)) fail(qId, `Contains UTF-8 mojibake: ${combinedText.match(mojibakeRe)[0]}`);
   if (outOfScopeRe.test(combinedText)) fail(qId, `Contains excluded out-of-scope C# API: ${combinedText.match(outOfScopeRe)[0]}`);
   if (/\.Filename\b/.test(q.code || '') || /\.Filename\b/.test(exp)) {
     fail(qId, 'Incorrect C# property casing .Filename (must be .FileName)');
@@ -588,6 +600,9 @@ scenarioKeys.forEach(scKey => {
   if (roboticFluffRe.test(scText)) {
     fail(scKey, `CodeGrade scenario contains prohibited meta-fluff: ${scText.match(roboticFluffRe)[0]}`);
   }
+  if (mojibakeRe.test(scText)) {
+    fail(scKey, `CodeGrade scenario contains UTF-8 mojibake: ${scText.match(mojibakeRe)[0]}`);
+  }
   const res = CSharpEngine.evaluateCodeGrade(sc.modelSolution, sc);
   if (res.percentage !== 100) {
     fail(scKey, `CodeGrade modelSolution scored ${res.percentage}% instead of 100%`);
@@ -598,6 +613,9 @@ scenarioKeys.forEach(scKey => {
   if (roboticFluffRe.test(seBlob)) {
     fail(se.id, `SpotError contains prohibited meta-fluff: ${seBlob.match(roboticFluffRe)[0]}`);
   }
+  if (mojibakeRe.test(seBlob)) {
+    fail(se.id, `SpotError contains UTF-8 mojibake: ${seBlob.match(mojibakeRe)[0]}`);
+  }
   verifyRenderedTextIntegrity(se.id, 'question', se.question || se.prompt || '');
   verifyRenderedTextIntegrity(se.id, 'explanation', se.explanation);
   auditOptionSymmetry(se.id, se.options, se.answer);
@@ -606,6 +624,9 @@ scenarioKeys.forEach(scKey => {
   const ascBlob = [asc.title, asc.description].join(' | ');
   if (roboticFluffRe.test(ascBlob)) {
     fail(asc.id || asc.filename || asc.fileName, `CodeAuditor scenario contains prohibited meta-fluff: ${ascBlob.match(roboticFluffRe)[0]}`);
+  }
+  if (mojibakeRe.test(ascBlob)) {
+    fail(asc.id || asc.filename || asc.fileName, `CodeAuditor scenario contains UTF-8 mojibake: ${ascBlob.match(mojibakeRe)[0]}`);
   }
   const res = CSharpEngine.CSharpCodeAuditor.audit(asc.canonicalSolution || asc.canonicalCode, asc);
   if (res.score !== 100) {
