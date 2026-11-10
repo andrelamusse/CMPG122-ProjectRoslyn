@@ -198,7 +198,7 @@ const roboticDrRe = /violate C# type, operator, control property, or HCI semanti
 const outOfScopeRe = /\b(SqlConnection|SqlCommand|BinaryReader|BinaryWriter|async|await)\b/;
 const nonAsciiCodeRe = /[\u2013\u2014\u2018\u2019\u201C\u201D]/;
 const mojibakeRe = /â€”|â€“|â€™|â€œ|â€\x9d|Â±|Â°|Ã—|Ã·|Â\s|[\u00c2\u00c3\u00e2]/i;
-const cartoonishDistractorRe = /deletes?\b.*\.(cs|exe|sln)|internet\s+connection|ram\s+capacity|mouse\s+buttons|gulf\s+of\s+compilation|gulf\s+of\s+hardware/i;
+const cartoonishDistractorRe = /deletes?\b.*(\.(cs|exe|sln)|text\s+file|image\s+file|other\s+buttons|temporary\s+local\s+variables)|internet\s+(connection|data\s+transmission)|connected\s+to\s+the\s+internet|ram\s+(capacity|memory|cache|paging)|system\s+ram|mouse\s+(buttons|hardware)|gulf\s+of\s+compilation|gulf\s+of\s+hardware|shuts\s+down\s+the\s+pc|powers\s+off\s+the\s+computer|converted\s+to\s+visual\s+basic|national\s+flag|email\s+address\s+of\s+the\s+current\s+user|separate\s+physical\s+monitor/i;
 
 const defsEng = new DefsMod.DefinitionsEngine(DATA.definitions || []);
 function verifyRenderedTextIntegrity(ownerId, fieldName, rawText) {
