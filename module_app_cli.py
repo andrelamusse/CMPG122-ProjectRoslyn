@@ -251,10 +251,28 @@ const validTopics = new Set();
 
 const validDefs = new Set((DATA.definitions || []).map(d => d.id));
 if (validDefs.size < 45) fail('DEFINITIONS_COUNT', `Expected comprehensive definitions library, found ${validDefs.size}`);
+(DATA.units || []).forEach(u => {
+  (u.structuredTopics || []).forEach(t => {
+    (t.relatedDefinitions || []).forEach(dId => {
+      if (!validDefs.has(dId)) fail(t.id, `Topic has broken relatedDefinitions ID: ${dId}`);
+    });
+  });
+});
 (DATA.definitions || []).forEach(d => {
-  const defBlob = [d.term, d.concise, d.detailed, ...(d.commonMistakes || [])].join(' | ');
+  ['term', 'plainEnglish', 'technicalDefinition', 'example', 'misconception'].forEach(reqDefField => {
+    if (!d[reqDefField] || String(d[reqDefField]).trim().length < 2) {
+      fail(d.id, `Definition missing required field: ${reqDefField}`);
+    }
+  });
+  (d.relatedConcepts || []).forEach(rcId => {
+    if (!validDefs.has(rcId)) fail(d.id, `Definition has broken relatedConcepts ID: ${rcId}`);
+  });
+  const defBlob = [d.term, d.plainEnglish, d.technicalDefinition, d.syntax || '', d.example, d.misconception].join(' | ');
   if (roboticFluffRe.test(defBlob)) {
     fail(d.id, `Definition contains prohibited meta-citation: ${defBlob.match(roboticFluffRe)[0]}`);
+  }
+  if (d.syntax && nonAsciiCodeRe.test(d.syntax)) {
+    fail(d.id, 'Definition C# syntax contains non-ASCII dash or smart quote');
   }
 });
 
@@ -286,6 +304,7 @@ function normDupTokens(s) {
   );
 }
 const standaloneTokenCache = [];
+const optLetters = ['A', 'B', 'C', 'D', 'E', 'F'];
 
 (DATA.questions || []).forEach((q, idx) => {
   const qId = q && q.id ? String(q.id) : `INDEX_${idx}`;
@@ -298,6 +317,9 @@ const standaloneTokenCache = [];
 
   if (!validUnits.has(q.su)) fail(qId, `Invalid Study Unit: ${q.su}`);
   if (!validTopics.has(q.topic)) fail(qId, `Invalid or unlinked topic: ${q.topic}`);
+  if (!q.learningObjective || String(q.learningObjective).trim().length < 10) {
+    fail(qId, 'Missing or brief learningObjective');
+  }
   if (!validTypes.has(q.questionType)) fail(qId, `Invalid questionType: ${q.questionType}`);
   if (!validDiffs.has(q.difficulty)) fail(qId, `Invalid difficulty: ${q.difficulty}`);
   if (typeof q.estimatedDifficulty !== 'number' || Number.isNaN(q.estimatedDifficulty) || q.estimatedDifficulty < 0.15 || q.estimatedDifficulty > 0.95) {
@@ -348,6 +370,10 @@ const standaloneTokenCache = [];
       fail(qId, `Duplicate boilerplate distractorRationale shared with ${seenRationales.get(normDr)}`);
     } else {
       seenRationales.set(normDr, qId);
+    }
+    const ansLetter = optLetters[q.answer];
+    if (ansLetter && new RegExp(`\\bOption\\s+${ansLetter}\\b`, 'i').test(dr)) {
+      fail(qId, `distractorRationale erroneously cites correct answer Option ${ansLetter} as a distractor`);
     }
   }
 
@@ -464,6 +490,17 @@ const customUnrandomUnits = new Set(customUnrandomAll.map(q => q.su));
 if (customUnrandomAll.length !== 20 || customUnrandomUnits.size !== 7) {
   fail('CUSTOM_EXAM_INTERLEAVED', `Expected 20 questions interleaved across all 7 SUs when randomize=false, got ${customUnrandomAll.length} across ${customUnrandomUnits.size} SUs`);
 }
+const customAdvMarks = ExamEngine.generateCustomExam(DATA.questions, {
+  units: allUnitsList,
+  difficulties: ['Advanced'],
+  targetMarks: 15,
+  questionCount: 0,
+  useWeightedDistribution: true,
+  seed: 42
+});
+if (customAdvMarks.length === 0) {
+  fail('CUSTOM_EXAM_ADV_TARGET_MARKS', 'generateCustomExam returned 0 questions for Advanced targetMarks=15');
+}
 
 // 6. CSharpEngine & CodeAuditor Verification (All 15 CodeGrade + 6 CodeAudit + 24 SpotError Scenarios)
 const scenarioKeys = Object.keys(DATA.codeScenarios || {});
@@ -484,10 +521,11 @@ scenarioKeys.forEach(scKey => {
   }
 });
 (DATA.spotErrors || []).forEach(se => {
-  const seBlob = [se.prompt, ...(se.options || []), se.explanation].join(' | ');
+  const seBlob = [se.title || '', se.code || '', se.question || se.prompt || '', ...(se.options || []), se.explanation].join(' | ');
   if (roboticFluffRe.test(seBlob)) {
     fail(se.id, `SpotError contains prohibited meta-fluff: ${seBlob.match(roboticFluffRe)[0]}`);
   }
+  verifyRenderedTextIntegrity(se.id, 'question', se.question || se.prompt || '');
   verifyRenderedTextIntegrity(se.id, 'explanation', se.explanation);
 });
 (DATA.auditScenarios || []).forEach(asc => {

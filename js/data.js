@@ -38,7 +38,7 @@
     moduleCode: curriculum.moduleCode || 'CMPG122',
     moduleTitle: curriculum.moduleTitle || 'User Interface Programming in Visual C#',
     institution: curriculum.institution || 'North-West University',
-    version: curriculum.version || '9.2.0',
+    version: curriculum.version || '9.2.1',
     examWeightingModel: curriculum.examWeightingModel || {},
     units: curriculum.units || [],
     definitions: definitions || [],

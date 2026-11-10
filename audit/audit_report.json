@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-11-10T04:21:15.547Z",
+  "timestamp": "2026-11-10T05:38:03.899Z",
   "module": "CMPG122",
-  "version": "9.2.0",
+  "version": "9.2.1",
   "status": "PASS",
   "summary": {
     "totalStudyUnits": 7,
@@ -22,7 +22,7 @@
       "SU1": 10,
       "SU2": 15
     },
-    "mobileBundleBytes": 2080401,
+    "mobileBundleBytes": 2089771,
     "failureCount": 0,
     "warningCount": 0
   },

@@ -17,7 +17,7 @@
   "moduleCode": "CMPG122",
   "moduleTitle": "User Interface Programming in Visual C#",
   "institution": "North-West University",
-  "version": "9.2.0",
+  "version": "9.2.1",
   "examWeightingModel": {
     "verifiedAgainst": [
       "CMPG 122 Module Outline Document (SU1–SU7, 12-week 120-hour curriculum)",

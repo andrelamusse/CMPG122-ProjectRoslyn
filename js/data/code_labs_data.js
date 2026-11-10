@@ -692,7 +692,7 @@
       },
       "methodHeader": "private void btnAddScore_Click(object sender, EventArgs e)\n{",
       "methodFooter": "}",
-      "modelSolution": "decimal score;\nif (decimal.TryParse(txtScore.Text, out score) && score >= 0 && score <= 100)\n{\n    lstScores.Items.Add(score.ToString(\"F1\"));\n    int count = lstScores.Items.Count;\n    decimal total = 0m;\n    for (int i = 0; i < count; i++)\n    {\n        total += decimal.Parse(lstScores.Items[i]);\n    }\n    decimal avg = total / count;\n    lblCount.Text = count.ToString();\n    lblAverage.Text = avg.ToString(\"F2\");\n}\nelse\n{\n    MessageBox.Show(\"Enter a valid score between 0 and 100.\", \"Validation Error\");\n}",
+      "modelSolution": "decimal score;\nif (decimal.TryParse(txtScore.Text, out score) && score >= 0 && score <= 100)\n{\n    lstScores.Items.Add(score.ToString(\"F1\"));\n    int count = lstScores.Items.Count;\n    decimal total = 0m;\n    for (int i = 0; i < count; i++)\n    {\n        total += decimal.Parse(lstScores.Items[i].ToString());\n    }\n    decimal avg = total / count;\n    lblCount.Text = count.ToString();\n    lblAverage.Text = avg.ToString(\"F2\");\n}\nelse\n{\n    MessageBox.Show(\"Enter a valid score between 0 and 100.\", \"Validation Error\");\n}",
       "testCases": [
         {
           "name": "Score Entry (80)",

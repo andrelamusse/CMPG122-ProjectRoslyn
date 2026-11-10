@@ -281,6 +281,8 @@ button {
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
   text-align: left;
+  min-width: 0;
+  flex-shrink: 1;
 }
 
 .topbar-code-mark {
@@ -292,11 +294,13 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .topbar-title-group {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 .topbar-title {
   font-size: 1rem;
@@ -313,6 +317,8 @@ button {
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  min-width: 0;
+  flex-shrink: 1;
 }
 
 .mode-pill-select-wrap {
@@ -324,6 +330,8 @@ button {
   border-radius: var(--radius-pill);
   padding: 0.3rem 0.75rem;
   color: var(--accent-tertiary);
+  min-width: 0;
+  max-width: 100%;
 }
 .mode-pill-select {
   background: transparent;
@@ -333,6 +341,8 @@ button {
   font-weight: var(--fw-semibold);
   padding-right: var(--space-2);
   cursor: pointer;
+  min-width: 0;
+  text-overflow: ellipsis;
 }
 .mode-pill-select option {
   background: var(--surface-1);
@@ -1180,6 +1190,8 @@ button:disabled {
 .text-input,
 .select-input {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 40px;
   background: var(--surface-2);
   border: 1px solid var(--border-subtle);
@@ -1604,8 +1616,14 @@ button:disabled {
 /* Custom Quiz Form Grid */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), minmax(0, 1fr)));
   gap: var(--space-4);
+}
+.form-grid > *,
+.cards-grid-2 > *,
+.cards-grid-3 > * {
+  min-width: 0;
+  max-width: 100%;
 }
 .check-chip-group {
   display: flex;
@@ -1711,6 +1729,7 @@ button:disabled {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: var(--space-4) var(--space-5);
+  overflow-wrap: anywhere;
 }
 .def-card.highlighted {
   border-color: var(--accent-primary);
@@ -1943,25 +1962,30 @@ button:disabled {
 /* Small Mobile (320px–375px) */
 @media (max-width: 375px) {
   .topbar {
+    padding: 0 8px;
+    gap: 0.25rem;
+  }
+  .topbar-brand {
+    padding: 2px 4px;
     gap: 0.35rem;
   }
   .topbar-code-mark {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
   }
   .topbar-title {
-    font-size: 0.9rem;
+    font-size: 0.86rem;
   }
   .mode-pill-select-wrap {
-    padding: 0.2rem 0.35rem;
-    max-width: 118px;
+    padding: 0.18rem 0.3rem;
+    max-width: min(104px, 34vw);
   }
   .mode-pill-select-wrap span {
     display: none;
   }
   .mode-pill-select {
-    max-width: 106px;
-    font-size: 0.74rem;
+    max-width: min(94px, 31vw);
+    font-size: 0.72rem;
     padding: 0;
   }
   .su-rings-grid {

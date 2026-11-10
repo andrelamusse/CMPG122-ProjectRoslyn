@@ -187,7 +187,9 @@
     const selected = [];
     const usedIds = new Set();
 
+    const unitSelectedMarks = {};
     for (const [su] of weightEntries) {
+      unitSelectedMarks[su] = 0;
       const unitTargetMarks = targetBySu[su] || 0;
       if (unitTargetMarks <= 0) continue;
       const suPool = activePool.filter(q => q.su === su);
@@ -213,6 +215,7 @@
         if (exact) {
           selected.push(exact);
           usedIds.add(exact.id);
+          unitMarks += diffNeeded;
         } else if (diffNeeded === 1 && selected.length > 0) {
           // Swap a 2-mark question in this SU for a 3-mark question (or 3 for 4) to hit exact target!
           const swapIdx = selected.findIndex(sq => sq.su === su && (Number(sq.marks) || 2) === 2);
@@ -221,6 +224,7 @@
             usedIds.delete(selected[swapIdx].id);
             selected[swapIdx] = threeMark;
             usedIds.add(threeMark.id);
+            unitMarks += 1;
           } else {
             const swap3 = selected.findIndex(sq => sq.su === su && (Number(sq.marks) || 2) === 3);
             const fourMark = candidates.find(q => !usedIds.has(q.id) && (Number(q.marks) || 2) === 4);
@@ -228,9 +232,59 @@
               usedIds.delete(selected[swap3].id);
               selected[swap3] = fourMark;
               usedIds.add(fourMark.id);
+              unitMarks += 1;
             }
           }
         }
+      }
+      unitSelectedMarks[su] = unitMarks;
+    }
+
+    // Cross-unit proportional shortfall top-up when item mark granularity (e.g. 4-mark Advanced items)
+    // exceeds small per-SU sub-quotas (e.g. targetMarks = 6..30)
+    let totalSelectedMarks = selected.reduce((s, q) => s + (Number(q.marks) || 2), 0);
+    if (totalSelectedMarks < targetMarks && activePool.length > selected.length) {
+      const weightSum = weightEntries.reduce((s, [, w]) => s + w, 0) || 1;
+      const candidatesBySu = new Map();
+      for (const [su] of weightEntries) {
+        const suPool = activePool.filter(q => q.su === su && !usedIds.has(q.id));
+        candidatesBySu.set(su, options.randomize === false ? suPool : shuffleArray(suPool, rng));
+      }
+
+      let progressed = true;
+      while (totalSelectedMarks < targetMarks && progressed) {
+        progressed = false;
+        const rankedUnits = weightEntries
+          .slice()
+          .sort(([suA, wA], [suB, wB]) => {
+            const defA = ((wA / weightSum) * targetMarks) - (unitSelectedMarks[suA] || 0);
+            const defB = ((wB / weightSum) * targetMarks) - (unitSelectedMarks[suB] || 0);
+            return (defB - defA) || (wB - wA);
+          });
+
+        for (const [su] of rankedUnits) {
+          if (totalSelectedMarks >= targetMarks) break;
+          const list = candidatesBySu.get(su) || [];
+          const fitIdx = list.findIndex(q => !usedIds.has(q.id) && totalSelectedMarks + (Number(q.marks) || 2) <= targetMarks);
+          if (fitIdx !== -1) {
+            const chosen = list[fitIdx];
+            const m = Number(chosen.marks) || 2;
+            selected.push(chosen);
+            usedIds.add(chosen.id);
+            unitSelectedMarks[su] = (unitSelectedMarks[su] || 0) + m;
+            totalSelectedMarks += m;
+            progressed = true;
+            break;
+          }
+        }
+      }
+
+      // Guarantee at least 1 question when targetMarks > 0 is smaller than the minimum available item mark
+      if (selected.length === 0 && activePool.length > 0) {
+        const topSu = weightEntries.slice().sort((a, b) => b[1] - a[1])[0]?.[0];
+        const fallbackList = (topSu && candidatesBySu.get(topSu)?.length) ? candidatesBySu.get(topSu) : activePool;
+        const smallest = fallbackList.slice().sort((a, b) => (Number(a.marks) || 2) - (Number(b.marks) || 2))[0];
+        if (smallest) selected.push(smallest);
       }
     }
 
@@ -276,17 +330,20 @@
 
     const hasTopicFilter = Boolean(topics && topics.size > 0);
     const targetM = Number(config.targetMarks) || 0;
+    const baseWeights = (config.allocations && typeof config.allocations === 'object')
+      ? config.allocations
+      : DEFAULT_WEIGHTS;
 
     if (config.useWeightedDistribution && !hasTopicFilter) {
       const subWeights = {};
       for (const su of orderedUnits) {
-        if (DEFAULT_WEIGHTS[su]) subWeights[su] = DEFAULT_WEIGHTS[su];
+        if (baseWeights[su]) subWeights[su] = baseWeights[su];
       }
-      for (const [su, w] of Object.entries(DEFAULT_WEIGHTS)) {
+      for (const [su, w] of Object.entries(baseWeights)) {
         if ((!units || units.has(su)) && !subWeights[su]) subWeights[su] = w;
       }
 
-      if (targetM >= 10) {
+      if (targetM > 0) {
         return generateWeightedExam(candidates, subWeights, targetM, {
           seed: config.seed,
           randomize,
@@ -331,7 +388,7 @@
       ? shuffleArray(candidates, rng)
       : interleaveByUnit(candidates, orderedUnits);
 
-    if (targetM > 0 && !config.questionCount) {
+    if (targetM > 0) {
       const picked = [];
       let sum = 0;
       for (const q of ordered) {

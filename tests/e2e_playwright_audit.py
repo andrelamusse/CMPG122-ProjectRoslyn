@@ -260,6 +260,13 @@ def run_suite():
             idx_after_2 = page.evaluate('window.CMPG122_APP._lastUnansweredJumpIdx')
             assert_true(idx_after_1 == 0 and idx_after_2 == 1, 'Next Unanswered button must cycle circularly across unanswered questions')
 
+            # Verify clicking Back to Centre on an unsubmitted active exam opens protective confirmation modal instead of wiping answers!
+            page.locator('#btnExitExamToLobby').click()
+            assert_true(page.locator('#appModalBackdrop.open').count() == 1, 'Back to Centre on unsubmitted exam must prompt confirmation')
+            assert_true('Discard' in page.locator('#appModalTitle').inner_text(), 'Expected Discard confirmation modal title')
+            page.locator('#btnModalCancelAction').click()
+            assert_true(page.locator('#activeExamWorkspace').is_visible(), 'Cancelling exit modal must keep active exam open')
+
             # Open Submit Confirmation Modal -> verify Unanswered & Flagged counts shown
             page.locator('#btnOpenSubmitExamModal').click()
             modal_text = page.locator('#appModalBody').inner_text()
@@ -288,7 +295,7 @@ def run_suite():
             results_summary['continuousPastExam'] = True
             print('[+] Verified Continuous Past Exam Paper, Circular Unanswered Jump, Pre-Submit Modal, 100-Mark Grading & Distractor Details Return.')
 
-            # 13. Open Progress / Unanswered & Flagged Review -> Verify honest states, Distractor Details Return & Switch Theme -> Reload
+            # 13. Open Progress / Unanswered & Flagged Review -> Verify honest states, Chained Related Definition Return & Switch Theme -> Reload
             page.locator('.sidebar-link[data-route="progress"]').click()
             assert_true(page.locator('#analyticsHost').is_visible(), 'Analytics & Review view must render')
             assert_true('Unanswered (13)' in page.locator('#analyticsHost').inner_text(), 'Unanswered review tab must track 13 blank exam items')
@@ -299,11 +306,21 @@ def run_suite():
             page.locator('#analyticsHost .def-chip-btn').first.click()
             assert_true(page.locator('#viewDefinitions.active').count() == 1, 'Definitions must open from Question Review')
             assert_true('Back to Question Review' in page.locator('#btnReturnFromDef').inner_text(), 'Expected Back to Question Review banner')
-            page.locator('#btnReturnFromDef').click()
-            assert_true(page.locator('#viewProgress.active').count() == 1, 'Must return to Question Review')
+            # Filter to SU7, then click Related [data-jump-def] to verify cross-unit filter reset + single-Escape exact return!
+            if page.locator('[data-jump-def]').count() > 0:
+                target_jump_id = page.locator('[data-jump-def]').first.get_attribute('data-jump-def')
+                page.locator('#defsUnitFilter').select_option('SU7')
+                # Re-render with ALL first ifSU7 hid the current card, or jump directly from any visible related chip
+                if page.locator('[data-jump-def]').count() > 0:
+                    target_jump_id = page.locator('[data-jump-def]').first.get_attribute('data-jump-def')
+                    page.locator('[data-jump-def]').first.click()
+                    assert_true(page.locator(f'#defCard_{target_jump_id}.highlighted').count() == 1, 'Related [data-jump-def] must clear unit filter and highlight target card')
+            page.locator('#defsViewHeading').click()
+            page.keyboard.press('Escape')
+            assert_true(page.locator('#viewProgress.active').count() == 1, 'Escape after chained Related Definition jump must return to Question Review')
             assert_true(
                 page.locator('#analyticsHost details.distractor-details').first.evaluate('el => el.open') is True,
-                'Expanded distractor-details inside Question Review must stay open after returning from Definition'
+                'Expanded distractor-details inside Question Review must stay open after chained Definition return'
             )
 
             page.locator('[data-review-tab="flagged"]').click()
@@ -578,15 +595,44 @@ def run_suite():
                     assert_true(page.locator('#appSidebar').is_visible(), f'Desktop sidebar must be visible at {vw}x{vh}')
                 results_summary['responsiveViewportsChecked'].append(f'{vw}x{vh}')
 
-            # Verify dynamic viewport resize preserves active question selection state
-            page.set_viewport_size({'width': 1440, 'height': 900})
+            # Verify 120% Large Accessibility Font Scale at 320x568 produces zero horizontal overflow across all routes,
+            # and verify mobile exam drawers close cleanly on bottom-nav route switch without locking out Practice shortcuts!
+            page.set_viewport_size({'width': 320, 'height': 568})
+            page.evaluate('window.CMPG122_APP.persistence.updatePreferences({ fontScale: 120 }); window.CMPG122_APP._applyPreferencesToDocument();')
+            for route in ['home', 'study', 'practice', 'exams', 'definitions', 'progress', 'settings']:
+                page.evaluate(f'window.CMPG122_APP.navigate("{route}")')
+                ov_120 = page.evaluate('document.documentElement.scrollWidth - window.innerWidth')
+                assert_true(ov_120 <= 1, f'Horizontal overflow ({ov_120}px) at 320x568 @ 120% font scale on route "{route}"')
+            page.evaluate('window.CMPG122_APP.persistence.updatePreferences({ fontScale: 100 }); window.CMPG122_APP._applyPreferencesToDocument();')
+
+            page.evaluate('window.CMPG122_APP.startOfficialExam("exam_2024_dec", false)')
+            page.locator('#btnToggleMobilePalette').click()
+            assert_true(page.locator('#examPaletteSidebar').evaluate('el => el.classList.contains("drawer-open")'), 'Mobile palette drawer must open')
+            page.mouse.click(10, 250)
+            assert_true(not page.locator('#examPaletteSidebar').evaluate('el => el.classList.contains("drawer-open")'), 'Outside click must dismiss mobile palette drawer')
+
+            page.locator('#btnToggleScenarioDrawer').click()
+            assert_true(page.locator('#scenarioDrawer').evaluate('el => el.classList.contains("open")'), 'Scenario drawer must open')
+            page.mouse.click(10, 250)
+            assert_true(not page.locator('#scenarioDrawer').evaluate('el => el.classList.contains("open")'), 'Outside click must dismiss scenario drawer')
+
+            # Also verify route change while drawers are open cleans up both drawers and preserves keyboard shortcuts
+            page.locator('#btnToggleScenarioDrawer').click()
+            page.evaluate('document.getElementById("examPaletteSidebar").classList.add("drawer-open")')
+            page.evaluate('window.CMPG122_APP.navigate("practice")')
+            assert_true(not page.locator('#scenarioDrawer').evaluate('el => el.classList.contains("open")'), 'Scenario drawer must close on route navigation')
+            assert_true(not page.locator('#examPaletteSidebar').evaluate('el => el.classList.contains("drawer-open")'), 'Mobile exam palette drawer must close on route navigation')
             page.evaluate('window.CMPG122_APP.startUnitPractice("SU2", "")')
-            page.locator('#singleCardArea .q-option-btn').nth(1).click()
+            page.locator('#practiceViewHeading').click()
+            page.keyboard.press('2')
+            assert_true(page.locator('#singleCardArea .q-option-btn.opt-selected').count() == 1, 'Practice shortcuts must work cleanly after leaving mobile exam drawers')
+
+            # Verify dynamic viewport resize preserves active question selection state
             page.set_viewport_size({'width': 375, 'height': 812})
             page.set_viewport_size({'width': 1024, 'height': 768})
             assert_true(page.locator('#singleCardArea .q-option-btn.opt-selected').count() == 1, 'Resizing must not destroy selected question state')
 
-            print(f"[+] Verified Zero Horizontal Overflow & Zero Bounding-Box Clipping (including Active Past Exam Paper) across all {len(REQUIRED_VIEWPORTS)} viewports.")
+            print(f"[+] Verified Zero Horizontal Overflow & Zero Bounding-Box Clipping (including 120% Scale & Active Past Exam Paper) across all {len(REQUIRED_VIEWPORTS)} viewports.")
 
             # Standalone Mobile/Offline Bundle Verification on file://
             assert_true(STANDALONE_HTML.exists(), f'Missing standalone bundle {STANDALONE_HTML}')

@@ -160,7 +160,7 @@
       technicalDefinition: 'An IDE window categorized into groups (Common Controls, Containers, Dialogs) from which control classes are instantiated onto a Form design surface.',
       syntax: 'View -> Toolbox (Ctrl+Alt+X)',
       example: 'Double-clicking Button or dragging PictureBox from Common Controls onto Form1.',
-      relatedConcepts: ['def_ide', 'def_component_tray'],
+      relatedConcepts: ['def_ide', 'def_file_dialogs'],
       misconception: 'Looking for invisible dialog components on the form surface after dragging OpenFileDialog from Toolbox—non-visual components sit in the Component Tray below the form.'
     },
     {
@@ -173,7 +173,7 @@
       technicalDefinition: 'Design-time inspector (F4) displaying public properties and the Events lightning-bolt view for the currently selected Form or Control instance, serializing settings into Form1.Designer.cs.',
       syntax: '(Name) = btnCalculate | Text = "&Calculate"',
       example: 'Selecting Label1 in the Designer and changing (Name) to lblTotal and AutoSize to False in the Properties Window.',
-      relatedConcepts: ['def_control_name_vs_text', 'def_designer_cs'],
+      relatedConcepts: ['def_control_name_vs_text', 'def_partial_form_classes'],
       misconception: 'Changing Text to "btnCalculate" instead of changing (Name)—changing Text displays "btnCalculate" on the button face while the identifier remains button1!'
     },
     {
@@ -186,7 +186,7 @@
       technicalDefinition: 'Hierarchical IDE navigator listing the .sln solution, .csproj project, Program.cs, Form classes (Form1.cs, Form1.Designer.cs, Form1.resx), and references.',
       syntax: 'Solution -> Project -> Form1.cs / Program.cs',
       example: 'Right-clicking the project in Solution Explorer and choosing Add -> Form (Windows Forms)... to create a second form.',
-      relatedConcepts: ['def_program_cs', 'def_designer_cs'],
+      relatedConcepts: ['def_program_cs', 'def_partial_form_classes'],
       misconception: 'Deleting Form1.Designer.cs in Solution Explorer thinking it is a temporary backup—deleting it destroys all visual control declarations for Form1.'
     },
     {

@@ -19542,7 +19542,7 @@
       "q": "What happens to the caller's variable `num` after executing the following code?",
       "title": "What happens to the caller's variable `num` after executing the following code?",
       "stem": "What happens to the caller's variable `num` after executing the following code?",
-      "code": "int num = 10;\nDoubleValue(num);\nlblOut.Text = num.ToString();\n\nprivate void DoubleValue(int val)\n{\n    val = val * 2;\n}",
+      "code": "private void btnRun_Click(object sender, EventArgs e)\n{\n    int num = 10;\n    DoubleValue(num);\n    lblOut.Text = num.ToString();\n}\n\nprivate void DoubleValue(int val)\n{\n    val = val * 2;\n}",
       "options": [
         "`lblOut` displays `20` because `val` doubles `num`.",
         "The code fails to compile because `DoubleValue` is `void`.",
@@ -19584,7 +19584,7 @@
       "q": "What does `lblOut` display after the following code runs?",
       "title": "What does `lblOut` display after the following code runs?",
       "stem": "What does `lblOut` display after the following code runs?",
-      "code": "int total = 100;\nAddBonus(ref total);\nlblOut.Text = total.ToString();\n\nprivate void AddBonus(ref int amount)\n{\n    amount += 25;\n}",
+      "code": "private void btnRun_Click(object sender, EventArgs e)\n{\n    int total = 100;\n    AddBonus(ref total);\n    lblOut.Text = total.ToString();\n}\n\nprivate void AddBonus(ref int amount)\n{\n    amount += 25;\n}",
       "options": [
         "100",
         "25",
@@ -19601,7 +19601,7 @@
       "ans": 3,
       "exp": "Because `amount` is a `ref` parameter, it refers directly to the caller's `total` variable in memory. Adding `25` to `amount` changes `total` from `100` to `125`.",
       "explanation": "Because `amount` is a `ref` parameter, it refers directly to the caller's `total` variable in memory. Adding `25` to `amount` changes `total` from `100` to `125`.",
-      "distractorRationale": "`CalcBonus(1000m)` returns `1000m * 0.10m + 25m = 125m`; `100` forgets `+ 25m`, `25` forgets the 10% commission, and `0` ignores the `return` value.",
+      "distractorRationale": "`100` mistakenly treats `ref int amount` as pass-by-value; `25` overwrites `amount = 25` instead of `amount += 25` (`100 + 25 = 125`); and `0` confuses `ref` with default zero-initialisation.",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -20390,7 +20390,7 @@
       "q": "What does `lblOut` display after the following code executes?",
       "title": "What does `lblOut` display after the following code executes?",
       "stem": "What does `lblOut` display after the following code executes?",
-      "code": "int q, r;\nDivideWithRemainder(17, 5, out q, out r);\nlblOut.Text = q + \" R \" + r;\n\nprivate void DivideWithRemainder(int dividend, int divisor, out int quotient, out int remainder)\n{\n    quotient = dividend / divisor;\n    remainder = dividend % divisor;\n}",
+      "code": "private void btnRun_Click(object sender, EventArgs e)\n{\n    int q, r;\n    DivideWithRemainder(17, 5, out q, out r);\n    lblOut.Text = q + \" R \" + r;\n}\n\nprivate void DivideWithRemainder(int dividend, int divisor, out int quotient, out int remainder)\n{\n    quotient = dividend / divisor;\n    remainder = dividend % divisor;\n}",
       "options": [
         "2 R 3",
         "5 R 17",
@@ -20407,7 +20407,7 @@
       "ans": 2,
       "exp": "`17 / 5` using integer division assigns `3` to `quotient` (`q`), and `17 % 5` assigns `2` to `remainder` (`r`). Therefore `lblOut.Text` becomes `\"3 R 2\"`.",
       "explanation": "`17 / 5` using integer division assigns `3` to `quotient` (`q`), and `17 % 5` assigns `2` to `remainder` (`r`). Therefore `lblOut.Text` becomes `\"3 R 2\"`.",
-      "distractorRationale": "`Divide(17, 5, out q, out r)` sets `q = 17 / 5 = 3` and `r = 17 % 5 = 2` -> `\"3 R 2\"` (`2 R 3` swaps `/` and `%`, `3.4 R 2` forgets integer division).",
+      "distractorRationale": "`DivideWithRemainder(17, 5, out q, out r)` sets `q = 17 / 5 = 3` and `r = 17 % 5 = 2` -> `\"3 R 2\"` (`2 R 3` swaps `/` and `%`, `5 R 17` reverses arguments, and `3.4 R 2` forgets integer division).",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -24675,7 +24675,7 @@
       "ans": 3,
       "exp": "(1) Instantiate `frmSum = new SummaryForm();`, (2) assign formatted strings to `.Text` on `frmSum`’s `Public` labels **before** showing, and (3) call `frmSum.ShowDialog();`.",
       "explanation": "(1) Instantiate `frmSum = new SummaryForm();`, (2) assign formatted strings to `.Text` on `frmSum`’s `Public` labels **before** showing, and (3) call `frmSum.ShowDialog();`.",
-      "distractorRationale": "Option A calls instance members statically; Option C assigns after `ShowDialog()` and assigns `decimal` to `Label`; Option D omits the `frmSum.` object qualifier.",
+      "distractorRationale": "Option A calls instance members statically; Option B assigns after `ShowDialog()` and assigns `decimal` directly to `Label`; Option C omits the `frmSum.` object qualifier and opens modelessly.",
       "definitions": [
         "def_form_instantiation",
         "def_cross_form_modifiers",
@@ -24971,7 +24971,7 @@
       "ans": 2,
       "exp": "Passing `320.00m` directly to `new ReceiptForm(320.00m)` calls `: this()` (`InitializeComponent()`) first and sets the private `lblTotal.Text` cleanly without exposing controls as `Public`.",
       "explanation": "Passing `320.00m` directly to `new ReceiptForm(320.00m)` calls `: this()` (`InitializeComponent()`) first and sets the private `lblTotal.Text` cleanly without exposing controls as `Public`.",
-      "distractorRationale": "Option B fails to compile (`CS0122`) because `lblTotal` has `Modifiers = Private`.",
+      "distractorRationale": "Option A calls `ShowDialog` statically with a `decimal` argument (`CS0120`/`CS1503`), Option B omits the `new` keyword (`CS1955`), and Option D fails to compile (`CS0122`) because `lblTotal` has `Modifiers = Private`.",
       "definitions": [
         "def_cross_form_modifiers",
         "def_form_instantiation",

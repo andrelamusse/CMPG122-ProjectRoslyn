@@ -483,13 +483,16 @@ describe('9. Markdown Emphasis Rendering, Unanswered Review Queue & Answer-Key C
     assert.ok(boldCodeLinked.includes('(<code class="inline-code">F11</code>)</strong>'), `Failed bold+code (linked): ${boldCodeLinked}`);
     assert.ok(!boldCodeLinked.includes('**'), `Raw ** leaked: ${boldCodeLinked}`);
 
-    // 4. Standalone ** operator distractor token must remain literal **
+    // 4. Standalone ** operator distractor token and paired a**2 + b**2 expressions must remain literal **
     assert.equal(eng.renderTextWithInlineLinks('**'), '**');
+    const expPair = eng.renderTextWithInlineLinks('Why is a**2 + b**2 invalid in C#?');
+    assert.ok(expPair.includes('a**2 + b**2'), `Expected literal a**2 + b**2 in: ${expPair}`);
+    assert.ok(!expPair.includes('<strong>'), `Must not convert a**2 + b**2 into <strong>: ${expPair}`);
   });
 });
 
 describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code Lab Signatures', () => {
-  it('applies Study Unit weights when targetMarks is 0 and interleaves multi-unit pools when randomize is false', () => {
+  it('applies Study Unit weights when targetMarks is 0, handles filtered/low targetMarks, and interleaves multi-unit pools', () => {
     const allUnits = ['SU7', 'SU1', 'SU2', 'SU3', 'SU4', 'SU5', 'SU6'];
 
     // Default Custom Quiz UI state: targetMarks = 0 ("0 = use count"), useWeightedDistribution = true
@@ -517,12 +520,46 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
     assert.equal(deterministic20.length, 20);
     const detUnits = new Set(deterministic20.map(q => q.su));
     assert.equal(detUnits.size, 7, `Expected all 7 SUs represented, got: ${[...detUnits]}`);
+
+    // Filtered Advanced (4-mark items) with targetMarks = 15 must top up proportionally instead of returning 0 items
+    const adv15 = ExamMod.generateCustomExam(DATA.questions, {
+      units: allUnits,
+      difficulties: ['Advanced'],
+      targetMarks: 15,
+      questionCount: 0,
+      useWeightedDistribution: true,
+      seed: 42
+    });
+    const advMarks = adv15.reduce((s, q) => s + q.marks, 0);
+    assert.ok(adv15.length >= 3 && advMarks >= 12 && advMarks <= 16, `Expected ~12-16 marks for Advanced tm=15, got ${advMarks}`);
+
+    // Small targetMarks (e.g. 6) and unweighted targetMarks with non-zero questionCount must honour targetMarks
+    const smallWeighted = ExamMod.generateCustomExam(DATA.questions, {
+      units: allUnits,
+      targetMarks: 6,
+      questionCount: 15,
+      useWeightedDistribution: true,
+      seed: 42
+    });
+    const smallM = smallWeighted.reduce((s, q) => s + q.marks, 0);
+    assert.ok(smallM >= 4 && smallM <= 8, `Expected ~6 marks, got ${smallM}`);
+
+    const unweightedTm = ExamMod.generateCustomExam(DATA.questions, {
+      units: allUnits,
+      targetMarks: 12,
+      questionCount: 15,
+      useWeightedDistribution: false,
+      seed: 42
+    });
+    const unwM = unweightedTm.reduce((s, q) => s + q.marks, 0);
+    assert.ok(unwM >= 10 && unwM <= 14, `Expected ~12 marks when unweighted targetMarks=12, got ${unwM}`);
   });
 
-  it('enforces numeric estimatedDifficulty, unique distractorRationale, and zero textbook citations across all 585 questions', () => {
+  it('enforces numeric estimatedDifficulty, option-consistent distractorRationale, and zero textbook citations across all 585 questions', () => {
     assert.equal(DATA.questions.length, 585);
     const citationRe = /\bch(?:apters?|\.)?\s+\d|\bch\.\d|\bshneiderman\s+ch\b|\bvisual\s+c#\s+ch\b/i;
     const rationales = new Set();
+    const letters = ['A', 'B', 'C', 'D', 'E'];
 
     for (const q of DATA.questions) {
       assert.equal(typeof q.estimatedDifficulty, 'number', `${q.id} missing numeric estimatedDifficulty`);
@@ -533,12 +570,15 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
       assert.equal(rationales.has(normDr), false, `${q.id} has duplicate distractorRationale`);
       rationales.add(normDr);
 
+      const ansL = letters[q.answer];
+      assert.equal(new RegExp(`\\bOption\\s+${ansL}\\b`, 'i').test(q.distractorRationale), false, `${q.id} distractorRationale cites correct Option ${ansL}`);
+
       const textBlob = [q.stem, q.explanation, q.distractorRationale, ...(q.options || [])].join(' ');
       assert.equal(citationRe.test(textBlob), false, `${q.id} still contains textbook chapter citation`);
     }
   });
 
-  it('defines matching methodSignature and methodHeader across all 15 CodeGrade scenarios', () => {
+  it('defines matching methodSignature and methodHeader across all 15 CodeGrade scenarios and preserves paused exams across Custom Quiz completion', async () => {
     const keys = Object.keys(DATA.codeScenarios || {});
     assert.equal(keys.length, 15);
     const norm = s => String(s || '').replace(/\s*\{\s*$/, '').trim();
@@ -547,9 +587,27 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
       assert.ok(sc.methodSignature && sc.methodHeader, `${key} missing signature/header`);
       assert.equal(norm(sc.methodSignature), norm(sc.methodHeader), `${key} signature/header mismatch`);
     }
-    assert.match(DATA.codeScenarios.scenario_racing_light.methodSignature, /btnStop_Click/);
-    assert.match(DATA.codeScenarios.scenario_file_sales.methodSignature, /btnSaveSale_Click/);
-    assert.match(DATA.codeScenarios.scenario_multiform_dispatch.methodSignature, /btnShowSummary_Click/);
+    assert.ok(DATA.codeScenarios.scenario_accumulator.modelSolution.includes('lstScores.Items[i].ToString()'));
+
+    const pm = new PersistenceMod.PersistenceManager({ localStorage: createMemoryStorage(), indexedDB: null });
+    await pm.init();
+    await pm.saveActiveExamSession({ id: 'paused_exam_1', questionIds: [DATA.questions[0].id] });
+    await pm.saveActivePracticeSession({ id: 'custom_quiz_1', questionIds: [DATA.questions[1].id] });
+    await pm.recordExamResult({
+      id: 'custom_quiz_1',
+      mode: 'custom_quiz',
+      title: 'Custom Quiz',
+      rawMarks: 2,
+      totalMarks: 2,
+      percentage: 100,
+      correctCount: 1,
+      incorrectCount: 0,
+      unansweredCount: 0,
+      durationSeconds: 30,
+      completedAt: Date.now()
+    });
+    assert.equal(pm.getState().activePracticeSession, null, 'Completed Custom Quiz should clear activePracticeSession');
+    assert.equal(pm.getState().activeExamSession?.id, 'paused_exam_1', 'Paused Past Exam must NOT be wiped by Custom Quiz completion');
   });
 });
 

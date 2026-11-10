@@ -116,8 +116,8 @@
       // 2. Escape HTML on prose text (control-char placeholders pass through untouched)
       let safe = escapeHtml(codeTokenized);
 
-      // 3. Convert **bold** (requires non-empty non-asterisk body; leaves literal "**" operator intact)
-      safe = safe.replace(/\*\*(?!\s)([^\n*]+?)(?<!\s)\*\*/g, '<strong>$1</strong>');
+      // 3. Convert **bold** (requires non-empty non-asterisk body & non-word outer boundaries so a**2 + b**2 stays literal)
+      safe = safe.replace(/(?<![A-Za-z0-9_*])\*\*(?!\s)([^\n*]+?)(?<!\s)\*\*(?![A-Za-z0-9_*])/g, '<strong>$1</strong>');
 
       // 4. Convert *italic* strictly on genuine alphabetic prose words so C# multiplication
       //    (3 * 2 * 2, a++ * 2) and dialog wildcards (*.txt, *.*) never lose asterisks.

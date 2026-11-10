@@ -78,11 +78,19 @@
       this._initHomeQuickSession();
       this._initDefaultPracticeSession();
 
-      // Recover interrupted examination session if present
+      // Recover interrupted examination or Custom Quiz session if present
       if (st.activeExamSession) {
         const recovered = ExamMod.ExamSession.fromSnapshot(st.activeExamSession, this.data.questions);
         if (recovered && !recovered.isCompleted) {
           this.examSession = recovered;
+        }
+      }
+      if (st.activePracticeSession) {
+        const recoveredPrac = ExamMod.ExamSession.fromSnapshot(st.activePracticeSession, this.data.questions);
+        if (recoveredPrac && !recoveredPrac.isCompleted) {
+          this.practiceSession = recoveredPrac;
+          this.practiceSubTab = 'session';
+          this.practiceViewMode = recoveredPrac.layout === 'continuous' ? 'continuous' : 'card';
         }
       }
 
@@ -192,11 +200,8 @@
       this.persistence.saveState(s => { s.lastRoute = target; });
 
       if (typeof document !== 'undefined') {
-        // Close mobile sidebar drawer if open
-        const sb = document.getElementById('appSidebar');
-        const menuBtn = document.getElementById('btnMobileMenu');
-        if (sb) sb.classList.remove('open');
-        if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+        // Close any open sidebar, scenario reference drawer, or mobile palette drawer
+        this._closeAllDrawers();
 
         document.querySelectorAll('.sidebar-link').forEach(btn => {
           btn.classList.toggle('active', btn.getAttribute('data-route') === target);
@@ -462,6 +467,7 @@
 
       bar.innerHTML = units.map(u => `
         <button type="button" role="tab" aria-selected="${u.id === unit.id ? 'true' : 'false'}"
+          aria-controls="studyUnitContentHost" tabindex="${u.id === unit.id ? '0' : '-1'}"
           class="unit-pill-btn ${u.id === unit.id ? 'active' : ''}" data-select-su="${esc(u.id)}">
           ${Icons.icon(u.iconId, { size: 15 })}
           <span>${esc(u.id)}: ${esc(u.shortTitle)}</span>
@@ -640,6 +646,7 @@
 
     startUnitPractice(suId = 'ALL', topicId = '') {
       this._initDefaultPracticeSession(suId, topicId);
+      this.persistence.saveActivePracticeSession(null);
       this.practiceSubTab = 'session';
       const unitSel = document.getElementById('practiceUnitSelect');
       if (unitSel) {
@@ -696,10 +703,11 @@
       const sess = this.practiceSession;
       if (!sess || sess.questions.length === 0) return;
 
-      const timerBarHtml = sess.timed
+      const showQuizControls = sess.timed || sess.mode === 'custom_quiz';
+      const timerBarHtml = showQuizControls
         ? `<div style="display:inline-flex;align-items:center;gap:0.45rem;flex-wrap:wrap;">
-            <span class="timer-badge" id="practiceTimerBadge" style="font-size:0.86rem;padding:0.2rem 0.55rem;">${ExamMod.formatCountdown(sess.getRemainingSeconds())}</span>
-            ${!sess.isCompleted ? `<button type="button" class="btn-ghost btn-sm" id="btnPauseResumePracticeTimer">${sess.pausedAtMs ? 'Resume' : 'Pause'}</button>` : ''}
+            ${sess.timed ? `<span class="timer-badge" id="practiceTimerBadge" style="font-size:0.86rem;padding:0.2rem 0.55rem;">${ExamMod.formatCountdown(sess.getRemainingSeconds())}</span>` : ''}
+            ${sess.timed && !sess.isCompleted ? `<button type="button" class="btn-ghost btn-sm" id="btnPauseResumePracticeTimer">${sess.pausedAtMs ? 'Resume' : 'Pause'}</button>` : ''}
             ${!sess.isCompleted ? `<button type="button" class="btn-secondary btn-sm" id="btnFinishTimedQuiz">Finish Quiz</button>` : ''}
           </div>`
         : '';
@@ -1858,7 +1866,7 @@
           <div class="panel-card">
             <h3 class="panel-title">About &amp; Offline Status</h3>
             <ul style="margin:0;padding-left:1.2rem;font-size:0.85rem;color:var(--text-secondary);display:flex;flex-direction:column;gap:0.35rem;">
-              <li><strong>Application:</strong> CMPG122 Visual C# UI Programming v${esc(this.data.version || '9.2.0')}</li>
+              <li><strong>Application:</strong> CMPG122 Visual C# UI Programming v${esc(this.data.version || '9.2.1')}</li>
               <li><strong>Connectivity:</strong> ${esc(onlineState)}</li>
               <li><strong>Question Bank:</strong> ${(this.data.questions || []).length} calibrated questions • ${(this.data.definitions || []).length} definitions</li>
               <li><strong>Curriculum Weighting:</strong> SU7 (10%), SU1 (10%), SU2 (15%), SU3 (20%), SU4 (20%), SU5 (15%), SU6 (10%)</li>
@@ -1908,6 +1916,12 @@
       }
     }
 
+    _persistActivePracticeIfNeeded() {
+      if (this.practiceSession && this.practiceSession.mode === 'custom_quiz' && !this.practiceSession.isCompleted) {
+        this.persistence.saveActivePracticeSession(this.practiceSession.toSnapshot());
+      }
+    }
+
     _handleShortcutSelect(optionIndex) {
       const sess = this._getActiveCardSession();
       if (!sess || sess.isCompleted) return;
@@ -1915,7 +1929,10 @@
       if (!q) return;
       if (sess.selectOption(q.id, optionIndex)) {
         if (this.currentRoute === 'home') this._renderHomeQuickPracticeCard();
-        else this._renderPracticeSessionArea();
+        else {
+          this._persistActivePracticeIfNeeded();
+          this._renderPracticeSessionArea();
+        }
         this._focusPracticeSurfaceSafely(optionIndex);
       }
     }
@@ -1930,7 +1947,10 @@
         this.persistence.recordQuestionAttempt(q, res.selectedAnswer, res.outcome === 'correct', 0);
         this._updateSidebarBadges();
         if (this.currentRoute === 'home') this.renderHomeView();
-        else this._renderPracticeSessionArea();
+        else {
+          this._persistActivePracticeIfNeeded();
+          this._renderPracticeSessionArea();
+        }
         this._focusPracticeSurfaceSafely(null);
       }
     }
@@ -1941,23 +1961,62 @@
       if (sess.currentIndex < sess.questions.length - 1) {
         sess.goToIndex(sess.currentIndex + 1);
         if (this.currentRoute === 'home') this._renderHomeQuickPracticeCard();
-        else this._renderPracticeSessionArea();
+        else {
+          this._persistActivePracticeIfNeeded();
+          this._renderPracticeSessionArea();
+        }
         this._focusPracticeSurfaceSafely(null);
       }
     }
 
     /* ==================== EVENT DELEGATION & MODALS ==================== */
 
+    _closeAllDrawers() {
+      if (typeof document === 'undefined') return;
+      const sb = document.getElementById('appSidebar');
+      const menuBtn = document.getElementById('btnMobileMenu');
+      if (sb) sb.classList.remove('open');
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+
+      const dr = document.getElementById('scenarioDrawer');
+      if (dr) {
+        dr.classList.remove('open');
+        dr.setAttribute('aria-hidden', 'true');
+      }
+      const pal = document.getElementById('examPaletteSidebar');
+      if (pal) pal.classList.remove('drawer-open');
+    }
+
     _hasAnyOpenDrawer() {
       if (typeof document === 'undefined') return false;
+      const isPaletteDrawerActive = Boolean(
+        this.currentRoute === 'exams' &&
+        (typeof window === 'undefined' || window.innerWidth <= 1024) &&
+        document.getElementById('examPaletteSidebar')?.classList.contains('drawer-open')
+      );
       return Boolean(
         document.getElementById('scenarioDrawer')?.classList.contains('open') ||
-        document.getElementById('examPaletteSidebar')?.classList.contains('drawer-open') ||
+        isPaletteDrawerActive ||
         document.getElementById('appSidebar')?.classList.contains('open')
       );
     }
 
     _bindGlobalEvents() {
+      if (typeof window !== 'undefined') {
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 1024) {
+            document.getElementById('examPaletteSidebar')?.classList.remove('drawer-open');
+          }
+          if (window.innerWidth > 900) {
+            const sb = document.getElementById('appSidebar');
+            if (sb?.classList.contains('open')) {
+              sb.classList.remove('open');
+              document.getElementById('btnMobileMenu')?.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      }
+
       document.addEventListener('keydown', (e) => {
         if (this._modalOpen) {
           if (e.key === 'Escape') {
@@ -2019,10 +2078,11 @@
           if (curIdx !== -1 && tabs.length > 0) {
             e.preventDefault();
             const nextIdx = (curIdx + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
-            const nextTab = tabs[nextIdx];
-            nextTab.focus();
-            const suId = nextTab.getAttribute('data-select-su');
-            if (suId) this.selectStudyUnit(suId);
+            const suId = tabs[nextIdx].getAttribute('data-select-su');
+            if (suId) {
+              this.selectStudyUnit(suId);
+              document.querySelector(`#studyUnitSelectorBar [role="tab"][data-select-su="${suId}"]`)?.focus();
+            }
             return;
           }
         }
@@ -2039,11 +2099,20 @@
         const target = e.target;
         if (!target || typeof target.closest !== 'function') return;
 
-        // Close open mobile sidebar if clicking outside sidebar and menu button
+        // Close open mobile sidebar / scenario drawer / mobile palette if clicking outside
         const openSb = document.getElementById('appSidebar');
         if (openSb?.classList.contains('open') && !target.closest('#appSidebar') && !target.closest('#btnMobileMenu')) {
           openSb.classList.remove('open');
           document.getElementById('btnMobileMenu')?.setAttribute('aria-expanded', 'false');
+        }
+        const openDr = document.getElementById('scenarioDrawer');
+        if (openDr?.classList.contains('open') && !target.closest('#scenarioDrawer') && !target.closest('#btnToggleScenarioDrawer')) {
+          openDr.classList.remove('open');
+          openDr.setAttribute('aria-hidden', 'true');
+        }
+        const openPal = document.getElementById('examPaletteSidebar');
+        if (openPal?.classList.contains('drawer-open') && !target.closest('#examPaletteSidebar') && !target.closest('#btnToggleMobilePalette')) {
+          openPal.classList.remove('drawer-open');
         }
 
         // Brand -> Home
@@ -2148,7 +2217,11 @@
         if (jumpDef) {
           this.highlightedDefId = jumpDef.getAttribute('data-jump-def');
           const searchEl = document.getElementById('defsMainSearch');
+          const unitEl = document.getElementById('defsUnitFilter');
+          const catEl = document.getElementById('defsCategoryFilter');
           if (searchEl) searchEl.value = '';
+          if (unitEl) unitEl.value = 'ALL';
+          if (catEl) catEl.value = 'ALL';
           this.renderDefinitionsView();
           const card = document.getElementById(`defCard_${this.highlightedDefId}`);
           if (card) card.scrollIntoView({ block: 'center' });
@@ -2229,6 +2302,7 @@
           if (this.practiceSession && this.practiceSession.timed && !this.practiceSession.isCompleted) {
             if (this.practiceSession.pausedAtMs) this.practiceSession.resumeTimer();
             else this.practiceSession.pauseTimer();
+            this._persistActivePracticeIfNeeded();
             this._renderPracticeSessionArea();
           }
           return;
@@ -2240,6 +2314,8 @@
         const vmBtn = target.closest('[data-view-mode]');
         if (vmBtn) {
           this.setViewMode(vmBtn.getAttribute('data-view-mode'));
+          if (this.practiceSession) this.practiceSession.layout = this.practiceViewMode;
+          this._persistActivePracticeIfNeeded();
           return;
         }
         if (target.closest('#btnShortcutHelpModal')) {
@@ -2269,6 +2345,7 @@
             this._renderHomeQuickPracticeCard();
           } else if (this.currentRoute === 'practice' && this.practiceSession) {
             this.practiceSession.selectOption(qId, optIdx);
+            this._persistActivePracticeIfNeeded();
             this._renderPracticeSessionArea();
           }
           return;
@@ -2292,6 +2369,7 @@
         // Practice Prev / Submit / Next / Sheet Submit
         if (target.closest('#btnPracPrevQ')) {
           this.practiceSession.goToIndex(this.practiceSession.currentIndex - 1);
+          this._persistActivePracticeIfNeeded();
           this._renderPracticeSessionArea();
           return;
         }
@@ -2310,6 +2388,7 @@
           if (res && !res.duplicate) {
             this.persistence.recordQuestionAttempt(res.question, res.selectedAnswer, res.outcome === 'correct', 0);
             this._updateSidebarBadges();
+            this._persistActivePracticeIfNeeded();
             this._renderPracticeSessionArea();
           }
           return;
@@ -2576,14 +2655,27 @@
           return;
         }
         if (target.closest('#btnExitExamToLobby')) {
+          if (this.examSession && !this.examSession.isCompleted) {
+            const pre = this.examSession.getPreSubmitSummary();
+            this._openModal(
+              'Exit & Discard Active Examination?',
+              `<p>You have answered <strong>${pre.answeredCount} of ${pre.totalQuestions}</strong> questions in <strong>${esc(this.examSession.title)}</strong>.</p><p>Returning to the Examination Centre Lobby will discard this unsubmitted attempt (use the sidebar to switch sections if you want to keep it paused for later).</p>`,
+              'Discard & Exit',
+              () => {
+                this._stopExamTimerLoop();
+                this._teardownPaperScrollSpy();
+                this._closeAllDrawers();
+                this.examSession = null;
+                this.persistence.saveActiveExamSession(null);
+                this.renderExamsView();
+              }
+            );
+            return;
+          }
           this._stopExamTimerLoop();
           this._teardownPaperScrollSpy();
-          if (this.examSession && this.examSession.isCompleted) {
-            this.examSession = null;
-          } else {
-            this.examSession = null;
-            this.persistence.saveActiveExamSession(null);
-          }
+          this._closeAllDrawers();
+          this.examSession = null;
           this.renderExamsView();
           return;
         }
@@ -2755,6 +2847,7 @@
           allowInstantSubmit: true,
           durationMinutes: timeLimit
         });
+        this.persistence.saveActivePracticeSession(this.practiceSession.toSnapshot());
         this.practiceSubTab = 'session';
         this.practiceViewMode = 'card';
         this.renderPracticeView();

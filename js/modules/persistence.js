@@ -49,7 +49,8 @@
       questionHistory: {},      // { [questionId]: { attempts, correct, incorrect, lastSelected, isCorrect, lastAttemptAt, totalTimeMs, su, topic, questionType } }
       examResults: [],          // [{ id, mode, title, rawMarks, totalMarks, percentage, correctCount, incorrectCount, unansweredCount, durationSeconds, completedAt, byUnit, byTopic }]
       recentActivity: [],       // [{ type, label, detail, timestamp }]
-      activeExamSession: null   // Persisted active exam/practice session for refresh recovery
+      activeExamSession: null,  // Persisted active exam paper session for refresh recovery
+      activePracticeSession: null // Persisted active Custom Quiz / practice session for refresh recovery
     };
   }
 
@@ -157,6 +158,11 @@
     if (raw.activeExamSession && typeof raw.activeExamSession === 'object' && !Array.isArray(raw.activeExamSession)) {
       if (Array.isArray(raw.activeExamSession.questionIds) && raw.activeExamSession.questionIds.length > 0) {
         out.activeExamSession = raw.activeExamSession;
+      }
+    }
+    if (raw.activePracticeSession && typeof raw.activePracticeSession === 'object' && !Array.isArray(raw.activePracticeSession)) {
+      if (Array.isArray(raw.activePracticeSession.questionIds) && raw.activePracticeSession.questionIds.length > 0) {
+        out.activePracticeSession = raw.activePracticeSession;
       }
     }
 
@@ -478,13 +484,33 @@
         examResults: [...this._state.examResults, resultRecord]
       }).examResults;
       this._state.examResults = clean;
-      this._state.activeExamSession = null;
+      if (
+        !this._state.activeExamSession ||
+        !resultRecord ||
+        !resultRecord.id ||
+        this._state.activeExamSession.id === resultRecord.id
+      ) {
+        this._state.activeExamSession = null;
+      }
+      if (
+        this._state.activePracticeSession &&
+        resultRecord &&
+        resultRecord.id &&
+        this._state.activePracticeSession.id === resultRecord.id
+      ) {
+        this._state.activePracticeSession = null;
+      }
       this._pushActivity('exam', `${resultRecord.title || 'Examination'}`, `Scored ${resultRecord.percentage}% (${resultRecord.rawMarks}/${resultRecord.totalMarks})`);
       return this.saveState();
     }
 
     saveActiveExamSession(sessionSnapshot) {
       this._state.activeExamSession = sessionSnapshot || null;
+      return this.saveState();
+    }
+
+    saveActivePracticeSession(sessionSnapshot) {
+      this._state.activePracticeSession = sessionSnapshot || null;
       return this.saveState();
     }
 

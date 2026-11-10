@@ -291,6 +291,8 @@ button {
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
   text-align: left;
+  min-width: 0;
+  flex-shrink: 1;
 }
 
 .topbar-code-mark {
@@ -302,11 +304,13 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .topbar-title-group {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 .topbar-title {
   font-size: 1rem;
@@ -323,6 +327,8 @@ button {
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  min-width: 0;
+  flex-shrink: 1;
 }
 
 .mode-pill-select-wrap {
@@ -334,6 +340,8 @@ button {
   border-radius: var(--radius-pill);
   padding: 0.3rem 0.75rem;
   color: var(--accent-tertiary);
+  min-width: 0;
+  max-width: 100%;
 }
 .mode-pill-select {
   background: transparent;
@@ -343,6 +351,8 @@ button {
   font-weight: var(--fw-semibold);
   padding-right: var(--space-2);
   cursor: pointer;
+  min-width: 0;
+  text-overflow: ellipsis;
 }
 .mode-pill-select option {
   background: var(--surface-1);
@@ -1190,6 +1200,8 @@ button:disabled {
 .text-input,
 .select-input {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 40px;
   background: var(--surface-2);
   border: 1px solid var(--border-subtle);
@@ -1614,8 +1626,14 @@ button:disabled {
 /* Custom Quiz Form Grid */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), minmax(0, 1fr)));
   gap: var(--space-4);
+}
+.form-grid > *,
+.cards-grid-2 > *,
+.cards-grid-3 > * {
+  min-width: 0;
+  max-width: 100%;
 }
 .check-chip-group {
   display: flex;
@@ -1721,6 +1739,7 @@ button:disabled {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: var(--space-4) var(--space-5);
+  overflow-wrap: anywhere;
 }
 .def-card.highlighted {
   border-color: var(--accent-primary);
@@ -1953,25 +1972,30 @@ button:disabled {
 /* Small Mobile (320px–375px) */
 @media (max-width: 375px) {
   .topbar {
+    padding: 0 8px;
+    gap: 0.25rem;
+  }
+  .topbar-brand {
+    padding: 2px 4px;
     gap: 0.35rem;
   }
   .topbar-code-mark {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
   }
   .topbar-title {
-    font-size: 0.9rem;
+    font-size: 0.86rem;
   }
   .mode-pill-select-wrap {
-    padding: 0.2rem 0.35rem;
-    max-width: 118px;
+    padding: 0.18rem 0.3rem;
+    max-width: min(104px, 34vw);
   }
   .mode-pill-select-wrap span {
     display: none;
   }
   .mode-pill-select {
-    max-width: 106px;
-    font-size: 0.74rem;
+    max-width: min(94px, 31vw);
+    font-size: 0.72rem;
     padding: 0;
   }
   .su-rings-grid {
@@ -1998,7 +2022,7 @@ button:disabled {
 
   <!-- Top Application Header -->
   <header class="topbar" role="banner">
-    <div style="display:flex;align-items:center;gap:0.65rem;">
+    <div style="display:flex;align-items:center;gap:0.5rem;min-width:0;flex-shrink:1;">
       <button type="button" class="mobile-menu-btn" id="btnMobileMenu" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="appSidebar">
         <span id="mobileMenuIconSlot"></span>
       </button>
@@ -2699,7 +2723,7 @@ button:disabled {
       technicalDefinition: 'An IDE window categorized into groups (Common Controls, Containers, Dialogs) from which control classes are instantiated onto a Form design surface.',
       syntax: 'View -> Toolbox (Ctrl+Alt+X)',
       example: 'Double-clicking Button or dragging PictureBox from Common Controls onto Form1.',
-      relatedConcepts: ['def_ide', 'def_component_tray'],
+      relatedConcepts: ['def_ide', 'def_file_dialogs'],
       misconception: 'Looking for invisible dialog components on the form surface after dragging OpenFileDialog from Toolbox—non-visual components sit in the Component Tray below the form.'
     },
     {
@@ -2712,7 +2736,7 @@ button:disabled {
       technicalDefinition: 'Design-time inspector (F4) displaying public properties and the Events lightning-bolt view for the currently selected Form or Control instance, serializing settings into Form1.Designer.cs.',
       syntax: '(Name) = btnCalculate | Text = "&Calculate"',
       example: 'Selecting Label1 in the Designer and changing (Name) to lblTotal and AutoSize to False in the Properties Window.',
-      relatedConcepts: ['def_control_name_vs_text', 'def_designer_cs'],
+      relatedConcepts: ['def_control_name_vs_text', 'def_partial_form_classes'],
       misconception: 'Changing Text to "btnCalculate" instead of changing (Name)—changing Text displays "btnCalculate" on the button face while the identifier remains button1!'
     },
     {
@@ -2725,7 +2749,7 @@ button:disabled {
       technicalDefinition: 'Hierarchical IDE navigator listing the .sln solution, .csproj project, Program.cs, Form classes (Form1.cs, Form1.Designer.cs, Form1.resx), and references.',
       syntax: 'Solution -> Project -> Form1.cs / Program.cs',
       example: 'Right-clicking the project in Solution Explorer and choosing Add -> Form (Windows Forms)... to create a second form.',
-      relatedConcepts: ['def_program_cs', 'def_designer_cs'],
+      relatedConcepts: ['def_program_cs', 'def_partial_form_classes'],
       misconception: 'Deleting Form1.Designer.cs in Solution Explorer thinking it is a temporary backup—deleting it destroys all visual control declarations for Form1.'
     },
     {
@@ -3661,7 +3685,7 @@ button:disabled {
   "moduleCode": "CMPG122",
   "moduleTitle": "User Interface Programming in Visual C#",
   "institution": "North-West University",
-  "version": "9.2.0",
+  "version": "9.2.1",
   "examWeightingModel": {
     "verifiedAgainst": [
       "CMPG 122 Module Outline Document (SU1–SU7, 12-week 120-hour curriculum)",
@@ -24178,7 +24202,7 @@ button:disabled {
       "q": "What happens to the caller's variable `num` after executing the following code?",
       "title": "What happens to the caller's variable `num` after executing the following code?",
       "stem": "What happens to the caller's variable `num` after executing the following code?",
-      "code": "int num = 10;\nDoubleValue(num);\nlblOut.Text = num.ToString();\n\nprivate void DoubleValue(int val)\n{\n    val = val * 2;\n}",
+      "code": "private void btnRun_Click(object sender, EventArgs e)\n{\n    int num = 10;\n    DoubleValue(num);\n    lblOut.Text = num.ToString();\n}\n\nprivate void DoubleValue(int val)\n{\n    val = val * 2;\n}",
       "options": [
         "`lblOut` displays `20` because `val` doubles `num`.",
         "The code fails to compile because `DoubleValue` is `void`.",
@@ -24220,7 +24244,7 @@ button:disabled {
       "q": "What does `lblOut` display after the following code runs?",
       "title": "What does `lblOut` display after the following code runs?",
       "stem": "What does `lblOut` display after the following code runs?",
-      "code": "int total = 100;\nAddBonus(ref total);\nlblOut.Text = total.ToString();\n\nprivate void AddBonus(ref int amount)\n{\n    amount += 25;\n}",
+      "code": "private void btnRun_Click(object sender, EventArgs e)\n{\n    int total = 100;\n    AddBonus(ref total);\n    lblOut.Text = total.ToString();\n}\n\nprivate void AddBonus(ref int amount)\n{\n    amount += 25;\n}",
       "options": [
         "100",
         "25",
@@ -24237,7 +24261,7 @@ button:disabled {
       "ans": 3,
       "exp": "Because `amount` is a `ref` parameter, it refers directly to the caller's `total` variable in memory. Adding `25` to `amount` changes `total` from `100` to `125`.",
       "explanation": "Because `amount` is a `ref` parameter, it refers directly to the caller's `total` variable in memory. Adding `25` to `amount` changes `total` from `100` to `125`.",
-      "distractorRationale": "`CalcBonus(1000m)` returns `1000m * 0.10m + 25m = 125m`; `100` forgets `+ 25m`, `25` forgets the 10% commission, and `0` ignores the `return` value.",
+      "distractorRationale": "`100` mistakenly treats `ref int amount` as pass-by-value; `25` overwrites `amount = 25` instead of `amount += 25` (`100 + 25 = 125`); and `0` confuses `ref` with default zero-initialisation.",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -25026,7 +25050,7 @@ button:disabled {
       "q": "What does `lblOut` display after the following code executes?",
       "title": "What does `lblOut` display after the following code executes?",
       "stem": "What does `lblOut` display after the following code executes?",
-      "code": "int q, r;\nDivideWithRemainder(17, 5, out q, out r);\nlblOut.Text = q + \" R \" + r;\n\nprivate void DivideWithRemainder(int dividend, int divisor, out int quotient, out int remainder)\n{\n    quotient = dividend / divisor;\n    remainder = dividend % divisor;\n}",
+      "code": "private void btnRun_Click(object sender, EventArgs e)\n{\n    int q, r;\n    DivideWithRemainder(17, 5, out q, out r);\n    lblOut.Text = q + \" R \" + r;\n}\n\nprivate void DivideWithRemainder(int dividend, int divisor, out int quotient, out int remainder)\n{\n    quotient = dividend / divisor;\n    remainder = dividend % divisor;\n}",
       "options": [
         "2 R 3",
         "5 R 17",
@@ -25043,7 +25067,7 @@ button:disabled {
       "ans": 2,
       "exp": "`17 / 5` using integer division assigns `3` to `quotient` (`q`), and `17 % 5` assigns `2` to `remainder` (`r`). Therefore `lblOut.Text` becomes `\"3 R 2\"`.",
       "explanation": "`17 / 5` using integer division assigns `3` to `quotient` (`q`), and `17 % 5` assigns `2` to `remainder` (`r`). Therefore `lblOut.Text` becomes `\"3 R 2\"`.",
-      "distractorRationale": "`Divide(17, 5, out q, out r)` sets `q = 17 / 5 = 3` and `r = 17 % 5 = 2` -> `\"3 R 2\"` (`2 R 3` swaps `/` and `%`, `3.4 R 2` forgets integer division).",
+      "distractorRationale": "`DivideWithRemainder(17, 5, out q, out r)` sets `q = 17 / 5 = 3` and `r = 17 % 5 = 2` -> `\"3 R 2\"` (`2 R 3` swaps `/` and `%`, `5 R 17` reverses arguments, and `3.4 R 2` forgets integer division).",
       "definitions": [
         "def_ref_vs_out",
         "def_out_parameter",
@@ -29311,7 +29335,7 @@ button:disabled {
       "ans": 3,
       "exp": "(1) Instantiate `frmSum = new SummaryForm();`, (2) assign formatted strings to `.Text` on `frmSum`’s `Public` labels **before** showing, and (3) call `frmSum.ShowDialog();`.",
       "explanation": "(1) Instantiate `frmSum = new SummaryForm();`, (2) assign formatted strings to `.Text` on `frmSum`’s `Public` labels **before** showing, and (3) call `frmSum.ShowDialog();`.",
-      "distractorRationale": "Option A calls instance members statically; Option C assigns after `ShowDialog()` and assigns `decimal` to `Label`; Option D omits the `frmSum.` object qualifier.",
+      "distractorRationale": "Option A calls instance members statically; Option B assigns after `ShowDialog()` and assigns `decimal` directly to `Label`; Option C omits the `frmSum.` object qualifier and opens modelessly.",
       "definitions": [
         "def_form_instantiation",
         "def_cross_form_modifiers",
@@ -29607,7 +29631,7 @@ button:disabled {
       "ans": 2,
       "exp": "Passing `320.00m` directly to `new ReceiptForm(320.00m)` calls `: this()` (`InitializeComponent()`) first and sets the private `lblTotal.Text` cleanly without exposing controls as `Public`.",
       "explanation": "Passing `320.00m` directly to `new ReceiptForm(320.00m)` calls `: this()` (`InitializeComponent()`) first and sets the private `lblTotal.Text` cleanly without exposing controls as `Public`.",
-      "distractorRationale": "Option B fails to compile (`CS0122`) because `lblTotal` has `Modifiers = Private`.",
+      "distractorRationale": "Option A calls `ShowDialog` statically with a `decimal` argument (`CS0120`/`CS1503`), Option B omits the `new` keyword (`CS1955`), and Option D fails to compile (`CS0122`) because `lblTotal` has `Modifiers = Private`.",
       "definitions": [
         "def_cross_form_modifiers",
         "def_form_instantiation",
@@ -30444,7 +30468,7 @@ button:disabled {
       },
       "methodHeader": "private void btnAddScore_Click(object sender, EventArgs e)\n{",
       "methodFooter": "}",
-      "modelSolution": "decimal score;\nif (decimal.TryParse(txtScore.Text, out score) && score >= 0 && score <= 100)\n{\n    lstScores.Items.Add(score.ToString(\"F1\"));\n    int count = lstScores.Items.Count;\n    decimal total = 0m;\n    for (int i = 0; i < count; i++)\n    {\n        total += decimal.Parse(lstScores.Items[i]);\n    }\n    decimal avg = total / count;\n    lblCount.Text = count.ToString();\n    lblAverage.Text = avg.ToString(\"F2\");\n}\nelse\n{\n    MessageBox.Show(\"Enter a valid score between 0 and 100.\", \"Validation Error\");\n}",
+      "modelSolution": "decimal score;\nif (decimal.TryParse(txtScore.Text, out score) && score >= 0 && score <= 100)\n{\n    lstScores.Items.Add(score.ToString(\"F1\"));\n    int count = lstScores.Items.Count;\n    decimal total = 0m;\n    for (int i = 0; i < count; i++)\n    {\n        total += decimal.Parse(lstScores.Items[i].ToString());\n    }\n    decimal avg = total / count;\n    lblCount.Text = count.ToString();\n    lblAverage.Text = avg.ToString(\"F2\");\n}\nelse\n{\n    MessageBox.Show(\"Enter a valid score between 0 and 100.\", \"Validation Error\");\n}",
       "testCases": [
         {
           "name": "Score Entry (80)",
@@ -31505,7 +31529,7 @@ button:disabled {
     moduleCode: curriculum.moduleCode || 'CMPG122',
     moduleTitle: curriculum.moduleTitle || 'User Interface Programming in Visual C#',
     institution: curriculum.institution || 'North-West University',
-    version: curriculum.version || '9.2.0',
+    version: curriculum.version || '9.2.1',
     examWeightingModel: curriculum.examWeightingModel || {},
     units: curriculum.units || [],
     definitions: definitions || [],
@@ -33781,7 +33805,8 @@ button:disabled {
       questionHistory: {},      // { [questionId]: { attempts, correct, incorrect, lastSelected, isCorrect, lastAttemptAt, totalTimeMs, su, topic, questionType } }
       examResults: [],          // [{ id, mode, title, rawMarks, totalMarks, percentage, correctCount, incorrectCount, unansweredCount, durationSeconds, completedAt, byUnit, byTopic }]
       recentActivity: [],       // [{ type, label, detail, timestamp }]
-      activeExamSession: null   // Persisted active exam/practice session for refresh recovery
+      activeExamSession: null,  // Persisted active exam paper session for refresh recovery
+      activePracticeSession: null // Persisted active Custom Quiz / practice session for refresh recovery
     };
   }
 
@@ -33889,6 +33914,11 @@ button:disabled {
     if (raw.activeExamSession && typeof raw.activeExamSession === 'object' && !Array.isArray(raw.activeExamSession)) {
       if (Array.isArray(raw.activeExamSession.questionIds) && raw.activeExamSession.questionIds.length > 0) {
         out.activeExamSession = raw.activeExamSession;
+      }
+    }
+    if (raw.activePracticeSession && typeof raw.activePracticeSession === 'object' && !Array.isArray(raw.activePracticeSession)) {
+      if (Array.isArray(raw.activePracticeSession.questionIds) && raw.activePracticeSession.questionIds.length > 0) {
+        out.activePracticeSession = raw.activePracticeSession;
       }
     }
 
@@ -34210,13 +34240,33 @@ button:disabled {
         examResults: [...this._state.examResults, resultRecord]
       }).examResults;
       this._state.examResults = clean;
-      this._state.activeExamSession = null;
+      if (
+        !this._state.activeExamSession ||
+        !resultRecord ||
+        !resultRecord.id ||
+        this._state.activeExamSession.id === resultRecord.id
+      ) {
+        this._state.activeExamSession = null;
+      }
+      if (
+        this._state.activePracticeSession &&
+        resultRecord &&
+        resultRecord.id &&
+        this._state.activePracticeSession.id === resultRecord.id
+      ) {
+        this._state.activePracticeSession = null;
+      }
       this._pushActivity('exam', `${resultRecord.title || 'Examination'}`, `Scored ${resultRecord.percentage}% (${resultRecord.rawMarks}/${resultRecord.totalMarks})`);
       return this.saveState();
     }
 
     saveActiveExamSession(sessionSnapshot) {
       this._state.activeExamSession = sessionSnapshot || null;
+      return this.saveState();
+    }
+
+    saveActivePracticeSession(sessionSnapshot) {
+      this._state.activePracticeSession = sessionSnapshot || null;
       return this.saveState();
     }
 
@@ -34690,8 +34740,8 @@ button:disabled {
       // 2. Escape HTML on prose text (control-char placeholders pass through untouched)
       let safe = escapeHtml(codeTokenized);
 
-      // 3. Convert **bold** (requires non-empty non-asterisk body; leaves literal "**" operator intact)
-      safe = safe.replace(/\*\*(?!\s)([^\n*]+?)(?<!\s)\*\*/g, '<strong>$1</strong>');
+      // 3. Convert **bold** (requires non-empty non-asterisk body & non-word outer boundaries so a**2 + b**2 stays literal)
+      safe = safe.replace(/(?<![A-Za-z0-9_*])\*\*(?!\s)([^\n*]+?)(?<!\s)\*\*(?![A-Za-z0-9_*])/g, '<strong>$1</strong>');
 
       // 4. Convert *italic* strictly on genuine alphabetic prose words so C# multiplication
       //    (3 * 2 * 2, a++ * 2) and dialog wildcards (*.txt, *.*) never lose asterisks.
@@ -34970,7 +35020,9 @@ button:disabled {
     const selected = [];
     const usedIds = new Set();
 
+    const unitSelectedMarks = {};
     for (const [su] of weightEntries) {
+      unitSelectedMarks[su] = 0;
       const unitTargetMarks = targetBySu[su] || 0;
       if (unitTargetMarks <= 0) continue;
       const suPool = activePool.filter(q => q.su === su);
@@ -34996,6 +35048,7 @@ button:disabled {
         if (exact) {
           selected.push(exact);
           usedIds.add(exact.id);
+          unitMarks += diffNeeded;
         } else if (diffNeeded === 1 && selected.length > 0) {
           // Swap a 2-mark question in this SU for a 3-mark question (or 3 for 4) to hit exact target!
           const swapIdx = selected.findIndex(sq => sq.su === su && (Number(sq.marks) || 2) === 2);
@@ -35004,6 +35057,7 @@ button:disabled {
             usedIds.delete(selected[swapIdx].id);
             selected[swapIdx] = threeMark;
             usedIds.add(threeMark.id);
+            unitMarks += 1;
           } else {
             const swap3 = selected.findIndex(sq => sq.su === su && (Number(sq.marks) || 2) === 3);
             const fourMark = candidates.find(q => !usedIds.has(q.id) && (Number(q.marks) || 2) === 4);
@@ -35011,9 +35065,59 @@ button:disabled {
               usedIds.delete(selected[swap3].id);
               selected[swap3] = fourMark;
               usedIds.add(fourMark.id);
+              unitMarks += 1;
             }
           }
         }
+      }
+      unitSelectedMarks[su] = unitMarks;
+    }
+
+    // Cross-unit proportional shortfall top-up when item mark granularity (e.g. 4-mark Advanced items)
+    // exceeds small per-SU sub-quotas (e.g. targetMarks = 6..30)
+    let totalSelectedMarks = selected.reduce((s, q) => s + (Number(q.marks) || 2), 0);
+    if (totalSelectedMarks < targetMarks && activePool.length > selected.length) {
+      const weightSum = weightEntries.reduce((s, [, w]) => s + w, 0) || 1;
+      const candidatesBySu = new Map();
+      for (const [su] of weightEntries) {
+        const suPool = activePool.filter(q => q.su === su && !usedIds.has(q.id));
+        candidatesBySu.set(su, options.randomize === false ? suPool : shuffleArray(suPool, rng));
+      }
+
+      let progressed = true;
+      while (totalSelectedMarks < targetMarks && progressed) {
+        progressed = false;
+        const rankedUnits = weightEntries
+          .slice()
+          .sort(([suA, wA], [suB, wB]) => {
+            const defA = ((wA / weightSum) * targetMarks) - (unitSelectedMarks[suA] || 0);
+            const defB = ((wB / weightSum) * targetMarks) - (unitSelectedMarks[suB] || 0);
+            return (defB - defA) || (wB - wA);
+          });
+
+        for (const [su] of rankedUnits) {
+          if (totalSelectedMarks >= targetMarks) break;
+          const list = candidatesBySu.get(su) || [];
+          const fitIdx = list.findIndex(q => !usedIds.has(q.id) && totalSelectedMarks + (Number(q.marks) || 2) <= targetMarks);
+          if (fitIdx !== -1) {
+            const chosen = list[fitIdx];
+            const m = Number(chosen.marks) || 2;
+            selected.push(chosen);
+            usedIds.add(chosen.id);
+            unitSelectedMarks[su] = (unitSelectedMarks[su] || 0) + m;
+            totalSelectedMarks += m;
+            progressed = true;
+            break;
+          }
+        }
+      }
+
+      // Guarantee at least 1 question when targetMarks > 0 is smaller than the minimum available item mark
+      if (selected.length === 0 && activePool.length > 0) {
+        const topSu = weightEntries.slice().sort((a, b) => b[1] - a[1])[0]?.[0];
+        const fallbackList = (topSu && candidatesBySu.get(topSu)?.length) ? candidatesBySu.get(topSu) : activePool;
+        const smallest = fallbackList.slice().sort((a, b) => (Number(a.marks) || 2) - (Number(b.marks) || 2))[0];
+        if (smallest) selected.push(smallest);
       }
     }
 
@@ -35059,17 +35163,20 @@ button:disabled {
 
     const hasTopicFilter = Boolean(topics && topics.size > 0);
     const targetM = Number(config.targetMarks) || 0;
+    const baseWeights = (config.allocations && typeof config.allocations === 'object')
+      ? config.allocations
+      : DEFAULT_WEIGHTS;
 
     if (config.useWeightedDistribution && !hasTopicFilter) {
       const subWeights = {};
       for (const su of orderedUnits) {
-        if (DEFAULT_WEIGHTS[su]) subWeights[su] = DEFAULT_WEIGHTS[su];
+        if (baseWeights[su]) subWeights[su] = baseWeights[su];
       }
-      for (const [su, w] of Object.entries(DEFAULT_WEIGHTS)) {
+      for (const [su, w] of Object.entries(baseWeights)) {
         if ((!units || units.has(su)) && !subWeights[su]) subWeights[su] = w;
       }
 
-      if (targetM >= 10) {
+      if (targetM > 0) {
         return generateWeightedExam(candidates, subWeights, targetM, {
           seed: config.seed,
           randomize,
@@ -35114,7 +35221,7 @@ button:disabled {
       ? shuffleArray(candidates, rng)
       : interleaveByUnit(candidates, orderedUnits);
 
-    if (targetM > 0 && !config.questionCount) {
+    if (targetM > 0) {
       const picked = [];
       let sum = 0;
       for (const q of ordered) {
@@ -35952,11 +36059,19 @@ button:disabled {
       this._initHomeQuickSession();
       this._initDefaultPracticeSession();
 
-      // Recover interrupted examination session if present
+      // Recover interrupted examination or Custom Quiz session if present
       if (st.activeExamSession) {
         const recovered = ExamMod.ExamSession.fromSnapshot(st.activeExamSession, this.data.questions);
         if (recovered && !recovered.isCompleted) {
           this.examSession = recovered;
+        }
+      }
+      if (st.activePracticeSession) {
+        const recoveredPrac = ExamMod.ExamSession.fromSnapshot(st.activePracticeSession, this.data.questions);
+        if (recoveredPrac && !recoveredPrac.isCompleted) {
+          this.practiceSession = recoveredPrac;
+          this.practiceSubTab = 'session';
+          this.practiceViewMode = recoveredPrac.layout === 'continuous' ? 'continuous' : 'card';
         }
       }
 
@@ -36066,11 +36181,8 @@ button:disabled {
       this.persistence.saveState(s => { s.lastRoute = target; });
 
       if (typeof document !== 'undefined') {
-        // Close mobile sidebar drawer if open
-        const sb = document.getElementById('appSidebar');
-        const menuBtn = document.getElementById('btnMobileMenu');
-        if (sb) sb.classList.remove('open');
-        if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+        // Close any open sidebar, scenario reference drawer, or mobile palette drawer
+        this._closeAllDrawers();
 
         document.querySelectorAll('.sidebar-link').forEach(btn => {
           btn.classList.toggle('active', btn.getAttribute('data-route') === target);
@@ -36336,6 +36448,7 @@ button:disabled {
 
       bar.innerHTML = units.map(u => `
         <button type="button" role="tab" aria-selected="${u.id === unit.id ? 'true' : 'false'}"
+          aria-controls="studyUnitContentHost" tabindex="${u.id === unit.id ? '0' : '-1'}"
           class="unit-pill-btn ${u.id === unit.id ? 'active' : ''}" data-select-su="${esc(u.id)}">
           ${Icons.icon(u.iconId, { size: 15 })}
           <span>${esc(u.id)}: ${esc(u.shortTitle)}</span>
@@ -36514,6 +36627,7 @@ button:disabled {
 
     startUnitPractice(suId = 'ALL', topicId = '') {
       this._initDefaultPracticeSession(suId, topicId);
+      this.persistence.saveActivePracticeSession(null);
       this.practiceSubTab = 'session';
       const unitSel = document.getElementById('practiceUnitSelect');
       if (unitSel) {
@@ -36570,10 +36684,11 @@ button:disabled {
       const sess = this.practiceSession;
       if (!sess || sess.questions.length === 0) return;
 
-      const timerBarHtml = sess.timed
+      const showQuizControls = sess.timed || sess.mode === 'custom_quiz';
+      const timerBarHtml = showQuizControls
         ? `<div style="display:inline-flex;align-items:center;gap:0.45rem;flex-wrap:wrap;">
-            <span class="timer-badge" id="practiceTimerBadge" style="font-size:0.86rem;padding:0.2rem 0.55rem;">${ExamMod.formatCountdown(sess.getRemainingSeconds())}</span>
-            ${!sess.isCompleted ? `<button type="button" class="btn-ghost btn-sm" id="btnPauseResumePracticeTimer">${sess.pausedAtMs ? 'Resume' : 'Pause'}</button>` : ''}
+            ${sess.timed ? `<span class="timer-badge" id="practiceTimerBadge" style="font-size:0.86rem;padding:0.2rem 0.55rem;">${ExamMod.formatCountdown(sess.getRemainingSeconds())}</span>` : ''}
+            ${sess.timed && !sess.isCompleted ? `<button type="button" class="btn-ghost btn-sm" id="btnPauseResumePracticeTimer">${sess.pausedAtMs ? 'Resume' : 'Pause'}</button>` : ''}
             ${!sess.isCompleted ? `<button type="button" class="btn-secondary btn-sm" id="btnFinishTimedQuiz">Finish Quiz</button>` : ''}
           </div>`
         : '';
@@ -37732,7 +37847,7 @@ button:disabled {
           <div class="panel-card">
             <h3 class="panel-title">About &amp; Offline Status</h3>
             <ul style="margin:0;padding-left:1.2rem;font-size:0.85rem;color:var(--text-secondary);display:flex;flex-direction:column;gap:0.35rem;">
-              <li><strong>Application:</strong> CMPG122 Visual C# UI Programming v${esc(this.data.version || '9.2.0')}</li>
+              <li><strong>Application:</strong> CMPG122 Visual C# UI Programming v${esc(this.data.version || '9.2.1')}</li>
               <li><strong>Connectivity:</strong> ${esc(onlineState)}</li>
               <li><strong>Question Bank:</strong> ${(this.data.questions || []).length} calibrated questions • ${(this.data.definitions || []).length} definitions</li>
               <li><strong>Curriculum Weighting:</strong> SU7 (10%), SU1 (10%), SU2 (15%), SU3 (20%), SU4 (20%), SU5 (15%), SU6 (10%)</li>
@@ -37782,6 +37897,12 @@ button:disabled {
       }
     }
 
+    _persistActivePracticeIfNeeded() {
+      if (this.practiceSession && this.practiceSession.mode === 'custom_quiz' && !this.practiceSession.isCompleted) {
+        this.persistence.saveActivePracticeSession(this.practiceSession.toSnapshot());
+      }
+    }
+
     _handleShortcutSelect(optionIndex) {
       const sess = this._getActiveCardSession();
       if (!sess || sess.isCompleted) return;
@@ -37789,7 +37910,10 @@ button:disabled {
       if (!q) return;
       if (sess.selectOption(q.id, optionIndex)) {
         if (this.currentRoute === 'home') this._renderHomeQuickPracticeCard();
-        else this._renderPracticeSessionArea();
+        else {
+          this._persistActivePracticeIfNeeded();
+          this._renderPracticeSessionArea();
+        }
         this._focusPracticeSurfaceSafely(optionIndex);
       }
     }
@@ -37804,7 +37928,10 @@ button:disabled {
         this.persistence.recordQuestionAttempt(q, res.selectedAnswer, res.outcome === 'correct', 0);
         this._updateSidebarBadges();
         if (this.currentRoute === 'home') this.renderHomeView();
-        else this._renderPracticeSessionArea();
+        else {
+          this._persistActivePracticeIfNeeded();
+          this._renderPracticeSessionArea();
+        }
         this._focusPracticeSurfaceSafely(null);
       }
     }
@@ -37815,23 +37942,62 @@ button:disabled {
       if (sess.currentIndex < sess.questions.length - 1) {
         sess.goToIndex(sess.currentIndex + 1);
         if (this.currentRoute === 'home') this._renderHomeQuickPracticeCard();
-        else this._renderPracticeSessionArea();
+        else {
+          this._persistActivePracticeIfNeeded();
+          this._renderPracticeSessionArea();
+        }
         this._focusPracticeSurfaceSafely(null);
       }
     }
 
     /* ==================== EVENT DELEGATION & MODALS ==================== */
 
+    _closeAllDrawers() {
+      if (typeof document === 'undefined') return;
+      const sb = document.getElementById('appSidebar');
+      const menuBtn = document.getElementById('btnMobileMenu');
+      if (sb) sb.classList.remove('open');
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+
+      const dr = document.getElementById('scenarioDrawer');
+      if (dr) {
+        dr.classList.remove('open');
+        dr.setAttribute('aria-hidden', 'true');
+      }
+      const pal = document.getElementById('examPaletteSidebar');
+      if (pal) pal.classList.remove('drawer-open');
+    }
+
     _hasAnyOpenDrawer() {
       if (typeof document === 'undefined') return false;
+      const isPaletteDrawerActive = Boolean(
+        this.currentRoute === 'exams' &&
+        (typeof window === 'undefined' || window.innerWidth <= 1024) &&
+        document.getElementById('examPaletteSidebar')?.classList.contains('drawer-open')
+      );
       return Boolean(
         document.getElementById('scenarioDrawer')?.classList.contains('open') ||
-        document.getElementById('examPaletteSidebar')?.classList.contains('drawer-open') ||
+        isPaletteDrawerActive ||
         document.getElementById('appSidebar')?.classList.contains('open')
       );
     }
 
     _bindGlobalEvents() {
+      if (typeof window !== 'undefined') {
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 1024) {
+            document.getElementById('examPaletteSidebar')?.classList.remove('drawer-open');
+          }
+          if (window.innerWidth > 900) {
+            const sb = document.getElementById('appSidebar');
+            if (sb?.classList.contains('open')) {
+              sb.classList.remove('open');
+              document.getElementById('btnMobileMenu')?.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      }
+
       document.addEventListener('keydown', (e) => {
         if (this._modalOpen) {
           if (e.key === 'Escape') {
@@ -37893,10 +38059,11 @@ button:disabled {
           if (curIdx !== -1 && tabs.length > 0) {
             e.preventDefault();
             const nextIdx = (curIdx + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
-            const nextTab = tabs[nextIdx];
-            nextTab.focus();
-            const suId = nextTab.getAttribute('data-select-su');
-            if (suId) this.selectStudyUnit(suId);
+            const suId = tabs[nextIdx].getAttribute('data-select-su');
+            if (suId) {
+              this.selectStudyUnit(suId);
+              document.querySelector(`#studyUnitSelectorBar [role="tab"][data-select-su="${suId}"]`)?.focus();
+            }
             return;
           }
         }
@@ -37913,11 +38080,20 @@ button:disabled {
         const target = e.target;
         if (!target || typeof target.closest !== 'function') return;
 
-        // Close open mobile sidebar if clicking outside sidebar and menu button
+        // Close open mobile sidebar / scenario drawer / mobile palette if clicking outside
         const openSb = document.getElementById('appSidebar');
         if (openSb?.classList.contains('open') && !target.closest('#appSidebar') && !target.closest('#btnMobileMenu')) {
           openSb.classList.remove('open');
           document.getElementById('btnMobileMenu')?.setAttribute('aria-expanded', 'false');
+        }
+        const openDr = document.getElementById('scenarioDrawer');
+        if (openDr?.classList.contains('open') && !target.closest('#scenarioDrawer') && !target.closest('#btnToggleScenarioDrawer')) {
+          openDr.classList.remove('open');
+          openDr.setAttribute('aria-hidden', 'true');
+        }
+        const openPal = document.getElementById('examPaletteSidebar');
+        if (openPal?.classList.contains('drawer-open') && !target.closest('#examPaletteSidebar') && !target.closest('#btnToggleMobilePalette')) {
+          openPal.classList.remove('drawer-open');
         }
 
         // Brand -> Home
@@ -38022,7 +38198,11 @@ button:disabled {
         if (jumpDef) {
           this.highlightedDefId = jumpDef.getAttribute('data-jump-def');
           const searchEl = document.getElementById('defsMainSearch');
+          const unitEl = document.getElementById('defsUnitFilter');
+          const catEl = document.getElementById('defsCategoryFilter');
           if (searchEl) searchEl.value = '';
+          if (unitEl) unitEl.value = 'ALL';
+          if (catEl) catEl.value = 'ALL';
           this.renderDefinitionsView();
           const card = document.getElementById(`defCard_${this.highlightedDefId}`);
           if (card) card.scrollIntoView({ block: 'center' });
@@ -38103,6 +38283,7 @@ button:disabled {
           if (this.practiceSession && this.practiceSession.timed && !this.practiceSession.isCompleted) {
             if (this.practiceSession.pausedAtMs) this.practiceSession.resumeTimer();
             else this.practiceSession.pauseTimer();
+            this._persistActivePracticeIfNeeded();
             this._renderPracticeSessionArea();
           }
           return;
@@ -38114,6 +38295,8 @@ button:disabled {
         const vmBtn = target.closest('[data-view-mode]');
         if (vmBtn) {
           this.setViewMode(vmBtn.getAttribute('data-view-mode'));
+          if (this.practiceSession) this.practiceSession.layout = this.practiceViewMode;
+          this._persistActivePracticeIfNeeded();
           return;
         }
         if (target.closest('#btnShortcutHelpModal')) {
@@ -38143,6 +38326,7 @@ button:disabled {
             this._renderHomeQuickPracticeCard();
           } else if (this.currentRoute === 'practice' && this.practiceSession) {
             this.practiceSession.selectOption(qId, optIdx);
+            this._persistActivePracticeIfNeeded();
             this._renderPracticeSessionArea();
           }
           return;
@@ -38166,6 +38350,7 @@ button:disabled {
         // Practice Prev / Submit / Next / Sheet Submit
         if (target.closest('#btnPracPrevQ')) {
           this.practiceSession.goToIndex(this.practiceSession.currentIndex - 1);
+          this._persistActivePracticeIfNeeded();
           this._renderPracticeSessionArea();
           return;
         }
@@ -38184,6 +38369,7 @@ button:disabled {
           if (res && !res.duplicate) {
             this.persistence.recordQuestionAttempt(res.question, res.selectedAnswer, res.outcome === 'correct', 0);
             this._updateSidebarBadges();
+            this._persistActivePracticeIfNeeded();
             this._renderPracticeSessionArea();
           }
           return;
@@ -38450,14 +38636,27 @@ button:disabled {
           return;
         }
         if (target.closest('#btnExitExamToLobby')) {
+          if (this.examSession && !this.examSession.isCompleted) {
+            const pre = this.examSession.getPreSubmitSummary();
+            this._openModal(
+              'Exit & Discard Active Examination?',
+              `<p>You have answered <strong>${pre.answeredCount} of ${pre.totalQuestions}</strong> questions in <strong>${esc(this.examSession.title)}</strong>.</p><p>Returning to the Examination Centre Lobby will discard this unsubmitted attempt (use the sidebar to switch sections if you want to keep it paused for later).</p>`,
+              'Discard & Exit',
+              () => {
+                this._stopExamTimerLoop();
+                this._teardownPaperScrollSpy();
+                this._closeAllDrawers();
+                this.examSession = null;
+                this.persistence.saveActiveExamSession(null);
+                this.renderExamsView();
+              }
+            );
+            return;
+          }
           this._stopExamTimerLoop();
           this._teardownPaperScrollSpy();
-          if (this.examSession && this.examSession.isCompleted) {
-            this.examSession = null;
-          } else {
-            this.examSession = null;
-            this.persistence.saveActiveExamSession(null);
-          }
+          this._closeAllDrawers();
+          this.examSession = null;
           this.renderExamsView();
           return;
         }
@@ -38629,6 +38828,7 @@ button:disabled {
           allowInstantSubmit: true,
           durationMinutes: timeLimit
         });
+        this.persistence.saveActivePracticeSession(this.practiceSession.toSnapshot());
         this.practiceSubTab = 'session';
         this.practiceViewMode = 'card';
         this.renderPracticeView();
