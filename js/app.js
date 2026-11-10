@@ -1,2285 +1,2444 @@
 /**
- * NWU CMPG122 - Interactive Learning & Exam Mastery Application Engine
- * =========================================================================
- * Comprehensive state machine, quiz/exam runner, C# diagnostics lab,
- * variable trace table visualizer, and side tools drawer.
- * 100% Standalone • Zero External Dependencies • Offline & Mobile Ready
+ * NWU CMPG122 — Main Application Controller
+ * Orchestrates Home Dashboard, 7 Study Units, Practice & Custom Quiz Engine,
+ * C# Code & Tracing Lab, Continuous Past Exam Papers, Searchable Definitions
+ * with Exact Context-Preserving Return, Analytics & Review Queue, and Settings.
  */
-
-(function() {
+(function (root) {
   'use strict';
 
-  const DATA = window.CMPG122_DATA;
-  const CSharpEngine = window.CSharpEngine;
+  const DATA = (root && root.CMPG122_DATA) || (typeof require === 'function' ? require('./data.js') : {});
+  const CSharpEngine = (root && root.CSharpEngine) || (typeof require === 'function' ? require('./csharp_engine.js') : {});
+  const Icons = (root && root.CMPG122_ICONS) || (typeof require === 'function' ? require('./modules/icons_and_diagrams.js') : {});
+  const PersistenceMod = (root && root.CMPG122_PERSISTENCE) || (typeof require === 'function' ? require('./modules/persistence.js') : {});
+  const AnalyticsMod = (root && root.CMPG122_ANALYTICS) || (typeof require === 'function' ? require('./modules/analytics.js') : {});
+  const DefsMod = (root && root.CMPG122_DEFS_ENGINE) || (typeof require === 'function' ? require('./modules/definitions_engine.js') : {});
+  const ExamMod = (root && root.CMPG122_EXAM_ENGINE) || (typeof require === 'function' ? require('./modules/exam_engine.js') : {});
+  const ShortcutsMod = (root && root.CMPG122_SHORTCUTS) || (typeof require === 'function' ? require('./modules/keyboard_shortcuts.js') : {});
+  const Renderer = (root && root.CMPG122_RENDERER) || (typeof require === 'function' ? require('./modules/question_renderer.js') : {});
 
-  // Application State
-  const state = {
-    currentTab: 'units', // 'units', 'exams', 'codegrade', 'spoterror', 'custom', 'quiz'
-    selectedUnitId: null,
-    selectedExamId: null,
-    quizQuestions: [],
-    currentIndex: 0,
-    answers: {}, // { [qId]: { selected: any, isCorrect: boolean, score: number } }
-    flags: {}, // { [qId]: boolean }
-    bookmarks: JSON.parse(localStorage.getItem('cmpg122_bookmarks') || '[]'),
-    score: 0,
-    isExamMode: false,
-    examSubmitted: false,
-    viewMode: 'continuous', // 'continuous' or 'card'
-    examSecondsLeft: 180 * 60,
-    examTimerInterval: null,
-    streak: 0,
-    bestStreak: parseInt(localStorage.getItem('cmpg122_best_streak') || '0', 10),
-    wrongOnlyMode: false,
-    activeScenarioId: 'scenario_racing_light',
-    activeAuditScenarioId: 'audit_wages',
-    isShowingAuditSolution: false,
-    auditMode: 'studio',
-    activeTerminalTab: 'stream',
-    masteryStats: JSON.parse(localStorage.getItem('cmpg122_mastery_stats') || JSON.stringify({
-      totalAttempts: 0,
-      correctAttempts: 0,
-      bestExamScore: 0,
-      unitStats: {
-        SU7: { total: 0, correct: 0 },
-        SU1: { total: 0, correct: 0 },
-        SU2: { total: 0, correct: 0 },
-        SU3: { total: 0, correct: 0 },
-        SU4: { total: 0, correct: 0 },
-        SU5: { total: 0, correct: 0 },
-        SU6: { total: 0, correct: 0 }
+  const esc = Renderer.escapeHtml;
+
+  class Cmpg122PlatformApp {
+    constructor() {
+      this.data = DATA;
+      this.persistence = new PersistenceMod.PersistenceManager();
+      this.defsEngine = new DefsMod.DefinitionsEngine(this.data.definitions || []);
+
+      this.currentRoute = 'home';
+      this.activeStudyUnit = 'SU7';
+      this.practiceSubTab = 'session'; // 'session' | 'custom' | 'codelab'
+      this.practiceViewMode = 'card';   // 'card' | 'continuous'
+      this.codelabSubTab = 'sandbox';   // 'sandbox' | 'spot' | 'auditor'
+      this.reviewSubTab = 'incorrect';  // 'incorrect' | 'flagged' | 'understood'
+      this.highlightedDefId = null;
+
+      this.homeSession = null;
+      this.practiceSession = null;
+      this.examSession = null;
+
+      this.activeCodeScenarioKey = Object.keys(this.data.codeScenarios || {})[0] || '';
+      this.spotIndex = 0;
+      this.spotSelected = null;
+      this.spotSubmitted = false;
+      this.activeAuditIndex = 0;
+
+      this._timerInterval = null;
+      this._studyTicker = null;
+      this._modalOpen = false;
+      this._modalConfirmHandler = null;
+
+      this.shortcuts = new ShortcutsMod.KeyboardShortcutController({
+        isPracticeShortcutContextActive: () => (
+          this.currentRoute === 'home' ||
+          (this.currentRoute === 'practice' && this.practiceSubTab === 'session' && this.practiceViewMode === 'card')
+        ),
+        getPreferences: () => this.persistence.getPreferences(),
+        hasOpenModal: () => this._modalOpen,
+        getCurrentQuestionContext: () => this._getActiveCardQuestionContext(),
+        onSelectOption: (idx) => this._handleShortcutSelect(idx),
+        onSubmitCurrent: () => this._handleShortcutSubmit(),
+        onNextQuestion: () => this._handleShortcutNext()
+      });
+    }
+
+    async init() {
+      if (typeof document === 'undefined') return;
+      await this.persistence.init();
+
+      const st = this.persistence.getState();
+      if (st.lastStudyUnit) this.activeStudyUnit = st.lastStudyUnit;
+
+      this._applyPreferencesToDocument();
+      this._hydrateStaticIcons();
+      this._initHomeQuickSession();
+      this._initDefaultPracticeSession();
+
+      // Recover interrupted examination session if present
+      if (st.activeExamSession) {
+        const recovered = ExamMod.ExamSession.fromSnapshot(st.activeExamSession, this.data.questions);
+        if (recovered && !recovered.isCompleted) {
+          this.examSession = recovered;
+        }
       }
-    }))
-  };
 
-  // DOM Elements Cache
-  let dom = {};
+      this._bindGlobalEvents();
+      this._populatePracticeFilters();
+      this._populateCustomBuilderControls();
+      this._populateDefsFilters();
+      this._populateCodeLabControls();
+      this._renderExamLobbyCards();
 
-  function init() {
-    if (!DATA) {
-      console.error('CMPG122_DATA failed to load.');
-      return;
-    }
-
-    cacheDOM();
-    bindEvents();
-    renderUnitsGrid();
-    renderExamsList();
-    renderSpotErrorList();
-    initCodeAudit();
-    renderCustomUnitChecks();
-    loadCodeScenario(state.activeScenarioId);
-    initTheme();
-    initScratchpad();
-    updateStatsDisplay();
-  }
-
-  function cacheDOM() {
-    dom = {
-      themeToggle: document.getElementById('themeToggle'),
-      tabButtons: document.querySelectorAll('.tab-btn'),
-      views: {
-        units: document.getElementById('viewUnits'),
-        exams: document.getElementById('viewExams'),
-        codegrade: document.getElementById('viewCodeGrade'),
-        spoterror: document.getElementById('viewSpotError'),
-        custom: document.getElementById('viewCustom'),
-        quiz: document.getElementById('viewQuiz')
-      },
-      // Units
-      unitsGrid: document.getElementById('unitsGrid'),
-      cheatSheetsGrid: document.getElementById('cheatSheetsGrid'),
-      statTotalQs: document.getElementById('statTotalQs'),
-      statMastery: document.getElementById('statMastery'),
-      statStreak: document.getElementById('statStreak'),
-      // Exams
-      examsList: document.getElementById('examsList'),
-      // CodeGrade Lab
-      codeScenarioSelect: document.getElementById('codeScenarioSelect'),
-      scenarioTitle: document.getElementById('scenarioTitle'),
-      scenarioDesc: document.getElementById('scenarioDesc'),
-      scenarioControlsList: document.getElementById('scenarioControlsList'),
-      cgMethodHeader: document.getElementById('cgMethodHeader'),
-      studentCodeInput: document.getElementById('studentCodeInput'),
-      cgMethodFooter: document.getElementById('cgMethodFooter'),
-      btnRunCodeGrade: document.getElementById('btnRunCodeGrade'),
-      btnClearCode: document.getElementById('btnClearCode'),
-      btnShowSolution: document.getElementById('btnShowSolution'),
-      solutionModal: document.getElementById('solutionModal'),
-      solutionCodeBox: document.getElementById('solutionCodeBox'),
-      diagnosticsPanel: document.getElementById('diagnosticsPanel'),
-      diagList: document.getElementById('diagList'),
-      testResultsTable: document.getElementById('testResultsTable'),
-      rubricBadge: document.getElementById('rubricBadge'),
-      rubricList: document.getElementById('rubricList'),
-      // Spot Error & Code Audit Studio
-      btnAuditModeStudio: document.getElementById('btnAuditModeStudio'),
-      btnAuditModeMcq: document.getElementById('btnAuditModeMcq'),
-      auditStudioContainer: document.getElementById('auditStudioContainer'),
-      auditMcqContainer: document.getElementById('auditMcqContainer'),
-      auditScenarioSelect: document.getElementById('auditScenarioSelect'),
-      auditUnitBadge: document.getElementById('auditUnitBadge'),
-      auditBugCountBadge: document.getElementById('auditBugCountBadge'),
-      auditMarksBadge: document.getElementById('auditMarksBadge'),
-      auditCategoryBadges: document.getElementById('auditCategoryBadges'),
-      auditScenarioTitle: document.getElementById('auditScenarioTitle'),
-      auditScenarioDesc: document.getElementById('auditScenarioDesc'),
-      auditFileName: document.getElementById('auditFileName'),
-      auditLineGutter: document.getElementById('auditLineGutter'),
-      auditCodeInput: document.getElementById('auditCodeInput'),
-      btnRunAudit: document.getElementById('btnRunAudit'),
-      btnResetAudit: document.getElementById('btnResetAudit'),
-      btnToggleSolutionAudit: document.getElementById('btnToggleSolutionAudit'),
-      auditLiveStatus: document.getElementById('auditLiveStatus'),
-      auditScorePill: document.getElementById('auditScorePill'),
-      auditGradeBadge: document.getElementById('auditGradeBadge'),
-      auditFixedPill: document.getElementById('auditFixedPill'),
-      auditMarksPill: document.getElementById('auditMarksPill'),
-      auditTabStream: document.getElementById('auditTabStream'),
-      auditTabDiff: document.getElementById('auditTabDiff'),
-      auditTerminalStream: document.getElementById('auditTerminalStream'),
-      auditDiffInspector: document.getElementById('auditDiffInspector'),
-      auditDiffTableBody: document.getElementById('auditDiffTableBody'),
-      spotErrorList: document.getElementById('spotErrorList'),
-      // Custom practice
-      customUnitChecks: document.getElementById('customUnitChecks'),
-      customQuestionCount: document.getElementById('customQuestionCount'),
-      btnStartCustom: document.getElementById('btnStartCustom'),
-      // Quiz & Exam Engine
-      quizTitle: document.getElementById('quizTitle'),
-      quizProgressFill: document.getElementById('quizProgressFill'),
-      quizCounter: document.getElementById('quizCounter'),
-      quizTimerBox: document.getElementById('quizTimerBox'),
-      quizTimerDisplay: document.getElementById('quizTimerDisplay'),
-      btnExitQuiz: document.getElementById('btnExitQuiz'),
-      btnBookmark: document.getElementById('btnBookmark'),
-      btnRetryWrong: document.getElementById('btnRetryWrong'),
-      quizArea: document.getElementById('quizArea'),
-      btnPrevQ: document.getElementById('btnPrevQ'),
-      btnNextQ: document.getElementById('btnNextQ'),
-      btnSubmitExam: document.getElementById('btnSubmitExam'),
-      // Continuous Exam Paper & Quick-Jump Palette DOM Elements
-      viewModeToggleGroup: document.getElementById('viewModeToggleGroup'),
-      btnModeContinuous: document.getElementById('btnModeContinuous'),
-      btnModeCard: document.getElementById('btnModeCard'),
-      cardProgressWrap: document.getElementById('cardProgressWrap'),
-      examNavigatorBar: document.getElementById('examNavigatorBar'),
-      examNavigatorSummary: document.getElementById('examNavigatorSummary'),
-      examQuestionPalette: document.getElementById('examQuestionPalette'),
-      btnJumpUnanswered: document.getElementById('btnJumpUnanswered'),
-      btnJumpSubmit: document.getElementById('btnJumpSubmit'),
-      navExamTimer: document.getElementById('navExamTimer'),
-      btnNavExitExam: document.getElementById('btnNavExitExam'),
-      continuousPaperArea: document.getElementById('continuousPaperArea'),
-      singleCardArea: document.getElementById('singleCardArea'),
-      btnOpenScenarioDrawer: document.getElementById('btnOpenScenarioDrawer'),
-      btnCloseScenarioDrawer: document.getElementById('btnCloseScenarioDrawer'),
-      scenarioDrawerBackdrop: document.getElementById('scenarioDrawerBackdrop'),
-      scenarioDrawer: document.getElementById('scenarioDrawer'),
-      scenarioDrawerTitle: document.getElementById('scenarioDrawerTitle'),
-      scenarioDrawerBody: document.getElementById('scenarioDrawerBody'),
-      // Drawer
-      toolsDrawer: document.getElementById('toolsDrawer'),
-      drawerBackdrop: document.getElementById('drawerBackdrop'),
-      btnOpenTools: document.getElementById('btnOpenTools'),
-      btnCloseTools: document.getElementById('btnCloseTools'),
-      drawerTabBtns: document.querySelectorAll('.drawer-tab-btn'),
-      drawerTabPanes: document.querySelectorAll('.drawer-pane'),
-      // Summary Modal
-      summaryModal: document.getElementById('summaryModal'),
-      summaryModalTitle: document.getElementById('summaryModalTitle'),
-      summaryModalBody: document.getElementById('summaryModalBody'),
-      btnCloseModal: document.getElementById('btnCloseModal'),
-      // Quick Sandbox
-      sandboxExpr: document.getElementById('sandboxExpr'),
-      btnRunSandbox: document.getElementById('btnRunSandbox'),
-      sandboxResult: document.getElementById('sandboxResult'),
-      // Trace Table
-      traceSnippet: document.getElementById('traceSnippet'),
-      btnGenerateTrace: document.getElementById('btnGenerateTrace'),
-      traceOutput: document.getElementById('traceOutput'),
-      scratchpadText: document.getElementById('scratchpadText')
-    };
-  }
-
-  function bindEvents() {
-    if (dom.themeToggle) dom.themeToggle.addEventListener('click', toggleTheme);
-
-    dom.tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const tab = btn.dataset.tab;
-        switchTab(tab);
-      });
-    });
-
-    // Drawer toggles
-    if (dom.btnOpenTools) dom.btnOpenTools.addEventListener('click', () => toggleDrawer(true));
-    if (dom.btnCloseTools) dom.btnCloseTools.addEventListener('click', () => toggleDrawer(false));
-    if (dom.drawerBackdrop) dom.drawerBackdrop.addEventListener('click', () => toggleDrawer(false));
-
-    dom.drawerTabBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        dom.drawerTabBtns.forEach(b => b.classList.remove('active'));
-        dom.drawerTabPanes.forEach(p => p.style.display = 'none');
-        btn.classList.add('active');
-        const target = document.getElementById(btn.dataset.pane);
-        if (target) target.style.display = 'block';
-      });
-    });
-
-    if (dom.btnCloseModal) dom.btnCloseModal.addEventListener('click', closeModal);
-    if (dom.summaryModal) {
-      dom.summaryModal.addEventListener('click', (e) => {
-        if (e.target === dom.summaryModal) closeModal();
-      });
-    }
-
-    if (dom.btnOpenScenarioDrawer) dom.btnOpenScenarioDrawer.addEventListener('click', openScenarioDrawer);
-    if (dom.btnCloseScenarioDrawer) dom.btnCloseScenarioDrawer.addEventListener('click', closeScenarioDrawer);
-    if (dom.scenarioDrawerBackdrop) dom.scenarioDrawerBackdrop.addEventListener('click', closeScenarioDrawer);
-
-    if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          closeScenarioDrawer();
-          closeModal();
-        }
-      });
-    }
-
-    // CodeGrade Lab controls
-    if (dom.codeScenarioSelect) {
-      dom.codeScenarioSelect.addEventListener('change', () => {
-        loadCodeScenario(dom.codeScenarioSelect.value);
-      });
-    }
-
-    if (dom.btnRunCodeGrade) dom.btnRunCodeGrade.addEventListener('click', runCodeGradeEvaluation);
-    if (dom.btnClearCode) {
-      dom.btnClearCode.addEventListener('click', () => {
-        if (dom.studentCodeInput) dom.studentCodeInput.value = '';
-      });
-    }
-
-    if (dom.btnShowSolution) dom.btnShowSolution.addEventListener('click', toggleModelSolution);
-
-    // Code Snippet Quick Buttons
-    document.querySelectorAll('.tool-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        const snippetType = chip.dataset.snippet;
-        insertCodeSnippet(snippetType);
-      });
-    });
-
-    // Code Audit Mode Switcher & Controls
-    if (dom.btnAuditModeStudio) {
-      dom.btnAuditModeStudio.addEventListener('click', () => switchAuditMode('studio'));
-    }
-    if (dom.btnAuditModeMcq) {
-      dom.btnAuditModeMcq.addEventListener('click', () => switchAuditMode('mcq'));
-    }
-
-    if (dom.auditScenarioSelect) {
-      dom.auditScenarioSelect.addEventListener('change', () => {
-        loadAuditScenario(dom.auditScenarioSelect.value);
-      });
-    }
-
-    if (dom.btnRunAudit) dom.btnRunAudit.addEventListener('click', runCodeAudit);
-    if (dom.btnResetAudit) dom.btnResetAudit.addEventListener('click', resetAuditScenario);
-    if (dom.btnToggleSolutionAudit) dom.btnToggleSolutionAudit.addEventListener('click', toggleAuditSolution);
-
-    if (dom.auditTabStream) {
-      dom.auditTabStream.addEventListener('click', () => switchTerminalTab('stream'));
-    }
-    if (dom.auditTabDiff) {
-      dom.auditTabDiff.addEventListener('click', () => switchTerminalTab('diff'));
-    }
-
-    // Code Audit Chips
-    document.querySelectorAll('.audit-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        insertAuditSnippet(chip.dataset.snippet);
-      });
-    });
-
-    // Editor scroll and input sync for line numbers
-    if (dom.auditCodeInput) {
-      dom.auditCodeInput.addEventListener('input', updateAuditGutter);
-      dom.auditCodeInput.addEventListener('scroll', () => {
-        if (dom.auditLineGutter) {
-          dom.auditLineGutter.scrollTop = dom.auditCodeInput.scrollTop;
-        }
-      });
-      dom.auditCodeInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Tab') {
-          e.preventDefault();
-          const start = this.selectionStart;
-          const end = this.selectionEnd;
-          this.value = this.value.substring(0, start) + "    " + this.value.substring(end);
-          this.selectionStart = this.selectionEnd = start + 4;
-          updateAuditGutter();
-        }
-      });
-    }
-
-    // Tab key trapping for Code Editor
-    if (dom.studentCodeInput) {
-      dom.studentCodeInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Tab') {
-          e.preventDefault();
-          const start = this.selectionStart;
-          const end = this.selectionEnd;
-          this.value = this.value.substring(0, start) + "    " + this.value.substring(end);
-          this.selectionStart = this.selectionEnd = start + 4;
-        }
-      });
-    }
-
-    // Custom practice start
-    if (dom.btnStartCustom) dom.btnStartCustom.addEventListener('click', startCustomPractice);
-
-    // Quiz controls
-    if (dom.btnPrevQ) dom.btnPrevQ.addEventListener('click', prevQuestion);
-    if (dom.btnNextQ) dom.btnNextQ.addEventListener('click', nextQuestion);
-    if (dom.btnExitQuiz) dom.btnExitQuiz.addEventListener('click', exitQuiz);
-    if (dom.btnBookmark) dom.btnBookmark.addEventListener('click', toggleBookmark);
-    if (dom.btnRetryWrong) dom.btnRetryWrong.addEventListener('click', retryWrongQuestions);
-    if (dom.btnSubmitExam) dom.btnSubmitExam.addEventListener('click', submitExam);
-
-    // Sandbox
-    if (dom.btnRunSandbox) dom.btnRunSandbox.addEventListener('click', runSandboxExpression);
-    if (dom.btnGenerateTrace) dom.btnGenerateTrace.addEventListener('click', generateTraceTable);
-  }
-
-  function switchTab(tabId) {
-    state.currentTab = tabId;
-
-    dom.tabButtons.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.tab === tabId);
-    });
-
-    Object.keys(dom.views).forEach(key => {
-      if (dom.views[key]) {
-        dom.views[key].style.display = (key === tabId) ? 'block' : 'none';
+      const hashRoute = (window.location.hash || '').replace(/^#/, '').trim();
+      const validRoutes = ['home', 'study', 'practice', 'exams', 'definitions', 'progress', 'settings'];
+      if (validRoutes.includes(hashRoute)) {
+        this.navigate(hashRoute, { skipHash: true });
+      } else {
+        this.renderCurrentRoute();
       }
-    });
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+      this._startStudyTimeTracker();
+      this._registerServiceWorkerSafely();
+    }
 
-  function renderUnitsGrid() {
-    if (!dom.unitsGrid) return;
+    _hydrateStaticIcons() {
+      document.querySelectorAll('[data-icon]').forEach(el => {
+        const name = el.getAttribute('data-icon');
+        el.innerHTML = Icons.icon(name, { size: 17 });
+      });
+      const codeMark = document.getElementById('topbarCodeIcon');
+      if (codeMark) codeMark.innerHTML = Icons.icon('codelab', { size: 19 });
+      const modeMark = document.getElementById('topbarModeIcon');
+      if (modeMark) modeMark.innerHTML = Icons.icon('graduation-cap', { size: 16 });
+      const menuSlot = document.getElementById('mobileMenuIconSlot');
+      if (menuSlot) menuSlot.innerHTML = Icons.icon('menu', { size: 19 });
+      const nwuSlot = document.getElementById('sidebarNwuMark');
+      if (nwuSlot) nwuSlot.innerHTML = Icons.renderNwuMark();
+      const shieldSlot = document.getElementById('heroCSharpShield');
+      if (shieldSlot) shieldSlot.innerHTML = Icons.renderCSharpShield(74);
+    }
 
-    let html = '';
-    DATA.units.forEach(unit => {
-      const qCount = DATA.questions.filter(q => q.ch === unit.id).length;
-      const stats = state.masteryStats.unitStats[unit.id] || { total: 0, correct: 0 };
-      const pct = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
+    _applyPreferencesToDocument() {
+      if (typeof document === 'undefined') return;
+      const prefs = this.persistence.getPreferences();
+      let resolvedTheme = prefs.theme;
+      if (resolvedTheme === 'system') {
+        const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        resolvedTheme = prefersLight ? 'light' : 'dark';
+      }
+      document.documentElement.setAttribute('data-theme', resolvedTheme);
+      document.documentElement.setAttribute('data-reduced-motion', prefs.reducedMotion ? 'true' : 'false');
+      document.documentElement.style.setProperty('--ui-font-scale', `${prefs.fontScale || 100}%`);
 
-      html += `
-        <div class="unit-card" style="border-top: 4px solid ${unit.color};">
-          <div>
-            <div class="unit-badge" style="background: rgba(255,255,255,0.05); color: ${unit.color}; border: 1px solid ${unit.color}40;">
-              ${unit.icon} ${unit.code} • ${unit.weeks}
-            </div>
-            <h3 class="unit-title">${unit.title}</h3>
-            <p class="unit-desc">${unit.summary}</p>
-            <div class="unit-topics-list">
-              ${unit.topics.slice(0, 3).map(t => `<span class="topic-tag">${t.split('(')[0].trim()}</span>`).join('')}
-            </div>
-          </div>
-          <div class="unit-card-footer">
+      const btnLight = document.getElementById('btnThemeLight');
+      const btnDark = document.getElementById('btnThemeDark');
+      if (btnLight && btnDark) {
+        btnLight.classList.toggle('active', resolvedTheme === 'light');
+        btnDark.classList.toggle('active', resolvedTheme === 'dark');
+      }
+    }
+
+    _initHomeQuickSession() {
+      const qs = this.data.questions || [];
+      // Curated balanced 10-question starter deck across units (starting with a decimal currency item if found)
+      const decStarter = qs.find(q => q.su === 'SU2' && /decimal/i.test(q.q) && (q.options || []).length >= 4);
+      const rest = ExamMod.generateCustomExam(qs, {
+        questionCount: 10,
+        randomize: false,
+        excludeIds: decStarter ? [decStarter.id] : []
+      });
+      const deck = decStarter ? [decStarter, ...rest.slice(0, 9)] : rest.slice(0, 10);
+      this.homeSession = new ExamMod.ExamSession({
+        id: 'home_quick_practice',
+        mode: 'practice',
+        title: 'Quick Practice',
+        questions: deck,
+        allowInstantSubmit: true
+      });
+    }
+
+    _initDefaultPracticeSession(su = 'ALL', topic = '') {
+      const qs = ExamMod.generateCustomExam(this.data.questions || [], {
+        units: su && su !== 'ALL' ? [su] : [],
+        topics: topic ? [topic] : [],
+        questionCount: 20,
+        randomize: false
+      });
+      this.practiceSession = new ExamMod.ExamSession({
+        id: `prac_${su}_${Date.now()}`,
+        mode: 'practice',
+        title: su === 'ALL' ? 'Mixed Curriculum Practice' : `${su} Study Unit Practice`,
+        questions: qs,
+        allowInstantSubmit: true
+      });
+    }
+
+    /* ==================== NAVIGATION & ROUTING ==================== */
+
+    navigate(route, options = {}) {
+      const target = route === 'codelab' ? 'practice' : route;
+      if (route === 'codelab') {
+        this.practiceSubTab = 'codelab';
+      }
+      this.currentRoute = target;
+      this.persistence.saveState(s => { s.lastRoute = target; });
+
+      if (typeof document !== 'undefined') {
+        // Close mobile sidebar drawer if open
+        const sb = document.getElementById('appSidebar');
+        const menuBtn = document.getElementById('btnMobileMenu');
+        if (sb) sb.classList.remove('open');
+        if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+
+        document.querySelectorAll('.sidebar-link').forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-route') === target);
+        });
+        document.querySelectorAll('.bottom-nav-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-route') === target);
+        });
+
+        const modeSel = document.getElementById('quickModeSelect');
+        if (modeSel) {
+          const modeVal = (target === 'practice' && this.practiceSubTab === 'codelab') ? 'codelab'
+            : (['home', 'study', 'practice', 'exams'].includes(target) ? target : 'home');
+          modeSel.value = modeVal;
+        }
+
+        const sectionMap = {
+          home: 'viewHome',
+          study: 'viewStudy',
+          practice: 'viewPractice',
+          exams: 'viewExams',
+          definitions: 'viewDefinitions',
+          progress: 'viewProgress',
+          settings: 'viewSettings'
+        };
+        Object.entries(sectionMap).forEach(([rKey, domId]) => {
+          const sec = document.getElementById(domId);
+          if (sec) sec.classList.toggle('active', rKey === target);
+        });
+
+        if (!options.skipHash && window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', `#${target}`);
+        }
+      }
+
+      this.renderCurrentRoute();
+      if (!options.preserveScroll && typeof window !== 'undefined') {
+        window.scrollTo(0, 0);
+      }
+    }
+
+    renderCurrentRoute() {
+      this._updateSidebarBadges();
+      switch (this.currentRoute) {
+        case 'home': this.renderHomeView(); break;
+        case 'study': this.renderStudyView(); break;
+        case 'practice': this.renderPracticeView(); break;
+        case 'exams': this.renderExamsView(); break;
+        case 'definitions': this.renderDefinitionsView(); break;
+        case 'progress': this.renderProgressView(); break;
+        case 'settings': this.renderSettingsView(); break;
+        default: this.renderHomeView();
+      }
+    }
+
+    _updateSidebarBadges() {
+      if (typeof document === 'undefined') return;
+      const stats = AnalyticsMod.computeAnalytics(this.persistence.getState(), this.data);
+      const badge = document.getElementById('navReviewBadge');
+      if (badge) {
+        const count = stats.incorrectQueue.length;
+        badge.textContent = String(count);
+        badge.style.display = count > 0 ? 'inline-block' : 'none';
+      }
+    }
+
+    /* ==================== 1. HOME DASHBOARD ==================== */
+
+    renderHomeView() {
+      const stats = AnalyticsMod.computeAnalytics(this.persistence.getState(), this.data);
+      const overallEl = document.getElementById('homeOverallPct');
+      if (overallEl) overallEl.textContent = `${stats.overallProgressPct}%`;
+
+      // Momentum / Quick Resume Card (Honest 0% state when no activity exists)
+      const momEl = document.getElementById('heroMomentumCard');
+      if (momEl) {
+        const hasSavedExam = this.examSession && !this.examSession.isCompleted;
+        let title = 'Ready to begin';
+        let sub = 'Select a Study Unit or answer your first question below.';
+        let barPct = stats.overallProgressPct;
+
+        if (hasSavedExam) {
+          title = 'Examination in progress';
+          sub = `${this.examSession.title} — resume where you left off.`;
+        } else if (stats.hasActivity) {
+          title = stats.overallProgressPct >= 75 ? 'Strong momentum!' : 'Building mastery';
+          sub = `${stats.uniqueAttempted} questions practised • ${stats.completedTopicsCount}/${stats.totalTopicsCount} topics completed`;
+        }
+
+        momEl.innerHTML = `
+          <div class="momentum-top">
+            <span class="momentum-trophy">${Icons.icon('trophy', { size: 22 })}</span>
             <div>
-              <span style="font-family:var(--font-mono); font-size:0.8rem; font-weight:700; color:${unit.color};">
-                ${qCount} Questions
-              </span>
-              <span style="font-size:0.75rem; color:var(--text-muted); margin-left:6px;">
-                (Mastery: ${pct}%)
-              </span>
-            </div>
-            <div style="display:flex; gap:0.4rem;">
-              <button class="action-btn" onclick="CMPG122_APP.showUnitSummary('${unit.id}')" style="padding:0.4rem 0.65rem;">
-                📖 Cheat Sheet
-              </button>
-              <button class="btn-practice" onclick="CMPG122_APP.startUnitPractice('${unit.id}')" style="padding:0.4rem 0.85rem;">
-                ⚡ Practice
-              </button>
+              <p class="momentum-title">${esc(title)}</p>
+              <p class="momentum-sub">${esc(sub)}</p>
             </div>
           </div>
-        </div>
-      `;
-    });
-
-    dom.unitsGrid.innerHTML = html;
-    renderCheatSheets('ALL');
-  }
-
-  function renderCheatSheets(filterUnitId = 'ALL') {
-    const grid = dom.cheatSheetsGrid || document.getElementById('cheatSheetsGrid');
-    if (!grid) return;
-
-    const unitsToShow = filterUnitId === 'ALL'
-      ? DATA.units
-      : DATA.units.filter(u => u.id === filterUnitId);
-
-    let html = '';
-    unitsToShow.forEach(unit => {
-      if (!unit.cheatSheetHtml) return;
-      html += `
-        <div class="cs-card" style="border-top: 4px solid ${unit.color};">
-          <div class="cs-card-header">
-            <div>
-              <span class="unit-badge" style="background: rgba(255,255,255,0.05); color: ${unit.color}; border: 1px solid ${unit.color}40; margin-bottom:0.35rem;">
-                ${unit.icon} ${unit.code} • ${unit.weeks} • ${unit.badge}
-              </span>
-              <h3 class="cs-card-title">${unit.title} — Study Summary &amp; Cheat Sheet</h3>
+          <div class="progress-bar-row">
+            <div class="progress-track" role="progressbar" aria-valuenow="${barPct}" aria-valuemin="0" aria-valuemax="100" aria-label="Overall curriculum completion">
+              <div class="progress-fill" style="width:${barPct}%;"></div>
             </div>
-            <button class="btn-practice" onclick="CMPG122_APP.startUnitPractice('${unit.id}')" style="padding:0.45rem 0.95rem;">
-              ⚡ Practice ${unit.code}
-            </button>
+            <span class="progress-pct-text">${barPct}%</span>
           </div>
-          <div class="cs-card-body">
-            ${unit.cheatSheetHtml}
-          </div>
-        </div>
-      `;
-    });
+          ${hasSavedExam ? `<button type="button" class="btn-primary btn-sm" style="margin-top:0.75rem;width:100%;" data-resume-exam="true">${Icons.icon('play', { size: 14 })} Resume Active Examination</button>` : ''}
+        `;
+      }
 
-    grid.innerHTML = html;
-  }
+      // 7 Study Units Circular Ring Grid
+      const gridEl = document.getElementById('homeSuRingsGrid');
+      if (gridEl) {
+        gridEl.innerHTML = (this.data.units || []).map(u => {
+          const us = stats.unitStats[u.id] || { progressPct: 0 };
+          return `<button type="button" class="su-ring-card" data-open-su="${esc(u.id)}" aria-label="${esc(u.id)} ${esc(u.shortTitle)}, ${us.progressPct}% complete">
+            <span class="su-card-icon" style="color:${esc(u.accentColor)};">${Icons.icon(u.iconId, { size: 22 })}</span>
+            <span class="su-card-code">${esc(u.id)}</span>
+            <span class="su-card-title">${esc(u.shortTitle)}</span>
+            <span class="su-card-weight">(~${u.examWeightPct}%)</span>
+            ${Icons.renderProgressRing(us.progressPct, u.accentColor, 60)}
+          </button>`;
+        }).join('');
+      }
 
-  function filterCheatSheets(unitId) {
-    const btns = document.querySelectorAll('.cs-filter-btn');
-    btns.forEach(b => {
-      b.classList.toggle('active', b.getAttribute('data-cs-unit') === unitId);
-    });
-    renderCheatSheets(unitId);
-  }
-
-  function renderExamsList() {
-    if (!dom.examsList) return;
-
-    let html = '';
-    DATA.officialExams.forEach(exam => {
-      const qCount = exam.subQuestionIds.length;
-
-      html += `
-        <div class="exam-card">
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem;">
-              <span class="unit-badge" style="background: rgba(168,85,247,0.15); color: var(--accent-purple); border: 1px solid var(--accent-purple);">
-                📝 ${exam.badge} • ${exam.academicYear}
-              </span>
-              <span style="font-family:var(--font-mono); font-size:0.8rem; font-weight:800; color:var(--accent-amber);">
-                ⏱️ ${exam.durationMinutes} Min • ${exam.totalMarks} Marks
-              </span>
+      // Revision Focus Card
+      const revEl = document.getElementById('homeRevisionFocusCard');
+      if (revEl) {
+        if (stats.weakTopics.length > 0) {
+          revEl.innerHTML = `
+            <h3 class="panel-title">${Icons.icon('alert-triangle', { size: 17 })} <span>Recommended Revision</span></h3>
+            <div style="display:flex;flex-direction:column;gap:0.45rem;">
+              ${stats.weakTopics.slice(0, 3).map(wt => `
+                <button type="button" class="btn-secondary btn-sm btn-align-start" data-retest-topic="${esc(wt.id)}" data-retest-su="${esc(wt.su)}">
+                  <span class="q-su-pill">${esc(wt.su)}</span>
+                  <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(wt.title)} (${wt.accuracyPct ?? 0}%)</span>
+                </button>
+              `).join('')}
             </div>
-            <h3 style="font-size:1.15rem; font-weight:800; margin-bottom:0.5rem;">${exam.title}</h3>
-            <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1rem; line-height:1.5;">
-              ${exam.scenario}
+          `;
+        } else {
+          revEl.innerHTML = `
+            <h3 class="panel-title">${Icons.icon('info', { size: 17 })} <span>Study Guidance</span></h3>
+            <p style="margin:0;font-size:0.84rem;color:var(--text-secondary);">
+              Start with <strong>SU7 (HCI Principles)</strong> and <strong>SU1 (GUI &amp; IDE)</strong>, use inline technical definitions as you read, and verify C# logic in the Code Lab.
             </p>
-          </div>
-          <div class="unit-card-footer">
-            <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--text-muted);">
-              ${qCount} Granular Assessment Steps
-            </span>
-            <div style="display:flex; gap:0.5rem;">
-              <button class="btn-practice" onclick="CMPG122_APP.startExam('${exam.id}', false)" style="background:var(--accent-purple); padding:0.45rem 0.9rem;">
-                📝 Practice Exam
-              </button>
-              <button class="btn-practice" onclick="CMPG122_APP.startExam('${exam.id}', true)" style="padding:0.45rem 0.9rem;">
-                ⏱️ Timed Simulation
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-    });
-
-    dom.examsList.innerHTML = html;
-  }
-
-  function renderSpotErrorList() {
-    if (!dom.spotErrorList) return;
-
-    let html = '';
-    DATA.spotErrors.forEach((item, idx) => {
-      html += `
-        <div class="q-card" style="margin-bottom:1.5rem; border-left:4px solid var(--accent-purple);">
-          <div class="q-header">
-            <span class="q-provenance">BUG #${idx+1}: ${item.title}</span>
-            <span class="q-marks-tag">NWU Spot-the-Error</span>
-          </div>
-          <div style="background:#0f172a; padding:0.75rem 1rem; border-radius:var(--radius-sm); border:1px solid #1e293b; margin-bottom:1rem; font-family:var(--font-mono); font-size:0.85rem; color:#f8fafc; white-space:pre-wrap;">${escapeHtml(item.code)}</div>
-          <h4 style="font-size:0.95rem; font-weight:700; margin-bottom:0.75rem;">${item.question}</h4>
-          <div class="q-options" id="spot_opts_${item.id}">
-            ${item.options.map((opt, optIdx) => `
-              <label class="q-option-label" id="spot_lbl_${item.id}_${optIdx}" onclick="CMPG122_APP.checkSpotError('${item.id}', ${optIdx})">
-                <input type="radio" name="spot_${item.id}" style="display:none;">
-                <span style="font-family:var(--font-mono); font-weight:700; color:var(--accent-blue);">${String.fromCharCode(65+optIdx)}.</span>
-                <span>${opt}</span>
-              </label>
-            `).join('')}
-          </div>
-          <div id="spot_fb_${item.id}" class="feedback-box"></div>
-        </div>
-      `;
-    });
-
-    dom.spotErrorList.innerHTML = html;
-  }
-
-  function checkSpotError(errId, selectedIdx) {
-    const item = DATA.spotErrors.find(s => s.id === errId);
-    if (!item) return;
-
-    const fb = document.getElementById(`spot_fb_${errId}`);
-    const labels = document.querySelectorAll(`[id^="spot_lbl_${errId}_"]`);
-
-    labels.forEach((lbl, idx) => {
-      lbl.classList.remove('correct', 'incorrect');
-      if (idx === item.answer) lbl.classList.add('correct');
-      else if (idx === selectedIdx) lbl.classList.add('incorrect');
-    });
-
-    const isCorrect = (selectedIdx === item.answer);
-    if (fb) {
-      fb.className = `feedback-box show ${isCorrect ? 'correct' : 'incorrect'}`;
-      fb.innerHTML = `<strong>${isCorrect ? '✅ Correct Diagnostic!' : '❌ Incorrect.'}</strong> ${item.explanation}`;
-    }
-  }
-
-  // =========================================================================
-  // SPOT & FIX INTERACTIVE CODE AUDIT STUDIO CONTROLLER
-  // =========================================================================
-  function initCodeAudit() {
-    if (!DATA.auditScenarios || DATA.auditScenarios.length === 0) return;
-    loadAuditScenario(state.activeAuditScenarioId);
-  }
-
-  function switchAuditMode(mode) {
-    state.auditMode = mode;
-    if (dom.btnAuditModeStudio) dom.btnAuditModeStudio.classList.toggle('active', mode === 'studio');
-    if (dom.btnAuditModeMcq) dom.btnAuditModeMcq.classList.toggle('active', mode === 'mcq');
-    if (dom.auditStudioContainer) dom.auditStudioContainer.style.display = (mode === 'studio') ? 'block' : 'none';
-    if (dom.auditMcqContainer) dom.auditMcqContainer.style.display = (mode === 'mcq') ? 'block' : 'none';
-  }
-
-  function switchTerminalTab(tab) {
-    state.activeTerminalTab = tab;
-    if (dom.auditTabStream) dom.auditTabStream.classList.toggle('active', tab === 'stream');
-    if (dom.auditTabDiff) dom.auditTabDiff.classList.toggle('active', tab === 'diff');
-    if (dom.auditTerminalStream) dom.auditTerminalStream.style.display = (tab === 'stream') ? 'block' : 'none';
-    if (dom.auditDiffInspector) dom.auditDiffInspector.style.display = (tab === 'diff') ? 'block' : 'none';
-  }
-
-  function loadAuditScenario(scenarioId) {
-    const sc = DATA.auditScenarios.find(s => s.id === scenarioId) || DATA.auditScenarios[0];
-    if (!sc) return;
-
-    state.activeAuditScenarioId = sc.id;
-    state.isShowingAuditSolution = false;
-
-    if (dom.auditScenarioSelect) dom.auditScenarioSelect.value = sc.id;
-    if (dom.auditScenarioTitle) dom.auditScenarioTitle.textContent = sc.title;
-    if (dom.auditScenarioDesc) dom.auditScenarioDesc.textContent = sc.description;
-    if (dom.auditUnitBadge) dom.auditUnitBadge.textContent = sc.unit;
-    if (dom.auditBugCountBadge) dom.auditBugCountBadge.textContent = `${sc.errorCatalog.length} Planted Defects`;
-
-    const totalMarks = sc.errorCatalog.reduce((sum, b) => sum + (b.marks || 5), 0);
-    if (dom.auditMarksBadge) dom.auditMarksBadge.textContent = `${totalMarks} Total Marks`;
-
-    if (dom.auditCategoryBadges) {
-      dom.auditCategoryBadges.innerHTML = (sc.categories || []).map(cat => 
-        `<span class="audit-badge audit-badge-cat">${cat}</span>`
-      ).join('');
-    }
-
-    if (dom.auditFileName) dom.auditFileName.textContent = sc.filename || `${sc.id}.cs`;
-    if (dom.btnToggleSolutionAudit) dom.btnToggleSolutionAudit.textContent = '💡 View Canonical Solution';
-
-    if (dom.auditCodeInput) {
-      dom.auditCodeInput.value = sc.initialCode;
-      updateAuditGutter();
-    }
-
-    if (dom.auditLiveStatus) {
-      dom.auditLiveStatus.className = 'audit-badge audit-badge-unit';
-      dom.auditLiveStatus.textContent = 'Ready for Audit';
-    }
-
-    // Run baseline grading
-    executeAuditGrading(false);
-  }
-
-  function updateAuditGutter() {
-    if (!dom.auditLineGutter || !dom.auditCodeInput) return;
-    const lines = dom.auditCodeInput.value.split('\n').length;
-    let html = '';
-    for (let i = 1; i <= lines; i++) {
-      html += `<div>${i}</div>`;
-    }
-    dom.auditLineGutter.innerHTML = html;
-  }
-
-  function resetAuditScenario() {
-    const sc = DATA.auditScenarios.find(s => s.id === state.activeAuditScenarioId);
-    if (!sc) return;
-    state.isShowingAuditSolution = false;
-    if (dom.btnToggleSolutionAudit) dom.btnToggleSolutionAudit.textContent = '💡 View Canonical Solution';
-    if (dom.auditCodeInput) {
-      dom.auditCodeInput.value = sc.initialCode;
-      updateAuditGutter();
-    }
-    executeAuditGrading(false);
-  }
-
-  function toggleAuditSolution() {
-    const sc = DATA.auditScenarios.find(s => s.id === state.activeAuditScenarioId);
-    if (!sc || !dom.auditCodeInput) return;
-
-    if (!state.isShowingAuditSolution) {
-      dom.auditCodeInput.value = sc.canonicalSolution;
-      state.isShowingAuditSolution = true;
-      if (dom.btnToggleSolutionAudit) dom.btnToggleSolutionAudit.textContent = '🔄 Revert to Student Code';
-    } else {
-      dom.auditCodeInput.value = sc.initialCode;
-      state.isShowingAuditSolution = false;
-      if (dom.btnToggleSolutionAudit) dom.btnToggleSolutionAudit.textContent = '💡 View Canonical Solution';
-    }
-    updateAuditGutter();
-    executeAuditGrading(true);
-  }
-
-  function insertAuditSnippet(snippetKey) {
-    if (!dom.auditCodeInput) return;
-    const snippets = {
-      tryparse: 'decimal.TryParse(txtInput.Text, out myVar)',
-      msgbox: 'MessageBox.Show("Message", "Title");',
-      equals: ' == ',
-      tostring: '.ToString("C")',
-      itemsadd: '.Items.Add(item);',
-      break: 'break;',
-      interpolate: '$"Total: {total:C}"'
-    };
-
-    const text = snippets[snippetKey];
-    if (!text) return;
-
-    const textarea = dom.auditCodeInput;
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    textarea.value = textarea.value.substring(0, start) + text + textarea.value.substring(end);
-    textarea.selectionStart = textarea.selectionEnd = start + text.length;
-    textarea.focus();
-    updateAuditGutter();
-  }
-
-  function runCodeAudit() {
-    executeAuditGrading(true);
-  }
-
-  function executeAuditGrading(isManualRun) {
-    const sc = DATA.auditScenarios.find(s => s.id === state.activeAuditScenarioId);
-    if (!sc || !dom.auditCodeInput) return;
-
-    const Auditor = (window.CSharpEngine && window.CSharpEngine.CSharpCodeAuditor) || window.CSharpCodeAuditor;
-    if (!Auditor) {
-      console.error('CSharpCodeAuditor is unavailable.');
-      return;
-    }
-
-    const studentCode = dom.auditCodeInput.value;
-    const result = Auditor.gradeSubmission(studentCode, sc.canonicalSolution, sc.errorCatalog, sc.initialCode);
-
-    // Update Scores in UI
-    if (dom.auditScorePill) {
-      dom.auditScorePill.textContent = `${result.score}%`;
-      if (result.score === 100) {
-        dom.auditScorePill.style.color = '#4caf50';
-        dom.auditScorePill.style.borderColor = '#4caf50';
-        dom.auditScorePill.style.background = 'rgba(76, 175, 80, 0.15)';
-      } else if (result.score >= 50) {
-        dom.auditScorePill.style.color = '#00bcd4';
-        dom.auditScorePill.style.borderColor = '#00bcd4';
-        dom.auditScorePill.style.background = 'rgba(0, 188, 212, 0.15)';
-      } else {
-        dom.auditScorePill.style.color = '#f44336';
-        dom.auditScorePill.style.borderColor = '#f44336';
-        dom.auditScorePill.style.background = 'rgba(244, 67, 54, 0.15)';
-      }
-    }
-
-    if (dom.auditFixedPill) {
-      dom.auditFixedPill.textContent = `${result.fixedBugs} / ${result.totalBugs} Fixed`;
-    }
-
-    if (dom.auditMarksPill) {
-      dom.auditMarksPill.textContent = `${result.earnedMarks} / ${result.totalMarks} Marks`;
-    }
-
-    if (dom.auditGradeBadge) {
-      if (result.isPerfectMatch || result.score === 100) {
-        dom.auditGradeBadge.textContent = '🌟 Distinction (100% Bugs Resolved)';
-        dom.auditGradeBadge.style.color = '#4caf50';
-      } else if (result.score >= 75) {
-        dom.auditGradeBadge.textContent = '✨ Merit Grade (Minor Defects Remaining)';
-        dom.auditGradeBadge.style.color = '#38bdf8';
-      } else if (result.score >= 50) {
-        dom.auditGradeBadge.textContent = '⚡ Pass Grade (Audit in Progress)';
-        dom.auditGradeBadge.style.color = '#ffb74d';
-      } else {
-        dom.auditGradeBadge.textContent = '⚠️ Unresolved Defects Present';
-        dom.auditGradeBadge.style.color = '#f44336';
-      }
-    }
-
-    if (dom.auditLiveStatus) {
-      if (result.score === 100) {
-        dom.auditLiveStatus.className = 'audit-badge audit-badge-marks';
-        dom.auditLiveStatus.textContent = 'All Defects Fixed!';
-      } else {
-        dom.auditLiveStatus.className = 'audit-badge audit-badge-bugs';
-        dom.auditLiveStatus.textContent = `${result.totalBugs - result.fixedBugs} Defects Remaining`;
-      }
-    }
-
-    // Render Diagnostic Stream
-    if (dom.auditTerminalStream) {
-      let streamHtml = `
-        <div class="audit-log-line audit-log-info">
-          <span>[COMPILER]</span>
-          <span>C# Roslyn static tokenizer executed. AST tokens: ${Auditor.tokenizeCode(studentCode).length}.</span>
-        </div>
-      `;
-
-      if (result.isPerfectMatch) {
-        streamHtml += `
-          <div class="audit-log-line audit-log-success" style="font-weight:700; font-size:0.9rem;">
-            <span>[PERFECT MATCH]</span>
-            <span>All ${result.totalBugs} defects resolved with 100% token accuracy! Model code conformity achieved.</span>
-          </div>
-        `;
-      }
-
-      result.feedback.forEach(item => {
-        let cls = 'audit-log-info';
-        if (item.status === 'SUCCESS') cls = 'audit-log-success';
-        else if (item.status === 'ERROR') cls = 'audit-log-error';
-        else if (item.status === 'WARNING') cls = 'audit-log-warning';
-
-        streamHtml += `
-          <div class="audit-log-line ${cls}">
-            <span>${item.status === 'SUCCESS' ? '✓' : (item.status === 'WARNING' ? '⚠' : '✗')}</span>
-            <span>${escapeHtml(item.message)}</span>
-          </div>
-        `;
-      });
-
-      if (result.fixedBugs < result.totalBugs) {
-        streamHtml += `
-          <div class="audit-log-line audit-log-info" style="margin-top:0.5rem; color:var(--text-muted);">
-            <span>[TIP]</span>
-            <span>Use the snippet chips above or inspect the 'Line Diff & Defect Inspector' tab to locate unresolved defect lines.</span>
-          </div>
-        `;
-      }
-
-      dom.auditTerminalStream.innerHTML = streamHtml;
-    }
-
-    // Render Visual Line Diff Inspector Table
-    if (dom.auditDiffTableBody && result.lineDiff) {
-      let tableHtml = '';
-      result.lineDiff.forEach(row => {
-        let rowClass = 'audit-diff-row-clean';
-        let statusBadge = '<span style="color:var(--text-muted);">Clean</span>';
-
-        if (row.status === 'fixed') {
-          rowClass = 'audit-diff-row-fixed';
-          statusBadge = '<span style="color:#4caf50; font-weight:700;">✓ Fixed</span>';
-        } else if (row.status === 'buggy') {
-          rowClass = 'audit-diff-row-buggy';
-          statusBadge = '<span style="color:#f44336; font-weight:700;">✗ Defect</span>';
-        } else if (row.status === 'regression') {
-          rowClass = 'audit-diff-row-regression';
-          statusBadge = '<span style="color:#ffb74d; font-weight:700;">⚠ Regressed</span>';
+          `;
         }
+      }
 
-        tableHtml += `
-          <tr class="${rowClass}">
-            <td style="font-weight:700; color:var(--text-muted);">${row.line}</td>
-            <td>${statusBadge}</td>
-            <td style="white-space:pre-wrap; word-break:break-all;">
-              <div>${escapeHtml(row.studentContent || "(empty)")}</div>
-              ${row.note ? `<div style="font-size:0.72rem; opacity:0.85; margin-top:2px;">↳ ${escapeHtml(row.note)}</div>` : ''}
-            </td>
-          </tr>
-        `;
-      });
-      dom.auditDiffTableBody.innerHTML = tableHtml;
+      this._renderHomeQuickPracticeCard();
+      this._renderHomeQuickDefs();
     }
-  }
 
-  function renderCustomUnitChecks() {
-    if (!dom.customUnitChecks) return;
+    _renderHomeQuickPracticeCard() {
+      const host = document.getElementById('homeQuickPracticeHost');
+      if (!host || !this.homeSession) return;
+      const q = this.homeSession.getCurrentQuestion();
+      if (!q) return;
+      const qState = this.homeSession.getQuestionState(q.id);
+      const isGraded = qState && qState.status === 'submitted';
+      const canSubmit = qState && typeof qState.selectedAnswer === 'number' && !isGraded;
 
-    let html = '';
-    DATA.units.forEach(unit => {
-      const qCount = DATA.questions.filter(q => q.ch === unit.id).length;
-      html += `
-        <label style="display:flex; align-items:center; gap:0.75rem; padding:0.6rem 0.85rem; background:var(--bg-subtle); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); cursor:pointer;">
-          <input type="checkbox" value="${unit.id}" checked class="custom-unit-cb" style="accent-color:var(--accent-blue); width:18px; height:18px;">
-          <span style="font-weight:700; font-size:0.9rem;">${unit.code}: ${unit.title}</span>
-          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); margin-left:auto;">(${qCount} Qs)</span>
-        </label>
+      host.innerHTML = `
+        <div class="section-bar" style="margin-bottom:0.75rem;">
+          <h3 class="panel-title" style="margin:0;">
+            ${Icons.icon('help-circle', { size: 18 })}
+            <span>Practice Question</span>
+          </h3>
+          <button type="button" class="btn-ghost btn-sm" data-expand-full-practice="true">Full Practice View</button>
+        </div>
+        ${Renderer.renderQuestionCard(q, qState, {
+          index: this.homeSession.currentIndex,
+          total: this.homeSession.questions.length,
+          csharpEngine: CSharpEngine,
+          defsEngine: this.defsEngine,
+          icons: Icons,
+          compact: true,
+          allowInstantSubmit: true,
+          isFlagged: this.persistence.isQuestionFlagged(q.id),
+          isUnderstood: Boolean(this.persistence.getState().understoodQuestions[q.id])
+        })}
+        <div class="q-nav-footer">
+          <button type="button" class="btn-secondary" id="btnHomePrevQ" ${this.homeSession.currentIndex === 0 ? 'disabled' : ''}>
+            ${Icons.icon('arrow-left', { size: 15 })} <span>Previous</span>
+          </button>
+          <button type="button" class="btn-primary" id="btnHomeSubmitQ" ${!canSubmit ? 'disabled' : ''}>
+            <span>Submit Answer</span> ${Icons.icon('check', { size: 15 })}
+          </button>
+          <button type="button" class="btn-secondary" id="btnHomeNextQ" ${this.homeSession.currentIndex >= this.homeSession.questions.length - 1 ? 'disabled' : ''}>
+            <span>Next</span> ${Icons.icon('arrow-right', { size: 15 })}
+          </button>
+        </div>
       `;
-    });
-
-    dom.customUnitChecks.innerHTML = html;
-  }
-
-  function startCustomPractice() {
-    const checked = Array.from(document.querySelectorAll('.custom-unit-cb:checked')).map(cb => cb.value);
-    if (checked.length === 0) {
-      alert('Please select at least one study unit for your custom session.');
-      return;
     }
 
-    const count = parseInt(dom.customQuestionCount.value || '20', 10);
-    const pool = DATA.questions.filter(q => checked.includes(q.ch));
+    _renderHomeQuickDefs(filterText = '') {
+      const listEl = document.getElementById('homeQuickDefsList');
+      if (!listEl) return;
+      const featuredIds = ['def_windows_form', 'def_button_control', 'def_event_handler', 'def_tryparse', 'def_messagebox_show', 'def_ref_vs_out', 'def_modal_vs_modeless'];
+      const matches = filterText.trim()
+        ? this.defsEngine.search(filterText).slice(0, 6)
+        : featuredIds.map(id => this.defsEngine.getById(id)).filter(Boolean).slice(0, 5);
 
-    if (pool.length === 0) {
-      alert('No questions available for the selected units.');
-      return;
+      if (matches.length === 0) {
+        listEl.innerHTML = `<div style="padding:0.6rem 0;font-size:0.83rem;color:var(--text-muted);">No matching terms.</div>`;
+        return;
+      }
+      listEl.innerHTML = matches.map(d => `
+        <button type="button" class="quick-def-item" data-def-id="${esc(d.id)}">
+          <span>${esc(d.term)}</span>
+          ${Icons.icon('chevron-right', { size: 15 })}
+        </button>
+      `).join('');
     }
 
-    // Shuffle pool and slice
-    const shuffled = [...pool].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, Math.min(count, pool.length));
+    /* ==================== 2. STUDY UNITS ENVIRONMENT ==================== */
 
-    clearInterval(state.examTimerInterval);
-    state.isExamMode = false;
-    state.selectedExamId = null;
-    state.examSubmitted = false;
-    state.flags = {};
-    if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
-    if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
-
-    launchQuizSession(`Custom Practice (${checked.join(', ')})`, selected, false);
-  }
-
-  function loadCodeScenario(scenarioId) {
-    const sc = DATA.codeScenarios[scenarioId];
-    if (!sc) return;
-
-    state.activeScenarioId = scenarioId;
-
-    if (dom.scenarioTitle) dom.scenarioTitle.textContent = sc.title;
-    if (dom.scenarioDesc) dom.scenarioDesc.textContent = sc.description;
-
-    // Pre-populate read-only scaffolding with application plumbing & control context
-    const controlsList = (sc.controls && sc.controls.length > 0) ? sc.controls.join(', ') : 'None';
-    const plumbingHeader = sc.classScaffolding || `// =========================================================================\n// [READ-ONLY SCAFFOLDING] Form Plumbing & Control Declarations\n// (Students write and debug only the in-scope logic assessed inside)\n// =========================================================================\npublic partial class MainForm : Form\n{\n    // Auto-instantiated Controls: ${controlsList}\n    public MainForm()\n    {\n        InitializeComponent();\n    }\n\n    ${sc.methodHeader.trim()}`;
-
-    if (dom.cgMethodHeader) dom.cgMethodHeader.textContent = plumbingHeader;
-    if (dom.cgMethodFooter) dom.cgMethodFooter.textContent = sc.methodFooter || "    }\n}";
-    if (dom.studentCodeInput) {
-      dom.studentCodeInput.value = '';
-      dom.studentCodeInput.placeholder = "// Write your C# statements here...\n// e.g. decimal.TryParse(txtInput.Text, out val); if-else; loops; ListBox...";
-    }
-
-    if (dom.scenarioControlsList) {
-      dom.scenarioControlsList.innerHTML = sc.controls.map(c => `<span class="topic-tag" style="color:var(--accent-blue);">${c}</span>`).join(' ');
-    }
-
-    // Reset results area
-    if (dom.diagnosticsPanel) dom.diagnosticsPanel.style.display = 'none';
-    if (dom.testResultsTable) dom.testResultsTable.innerHTML = '';
-    if (dom.rubricList) dom.rubricList.innerHTML = '';
-    if (dom.rubricBadge) {
-      dom.rubricBadge.textContent = 'Not Graded';
-      dom.rubricBadge.className = 'q-marks-tag';
-    }
-  }
-
-  function runCodeGradeEvaluation() {
-    const sc = DATA.codeScenarios[state.activeScenarioId];
-    if (!sc) return;
-
-    const code = dom.studentCodeInput ? dom.studentCodeInput.value.trim() : '';
-    if (!code) {
-      alert('Please enter your C# statements in the code editor before running evaluation.');
-      return;
-    }
-
-    if (!CSharpEngine) {
-      alert('CSharpEngine not loaded.');
-      return;
-    }
-
-    const evalResult = CSharpEngine.evaluateCodeGrade(code, sc);
-
-    // 1. Diagnostics Display
-    if (dom.diagnosticsPanel && dom.diagList) {
-      dom.diagnosticsPanel.style.display = 'block';
-      if (evalResult.diagnostics.length === 0) {
-        dom.diagList.innerHTML = `
-          <div class="diag-item success">
-            <span>✅</span>
-            <span>Zero compiler errors detected. Clean C# syntax and naming standard validated.</span>
-          </div>
-        `;
+    selectStudyUnit(suId) {
+      this.activeStudyUnit = suId;
+      this.persistence.saveState(s => { s.lastStudyUnit = suId; });
+      if (this.currentRoute !== 'study') {
+        this.navigate('study');
       } else {
-        dom.diagList.innerHTML = evalResult.diagnostics.map(d => `
-          <div class="diag-item ${d.severity}">
-            <span>${d.severity === 'error' ? '❌' : '⚠️'}</span>
+        this.renderStudyView();
+      }
+    }
+
+    renderStudyView(restoreExpandedPanels = null) {
+      const bar = document.getElementById('studyUnitSelectorBar');
+      const host = document.getElementById('studyUnitContentHost');
+      if (!bar || !host) return;
+
+      const units = this.data.units || [];
+      const unit = units.find(u => u.id === this.activeStudyUnit) || units[0];
+      if (!unit) return;
+
+      bar.innerHTML = units.map(u => `
+        <button type="button" role="tab" aria-selected="${u.id === unit.id ? 'true' : 'false'}"
+          class="unit-pill-btn ${u.id === unit.id ? 'active' : ''}" data-select-su="${esc(u.id)}">
+          ${Icons.icon(u.iconId, { size: 15 })}
+          <span>${esc(u.id)}: ${esc(u.shortTitle)}</span>
+        </button>
+      `).join('');
+
+      const state = this.persistence.getState();
+      const stats = AnalyticsMod.computeAnalytics(state, this.data);
+      const us = stats.unitStats[unit.id] || { completedTopics: 0, totalTopics: 0, progressPct: 0 };
+      const expSet = restoreExpandedPanels ? new Set(restoreExpandedPanels) : null;
+
+      const topicsHtml = (unit.structuredTopics || []).map((t, idx) => {
+        const isDone = Boolean(state.completedTopics[t.id]);
+        const p1 = `${t.id}_syntax`;
+        const p2 = `${t.id}_example`;
+        const p3 = `${t.id}_mistakes`;
+        const p4 = `${t.id}_exam`;
+
+        const openAttr = (pId, defaultOpen) => {
+          if (expSet) return expSet.has(pId) ? ' open' : '';
+          return defaultOpen ? ' open' : '';
+        };
+
+        return `<article class="topic-card ${isDone ? 'completed' : ''}" id="topicCard_${esc(t.id)}">
+          <div class="topic-header">
             <div>
-              <strong>[${d.code}] Line ${d.line}:</strong> ${escapeHtml(d.message)}
+              <span class="q-su-pill">${esc(unit.id)} • Topic ${idx + 1}</span>
+              <h3 class="topic-title" style="margin-top:0.35rem;">${esc(t.title)}</h3>
+            </div>
+            <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+              <button type="button" class="btn-secondary btn-sm" data-toggle-topic-done="${esc(t.id)}" data-topic-su="${esc(unit.id)}">
+                ${Icons.icon(isDone ? 'check-circle' : 'check', { size: 14 })}
+                <span>${isDone ? 'Completed' : 'Mark Complete'}</span>
+              </button>
+              <button type="button" class="btn-ghost btn-sm" data-practise-topic="${esc(t.id)}" data-topic-su="${esc(unit.id)}">
+                ${Icons.icon('play', { size: 14 })} <span>Practise Topic</span>
+              </button>
             </div>
           </div>
+
+          <p class="topic-plain-english">${this.defsEngine.renderTextWithInlineLinks(t.plainEnglish, { maxLinks: 3 })}</p>
+
+          <div class="topic-expand-group">
+            <details class="topic-details" data-panel-id="${esc(p1)}"${openAttr(p1, idx === 0)}>
+              <summary>Technical Terminology &amp; C# Syntax</summary>
+              <div class="topic-details-body">
+                <p style="margin-top:0;">${this.defsEngine.renderTextWithInlineLinks(t.terminology, { maxLinks: 4 })}</p>
+                ${Renderer.renderCodeBlock(t.syntax, CSharpEngine, Icons, 'C# Syntax Pattern')}
+              </div>
+            </details>
+
+            <details class="topic-details" data-panel-id="${esc(p2)}"${openAttr(p2, false)}>
+              <summary>Minimal Example (${t.exampleScope === 'complete' ? 'Complete Compiling Program' : 'Event-Handler / Class Fragment'}) &amp; How It Works</summary>
+              <div class="topic-details-body">
+                ${Renderer.renderCodeBlock(t.minimalExample, CSharpEngine, Icons, t.exampleScope === 'complete' ? 'Complete C# Program' : 'C# Code Fragment (inside Form1 class)')}
+                <p style="margin-bottom:0;">${this.defsEngine.renderTextWithInlineLinks(t.howItWorks, { maxLinks: 3 })}</p>
+              </div>
+            </details>
+
+            <details class="topic-details" data-panel-id="${esc(p3)}"${openAttr(p3, false)}>
+              <summary>Common Mistakes &amp; Important Distinctions</summary>
+              <div class="topic-details-body">
+                <div class="callout-box callout-warning">
+                  <strong>Common Mistakes:</strong>
+                  <ul style="margin:0.35rem 0 0;padding-left:1.2rem;">
+                    ${(t.commonMistakes || []).map(cm => `<li>${this.defsEngine.renderTextWithInlineLinks(cm, { maxLinks: 2 })}</li>`).join('')}
+                  </ul>
+                </div>
+                <div class="callout-box callout-info">
+                  <strong>Important Distinction:</strong> ${this.defsEngine.renderTextWithInlineLinks(t.importantDistinctions, { maxLinks: 2 })}
+                </div>
+              </div>
+            </details>
+
+            <details class="topic-details" data-panel-id="${esc(p4)}"${openAttr(p4, false)}>
+              <summary>Examination Application &amp; Related Definitions</summary>
+              <div class="topic-details-body">
+                <p style="margin-top:0;">${this.defsEngine.renderTextWithInlineLinks(t.examExample, { maxLinks: 2 })}</p>
+                <div class="feedback-defs-row">
+                  <span class="feedback-defs-label">Related Definitions:</span>
+                  ${(t.relatedDefinitions || []).map(dId => {
+                    const d = this.defsEngine.getById(dId);
+                    return d ? `<button type="button" class="def-chip-btn" data-def-id="${esc(d.id)}" data-from-topic="${esc(t.id)}">${esc(d.term)}</button>` : '';
+                  }).join('')}
+                </div>
+              </div>
+            </details>
+          </div>
+        </article>`;
+      }).join('');
+
+      host.innerHTML = `
+        <div class="study-unit-banner">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;">
+            <div>
+              <span class="q-su-pill">${esc(unit.weeks)} • Target Exam Weighting: ${unit.examWeightPct}%</span>
+              <h3 style="margin:0.4rem 0 0.3rem;font-size:1.25rem;">${esc(unit.title)}</h3>
+              <p style="margin:0;color:var(--text-secondary);font-size:0.9rem;">${esc(unit.summary)}</p>
+            </div>
+            <div style="min-width:190px;">
+              <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.25rem;">
+                Topics Completed: <strong>${us.completedTopics} / ${us.totalTopics}</strong> (${us.progressPct}% Mastery)
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width:${us.progressPct}%;"></div></div>
+            </div>
+          </div>
+          <details class="topic-details" data-panel-id="${esc(unit.id)}_objectives" style="margin-top:0.9rem;">
+            <summary>Official Learning Objectives (${(unit.learningObjectives || []).length})</summary>
+            <ul class="objectives-list">
+              ${(unit.learningObjectives || []).map(o => `<li>${esc(o)}</li>`).join('')}
+            </ul>
+          </details>
+        </div>
+
+        <div class="edu-svg-wrap">
+          <div style="font-size:0.78rem;font-weight:700;color:var(--text-muted);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.04em;">
+            Visual Architecture Diagram — ${esc(unit.id)}
+          </div>
+          ${Icons.renderDiagram(unit.diagramId)}
+        </div>
+
+        ${topicsHtml}
+
+        ${unit.cheatSheetHtml ? `
+          <div class="panel-card">
+            <h3 class="panel-title">${Icons.icon('file-text', { size: 18 })} <span>${esc(unit.id)} Quick-Reference Summary &amp; C# Cheat Sheet</span></h3>
+            <div class="cheatsheet-host">${unit.cheatSheetHtml}</div>
+          </div>
+        ` : ''}
+      `;
+    }
+
+    /* ==================== 3. PRACTICE, CUSTOM QUIZ & CODE LAB ==================== */
+
+    _populatePracticeFilters() {
+      const unitSel = document.getElementById('practiceUnitSelect');
+      if (!unitSel) return;
+      unitSel.innerHTML = `<option value="ALL">All Study Units (SU7, SU1–SU6)</option>` +
+        (this.data.units || []).map(u => `<option value="${esc(u.id)}">${esc(u.id)} — ${esc(u.shortTitle)}</option>`).join('');
+      this._syncPracticeTopicDropdown('ALL');
+    }
+
+    _syncPracticeTopicDropdown(suVal) {
+      const topicSel = document.getElementById('practiceTopicSelect');
+      if (!topicSel) return;
+      const units = (this.data.units || []).filter(u => suVal === 'ALL' || u.id === suVal);
+      const opts = [`<option value="">All Topics</option>`];
+      units.forEach(u => {
+        (u.structuredTopics || []).forEach(t => {
+          opts.push(`<option value="${esc(t.id)}">${esc(u.id)}: ${esc(t.title)}</option>`);
+        });
+      });
+      topicSel.innerHTML = opts.join('');
+    }
+
+    _populateCustomBuilderControls() {
+      const ug = document.getElementById('customUnitsGroup');
+      const tf = document.getElementById('customTopicFilter');
+      if (ug) {
+        ug.innerHTML = (this.data.units || []).map(u => `
+          <label class="check-chip">
+            <input type="checkbox" value="${esc(u.id)}" checked>
+            <span>${esc(u.id)} (${u.examWeightPct}%)</span>
+          </label>
         `).join('');
       }
+      if (tf) {
+        const opts = [`<option value="">All Topics in Selected Units</option>`];
+        (this.data.units || []).forEach(u => {
+          (u.structuredTopics || []).forEach(t => {
+            opts.push(`<option value="${esc(t.id)}">${esc(u.id)} — ${esc(t.title)}</option>`);
+          });
+        });
+        tf.innerHTML = opts.join('');
+      }
     }
 
-    // 2. Test Runner Table
-    if (dom.testResultsTable) {
-      dom.testResultsTable.innerHTML = `
-        <thead>
-          <tr>
-            <th>Test Scenario</th>
-            <th>Expected Result</th>
-            <th>Actual Output</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${evalResult.testResults.map(tr => `
-            <tr>
-              <td><strong>${escapeHtml(tr.name)}</strong></td>
-              <td style="color:var(--text-muted);">${escapeHtml(tr.expected)}</td>
-              <td style="font-family:var(--font-mono); color:${tr.passed ? 'var(--success-text)' : 'var(--danger-text)'};">${escapeHtml(tr.actual)}</td>
-              <td>
-                <span class="status-badge ${tr.passed ? 'pass' : 'fail'}">
-                  ${tr.passed ? '✓ PASS' : '✗ FAIL'}
-                </span>
-              </td>
-            </tr>
-          `).join('')}
-        </tbody>
+    startUnitPractice(suId = 'ALL', topicId = '') {
+      this._initDefaultPracticeSession(suId, topicId);
+      this.practiceSubTab = 'session';
+      const unitSel = document.getElementById('practiceUnitSelect');
+      if (unitSel) {
+        unitSel.value = suId || 'ALL';
+        this._syncPracticeTopicDropdown(unitSel.value);
+      }
+      const topicSel = document.getElementById('practiceTopicSelect');
+      if (topicSel) topicSel.value = topicId || '';
+
+      const toggleGrp = document.getElementById('viewModeToggleGroup');
+      if (toggleGrp) toggleGrp.style.display = 'inline-flex';
+
+      this.navigate('practice');
+    }
+
+    setViewMode(mode) {
+      this.practiceViewMode = mode === 'continuous' ? 'continuous' : 'card';
+      const singleArea = document.getElementById('singleCardArea');
+      const contArea = document.getElementById('practiceContinuousArea');
+      const btnCard = document.getElementById('btnViewCard');
+      const btnCont = document.getElementById('btnViewContinuous');
+
+      if (singleArea) singleArea.style.display = this.practiceViewMode === 'card' ? 'block' : 'none';
+      if (contArea) contArea.style.display = this.practiceViewMode === 'continuous' ? 'block' : 'none';
+      if (btnCard) btnCard.className = this.practiceViewMode === 'card' ? 'btn-secondary btn-sm' : 'btn-ghost btn-sm';
+      if (btnCont) btnCont.className = this.practiceViewMode === 'continuous' ? 'btn-secondary btn-sm' : 'btn-ghost btn-sm';
+
+      this._renderPracticeSessionArea();
+    }
+
+    renderPracticeView() {
+      document.querySelectorAll('[data-practice-sub]').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-practice-sub') === this.practiceSubTab);
+      });
+      const sPane = document.getElementById('practiceSubSession');
+      const cPane = document.getElementById('practiceSubCustom');
+      const lPane = document.getElementById('practiceSubCodelab');
+      if (sPane) sPane.style.display = this.practiceSubTab === 'session' ? 'block' : 'none';
+      if (cPane) cPane.style.display = this.practiceSubTab === 'custom' ? 'block' : 'none';
+      if (lPane) lPane.style.display = this.practiceSubTab === 'codelab' ? 'block' : 'none';
+
+      if (this.practiceSubTab === 'session') {
+        this.setViewMode(this.practiceViewMode);
+      } else if (this.practiceSubTab === 'codelab') {
+        this._renderCodeLabView();
+      }
+    }
+
+    _renderPracticeSessionArea() {
+      if (!this.practiceSession) this._initDefaultPracticeSession();
+      const sess = this.practiceSession;
+      if (!sess || sess.questions.length === 0) return;
+
+      if (this.practiceViewMode === 'continuous') {
+        const contArea = document.getElementById('practiceContinuousArea');
+        if (!contArea) return;
+        contArea.innerHTML = sess.questions.map((q, idx) => {
+          const st = sess.getQuestionState(q.id);
+          const canSub = st && typeof st.selectedAnswer === 'number' && st.status !== 'submitted';
+          return `
+            <div>
+              ${Renderer.renderQuestionCard(q, st, {
+                index: idx,
+                total: sess.questions.length,
+                csharpEngine: CSharpEngine,
+                defsEngine: this.defsEngine,
+                icons: Icons,
+                continuousMode: true,
+                allowInstantSubmit: true,
+                isFlagged: this.persistence.isQuestionFlagged(q.id),
+                isUnderstood: Boolean(this.persistence.getState().understoodQuestions[q.id])
+              })}
+              ${st && st.status !== 'submitted' ? `
+                <div style="margin:-0.5rem 0 1.25rem;display:flex;justify-content:flex-end;">
+                  <button type="button" class="btn-primary btn-sm" data-submit-sheet-q="${esc(q.id)}" ${!canSub ? 'disabled' : ''}>Check Answer</button>
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }).join('');
+        return;
+      }
+
+      const singleArea = document.getElementById('singleCardArea');
+      if (!singleArea) return;
+      const q = sess.getCurrentQuestion();
+      const qState = sess.getQuestionState(q.id);
+      const isGraded = qState && qState.status === 'submitted';
+      const canSubmit = qState && typeof qState.selectedAnswer === 'number' && !isGraded;
+
+      singleArea.innerHTML = `
+        <div style="margin-bottom:0.75rem;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;flex-wrap:wrap;">
+          <strong style="font-size:0.95rem;">${esc(sess.title)}</strong>
+          <span style="font-size:0.8rem;color:var(--text-muted);">
+            Shortcuts: <span class="kbd-tag">1–5</span> Select • <span class="kbd-tag">A–E</span> Select &amp; Submit • <span class="kbd-tag">Enter</span> Submit/Next
+          </span>
+        </div>
+        ${Renderer.renderQuestionCard(q, qState, {
+          index: sess.currentIndex,
+          total: sess.questions.length,
+          csharpEngine: CSharpEngine,
+          defsEngine: this.defsEngine,
+          icons: Icons,
+          allowInstantSubmit: true,
+          isFlagged: this.persistence.isQuestionFlagged(q.id),
+          isUnderstood: Boolean(this.persistence.getState().understoodQuestions[q.id])
+        })}
+        <div class="q-nav-footer">
+          <button type="button" class="btn-secondary" id="btnPracPrevQ" ${sess.currentIndex === 0 ? 'disabled' : ''}>
+            ${Icons.icon('arrow-left', { size: 15 })} <span>Previous</span>
+          </button>
+          <button type="button" class="btn-primary" id="btnPracSubmitQ" ${!canSubmit ? 'disabled' : ''}>
+            <span>Submit Answer</span> ${Icons.icon('check', { size: 15 })}
+          </button>
+          <button type="button" class="btn-secondary" id="btnPracNextQ" ${sess.currentIndex >= sess.questions.length - 1 ? 'disabled' : ''}>
+            <span>Next Question</span> ${Icons.icon('arrow-right', { size: 15 })}
+          </button>
+        </div>
       `;
     }
 
-    // 3. Rubric Breakdown
-    if (dom.rubricBadge) {
-      dom.rubricBadge.textContent = `${evalResult.percentage}% • ${evalResult.gradeLetter}`;
-      dom.rubricBadge.className = `status-badge ${evalResult.isPass ? 'pass' : 'fail'}`;
-      dom.rubricBadge.style.fontSize = '0.9rem';
-      dom.rubricBadge.style.padding = '0.35rem 0.8rem';
+    /* ==================== C# CODE LAB, SPOT-THE-ERROR & CODE AUDITOR ==================== */
+
+    _populateCodeLabControls() {
+      const sel = document.getElementById('codeScenarioSelect');
+      if (!sel) return;
+      const entries = Object.entries(this.data.codeScenarios || {});
+      sel.innerHTML = entries.map(([key, sc]) => `<option value="${esc(key)}">${esc(sc.title)}</option>`).join('');
+      if (entries.length > 0) {
+        this.activeCodeScenarioKey = entries[0][0];
+        this._loadCodeScenarioIntoEditor(this.activeCodeScenarioKey);
+      }
     }
 
-    if (dom.rubricList) {
-      dom.rubricList.innerHTML = evalResult.rubric.map(item => `
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; padding:0.6rem 0; border-bottom:1px solid var(--border-subtle); font-size:0.85rem;">
-          <div>
-            <strong>${escapeHtml(item.title)}</strong>
-            <div style="font-size:0.78rem; color:var(--text-muted);">${escapeHtml(item.notes)}</div>
+    _loadCodeScenarioIntoEditor(scKey) {
+      const sc = (this.data.codeScenarios || {})[scKey];
+      if (!sc) return;
+      this.activeCodeScenarioKey = scKey;
+      const titleEl = document.getElementById('scenarioTitle');
+      const descEl = document.getElementById('scenarioDesc');
+      const sigEl = document.getElementById('cgMethodHeader');
+      const ctrlsEl = document.getElementById('scenarioControlsList');
+      const inputEl = document.getElementById('studentCodeInput');
+      const outEl = document.getElementById('codeGradeOutputHost');
+
+      if (titleEl) titleEl.textContent = sc.title;
+      if (descEl) descEl.textContent = sc.description;
+      if (sigEl) sigEl.textContent = `${sc.methodSignature || 'private void btnCalculate_Click(object sender, EventArgs e)'} {`;
+      if (ctrlsEl) {
+        ctrlsEl.innerHTML = (sc.controls || []).map(c => `<span class="inline-code">${esc(c)}</span>`).join('');
+      }
+      if (inputEl) inputEl.value = sc.starterCode || '';
+      if (outEl) outEl.innerHTML = '';
+    }
+
+    _runCodeGradeEvaluation() {
+      const sc = (this.data.codeScenarios || {})[this.activeCodeScenarioKey];
+      const inputEl = document.getElementById('studentCodeInput');
+      const outEl = document.getElementById('codeGradeOutputHost');
+      if (!sc || !inputEl || !outEl) return;
+
+      const res = CSharpEngine.evaluateCodeGrade(inputEl.value, sc);
+      const diags = res.diagnostics || [];
+      const tests = res.testResults || [];
+
+      outEl.innerHTML = `
+        <div class="panel-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem;">
+            <strong>Evaluation Score: ${res.percentage}% (${esc(res.gradeLetter)})</strong>
+            <span class="q-diff-pill ${res.percentage === 100 ? 'diff-foundational' : 'diff-advanced'}">
+              ${tests.filter(t => t.passed).length} / ${tests.length} Test Cases Passed
+            </span>
           </div>
-          <span style="font-family:var(--font-mono); font-weight:700; color:${item.passed ? 'var(--success-text)' : 'var(--danger-text)'};">
-            ${item.pointsEarned} / ${item.pointsMax} pts
-          </span>
+          ${diags.length > 0 ? `
+            <div style="margin-bottom:1rem;">
+              <strong style="font-size:0.85rem;">Compiler &amp; Naming Diagnostics (${diags.length}):</strong>
+              <ul style="margin:0.4rem 0 0;padding-left:1.2rem;font-size:0.84rem;">
+                ${diags.map(d => `<li style="color:${d.severity === 'error' ? 'var(--status-error-text)' : 'var(--status-warning-text)'};">
+                  <code>${esc(d.code)}</code> (Line ${d.line}): ${esc(d.message)}
+                </li>`).join('')}
+              </ul>
+            </div>
+          ` : `<p style="font-size:0.84rem;color:var(--status-success-text);margin-top:0;">0 Compiler Diagnostics — Clean C# Syntax &amp; Naming!</p>`}
+          <div class="scenario-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Test Case</th><th>Status</th><th>Actual Output</th><th>Expected</th></tr></thead>
+              <tbody>
+                ${tests.map(t => `<tr>
+                  <td>${esc(t.name)}</td>
+                  <td style="color:${t.passed ? 'var(--status-success-text)' : 'var(--status-error-text)'};font-weight:700;">${t.passed ? 'PASS' : 'FAIL'}</td>
+                  <td><code>${esc(t.actual || t.reason || '')}</code></td>
+                  <td><code>${esc(t.expected || '')}</code></td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    _renderCodeLabView() {
+      document.querySelectorAll('[data-codelab-tab]').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-codelab-tab') === this.codelabSubTab);
+      });
+      const sb = document.getElementById('codelabSandboxPane');
+      const sp = document.getElementById('codelabSpotPane');
+      const au = document.getElementById('auditStudioContainer');
+      if (sb) sb.style.display = this.codelabSubTab === 'sandbox' ? 'block' : 'none';
+      if (sp) sp.style.display = this.codelabSubTab === 'spot' ? 'block' : 'none';
+      if (au) au.style.display = this.codelabSubTab === 'auditor' ? 'block' : 'none';
+
+      if (this.codelabSubTab === 'spot' && sp) {
+        const list = this.data.spotErrors || [];
+        const item = list[this.spotIndex] || list[0];
+        if (!item) return;
+        sp.innerHTML = `
+          <div class="single-q-card">
+            <div class="q-card-meta">
+              <div class="q-meta-left">
+                <span class="q-su-pill">${esc(item.su || 'C#')}</span>
+                <strong>${esc(item.title)}</strong>
+              </div>
+              <span class="q-progress-label">Challenge ${this.spotIndex + 1} of ${list.length}</span>
+            </div>
+            ${Renderer.renderCodeBlock(item.code, CSharpEngine, Icons, 'Defective C# Snippet')}
+            <div class="q-stem-text">${esc(item.question)}</div>
+            <div class="q-options-list">
+              ${(item.options || []).map((opt, idx) => {
+                let cls = 'q-option-btn';
+                if (this.spotSubmitted) {
+                  if (idx === item.answer) cls += ' opt-correct';
+                  else if (idx === this.spotSelected) cls += ' opt-incorrect';
+                } else if (idx === this.spotSelected) {
+                  cls += ' opt-selected';
+                }
+                return `<button type="button" class="${cls}" data-spot-opt="${idx}" ${this.spotSubmitted ? 'disabled' : ''}>
+                  <span class="opt-radio-ring">${Renderer.LETTERS[idx]}</span>
+                  <span class="opt-text">${esc(opt)}</span>
+                </button>`;
+              }).join('')}
+            </div>
+            ${this.spotSubmitted ? `
+              <div class="q-feedback-panel ${this.spotSelected === item.answer ? 'feedback-correct' : 'feedback-incorrect'}">
+                <strong>${this.spotSelected === item.answer ? 'Correct Diagnosis!' : `Incorrect — Correct Option: ${Renderer.LETTERS[item.answer]}`}</strong>
+                <p style="margin:0.4rem 0 0;">${esc(item.explanation)}</p>
+              </div>
+            ` : ''}
+            <div class="q-nav-footer">
+              <button type="button" class="btn-secondary" data-spot-nav="-1" ${this.spotIndex === 0 ? 'disabled' : ''}>Previous</button>
+              <button type="button" class="btn-primary" id="btnSubmitSpot" ${this.spotSelected === null || this.spotSubmitted ? 'disabled' : ''}>Check Diagnosis</button>
+              <button type="button" class="btn-secondary" data-spot-nav="1" ${this.spotIndex >= list.length - 1 ? 'disabled' : ''}>Next</button>
+            </div>
+          </div>
+        `;
+      } else if (this.codelabSubTab === 'auditor' && au) {
+        const scenarios = this.data.auditScenarios || [];
+        const sc = scenarios[this.activeAuditIndex] || scenarios[0];
+        if (!sc) return;
+        au.innerHTML = `
+          <div class="panel-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:0.75rem;">
+              <label style="font-weight:700;font-size:0.88rem;">Code Audit File:
+                <select id="auditScenarioSelect" class="select-input" style="width:auto;display:inline-block;margin-left:0.5rem;">
+                  ${scenarios.map((a, idx) => `<option value="${idx}" ${idx === this.activeAuditIndex ? 'selected' : ''}>${esc(a.filename || a.fileName || a.title)}</option>`).join('')}
+                </select>
+              </label>
+              <div style="display:flex;gap:0.5rem;">
+                <button type="button" class="btn-secondary btn-sm" id="btnLoadCanonicalAudit">Show Canonical Fix</button>
+                <button type="button" class="btn-primary btn-sm" id="btnRunCodeAuditor">Audit Fixed C# Code</button>
+              </div>
+            </div>
+            <p style="margin:0 0 0.75rem;font-size:0.86rem;color:var(--text-secondary);">${esc(sc.instructions || sc.description || 'Locate and repair all syntax, casing, type, and logic defects.')}</p>
+            <div class="code-editor-surface">
+              <label for="auditCodeTextarea" class="sr-only">Buggy C# Code Editor</label>
+              <textarea id="auditCodeTextarea" class="code-textarea" style="min-height:260px;" spellcheck="false">${esc(sc.initialCode || sc.buggyCode || '')}</textarea>
+            </div>
+            <div id="auditResultOutput" style="margin-top:1rem;"></div>
+          </div>
+        `;
+      }
+    }
+
+    /* ==================== 4. EXAMINATION CENTRE & PAST PAPERS ==================== */
+
+    _renderExamLobbyCards() {
+      const listEl = document.getElementById('examsList');
+      if (!listEl) return;
+      listEl.innerHTML = (this.data.officialExams || []).map(ex => `
+        <div class="panel-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+            <span class="q-su-pill">${esc(ex.academicYear || 'Past Paper')}</span>
+            <span class="q-marks-pill">${ex.totalMarks} Marks • ${ex.durationMinutes}m</span>
+          </div>
+          <h3 style="margin:0.25rem 0 0.45rem;font-size:1rem;">${esc(ex.title)}</h3>
+          <p style="font-size:0.84rem;color:var(--text-secondary);margin:0 0 0.9rem;">
+            Continuous single-sheet examination (${(ex.subQuestionIds || []).length} structured questions) with reference rates matrix and full memorandum review.
+          </p>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <button type="button" class="btn-primary btn-sm" data-start-paper="${esc(ex.id)}" data-paper-timed="true">Start Timed (${ex.durationMinutes}m)</button>
+            <button type="button" class="btn-secondary btn-sm" data-start-paper="${esc(ex.id)}" data-paper-timed="false">Untimed Practice</button>
+          </div>
         </div>
       `).join('');
     }
 
-    // Update session analytics
-    state.masteryStats.totalAttempts++;
-    if (evalResult.isPass) state.masteryStats.correctAttempts++;
-    saveStats();
-    updateStatsDisplay();
-  }
+    startOfficialExam(examId, timed = true) {
+      const ex = (this.data.officialExams || []).find(e => e.id === examId);
+      if (!ex) return;
+      const qMap = new Map((this.data.questions || []).map(q => [q.id, q]));
+      const qs = (ex.subQuestionIds || []).map(id => qMap.get(id)).filter(Boolean);
 
-  function insertCodeSnippet(type) {
-    if (!dom.studentCodeInput) return;
+      this.examSession = new ExamMod.ExamSession({
+        id: `${ex.id}_${Date.now()}`,
+        mode: 'past_paper',
+        title: ex.title,
+        layout: 'continuous',
+        allowInstantSubmit: false,
+        scenarioHtml: ex.scenarioHtml || `<p>${esc(ex.scenario || '')}</p>`,
+        examPaperId: ex.id,
+        questions: qs,
+        durationMinutes: timed ? (ex.durationMinutes || 180) : 0
+      });
 
-    let snippet = '';
-    switch (type) {
-      case 'tryparse':
-        snippet = 'decimal value;\nif (decimal.TryParse(txtInput.Text, out value))\n{\n    // valid input logic\n}\nelse\n{\n    MessageBox.Show("Please enter a valid numeric value.", "Input Error");\n}\n';
-        break;
-      case 'trycatch':
-        snippet = 'try\n{\n    // Statements that may throw exceptions\n}\ncatch (FormatException)\n{\n    MessageBox.Show("Invalid data format.", "Format Error");\n}\n';
-        break;
-      case 'ifelse':
-        snippet = 'if (condition)\n{\n    // branch 1\n}\nelse\n{\n    // branch 2\n}\n';
-        break;
-      case 'while':
-        snippet = 'int count = 1;\nwhile (count <= 10)\n{\n    // body\n    count++;\n}\n';
-        break;
-      case 'for':
-        snippet = 'for (int i = 0; i < lstItems.Items.Count; i++)\n{\n    // statements\n}\n';
-        break;
-      case 'msgbox':
-        snippet = 'MessageBox.Show("Operation completed.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);\n';
-        break;
-      case 'tostring':
-        snippet = '.ToString("C");';
-        break;
+      this.persistence.saveActiveExamSession(this.examSession.toSnapshot());
+      this.navigate('exams');
+      this.renderContinuousExamPaper();
     }
 
-    const start = dom.studentCodeInput.selectionStart;
-    const end = dom.studentCodeInput.selectionEnd;
-    const val = dom.studentCodeInput.value;
-    dom.studentCodeInput.value = val.substring(0, start) + snippet + val.substring(end);
-    dom.studentCodeInput.focus();
-    dom.studentCodeInput.selectionStart = dom.studentCodeInput.selectionEnd = start + snippet.length;
-  }
-
-  function toggleModelSolution() {
-    const sc = DATA.codeScenarios[state.activeScenarioId];
-    if (!sc) return;
-
-    if (confirm("Would you like to load the official model solution into the C# editor?")) {
-      if (dom.studentCodeInput) {
-        dom.studentCodeInput.value = sc.modelSolution;
-      }
-    }
-  }
-
-  // Quiz / Exam Session Runner
-  function startUnitPractice(unitId) {
-    const questions = DATA.questions.filter(q => q.ch === unitId);
-    if (questions.length === 0) {
-      alert('No practice questions available for ' + unitId);
-      return;
-    }
-    const unit = DATA.units.find(u => u.id === unitId);
-    clearInterval(state.examTimerInterval);
-    state.isExamMode = false;
-    state.selectedExamId = null;
-    state.examSubmitted = false;
-    state.flags = {};
-    if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
-    if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
-    launchQuizSession(`${unit ? unit.title : unitId} Practice`, questions, false);
-  }
-
-  function startExam(examId, isTimed) {
-    const exam = DATA.officialExams.find(e => e.id === examId);
-    if (!exam) return;
-
-    const questions = DATA.questions.filter(q => exam.subQuestionIds.includes(q.id));
-    if (questions.length === 0) {
-      alert('Exam questions are being prepared.');
-      return;
+    startFullWeightedExam(timed = true) {
+      const allocations = (this.data.examWeightingModel && this.data.examWeightingModel.allocations) || ExamMod.DEFAULT_WEIGHTS;
+      const qs = ExamMod.generateWeightedExam(this.data.questions || [], allocations, 100);
+      this.examSession = new ExamMod.ExamSession({
+        id: `full_sim_${Date.now()}`,
+        mode: 'full_exam',
+        title: 'Full Weighted Examination Simulation (SU7, SU1–SU6)',
+        layout: 'continuous',
+        allowInstantSubmit: false,
+        scenarioHtml: `<p>Full 100-mark examination simulation calibrated across all seven Study Units: SU7 (10%), SU1 (10%), SU2 (15%), SU3 (20%), SU4 (20%), SU5 (15%), and SU6 (10%).</p>`,
+        questions: qs,
+        durationMinutes: timed ? 180 : 0
+      });
+      this.persistence.saveActiveExamSession(this.examSession.toSnapshot());
+      this.navigate('exams');
+      this.renderContinuousExamPaper();
     }
 
-    clearInterval(state.examTimerInterval);
-    state.isExamMode = true;
-    state.selectedExamId = examId;
-    state.isTimedExam = !!isTimed;
-    state.examSubmitted = false;
-    state.flags = {};
-    state.answers = {};
-    state.viewMode = 'continuous'; // MANDATORY INVARIANT: Continuous Single-Sheet Paper Only
-    state.examSecondsLeft = (exam.durationMinutes || 180) * 60;
-    state.quizQuestions = questions;
-    state.currentIndex = 0;
-    state.score = 0;
-    state.wrongOnlyMode = false;
+    renderExamsView() {
+      const lobby = document.getElementById('examsLobbyPane');
+      const active = document.getElementById('activeExamWorkspace');
+      if (!lobby || !active) return;
 
-    if (dom.quizTitle) dom.quizTitle.textContent = `${exam.title} ${isTimed ? '(Timed)' : ''}`;
-    if (dom.btnRetryWrong) dom.btnRetryWrong.style.display = 'none';
-
-    // Timer setup
-    if (isTimed) {
-      if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'flex';
-      if (dom.navExamTimer) dom.navExamTimer.style.display = 'inline-flex';
-      startExamTimer();
-    } else {
-      if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
-      if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
-      clearInterval(state.examTimerInterval);
-    }
-
-    // MANDATORY CRITICAL EXAM ARCHITECTURE INVARIANT:
-    // Under NO circumstances may official exam papers be rendered as a single-question carousel,
-    // flashcard, or "Q 1 of N" paginated stepper with "Next Question" buttons.
-    // All official past papers MUST render as a CONTINUOUS, SINGLE SCROLLABLE EXAMINATION DOCUMENT.
-    if (dom.viewModeToggleGroup) dom.viewModeToggleGroup.style.display = 'none';
-    if (dom.cardProgressWrap) dom.cardProgressWrap.style.display = 'none';
-    if (dom.quizCounter) dom.quizCounter.style.display = 'none';
-    if (dom.btnBookmark) dom.btnBookmark.style.display = 'none';
-    if (dom.singleCardArea) dom.singleCardArea.style.display = 'none';
-    if (dom.continuousPaperArea) dom.continuousPaperArea.style.display = 'block';
-    if (dom.examNavigatorBar) dom.examNavigatorBar.style.display = 'flex';
-
-    switchTab('quiz');
-    renderContinuousExamPaper();
-    renderExamPalette();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function launchQuizSession(title, questions, isTimed) {
-    state.quizQuestions = questions;
-    state.currentIndex = 0;
-    state.answers = {};
-    state.flags = {};
-    state.score = 0;
-    state.wrongOnlyMode = false;
-    state.examSubmitted = false;
-
-    if (dom.quizTitle) dom.quizTitle.textContent = title;
-    if (dom.btnRetryWrong) dom.btnRetryWrong.style.display = 'none';
-
-    // Timer setup
-    if (isTimed) {
-      if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'flex';
-      if (dom.navExamTimer) dom.navExamTimer.style.display = 'inline-flex';
-      startExamTimer();
-    } else {
-      if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
-      if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
-      clearInterval(state.examTimerInterval);
-    }
-
-    switchTab('quiz');
-
-    if (state.isExamMode) {
-      state.viewMode = 'continuous';
-      if (dom.viewModeToggleGroup) dom.viewModeToggleGroup.style.display = 'none';
-      if (dom.cardProgressWrap) dom.cardProgressWrap.style.display = 'none';
-      if (dom.quizCounter) dom.quizCounter.style.display = 'none';
-      if (dom.btnBookmark) dom.btnBookmark.style.display = 'none';
-      if (dom.singleCardArea) dom.singleCardArea.style.display = 'none';
-      if (dom.continuousPaperArea) dom.continuousPaperArea.style.display = 'block';
-      if (dom.examNavigatorBar) dom.examNavigatorBar.style.display = 'flex';
-      renderContinuousExamPaper();
-      renderExamPalette();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      if (dom.viewModeToggleGroup) dom.viewModeToggleGroup.style.display = 'inline-flex';
-      applyViewMode(state.viewMode || 'continuous');
-    }
-  }
-
-  function setViewMode(mode) {
-    if (state.isExamMode) {
-      console.warn('CRITICAL INVARIANT: Official exam papers are strictly locked to Continuous Single-Sheet Paper Only.');
-      return;
-    }
-    state.viewMode = mode;
-    applyViewMode(mode);
-  }
-
-  function applyViewMode(mode) {
-    if (state.isExamMode) {
-      // Invariant safeguard: enforce continuous mode under all conditions in exams
-      mode = 'continuous';
-    }
-
-    if (dom.btnModeContinuous) dom.btnModeContinuous.classList.toggle('active', mode === 'continuous');
-    if (dom.btnModeCard) dom.btnModeCard.classList.toggle('active', mode === 'card');
-
-    if (mode === 'continuous') {
-      if (dom.singleCardArea) dom.singleCardArea.style.display = 'none';
-      if (dom.continuousPaperArea) dom.continuousPaperArea.style.display = 'block';
-      if (dom.examNavigatorBar) dom.examNavigatorBar.style.display = 'flex';
-      if (dom.cardProgressWrap) dom.cardProgressWrap.style.display = 'none';
-      if (dom.quizCounter) dom.quizCounter.style.display = 'none';
-      if (dom.btnBookmark) dom.btnBookmark.style.display = 'none';
-      renderContinuousExamPaper();
-      renderExamPalette();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      if (dom.singleCardArea) dom.singleCardArea.style.display = 'block';
-      if (dom.continuousPaperArea) dom.continuousPaperArea.style.display = 'none';
-      if (dom.examNavigatorBar) dom.examNavigatorBar.style.display = 'none';
-      if (dom.cardProgressWrap) dom.cardProgressWrap.style.display = 'block';
-      if (dom.quizCounter) dom.quizCounter.style.display = 'inline';
-      if (dom.btnBookmark) dom.btnBookmark.style.display = 'inline-block';
-      renderCurrentQuestion();
-    }
-  }
-
-  function startExamTimer() {
-    clearInterval(state.examTimerInterval);
-    updateTimerDisplay();
-
-    state.examTimerInterval = setInterval(() => {
-      state.examSecondsLeft--;
-      updateTimerDisplay();
-
-      if (state.examSecondsLeft <= 0) {
-        clearInterval(state.examTimerInterval);
-        alert('Time is up! Your exam paper will now be submitted automatically.');
-        submitCompleteExamPaper(true); // Forced submission with NO cancellation allowed
-      }
-    }, 1000);
-  }
-
-  function updateTimerDisplay() {
-    const mins = Math.floor(state.examSecondsLeft / 60);
-    const secs = state.examSecondsLeft % 60;
-    const formatted = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    if (dom.quizTimerDisplay) dom.quizTimerDisplay.textContent = formatted;
-    if (dom.navExamTimer) dom.navExamTimer.textContent = `⏱️ ${formatted}`;
-  }
-
-  function renderCurrentQuestion() {
-    if (state.isExamMode) {
-      console.warn('CRITICAL INVARIANT: Official exam papers cannot be rendered as a single-question card.');
-      return;
-    }
-    if (!dom.quizArea || state.quizQuestions.length === 0) return;
-
-    const q = state.quizQuestions[state.currentIndex];
-    const total = state.quizQuestions.length;
-
-    if (dom.quizCounter) dom.quizCounter.textContent = `Q ${state.currentIndex + 1} of ${total}`;
-    if (dom.quizProgressFill) {
-      const pct = Math.round(((state.currentIndex + 1) / total) * 100);
-      dom.quizProgressFill.style.width = `${pct}%`;
-    }
-
-    // Previous / Next button states
-    if (dom.btnPrevQ) dom.btnPrevQ.disabled = (state.currentIndex === 0);
-    if (dom.btnNextQ) {
-      if (state.currentIndex === total - 1) {
-        dom.btnNextQ.textContent = state.isExamMode ? 'Finish & Submit Exam 📤' : 'Finish Practice 🏁';
+      if (this.examSession) {
+        lobby.style.display = 'none';
+        active.style.display = 'block';
+        this.renderContinuousExamPaper();
       } else {
-        dom.btnNextQ.textContent = 'Next Question →';
+        lobby.style.display = 'block';
+        active.style.display = 'none';
+        this._stopExamTimerLoop();
       }
     }
 
-    // Bookmark button
-    const isBookmarked = state.bookmarks.includes(q.id);
-    if (dom.btnBookmark) {
-      dom.btnBookmark.textContent = isBookmarked ? '★ Bookmarked' : '☆ Bookmark';
-      dom.btnBookmark.style.color = isBookmarked ? 'var(--accent-amber)' : 'inherit';
+    renderContinuousExamPaper() {
+      const sess = this.examSession;
+      if (!sess) return;
+      const lobby = document.getElementById('examsLobbyPane');
+      const active = document.getElementById('activeExamWorkspace');
+      if (lobby) lobby.style.display = 'none';
+      if (active) active.style.display = 'block';
+
+      const titleEl = document.getElementById('activeExamTitle');
+      const summaryEl = document.getElementById('examNavigatorSummary');
+      const paperArea = document.getElementById('continuousPaperArea');
+      const paletteEl = document.getElementById('examQuestionPalette');
+      const drawerBody = document.getElementById('scenarioDrawerBody');
+      const submitBtn = document.getElementById('btnOpenSubmitExamModal');
+      const pauseBtn = document.getElementById('btnPauseResumeTimer');
+
+      if (titleEl) titleEl.textContent = sess.title;
+      if (drawerBody) {
+        drawerBody.innerHTML = sess.scenarioHtml || '<p>No external reference table required for this assessment.</p>';
+      }
+      if (submitBtn) submitBtn.style.display = sess.isCompleted ? 'none' : 'inline-flex';
+      if (pauseBtn) {
+        pauseBtn.style.display = (sess.timed && !sess.isCompleted) ? 'inline-flex' : 'none';
+        pauseBtn.textContent = sess.pausedAtMs ? 'Resume' : 'Pause';
+      }
+
+      const pre = sess.getPreSubmitSummary();
+      if (summaryEl) {
+        if (sess.isCompleted && sess.finalResult) {
+          const r = sess.finalResult;
+          summaryEl.textContent = `Score: ${r.rawMarks} / ${r.totalMarks} (${r.percentage}%) • Correct: ${r.correctCount} • Incorrect: ${r.incorrectCount} • Unanswered: ${r.unansweredCount}`;
+        } else {
+          summaryEl.textContent = `Answered: ${pre.answeredCount} / ${pre.totalQuestions} • Unanswered: ${pre.unansweredCount} • Flagged: ${pre.flaggedCount}`;
+        }
+      }
+
+      if (paletteEl) {
+        paletteEl.innerHTML = sess.questions.map((q, idx) => {
+          const st = sess.getQuestionState(q.id);
+          let cls = 'palette-pill';
+          if (sess.isCompleted) {
+            cls += st.outcome === 'correct' ? ' graded-correct' : ' graded-incorrect';
+          } else if (typeof st.selectedAnswer === 'number') {
+            cls += ' answered';
+          }
+          if (st.flagged) cls += ' flagged';
+          return `<button type="button" class="${cls}" id="palettePill_${esc(q.id)}" data-jump-paper-q="${esc(q.id)}" aria-label="Jump to Question ${idx + 1}">
+            ${idx + 1}
+          </button>`;
+        }).join('');
+      }
+
+      if (paperArea) {
+        const resultsBannerHtml = (sess.isCompleted && sess.finalResult)
+          ? this._renderExamResultsBannerHtml(sess.finalResult)
+          : '';
+
+        const scenarioInlineCard = sess.scenarioHtml
+          ? `<details class="topic-details" style="margin-bottom:1rem;" open>
+              <summary>Examination Scenario, Control Matrix &amp; Rates Reference</summary>
+              <div class="topic-details-body">${sess.scenarioHtml}</div>
+            </details>`
+          : '';
+
+        const questionsHtml = sess.questions.map((q, idx) =>
+          Renderer.renderQuestionCard(q, sess.getQuestionState(q.id), {
+            index: idx,
+            total: sess.questions.length,
+            csharpEngine: CSharpEngine,
+            defsEngine: this.defsEngine,
+            icons: Icons,
+            continuousMode: true,
+            allowInstantSubmit: false,
+            isCompleted: sess.isCompleted,
+            isFlagged: sess.getQuestionState(q.id).flagged,
+            isUnderstood: Boolean(this.persistence.getState().understoodQuestions[q.id])
+          })
+        ).join('');
+
+        const footSubmitHtml = !sess.isCompleted
+          ? `<div class="panel-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+              <span style="font-size:0.88rem;color:var(--text-secondary);">Review unanswered and flagged items before final grading.</span>
+              <button type="button" class="btn-primary" data-trigger-exam-submit="true">Submit Complete Examination</button>
+            </div>`
+          : '';
+
+        paperArea.innerHTML = resultsBannerHtml + scenarioInlineCard + questionsHtml + footSubmitHtml;
+      }
+
+      this._startExamTimerLoop();
     }
 
-    const savedAns = state.answers[q.id];
+    _renderExamResultsBannerHtml(res) {
+      const mins = Math.floor((res.durationSeconds || 0) / 60);
+      const secs = (res.durationSeconds || 0) % 60;
+      const unitRows = Object.values(res.byUnit || {}).map(u => `
+        <tr>
+          <td><strong>${esc(u.su)}</strong></td>
+          <td>${u.earnedMarks} / ${u.totalMarks}</td>
+          <td>${u.correct} / ${u.total}</td>
+          <td><strong>${u.percentage}%</strong></td>
+        </tr>
+      `).join('');
 
-    let html = `
-      <div class="q-card">
-        <div class="q-header">
-          <span class="q-provenance">${q.provenance || 'NWU CMPG122'}</span>
-          <span class="q-marks-tag">${q.marks || 2} Marks</span>
+      return `<div class="exam-results-banner" role="region" aria-label="Examination Results">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+          <h3 style="margin:0;font-size:1.15rem;">Examination Results — ${esc(res.title)}</h3>
+          <span class="q-diff-pill ${res.percentage >= 50 ? 'diff-foundational' : 'diff-advanced'}">
+            ${res.percentage >= 75 ? 'Distinction' : res.percentage >= 50 ? 'Pass' : 'Needs Revision'}
+          </span>
         </div>
-        <h3 class="q-title">${q.q || q.title}</h3>
-    `;
-
-    if (q.codeSnippet) {
-      html += `<div style="background:#0f172a; padding:0.75rem 1rem; border-radius:var(--radius-sm); border:1px solid #1e293b; margin-bottom:1.25rem; font-family:var(--font-mono); font-size:0.85rem; color:#f8fafc; white-space:pre-wrap;">${escapeHtml(q.codeSnippet)}</div>`;
+        <div class="results-kpi-grid">
+          <div class="kpi-box"><div class="kpi-val">${res.rawMarks} / ${res.totalMarks}</div><div class="kpi-lbl">Raw Marks</div></div>
+          <div class="kpi-box"><div class="kpi-val">${res.percentage}%</div><div class="kpi-lbl">Percentage</div></div>
+          <div class="kpi-box"><div class="kpi-val" style="color:var(--status-success-text);">${res.correctCount}</div><div class="kpi-lbl">Correct</div></div>
+          <div class="kpi-box"><div class="kpi-val" style="color:var(--status-error-text);">${res.incorrectCount}</div><div class="kpi-lbl">Incorrect</div></div>
+          <div class="kpi-box"><div class="kpi-val">${res.unansweredCount}</div><div class="kpi-lbl">Unanswered</div></div>
+          <div class="kpi-box"><div class="kpi-val">${mins}m ${secs}s</div><div class="kpi-lbl">Time Taken</div></div>
+        </div>
+        <div class="scenario-table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Study Unit</th><th>Marks</th><th>Correct Questions</th><th>Accuracy</th></tr></thead>
+            <tbody>${unitRows}</tbody>
+          </table>
+        </div>
+        ${(res.recommendedRevisionAreas || []).length > 0 ? `
+          <div style="margin-top:0.85rem;">
+            <strong style="font-size:0.85rem;">Recommended Revision Topics:</strong>
+            <div style="display:flex;gap:0.45rem;flex-wrap:wrap;margin-top:0.4rem;">
+              ${res.recommendedRevisionAreas.map(t => `
+                <button type="button" class="btn-secondary btn-sm" data-open-su="${esc(t.su)}">${esc(t.su)}: ${esc(t.title)} (${t.percentage}%)</button>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+      </div>`;
     }
 
-    // Options rendering
-    if (q.options && q.options.length > 0) {
-      html += `<div class="q-options">`;
-      q.options.forEach((opt, optIdx) => {
-        let labelClass = 'q-option-label';
-        if (savedAns) {
-          if (optIdx === q.answer) labelClass += ' correct';
-          else if (optIdx === savedAns.selected) labelClass += ' incorrect';
+    selectPaperAnswer(questionId, optionIndex) {
+      if (!this.examSession || this.examSession.isCompleted) return;
+      const ok = this.examSession.selectOption(questionId, optionIndex);
+      if (!ok) return;
+      this.persistence.saveActiveExamSession(this.examSession.toSnapshot());
+
+      const pill = typeof document !== 'undefined' ? document.getElementById(`palettePill_${questionId}`) : null;
+      if (pill) pill.classList.add('answered');
+
+      const card = typeof document !== 'undefined' ? document.getElementById(`paperQuestion_${questionId}`) : null;
+      if (card) {
+        card.querySelectorAll('.q-option-btn').forEach((btn, idx) => {
+          btn.classList.toggle('opt-selected', idx === optionIndex);
+          btn.setAttribute('aria-pressed', idx === optionIndex ? 'true' : 'false');
+        });
+      }
+
+      const summaryEl = typeof document !== 'undefined' ? document.getElementById('examNavigatorSummary') : null;
+      if (summaryEl) {
+        const pre = this.examSession.getPreSubmitSummary();
+        summaryEl.textContent = `Answered: ${pre.answeredCount} / ${pre.totalQuestions} • Unanswered: ${pre.unansweredCount} • Flagged: ${pre.flaggedCount}`;
+      }
+    }
+
+    toggleQuestionFlag(questionId) {
+      const globalFlagged = this.persistence.toggleFlagQuestion(questionId);
+      if (this.examSession && this.examSession.states[questionId]) {
+        this.examSession.states[questionId].flagged = globalFlagged;
+        this.persistence.saveActiveExamSession(this.examSession.toSnapshot());
+        const pill = typeof document !== 'undefined' ? document.getElementById(`palettePill_${questionId}`) : null;
+        if (pill) pill.classList.toggle('flagged', globalFlagged);
+        const summaryEl = typeof document !== 'undefined' ? document.getElementById('examNavigatorSummary') : null;
+        if (summaryEl && !this.examSession.isCompleted) {
+          const pre = this.examSession.getPreSubmitSummary();
+          summaryEl.textContent = `Answered: ${pre.answeredCount} / ${pre.totalQuestions} • Unanswered: ${pre.unansweredCount} • Flagged: ${pre.flaggedCount}`;
+        }
+      }
+      return globalFlagged;
+    }
+
+    openExamSubmitConfirmation() {
+      if (!this.examSession || this.examSession.isCompleted) return;
+      const pre = this.examSession.getPreSubmitSummary();
+      const unansText = pre.unansweredNumbers.length > 0
+        ? `<p style="color:var(--status-warning-text);"><strong>Unanswered Questions (${pre.unansweredCount}):</strong> ${pre.unansweredNumbers.map(u => `Q${u.number}`).join(', ')}</p>`
+        : `<p style="color:var(--status-success-text);">All ${pre.totalQuestions} questions have an answer selected.</p>`;
+      const flagText = pre.flaggedNumbers.length > 0
+        ? `<p><strong>Flagged for Review (${pre.flaggedCount}):</strong> ${pre.flaggedNumbers.map(f => `Q${f.number}`).join(', ')}</p>`
+        : '';
+
+      this._openModal(
+        'Submit Examination for Final Marking?',
+        `${unansText}${flagText}<p>Once submitted, answers are locked and full mark allocations and explanations will be revealed.</p>`,
+        'Confirm & Grade Examination',
+        () => this.submitCompleteExamPaper(true)
+      );
+    }
+
+    submitCompleteExamPaper(confirmed = false) {
+      if (!this.examSession) return null;
+      if (!confirmed) {
+        this.openExamSubmitConfirmation();
+        return null;
+      }
+      if (this.examSession.isCompleted && this.examSession.finalResult) {
+        return this.examSession.finalResult;
+      }
+
+      const result = this.examSession.submitExamination();
+      // Record individual question attempts in learner history
+      this.examSession.questions.forEach(q => {
+        const st = this.examSession.getQuestionState(q.id);
+        if (st && typeof st.selectedAnswer === 'number') {
+          this.persistence.recordQuestionAttempt(q, st.selectedAnswer, st.outcome === 'correct', 0);
+        }
+      });
+      this.persistence.recordExamResult(result);
+      this._stopExamTimerLoop();
+      this.renderContinuousExamPaper();
+      this.showToast(`Examination graded: ${result.rawMarks}/${result.totalMarks} (${result.percentage}%)`);
+      if (typeof window !== 'undefined') window.scrollTo(0, 0);
+      return result;
+    }
+
+    _startExamTimerLoop() {
+      this._stopExamTimerLoop();
+      if (typeof document === 'undefined' || !this.examSession) return;
+      const badge = document.getElementById('examTimerBadge');
+      if (!badge) return;
+
+      const tick = () => {
+        if (!this.examSession) return;
+        if (!this.examSession.timed) {
+          badge.textContent = 'Untimed';
+          badge.classList.remove('timer-urgent');
+          return;
+        }
+        const rem = this.examSession.getRemainingSeconds();
+        badge.textContent = ExamMod.formatCountdown(rem);
+        badge.classList.toggle('timer-urgent', rem <= 300 && !this.examSession.isCompleted);
+        if (rem <= 0 && !this.examSession.isCompleted) {
+          this.showToast('Time expired — submitting examination automatically.');
+          this.submitCompleteExamPaper(true);
+        }
+      };
+
+      tick();
+      if (this.examSession.timed && !this.examSession.isCompleted) {
+        this._timerInterval = setInterval(tick, 1000);
+      }
+    }
+
+    _stopExamTimerLoop() {
+      if (this._timerInterval) {
+        clearInterval(this._timerInterval);
+        this._timerInterval = null;
+      }
+    }
+
+    /* ==================== 5. DEFINITIONS LIBRARY & EXACT CONTEXT RETURN ==================== */
+
+    _populateDefsFilters() {
+      const catSel = document.getElementById('defsCategoryFilter');
+      if (!catSel) return;
+      const cats = this.defsEngine.getCategories();
+      catSel.innerHTML = `<option value="ALL">All Categories (${cats.length})</option>` +
+        cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+    }
+
+    openDefinitionWithContext(defId, extraSource = {}) {
+      const def = this.defsEngine.getById(defId);
+      if (!def) return;
+
+      // Capture exact current state before leaving
+      if (this.currentRoute !== 'definitions') {
+        const expandedPanels = [];
+        if (typeof document !== 'undefined') {
+          document.querySelectorAll('details.topic-details[open][data-panel-id]').forEach(el => {
+            expandedPanels.push(el.getAttribute('data-panel-id'));
+          });
         }
 
-        html += `
-          <label class="${labelClass}" onclick="CMPG122_APP.selectAnswer(${optIdx})">
-            <input type="radio" name="opt_${q.id}" style="display:none;" ${savedAns && savedAns.selected === optIdx ? 'checked' : ''}>
-            <span style="font-family:var(--font-mono); font-weight:700; color:var(--accent-blue);">${String.fromCharCode(65 + optIdx)}.</span>
-            <span>${opt}</span>
-          </label>
-        `;
-      });
-      html += `</div>`;
-    } else if (q.blankAnswer) {
-      html += `
-        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:1rem;">
-          <input type="text" id="clozeInput_${q.id}" class="cloze-input" placeholder="Type answer here..." value="${savedAns ? savedAns.selected : ''}">
-          <button class="btn-practice" onclick="CMPG122_APP.submitClozeAnswer()">Check</button>
-        </div>
-      `;
-    }
+        let activeQ = null;
+        let qState = null;
+        let sourceLabel = 'Previous View';
 
-    // Feedback box (visible if already answered in practice mode)
-    if (savedAns && !state.isExamMode) {
-      html += `
-        <div class="feedback-box show ${savedAns.isCorrect ? 'correct' : 'incorrect'}">
-          <strong>${savedAns.isCorrect ? '✅ Correct!' : '❌ Incorrect.'}</strong>
-          ${q.exp || q.explanation}
-        </div>
-      `;
-    }
+        if (this.currentRoute === 'study') {
+          sourceLabel = `Study Note (${this.activeStudyUnit})`;
+        } else if (this.currentRoute === 'home' && this.homeSession) {
+          activeQ = this.homeSession.getCurrentQuestion();
+          qState = activeQ ? this.homeSession.getQuestionState(activeQ.id) : null;
+          sourceLabel = 'Practice Question';
+        } else if (this.currentRoute === 'practice' && this.practiceSession) {
+          activeQ = this.practiceSession.getCurrentQuestion();
+          qState = activeQ ? this.practiceSession.getQuestionState(activeQ.id) : null;
+          sourceLabel = 'Question';
+        } else if (this.currentRoute === 'exams' && this.examSession) {
+          sourceLabel = 'Examination Question';
+        } else if (this.currentRoute === 'progress') {
+          sourceLabel = 'Question Review';
+        }
 
-    html += `</div>`;
-    dom.quizArea.innerHTML = html;
-  }
-
-  function selectAnswer(optIdx) {
-    const q = state.quizQuestions[state.currentIndex];
-    if (!q) return;
-
-    // If in practice mode and already answered, skip
-    if (state.answers[q.id] && !state.isExamMode) return;
-
-    const isCorrect = (optIdx === q.answer);
-    state.answers[q.id] = {
-      selected: optIdx,
-      isCorrect: isCorrect,
-      score: isCorrect ? (q.marks || 2) : 0
-    };
-
-    if (isCorrect) {
-      state.streak++;
-      if (state.streak > state.bestStreak) {
-        state.bestStreak = state.streak;
-        localStorage.setItem('cmpg122_best_streak', state.bestStreak.toString());
+        this.defsEngine.pushReturnContext({
+          route: this.currentRoute,
+          sourceLabel,
+          studyUnitId: this.activeStudyUnit,
+          topicId: extraSource.topicId || null,
+          questionId: extraSource.questionId || (activeQ ? activeQ.id : null),
+          selectedAnswer: qState ? qState.selectedAnswer : null,
+          submissionStatus: qState ? qState.status : null,
+          scrollY: typeof window !== 'undefined' ? window.scrollY : 0,
+          activeSection: this.currentRoute === 'practice' ? this.practiceSubTab : this.reviewSubTab,
+          examState: this.examSession ? this.examSession.toSnapshot() : null,
+          expandedPanels
+        });
       }
-    } else {
-      state.streak = 0;
+
+      this.highlightedDefId = defId;
+      const searchEl = typeof document !== 'undefined' ? document.getElementById('defsMainSearch') : null;
+      const unitEl = typeof document !== 'undefined' ? document.getElementById('defsUnitFilter') : null;
+      const catEl = typeof document !== 'undefined' ? document.getElementById('defsCategoryFilter') : null;
+      if (searchEl) searchEl.value = '';
+      if (unitEl) unitEl.value = 'ALL';
+      if (catEl) catEl.value = 'ALL';
+
+      this.navigate('definitions', { preserveScroll: true });
+      if (typeof document !== 'undefined') {
+        const card = document.getElementById(`defCard_${defId}`);
+        if (card && typeof card.scrollIntoView === 'function') {
+          card.scrollIntoView({ block: 'center' });
+        }
+      }
     }
 
-    // Record attempt in persistent mastery stats
-    state.masteryStats.totalAttempts++;
-    if (isCorrect) state.masteryStats.correctAttempts++;
-    if (state.masteryStats.unitStats[q.ch]) {
-      state.masteryStats.unitStats[q.ch].total++;
-      if (isCorrect) state.masteryStats.unitStats[q.ch].correct++;
-    }
-    saveStats();
-    updateStatsDisplay();
+    returnFromDefinition() {
+      const ctx = this.defsEngine.popReturnContext();
+      if (!ctx) {
+        this.navigate('home');
+        return;
+      }
+      this.highlightedDefId = null;
 
-    renderCurrentQuestion();
-  }
+      if (ctx.studyUnitId) this.activeStudyUnit = ctx.studyUnitId;
+      if (ctx.route === 'practice' && ctx.activeSection) {
+        this.practiceSubTab = ctx.activeSection;
+      }
+      if (ctx.route === 'progress' && ctx.activeSection) {
+        this.reviewSubTab = ctx.activeSection;
+      }
 
-  function submitClozeAnswer() {
-    const q = state.quizQuestions[state.currentIndex];
-    if (!q) return;
+      this.navigate(ctx.route, { preserveScroll: true });
 
-    const input = document.getElementById(`clozeInput_${q.id}`);
-    if (!input) return;
+      if (ctx.route === 'study' && Array.isArray(ctx.expandedPanels)) {
+        this.renderStudyView(ctx.expandedPanels);
+      }
 
-    const val = input.value.trim().toLowerCase();
-    const correctVal = String(q.blankAnswer).trim().toLowerCase();
-    const isCorrect = (val === correctVal);
+      // Restore exact question selection/index if applicable
+      const targetSession = ctx.route === 'home' ? this.homeSession
+        : (ctx.route === 'practice' ? this.practiceSession : null);
+      if (targetSession && ctx.questionId) {
+        const qIdx = targetSession.questions.findIndex(q => q.id === ctx.questionId);
+        if (qIdx !== -1) targetSession.goToIndex(qIdx);
+        const st = targetSession.getQuestionState(ctx.questionId);
+        if (st && typeof ctx.selectedAnswer === 'number' && st.status !== 'submitted') {
+          st.selectedAnswer = ctx.selectedAnswer;
+          st.status = 'answered_unsubmitted';
+        }
+        this.renderCurrentRoute();
+      }
 
-    state.answers[q.id] = {
-      selected: input.value.trim(),
-      isCorrect: isCorrect,
-      score: isCorrect ? (q.marks || 2) : 0
-    };
-
-    renderCurrentQuestion();
-  }
-
-  function prevQuestion() {
-    if (state.isExamMode) return;
-    if (state.currentIndex > 0) {
-      state.currentIndex--;
-      renderCurrentQuestion();
-    }
-  }
-
-  function nextQuestion() {
-    if (state.isExamMode) return;
-    if (state.currentIndex < state.quizQuestions.length - 1) {
-      state.currentIndex++;
-      renderCurrentQuestion();
-    } else {
-      finishPractice();
-    }
-  }
-
-  function finishPractice() {
-    const totalQ = state.quizQuestions.length;
-    const answeredCount = Object.keys(state.answers).length;
-    const correctCount = Object.values(state.answers).filter(a => a.isCorrect).length;
-    const pct = totalQ > 0 ? Math.round((correctCount / totalQ) * 100) : 0;
-
-    const wrongQuestions = state.quizQuestions.filter(q => state.answers[q.id] && !state.answers[q.id].isCorrect);
-
-    let msg = `Practice Completed!\nScore: ${correctCount} / ${totalQ} (${pct}%)\n`;
-    if (wrongQuestions.length > 0) {
-      msg += `\nYou missed ${wrongQuestions.length} question(s). You can retry them now.`;
+      if (typeof window !== 'undefined') {
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: ctx.scrollY || 0, behavior: 'instant' });
+        });
+      }
     }
 
-    alert(msg);
+    renderDefinitionsView() {
+      const bannerHost = document.getElementById('defReturnBannerHost');
+      const countEl = document.getElementById('defsCountLabel');
+      const cardsHost = document.getElementById('defsCardsHost');
+      const searchEl = document.getElementById('defsMainSearch');
+      const unitEl = document.getElementById('defsUnitFilter');
+      const catEl = document.getElementById('defsCategoryFilter');
+      if (!cardsHost) return;
 
-    if (wrongQuestions.length > 0 && dom.btnRetryWrong) {
-      dom.btnRetryWrong.style.display = 'block';
+      const retCtx = this.defsEngine.peekReturnContext();
+      if (bannerHost) {
+        bannerHost.innerHTML = retCtx
+          ? `<div class="context-return-banner">
+              <button type="button" class="btn-primary btn-sm" id="btnReturnFromDef">
+                ← Back to ${esc(retCtx.sourceLabel || 'Question / Study Note')}
+              </button>
+              <span style="font-size:0.8rem;color:var(--text-muted);">
+                Your exact scroll position, answer selection, and expanded panels are preserved (or press <span class="kbd-tag">Esc</span>).
+              </span>
+            </div>`
+          : '';
+      }
+
+      const list = this.defsEngine.search(
+        searchEl ? searchEl.value : '',
+        unitEl ? unitEl.value : 'ALL',
+        catEl ? catEl.value : 'ALL'
+      );
+      if (countEl) countEl.textContent = `${list.length} of ${(this.data.definitions || []).length} definitions`;
+
+      if (list.length === 0) {
+        cardsHost.innerHTML = `<div class="panel-card"><p style="margin:0;color:var(--text-muted);">No technical definitions matched your search filter.</p></div>`;
+        return;
+      }
+
+      cardsHost.innerHTML = list.map(d => `
+        <article class="def-card ${this.highlightedDefId === d.id ? 'highlighted' : ''}" id="defCard_${esc(d.id)}">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.4rem;">
+            <span class="q-su-pill">${esc(d.su)}</span>
+            <span class="q-topic-pill">${esc(d.category)}</span>
+          </div>
+          <h3 style="margin:0 0 0.45rem;font-size:1.05rem;">${esc(d.term)}</h3>
+          <p style="margin:0 0 0.5rem;font-size:0.9rem;color:var(--text-primary);"><strong>Plain English:</strong> ${esc(d.plainEnglish)}</p>
+          <p style="margin:0 0 0.6rem;font-size:0.85rem;color:var(--text-secondary);"><strong>Technical Definition:</strong> ${esc(d.technicalDefinition)}</p>
+          ${d.syntax ? Renderer.renderCodeBlock(d.syntax, CSharpEngine, Icons, 'Syntax') : ''}
+          <p style="margin:0 0 0.5rem;font-size:0.84rem;color:var(--text-secondary);"><strong>Example:</strong> ${esc(d.example)}</p>
+          <div class="callout-box callout-warning" style="margin-top:0.5rem;">
+            <strong>Common Misconception:</strong> ${esc(d.misconception)}
+          </div>
+          ${(d.relatedConcepts || []).length > 0 ? `
+            <div class="feedback-defs-row">
+              <span class="feedback-defs-label">Related:</span>
+              ${d.relatedConcepts.map(rcId => {
+                const rc = this.defsEngine.getById(rcId);
+                return rc ? `<button type="button" class="def-chip-btn" data-jump-def="${esc(rc.id)}">${esc(rc.term)}</button>` : '';
+              }).join('')}
+            </div>
+          ` : ''}
+        </article>
+      `).join('');
     }
-  }
 
-  function retryWrongQuestions() {
-    const wrong = state.quizQuestions.filter(q => state.answers[q.id] && !state.answers[q.id].isCorrect);
-    if (wrong.length === 0) {
-      alert('No incorrect questions to retry!');
-      return;
-    }
-    launchQuizSession('Retry Incorrect Questions', wrong, false);
-  }
+    /* ==================== 6. PROGRESS, ANALYTICS & QUESTION REVIEW ==================== */
 
-  // =========================================================================
-  // CONTINUOUS SINGLE-SHEET EXAMINATION PAPER ENGINE & QUICK-JUMP PALETTE
-  // Under NO circumstances may official exam papers be rendered as a single-question
-  // carousel, flashcard, or "Q 1 of N" paginated stepper with "Next Question" buttons.
-  // All official past papers render as a CONTINUOUS, SINGLE SCROLLABLE EXAMINATION DOCUMENT.
-  // =========================================================================
+    renderProgressView() {
+      const host = document.getElementById('analyticsHost');
+      if (!host) return;
+      const state = this.persistence.getState();
+      const stats = AnalyticsMod.computeAnalytics(state, this.data);
+      const studyMins = Math.round((stats.studyTimeSeconds || 0) / 60);
 
-  function renderContinuousExamPaper() {
-    if (!dom.continuousPaperArea || state.quizQuestions.length === 0) return;
+      const trendSvg = Icons.renderExamTrendSvg(stats.examResults);
 
-    const exam = state.selectedExamId ? DATA.officialExams.find(e => e.id === state.selectedExamId) : null;
-    const questions = state.quizQuestions;
-    const totalMarks = questions.reduce((sum, q) => sum + (q.marks || 2), 0);
-    const answeredCount = Object.keys(state.answers).length;
-    const unansweredCount = questions.length - answeredCount;
-    const earnedMarks = Object.values(state.answers).reduce((sum, a) => sum + (a.isCorrect ? a.score : 0), 0);
-    const pct = totalMarks > 0 ? Math.round((earnedMarks / totalMarks) * 100) : 0;
-
-    let html = '';
-
-    // Results Banner (rendered upon submission)
-    if (state.examSubmitted) {
-      const passed = pct >= 50;
-      const distinction = pct >= 75;
-      const bannerClass = distinction ? 'distinction' : (passed ? 'passed' : 'failed');
-      const bannerGrade = distinction ? 'Distinction! 🏆' : (passed ? 'Passed! 🎉' : 'Supplementary Revision Required ⚠️');
-      const correctCount = Object.values(state.answers).filter(a => a.isCorrect).length;
-      const incorrectCount = answeredCount - correctCount;
-
-      html += `
-        <div class="exam-results-banner ${bannerClass}">
-          <div class="results-top-row">
-            <div>
-              <div class="results-title">${bannerGrade}</div>
-              <div style="font-size:0.9rem; color:var(--text-muted); margin-top:0.25rem;">
-                Official NWU CMPG122 Examination Assessment Result
+      let reviewItemsHtml = '';
+      if (this.reviewSubTab === 'incorrect') {
+        reviewItemsHtml = stats.incorrectQueue.length === 0
+          ? `<p style="color:var(--text-muted);margin:0;">No unresolved incorrect questions right now.</p>`
+          : stats.incorrectQueue.map(({ question, history }, i) => `
+              <div style="margin-bottom:1rem;">
+                <div style="font-size:0.78rem;color:var(--status-error-text);margin-bottom:0.3rem;font-weight:700;">
+                  Missed ${history.incorrect} time(s) • Last Choice: Option ${Renderer.LETTERS[history.lastSelected] || '?'}
+                </div>
+                ${Renderer.renderQuestionCard(question, {
+                  status: 'submitted',
+                  selectedAnswer: history.lastSelected,
+                  outcome: 'incorrect'
+                }, {
+                  index: i,
+                  total: stats.incorrectQueue.length,
+                  csharpEngine: CSharpEngine,
+                  defsEngine: this.defsEngine,
+                  icons: Icons,
+                  isCompleted: true,
+                  isFlagged: this.persistence.isQuestionFlagged(question.id),
+                  isUnderstood: false
+                })}
               </div>
-            </div>
-            <div class="results-score-badge">
-              ${earnedMarks} / ${totalMarks} Marks (${pct}%)
-            </div>
-          </div>
-          <div class="results-stats-row">
-            <span class="result-stat-pill correct-pill">✓ ${correctCount} Correct</span>
-            <span class="result-stat-pill incorrect-pill">✗ ${incorrectCount} Incorrect</span>
-            <span class="result-stat-pill unanswered-pill">⚠️ ${unansweredCount} Unanswered</span>
-          </div>
-          <div class="results-actions-row">
-            <button type="button" class="btn-practice" onclick="CMPG122_APP.jumpToQuestion(0)">⬆️ Review Paper Solutions</button>
-            <button type="button" class="action-btn" onclick="CMPG122_APP.retakeExam()">🔄 Retake Exam Paper</button>
-            <button type="button" class="action-btn" onclick="CMPG122_APP.exitExamPaper()">✕ Exit to Exams List</button>
-          </div>
-        </div>
-      `;
-    }
-
-    // Cover Sheet
-    const instName = "North-West University (NWU)";
-    const facName = "Faculty of Natural and Agricultural Sciences • School of Computer Science & Information Systems";
-    const paperTitle = exam ? exam.title : (dom.quizTitle ? dom.quizTitle.textContent : "Examination Paper");
-    const paperBadge = exam ? `${exam.badge} • Academic Year ${exam.academicYear}` : "Official Examination Assessment";
-    const durationText = exam ? `${exam.durationMinutes} Minutes (3 Hours)` : "180 Minutes (3 Hours)";
-    const marksText = `${totalMarks} Marks (${questions.length} Questions)`;
-    const sittingText = exam ? exam.sitting : "Continuous Examination Assessment";
-    const scenarioText = exam ? exam.scenario : "This official examination paper evaluates full-spectrum competency across Visual C#, Windows Forms GUI architecture, data types, control flow, loops, and array manipulation.";
-
-    html += `
-      <div class="paper-cover-sheet">
-        <div class="paper-cover-header">
-          <div class="paper-inst-name">${instName}</div>
-          <div class="paper-faculty-name">${facName}</div>
-          <h2 class="paper-main-title">${escapeHtml(paperTitle)}</h2>
-          <div class="paper-sub-title">${escapeHtml(paperBadge)}</div>
-        </div>
-
-        <div class="paper-meta-grid">
-          <div class="paper-meta-card">
-            <span class="paper-meta-label">Module</span>
-            <span class="paper-meta-val">CMPG 122</span>
-          </div>
-          <div class="paper-meta-card">
-            <span class="paper-meta-label">Assessment</span>
-            <span class="paper-meta-val">${escapeHtml(sittingText)}</span>
-          </div>
-          <div class="paper-meta-card">
-            <span class="paper-meta-label">Duration</span>
-            <span class="paper-meta-val">${durationText}</span>
-          </div>
-          <div class="paper-meta-card">
-            <span class="paper-meta-label">Total Marks</span>
-            <span class="paper-meta-val">${marksText}</span>
-          </div>
-        </div>
-
-        <div class="paper-scenario-box">
-          <div class="paper-scenario-title">
-            <span>📋 PRACTICAL SPECIFICATION, PRICING &amp; CONTROLS MATRIX</span>
-            <button type="button" class="action-btn-sm btn-scenario-drawer" onclick="CMPG122_APP.openScenarioDrawer()">📖 Open Floating Reference Drawer</button>
-          </div>
-          <div class="paper-scenario-content">
-            ${exam && exam.scenarioHtml ? exam.scenarioHtml : `<div class="paper-scenario-text">${escapeHtml(scenarioText)}</div>`}
-          </div>
-        </div>
-
-        <div class="paper-instructions-box">
-          <h5>Examination Invariant & Candidate Guidelines:</h5>
-          <ul>
-            <li><strong>Continuous Single-Sheet Document:</strong> All ${questions.length} questions are presented below on this single scrollable sheet.</li>
-            <li><strong>Non-Linear Navigation:</strong> Scroll freely, answer questions in any order, and change your selections at any time prior to submission.</li>
-            <li><strong>Question Palette:</strong> The sticky palette at the top tracks your answered/flagged progress and allows instant smooth-scrolling to any question.</li>
-            <li><strong>Single Paper Submission:</strong> When you are satisfied with all responses, proceed to the foot of this document and click "Submit Complete Exam Paper".</li>
-          </ul>
-        </div>
-      </div>
-    `;
-
-    // Stacked Questions 1 through N
-    questions.forEach((q, idx) => {
-      const qNum = idx + 1;
-      const savedAns = state.answers[q.id];
-      const isFlagged = !!state.flags[q.id];
-      const marks = q.marks || 2;
-
-      let cardClasses = 'paper-q-card';
-      if (state.examSubmitted) {
-        if (savedAns && savedAns.isCorrect) cardClasses += ' is-correct';
-        else cardClasses += ' is-incorrect';
+            `).join('');
+      } else if (this.reviewSubTab === 'flagged') {
+        reviewItemsHtml = stats.flaggedQueue.length === 0
+          ? `<p style="color:var(--text-muted);margin:0;">No flagged questions yet. Click "Flag" on any question to bookmark it for review.</p>`
+          : stats.flaggedQueue.map((question, i) => {
+              const h = state.questionHistory[question.id];
+              return `<div style="margin-bottom:1rem;">
+                ${Renderer.renderQuestionCard(question, {
+                  status: 'submitted',
+                  selectedAnswer: h ? h.lastSelected : question.answer
+                }, {
+                  index: i,
+                  total: stats.flaggedQueue.length,
+                  csharpEngine: CSharpEngine,
+                  defsEngine: this.defsEngine,
+                  icons: Icons,
+                  isCompleted: true,
+                  isFlagged: true,
+                  isUnderstood: Boolean(state.understoodQuestions[question.id])
+                })}
+              </div>`;
+            }).join('');
+      } else {
+        reviewItemsHtml = stats.understoodQueue.length === 0
+          ? `<p style="color:var(--text-muted);margin:0;">Questions you mark as understood after reviewing mistakes appear here.</p>`
+          : stats.understoodQueue.map(q => `
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;border-bottom:1px solid var(--border-subtle);gap:0.5rem;flex-wrap:wrap;">
+                <span><span class="q-su-pill">${esc(q.su)}</span> ${esc(q.stem.slice(0, 110))}</span>
+                <button type="button" class="btn-ghost btn-sm" data-unmark-understood="${esc(q.id)}">Restore to Review</button>
+              </div>
+            `).join('');
       }
 
-      html += `
-        <div class="${cardClasses}" id="paperQ_${q.id}" data-qid="${q.id}" data-idx="${idx}">
-          <div class="paper-q-header">
-            <div class="paper-q-num-wrap">
-              <span class="paper-q-num">Question ${qNum}</span>
-              <span class="paper-q-provenance">${escapeHtml(q.provenance || `Step ${qNum}`)}</span>
+      host.innerHTML = `
+        <div class="results-kpi-grid" style="margin-top:0;">
+          <div class="kpi-box"><div class="kpi-val">${stats.overallProgressPct}%</div><div class="kpi-lbl">Overall Progress</div></div>
+          <div class="kpi-box"><div class="kpi-val">${stats.uniqueAttempted} / ${stats.totalQuestionsBank}</div><div class="kpi-lbl">Questions Practised</div></div>
+          <div class="kpi-box"><div class="kpi-val">${stats.accuracyPct !== null ? `${stats.accuracyPct}%` : '—'}</div><div class="kpi-lbl">Overall Accuracy</div></div>
+          <div class="kpi-box"><div class="kpi-val">${stats.codeTracingAccuracyPct !== null ? `${stats.codeTracingAccuracyPct}%` : '—'}</div><div class="kpi-lbl">Code-Tracing Accuracy</div></div>
+          <div class="kpi-box"><div class="kpi-val">${stats.completedTopicsCount} / ${stats.totalTopicsCount}</div><div class="kpi-lbl">Topics Completed</div></div>
+          <div class="kpi-box"><div class="kpi-val">${studyMins}m</div><div class="kpi-lbl">Recorded Study Time</div></div>
+        </div>
+
+        <div class="cards-grid-2" style="margin-bottom:1.25rem;">
+          <div class="panel-card">
+            <h3 class="panel-title">Diagnostic Learning Insights</h3>
+            ${!stats.hasActivity ? `<p style="margin:0;color:var(--text-muted);font-size:0.88rem;">No assessment attempts recorded yet. Complete practice questions or an examination to unlock diagnostic accuracy insights.</p>` : `
+              <ul style="margin:0;padding-left:1.2rem;font-size:0.88rem;color:var(--text-secondary);display:flex;flex-direction:column;gap:0.45rem;">
+                <li><strong>Lowest-Accuracy Study Unit:</strong> ${stats.weakestUnit ? `${esc(stats.weakestUnit.id)} (${stats.weakestUnit.accuracyPct}% across ${stats.weakestUnit.attempts} attempts)` : 'Need question attempts first'}</li>
+                <li><strong>Code-Tracing Performance:</strong> ${stats.codeTracingAccuracyPct !== null ? `${stats.codeTracingAccuracyPct}% across ${stats.codeTracingAttempts} code/method/loop attempts` : 'Practise code-tracing items to measure'}</li>
+                <li><strong>Time Management Trend:</strong> ${stats.pacingTrend ? `${stats.pacingTrend.latestSecPerQ}s/question (${stats.pacingTrend.improving ? 'Improving pace' : 'Watch exam pacing'})` : 'Complete at least 2 exams to compare pacing'}</li>
+              </ul>
+            `}
+          </div>
+
+          <div class="panel-card">
+            <h3 class="panel-title">Examination Score Progression</h3>
+            ${trendSvg || `<p style="margin:0;color:var(--text-muted);font-size:0.88rem;">No completed examination papers recorded yet. Take a Full Weighted Simulation or Past Paper to track score progression.</p>`}
+          </div>
+        </div>
+
+        <div class="cards-grid-2" style="margin-bottom:1.25rem;">
+          <div class="panel-card">
+            <h3 class="panel-title">Weak Topics (Repeated Mistakes)</h3>
+            ${stats.weakTopics.length === 0 ? `<p style="margin:0;color:var(--text-muted);font-size:0.86rem;">No repeated topic errors detected.</p>` : `
+              <div style="display:flex;flex-direction:column;gap:0.45rem;">
+                ${stats.weakTopics.map(t => `
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;">
+                    <span style="font-size:0.85rem;"><span class="q-su-pill">${esc(t.su)}</span> ${esc(t.title)} (${t.incorrect} missed)</span>
+                    <button type="button" class="btn-secondary btn-sm" data-retest-topic="${esc(t.id)}" data-retest-su="${esc(t.su)}">Retest</button>
+                  </div>
+                `).join('')}
+              </div>
+            `}
+          </div>
+
+          <div class="panel-card">
+            <h3 class="panel-title">Unpractised Topics</h3>
+            <div style="display:flex;flex-direction:column;gap:0.45rem;">
+              ${stats.unpractisedTopics.slice(0, 5).map(t => `
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;">
+                  <span style="font-size:0.85rem;"><span class="q-su-pill">${esc(t.su)}</span> ${esc(t.title)}</span>
+                  <button type="button" class="btn-ghost btn-sm" data-retest-topic="${esc(t.id)}" data-retest-su="${esc(t.su)}">Practise</button>
+                </div>
+              `).join('')}
             </div>
-            <div class="paper-q-header-right">
-              <span class="q-marks-tag">${marks} Marks</span>
-              <button type="button" class="paper-q-flag-btn ${isFlagged ? 'flagged' : ''}" id="flagBtn_${q.id}" onclick="CMPG122_APP.toggleQuestionFlag('${q.id}')">
-                ${isFlagged ? '★ Flagged' : '☆ Flag'}
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem;">
+            <h3 class="panel-title" style="margin:0;">Question Review &amp; Error-Correction Queue</h3>
+            <div class="unit-pills-bar" style="margin-bottom:0;">
+              <button type="button" class="unit-pill-btn ${this.reviewSubTab === 'incorrect' ? 'active' : ''}" data-review-tab="incorrect">
+                Incorrect (${stats.incorrectQueue.length})
+              </button>
+              <button type="button" class="unit-pill-btn ${this.reviewSubTab === 'flagged' ? 'active' : ''}" data-review-tab="flagged">
+                Flagged (${stats.flaggedQueue.length})
+              </button>
+              <button type="button" class="unit-pill-btn ${this.reviewSubTab === 'understood' ? 'active' : ''}" data-review-tab="understood">
+                Understood (${stats.understoodQueue.length})
               </button>
             </div>
           </div>
-
-          <div class="paper-q-title">${escapeHtml(q.q || q.title)}</div>
+          ${reviewItemsHtml}
+        </div>
       `;
+    }
 
-      if (q.codeSnippet) {
-        html += `<div style="background:#0f172a; padding:0.85rem 1.15rem; border-radius:var(--radius-sm); border:1px solid #1e293b; margin-bottom:1.25rem; font-family:var(--font-mono); font-size:0.85rem; color:#f8fafc; white-space:pre-wrap; overflow-x:auto;">${escapeHtml(q.codeSnippet)}</div>`;
+    /* ==================== 7. SETTINGS, ACCESSIBILITY & DATA BACKUP ==================== */
+
+    renderSettingsView() {
+      const host = document.getElementById('settingsHost');
+      if (!host) return;
+      const prefs = this.persistence.getPreferences();
+      const onlineState = typeof navigator !== 'undefined' && navigator.onLine === false ? 'Offline (Local Mode Active)' : 'Online & Offline-Ready';
+
+      host.innerHTML = `
+        <div class="cards-grid-2">
+          <div class="panel-card">
+            <h3 class="panel-title">Appearance &amp; Accessibility</h3>
+            <div style="display:flex;flex-direction:column;gap:0.9rem;">
+              <div>
+                <label for="settingThemeSelect" style="display:block;font-size:0.84rem;font-weight:600;margin-bottom:0.3rem;">Colour Theme</label>
+                <select id="settingThemeSelect" class="select-input">
+                  <option value="dark" ${prefs.theme === 'dark' ? 'selected' : ''}>Dark Modern (Default)</option>
+                  <option value="light" ${prefs.theme === 'light' ? 'selected' : ''}>Light Modern</option>
+                  <option value="system" ${prefs.theme === 'system' ? 'selected' : ''}>Follow System Appearance</option>
+                </select>
+              </div>
+              <div>
+                <label for="settingFontScaleSelect" style="display:block;font-size:0.84rem;font-weight:600;margin-bottom:0.3rem;">Interface Text Scale</label>
+                <select id="settingFontScaleSelect" class="select-input">
+                  <option value="90" ${prefs.fontScale === 90 ? 'selected' : ''}>Compact (90%)</option>
+                  <option value="100" ${prefs.fontScale === 100 ? 'selected' : ''}>Standard (100%)</option>
+                  <option value="110" ${prefs.fontScale === 110 ? 'selected' : ''}>Comfortable (110%)</option>
+                  <option value="120" ${prefs.fontScale === 120 ? 'selected' : ''}>Large Accessibility (120%)</option>
+                </select>
+              </div>
+              <label class="check-chip">
+                <input type="checkbox" id="settingReducedMotion" ${prefs.reducedMotion ? 'checked' : ''}>
+                <span>Reduce interface motion and transitions</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <h3 class="panel-title">Keyboard Shortcuts</h3>
+            <div style="display:flex;flex-direction:column;gap:0.75rem;">
+              <label class="check-chip">
+                <input type="checkbox" id="settingShortcutsEnabled" ${prefs.keyboardShortcutsEnabled ? 'checked' : ''}>
+                <span>Enable Practice &amp; Custom Quiz keyboard shortcuts</span>
+              </label>
+              <label class="check-chip">
+                <input type="checkbox" id="settingLetterShortcuts" ${prefs.letterShortcutsEnabled ? 'checked' : ''}>
+                <span>Enable single-key A–E immediate select &amp; submit</span>
+              </label>
+              <div class="callout-box callout-info" style="margin:0;">
+                Shortcuts automatically pause whenever focus is inside search boxes, inputs, or C# code editors.
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <h3 class="panel-title">Data Backup, Restore &amp; Safe Reset</h3>
+            <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:0;">
+              Progress is stored locally in IndexedDB (with automatic versioned schema migration v${PersistenceMod.CURRENT_SCHEMA_VERSION}).
+            </p>
+            <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:0.9rem;">
+              <button type="button" class="btn-secondary btn-sm" id="btnExportBackup">
+                ${Icons.icon('download', { size: 14 })} <span>Export Backup (.json)</span>
+              </button>
+              <label class="btn-secondary btn-sm" style="cursor:pointer;">
+                ${Icons.icon('upload', { size: 14 })} <span>Import Backup (.json)</span>
+                <input type="file" id="inputImportBackup" accept=".json,application/json" class="sr-only">
+              </label>
+            </div>
+            <button type="button" class="btn-danger btn-sm" id="btnResetProgressPrompt">
+              ${Icons.icon('trash', { size: 14 })} <span>Reset All Progress Data...</span>
+            </button>
+          </div>
+
+          <div class="panel-card">
+            <h3 class="panel-title">About &amp; Offline Status</h3>
+            <ul style="margin:0;padding-left:1.2rem;font-size:0.85rem;color:var(--text-secondary);display:flex;flex-direction:column;gap:0.35rem;">
+              <li><strong>Application:</strong> CMPG122 Visual C# UI Programming v${esc(this.data.version || '9.0.0')}</li>
+              <li><strong>Connectivity:</strong> ${esc(onlineState)}</li>
+              <li><strong>Question Bank:</strong> ${(this.data.questions || []).length} calibrated questions • ${(this.data.definitions || []).length} definitions</li>
+              <li><strong>Curriculum Weighting:</strong> SU7 (10%), SU1 (10%), SU2 (15%), SU3 (20%), SU4 (20%), SU5 (15%), SU6 (10%)</li>
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ==================== KEYBOARD SHORTCUT DELEGATION ==================== */
+
+    _getActiveCardSession() {
+      if (this.currentRoute === 'home') return this.homeSession;
+      if (this.currentRoute === 'practice' && this.practiceSubTab === 'session' && this.practiceViewMode === 'card') {
+        return this.practiceSession;
       }
+      return null;
+    }
 
-      // Options (MCQ)
-      if (q.options && q.options.length > 0) {
-        html += `<div class="paper-q-options" id="optionsWrap_${q.id}">`;
-        q.options.forEach((opt, optIdx) => {
-          const isSelected = (savedAns && savedAns.selected === optIdx);
-          let optClass = 'paper-option-label';
-          let badgeHtml = '';
+    _getActiveCardQuestionContext() {
+      const sess = this._getActiveCardSession();
+      if (!sess) return null;
+      const q = sess.getCurrentQuestion();
+      if (!q) return null;
+      const st = sess.getQuestionState(q.id);
+      return {
+        questionId: q.id,
+        optionCount: (q.options || q.opts || []).length,
+        selectedAnswer: st ? st.selectedAnswer : null,
+        isSubmitted: Boolean(st && st.status === 'submitted')
+      };
+    }
 
-          if (isSelected) optClass += ' selected';
+    _handleShortcutSelect(optionIndex) {
+      const sess = this._getActiveCardSession();
+      if (!sess) return;
+      const q = sess.getCurrentQuestion();
+      if (!q) return;
+      if (sess.selectOption(q.id, optionIndex)) {
+        if (this.currentRoute === 'home') this._renderHomeQuickPracticeCard();
+        else this._renderPracticeSessionArea();
+      }
+    }
 
-          if (state.examSubmitted) {
-            if (optIdx === q.answer) {
-              optClass += ' correct';
-              if (isSelected) {
-                badgeHtml = `<span class="paper-q-badge badge-correct-sel">✓ Your Answer (Correct)</span>`;
-              } else {
-                badgeHtml = `<span class="paper-q-badge badge-correct-key">Correct Answer</span>`;
-              }
-            } else if (isSelected) {
-              optClass += ' incorrect';
-              badgeHtml = `<span class="paper-q-badge badge-incorrect-sel">✗ Your Answer</span>`;
+    _handleShortcutSubmit() {
+      const sess = this._getActiveCardSession();
+      if (!sess) return;
+      const q = sess.getCurrentQuestion();
+      if (!q) return;
+      const res = sess.submitSingleQuestion(q.id);
+      if (res && !res.duplicate) {
+        this.persistence.recordQuestionAttempt(q, res.selectedAnswer, res.outcome === 'correct', 0);
+        this._updateSidebarBadges();
+        if (this.currentRoute === 'home') this.renderHomeView();
+        else this._renderPracticeSessionArea();
+      }
+    }
+
+    _handleShortcutNext() {
+      const sess = this._getActiveCardSession();
+      if (!sess) return;
+      if (sess.currentIndex < sess.questions.length - 1) {
+        sess.goToIndex(sess.currentIndex + 1);
+        if (this.currentRoute === 'home') this._renderHomeQuickPracticeCard();
+        else this._renderPracticeSessionArea();
+      }
+    }
+
+    /* ==================== EVENT DELEGATION & MODALS ==================== */
+
+    _bindGlobalEvents() {
+      document.addEventListener('keydown', (e) => {
+        if (this._modalOpen && e.key === 'Escape') {
+          this._closeModal();
+          return;
+        }
+        if (this.defsEngine.shouldTriggerKeyboardReturn(e, this.currentRoute)) {
+          e.preventDefault();
+          this.returnFromDefinition();
+          return;
+        }
+        this.shortcuts.handleKeyDown(e);
+      });
+
+      document.addEventListener('click', (e) => {
+        const target = e.target;
+        if (!target || typeof target.closest !== 'function') return;
+
+        // Brand -> Home
+        if (target.closest('#btnBrandHome')) {
+          this.navigate('home');
+          return;
+        }
+
+        // Mobile sidebar menu button
+        if (target.closest('#btnMobileMenu')) {
+          const sb = document.getElementById('appSidebar');
+          const btn = document.getElementById('btnMobileMenu');
+          if (sb && btn) {
+            const next = !sb.classList.contains('open');
+            sb.classList.toggle('open', next);
+            btn.setAttribute('aria-expanded', next ? 'true' : 'false');
+          }
+          return;
+        }
+
+        // Sidebar or bottom nav route link
+        const routeBtn = target.closest('[data-route]');
+        if (routeBtn) {
+          this.navigate(routeBtn.getAttribute('data-route'));
+          return;
+        }
+
+        // Theme quick switch
+        const themeBtn = target.closest('[data-set-theme]');
+        if (themeBtn) {
+          this.persistence.updatePreferences({ theme: themeBtn.getAttribute('data-set-theme') });
+          this._applyPreferencesToDocument();
+          if (this.currentRoute === 'settings') this.renderSettingsView();
+          return;
+        }
+
+        // Open Study Unit from Home ring or Revision button
+        const openSuBtn = target.closest('[data-open-su]');
+        if (openSuBtn) {
+          this.selectStudyUnit(openSuBtn.getAttribute('data-open-su'));
+          return;
+        }
+
+        // Study Unit pill tab
+        const selSuBtn = target.closest('[data-select-su]');
+        if (selSuBtn) {
+          this.selectStudyUnit(selSuBtn.getAttribute('data-select-su'));
+          return;
+        }
+
+        // Quick Actions on Home
+        if (target.closest('#qaStartPractice') || target.closest('[data-expand-full-practice]')) {
+          this.practiceSubTab = 'session';
+          this.navigate('practice');
+          return;
+        }
+        if (target.closest('#qaCustomQuiz') || target.closest('#btnJumpCustomBuilder')) {
+          this.practiceSubTab = 'custom';
+          this.navigate('practice');
+          return;
+        }
+        if (target.closest('#qaPastPapers')) {
+          this.navigate('exams');
+          return;
+        }
+        if (target.closest('#qaCodeLab')) {
+          this.practiceSubTab = 'codelab';
+          this.navigate('practice');
+          return;
+        }
+        if (target.closest('#qaDefinitions')) {
+          this.defsEngine.clearReturnContext();
+          this.navigate('definitions');
+          return;
+        }
+        if (target.closest('[data-resume-exam]')) {
+          this.navigate('exams');
+          return;
+        }
+
+        // Inline or chip Definition link
+        const defTrigger = target.closest('[data-def-id]');
+        if (defTrigger) {
+          const defId = defTrigger.getAttribute('data-def-id');
+          const qHost = defTrigger.closest('[data-question-id]');
+          const fromTopic = defTrigger.getAttribute('data-from-topic') || null;
+          this.openDefinitionWithContext(defId, {
+            questionId: qHost ? qHost.getAttribute('data-question-id') : null,
+            topicId: fromTopic
+          });
+          return;
+        }
+
+        // Related definition jump inside Definitions view
+        const jumpDef = target.closest('[data-jump-def]');
+        if (jumpDef) {
+          this.highlightedDefId = jumpDef.getAttribute('data-jump-def');
+          const searchEl = document.getElementById('defsMainSearch');
+          if (searchEl) searchEl.value = '';
+          this.renderDefinitionsView();
+          const card = document.getElementById(`defCard_${this.highlightedDefId}`);
+          if (card) card.scrollIntoView({ block: 'center' });
+          return;
+        }
+
+        // Return from Definition
+        if (target.closest('#btnReturnFromDef')) {
+          this.returnFromDefinition();
+          return;
+        }
+
+        // Copy C# code snippet
+        const copyBtn = target.closest('[data-copy-encoded]');
+        if (copyBtn) {
+          const code = decodeURIComponent(copyBtn.getAttribute('data-copy-encoded') || '');
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(code).catch(() => {});
+          }
+          this.showToast('C# snippet copied to clipboard.');
+          return;
+        }
+
+        // Toggle topic completed
+        const doneTopicBtn = target.closest('[data-toggle-topic-done]');
+        if (doneTopicBtn) {
+          const openPanels = [...document.querySelectorAll('details.topic-details[open][data-panel-id]')]
+            .map(el => el.getAttribute('data-panel-id'));
+          const prevScrollY = window.scrollY;
+          const tId = doneTopicBtn.getAttribute('data-toggle-topic-done');
+          const suId = doneTopicBtn.getAttribute('data-topic-su');
+          const uObj = (this.data.units || []).find(u => u.id === suId);
+          const allTopicIds = uObj ? (uObj.structuredTopics || []).map(t => t.id) : [];
+          const nowDone = this.persistence.toggleTopicCompleted(tId, suId, allTopicIds);
+          this.showToast(nowDone ? 'Topic marked complete.' : 'Topic marked incomplete.');
+          this.renderStudyView(openPanels);
+          window.scrollTo(0, prevScrollY);
+          return;
+        }
+
+        // Practise specific topic or active unit
+        const pracTopicBtn = target.closest('[data-practise-topic]');
+        if (pracTopicBtn) {
+          this.startUnitPractice(
+            pracTopicBtn.getAttribute('data-topic-su') || 'ALL',
+            pracTopicBtn.getAttribute('data-practise-topic')
+          );
+          return;
+        }
+        const retestTopicBtn = target.closest('[data-retest-topic]');
+        if (retestTopicBtn) {
+          this.startUnitPractice(
+            retestTopicBtn.getAttribute('data-retest-su') || 'ALL',
+            retestTopicBtn.getAttribute('data-retest-topic')
+          );
+          return;
+        }
+        if (target.closest('#btnPractiseActiveUnit')) {
+          this.startUnitPractice(this.activeStudyUnit, '');
+          return;
+        }
+
+        // Practice sub-tabs
+        const pSub = target.closest('[data-practice-sub]');
+        if (pSub) {
+          this.practiceSubTab = pSub.getAttribute('data-practice-sub');
+          this.renderPracticeView();
+          return;
+        }
+        if (target.closest('#btnStartFilteredPractice')) {
+          const u = document.getElementById('practiceUnitSelect')?.value || 'ALL';
+          const t = document.getElementById('practiceTopicSelect')?.value || '';
+          this.startUnitPractice(u, t);
+          return;
+        }
+        const vmBtn = target.closest('[data-view-mode]');
+        if (vmBtn) {
+          this.setViewMode(vmBtn.getAttribute('data-view-mode'));
+          return;
+        }
+        if (target.closest('#btnShortcutHelpModal')) {
+          this._openModal(
+            'Practice & Quiz Keyboard Shortcuts',
+            `<div class="shortcut-list">
+              <div><span class="kbd-tag">A, B, C, D, E</span> — Immediately select AND submit the corresponding option</div>
+              <div><span class="kbd-tag">1, 2, 3, 4, 5</span> — Select the option without submitting</div>
+              <div><span class="kbd-tag">Enter</span> — Submit selected answer, or advance to next question if already graded</div>
+              <div><span class="kbd-tag">Esc / Backspace</span> — Return to exact position from an opened Definition</div>
+            </div>`,
+            null,
+            null
+          );
+          return;
+        }
+
+        // Answer option click (Home, Practice, or Continuous Exam)
+        const optBtn = target.closest('.q-option-btn[data-q-id]');
+        if (optBtn && !optBtn.disabled) {
+          const qId = optBtn.getAttribute('data-q-id');
+          const optIdx = Number(optBtn.getAttribute('data-option-idx'));
+          if (this.currentRoute === 'exams' && this.examSession) {
+            this.selectPaperAnswer(qId, optIdx);
+          } else if (this.currentRoute === 'home' && this.homeSession) {
+            this.homeSession.selectOption(qId, optIdx);
+            this._renderHomeQuickPracticeCard();
+          } else if (this.currentRoute === 'practice' && this.practiceSession) {
+            this.practiceSession.selectOption(qId, optIdx);
+            this._renderPracticeSessionArea();
+          }
+          return;
+        }
+
+        // Home Quick-Practice Prev / Submit / Next
+        if (target.closest('#btnHomePrevQ')) {
+          this.homeSession.goToIndex(this.homeSession.currentIndex - 1);
+          this._renderHomeQuickPracticeCard();
+          return;
+        }
+        if (target.closest('#btnHomeSubmitQ')) {
+          this._handleShortcutSubmit();
+          return;
+        }
+        if (target.closest('#btnHomeNextQ')) {
+          this._handleShortcutNext();
+          return;
+        }
+
+        // Practice Prev / Submit / Next / Sheet Submit
+        if (target.closest('#btnPracPrevQ')) {
+          this.practiceSession.goToIndex(this.practiceSession.currentIndex - 1);
+          this._renderPracticeSessionArea();
+          return;
+        }
+        if (target.closest('#btnPracSubmitQ')) {
+          this._handleShortcutSubmit();
+          return;
+        }
+        if (target.closest('#btnPracNextQ')) {
+          this._handleShortcutNext();
+          return;
+        }
+        const sheetSubBtn = target.closest('[data-submit-sheet-q]');
+        if (sheetSubBtn) {
+          const qId = sheetSubBtn.getAttribute('data-submit-sheet-q');
+          const res = this.practiceSession.submitSingleQuestion(qId);
+          if (res && !res.duplicate) {
+            this.persistence.recordQuestionAttempt(res.question, res.selectedAnswer, res.outcome === 'correct', 0);
+            this._updateSidebarBadges();
+            this._renderPracticeSessionArea();
+          }
+          return;
+        }
+
+        // Flag question button
+        const flagBtn = target.closest('[data-flag-q]');
+        if (flagBtn) {
+          const qId = flagBtn.getAttribute('data-flag-q');
+          const active = this.toggleQuestionFlag(qId);
+          flagBtn.classList.toggle('active', active);
+          flagBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
+          const span = flagBtn.querySelector('span');
+          if (span) span.textContent = active ? 'Flagged' : 'Flag';
+          return;
+        }
+
+        // Practise Similar Questions & Mark Concept Understood (Section 14)
+        const simBtn = target.closest('[data-practise-similar]');
+        if (simBtn) {
+          const qId = simBtn.getAttribute('data-practise-similar');
+          const srcQ = (this.data.questions || []).find(q => q.id === qId);
+          if (srcQ) {
+            const simQs = AnalyticsMod.getSimilarQuestions(srcQ, this.data.questions, this.persistence.getState().questionHistory, 8);
+            if (simQs.length > 0) {
+              this.practiceSession = new ExamMod.ExamSession({
+                id: `similar_${qId}_${Date.now()}`,
+                mode: 'practice',
+                title: `Related Practice: ${srcQ.topicTitle || srcQ.su}`,
+                questions: simQs,
+                allowInstantSubmit: true
+              });
+              this.practiceSubTab = 'session';
+              this.practiceViewMode = 'card';
+              this.navigate('practice');
+              this.showToast(`Loaded ${simQs.length} related questions on ${srcQ.topicTitle || srcQ.su}.`);
             }
           }
+          return;
+        }
+        const undBtn = target.closest('[data-mark-understood]');
+        if (undBtn) {
+          const qId = undBtn.getAttribute('data-mark-understood');
+          this.persistence.markConceptUnderstood(qId, true);
+          this.showToast('Marked concept as understood.');
+          this.renderCurrentRoute();
+          return;
+        }
+        const unmarkBtn = target.closest('[data-unmark-understood]');
+        if (unmarkBtn) {
+          this.persistence.markConceptUnderstood(unmarkBtn.getAttribute('data-unmark-understood'), false);
+          this.renderProgressView();
+          return;
+        }
 
-          html += `
-            <label class="${optClass}" id="label_${q.id}_${optIdx}" onclick="CMPG122_APP.selectPaperAnswer('${q.id}', ${optIdx})">
-              <input type="radio" name="paper_opt_${q.id}" value="${optIdx}" ${isSelected ? 'checked' : ''} ${state.examSubmitted ? 'disabled' : ''} style="display:none;">
-              <span class="q-option-letter">${String.fromCharCode(65 + optIdx)}.</span>
-              <span class="q-option-text">${escapeHtml(opt)}</span>
-              ${badgeHtml}
-            </label>
-          `;
-        });
-        html += `</div>`;
-      } else if (q.blankAnswer) {
-        const clozeVal = savedAns ? savedAns.selected : '';
-        html += `
-          <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:1rem;">
-            <input type="text" id="paperCloze_${q.id}" class="cloze-input" placeholder="Type answer here..." value="${escapeHtml(clozeVal)}" ${state.examSubmitted ? 'disabled' : ''} oninput="CMPG122_APP.setPaperClozeAnswer('${q.id}', this.value)" style="flex:1; max-width:320px;">
-          </div>
-        `;
-      }
+        // Custom Quiz Generator Launch
+        if (target.closest('#btnGenerateCustomExam')) {
+          this._handleGenerateCustomAssessment();
+          return;
+        }
 
-      // If submitted, show full step-by-step solution
-      if (state.examSubmitted) {
-        const isCorrect = savedAns && savedAns.isCorrect;
-        html += `
-          <div class="paper-q-explanation ${isCorrect ? 'correct' : 'incorrect'}">
-            <div class="explanation-header">
-              <strong style="color:${isCorrect ? '#34d399' : '#f87171'};">
-                ${isCorrect ? `✅ Full Credit: +${marks} / ${marks} Marks` : `❌ Incorrect: 0 / ${marks} Marks`}
-              </strong>
-              <span class="solution-tag">Official Memorandum Solution & Analysis</span>
-            </div>
-            <div class="explanation-body">
-              ${escapeHtml(q.exp || q.explanation || 'Refer to textbook and lecture slides for full specification.')}
-            </div>
-          </div>
-        `;
-      }
-
-      html += `</div>`;
-    });
-
-    // Foot of document: Submission Card
-    html += `
-      <div class="paper-footer-card" id="paperFooterCard">
-    `;
-
-    if (!state.examSubmitted) {
-      html += `
-        <div class="paper-footer-title">End of Examination Document</div>
-        <div class="paper-footer-desc">
-          Review your answers using the Sticky Question Palette or by scrolling freely above. You can change any response until you submit.
-        </div>
-        <div id="footerWarningBox">
-          ${unansweredCount > 0 
-            ? `<div class="unanswered-warning">⚠️ Notice: You have ${unansweredCount} unanswered question(s) out of ${questions.length}.</div>`
-            : `<div style="color:var(--success-text); font-weight:700; margin-bottom:1.25rem;">✅ All ${questions.length} questions answered! You are ready to finalize your submission.</div>`
+        // Code Lab controls
+        const clTab = target.closest('[data-codelab-tab]');
+        if (clTab) {
+          this.codelabSubTab = clTab.getAttribute('data-codelab-tab');
+          this._renderCodeLabView();
+          return;
+        }
+        if (target.closest('#btnRunCodeGrade')) {
+          this._runCodeGradeEvaluation();
+          return;
+        }
+        if (target.closest('#btnShowSolution')) {
+          const sc = (this.data.codeScenarios || {})[this.activeCodeScenarioKey];
+          const inp = document.getElementById('studentCodeInput');
+          if (sc && inp) inp.value = sc.modelSolution || '';
+          return;
+        }
+        if (target.closest('#btnResetScenarioCode')) {
+          this._loadCodeScenarioIntoEditor(this.activeCodeScenarioKey);
+          return;
+        }
+        const spotOpt = target.closest('[data-spot-opt]');
+        if (spotOpt) {
+          this.spotSelected = Number(spotOpt.getAttribute('data-spot-opt'));
+          this._renderCodeLabView();
+          return;
+        }
+        if (target.closest('#btnSubmitSpot')) {
+          this.spotSubmitted = true;
+          this._renderCodeLabView();
+          return;
+        }
+        const spotNav = target.closest('[data-spot-nav]');
+        if (spotNav) {
+          const delta = Number(spotNav.getAttribute('data-spot-nav'));
+          this.spotIndex = Math.max(0, Math.min((this.data.spotErrors || []).length - 1, this.spotIndex + delta));
+          this.spotSelected = null;
+          this.spotSubmitted = false;
+          this._renderCodeLabView();
+          return;
+        }
+        if (target.closest('#btnLoadCanonicalAudit')) {
+          const sc = (this.data.auditScenarios || [])[this.activeAuditIndex];
+          const ta = document.getElementById('auditCodeTextarea');
+          if (sc && ta) ta.value = sc.canonicalSolution || sc.canonicalCode || '';
+          return;
+        }
+        if (target.closest('#btnRunCodeAuditor')) {
+          const sc = (this.data.auditScenarios || [])[this.activeAuditIndex];
+          const ta = document.getElementById('auditCodeTextarea');
+          const out = document.getElementById('auditResultOutput');
+          if (sc && ta && out && CSharpEngine.CSharpCodeAuditor) {
+            const res = CSharpEngine.CSharpCodeAuditor.audit(ta.value, sc);
+            out.innerHTML = `<div class="panel-card">
+              <strong>Audit Score: ${res.score}% (${res.fixedBugs} / ${res.totalBugs} defects fixed)</strong>
+              <ul style="margin:0.5rem 0 0;padding-left:1.2rem;font-size:0.84rem;">
+                ${(res.feedback || []).map(f => `<li style="color:${f.passed ? 'var(--status-success-text)' : 'var(--status-error-text)'};">${esc(f.message || f.description || '')}</li>`).join('')}
+              </ul>
+            </div>`;
           }
-        </div>
-        <button type="button" id="btnSubmitExamPaper" class="btn-practice btn-submit-paper" onclick="CMPG122_APP.submitCompleteExamPaper()">
-          📤 Submit Complete Exam Paper
-        </button>
-      `;
-    } else {
-      html += `
-        <div class="paper-footer-title">Examination Completed & Graded</div>
-        <div class="paper-footer-desc" style="font-size:1.05rem; font-weight:700; color:var(--text-main); margin-bottom:1.25rem;">
-          Final Result: ${earnedMarks} / ${totalMarks} Marks (${pct}%)
-        </div>
-        <div class="results-actions-row" style="justify-content:center;">
-          <button type="button" class="btn-practice" onclick="CMPG122_APP.jumpToQuestion(0)">⬆️ Back to Top of Paper</button>
-          <button type="button" class="action-btn" onclick="CMPG122_APP.retakeExam()">🔄 Retake Exam Paper</button>
-          <button type="button" class="action-btn" onclick="CMPG122_APP.exitExamPaper()">✕ Exit to Exams List</button>
-        </div>
-      `;
-    }
+          return;
+        }
 
-    html += `</div>`;
-
-    dom.continuousPaperArea.innerHTML = html;
-    setupQuestionObserver();
-  }
-
-  let questionObserver = null;
-
-  function setupQuestionObserver() {
-    if (questionObserver) {
-      questionObserver.disconnect();
-      questionObserver = null;
-    }
-
-    if (!('IntersectionObserver' in window)) return;
-
-    const options = {
-      root: null,
-      rootMargin: '-100px 0px -60% 0px',
-      threshold: 0
-    };
-
-    questionObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const idx = parseInt(entry.target.getAttribute('data-idx'), 10);
-          if (!isNaN(idx)) {
-            state.currentIndex = idx;
-            highlightCurrentPalettePill(idx);
+        // Examination Centre actions
+        if (target.closest('#btnStartFullWeightedTimed')) {
+          this.startFullWeightedExam(true);
+          return;
+        }
+        if (target.closest('#btnStartFullWeightedUntimed')) {
+          this.startFullWeightedExam(false);
+          return;
+        }
+        if (target.closest('#btnStartIncorrectExam')) {
+          const stats = AnalyticsMod.computeAnalytics(this.persistence.getState(), this.data);
+          const pool = stats.incorrectQueue.map(x => x.question);
+          if (pool.length === 0) {
+            this.showToast('No unresolved incorrect questions — launching mixed diagnostic set.');
+            this.startUnitPractice('ALL', '');
+            return;
           }
+          this.practiceSession = new ExamMod.ExamSession({
+            id: `diag_review_${Date.now()}`,
+            mode: 'review',
+            title: 'Incorrect Questions Diagnostic Retest',
+            questions: pool,
+            allowInstantSubmit: true
+          });
+          this.practiceSubTab = 'session';
+          this.practiceViewMode = 'card';
+          this.navigate('practice');
+          return;
+        }
+        const paperBtn = target.closest('[data-start-paper]');
+        if (paperBtn) {
+          const eId = paperBtn.getAttribute('data-start-paper');
+          const timed = paperBtn.getAttribute('data-paper-timed') !== 'false';
+          this.startOfficialExam(eId, timed);
+          return;
+        }
+        const jumpQ = target.closest('[data-jump-paper-q]');
+        if (jumpQ) {
+          const qId = jumpQ.getAttribute('data-jump-paper-q');
+          const el = document.getElementById(`paperQuestion_${qId}`);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById('examPaletteSidebar')?.classList.remove('drawer-open');
+          return;
+        }
+        if (target.closest('#btnJumpNextUnanswered')) {
+          if (this.examSession) {
+            const pre = this.examSession.getPreSubmitSummary();
+            if (pre.unansweredNumbers.length > 0) {
+              const targetId = pre.unansweredNumbers[0].id;
+              document.getElementById(`paperQuestion_${targetId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+              this.showToast('All questions in this paper have an answer selected.');
+            }
+          }
+          return;
+        }
+        if (target.closest('#btnOpenSubmitExamModal') || target.closest('[data-trigger-exam-submit]')) {
+          this.openExamSubmitConfirmation();
+          return;
+        }
+        if (target.closest('#btnPauseResumeTimer')) {
+          if (this.examSession && this.examSession.timed && !this.examSession.isCompleted) {
+            if (this.examSession.pausedAtMs) this.examSession.resumeTimer();
+            else this.examSession.pauseTimer();
+            this.persistence.saveActiveExamSession(this.examSession.toSnapshot());
+            this.renderContinuousExamPaper();
+          }
+          return;
+        }
+        if (target.closest('#btnToggleScenarioDrawer')) {
+          const dr = document.getElementById('scenarioDrawer');
+          if (dr) {
+            const open = !dr.classList.contains('open');
+            dr.classList.toggle('open', open);
+            dr.setAttribute('aria-hidden', open ? 'false' : 'true');
+          }
+          return;
+        }
+        if (target.closest('#btnCloseScenarioDrawer')) {
+          const dr = document.getElementById('scenarioDrawer');
+          if (dr) {
+            dr.classList.remove('open');
+            dr.setAttribute('aria-hidden', 'true');
+          }
+          return;
+        }
+        if (target.closest('#btnToggleMobilePalette')) {
+          document.getElementById('examPaletteSidebar')?.classList.add('drawer-open');
+          return;
+        }
+        if (target.closest('#btnCloseMobilePalette')) {
+          document.getElementById('examPaletteSidebar')?.classList.remove('drawer-open');
+          return;
+        }
+        if (target.closest('#btnExitExamToLobby')) {
+          this._stopExamTimerLoop();
+          if (this.examSession && this.examSession.isCompleted) {
+            this.examSession = null;
+          } else {
+            this.examSession = null;
+            this.persistence.saveActiveExamSession(null);
+          }
+          this.renderExamsView();
+          return;
+        }
+
+        // Review sub-tabs
+        const revTab = target.closest('[data-review-tab]');
+        if (revTab) {
+          this.reviewSubTab = revTab.getAttribute('data-review-tab');
+          this.renderProgressView();
+          return;
+        }
+
+        // Settings Export & Reset
+        if (target.closest('#btnExportBackup')) {
+          const json = this.persistence.exportBackupJson();
+          const blob = new Blob([json], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `CMPG122_Progress_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+          this.showToast('Progress backup exported.');
+          return;
+        }
+        if (target.closest('#btnResetProgressPrompt')) {
+          this._openModal(
+            'Reset All Learner Progress?',
+            '<p>This permanently clears your saved question history, completed Study Unit topics, flagged items, and examination scores. Consider exporting a JSON backup first.</p>',
+            'Reset All Data',
+            async () => {
+              await this.persistence.resetAllData();
+              this._applyPreferencesToDocument();
+              this._initHomeQuickSession();
+              this._initDefaultPracticeSession();
+              this.examSession = null;
+              this.renderCurrentRoute();
+              this.showToast('All progress and preferences have been reset.');
+            }
+          );
+          return;
+        }
+
+        // Close Modal
+        if (target.closest('#btnCloseAppModal') || target === document.getElementById('appModalBackdrop')) {
+          this._closeModal();
         }
       });
-    }, options);
 
-    const cards = document.querySelectorAll('.paper-q-card');
-    cards.forEach(card => questionObserver.observe(card));
-  }
+      // Change & Input listeners
+      document.addEventListener('change', async (e) => {
+        const t = e.target;
+        if (!t) return;
 
-  function highlightCurrentPalettePill(currentIdx) {
-    const pills = document.querySelectorAll('.palette-pill');
-    pills.forEach((pill, idx) => {
-      pill.classList.toggle('current-card', idx === currentIdx);
-    });
-  }
-
-  function updateNavigatorSummary() {
-    if (!dom.examNavigatorSummary || state.quizQuestions.length === 0) return;
-    const total = state.quizQuestions.length;
-    const answeredCount = Object.keys(state.answers).length;
-    const flaggedCount = Object.values(state.flags).filter(Boolean).length;
-    const pct = Math.round((answeredCount / total) * 100);
-
-    if (state.examSubmitted) {
-      const totalMarks = state.quizQuestions.reduce((sum, q) => sum + (q.marks || 2), 0);
-      const earnedMarks = Object.values(state.answers).reduce((sum, a) => sum + (a.isCorrect ? a.score : 0), 0);
-      const scorePct = totalMarks > 0 ? Math.round((earnedMarks / totalMarks) * 100) : 0;
-      const correctCount = Object.values(state.answers).filter(a => a.isCorrect).length;
-      const missedCount = total - correctCount;
-      dom.examNavigatorSummary.textContent = `Score: ${earnedMarks}/${totalMarks} Marks (${scorePct}%) • ${correctCount} Correct • ${missedCount} Missed`;
-    } else {
-      dom.examNavigatorSummary.textContent = `${answeredCount} / ${total} Answered (${pct}%) • ${flaggedCount} Flagged`;
-    }
-  }
-
-  function renderExamPalette() {
-    if (!dom.examQuestionPalette || state.quizQuestions.length === 0) return;
-
-    const questions = state.quizQuestions;
-    updateNavigatorSummary();
-
-    let html = '';
-    questions.forEach((q, idx) => {
-      const qNum = idx + 1;
-      const isAnswered = state.answers[q.id] !== undefined;
-      const isFlagged = !!state.flags[q.id];
-
-      let pillClasses = 'palette-pill';
-      if (idx === state.currentIndex) pillClasses += ' current-card';
-      if (isFlagged) pillClasses += ' flagged';
-
-      let statusDesc = isAnswered ? 'Answered' : 'Unanswered';
-
-      if (state.examSubmitted) {
-        const ans = state.answers[q.id];
-        if (ans && ans.isCorrect) {
-          pillClasses += ' correct';
-          statusDesc = `Correct (+${q.marks || 2} Marks)`;
-        } else if (ans && !ans.isCorrect) {
-          pillClasses += ' incorrect';
-          statusDesc = 'Incorrect (0 Marks)';
-        } else {
-          pillClasses += ' unanswered-missed';
-          statusDesc = 'Unanswered (0 Marks)';
+        if (t.id === 'quickModeSelect') {
+          this.navigate(t.value);
+        } else if (t.id === 'practiceUnitSelect') {
+          this._syncPracticeTopicDropdown(t.value);
+        } else if (t.id === 'codeScenarioSelect') {
+          this._loadCodeScenarioIntoEditor(t.value);
+        } else if (t.id === 'auditScenarioSelect') {
+          this.activeAuditIndex = Number(t.value) || 0;
+          this._renderCodeLabView();
+        } else if (t.id === 'defsUnitFilter' || t.id === 'defsCategoryFilter') {
+          this.renderDefinitionsView();
+        } else if (t.id === 'settingThemeSelect') {
+          this.persistence.updatePreferences({ theme: t.value });
+          this._applyPreferencesToDocument();
+        } else if (t.id === 'settingFontScaleSelect') {
+          this.persistence.updatePreferences({ fontScale: Number(t.value) });
+          this._applyPreferencesToDocument();
+        } else if (t.id === 'settingReducedMotion') {
+          this.persistence.updatePreferences({ reducedMotion: Boolean(t.checked) });
+          this._applyPreferencesToDocument();
+        } else if (t.id === 'settingShortcutsEnabled') {
+          this.persistence.updatePreferences({ keyboardShortcutsEnabled: Boolean(t.checked) });
+        } else if (t.id === 'settingLetterShortcuts') {
+          this.persistence.updatePreferences({ letterShortcutsEnabled: Boolean(t.checked) });
+        } else if (t.id === 'inputImportBackup' && t.files && t.files[0]) {
+          try {
+            const text = await t.files[0].text();
+            const res = await this.persistence.importBackupJson(text);
+            if (!res.valid) {
+              this.showToast(`Import rejected: ${res.error}`);
+            } else {
+              this._applyPreferencesToDocument();
+              this.renderCurrentRoute();
+              this.showToast('Backup validated and restored successfully.');
+            }
+          } catch (_err) {
+            this.showToast('Could not read backup file.');
+          }
+          t.value = '';
         }
-      } else {
-        if (isAnswered) pillClasses += ' answered';
-      }
+      });
 
-      html += `
-        <button type="button" class="${pillClasses}" id="palettePill_${q.id}" onclick="CMPG122_APP.jumpToQuestion(${idx})" title="Question ${qNum}: ${statusDesc}${isFlagged ? ' (Flagged)' : ''}">
-          Q${qNum}
-        </button>
-      `;
-    });
-
-    dom.examQuestionPalette.innerHTML = html;
-  }
-
-  function selectPaperAnswer(qId, optIdx) {
-    if (state.examSubmitted) return;
-
-    const q = state.quizQuestions.find(item => item.id === qId);
-    if (!q) return;
-
-    const isCorrect = (optIdx === q.answer);
-    state.answers[qId] = {
-      selected: optIdx,
-      isCorrect: isCorrect,
-      score: isCorrect ? (q.marks || 2) : 0
-    };
-
-    // Update option labels directly
-    const wrap = document.getElementById(`optionsWrap_${qId}`);
-    if (wrap) {
-      const labels = wrap.querySelectorAll('.paper-option-label');
-      labels.forEach((lbl, idx) => {
-        if (idx === optIdx) {
-          lbl.classList.add('selected');
-          const radio = lbl.querySelector('input[type="radio"]');
-          if (radio) radio.checked = true;
-        } else {
-          lbl.classList.remove('selected');
-          const radio = lbl.querySelector('input[type="radio"]');
-          if (radio) radio.checked = false;
+      document.addEventListener('input', (e) => {
+        const t = e.target;
+        if (!t) return;
+        if (t.id === 'homeDefSearchInput') {
+          this._renderHomeQuickDefs(t.value);
+        } else if (t.id === 'defsMainSearch') {
+          this.renderDefinitionsView();
         }
       });
     }
 
-    // Update palette pill
-    const pill = document.getElementById(`palettePill_${qId}`);
-    if (pill) {
-      pill.classList.add('answered');
-      const qNum = state.quizQuestions.findIndex(item => item.id === qId) + 1;
-      const isFlagged = !!state.flags[qId];
-      pill.title = `Question ${qNum}: Answered${isFlagged ? ' (Flagged)' : ''}`;
-    }
+    _handleGenerateCustomAssessment() {
+      const units = [...document.querySelectorAll('#customUnitsGroup input[type="checkbox"]:checked')].map(el => el.value);
+      const diffs = [...document.querySelectorAll('#customDiffGroup input[type="checkbox"]:checked')].map(el => el.value);
+      const topic = document.getElementById('customTopicFilter')?.value || '';
+      const qCount = Math.max(3, Math.min(80, Number(document.getElementById('customQuestionCount')?.value) || 15));
+      const targetMarks = Math.max(0, Number(document.getElementById('customTargetMarks')?.value) || 0);
+      const timeLimit = Math.max(0, Number(document.getElementById('customTimeLimit')?.value) || 0);
+      const useWeighted = Boolean(document.getElementById('customWeightedCheck')?.checked);
+      const randomize = Boolean(document.getElementById('customRandomizeCheck')?.checked);
+      const excludeMastered = Boolean(document.getElementById('customExcludeMasteredCheck')?.checked);
 
-    updateNavigatorSummary();
-
-    // Update footer warning box
-    const footerWarning = document.getElementById('footerWarningBox');
-    if (footerWarning) {
-      const total = state.quizQuestions.length;
-      const answeredCount = Object.keys(state.answers).length;
-      const unanswered = total - answeredCount;
-      if (unanswered > 0) {
-        footerWarning.innerHTML = `<div class="unanswered-warning">⚠️ Notice: You have ${unanswered} unanswered question(s) out of ${total}.</div>`;
-      } else {
-        footerWarning.innerHTML = `<div style="color:var(--success-text); font-weight:700; margin-bottom:1.25rem;">✅ All ${total} questions answered! You are ready to finalize your submission.</div>`;
-      }
-    }
-  }
-
-  function setPaperClozeAnswer(qId, val) {
-    if (state.examSubmitted) return;
-
-    const q = state.quizQuestions.find(item => item.id === qId);
-    if (!q) return;
-
-    const cleanVal = val.trim();
-    if (cleanVal === '') {
-      delete state.answers[qId];
-    } else {
-      const correctVal = String(q.blankAnswer).trim().toLowerCase();
-      const isCorrect = (cleanVal.toLowerCase() === correctVal);
-      state.answers[qId] = {
-        selected: cleanVal,
-        isCorrect: isCorrect,
-        score: isCorrect ? (q.marks || 2) : 0
-      };
-    }
-
-    const pill = document.getElementById(`palettePill_${qId}`);
-    if (pill) {
-      const qNum = state.quizQuestions.findIndex(item => item.id === qId) + 1;
-      const isFlagged = !!state.flags[qId];
-      if (cleanVal !== '') {
-        pill.classList.add('answered');
-        pill.title = `Question ${qNum}: Answered${isFlagged ? ' (Flagged)' : ''}`;
-      } else {
-        pill.classList.remove('answered');
-        pill.title = `Question ${qNum}: Unanswered${isFlagged ? ' (Flagged)' : ''}`;
-      }
-    }
-
-    updateNavigatorSummary();
-
-    const footerWarning = document.getElementById('footerWarningBox');
-    if (footerWarning) {
-      const total = state.quizQuestions.length;
-      const answeredCount = Object.keys(state.answers).length;
-      const unanswered = total - answeredCount;
-      if (unanswered > 0) {
-        footerWarning.innerHTML = `<div class="unanswered-warning">⚠️ Notice: You have ${unanswered} unanswered question(s) out of ${total}.</div>`;
-      } else {
-        footerWarning.innerHTML = `<div style="color:var(--success-text); font-weight:700; margin-bottom:1.25rem;">✅ All ${total} questions answered! You are ready to finalize your submission.</div>`;
-      }
-    }
-  }
-
-  function toggleQuestionFlag(qId) {
-    state.flags[qId] = !state.flags[qId];
-    const isFlagged = !!state.flags[qId];
-
-    const btn = document.getElementById(`flagBtn_${qId}`);
-    if (btn) {
-      btn.classList.toggle('flagged', isFlagged);
-      btn.textContent = isFlagged ? '★ Flagged' : '☆ Flag';
-    }
-
-    const pill = document.getElementById(`palettePill_${qId}`);
-    if (pill) {
-      pill.classList.toggle('flagged', isFlagged);
-      const qNum = state.quizQuestions.findIndex(item => item.id === qId) + 1;
-      const isAnswered = state.answers[qId] !== undefined;
-      pill.title = `Question ${qNum}: ${isAnswered ? 'Answered' : 'Unanswered'}${isFlagged ? ' (Flagged)' : ''}`;
-    }
-
-    updateNavigatorSummary();
-  }
-
-  function jumpToQuestion(idx) {
-    if (idx < 0 || idx >= state.quizQuestions.length) return;
-    state.currentIndex = idx;
-    const q = state.quizQuestions[idx];
-    const card = document.getElementById(`paperQ_${q.id}`);
-    if (card) {
-      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      card.classList.add('highlight-focus');
-      setTimeout(() => {
-        card.classList.remove('highlight-focus');
-      }, 1500);
-    }
-    highlightCurrentPalettePill(idx);
-  }
-
-  function jumpToNextUnanswered() {
-    const questions = state.quizQuestions;
-    const total = questions.length;
-    if (total === 0) return;
-
-    // Search starting from current position + 1, wrapping around circularly
-    let startIdx = (state.currentIndex + 1) % total;
-    let foundIdx = -1;
-
-    for (let i = 0; i < total; i++) {
-      const checkIdx = (startIdx + i) % total;
-      if (state.answers[questions[checkIdx].id] === undefined) {
-        foundIdx = checkIdx;
-        break;
-      }
-    }
-
-    if (foundIdx !== -1) {
-      jumpToQuestion(foundIdx);
-    } else {
-      alert('All questions on this examination paper have been answered! You can review or finalize your submission at the foot of the document.');
-    }
-  }
-
-  function jumpToSubmit() {
-    const footer = document.getElementById('paperFooterCard');
-    if (footer) {
-      footer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-
-  function submitCompleteExamPaper(force = false) {
-    if (state.examSubmitted) return;
-
-    const totalQuestions = state.quizQuestions.length;
-    const answeredCount = Object.keys(state.answers).length;
-    const unansweredCount = totalQuestions - answeredCount;
-
-    if (!force && unansweredCount > 0) {
-      const confirmSubmit = confirm(
-        `Warning: You have ${unansweredCount} unanswered question(s) out of ${totalQuestions}.\n\nAre you sure you want to submit the complete examination paper now?`
-      );
-      if (!confirmSubmit) return;
-    }
-
-    clearInterval(state.examTimerInterval);
-    state.examSubmitted = true;
-    if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
-    if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
-
-    const totalMarks = state.quizQuestions.reduce((sum, q) => sum + (q.marks || 2), 0);
-    const earnedMarks = Object.values(state.answers).reduce((sum, a) => sum + (a.isCorrect ? a.score : 0), 0);
-    const pct = totalMarks > 0 ? Math.round((earnedMarks / totalMarks) * 100) : 0;
-
-    // Update persistent mastery statistics
-    if (pct > state.masteryStats.bestExamScore) {
-      state.masteryStats.bestExamScore = pct;
-    }
-
-    state.quizQuestions.forEach(q => {
-      state.masteryStats.totalAttempts++;
-      const ans = state.answers[q.id];
-      if (ans && ans.isCorrect) {
-        state.masteryStats.correctAttempts++;
-        if (state.masteryStats.unitStats && state.masteryStats.unitStats[q.ch]) {
-          state.masteryStats.unitStats[q.ch].correct++;
-        }
-      }
-      if (state.masteryStats.unitStats && state.masteryStats.unitStats[q.ch]) {
-        state.masteryStats.unitStats[q.ch].total++;
-      }
-    });
-
-    saveStats();
-    updateStatsDisplay();
-
-    if (window.AxiomTelemetry && window.AxiomTelemetry.logAssessmentCompleted) {
-      window.AxiomTelemetry.logAssessmentCompleted();
-    }
-
-    const passed = pct >= 50;
-    const distinction = pct >= 75;
-    const gradeTitle = distinction ? 'Distinction! 🏆' : (passed ? 'Passed! 🎉' : 'Failed - Supplementary Revision Required ⚠️');
-
-    // Re-render continuous paper and palette to reveal full solutions, answer keys, and results banner
-    renderContinuousExamPaper();
-    renderExamPalette();
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function submitExam() {
-    submitCompleteExamPaper(false);
-  }
-
-  function retakeExam() {
-    if (confirm("Are you sure you want to retake this examination paper? Your previous answers will be cleared.")) {
-      if (state.selectedExamId) {
-        startExam(state.selectedExamId, !!state.isTimedExam);
-      } else {
-        launchQuizSession(dom.quizTitle ? dom.quizTitle.textContent : "Practice", state.quizQuestions, false);
-      }
-    }
-  }
-
-  function openScenarioDrawer() {
-    const exam = state.selectedExamId ? DATA.officialExams.find(e => e.id === state.selectedExamId) : null;
-    if (!exam) return;
-
-    if (dom.scenarioDrawerTitle) {
-      dom.scenarioDrawerTitle.textContent = `${exam.title} — Scenario & Rates Table`;
-    }
-    if (dom.scenarioDrawerBody) {
-      dom.scenarioDrawerBody.innerHTML = exam.scenarioHtml || `<div class="paper-scenario-text">${escapeHtml(exam.scenario || '')}</div>`;
-    }
-    if (dom.scenarioDrawerBackdrop) dom.scenarioDrawerBackdrop.style.display = 'block';
-    if (dom.scenarioDrawer) dom.scenarioDrawer.style.display = 'flex';
-  }
-
-  function closeScenarioDrawer() {
-    if (dom.scenarioDrawerBackdrop) dom.scenarioDrawerBackdrop.style.display = 'none';
-    if (dom.scenarioDrawer) dom.scenarioDrawer.style.display = 'none';
-  }
-
-  function exitExamPaper() {
-    closeScenarioDrawer();
-    if (!state.examSubmitted) {
-      if (!confirm("Are you sure you want to exit? Your exam progress will not be saved.")) {
+      if (units.length === 0 || diffs.length === 0) {
+        this.showToast('Select at least one Study Unit and one Difficulty level.');
         return;
       }
-    }
-    if (questionObserver) {
-      questionObserver.disconnect();
-      questionObserver = null;
-    }
-    clearInterval(state.examTimerInterval);
-    state.isExamMode = false;
-    state.selectedExamId = null;
-    state.isTimedExam = false;
-    state.examSubmitted = false;
-    if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
-    if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
-    switchTab('exams');
-  }
 
-  function exitQuiz() {
-    if (state.isExamMode) {
-      exitExamPaper();
-    } else {
-      if (confirm("Are you sure you want to exit this session?")) {
-        clearInterval(state.examTimerInterval);
-        state.isExamMode = false;
-        state.selectedExamId = null;
-        state.isTimedExam = false;
-        state.examSubmitted = false;
-        if (dom.quizTimerBox) dom.quizTimerBox.style.display = 'none';
-        if (dom.navExamTimer) dom.navExamTimer.style.display = 'none';
-        switchTab('units');
+      const hist = this.persistence.getState().questionHistory || {};
+      const excludeIds = excludeMastered
+        ? Object.keys(hist).filter(id => hist[id] && hist[id].isCorrect)
+        : [];
+
+      const generated = ExamMod.generateCustomExam(this.data.questions || [], {
+        units,
+        topics: topic ? [topic] : [],
+        difficulties: diffs,
+        questionCount: targetMarks > 0 ? 0 : qCount,
+        targetMarks: targetMarks > 0 ? targetMarks : 0,
+        useWeightedDistribution: useWeighted,
+        randomize,
+        excludeIds
+      });
+
+      if (generated.length === 0) {
+        this.showToast('No questions matched those exact filters. Try broadening topic or difficulty filters.');
+        return;
+      }
+
+      if (timeLimit > 0) {
+        this.examSession = new ExamMod.ExamSession({
+          id: `custom_exam_${Date.now()}`,
+          mode: 'custom_quiz',
+          title: `Custom Timed Assessment (${generated.length} Questions)`,
+          layout: 'continuous',
+          allowInstantSubmit: false,
+          questions: generated,
+          durationMinutes: timeLimit
+        });
+        this.persistence.saveActiveExamSession(this.examSession.toSnapshot());
+        this.navigate('exams');
+      } else {
+        this.practiceSession = new ExamMod.ExamSession({
+          id: `custom_prac_${Date.now()}`,
+          mode: 'custom_quiz',
+          title: `Custom Quiz (${generated.length} Questions)`,
+          questions: generated,
+          allowInstantSubmit: true
+        });
+        this.practiceSubTab = 'session';
+        this.practiceViewMode = 'card';
+        this.renderPracticeView();
       }
     }
+
+    /* ==================== MODAL, TOAST, STUDY TIMER & SW ==================== */
+
+    _openModal(title, bodyHtml, confirmLabel, onConfirm) {
+      const bd = document.getElementById('appModalBackdrop');
+      const titleEl = document.getElementById('appModalTitle');
+      const bodyEl = document.getElementById('appModalBody');
+      const actionsEl = document.getElementById('appModalActions');
+      if (!bd || !titleEl || !bodyEl || !actionsEl) return;
+
+      titleEl.textContent = title;
+      bodyEl.innerHTML = bodyHtml;
+      this._modalConfirmHandler = onConfirm;
+      actionsEl.innerHTML = `
+        <button type="button" class="btn-ghost btn-sm" id="btnModalCancelAction">Cancel</button>
+        ${confirmLabel ? `<button type="button" class="btn-primary btn-sm" id="btnModalConfirmAction">${esc(confirmLabel)}</button>` : ''}
+      `;
+      bd.classList.add('open');
+      this._modalOpen = true;
+
+      document.getElementById('btnModalCancelAction')?.addEventListener('click', () => this._closeModal(), { once: true });
+      document.getElementById('btnModalConfirmAction')?.addEventListener('click', () => {
+        const fn = this._modalConfirmHandler;
+        this._closeModal();
+        if (typeof fn === 'function') fn();
+      }, { once: true });
+    }
+
+    _closeModal() {
+      const bd = document.getElementById('appModalBackdrop');
+      if (bd) bd.classList.remove('open');
+      this._modalOpen = false;
+      this._modalConfirmHandler = null;
+    }
+
+    showToast(message) {
+      if (typeof document === 'undefined') return;
+      const region = document.getElementById('toastRegion');
+      if (!region) return;
+      const el = document.createElement('div');
+      el.className = 'toast-item';
+      el.textContent = message;
+      region.appendChild(el);
+      setTimeout(() => { el.remove(); }, 3200);
+    }
+
+    _startStudyTimeTracker() {
+      if (this._studyTicker || typeof document === 'undefined') return;
+      this._studyTicker = setInterval(() => {
+        if (!document.hidden) {
+          this.persistence.addStudyTime(15);
+        }
+      }, 15000);
+    }
+
+    _registerServiceWorkerSafely() {
+      if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
+      if (!('serviceWorker' in navigator)) return;
+      if (!window.location.protocol.startsWith('http')) return;
+      navigator.serviceWorker.register('./sw.js').then((reg) => {
+        reg.addEventListener('updatefound', () => {
+          const worker = reg.installing;
+          if (!worker) return;
+          worker.addEventListener('statechange', () => {
+            // Never interrupt an active examination session with a forced reload
+            const hasLiveExam = Boolean(this.examSession && !this.examSession.isCompleted);
+            if (worker.state === 'installed' && navigator.serviceWorker.controller && !hasLiveExam) {
+              this.showToast('Offline cache updated for next launch.');
+            }
+          });
+        });
+      }).catch(() => {});
+    }
   }
 
-  function toggleBookmark() {
-    const q = state.quizQuestions[state.currentIndex];
-    if (!q) return;
+  if (typeof module === 'object' && module.exports) {
+    module.exports = { Cmpg122PlatformApp };
+  }
 
-    const idx = state.bookmarks.indexOf(q.id);
-    if (idx === -1) {
-      state.bookmarks.push(q.id);
+  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    const instance = new Cmpg122PlatformApp();
+    window.CMPG122_APP = instance;
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => instance.init());
     } else {
-      state.bookmarks.splice(idx, 1);
-    }
-
-    localStorage.setItem('cmpg122_bookmarks', JSON.stringify(state.bookmarks));
-    renderCurrentQuestion();
-  }
-
-  // Side Tools Drawer Handlers
-  function toggleDrawer(open) {
-    if (dom.toolsDrawer) dom.toolsDrawer.classList.toggle('active', open);
-    if (dom.drawerBackdrop) dom.drawerBackdrop.classList.toggle('active', open);
-  }
-
-  function runSandboxExpression() {
-    if (!dom.sandboxExpr || !dom.sandboxResult) return;
-    const expr = dom.sandboxExpr.value.trim();
-    if (!expr) return;
-
-    try {
-      // Clean C# suffixes for JS eval
-      let jsExpr = expr.replace(/(\d+(?:\.\d+)?)[mMDdfF]\b/g, '$1');
-      jsExpr = jsExpr.replace(/\bMath\.Pow\b/g, 'Math.pow');
-      jsExpr = jsExpr.replace(/\bMath\.Sqrt\b/g, 'Math.sqrt');
-      jsExpr = jsExpr.replace(/\bMath\.Round\b/g, 'Math.round');
-      jsExpr = jsExpr.replace(/\bMath\.Abs\b/g, 'Math.abs');
-      jsExpr = jsExpr.replace(/\.ToString\s*\(\s*["']C["']\s*\)/gi, '._toCurrency()');
-      jsExpr = jsExpr.replace(/\.ToString\s*\(\s*["']F(\d)?["']\s*\)/gi, '._toFixed($1 || 2)');
-
-      Number.prototype._toCurrency = function() {
-        return 'R ' + this.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      };
-      Number.prototype._toFixed = function(digits) {
-        return this.toFixed(digits);
-      };
-
-      const result = eval(jsExpr);
-      dom.sandboxResult.innerHTML = `
-        <div style="padding:0.6rem; background:rgba(16,185,129,0.1); border:1px solid var(--success-border); border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:0.85rem;">
-          <strong style="color:var(--success-text);">Result:</strong> ${result} <br>
-          <span style="font-size:0.75rem; color:var(--text-muted);">Evaluated in Sandbox</span>
-        </div>
-      `;
-    } catch (e) {
-      dom.sandboxResult.innerHTML = `
-        <div style="padding:0.6rem; background:rgba(239,68,68,0.1); border:1px solid var(--danger-border); border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:0.85rem; color:var(--danger-text);">
-          <strong>Evaluation Error:</strong> ${e.message}
-        </div>
-      `;
+      instance.init();
     }
   }
-
-  function generateTraceTable() {
-    if (!dom.traceOutput) return;
-
-    // Demonstrates interactive trace table as mandated by CS Framework spec
-    dom.traceOutput.innerHTML = `
-      <table class="test-table" style="margin-top:0.5rem;">
-        <thead>
-          <tr>
-            <th>Iteration</th>
-            <th>Variable 'count'</th>
-            <th>Accumulator 'total'</th>
-            <th>Condition (count <= 4)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Initial</td><td>1</td><td>0.00</td><td>true</td></tr>
-          <tr><td>Loop 1</td><td>2</td><td>100.00</td><td>true</td></tr>
-          <tr><td>Loop 2</td><td>3</td><td>200.00</td><td>true</td></tr>
-          <tr><td>Loop 3</td><td>4</td><td>300.00</td><td>true</td></tr>
-          <tr><td>Loop 4</td><td>5</td><td>400.00</td><td>false (Terminates)</td></tr>
-        </tbody>
-      </table>
-      <div style="margin-top:0.5rem; font-size:0.75rem; color:var(--text-muted);">
-        * Final values after loop termination: count = 5, total = R 400.00.
-      </div>
-    `;
-  }
-
-  function initScratchpad() {
-    if (!dom.scratchpadText) return;
-    dom.scratchpadText.value = localStorage.getItem('cmpg122_scratchpad') || '';
-    dom.scratchpadText.addEventListener('input', () => {
-      localStorage.setItem('cmpg122_scratchpad', dom.scratchpadText.value);
-    });
-  }
-
-  // Summary Modal
-  function showUnitSummary(unitId) {
-    const unit = DATA.units.find(u => u.id === unitId);
-    if (!unit) return;
-
-    if (dom.summaryModalTitle) dom.summaryModalTitle.textContent = `${unit.code}: Study Summary & C# Cheat Sheet`;
-    if (dom.summaryModalBody) {
-      dom.summaryModalBody.innerHTML = `
-        <div style="margin-bottom:1rem;">
-          <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6;">${unit.summary}</p>
-        </div>
-        ${unit.cheatSheetHtml ? `<div style="margin-bottom:1.25rem;">${unit.cheatSheetHtml}</div>` : ''}
-        <div style="margin-bottom:1rem;">
-          <h4 style="color:var(--accent-purple); margin-bottom:0.4rem;">Curriculum Checklist:</h4>
-          <ul style="padding-left:1.25rem; font-size:0.88rem; line-height:1.8;">
-            ${unit.topics.map(t => `<li>${t}</li>`).join('')}
-          </ul>
-        </div>
-        <button class="btn-practice" onclick="CMPG122_APP.closeModal(); CMPG122_APP.startUnitPractice('${unit.id}');" style="width:100%; margin-top:0.75rem;">
-          ⚡ Launch ${unit.code} Practice Session
-        </button>
-      `;
-    }
-
-    if (dom.summaryModal) dom.summaryModal.classList.add('active');
-  }
-
-  function closeModal() {
-    if (dom.summaryModal) dom.summaryModal.classList.remove('active');
-  }
-
-  // Theme Toggle
-  function initTheme() {
-    const savedTheme = localStorage.getItem('cmpg122_theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    if (dom.themeToggle) {
-      dom.themeToggle.textContent = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
-    }
-  }
-
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-    const next = (current === 'dark') ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('cmpg122_theme', next);
-    if (dom.themeToggle) {
-      dom.themeToggle.textContent = next === 'dark' ? '☀️ Light' : '🌙 Dark';
-    }
-  }
-
-  function saveStats() {
-    localStorage.setItem('cmpg122_mastery_stats', JSON.stringify(state.masteryStats));
-  }
-
-  function updateStatsDisplay() {
-    if (dom.statTotalQs) dom.statTotalQs.textContent = DATA.questions.length;
-    const rate = state.masteryStats.totalAttempts > 0
-      ? Math.round((state.masteryStats.correctAttempts / state.masteryStats.totalAttempts) * 100)
-      : 0;
-    if (dom.statMastery) dom.statMastery.textContent = `${rate}%`;
-    if (dom.statStreak) dom.statStreak.textContent = `🔥 ${state.streak}`;
-  }
-
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  // Public API
-  window.CMPG122_APP = {
-    init: init,
-    startUnitPractice: startUnitPractice,
-    startExam: startExam,
-    showUnitSummary: showUnitSummary,
-    filterCheatSheets: filterCheatSheets,
-    closeModal: closeModal,
-    selectAnswer: selectAnswer,
-    submitClozeAnswer: submitClozeAnswer,
-    checkSpotError: checkSpotError,
-    switchAuditMode: switchAuditMode,
-    loadAuditScenario: loadAuditScenario,
-    runCodeAudit: runCodeAudit,
-    resetAuditScenario: resetAuditScenario,
-    toggleAuditSolution: toggleAuditSolution,
-    setViewMode: setViewMode,
-    renderContinuousExamPaper: renderContinuousExamPaper,
-    renderExamPalette: renderExamPalette,
-    selectPaperAnswer: selectPaperAnswer,
-    setPaperClozeAnswer: setPaperClozeAnswer,
-    toggleQuestionFlag: toggleQuestionFlag,
-    jumpToQuestion: jumpToQuestion,
-    jumpToNextUnanswered: jumpToNextUnanswered,
-    jumpToSubmit: jumpToSubmit,
-    submitCompleteExamPaper: submitCompleteExamPaper,
-    submitExam: submitExam,
-    retakeExam: retakeExam,
-    exitExamPaper: exitExamPaper,
-    exitQuiz: exitQuiz,
-    openScenarioDrawer: openScenarioDrawer,
-    closeScenarioDrawer: closeScenarioDrawer
-  };
-
-  window.addEventListener('DOMContentLoaded', init);
-})();
+})(typeof self !== 'undefined' ? self : this);

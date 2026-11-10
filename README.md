@@ -1,77 +1,41 @@
-# NWU CMPG122 • User Interface Programming in Visual C# Study & Exam Suite
+# CMPG122 — Visual C# UI Programming Learning & Examination Platform
 
-Welcome to the **NWU CMPG122 Mastery Application Suite (Production V7.05)** ("Project Roslyn"). This application provides **100% curriculum exhaustion for Weeks 1 to 7** of North-West University's CMPG 122 module.
+Comprehensive offline-capable learning, C# code-tracing, technical definitions, and examination platform covering the 12-week NWU CMPG122 curriculum (`SU7` and `SU1`–`SU6`).
 
----
+## Modular Architecture
 
-## 🌐 Official Live Deployment & Repository Endpoints
+- `index.html` — Clean, accessible learner application shell (zero administrative or external network dependencies)
+- `css/style.css` — Centralised CSS custom-property design system (`Dark` & `Light` themes, `320px`–`1920px+` responsive breakpoints)
+- `manifest.json` & `sw.js` — Offline-first PWA Web App Manifest and versioned Service Worker
+- `js/data/`
+  - `curriculum.js` — 7 Study Units, verified exam weighting model, and 35 10-part structured topics
+  - `definitions_data.js` — 82 searchable technical definitions
+  - `questions_bank.js` — 585 calibrated questions and 5 continuous single-sheet past examination papers
+  - `code_labs_data.js` — 15 CodeGrade event-handler scenarios (`SU1`–`SU6`), 24 Spot-the-Error challenges, and 6 Code-Audit scenarios
+- `js/modules/`
+  - `icons_and_diagrams.js` — Coherent 24×24 SVG icon set, circular progress rings, trend chart, and 7 Study Unit vector diagrams
+  - `persistence.js` — IndexedDB structured storage, `localStorage` preferences, schema v2 migration, and validated JSON backup/restore
+  - `analytics.js` — Real-time progress, weak-topic diagnostics, pacing/tracing trends, and related-question recommendations
+  - `definitions_engine.js` — Searchable definitions, subtle inline linker, and exact context-preserving return navigation stack
+  - `exam_engine.js` — Question state machine, timestamp-based countdown timer, and mark-weighted / custom exam generators
+  - `keyboard_shortcuts.js` — `A–E`, `1–5`, and `Enter` shortcut state controller
+  - `question_renderer.js` — Accessible question cards and offline C# syntax highlighting
+- `js/csharp_engine.js` — Offline C# tokenizer, syntax highlighter, static analyzer, sandboxed virtual runner, and `CSharpCodeAuditor`
+- `audit/` — Non-learner-facing `provenance_registry.json`, `audit_report.json`, and `e2e_verification_report.json`
+- `tests/` — Automated Node.js unit/integration suite (`unit_and_integration.test.js`) and Playwright browser E2E/responsive suite (`e2e_playwright_audit.py`)
 
-- 🌐 **Live Student Web Application:** [https://andrelamusse.github.io/CMPG122-ProjectRoslyn/](https://andrelamusse.github.io/CMPG122-ProjectRoslyn/)
-- 📊 **Live Admin Analytics Dashboard:** [https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html](https://andrelamusse.github.io/CMPG122-ProjectRoslyn/admin.html)
-- 📁 **Official GitHub Repository:** [https://github.com/andrelamusse/CMPG122-ProjectRoslyn](https://github.com/andrelamusse/CMPG122-ProjectRoslyn)
-- 🤖 **Master Engineering Specification & Prompt:** [`MasterPrompt_V7.05.md`](./MasterPrompt_V7.05.md)
-- 💬 **Direct Creator Escalation Channel:** [https://wa.me/27660673757](https://wa.me/27660673757)
-
----
-
-## 🌟 Key Application Features
-
-1. **📚 430 Verified Curriculum Questions (Weeks 1–7):**
-   - **SU7: Human-Computer Interaction (HCI):** Shneiderman's 8 Golden Rules, 5 Usability Measures, Motivations, Universal Usability, and Norman's Action Cycle.
-   - **SU1: Introduction to Programming & Visual C# GUI:** Visual Studio IDE, Gaddis 6-phase process, Form Designer, Hungarian prefixes (`btn`, `txt`, `lbl`, `pic`), event-driven architecture, `this.Close();`.
-   - **SU2: Processing Data, Variables & Math:** Numeric data types (`decimal`, `double`, `int`), literal suffixes (`m`, `d`), arithmetic precedence, integer division truncation, `ToString()` specifiers (`C`, `F`, `N`, `P`, `D`), `try-catch` exception handling, field vs local scope, `Math` class methods, `TabIndex`, and `Focus()`.
-   - **SU3: Making Decisions, Selection & Validation:** Relational and logical operators (`&&`, `||`, `!`), `if-else`, nested `if`, `switch` statements, `TryParse()` defensive input validation, RadioButtons, CheckBoxes, GroupBoxes, `MessageBox.Show()`, and `ListBox` selection guards.
-   - **SU4: Loops, Accumulators & ListBoxes:** `while` loop (pre-test), `do-while` loop (post-test), `for` loop, postfix vs prefix increment operators (`count++` vs `++count`), accumulators, counters, sentinels, ListBox population, and `Form_Load` initialization.
-
-2. **📝 5 Official Past Exam Simulations (2021–2024):**
-   - **Dec 2024 VC/PC Paper 1:** Car Rental Fleet & Mileage Surcharge Billing System (100 Marks, 16 steps).
-   - **Dec 2023 VC/PC Paper 1:** Student Tuition, Campus Residence & Bursary Assessment (100 Marks, 16 steps).
-   - **Dec 2022 NWU Paper 1:** Gym & Fitness Club Membership Billing Terminal (100 Marks, 16 steps).
-   - **Nov 2021 VC/PC/DL Paper 1:** Hotel & Conference Booking Engine (90 Marks, 15 steps).
-   - **PEC 2024 Comprehensive Practical Exam:** Retail POS, Volume Discount & Loyalty Register (100 Marks, 16 steps).
-   - Features both **Untimed Practice Mode** and **Timed Simulation Mode** with automatic mark calculation.
-
-3. **💻 C# CodeGrade Automated Marking & Diagnostics Engine:**
-   - **Client-Side Roslyn Diagnostics:** Flags real compiler error codes (`CS1002` ; expected, `CS1513` } expected, `CS1026` ) expected, `CS0029` type conversion errors, `CS0103` undeclared variables, `CS1525` invalid expression terms).
-   - **NWU Coding Standards Checker:** Enforces Hungarian notation (`NWU_CONV01`), safe input parsing (`NWU_SAFE01`), and currency formatting (`NWU_FORMAT01`).
-   - **Automated Virtual Test Runner:** Runs simulated test cases against student event handlers and displays real-time Pass/Fail results.
-   - **Code Snippet Toolbar:** One-click insertion of `TryParse`, `try-catch`, `if-else`, `while loop`, `for loop`, and `MessageBox`.
-
-4. **🔍 Spot-the-Error & Debugging Gym:**
-   - 15 tricky code snippets featuring past-paper bugs, off-by-one errors, unassigned locals, and TryParse syntax traps with instant feedback.
-
-5. **🛠️ Side Tools Drawer:**
-   - **Quick C# Expression Sandbox:** Live evaluation of C# arithmetic, `Math` functions, and `ToString` format strings.
-   - **Variable State Trace Table:** Step through loop variable state changes.
-   - **Hungarian Prefixes Inspector:** Official NWU naming cheat sheet.
-   - **Auto-saved Scratchpad:** Keeps notes in browser LocalStorage.
-
----
-
-## 🚀 3-Step Quick Start (100% Offline)
-
-### Option A: Open Application Suite
-1. Navigate to the `CMPG122_App/` folder.
-2. Double-click `index.html` in any web browser (Chrome, Edge, Firefox, Safari).
-3. No web server, node, or internet connection required!
-
-### Option B: Single-File Mobile Study Guide
-1. Double-click `CMPG122_Test1_StudyGuide.html` in the root folder.
-2. Share this single file via WhatsApp, AirDrop, or email for on-the-go mobile studying.
-
----
-
-## ⚙️ Automated CLI Commands
-
-From the `c:\NWU\SM2\CMPG122` directory:
+## Build, Audit & Verification Commands
 
 ```bash
-# Run automated Node.js QA Census & C# Engine Verification
-python module_app_cli.py audit
-
-# Re-bundle the single-file mobile study guide
+# Build standalone single-file offline bundle (CMPG122_Test1_StudyGuide.html)
 python module_app_cli.py build-mobile
 
-# Clean and organize workspace
-python module_app_cli.py clean
+# Run structural, educational, exam, presentation, and security QA audit
+python module_app_cli.py audit
+
+# Run unit & module integration tests
+node --test CMPG122_App/tests/unit_and_integration.test.js
+
+# Run full Playwright E2E, 10-viewport responsive, offline & WCAG verification
+python CMPG122_App/tests/e2e_playwright_audit.py
 ```

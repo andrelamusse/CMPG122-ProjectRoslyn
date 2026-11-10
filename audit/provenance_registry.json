@@ -1,0 +1,2931 @@
+{
+  "generatedAt": "2026-11-10T01:08:18.952Z",
+  "totalQuestions": 585,
+  "records": {
+    "q_su7_001": {
+      "source": "Shneiderman 5th Ed §1.2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_002": {
+      "source": "Shneiderman 5th Ed §1.2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_003": {
+      "source": "Shneiderman 5th Ed §1.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_004": {
+      "source": "Shneiderman 5th Ed §1.3.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_005": {
+      "source": "Shneiderman 5th Ed §1.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_006": {
+      "source": "Shneiderman 5th Ed §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_007": {
+      "source": "Shneiderman 5th Ed §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_008": {
+      "source": "Shneiderman 5th Ed §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_009": {
+      "source": "Shneiderman 5th Ed §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_010": {
+      "source": "Shneiderman 5th Ed §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_011": {
+      "source": "Shneiderman 5th Ed §2.2 / Norman",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_012": {
+      "source": "Shneiderman 5th Ed §2.2 / Norman",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_013": {
+      "source": "Shneiderman 5th Ed §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_014": {
+      "source": "Shneiderman 5th Ed §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_015": {
+      "source": "Shneiderman 5th Ed §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_016": {
+      "source": "Shneiderman §1.3.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_017": {
+      "source": "Shneiderman §2.2.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_018": {
+      "source": "Shneiderman §1.4.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_019": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_020": {
+      "source": "Shneiderman §2.2.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_021": {
+      "source": "Shneiderman §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_022": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_023": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_024": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_025": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_026": {
+      "source": "Shneiderman 5th Ed §1.2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_027": {
+      "source": "Shneiderman 5th Ed §1.2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_028": {
+      "source": "Shneiderman 5th Ed §1.2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_029": {
+      "source": "Shneiderman 5th Ed §1.2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_030": {
+      "source": "Shneiderman 5th Ed §1.2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_031": {
+      "source": "Shneiderman 5th Ed §1.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_032": {
+      "source": "Shneiderman 5th Ed §1.3.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_033": {
+      "source": "Shneiderman 5th Ed §1.3.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_034": {
+      "source": "Shneiderman 5th Ed §1.3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_035": {
+      "source": "Shneiderman 5th Ed §1.3.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_036": {
+      "source": "Shneiderman 5th Ed §1.4.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_037": {
+      "source": "Shneiderman 5th Ed §1.4.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_038": {
+      "source": "Shneiderman 5th Ed §1.4.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_039": {
+      "source": "Shneiderman 5th Ed §1.4.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_040": {
+      "source": "Shneiderman 5th Ed §1.4.4 & Gaddis Ch 3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_041": {
+      "source": "Shneiderman 5th Ed §1.4.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_042": {
+      "source": "Shneiderman §2.3.1 & NWU Standard",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_043": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_044": {
+      "source": "Shneiderman §2.3.1 & Gaddis Ch 4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_045": {
+      "source": "Shneiderman §2.3.1 & Gaddis Ch 3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_046": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_047": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_048": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_049": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_050": {
+      "source": "Shneiderman §2.3.1 & Gaddis Ch 3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_051": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_052": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_053": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_054": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_055": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_056": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_057": {
+      "source": "Shneiderman §2.3.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_058": {
+      "source": "Shneiderman Ch 2 / Practical 29 HCI Alignment",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_059": {
+      "source": "Norman Action Cycle / Practical 29 HCI Alignment",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_060": {
+      "source": "Shneiderman §2.2 & Norman",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_061": {
+      "source": "Shneiderman §2.2 & Norman",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_062": {
+      "source": "Shneiderman §1.2 & §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_063": {
+      "source": "Shneiderman §1.2 & §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_064": {
+      "source": "Shneiderman §1.2 & §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su7_065": {
+      "source": "Shneiderman §2.3.1 & Gaddis Ch 4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_066": {
+      "source": "Gaddis 4th Ed §1.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_067": {
+      "source": "Gaddis 4th Ed §1.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_068": {
+      "source": "NWU Quiz 1 (SU1) Gaddis Chapter 1 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_069": {
+      "source": "Gaddis 4th Ed §1.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_070": {
+      "source": "Gaddis 4th Ed §1.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_071": {
+      "source": "NWU Naming Conventions Handout",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_072": {
+      "source": "Gaddis 4th Ed §1.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_073": {
+      "source": "Gaddis 4th Ed §1.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_074": {
+      "source": "Gaddis 4th Ed §1.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_075": {
+      "source": "NWU Quiz 1 (SU1) Gaddis Chapter 1 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_076": {
+      "source": "Gaddis 4th Ed §1.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_077": {
+      "source": "Gaddis 4th Ed §1.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_078": {
+      "source": "Gaddis 4th Ed §1.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_079": {
+      "source": "NWU Quiz 1 (SU1) Gaddis Chapter 1 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_080": {
+      "source": "NWU Naming Conventions Handout",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_081": {
+      "source": "NWU Practical 1: Racing Light Trainer Part A",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_082": {
+      "source": "NWU Practical 1: Racing Light Trainer Part A Step 3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_083": {
+      "source": "NWU Practical 1: Racing Light Trainer Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_084": {
+      "source": "NWU Practical 1: Racing Light Trainer Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_085": {
+      "source": "NWU Practical 1: Racing Light Trainer Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_086": {
+      "source": "NWU Practical 1: Racing Light Trainer Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_087": {
+      "source": "NWU Practical 1: Racing Light Trainer Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_088": {
+      "source": "NWU Practical 1: Racing Light Trainer Part D (Traps)",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_089": {
+      "source": "NWU Practical 1: Racing Light Trainer Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_090": {
+      "source": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_091": {
+      "source": "NWU Practical 1: Racing Light Trainer Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_092": {
+      "source": "Gaddis 4th Ed §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_093": {
+      "source": "NWU CMPG122 Naming Conventions Guide",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_094": {
+      "source": "Gaddis 4th Ed §2.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_095": {
+      "source": "Gaddis 4th Ed §2.3 & Practical Four",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_096": {
+      "source": "NWU Test 1 (SU1) Gaddis Chapter 2 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_097": {
+      "source": "Gaddis 4th Ed §2.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_098": {
+      "source": "NWU Practical 1: Racing Light Trainer Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_099": {
+      "source": "NWU Practical 1: Racing Light Trainer Part E",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_100": {
+      "source": "NWU Practical 1: Racing Light Trainer Part D & Shneiderman Rule 5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_101": {
+      "source": "Gaddis 4th Ed §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_102": {
+      "source": "Gaddis 4th Ed §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_103": {
+      "source": "NWU Practical 29 Assessment Rubric Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_104": {
+      "source": "Gaddis 4th Ed §2.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_105": {
+      "source": "Gaddis 4th Ed §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_106": {
+      "source": "NWU Practical 1 & 2 Submission Instructions",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_107": {
+      "source": "Gaddis 4th Ed §1.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_108": {
+      "source": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_109": {
+      "source": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_110": {
+      "source": "Gaddis 4th Ed §1.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_111": {
+      "source": "Gaddis 4th Ed §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_112": {
+      "source": "NWU Practical 1 & Naming Conventions Guide",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_113": {
+      "source": "Gaddis 4th Ed §2.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_114": {
+      "source": "Shneiderman HCI Ch 2 & SU7",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_115": {
+      "source": "NWU Practical 1 & Shneiderman Rule 3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_116": {
+      "source": "Gaddis 4th Ed §1.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_117": {
+      "source": "Gaddis 4th Ed §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_118": {
+      "source": "NWU Test 1 (SU1) Gaddis Chapter 2 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_119": {
+      "source": "Gaddis 4th Ed §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_120": {
+      "source": "NWU Test 1 (SU1) Gaddis Chapter 2 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_121": {
+      "source": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_122": {
+      "source": "Gaddis 4th Ed §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_123": {
+      "source": "Gaddis 4th Ed §2.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_124": {
+      "source": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_125": {
+      "source": "Gaddis 4th Ed §2.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_126": {
+      "source": "NWU Practical 1 Part B",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_127": {
+      "source": "Gaddis 4th Ed §2.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_128": {
+      "source": "Gaddis 4th Ed §2.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_129": {
+      "source": "NWU Practical 1 Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su1_130": {
+      "source": "NWU Test 1 (SU1) Gaddis Chapter 1 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_131": {
+      "source": "Gaddis 4th Ed §3.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_132": {
+      "source": "Gaddis 4th Ed §3.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_133": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_134": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_135": {
+      "source": "Gaddis 4th Ed §3.6",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_136": {
+      "source": "Gaddis 4th Ed §3.6",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_137": {
+      "source": "Gaddis 4th Ed §3.7",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_138": {
+      "source": "Gaddis 4th Ed §3.9",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_139": {
+      "source": "Gaddis 4th Ed §3.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_140": {
+      "source": "Gaddis 4th Ed §3.10",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_141": {
+      "source": "Gaddis 4th Ed §3.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_142": {
+      "source": "Gaddis 4th Ed §3.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_143": {
+      "source": "NWU Quiz 1 (SU1/SU2) Gaddis Chapter 2 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_144": {
+      "source": "Gaddis 4th Ed §3.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_145": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_146": {
+      "source": "NWU Practical 2 Part D & Gaddis 4th Ed §3.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_147": {
+      "source": "NWU Practical 2 Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_148": {
+      "source": "NWU Practical 2 Part C Step 2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_149": {
+      "source": "NWU Practical 2 Part C & Code Standards",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_150": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_151": {
+      "source": "NWU Practical 2 Part D & Gaddis 4th Ed §3.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_152": {
+      "source": "Gaddis 4th Ed §3.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_153": {
+      "source": "NWU Practical 2 Part C",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_154": {
+      "source": "Gaddis 4th Ed §3.6",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_155": {
+      "source": "Gaddis 4th Ed §3.6",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_156": {
+      "source": "Gaddis 4th Ed §3.6",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_157": {
+      "source": "Gaddis 4th Ed §3.5 & Practical 2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_158": {
+      "source": "NWU Practical 2 Part E",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_159": {
+      "source": "Gaddis 4th Ed §3.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_160": {
+      "source": "NWU Test 1 (SU2) Gaddis Chapter 2 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_161": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_162": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_163": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_164": {
+      "source": "Gaddis 4th Ed §3.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_165": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_166": {
+      "source": "NWU Practical 2 Part C & Gaddis §3.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_167": {
+      "source": "Gaddis 4th Ed §3.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_168": {
+      "source": "NWU Practical 2 Part D (Marking Standards)",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_169": {
+      "source": "Gaddis 4th Ed §3.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_170": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_171": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_172": {
+      "source": "NWU SU2 Format String Standards",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_173": {
+      "source": "Gaddis 4th Ed §3.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_174": {
+      "source": "NWU Test 1 (SU2) Gaddis Chapter 2 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_175": {
+      "source": "NWU Practical 29 Assessment Rubric Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_176": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_177": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_178": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_179": {
+      "source": "NWU Practical 29 Assessment Rubric Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_180": {
+      "source": "NWU Practical 29 Assessment Rubric Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_181": {
+      "source": "NWU Practical 29 Assessment Rubric Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_182": {
+      "source": "Gaddis 4th Ed §3.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_183": {
+      "source": "NWU CMPG122 Naming Conventions Guide",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_184": {
+      "source": "NWU CMPG122 Naming Conventions Guide",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_185": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_186": {
+      "source": "Gaddis 4th Ed §3.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_187": {
+      "source": "Gaddis 4th Ed §3.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_188": {
+      "source": "Gaddis 4th Ed §3.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_189": {
+      "source": "Gaddis 4th Ed §3.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_190": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_191": {
+      "source": "Gaddis 4th Ed §3.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_192": {
+      "source": "Gaddis 4th Ed §3.6",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_193": {
+      "source": "NWU Practical 2 Part C",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_194": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_195": {
+      "source": "Gaddis 4th Ed §3.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_196": {
+      "source": "Gaddis 4th Ed §3.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_197": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_198": {
+      "source": "NWU Practical 2 Part F (Code Standards)",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_199": {
+      "source": "Gaddis 4th Ed §3.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_200": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_201": {
+      "source": "NWU Practical 2 Part C (Calculations)",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_202": {
+      "source": "Gaddis 4th Ed §3.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_203": {
+      "source": "Gaddis 4th Ed §3.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_204": {
+      "source": "Gaddis 4th Ed §3.6",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su2_205": {
+      "source": "NWU Practical 2 Submission Instructions",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_206": {
+      "source": "Gaddis 4th Ed §4.7",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_207": {
+      "source": "Gaddis 4th Ed §4.7",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_208": {
+      "source": "Gaddis 4th Ed §4.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_209": {
+      "source": "Gaddis 4th Ed §4.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_210": {
+      "source": "Gaddis 4th Ed §4.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_211": {
+      "source": "Gaddis 4th Ed §4.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_212": {
+      "source": "Gaddis 4th Ed §4.9",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_213": {
+      "source": "Gaddis 4th Ed §4.9",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_214": {
+      "source": "Gaddis 4th Ed §4.9",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_215": {
+      "source": "Gaddis 4th Ed §4.9",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_216": {
+      "source": "Gaddis 4th Ed §4.10",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_217": {
+      "source": "Gaddis 4th Ed §4.10",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_218": {
+      "source": "Gaddis 4th Ed §4.11 / §5.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_219": {
+      "source": "Gaddis 4th Ed §4.11 / §5.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_220": {
+      "source": "Gaddis 4th Ed §4.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_221": {
+      "source": "NWU Practical Four Part C (How far over)",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_222": {
+      "source": "NWU Practical Four Part B & Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_223": {
+      "source": "NWU Practical Four Part C (The bands)",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_224": {
+      "source": "NWU Practical Four Part B & Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_225": {
+      "source": "NWU Practical Four Part B",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_226": {
+      "source": "NWU Practical Four Part B & Part C",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_227": {
+      "source": "NWU Practical Four Part D (Test the edges)",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_228": {
+      "source": "NWU Practical Four Part B & Part D",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_229": {
+      "source": "NWU Practical Four Part C (A named constant)",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_230": {
+      "source": "NWU Practical 29 Assessment Rubric Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_231": {
+      "source": "NWU Practical Four Part C & Gaddis §4.9",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_232": {
+      "source": "NWU Practical Four Part C (Repeat offenders)",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_233": {
+      "source": "NWU Practical Four Part B (A GroupBox)",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_234": {
+      "source": "Gaddis 4th Ed §4.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_235": {
+      "source": "Gaddis 4th Ed §4.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_236": {
+      "source": "Gaddis 4th Ed §4.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_237": {
+      "source": "Gaddis 4th Ed §4.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_238": {
+      "source": "Gaddis 4th Ed §4.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_239": {
+      "source": "Gaddis 4th Ed §4.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_240": {
+      "source": "NWU Practical 5 GUI Requirements",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_241": {
+      "source": "NWU Practical 5 Technical Requirements §2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_242": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_243": {
+      "source": "NWU Practical 5 GUI Requirements",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_244": {
+      "source": "NWU Practical 5 GUI Requirements",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_245": {
+      "source": "NWU Practical 5 GUI Requirements",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_246": {
+      "source": "NWU Practical 5 Technical Requirements §2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_247": {
+      "source": "Gaddis 4th Ed §4.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_248": {
+      "source": "NWU Practical 5 Technical Requirements §4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_249": {
+      "source": "NWU Practical 5 Technical Requirements §3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_250": {
+      "source": "Gaddis 4th Ed §4.7",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_251": {
+      "source": "Gaddis 4th Ed §4.7",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_252": {
+      "source": "Gaddis 4th Ed §4.7",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_253": {
+      "source": "NWU Practical 5 Technical Requirements §1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_254": {
+      "source": "NWU Practical 5 Technical Requirements §1 & HCI",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_255": {
+      "source": "Gaddis 4th Ed §4.7",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_256": {
+      "source": "NWU Practical Four Part B & Part C",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_257": {
+      "source": "NWU Practical Four Part B & Part C",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_258": {
+      "source": "Gaddis 4th Ed §4.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_259": {
+      "source": "Gaddis 4th Ed §4.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_260": {
+      "source": "Gaddis 4th Ed §4.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_261": {
+      "source": "Gaddis 4th Ed §4.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_262": {
+      "source": "Gaddis 4th Ed §4.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_263": {
+      "source": "Gaddis 4th Ed §4.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_264": {
+      "source": "Gaddis 4th Ed §4.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_265": {
+      "source": "NWU Practical 29 Defensive Validation Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_266": {
+      "source": "Gaddis 4th Ed §4.6 & Practical Four",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_267": {
+      "source": "NWU Practical 5 Technical Requirements §4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_268": {
+      "source": "NWU Practical 5 GUI Requirements & Gaddis §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_269": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_270": {
+      "source": "Gaddis 4th Ed §4.7",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_271": {
+      "source": "Gaddis 4th Ed §2.2 & Practical 5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_272": {
+      "source": "Gaddis 4th Ed §4.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_273": {
+      "source": "Gaddis 4th Ed §4.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_274": {
+      "source": "NWU Practical Four Part B",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_275": {
+      "source": "Gaddis 4th Ed §4.9 & Practical Four",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_276": {
+      "source": "Gaddis 4th Ed §4.9",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_277": {
+      "source": "Gaddis 4th Ed §4.8",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_278": {
+      "source": "NWU Practical 5 GUI Requirements",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_279": {
+      "source": "Gaddis 4th Ed §4.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su3_280": {
+      "source": "Gaddis 4th Ed §4.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_281": {
+      "source": "Gaddis 4th Ed §5.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_282": {
+      "source": "Gaddis 4th Ed §5.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_283": {
+      "source": "Gaddis 4th Ed §5.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_284": {
+      "source": "Gaddis 4th Ed §5.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_285": {
+      "source": "Gaddis 4th Ed §5.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_286": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_287": {
+      "source": "Gaddis 4th Ed §5.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_288": {
+      "source": "Gaddis 4th Ed §5.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_289": {
+      "source": "Gaddis 4th Ed §5.9",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_290": {
+      "source": "Gaddis 4th Ed §5.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_291": {
+      "source": "Gaddis 4th Ed §5.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_292": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_293": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_294": {
+      "source": "Gaddis 4th Ed §3.4 / §5.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_295": {
+      "source": "Gaddis 4th Ed §5.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_296": {
+      "source": "Gaddis 4th Ed §5.2 & §5.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_297": {
+      "source": "Gaddis 4th Ed §5.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_298": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_299": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_300": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_301": {
+      "source": "Gaddis 4th Ed §5.1",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_302": {
+      "source": "NWU Practical 29 Accumulator Loop Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_303": {
+      "source": "Gaddis 4th Ed §5.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_304": {
+      "source": "Tony Gaddis Chapter 5 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_305": {
+      "source": "Gaddis 4th Ed §5.6",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_306": {
+      "source": "Gaddis 4th Ed §5.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_307": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_308": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_309": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_310": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_311": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_312": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_313": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_314": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_315": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_316": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_317": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_318": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_319": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_320": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_321": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_322": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_323": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_324": {
+      "source": "Gaddis 4th Ed §5.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_325": {
+      "source": "Gaddis 4th Ed §5.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_326": {
+      "source": "Gaddis 4th Ed §5.2 (Common Pitfalls)",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_327": {
+      "source": "Gaddis 4th Ed §5.4 (Common Pitfalls)",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_328": {
+      "source": "NWU PEC 2024 Exam & Practical 5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_329": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_330": {
+      "source": "Gaddis 4th Ed §5.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_331": {
+      "source": "Gaddis 4th Ed §5.5 & Practical 2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_332": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_333": {
+      "source": "Gaddis 4th Ed §5.2 & §5.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_334": {
+      "source": "Tony Gaddis Chapter 5 Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_335": {
+      "source": "Gaddis 4th Ed §5.7",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_336": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_337": {
+      "source": "Gaddis 4th Ed §3.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_338": {
+      "source": "Gaddis 4th Ed §5.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_339": {
+      "source": "Gaddis 4th Ed §5.5",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_340": {
+      "source": "Gaddis 4th Ed §5.2",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_341": {
+      "source": "Gaddis 4th Ed §5.3",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_342": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_343": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_344": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_345": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_346": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_347": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_348": {
+      "source": "Gaddis 4th Ed §4.11",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_349": {
+      "source": "Gaddis 4th Ed §5.4",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_350": {
+      "source": "Shneiderman HCI Ch 2 & SU7",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su-exam_351": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_352": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_353": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_354": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_355": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_356": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_357": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_358": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_359": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_360": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_361": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_362": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_363": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_364": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_365": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_366": {
+      "source": "NWU Dec 2024 Exam (Car Rental Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_su-exam_367": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_368": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_369": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_370": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_371": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_372": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_373": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_374": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_375": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_376": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_377": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_378": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_379": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_380": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_381": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_382": {
+      "source": "NWU Dec 2023 Exam (Student Tuition Assessment) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_su-exam_383": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_384": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_385": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_386": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_387": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_388": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_389": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_390": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_391": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_392": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_393": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_394": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_395": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_396": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_397": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_398": {
+      "source": "NWU Dec 2022 Exam (Gym Membership Billing) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_su-exam_399": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_400": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_401": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_402": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_403": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_404": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_405": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_406": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_407": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_408": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_409": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_410": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_411": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_412": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_413": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_414": {
+      "source": "NWU Nov 2021 Exam (Hotel Booking Engine) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_su-exam_415": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_416": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_417": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_418": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_419": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_420": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_421": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_422": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_423": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_424": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_425": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_426": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_427": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_428": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_429": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su-exam_430": {
+      "source": "NWU PEC 2024 Exam (Retail POS & Loyalty Register) Official Mark Step",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": "exam_2024_pec"
+    },
+    "q_su4_351": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_352": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_353": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_354": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_355": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_356": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_357": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_358": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_359": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_360": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_361": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_362": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_363": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_364": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_365": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_366": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_367": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_368": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_369": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_370": {
+      "source": "SU4 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_001": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_002": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_003": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_004": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_005": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_006": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_007": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_008": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_009": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_010": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_011": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_012": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_013": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_014": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_015": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_016": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_017": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_018": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_019": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_020": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_021": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_022": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_023": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_024": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_025": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_026": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_027": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_028": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_029": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su5_030": {
+      "source": "SU5 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_001": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_002": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_003": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_004": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_005": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_006": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_007": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_008": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_009": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_010": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_011": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_012": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_013": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_014": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_015": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_016": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_017": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_018": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_019": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su6_020": {
+      "source": "SU6 Curriculum Objective",
+      "verifiedStage": "Stage C Schema & C# Syntax Audit",
+      "examPaperId": null
+    },
+    "q_su4_new_001": {
+      "source": "Chapter 5 §5.6 File I/O",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su4_new_002": {
+      "source": "Chapter 5 §5.6 File.CreateText vs File.AppendText",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su4_new_003": {
+      "source": "Chapter 5 §5.6 Write vs WriteLine",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su4_new_004": {
+      "source": "Chapter 5 §5.6 Verbatim String Literals",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su4_new_005": {
+      "source": "Chapter 5 §5.6 StreamReader ReadLine Consumption",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su4_new_006": {
+      "source": "Chapter 5 §5.7 OpenFileDialog & SaveFileDialog",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su4_new_007": {
+      "source": "Chapter 5 §5.7 DialogResult.OK & FileName",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su4_new_008": {
+      "source": "Chapter 5 §5.7 InitialDirectory",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su4_new_009": {
+      "source": "Chapter 5 §5.8 Random.Next Boundaries",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su4_new_010": {
+      "source": "Chapter 5 §5.2 Prefix vs Postfix Evaluation",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_001": {
+      "source": "Chapter 6 §6.2 Method Header Anatomy",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_002": {
+      "source": "Chapter 6 §6.2 Method Header Syntax",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_003": {
+      "source": "Chapter 6 §6.2 Return Point Concept",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_004": {
+      "source": "Chapter 6 §6.2 Early Return in void Methods",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_005": {
+      "source": "Chapter 6 §6.5 Value-Returning Reachable Paths",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_006": {
+      "source": "Chapter 6 §6.5 Capturing Return Values",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_007": {
+      "source": "Chapter 6 §6.3 Calling Methods with Arguments",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_008": {
+      "source": "Chapter 6 §6.3 Pass-by-Value Independence",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_009": {
+      "source": "Chapter 6 §6.3 Positional Argument Binding",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_010": {
+      "source": "Chapter 6 §6.4 ref Initialisation Requirement",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_011": {
+      "source": "Chapter 6 §6.4 out Definite Assignment",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_012": {
+      "source": "Chapter 6 §6.3–6.5 Combined Parameter Modes",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_013": {
+      "source": "Chapter 6 §6.4 Assignable Variable Rule for ref/out",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_014": {
+      "source": "Chapter 6 §6.4 Matching ref Keyword at Call Site",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_015": {
+      "source": "Chapter 6 §6.4 Swap Algorithm with ref",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_016": {
+      "source": "Chapter 6 §6.5 Overloaded Methods",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_017": {
+      "source": "Chapter 6 §6.6 Step Into (F11)",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_018": {
+      "source": "Chapter 6 §6.6 Step Over (F10)",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_019": {
+      "source": "Chapter 6 §6.6 Step Out (Shift+F11)",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_020": {
+      "source": "Chapter 6 §6.5 Boolean Methods",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_021": {
+      "source": "Chapter 6 §6.3 Local Scope Across Methods",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_022": {
+      "source": "Chapter 6 §6.4–6.5 Multi-Output Validation Methods",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_023": {
+      "source": "Chapter 6 §6.5 Immediate Exit on return",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_024": {
+      "source": "Chapter 6 §6.4 Loops with ref Methods",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_025": {
+      "source": "Chapter 6 §6.3 Argument Widening Compatibility",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_026": {
+      "source": "Chapter 6 §6.4 Exact Type Matching for ref/out",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_027": {
+      "source": "Chapter 6 §6.5 String-Returning Methods",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_028": {
+      "source": "Chapter 6 §6.1 Modularisation Benefits",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_029": {
+      "source": "Chapter 6 §6.4 Multiple out Parameters with Integer Division",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_030": {
+      "source": "Chapter 6 §6.5 Return Type Compatibility",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_031": {
+      "source": "Chapter 6 §6.3 Parameter Shadowing vs Class Fields",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_032": {
+      "source": "Chapter 6 §6.5 Composing Value-Returning Calls",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_033": {
+      "source": "Chapter 6 §6.4 Incoming State of out vs ref",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_034": {
+      "source": "Chapter 6 §6.5 Best-Two Assessment Calculation Method",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_035": {
+      "source": "Chapter 6 §6.2 Calling void vs Value-Returning Methods",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_036": {
+      "source": "Chapter 6 §6.5 Boolean Remainder Edge Case",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_037": {
+      "source": "Chapter 6 §6.4 Safe Division Helper with out",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_038": {
+      "source": "Chapter 6 §6.5 Nested Method Calls",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_039": {
+      "source": "Chapter 6 §6.2 private vs public Method Access",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_040": {
+      "source": "Chapter 6 §6.5 Unreachable Code After return",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_041": {
+      "source": "Chapter 6 §6.3–6.4 Parameter Passing Summary",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_042": {
+      "source": "Chapter 6 §6.6 Step Over Execution Behaviour",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_043": {
+      "source": "Chapter 6 §6.5 Guard Conditions in Methods",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_044": {
+      "source": "Chapter 6 §6.4 Running Min/Max via ref",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su5_new_045": {
+      "source": "Chapter 6 §6.3 Passing Control References to Methods",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_001": {
+      "source": "Chapter 9 §9.6 Form1.cs & Designer.cs Partial Classes",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_002": {
+      "source": "Chapter 9 §9.6 Constructor & InitializeComponent Order",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_003": {
+      "source": "Chapter 9 §9.6 Program.cs Startup Form",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_004": {
+      "source": "Chapter 9 §9.1 & §9.6 Class Blueprint vs new Instance",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_005": {
+      "source": "Chapter 9 §9.6 Modal Behaviour Within Application",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_006": {
+      "source": "Chapter 9 §9.6 Statement Execution Order with ShowDialog",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_007": {
+      "source": "Chapter 9 §9.6 Modeless Premature Read Bug",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_008": {
+      "source": "Chapter 9 §9.6 Default Control Modifiers",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_009": {
+      "source": "Chapter 9 §9.6 Exam Modifiers Technique vs Production Encapsulation",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_010": {
+      "source": "Chapter 9 §9.1 & §9.6 Multiple Instances Reference Bug",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_011": {
+      "source": "Chapter 9 §9.6 Closing Startup Form Terminates Application",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_012": {
+      "source": "Chapter 9 §9.6 Close() vs Hide()",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_013": {
+      "source": "Chapter 9 §9.6 Hiding Modal Dialogs",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_014": {
+      "source": "Chapter 9 §9.6 Form Startup Lifecycle Order",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_015": {
+      "source": "Chapter 9 §9.6 Load vs Activated Events",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_016": {
+      "source": "Chapter 9 §9.6 Cancelling FormClosing via e.Cancel",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_017": {
+      "source": "Chapter 9 §9.6 Hidden Startup Form Background Process Bug",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_018": {
+      "source": "Chapter 9 §9.6 Modal Execution Trace",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_019": {
+      "source": "Chapter 9 §9.6 Shared Project Namespace Across Forms",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_020": {
+      "source": "Chapter 9 §9.6 Complete Cross-Form Modal Display Pattern",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_021": {
+      "source": "Chapter 9 §9.6 Form.ShowDialog Return Value",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_022": {
+      "source": "Chapter 9 §9.6 Modeless Close Disposal Behaviour",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_023": {
+      "source": "Chapter 9 §9.6 Windows Form Tri-File Structure",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_024": {
+      "source": "Chapter 9 §9.6 Reading Selection Controls Across Forms",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_025": {
+      "source": "Chapter 9 §9.6 Constructor vs Load Timing with Cross-Form Assignment",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_026": {
+      "source": "Chapter 9 §9.6 Choosing Modal vs Modeless",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_027": {
+      "source": "Chapter 9 §9.1 & §9.6 Constructor Data Passing vs Public Modifiers",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_028": {
+      "source": "Chapter 9 §9.6 Meaning of this Inside Secondary Forms",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_029": {
+      "source": "Chapter 9 §9.6 Populating Cross-Form ListBox",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    },
+    "q_su6_new_030": {
+      "source": "Chapter 9 §9.6 FormClosing vs FormClosed",
+      "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
+      "examPaperId": null
+    }
+  }
+}

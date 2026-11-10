@@ -2,636 +2,563 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>CMPG 122 • User Interface Programming in Visual C# | NWU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CMPG122 Visual C# UI Programming — Study, Code Tracing, Definitions, and Examination Platform">
+  <meta name="theme-color" content="#6d4aff">
+  <title>CMPG122 — Visual C# UI Programming</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='22' fill='%236d4aff'/%3E%3Ctext x='42' y='63' text-anchor='middle' fill='%23fff' font-family='sans-serif' font-weight='800' font-size='42'%3EC%3C/text%3E%3Ctext x='72' y='50' text-anchor='middle' fill='%23e0e7ff' font-family='monospace' font-weight='800' font-size='24'%3E%23%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <a href="#mainWorkspace" class="skip-link">Skip to main content</a>
 
-  <!-- App Header -->
-  <header class="app-header">
-    <div class="nav-container">
-      <div class="brand-group" id="brandHome" onclick="CMPG122_APP && window.location.reload();">
-        <div class="brand-logo">C#</div>
-        <div class="brand-info">
-          <h1>CMPG 122 <span class="brand-badge">NWU • V8.00</span></h1>
-          <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">Visual C# UI Programming • Study &amp; Exam App</span>
-        </div>
-      </div>
+  <!-- Top Application Header -->
+  <header class="topbar" role="banner">
+    <div style="display:flex;align-items:center;gap:0.65rem;">
+      <button type="button" class="mobile-menu-btn" id="btnMobileMenu" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="appSidebar">
+        <span id="mobileMenuIconSlot"></span>
+      </button>
+      <button type="button" class="topbar-brand" id="btnBrandHome" aria-label="Go to Home Dashboard">
+        <span class="topbar-code-mark" id="topbarCodeIcon" aria-hidden="true"></span>
+        <span class="topbar-title-group">
+          <span class="topbar-title">CMPG122</span>
+          <span class="topbar-subtitle">Visual C# UI Programming</span>
+        </span>
+      </button>
+    </div>
 
-      <nav class="nav-tabs">
-        <button class="tab-btn active" data-tab="units">📚 Study &amp; Cheat Sheets</button>
-        <button class="tab-btn" data-tab="exams">📝 Past Exams</button>
-        <button class="tab-btn" data-tab="codegrade">💻 CodeGrade Lab</button>
-        <button class="tab-btn" data-tab="spoterror">🔍 Spot &amp; Fix Gym</button>
-        <button class="tab-btn" data-tab="custom">⚙️ Custom Quiz</button>
-      </nav>
-
-      <div class="header-actions">
-        <button class="action-btn" id="btnOpenWhatsApp" onclick="openWhatsAppModal()">💬 Help / Inquiries</button>
-        <button class="action-btn" id="btnOpenTools">🛠️ Tools Drawer</button>
-        <button class="action-btn" id="themeToggle">☀️ Light</button>
+    <div class="topbar-actions">
+      <div class="mode-pill-select-wrap">
+        <span id="topbarModeIcon" aria-hidden="true"></span>
+        <label for="quickModeSelect" class="sr-only">Workspace Mode</label>
+        <select id="quickModeSelect" class="mode-pill-select" aria-label="Workspace mode">
+          <option value="home">Overview Mode</option>
+          <option value="study">Study Mode</option>
+          <option value="practice">Practice Mode</option>
+          <option value="exams">Exam Mode</option>
+          <option value="codelab">Code Lab Mode</option>
+        </select>
       </div>
     </div>
   </header>
 
-  <!-- Main Content Area -->
-  <main class="main-wrapper">
+  <!-- Main Shell: Persistent Sidebar + Dynamic Workspace -->
+  <div class="app-shell">
+    <aside class="app-sidebar" id="appSidebar" aria-label="Primary navigation">
+      <nav class="sidebar-nav" id="sidebarNav" aria-label="Application sections">
+        <button type="button" class="sidebar-link active" data-route="home">
+          <span class="nav-icon" data-icon="home"></span>
+          <span>Home</span>
+        </button>
+        <button type="button" class="sidebar-link" data-route="study">
+          <span class="nav-icon" data-icon="study"></span>
+          <span>Study</span>
+        </button>
+        <button type="button" class="sidebar-link" data-route="practice">
+          <span class="nav-icon" data-icon="practice"></span>
+          <span>Practice</span>
+        </button>
+        <button type="button" class="sidebar-link" data-route="exams">
+          <span class="nav-icon" data-icon="exams"></span>
+          <span>Past Papers</span>
+        </button>
+        <button type="button" class="sidebar-link" data-route="definitions">
+          <span class="nav-icon" data-icon="definitions"></span>
+          <span>Definitions</span>
+        </button>
+        <button type="button" class="sidebar-link" data-route="progress">
+          <span class="nav-icon" data-icon="progress"></span>
+          <span>Progress</span>
+          <span class="sidebar-badge" id="navReviewBadge" style="display:none;">0</span>
+        </button>
+        <button type="button" class="sidebar-link" data-route="settings">
+          <span class="nav-icon" data-icon="settings"></span>
+          <span>Settings</span>
+        </button>
+      </nav>
 
-    <!-- View 1: Study Units Hub -->
-    <section id="viewUnits" class="view-panel">
-      <!-- Hero Banner -->
-      <div class="hero-banner">
-        <div class="hero-text">
-          <h2>CMPG 122 Visual C# &amp; HCI Study &amp; Exam Suite</h2>
-          <p>
-            Direct Study Summaries, C# Syntax &amp; Control Cheat Sheets, Practice Questions, Past Exam Papers, and Code Lab (Weeks 1–12 • SU1–SU7).
-          </p>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-pill">
-            <div class="stat-num" id="statTotalQs">500</div>
-            <div class="stat-label">Exam Questions</div>
-          </div>
-          <div class="stat-pill">
-            <div class="stat-num" id="statMastery">0%</div>
-            <div class="stat-label">Session Accuracy</div>
-          </div>
-          <div class="stat-pill">
-            <div class="stat-num" id="statStreak">🔥 0</div>
-            <div class="stat-label">Active Streak</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Units Grid -->
-      <div class="section-header">
-        <h3 class="section-title">📖 Study Units (SU7 &amp; SU1–SU6)</h3>
-        <span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">Weeks 1–12 • Visual C# &amp; HCI</span>
-      </div>
-      <div class="units-grid" id="unitsGrid">
-        <!-- Rendered dynamically by app.js -->
-      </div>
-
-      <!-- Direct Study Summaries & C# Cheat Sheets -->
-      <div class="section-header" style="margin-top:2.25rem; flex-wrap:wrap; gap:0.75rem;">
-        <h3 class="section-title">⚡ Study Summaries &amp; C# Cheat Sheets (SU7, SU1–SU6)</h3>
-        <div class="cs-filter-bar" id="cheatSheetFilters">
-          <button type="button" class="action-btn cs-filter-btn active" data-cs-unit="ALL" onclick="CMPG122_APP.filterCheatSheets('ALL')">All Units</button>
-          <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU7" onclick="CMPG122_APP.filterCheatSheets('SU7')">SU7: HCI</button>
-          <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU1" onclick="CMPG122_APP.filterCheatSheets('SU1')">SU1: GUI &amp; IDE</button>
-          <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU2" onclick="CMPG122_APP.filterCheatSheets('SU2')">SU2: Data &amp; Math</button>
-          <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU3" onclick="CMPG122_APP.filterCheatSheets('SU3')">SU3: Decisions</button>
-          <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU4" onclick="CMPG122_APP.filterCheatSheets('SU4')">SU4: Loops &amp; Files</button>
-          <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU5" onclick="CMPG122_APP.filterCheatSheets('SU5')">SU5: Methods (ref/out)</button>
-          <button type="button" class="action-btn cs-filter-btn" data-cs-unit="SU6" onclick="CMPG122_APP.filterCheatSheets('SU6')">SU6: Multiforms</button>
-        </div>
-      </div>
-      <div id="cheatSheetsGrid" class="cheatsheets-grid">
-        <!-- Rendered dynamically by app.js -->
-      </div>
-    </section>
-
-    <!-- View 2: Official Past Exams Hub -->
-    <section id="viewExams" class="view-panel" style="display:none;">
-      <div class="section-header">
-        <h3 class="section-title">📝 Official Past Exam Papers</h3>
-        <span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">NWU Past Papers (2021–2024)</span>
-      </div>
-      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">
-        Full exam papers with rates tables, Hungarian control matrices, timed/untimed modes, and complete memorandum solutions.
-      </p>
-      <div class="units-grid" id="examsList">
-        <!-- Rendered dynamically by app.js -->
-      </div>
-    </section>
-
-    <!-- View 3: C# CodeGrade Lab & Diagnostics Engine -->
-    <section id="viewCodeGrade" class="view-panel" style="display:none;">
-      <div class="section-header">
-        <h3 class="section-title">💻 C# CodeGrade Lab</h3>
-        <span class="badge" style="background:var(--success-bg); color:var(--success-text); border:1px solid var(--success-border); padding:0.25rem 0.6rem; border-radius:var(--radius-sm); font-size:0.75rem; font-family:var(--font-mono); font-weight:700;">Roslyn Diagnostics &amp; Test Sandbox</span>
-      </div>
-      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.25rem;">
-        Write C# event handlers with instant compiler diagnostics, automated test cases, and rubric grading.
-      </p>
-
-      <div style="display:flex; gap:1rem; margin-bottom:1.25rem; align-items:center; flex-wrap:wrap;">
-        <label style="font-weight:700; font-size:0.9rem;">Select Scenario:</label>
-        <select id="codeScenarioSelect" class="cloze-input" style="min-width:320px; font-weight:600;">
-          <option value="scenario_racing_light">Practical 1: Racing Light Trainer (SU1)</option>
-          <option value="scenario_braai_master">Practical 2: Braai Master 3000 (SU1–SU2)</option>
-          <option value="scenario_speedtrap">Practical 4: SpeedTrap Potchefstroom R30 (SU1–SU3)</option>
-          <option value="scenario_vaal_cruise">Practical 5: Vaal River Cruises Booking (SU1–SU4)</option>
-          <option value="scenario_wages">Scenario 5: Gross Wage & Overtime Calculator (SU1–SU3)</option>
-          <option value="scenario_grades">Scenario 6: Student Mark & Grade Classifier (SU1–SU3)</option>
-          <option value="scenario_investment">Scenario 7: Compound Investment Growth Loop (SU1–SU4)</option>
-          <option value="scenario_pos">Scenario 8: Retail POS Shopping Cart (SU1–SU3)</option>
-          <option value="scenario_temperature">Scenario 9: Temperature Converter with RadioButtons (SU1–SU3)</option>
-          <option value="scenario_accumulator">Scenario 10: Number Accumulator & Average Score Loop (SU1–SU4)</option>
-          <option value="scenario_car_rental">Scenario 11: Car Rental Mileage Surcharge Terminal (NWU 2024 Exam)</option>
-          <option value="scenario_tuition">Scenario 12: Tuition Fee & Bursary Assessment (NWU 2023 Exam)</option>
-        </select>
-        <button class="action-btn" id="btnShowSolution">💡 Model Solution</button>
-      </div>
-
-      <div class="q-card" style="margin-bottom:1.25rem; border-left:4px solid var(--accent-blue);">
-        <h4 id="scenarioTitle" style="font-size:1.1rem; font-weight:800; margin-bottom:0.5rem;">Gross Wage & Overtime Calculator</h4>
-        <p id="scenarioDesc" style="color:var(--text-muted); font-size:0.88rem; line-height:1.6; margin-bottom:0.75rem;">
-          Calculate gross wage with overtime paid at 1.5 times the hourly rate...
-        </p>
-        <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
-          <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted);">Controls in Scope:</span>
-          <div id="scenarioControlsList" style="display:flex; gap:0.4rem; flex-wrap:wrap;"></div>
-        </div>
-      </div>
-
-      <!-- Editor Card -->
-      <div class="editor-card">
-        <div class="editor-header">
-          <span style="font-weight:700; font-size:0.85rem; color:var(--text-muted);">C# Event Handler Editor:</span>
-          <div class="editor-tools">
-            <span class="tool-chip" data-snippet="tryparse">+ TryParse</span>
-            <span class="tool-chip" data-snippet="trycatch">+ try-catch</span>
-            <span class="tool-chip" data-snippet="ifelse">+ if-else</span>
-            <span class="tool-chip" data-snippet="while">+ while loop</span>
-            <span class="tool-chip" data-snippet="for">+ for loop</span>
-            <span class="tool-chip" data-snippet="msgbox">+ MessageBox</span>
-            <span class="tool-chip" data-snippet="tostring">+ ToString("C")</span>
-          </div>
-        </div>
-
-        <div class="code-wrapper">
-          <div id="cgMethodHeader" class="method-sig-bar">
-            private void btnCalculate_Click(object sender, EventArgs e)
-            {
-          </div>
-          <textarea id="studentCodeInput" class="code-textarea" spellcheck="false" placeholder="// Write your C# statements here..."></textarea>
-          <div id="cgMethodFooter" class="method-sig-bar" style="border-top:1px solid #1e293b; border-bottom:none;">
-            }
-          </div>
-        </div>
-
-        <div style="padding:0.85rem 1.25rem; background:#131b2e; display:flex; gap:0.75rem; align-items:center; border-top:1px solid var(--border-subtle);">
-          <button class="btn-practice" id="btnRunCodeGrade" style="padding:0.6rem 1.5rem;">
-            ⚡ Run CodeGrade Evaluation
+      <div class="sidebar-footer">
+        <div class="theme-pill-switch" role="group" aria-label="Colour theme">
+          <button type="button" class="theme-pill-btn" id="btnThemeLight" data-set-theme="light" aria-label="Switch to Light theme">
+            <span class="nav-icon" data-icon="sun"></span>
+            <span>Light</span>
           </button>
-          <button class="action-btn" id="btnClearCode">
-            🔄 Clear Code
+          <button type="button" class="theme-pill-btn active" id="btnThemeDark" data-set-theme="dark" aria-label="Switch to Dark theme">
+            <span class="nav-icon" data-icon="moon"></span>
+            <span>Dark</span>
           </button>
         </div>
-      </div>
-
-      <!-- Real-Time Roslyn Diagnostics Panel -->
-      <div id="diagnosticsPanel" class="diagnostics-panel" style="display:none;">
-        <div class="diagnostics-header">
-          <span>🔍 Compiler Diagnostics & Code Analysis</span>
+        <div class="sidebar-institution">
+          <span id="sidebarNwuMark"></span>
+          <span>NWU • CMPG122</span>
         </div>
-        <div id="diagList"></div>
       </div>
+    </aside>
 
-      <!-- Test Cases & Rubric Results -->
-      <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:1.25rem; margin-top:1.5rem;">
-        <div class="q-card" style="margin-bottom:0;">
-          <h4 style="font-size:1rem; font-weight:800; margin-bottom:0.75rem;">🧪 Automated Virtual Test Cases</h4>
-          <div style="overflow-x:auto;">
-            <table class="test-table" id="testResultsTable">
-              <tbody><tr><td style="color:var(--text-muted);">Click 'Run CodeGrade Evaluation' to execute test cases.</td></tr></tbody>
-            </table>
+    <main class="workspace-main" id="mainWorkspace" tabindex="-1">
+      <h1 class="sr-only">CMPG122 Visual C# UI Programming Learning and Examination Platform</h1>
+
+      <!-- 1. HOME DASHBOARD -->
+      <section id="viewHome" class="view-section active" aria-labelledby="homeHeroHeading">
+        <div class="dashboard-hero">
+          <div class="hero-brand-cluster">
+            <div id="heroCSharpShield"></div>
+            <div>
+              <h2 class="hero-heading" id="homeHeroHeading">Master CMPG122</h2>
+              <p class="hero-tagline">Study • Practise • Succeed across Weeks 1–12 (SU7 &amp; SU1–SU6)</p>
+            </div>
+          </div>
+          <div class="hero-momentum-card" id="heroMomentumCard"></div>
+        </div>
+
+        <div class="section-bar">
+          <h2 class="section-heading">
+            <span class="nav-icon" data-icon="study"></span>
+            <span>Study Units (7)</span>
+          </h2>
+          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;">
+            <span class="nav-icon" data-icon="progress"></span>
+            <span style="color:var(--text-muted);">Overall Progress</span>
+            <strong id="homeOverallPct">0%</strong>
+          </div>
+        </div>
+        <div class="su-rings-grid" id="homeSuRingsGrid"></div>
+
+        <div class="dashboard-lower-grid">
+          <!-- Left Column: Quick Actions & Revision Focus -->
+          <div class="dashboard-col-left">
+            <div class="panel-card">
+              <h3 class="panel-title">
+                <span class="nav-icon" data-icon="zap"></span>
+                <span>Quick Actions</span>
+              </h3>
+              <div class="quick-actions-stack">
+                <button type="button" class="btn-primary btn-align-start" id="qaStartPractice">
+                  <span class="nav-icon" data-icon="play"></span>
+                  <span>Start Practice</span>
+                </button>
+                <button type="button" class="btn-secondary btn-align-start" id="qaCustomQuiz">
+                  <span class="nav-icon" data-icon="sliders"></span>
+                  <span>Take a Custom Quiz</span>
+                </button>
+                <button type="button" class="btn-secondary btn-align-start" id="qaPastPapers">
+                  <span class="nav-icon" data-icon="exams"></span>
+                  <span>View Past Papers</span>
+                </button>
+                <button type="button" class="btn-secondary btn-align-start" id="qaCodeLab">
+                  <span class="nav-icon" data-icon="codelab"></span>
+                  <span>Open C# Code Lab</span>
+                </button>
+                <button type="button" class="btn-secondary btn-align-start" id="qaDefinitions">
+                  <span class="nav-icon" data-icon="definitions"></span>
+                  <span>Open Definitions</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="panel-card" id="homeRevisionFocusCard"></div>
+          </div>
+
+          <!-- Center Column: Interactive Practice Question -->
+          <div class="dashboard-col-center">
+            <div class="panel-card" id="homeQuickPracticeHost"></div>
+          </div>
+
+          <!-- Right Column: Quick Definitions Search & Keyboard Shortcuts Guide -->
+          <div class="dashboard-col-right">
+            <div class="panel-card">
+              <h3 class="panel-title">
+                <span class="nav-icon" data-icon="definitions"></span>
+                <span>Definitions Library</span>
+              </h3>
+              <div class="search-input-wrap">
+                <span class="nav-icon" data-icon="search"></span>
+                <label for="homeDefSearchInput" class="sr-only">Search technical definitions</label>
+                <input type="search" id="homeDefSearchInput" class="text-input" placeholder="Search definitions...">
+              </div>
+              <div class="quick-def-list" id="homeQuickDefsList"></div>
+            </div>
+
+            <div class="panel-card">
+              <h3 class="panel-title">
+                <span class="nav-icon" data-icon="keyboard"></span>
+                <span>Keyboard Shortcuts</span>
+              </h3>
+              <div class="shortcut-list">
+                <div><span class="kbd-tag">A, B, C, D, E</span> – Select &amp; Submit</div>
+                <div><span class="kbd-tag">1, 2, 3, 4, 5</span> – Select Only</div>
+                <div><span class="kbd-tag">Enter</span> – Submit / Next</div>
+                <div><span class="kbd-tag">Esc</span> – Return from Definition</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. STUDY UNITS ENVIRONMENT -->
+      <section id="viewStudy" class="view-section" aria-labelledby="studyViewHeading">
+        <div class="section-bar">
+          <h2 class="section-heading" id="studyViewHeading">
+            <span class="nav-icon" data-icon="study"></span>
+            <span>Study Units &amp; C# Reference Notes</span>
+          </h2>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <button type="button" class="btn-primary btn-sm" id="btnPractiseActiveUnit">
+              <span class="nav-icon" data-icon="play"></span>
+              <span>Practise This Study Unit</span>
+            </button>
+          </div>
+        </div>
+        <div class="unit-pills-bar" id="studyUnitSelectorBar" role="tablist" aria-label="Study Units"></div>
+        <div id="studyUnitContentHost"></div>
+      </section>
+
+      <!-- 3. PRACTICE, CUSTOM QUIZ & C# CODE LAB -->
+      <section id="viewPractice" class="view-section" aria-labelledby="practiceViewHeading">
+        <div class="section-bar">
+          <h2 class="section-heading" id="practiceViewHeading">
+            <span class="nav-icon" data-icon="practice"></span>
+            <span>Practice, Custom Quiz &amp; C# Code Lab</span>
+          </h2>
+          <div class="unit-pills-bar" style="margin-bottom:0;" id="practiceSubTabs">
+            <button type="button" class="unit-pill-btn active" data-practice-sub="session">Unit &amp; Topic Practice</button>
+            <button type="button" class="unit-pill-btn" data-practice-sub="custom">Custom Quiz Builder</button>
+            <button type="button" class="unit-pill-btn" data-practice-sub="codelab">C# Code &amp; Tracing Lab</button>
           </div>
         </div>
 
-        <div class="q-card" style="margin-bottom:0;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
-            <h4 style="font-size:1rem; font-weight:800;">📋 CodeGrade Rubric Assessment</h4>
-            <span id="rubricBadge" class="q-marks-tag">Not Graded</span>
+        <!-- Practice Sub-View A: Active Practice / Custom Quiz Session -->
+        <div id="practiceSubSession">
+          <div class="panel-card" style="margin-bottom:1rem;">
+            <div style="display:flex;gap:0.75rem;align-items:center;justify-content:space-between;flex-wrap:wrap;">
+              <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;max-width:100%;min-width:0;">
+                <label for="practiceUnitSelect" style="font-size:0.84rem;font-weight:600;">Study Unit:</label>
+                <select id="practiceUnitSelect" class="select-input" style="flex:1 1 140px;max-width:100%;min-width:0;"></select>
+                <label for="practiceTopicSelect" style="font-size:0.84rem;font-weight:600;">Topic:</label>
+                <select id="practiceTopicSelect" class="select-input" style="flex:1 1 160px;max-width:100%;min-width:0;"></select>
+                <button type="button" class="btn-secondary btn-sm" id="btnStartFilteredPractice">Load Set</button>
+              </div>
+              <div style="display:inline-flex;gap:0.4rem;" id="viewModeToggleGroup">
+                <button type="button" class="btn-secondary btn-sm" id="btnViewCard" data-view-mode="card">Card View</button>
+                <button type="button" class="btn-ghost btn-sm" id="btnViewContinuous" data-view-mode="continuous">Sheet View</button>
+                <button type="button" class="btn-ghost btn-sm" id="btnShortcutHelpModal" title="Keyboard shortcuts">
+                  <span class="nav-icon" data-icon="keyboard"></span>
+                  <span>Shortcuts</span>
+                </button>
+              </div>
+            </div>
           </div>
-          <div id="rubricList">
-            <p style="color:var(--text-muted); font-size:0.85rem;">Run evaluation to generate rubric scores.</p>
+          <div id="singleCardArea"></div>
+          <div id="practiceContinuousArea" style="display:none;"></div>
+        </div>
+
+        <!-- Practice Sub-View B: Custom Quiz / Examination Generator -->
+        <div id="practiceSubCustom" style="display:none;">
+          <div class="panel-card">
+            <h3 class="panel-title">Custom Examination &amp; Quiz Generator</h3>
+            <p style="color:var(--text-muted);font-size:0.88rem;margin-top:0;">
+              Configure Study Units, topics, difficulty calibration, mark/question targets, timer, and curriculum mark weighting.
+            </p>
+            <div style="margin-bottom:1rem;">
+              <div style="font-size:0.85rem;font-weight:700;margin-bottom:0.45rem;">1. Include Study Units</div>
+              <div class="check-chip-group" id="customUnitsGroup"></div>
+            </div>
+            <div style="margin-bottom:1rem;">
+              <div style="font-size:0.85rem;font-weight:700;margin-bottom:0.45rem;">2. Difficulty Levels</div>
+              <div class="check-chip-group" id="customDiffGroup">
+                <label class="check-chip"><input type="checkbox" value="Foundational" checked> Foundational</label>
+                <label class="check-chip"><input type="checkbox" value="Intermediate" checked> Intermediate</label>
+                <label class="check-chip"><input type="checkbox" value="Advanced" checked> Advanced</label>
+              </div>
+            </div>
+            <div class="form-grid" style="margin-bottom:1rem;">
+              <div>
+                <label for="customTopicFilter" style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Specific Topic (Optional)</label>
+                <select id="customTopicFilter" class="select-input">
+                  <option value="">All Topics in Selected Units</option>
+                </select>
+              </div>
+              <div>
+                <label for="customQuestionCount" style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Question Count</label>
+                <input type="number" id="customQuestionCount" class="text-input" min="3" max="80" value="15">
+              </div>
+              <div>
+                <label for="customTargetMarks" style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Target Marks (0 = use count)</label>
+                <input type="number" id="customTargetMarks" class="text-input" min="0" max="150" value="0">
+              </div>
+              <div>
+                <label for="customTimeLimit" style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Time Limit (Minutes, 0 = Untimed)</label>
+                <input type="number" id="customTimeLimit" class="text-input" min="0" max="240" value="30">
+              </div>
+            </div>
+            <div class="check-chip-group" style="margin-bottom:1.25rem;">
+              <label class="check-chip"><input type="checkbox" id="customWeightedCheck" checked> Use Exam Weighting Distribution</label>
+              <label class="check-chip"><input type="checkbox" id="customRandomizeCheck" checked> Randomise Question Order</label>
+              <label class="check-chip"><input type="checkbox" id="customExcludeMasteredCheck"> Exclude Mastered Questions</label>
+            </div>
+            <button type="button" class="btn-primary" id="btnGenerateCustomExam">
+              <span class="nav-icon" data-icon="play"></span>
+              <span>Generate &amp; Start Custom Assessment</span>
+            </button>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- View 4: Spot & Fix Code Audit Studio & Debugging Gym -->
-    <section id="viewSpotError" class="view-panel" style="display:none;">
-      <div class="section-header" style="align-items:flex-start; margin-bottom:1.25rem;">
-        <div>
-          <h3 class="section-title">🔍 Spot &amp; Fix the Bugs Gym</h3>
-          <span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">SU1–SU7 • C# Syntax, Runtime &amp; Logic Debugging</span>
-        </div>
-        <div class="audit-mode-selector">
-          <button class="audit-mode-btn active" id="btnAuditModeStudio" data-mode="studio">⚡ Code Audit Studio</button>
-          <button class="audit-mode-btn" id="btnAuditModeMcq" data-mode="mcq">📝 Rapid Exam MCQs (20 Bugs)</button>
-        </div>
-      </div>
+        <!-- Practice Sub-View C: C# CodeGrade, Spot-The-Error & Code-Audit Studio -->
+        <div id="practiceSubCodelab" style="display:none;">
+          <div class="unit-pills-bar" id="codelabModeTabs">
+            <button type="button" class="unit-pill-btn active" data-codelab-tab="sandbox">Event-Handler Sandbox (15)</button>
+            <button type="button" class="unit-pill-btn" data-codelab-tab="spot">Spot &amp; Fix Challenges (24)</button>
+            <button type="button" class="unit-pill-btn" data-codelab-tab="auditor">Multi-Bug Code Auditor (6)</button>
+          </div>
 
-      <!-- Mode 1: Interactive Code Audit Studio -->
-      <div id="auditStudioContainer">
-        <!-- Scenario Selector & Info Header -->
-        <div class="audit-scenario-card">
-          <div class="audit-scenario-header">
-            <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
-              <label style="font-weight:700; font-size:0.9rem; color:var(--text-muted);">Select Exam Scenario:</label>
-              <select id="auditScenarioSelect" class="audit-select">
-                <option value="audit_wages">Scenario 1: Gross Wage & Overtime Payroll Auditor (SU1–SU3)</option>
-                <option value="audit_grades">Scenario 2: Student Academic Grade Classifier & Results Terminal (SU1–SU3)</option>
-                <option value="audit_pos">Scenario 3: Retail POS Shopping Cart & Inventory Register (SU1–SU4)</option>
-                <option value="audit_investment">Scenario 4: Compound Investment Growth Loop & Table Generator (SU1–SU4)</option>
-                <option value="audit_mileage">Scenario 5: Fleet Mileage Array Surcharge & ListBox Auditor (SU1–SU5)</option>
-                <option value="audit_bursary">Scenario 6: Tuition Bursary & Surcharge Terminal (NWU Official Exam)</option>
+          <div id="codelabSandboxPane">
+            <div class="panel-card" style="margin-bottom:1rem;">
+              <div style="display:flex;gap:0.75rem;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:0.75rem;">
+                <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;flex:1;">
+                  <label for="codeScenarioSelect" style="font-weight:700;font-size:0.88rem;">Scenario:</label>
+                  <select id="codeScenarioSelect" class="select-input" style="max-width:440px;"></select>
+                </div>
+                <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                  <button type="button" class="btn-secondary btn-sm" id="btnShowSolution">Load Model Solution</button>
+                  <button type="button" class="btn-ghost btn-sm" id="btnResetScenarioCode">Reset Starter</button>
+                </div>
+              </div>
+              <h3 id="scenarioTitle" style="margin:0 0 0.35rem;font-size:1.02rem;"></h3>
+              <p id="scenarioDesc" style="margin:0 0 0.65rem;font-size:0.88rem;color:var(--text-secondary);"></p>
+              <div id="scenarioControlsList" style="display:flex;gap:0.4rem;flex-wrap:wrap;"></div>
+            </div>
+
+            <div class="code-editor-surface" style="margin-bottom:1rem;">
+              <div id="cgMethodHeader" class="code-sig-line">private void btnCalculate_Click(object sender, EventArgs e) {</div>
+              <label for="studentCodeInput" class="sr-only">C# Event Handler Code Editor</label>
+              <textarea id="studentCodeInput" class="code-textarea" spellcheck="false" placeholder="// Write C# event-handler statements here..."></textarea>
+              <div class="code-sig-line" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+                <span>}</span>
+                <button type="button" class="btn-primary btn-sm" id="btnRunCodeGrade">
+                  <span class="nav-icon" data-icon="play"></span>
+                  <span>Run Diagnostics &amp; Virtual Tests</span>
+                </button>
+              </div>
+            </div>
+            <div id="codeGradeOutputHost"></div>
+          </div>
+
+          <div id="codelabSpotPane" style="display:none;"></div>
+          <div id="auditStudioContainer" style="display:none;"></div>
+        </div>
+      </section>
+
+      <!-- 4. EXAMINATION CENTRE & CONTINUOUS PAST PAPERS -->
+      <section id="viewExams" class="view-section" aria-labelledby="examsViewHeading">
+        <div id="examsLobbyPane">
+          <div class="section-bar">
+            <h2 class="section-heading" id="examsViewHeading">
+              <span class="nav-icon" data-icon="exams"></span>
+              <span>Examination Centre &amp; Past Papers</span>
+            </h2>
+          </div>
+
+          <!-- Full Weighted Simulation + Targeted Modes -->
+          <div class="cards-grid-3" style="margin-bottom:1.5rem;">
+            <div class="panel-card">
+              <h3 class="panel-title">Full Weighted Exam Simulation</h3>
+              <p style="font-size:0.86rem;color:var(--text-secondary);margin-top:0;">
+                100 Marks • 180 Minutes across all 7 Study Units calibrated strictly to verified curriculum mark allocations (SU7 10%, SU1 10%, SU2 15%, SU3 20%, SU4 20%, SU5 15%, SU6 10%).
+              </p>
+              <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <button type="button" class="btn-primary btn-sm" id="btnStartFullWeightedTimed">Start Timed (180m)</button>
+                <button type="button" class="btn-secondary btn-sm" id="btnStartFullWeightedUntimed">Start Untimed</button>
+              </div>
+            </div>
+
+            <div class="panel-card">
+              <h3 class="panel-title">Custom Examination</h3>
+              <p style="font-size:0.86rem;color:var(--text-secondary);margin-top:0;">
+                Tailor a timed or untimed paper by Study Unit, specific topic, difficulty distribution, and target marks.
+              </p>
+              <button type="button" class="btn-secondary btn-sm" id="btnJumpCustomBuilder">Configure Custom Exam</button>
+            </div>
+
+            <div class="panel-card">
+              <h3 class="panel-title">Incorrect-Question Retest</h3>
+              <p style="font-size:0.86rem;color:var(--text-secondary);margin-top:0;">
+                Generate a focused diagnostic session targeting previously missed questions and related topic concepts.
+              </p>
+              <button type="button" class="btn-secondary btn-sm" id="btnStartIncorrectExam">Start Diagnostic Review</button>
+            </div>
+          </div>
+
+          <div class="section-bar">
+            <h3 class="section-heading">Past Examination Paper Simulations (Continuous Single-Sheet)</h3>
+          </div>
+          <div class="cards-grid-3" id="examsList"></div>
+        </div>
+
+        <!-- Active Examination / Continuous Paper Workspace -->
+        <div id="activeExamWorkspace" style="display:none;">
+          <div class="panel-card" id="examNavigatorBar" style="margin-bottom:1rem;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;">
+              <div>
+                <h3 id="activeExamTitle" style="margin:0;font-size:1.04rem;"></h3>
+                <div id="examNavigatorSummary" style="font-size:0.82rem;color:var(--text-muted);"></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                <div class="timer-badge" id="examTimerBadge" aria-live="off">03:00:00</div>
+                <button type="button" class="btn-ghost btn-sm" id="btnPauseResumeTimer">Pause</button>
+                <button type="button" class="btn-secondary btn-sm" id="btnToggleScenarioDrawer">Reference Sheet</button>
+                <button type="button" class="btn-secondary btn-sm mobile-palette-fab" id="btnToggleMobilePalette">Palette</button>
+                <button type="button" class="btn-ghost btn-sm" id="btnExitExamToLobby">Back to Centre</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="exam-workspace-shell">
+            <div id="continuousPaperArea"></div>
+
+            <aside class="exam-sticky-sidebar" id="examPaletteSidebar" aria-label="Question navigation palette">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <strong style="font-size:0.9rem;">Question Palette</strong>
+                <button type="button" class="btn-ghost btn-sm mobile-palette-fab" id="btnCloseMobilePalette">Close</button>
+              </div>
+              <div class="palette-grid" id="examQuestionPalette"></div>
+              <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:0.75rem;">
+                <button type="button" class="btn-secondary btn-sm" id="btnJumpNextUnanswered">Next Unanswered</button>
+                <button type="button" class="btn-primary" id="btnOpenSubmitExamModal">Submit Examination</button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. DEFINITIONS LIBRARY -->
+      <section id="viewDefinitions" class="view-section" aria-labelledby="defsViewHeading">
+        <div id="defReturnBannerHost"></div>
+        <div class="section-bar">
+          <h2 class="section-heading" id="defsViewHeading">
+            <span class="nav-icon" data-icon="definitions"></span>
+            <span>Technical Definitions Library</span>
+          </h2>
+          <span id="defsCountLabel" style="font-size:0.84rem;color:var(--text-muted);"></span>
+        </div>
+
+        <div class="panel-card" style="margin-bottom:1rem;">
+          <div class="form-grid">
+            <div class="search-input-wrap">
+              <span class="nav-icon" data-icon="search"></span>
+              <label for="defsMainSearch" class="sr-only">Search definitions</label>
+              <input type="search" id="defsMainSearch" class="text-input" placeholder="Search C# syntax, controls, debugging, or HCI terms...">
+            </div>
+            <div>
+              <label for="defsUnitFilter" class="sr-only">Filter by Study Unit</label>
+              <select id="defsUnitFilter" class="select-input">
+                <option value="ALL">All Study Units (SU7, SU1–SU6)</option>
+                <option value="SU7">SU7 — HCI Principles</option>
+                <option value="SU1">SU1 — GUI &amp; IDE</option>
+                <option value="SU2">SU2 — Data, Types &amp; Math</option>
+                <option value="SU3">SU3 — Decisions &amp; Validation</option>
+                <option value="SU4">SU4 — Loops, Files &amp; Dialogs</option>
+                <option value="SU5">SU5 — Modularising with Methods</option>
+                <option value="SU6">SU6 — Multiform Projects</option>
               </select>
             </div>
-            <div class="audit-badge-group">
-              <span id="auditUnitBadge" class="audit-badge audit-badge-unit">SU1–SU3 (Weeks 1–3)</span>
-              <span id="auditBugCountBadge" class="audit-badge audit-badge-bugs">4 Planted Defects</span>
-              <span id="auditMarksBadge" class="audit-badge audit-badge-marks">20 Total Marks</span>
-              <div id="auditCategoryBadges" style="display:flex; gap:0.4rem; flex-wrap:wrap;"></div>
-            </div>
-          </div>
-          <h4 id="auditScenarioTitle" style="font-size:1.05rem; font-weight:800; margin-bottom:0.4rem; color:var(--text-main);">Scenario 1: Gross Wage & Overtime Payroll Auditor</h4>
-          <p id="auditScenarioDesc" style="color:var(--text-muted); font-size:0.88rem; line-height:1.6; margin:0;">
-            Audit an event handler that calculates employee gross wages. The handler reads hours and rate, validates numeric entry using TryParse, calculates standard vs overtime pay (hours > 40 paid at 1.5x), and formats gross pay into a Label as Currency.
-          </p>
-        </div>
-
-        <!-- Split-Pane Workspace: Buggy Code Editor (Left) vs Live Diagnostic Terminal & Marking Feedback (Right) -->
-        <div class="audit-workspace">
-          <!-- Left Pane: VS Code Editor -->
-          <div class="audit-editor-box">
-            <div class="audit-editor-topbar">
-              <div class="audit-editor-filetab">
-                <span>📄</span>
-                <span id="auditFileName">WagePayrollAuditor.cs</span>
-                <span style="font-size:0.7rem; color:var(--accent-teal); margin-left:0.25rem;">[C#]</span>
-              </div>
-              <div class="audit-editor-chips">
-                <span class="audit-chip" data-snippet="tryparse">+ TryParse</span>
-                <span class="audit-chip" data-snippet="msgbox">+ MessageBox</span>
-                <span class="audit-chip" data-snippet="equals">+ ==</span>
-                <span class="audit-chip" data-snippet="tostring">+ ToString("C")</span>
-                <span class="audit-chip" data-snippet="itemsadd">+ Items.Add</span>
-                <span class="audit-chip" data-snippet="break">+ break;</span>
-                <span class="audit-chip" data-snippet="interpolate">+ $""</span>
-              </div>
-            </div>
-
-            <div class="audit-editor-container">
-              <div id="auditLineGutter" class="audit-gutter"></div>
-              <textarea id="auditCodeInput" class="audit-textarea" spellcheck="false" wrap="off" placeholder="// Loading scenario code..."></textarea>
-            </div>
-
-            <div class="audit-editor-footer">
-              <div style="display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;">
-                <button id="btnRunAudit" class="audit-btn-primary">⚡ Run Code Audit & Grade</button>
-                <button id="btnResetAudit" class="audit-btn-secondary">🔄 Reset Buggy Code</button>
-                <button id="btnToggleSolutionAudit" class="audit-btn-secondary">💡 View Canonical Solution</button>
-              </div>
-              <span id="auditLiveStatus" class="audit-badge audit-badge-unit">Ready for Audit</span>
-            </div>
-          </div>
-
-          <!-- Right Pane: Live Diagnostic Terminal & Marking Feedback -->
-          <div class="audit-terminal-box">
-            <div class="audit-terminal-header">
-              <div class="audit-window-dots">
-                <span class="audit-window-dot dot-red"></span>
-                <span class="audit-window-dot dot-yellow"></span>
-                <span class="audit-window-dot dot-green"></span>
-              </div>
-              <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:700; color:var(--text-muted);">TERMINAL • C# CODE AUDIT ENGINE V7.00</span>
-              <span style="font-size:0.72rem; color:var(--accent-teal); font-family:var(--font-mono);">ONLINE</span>
-            </div>
-
-            <!-- Score and Rubric Overview -->
-            <div class="audit-score-summary">
-              <div style="display:flex; align-items:center; gap:0.75rem;">
-                <span id="auditScorePill" class="audit-score-pill">0%</span>
-                <div>
-                  <div style="font-size:0.72rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Audit Assessment</div>
-                  <div id="auditGradeBadge" style="font-size:0.95rem; font-weight:800; color:#ffb74d;">Unresolved Defects</div>
-                </div>
-              </div>
-              <div class="audit-score-metrics">
-                <span id="auditFixedPill" class="audit-metric-chip">0 / 4 Fixed</span>
-                <span id="auditMarksPill" class="audit-metric-chip">0 / 20 Marks</span>
-              </div>
-            </div>
-
-            <!-- Terminal Tabs -->
-            <div class="audit-terminal-tabs">
-              <button class="audit-term-tab active" id="auditTabStream" data-pane="stream">🖥️ Diagnostic Stream</button>
-              <button class="audit-term-tab" id="auditTabDiff" data-pane="diff">🔍 Line Diff & Defect Inspector</button>
-            </div>
-
-            <!-- Terminal Content Panes -->
-            <div class="audit-terminal-body">
-              <!-- Pane 1: Log Stream -->
-              <div id="auditTerminalStream">
-                <div class="audit-log-line audit-log-info">
-                  <span>[SYSTEM]</span>
-                  <span>Interactive C# Code Audit initialized. Audit against authentic NWU exam defects.</span>
-                </div>
-              </div>
-
-              <!-- Pane 2: Visual Line Diff Inspector -->
-              <div id="auditDiffInspector" style="display:none;">
-                <table class="audit-diff-table">
-                  <thead>
-                    <tr>
-                      <th style="width:38px;">Line</th>
-                      <th style="width:90px;">Status</th>
-                      <th>Observed / Target Statement</th>
-                    </tr>
-                  </thead>
-                  <tbody id="auditDiffTableBody">
-                    <!-- Populated dynamically -->
-                  </tbody>
-                </table>
-              </div>
+            <div>
+              <label for="defsCategoryFilter" class="sr-only">Filter by Category</label>
+              <select id="defsCategoryFilter" class="select-input">
+                <option value="ALL">All Categories</option>
+              </select>
             </div>
           </div>
         </div>
-      </div>
+        <div class="cards-grid-2" id="defsCardsHost"></div>
+      </section>
 
-      <!-- Mode 2: Rapid Exam Diagnostics (15 MCQs) -->
-      <div id="auditMcqContainer" style="display:none;">
-        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">
-          Identify subtle syntax errors, runtime exception traps, and logic defects frequently tested in CMPG122 written and practical exams.
-        </p>
-        <div id="spotErrorList">
-          <!-- Populated dynamically by app.js -->
+      <!-- 6. PERFORMANCE ANALYTICS & QUESTION REVIEW -->
+      <section id="viewProgress" class="view-section" aria-labelledby="progressViewHeading">
+        <div class="section-bar">
+          <h2 class="section-heading" id="progressViewHeading">
+            <span class="nav-icon" data-icon="progress"></span>
+            <span>Performance Analytics &amp; Question Review</span>
+          </h2>
         </div>
-      </div>
-    </section>
+        <div id="analyticsHost"></div>
+      </section>
 
-    <!-- View 5: Custom Practice Builder -->
-    <section id="viewCustom" class="view-panel" style="display:none;">
-      <div class="q-card" style="max-width:720px; margin:0 auto;">
-        <h3 style="font-size:1.3rem; font-weight:800; margin-bottom:0.5rem;">⚙️ Multi-Unit Custom Practice Builder</h3>
-        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">
-          Select any combination of Study Units (SU7 HCI, SU1 Fundamentals, SU2 Data, SU3 Decisions, SU4 Loops &amp; Files, SU5 Methods, SU6 Multiforms) to build a custom quiz session.
-        </p>
-        <div style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:1.5rem;" id="customUnitChecks">
-          <!-- Checkboxes injected dynamically -->
+      <!-- 7. SETTINGS -->
+      <section id="viewSettings" class="view-section" aria-labelledby="settingsViewHeading">
+        <div class="section-bar">
+          <h2 class="section-heading" id="settingsViewHeading">
+            <span class="nav-icon" data-icon="settings"></span>
+            <span>Settings, Accessibility &amp; Data Backup</span>
+          </h2>
         </div>
-        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
-          <label style="font-weight:700; font-size:0.9rem;">Target Question Count:</label>
-          <input type="number" id="customQuestionCount" value="20" min="5" max="100" class="cloze-input" style="width:90px; padding:0.4rem 0.8rem;">
-        </div>
-        <button id="btnStartCustom" class="btn-practice" style="padding:0.75rem 1.5rem; font-size:0.95rem; width:100%;">
-          ⚡ Launch Custom Practice Session
-        </button>
-      </div>
-    </section>
+        <div id="settingsHost"></div>
+      </section>
+    </main>
+  </div>
 
-    <!-- View 6: Interactive Quiz & Examination Engine -->
-    <section id="viewQuiz" class="view-panel" style="display:none;">
-      <div class="quiz-container">
-        <!-- Top Toolbar with Mode Toggle and Controls -->
-        <div class="quiz-top-bar">
-          <button id="btnExitQuiz" class="action-btn" style="padding:0.35rem 0.65rem;">✕ Exit</button>
-
-          <!-- Examination Layout View Toggle (Practice Only) -->
-          <div class="view-mode-toggle" id="viewModeToggleGroup" style="display:none;">
-            <button type="button" id="btnModeContinuous" class="view-mode-pill active" onclick="CMPG122_APP.setViewMode('continuous')">
-              📄 Continuous Paper View
-            </button>
-            <button type="button" id="btnModeCard" class="view-mode-pill" onclick="CMPG122_APP.setViewMode('card')">
-              🗂️ Single Question Card View
-            </button>
-          </div>
-
-          <!-- Single Card Progress Bar (shown in Card view) -->
-          <div class="quiz-progress-wrap" id="cardProgressWrap" style="display:none;">
-            <div class="progress-bar-bg">
-              <div id="quizProgressFill" class="progress-bar-fill"></div>
-            </div>
-          </div>
-          <span id="quizCounter" style="display:none; font-family:var(--font-mono); font-size:0.85rem; font-weight:700; color:var(--text-muted);">Q 1 of 20</span>
-          
-          <!-- Exam Countdown Timer -->
-          <div id="quizTimerBox" style="display:none; align-items:center; gap:0.4rem; background:var(--bg-subtle); border:1px solid var(--border-subtle); padding:0.25rem 0.6rem; border-radius:var(--radius-sm); font-family:var(--font-mono); font-weight:700; color:var(--accent-amber);">
-            <span>⏱️</span>
-            <span id="quizTimerDisplay">180:00</span>
-          </div>
-
-          <button id="btnBookmark" class="action-btn" style="padding:0.35rem 0.65rem;">☆ Bookmark</button>
-        </div>
-
-        <!-- Sticky Question Jump Palette Navigator for Continuous Exam Paper -->
-        <div id="examNavigatorBar" class="exam-navigator-bar" style="display:none;">
-          <div class="navigator-meta">
-            <div class="navigator-title-row">
-              <span class="navigator-badge">📋 QUESTION PALETTE</span>
-              <span id="examNavigatorSummary" class="navigator-summary">0 / 16 Answered (0%)</span>
-              <span id="navExamTimer" class="nav-timer-pill" style="display:none;">⏱️ 180:00</span>
-            </div>
-            <div class="navigator-actions">
-              <button type="button" id="btnOpenScenarioDrawer" class="action-btn-sm btn-scenario-drawer" onclick="CMPG122_APP.openScenarioDrawer()">📖 Scenario & Rates Table</button>
-              <button type="button" id="btnJumpUnanswered" class="action-btn-sm" onclick="CMPG122_APP.jumpToNextUnanswered()">⏭️ Next Unanswered</button>
-              <button type="button" id="btnJumpSubmit" class="action-btn-sm" onclick="CMPG122_APP.jumpToSubmit()">📋 Jump to Submit</button>
-              <button type="button" id="btnNavExitExam" class="action-btn-sm" onclick="CMPG122_APP.exitExamPaper()" style="color:var(--danger-text); border-color:var(--danger-border);" title="Exit Exam Paper">✕ Exit</button>
-            </div>
-          </div>
-          <div id="examQuestionPalette" class="exam-question-palette">
-            <!-- Dynamically populated question pills -->
-          </div>
-          <div class="palette-legend">
-            <span class="legend-item"><span class="legend-dot dot-unanswered"></span> Unanswered</span>
-            <span class="legend-item"><span class="legend-dot dot-answered"></span> Answered</span>
-            <span class="legend-item"><span class="legend-dot dot-flagged"></span> Flagged</span>
-            <span class="legend-item"><span class="legend-dot dot-current"></span> Current Position</span>
-          </div>
-        </div>
-
-        <!-- Mode A: Continuous Single Exam Paper View -->
-        <div id="continuousPaperArea" class="continuous-paper-area">
-          <!-- Rendered dynamically by app.js: Cover, Questions 1..N, Submit Section -->
-        </div>
-
-        <!-- Mode B: Single Question Card View -->
-        <div id="singleCardArea" class="single-card-area" style="display:none;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-            <h2 id="quizTitle" style="font-size:1.15rem; font-weight:800;">Unit Practice</h2>
-            <button id="btnRetryWrong" class="action-btn" style="display:none; color:var(--danger-text); border-color:var(--danger-border);">
-              🔄 Retry Incorrect Qs
-            </button>
-          </div>
-
-          <!-- Question Render Area -->
-          <div id="quizArea"></div>
-
-          <!-- Navigation Controls -->
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.25rem;">
-            <button id="btnPrevQ" class="action-btn" disabled>← Previous</button>
-            <button id="btnNextQ" class="btn-practice" style="padding:0.6rem 1.5rem; font-size:0.9rem;">Next Question →</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Side Tools Drawer -->
-  <div class="drawer-backdrop" id="drawerBackdrop"></div>
-  <aside class="tools-drawer" id="toolsDrawer">
-    <div class="drawer-header">
-      <h3>🛠️ C# Development Side Tools</h3>
-      <button class="close-btn" id="btnCloseTools">✕</button>
+  <!-- Slide-out Scenario Reference Drawer (Past Papers) -->
+  <aside class="slide-drawer" id="scenarioDrawer" aria-label="Examination reference tables" aria-hidden="true">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+      <h3 style="margin:0;font-size:1rem;">Scenario &amp; Control Reference</h3>
+      <button type="button" class="btn-ghost btn-sm" id="btnCloseScenarioDrawer">Close</button>
     </div>
-    <div class="drawer-tabs">
-      <button class="drawer-tab-btn active" data-pane="paneSandbox">Expression Sandbox</button>
-      <button class="drawer-tab-btn" data-pane="paneTrace">Variable Trace Table</button>
-      <button class="drawer-tab-btn" data-pane="paneNaming">Hungarian Prefixes</button>
-      <button class="drawer-tab-btn" data-pane="paneScratch">Scratchpad</button>
-    </div>
-    <div class="drawer-content">
-
-      <!-- Pane 1: C# Expression Sandbox -->
-      <div id="paneSandbox" class="drawer-pane">
-        <h4 style="font-size:0.9rem; font-weight:700; color:var(--accent-blue); margin-bottom:0.75rem;">
-          ⚡ Quick C# Expression Evaluator
-        </h4>
-        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">
-          Evaluate C# arithmetic, Math methods, and ToString specifiers instantly in the sandbox.
-        </p>
-        <textarea id="sandboxExpr" style="width:100%; height:80px; background:var(--bg-subtle); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); color:var(--text-main); font-family:var(--font-mono); font-size:0.85rem; padding:0.6rem; margin-bottom:0.75rem;" placeholder="(45 - 40) * 100 * 1.5m"></textarea>
-        <button id="btnRunSandbox" class="btn-practice" style="width:100%; padding:0.45rem; font-size:0.85rem; margin-bottom:0.75rem;">
-          Run Expression
-        </button>
-        <div id="sandboxResult"></div>
-      </div>
-
-      <!-- Pane 2: Variable State Trace Table -->
-      <div id="paneTrace" class="drawer-pane" style="display:none;">
-        <h4 style="font-size:0.9rem; font-weight:700; color:var(--accent-purple); margin-bottom:0.75rem;">
-          📊 Loop Variable State Trace Visualizer
-        </h4>
-        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">
-          Step through loop counters, accumulators, and termination conditions.
-        </p>
-        <div style="background:#0f172a; padding:0.6rem; border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:0.78rem; margin-bottom:0.75rem;">
-          int count = 1;<br>
-          decimal total = 0m;<br>
-          while (count &lt;= 4) {<br>
-          &nbsp;&nbsp;total += 100m;<br>
-          &nbsp;&nbsp;count++;<br>
-          }
-        </div>
-        <button id="btnGenerateTrace" class="btn-practice" style="width:100%; padding:0.45rem; font-size:0.85rem; margin-bottom:0.75rem;">
-          Generate Trace Table
-        </button>
-        <div id="traceOutput"></div>
-      </div>
-
-      <!-- Pane 3: Hungarian Prefixes Cheatsheet -->
-      <div id="paneNaming" class="drawer-pane" style="display:none;">
-        <h4 style="font-size:0.9rem; font-weight:700; color:var(--accent-teal); margin-bottom:0.75rem;">
-          📋 NWU CMPG122 Control Naming Standards
-        </h4>
-        <table class="test-table">
-          <thead>
-            <tr><th>Control</th><th>Prefix</th><th>Example Identifier</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Button</td><td><code>btn</code></td><td><code>btnCalculate</code></td></tr>
-            <tr><td>TextBox</td><td><code>txt</code></td><td><code>txtHours</code></td></tr>
-            <tr><td>Label</td><td><code>lbl</code></td><td><code>lblGrossPay</code></td></tr>
-            <tr><td>ListBox</td><td><code>lst</code></td><td><code>lstReceipt</code></td></tr>
-            <tr><td>RadioButton</td><td><code>rdo</code> / <code>rad</code></td><td><code>rdoSedan</code></td></tr>
-            <tr><td>CheckBox</td><td><code>chk</code></td><td><code>chkDiscount</code></td></tr>
-            <tr><td>GroupBox</td><td><code>grp</code></td><td><code>grpVehicle</code></td></tr>
-            <tr><td>PictureBox</td><td><code>pic</code></td><td><code>picLogo</code></td></tr>
-            <tr><td>Timer</td><td><code>tmr</code></td><td><code>tmrClock</code></td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Pane 4: Scratchpad -->
-      <div id="paneScratch" class="drawer-pane" style="display:none;">
-        <h4 style="font-size:0.9rem; font-weight:700; color:var(--text-main); margin-bottom:0.5rem;">
-          📝 Local Scratchpad & Working Notes
-        </h4>
-        <textarea id="scratchpadText" style="width:100%; height:320px; background:var(--bg-subtle); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); color:var(--text-main); font-family:var(--font-mono); font-size:0.85rem; padding:0.75rem; outline:none; resize:none;" placeholder="Type code workings or notes here... (Auto-saved to local browser storage)"></textarea>
-      </div>
-
-    </div>
+    <div id="scenarioDrawerBody"></div>
   </aside>
 
-  <!-- Summary Modal Overlay -->
-  <div class="modal-backdrop" id="summaryModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3 id="summaryModalTitle" style="font-size:1.15rem; font-weight:800;">Unit Summary</h3>
-        <button class="close-btn" id="btnCloseModal">✕</button>
+  <!-- Accessible Confirmation & Shortcut Modal -->
+  <div class="modal-backdrop" id="appModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="appModalTitle">
+    <div class="modal-dialog">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;margin-bottom:0.75rem;">
+        <h3 id="appModalTitle" style="margin:0;font-size:1.05rem;">Confirmation</h3>
+        <button type="button" class="btn-ghost btn-sm" id="btnCloseAppModal" aria-label="Close dialog">Close</button>
       </div>
-      <div class="modal-body" id="summaryModalBody"></div>
+      <div id="appModalBody" style="font-size:0.9rem;color:var(--text-secondary);"></div>
+      <div id="appModalActions" style="display:flex;justify-content:flex-end;gap:0.6rem;margin-top:1.25rem;flex-wrap:wrap;"></div>
     </div>
   </div>
 
-  <!-- WhatsApp Feedback & Escalation Modal -->
-  <div class="modal-backdrop" id="whatsappModal" style="display:none;">
-    <div class="modal-card" style="max-width:520px;">
-      <div class="modal-header">
-        <h3 style="font-size:1.15rem; font-weight:800; display:flex; align-items:center; gap:0.5rem;">
-          <span>💬 Direct Creator Support & Inquiries</span>
-        </h3>
-        <button class="close-btn" onclick="closeWhatsAppModal()">✕</button>
-      </div>
-      <div class="modal-body" style="line-height:1.6;">
-        <p style="margin-bottom:1rem; font-size:0.9rem;">
-          Have an academic question, syntax query, or discovered an issue in an assessment simulation? Connect directly with the course platform creator on WhatsApp:
-        </p>
-        <div style="background:rgba(217,119,6,0.1); border:1px solid rgba(217,119,6,0.3); border-radius:var(--radius-md); padding:1rem; margin-bottom:1.25rem; font-size:0.85rem; color:var(--accent-amber);">
-          <strong>📸 Important Note:</strong> Please take a screenshot of all issues and explain the problem clearly so I can assist and update the engine immediately.
-        </div>
-        <a href="https://wa.me/27660673757?text=Hi%20Andre%2C%20I%20have%20feedback%20%2F%20found%20an%20issue%20on%20Project%20Roslyn%20CMPG122%3A" target="_blank" class="btn-practice" style="display:block; text-align:center; text-decoration:none; padding:0.75rem 1.5rem; font-size:0.95rem; background:#25D366; color:#fff; font-weight:700; border-radius:var(--radius-sm);">
-          Open WhatsApp Direct Chat (066 067 3757)
-        </a>
-      </div>
-    </div>
-  </div>
+  <!-- Toast Notification Live Region -->
+  <div class="toast-region" id="toastRegion" role="status" aria-live="polite"></div>
 
-  <!-- Sticky Slide-Out Scenario & Rates Reference Drawer for Exam Mode -->
-  <div id="scenarioDrawerBackdrop" class="scenario-drawer-backdrop" style="display:none;" onclick="CMPG122_APP.closeScenarioDrawer()"></div>
-  <div id="scenarioDrawer" class="scenario-drawer" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="scenarioDrawerTitle">
-    <div class="scenario-drawer-header">
-      <div class="scenario-drawer-title-wrap">
-        <span class="scenario-drawer-badge">OFFICIAL EXAM SPECIFICATION</span>
-        <h3 id="scenarioDrawerTitle" class="scenario-drawer-title">Practical Scenario & Rates Table</h3>
-      </div>
-      <button type="button" id="btnCloseScenarioDrawer" class="action-btn-sm" onclick="CMPG122_APP.closeScenarioDrawer()" title="Close Specification Drawer">✕ Close</button>
-    </div>
-    <div id="scenarioDrawerBody" class="scenario-drawer-body">
-      <!-- Populated dynamically with rich scenario tables, naming matrix, and business rules -->
-    </div>
-  </div>
+  <!-- Touch-Friendly Mobile Bottom Navigation -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="Mobile navigation">
+    <button type="button" class="bottom-nav-btn active" data-route="home">
+      <span class="nav-icon" data-icon="home"></span>
+      <span>Home</span>
+    </button>
+    <button type="button" class="bottom-nav-btn" data-route="study">
+      <span class="nav-icon" data-icon="study"></span>
+      <span>Study</span>
+    </button>
+    <button type="button" class="bottom-nav-btn" data-route="practice">
+      <span class="nav-icon" data-icon="practice"></span>
+      <span>Practice</span>
+    </button>
+    <button type="button" class="bottom-nav-btn" data-route="exams">
+      <span class="nav-icon" data-icon="exams"></span>
+      <span>Exams</span>
+    </button>
+    <button type="button" class="bottom-nav-btn" data-route="definitions">
+      <span class="nav-icon" data-icon="definitions"></span>
+      <span>Glossary</span>
+    </button>
+  </nav>
 
-  <!-- Institutional Read-Only Footer with Live Cloud Telemetry Badge -->
-  <footer style="border-top:1px solid var(--border-subtle); padding:1.5rem 1rem; text-align:center; font-size:0.8rem; color:var(--text-faint); margin-top:3rem;">
-    <div id="telemetry-badge" style="display:inline-flex; align-items:center; gap:0.5rem; background:var(--bg-card); border:1px solid var(--border-subtle); padding:0.4rem 1.1rem; border-radius:999px; font-family:var(--font-mono); font-size:0.78rem;">
-      <span><span style="color: var(--accent-emerald, #4caf50);">●</span> Live Cloud Connected</span>
-    </div>
-    <div style="margin-top:0.65rem; color:var(--text-muted);">North-West University • Faculty of Natural & Agricultural Sciences • School of Computer Science & Information Systems</div>
-    <div style="margin-top:0.25rem; font-size:0.75rem; color:var(--text-faint);">CMPG122 Visual C# Study & Exam Suite • Production V7.00 • Active Assessment Platform</div>
-  </footer>
-
-  <script>
-    function openWhatsAppModal() {
-      const m = document.getElementById('whatsappModal');
-      if (m) m.style.display = 'flex';
-    }
-    function closeWhatsAppModal() {
-      const m = document.getElementById('whatsappModal');
-      if (m) m.style.display = 'none';
-    }
-  </script>
-
-  <!-- Scripts -->
+  <!-- Modular Application Scripts (100% Local & Offline) -->
+  <script src="js/data/definitions_data.js"></script>
+  <script src="js/data/curriculum.js"></script>
+  <script src="js/data/questions_bank.js"></script>
+  <script src="js/data/code_labs_data.js"></script>
   <script src="js/data.js"></script>
   <script src="js/csharp_engine.js"></script>
-  <script src="js/telemetry.js"></script>
+  <script src="js/modules/icons_and_diagrams.js"></script>
+  <script src="js/modules/persistence.js"></script>
+  <script src="js/modules/analytics.js"></script>
+  <script src="js/modules/definitions_engine.js"></script>
+  <script src="js/modules/exam_engine.js"></script>
+  <script src="js/modules/keyboard_shortcuts.js"></script>
+  <script src="js/modules/question_renderer.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

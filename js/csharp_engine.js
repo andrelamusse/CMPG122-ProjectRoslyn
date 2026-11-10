@@ -615,7 +615,7 @@
         severity: 'warning',
         line: lineNum,
         col: 1,
-        message: `NWU CMPG122 Rubric Warning: Default control name '${match[1]}' detected. Standard Hungarian prefixes must be used (e.g. btnCalculate, txtHours, lblGrossPay).`
+        message: `Naming Convention Warning: Default control name '${match[1]}' detected. Standard Hungarian prefixes must be used (e.g. btnCalculate, txtHours, lblGrossPay).`
       });
     }
 
@@ -626,7 +626,7 @@
         severity: 'warning',
         line: 1,
         col: 1,
-        message: "Robust Input Validation: Raw '.Parse()' can crash the program with unhandled FormatException. Gaddis 4.7 & NWU CodeGrade standard requires TryParse() or a try-catch block."
+        message: "Defensive Input Validation: Raw '.Parse()' throws an unhandled FormatException on non-numeric input. Use TryParse() or wrap parsing in a try-catch block."
       });
     }
 
@@ -788,8 +788,8 @@
     js = js.replace(/\b(?:decimal|double|int|string|bool|float|long|char)\s*\[\s*\]\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*new\s+(?:decimal|double|int|string|bool|float|long|char)\s*\[([^\]]+)\]/g, 'let $1 = new Array($2).fill(0)');
     js = js.replace(/\b(?:decimal|double|int|string|bool|float|long|char)\s*\[\s*\]\s+([a-zA-Z_][a-zA-Z0-9_]*)/g, 'let $1');
 
-    // 4. Transpile C# type declarations (handling const/readonly, e.g. 'const decimal RATE' -> 'const RATE', and 'decimal gross' -> 'let gross')
-    js = js.replace(/\b(?:(const|readonly)\s+)?(?:decimal|double|int|string|bool|float|long|char|DialogResult|Color)\s+([a-zA-Z_][a-zA-Z0-9_]*)/g, (match, isConst, varName) => {
+    // 4. Transpile C# type declarations (handling const/readonly, primitive types, StreamWriter/StreamReader, Random, and Form types)
+    js = js.replace(/\b(?:(const|readonly)\s+)?(?:decimal|double|int|string|bool|float|long|char|DialogResult|Color|StreamWriter|StreamReader|Random|[A-Z][a-zA-Z0-9_]*Form)\s+([a-zA-Z_][a-zA-Z0-9_]*)/g, (match, isConst, varName) => {
       return (isConst ? 'const ' : 'let ') + varName;
     });
 
@@ -862,11 +862,18 @@
     js = js.replace(/\.ToString\s*\(\s*["']P(\d)?["']\s*\)/gi, '._toPercent($1 || 1)');
     js = js.replace(/\.ToString\s*\(\s*\)/g, '.toString()');
 
+    // Verbatim C# string literals @"..." -> escaped JS string literal
+    js = js.replace(/@"([^"]*)"/g, (_m, inner) => JSON.stringify(inner));
+
     // MessageBox.Show(...) -> _msgBox(...)
     js = js.replace(/\bMessageBox\.Show\s*\(/g, '_msgBox(');
 
-    // this.Close() -> _closeForm()
+    // this.Close() / this.Hide()
     js = js.replace(/\bthis\.Close\s*\(\s*\)/g, '_closeForm()');
+    js = js.replace(/\bthis\.Hide\s*\(\s*\)/g, '_hideForm()');
+
+    // Infinite-loop guard on brace-delimited while / for / do loops
+    js = js.replace(/\b(while\s*\([^)]*\)|for\s*\([^)]*\)|do)\s*\{/g, '$1 { _guardLoop(); ');
 
     return js;
   }
@@ -1077,6 +1084,80 @@
         ToInt32: function(val) { const v = parseInt(val, 10); if (isNaN(v)) throw new Error("Input string was not in a correct format."); return v; },
         ToString: function(val) { return String(val); },
         ToBoolean: function(val) { return Boolean(val); }
+      },
+      _hideForm: function() { sandbox._isHidden = true; },
+      _loopSteps: 0,
+      _guardLoop: function() {
+        sandbox._loopSteps++;
+        if (sandbox._loopSteps > 10000) {
+          throw new Error('Infinite loop halted (>10,000 iterations). Check your loop condition and counter update.');
+        }
+      },
+      _virtualFiles: {},
+      File: {
+        CreateText: function(fn) {
+          const lines = [];
+          sandbox._virtualFiles[fn] = lines;
+          return {
+            Write: function(s) { if (!lines.length) lines.push(String(s)); else lines[lines.length - 1] += String(s); },
+            WriteLine: function(s) { lines.push(s === undefined ? '' : String(s)); },
+            Close: function() { this._closed = true; }
+          };
+        },
+        AppendText: function(fn) {
+          if (!sandbox._virtualFiles[fn]) sandbox._virtualFiles[fn] = [];
+          const lines = sandbox._virtualFiles[fn];
+          return {
+            Write: function(s) { if (!lines.length) lines.push(String(s)); else lines[lines.length - 1] += String(s); },
+            WriteLine: function(s) { lines.push(s === undefined ? '' : String(s)); },
+            Close: function() { this._closed = true; }
+          };
+        },
+        OpenText: function(fn) {
+          const lines = (sandbox._virtualFiles[fn] || ['10', '20', '30']).slice();
+          let idx = 0;
+          return {
+            get EndOfStream() { return idx >= lines.length; },
+            ReadLine: function() { return idx < lines.length ? lines[idx++] : null; },
+            Close: function() { this._closed = true; }
+          };
+        }
+      },
+      Random: function() {
+        return {
+          Next: function(a, b) {
+            if (a === undefined) return 42;
+            if (b === undefined) return Math.floor(a / 2);
+            return a;
+          },
+          NextDouble: function() { return 0.5; }
+        };
+      },
+      SummaryForm: function() {
+        return {
+          lblSummaryTotal: { Text: '' },
+          lblFinalTotal: { Text: '' },
+          lblOutput: { Text: '' },
+          ShowDialog: function() { this._shownModal = true; return 1; },
+          Show: function() { this._shownModeless = true; },
+          Close: function() { this._closed = true; },
+          Hide: function() { this._hidden = true; }
+        };
+      },
+      ReceiptForm: function() {
+        return {
+          lblTotal: { Text: '' },
+          lblResult: { Text: '' },
+          ShowDialog: function() { this._shownModal = true; return 1; },
+          Show: function() { this._shownModeless = true; }
+        };
+      },
+      InvoiceForm: function() {
+        return {
+          lblAmountDue: { Text: '' },
+          ShowDialog: function() { this._shownModal = true; return 1; },
+          Show: function() { this._shownModeless = true; }
+        };
       }
     };
 
@@ -1102,14 +1183,18 @@
     try {
       const keys = Object.keys(sandbox);
       const vals = keys.map(k => sandbox[k]);
-      const runner = new Function(...keys, `
+      const runner = new Function(
+        ...keys,
+        'window', 'document', 'globalThis', 'self', 'fetch', 'XMLHttpRequest', 'localStorage', 'sessionStorage', 'indexedDB',
+        `
+        "use strict";
         try {
           ${transpiledJs}
         } catch(e) {
           throw e;
         }
       `);
-      runner.call(sandbox, ...vals);
+      runner.call(sandbox, ...vals, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
 
       let passed = true;
       let actualSummary = [];
@@ -1528,10 +1613,76 @@
         lineDiff
       };
     }
+
+    static audit(studentCode, scenario) {
+      if (!scenario) return { score: 0, fixedBugs: 0, totalBugs: 0, feedback: [] };
+      return CSharpCodeAuditor.gradeSubmission(
+        studentCode,
+        scenario.canonicalSolution || scenario.canonicalCode || '',
+        scenario.errorCatalog || [],
+        scenario.initialCode || scenario.buggyCode || ''
+      );
+    }
+  }
+
+  const FRAMEWORK_TYPES = new Set([
+    'Form', 'Form1', 'Form2', 'SummaryForm', 'ReceiptForm', 'InvoiceForm', 'DetailsForm',
+    'EventArgs', 'FormClosingEventArgs', 'MessageBox', 'MessageBoxButtons', 'MessageBoxIcon',
+    'DialogResult', 'PictureBoxSizeMode', 'Math', 'Convert', 'Random', 'File',
+    'StreamWriter', 'StreamReader', 'OpenFileDialog', 'SaveFileDialog', 'Color',
+    'Application', 'ListBox', 'Button', 'Label', 'TextBox', 'RadioButton', 'CheckBox',
+    'GroupBox', 'PictureBox', 'Exception', 'FormatException', 'DivideByZeroException'
+  ]);
+
+  function escapeHtmlSafe(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function highlightCSharp(rawCode) {
+    if (!rawCode) return '';
+    const src = String(rawCode);
+    const tokenPattern = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/|\$@"[^"]*"|@"[^"]*"|\$"(?:[^"\\]|\\.)*"|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|\b\d+(?:\.\d+)?[mMdDfF]?\b|\b[a-zA-Z_][a-zA-Z0-9_]*\b)/g;
+    let out = '';
+    let last = 0;
+    let m;
+    while ((m = tokenPattern.exec(src)) !== null) {
+      if (m.index > last) {
+        out += escapeHtmlSafe(src.slice(last, m.index));
+      }
+      const tok = m[0];
+      const nextSlice = src.slice(tokenPattern.lastIndex);
+      if (tok.startsWith('//') || tok.startsWith('/*')) {
+        out += `<span class="tok-cmt">${escapeHtmlSafe(tok)}</span>`;
+      } else if (tok.startsWith('"') || tok.startsWith("'") || tok.startsWith('$') || tok.startsWith('@')) {
+        out += `<span class="tok-str">${escapeHtmlSafe(tok)}</span>`;
+      } else if (/^\d/.test(tok)) {
+        out += `<span class="tok-num">${escapeHtmlSafe(tok)}</span>`;
+      } else if (CSHARP_PRIMITIVE_TYPES.has(tok) || FRAMEWORK_TYPES.has(tok)) {
+        out += `<span class="tok-type">${escapeHtmlSafe(tok)}</span>`;
+      } else if (CSHARP_KEYWORDS.has(tok)) {
+        out += `<span class="tok-kw">${escapeHtmlSafe(tok)}</span>`;
+      } else if (/^\s*\(/.test(nextSlice)) {
+        out += `<span class="tok-fn">${escapeHtmlSafe(tok)}</span>`;
+      } else if (/^(?:btn|txt|lbl|lst|rdo|rad|chk|cb|grp|pic|ofd|sfd)[A-Z]/.test(tok)) {
+        out += `<span class="tok-ctrl">${escapeHtmlSafe(tok)}</span>`;
+      } else {
+        out += escapeHtmlSafe(tok);
+      }
+      last = tokenPattern.lastIndex;
+    }
+    if (last < src.length) {
+      out += escapeHtmlSafe(src.slice(last));
+    }
+    return out;
   }
 
   return {
     tokenize: tokenize,
+    highlightCSharp: highlightCSharp,
     analyzeDiagnostics: analyzeDiagnostics,
     simulateExecution: simulateExecution,
     evaluateCodeGrade: evaluateCodeGrade,

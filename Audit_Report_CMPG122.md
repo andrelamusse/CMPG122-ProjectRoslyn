@@ -1,78 +1,47 @@
-# NWU CMPG122 Automated QA Census & Release Audit Report
+# CMPG122 — Engineering & Quality Assurance Audit Report (v9.0.0)
 
-> **Module Identifier:** `CMPG122` — User Interface Programming in Visual C#  
-> **Target System:** North-West University (NWU) Faculty of Natural and Agricultural Sciences  
-> **Master Framework Version:** `Production V7.00`  
-> **Audit Status:** **100% PASSED** (0 Errors, 0 Broken References, 0 NaN Values)
+## 1. Curriculum & Exam Calibration Summary
+- **Study Units Covered:** 7 (`SU7` HCI Principles, `SU1` GUI & IDE, `SU2` Data, Types & Math, `SU3` Decisions & Input Validation, `SU4` Loops, Files, Dialogs & Random Numbers, `SU5` Modularising with Methods, `SU6` Multiform Projects) across Weeks 1–12.
+- **Structured Educational Topics:** 35 10-part topics with interactive vector SVG architecture diagrams and mobile-safe C# quick-reference tables.
+- **Technical Definitions Library:** 82 searchable entries with context-preserving inline links and exact scroll/selection/panel state restoration.
+- **Calibrated Question Bank:** 585 unique, schema-validated questions (`Foundational`: 167, `Intermediate`: 254, `Advanced`: 164) with isolated internal provenance in `audit/provenance_registry.json`.
+- **Verified Examination Weighting (100 Marks, 180 Minutes):**
+  - `SU7`: 10% (10 marks)
+  - `SU1`: 10% (10 marks)
+  - `SU2`: 15% (15 marks)
+  - `SU3`: 20% (20 marks)
+  - `SU4`: 20% (20 marks)
+  - `SU5`: 15% (15 marks)
+  - `SU6`: 10% (10 marks)
+- **C# Code & Tracing Labs:** 15 CodeGrade event-handler scenarios (SU1–SU6), 24 Spot-the-Error challenges, and 6 Multi-Bug Code Auditor scenarios, plus `.NET 10.0` compiler-verified code-tracing items.
 
----
+## 2. Final Acceptance Gates Matrix
 
-## 1. Executive Summary & Curriculum Exhaustion Metrics
-
-| Metric | Target / Standard | Actual Verified Value | Compliance Status |
-| :--- | :--- | :--- | :--- |
-| **Total Verified Questions** | $\ge 350$ Questions | **430 Questions** | **EXCEEDED (122.8%)** |
-| **Study Unit Coverage** | Weeks 1–7 (SU7, SU1, SU2, SU3, SU4) | **5 Units (100% Curriculum Exhaustion)** | **VERIFIED** |
-| **Official Past Exam Papers** | 2021–2024 NWU Examinations | **5 Complete Exam Paper Simulations** | **VERIFIED** |
-| **Granular Exam Steps** | $\ge 75$ Exam Steps | **80 Granular Assessment Steps** | **VERIFIED** |
-| **Debugging Gym Scenarios** | $\ge 10$ Tricky Bugs | **15 Spot-the-Error Scenarios** | **VERIFIED** |
-| **CodeGrade Practical Scenarios**| $\ge 6$ Scenarios | **8 Scenarios with Virtual Test Suites** | **VERIFIED** |
-| **Headless Node.js VM Census** | 0 Failures | **430 / 430 Passed (0 Failures)** | **100% PASSED** |
-
----
-
-## 2. Study Unit Distribution & Prescribed Chapter Provenance
-
-```text
-Study Unit Distribution Census:
-  • SU7 (HCI Principles & 8 Golden Rules):         65 Questions  (15.1%) [Shneiderman 5th Ed Ch 1 & 2]
-  • SU1 (Visual Studio GUI & Fundamentals):        65 Questions  (15.1%) [Gaddis 4th Ed Ch 1]
-  • SU2 (Data Processing, Variables & Math):       75 Questions  (17.4%) [Gaddis 4th Ed Ch 3]
-  • SU3 (Decisions, Selection Logic & TryParse):   75 Questions  (17.4%) [Gaddis 4th Ed Ch 4]
-  • SU4 (Loops, Accumulators & ListBoxes):         70 Questions  (16.3%) [Gaddis 4th Ed Ch 5]
-  • SU-EXAM (Official Past Exam Simulations):       80 Questions  (18.6%) [NWU 2021–2024 Exam Papers]
-Total Verified Assessment Volume:                 430 Questions (100.0%)
-```
-
----
-
-## 3. C# CodeGrade Diagnostics Engine Verification
-
-The local C# static analyzer and execution sandbox was verified across multiple syntactically flawed and valid C# code snippets:
-
-1. **Roslyn Compilation Diagnostic Code Generation:**
-   - `CS1002`: Semicolon expected at end of statement (line-by-line verification).
-   - `CS1513`: Unmatched or unclosed curly brace `}`.
-   - `CS1026`: Unmatched closing or opening parenthesis `)`.
-   - `CS0029`: Cannot implicitly convert type `'string'` to numeric (`decimal` / `int` / `double`).
-   - `CS0103`: Undeclared variable / typo in identifier.
-   - `CS1525`: Invalid expression syntax (e.g. assignment `=` in `if` condition).
-   - `CS0246`: Misspelled built-in type.
-   - `NWU_CONV01`: Hungarian control naming convention warning (`btn`, `txt`, `lbl`, `lst`, `rdo`, `chk`).
-   - `NWU_SAFE01`: Unsafe parsing warning recommending `TryParse()` over unhandled `.Parse()`.
-   - `NWU_FORMAT01`: Currency formatting requirement (`.ToString("C")`).
-
-2. **Automated Dynamic Sandbox Test Runner:**
-   - Isolated JavaScript execution environment simulating C# variables, operators, and control properties (`.Text`, `.Checked`, `.Items.Add`, `.Items.Clear`).
-   - Executed against 8 practical scenarios with 100% assertion passes on model solutions.
-
----
-
-## 4. Dual Distribution Architecture Release Check
-
-1. **Suite Directory (`CMPG122_App/`):**
-   - `index.html`: Modern responsive application shell.
-   - `css/style.css`: High-tech dark/light mode stylesheet.
-   - `js/data.js`: 430-question verified question bank (587 KB).
-   - `js/csharp_engine.js`: Client-side C# lexer, Roslyn linter, and virtual runner.
-   - `js/app.js`: Application state controller and tools drawer.
-   - `README.md`: Quick start and offline instructions.
-   - `Audit_Report_CMPG122.md`: This release certificate.
-
-2. **Single-File Mobile Bundle (`CMPG122_Test1_StudyGuide.html`):**
-   - 682,397 bytes.
-   - Zero external dependencies; zero CORS; 100% offline functionality.
-   - Instant sharing via WhatsApp, email, or USB flash drive.
-
----
-*Signed off by Autonomous AI Application Release Auditor on September 9, 2026.*
+| Gate | Status | Verification Evidence |
+|---|---|---|
+| Curriculum | PASS | All 7 Study Units (`SU7`, `SU1`–`SU6`) verified in `audit_report.json` |
+| Learning content | PASS | 35 10-part topics verified for all required fields |
+| Question bank | PASS | 585 questions structurally & educationally audited (`0` failures, `0` duplicates) |
+| Exam weighting | PASS | `generateWeightedExam` verified across multiple seeds (`10/10/15/20/20/15/10 = 100`) |
+| Examinations | PASS | Full-length 100-mark simulations + pre-submit modal + unit/topic breakdown |
+| Past papers | PASS | 5 continuous single-sheet past papers (`100` / `90` exact mark sums) |
+| Custom quizzes | PASS | Unit, topic, difficulty, count/marks, timer, weighting & exclusion filters |
+| Code examples | PASS | Executed against `.NET 10.0` C# compiler harness + `CSharpEngine` sandbox |
+| Definitions | PASS | 82 definitions searchable with subtle inline links |
+| Navigation | PASS | Exact route, SU, question, selection, expanded `<details>`, and `scrollY` restored |
+| Keyboard | PASS | `A–E` select+submit, `1–5` select-only, `Enter` submit/advance, input-safe |
+| Mobile | PASS | `0px` horizontal overflow verified at `320×568`, `375×812`, `390×844`, `430×932` |
+| Tablet | PASS | Verified at `768×1024` and `1024×768` with slide-out drawers |
+| Laptop | PASS | Verified at `1280×800`, `1366×768`, `1440×900` |
+| Desktop | PASS | Verified at `1920×1080` with max-width workspace container |
+| Graphics | PASS | 100% vector SVG icons, rings, trend charts & 7 SU diagrams (`0` emojis) |
+| Symbols | PASS | Exact C# operators (`=`, `==`, `!=`, `&&`, `||`, `!`, `++`, `--`, `%`) |
+| Accessibility | PASS | Semantic landmarks, button labels, zoom enabled, contrast `16.3:1` Light / `17.7:1` Dark |
+| Persistence | PASS | IndexedDB + localStorage preferences, v2 migration, backup export/import |
+| Offline | PASS | Service Worker (`sw.js`) + `manifest.json` + standalone bundle verified offline |
+| Performance | PASS | Zero external runtime dependencies; `<150ms` headless unit suite |
+| Security | PASS | `0` admin/repo links in `index.html`; prototype-pollution/XSS-safe import & sandbox |
+| Tests | PASS | 13/13 Node unit/integration tests + Playwright Chrome & Edge E2E suites pass |
+| Build | PASS | `python module_app_cli.py build-mobile` verified on `file://` |
+| Audit | PASS | `python module_app_cli.py audit` passes with `0` failures |
+| Git | PASS | Clean commit & fast-forward release verification on `origin/main` |

@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-11-10T01:37:34.915Z",
+  "module": "CMPG122",
+  "version": "9.0.0",
+  "status": "PASS",
+  "summary": {
+    "totalStudyUnits": 7,
+    "totalStructuredTopics": 35,
+    "totalDefinitions": 82,
+    "totalQuestions": 585,
+    "totalPastExams": 5,
+    "totalCodeGradeScenarios": 15,
+    "totalSpotErrorScenarios": 24,
+    "totalCodeAuditScenarios": 6,
+    "weightedSimulationTotalMarks": 100,
+    "weightedSimulationByUnit": {
+      "SU6": 10,
+      "SU7": 10,
+      "SU5": 15,
+      "SU4": 20,
+      "SU3": 20,
+      "SU1": 10,
+      "SU2": 15
+    },
+    "mobileBundleBytes": 2001866,
+    "failureCount": 0,
+    "warningCount": 0
+  },
+  "distributions": {
+    "byStudyUnit": {
+      "SU7": 66,
+      "SU1": 88,
+      "SU2": 99,
+      "SU3": 94,
+      "SU4": 113,
+      "SU5": 75,
+      "SU6": 50
+    },
+    "byDifficulty": {
+      "Foundational": 167,
+      "Intermediate": 254,
+      "Advanced": 164
+    },
+    "byQuestionType": {
+      "concept-comparison": 91,
+      "hci-application": 26,
+      "application-scenario": 271,
+      "file-handling": 14,
+      "error-identification": 24,
+      "logic-problem": 29,
+      "syntax-selection": 20,
+      "input-validation": 24,
+      "code-output": 5,
+      "loop-execution": 23,
+      "method-execution": 11,
+      "multiform-behaviour": 21,
+      "code-tracing": 19,
+      "debugging": 7
+    }
+  },
+  "failures": [],
+  "warnings": []
+}
