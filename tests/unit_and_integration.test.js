@@ -1094,10 +1094,42 @@ describe('11. Multi-Variation C# Marking Engine, Virtual Interfaces & Interactiv
     assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTheory, 'Mutual exclusion').earnedMarks, qShortTheory.marks);
     assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTheory, 'So only one vehicle category can be selected at a time').earnedMarks, qShortTheory.marks);
 
-    // Numeric & currency equivalence (R 2,600.00 vs 2600 vs R2600.00)
+    // Numeric & currency equivalence (R 2,600.00 vs 2600 vs R2600.00 vs SA comma decimal R 2 600,00 vs trailing unit)
     assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTrace, 'R 2,600.00').earnedMarks, qShortTrace.marks);
     assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTrace, '2600').earnedMarks, qShortTrace.marks);
     assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTrace, 'R2600.00').earnedMarks, qShortTrace.marks);
+    assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTrace, 'R 2 600,00').earnedMarks, qShortTrace.marks);
+    assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTrace, '2600 rand').earnedMarks, qShortTrace.marks);
+
+    const qVatTrace = DATA.questions.find(q => q.id === 'q_su-exam_386');
+    assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qVatTrace, 'R 977,50').earnedMarks, qVatTrace.marks);
+
+    // Multi-part short-answer question (q_su-exam_363): "false" alone must score 4/8 partial credit, while "false and FormatException" scores 8/8
+    const qTryParseShort = DATA.questions.find(q => q.id === 'q_su-exam_363');
+    const partialShort = CSharpEngine.evaluateShortAnswerQuestion(qTryParseShort, 'false');
+    assert.equal(partialShort.earnedMarks, 4);
+    assert.equal(partialShort.isPartial, true);
+    const fullShort = CSharpEngine.evaluateShortAnswerQuestion(qTryParseShort, 'false and FormatException');
+    assert.equal(fullShort.earnedMarks, 8);
+    assert.equal(fullShort.isCorrect, true);
+
+    // Expression-only code-snippet exam questions must emit 0 false-positive CS1002 syntax errors
+    for (const qId of ['q_su-exam_392', 'q_su-exam_404', 'q_su-exam_416', 'q_su-exam_426', 'q_su-exam_389', 'q_su-exam_396', 'q_su-exam_403', 'q_su-exam_409', 'q_su-exam_425']) {
+      const qExpr = DATA.questions.find(q => q.id === qId);
+      const diags = CSharpEngine.analyzeDiagnostics(qExpr.modelSolution, qExpr);
+      assert.equal(diags.filter(d => d.severity === 'error').length, 0, `${qId} modelSolution should have 0 syntax errors, got ${JSON.stringify(diags)}`);
+    }
+
+    // String interpolation currency formatting on q_su-exam_358 and q_su-exam_407 must score full marks
+    const qCurr358 = DATA.questions.find(q => q.id === 'q_su-exam_358');
+    const qCurr407 = DATA.questions.find(q => q.id === 'q_su-exam_407');
+    assert.equal(CSharpEngine.evaluateCodingQuestion(qCurr358, 'lblTotalDue.Text = $"{totalDue:C}";').earnedMarks, qCurr358.marks);
+    assert.equal(CSharpEngine.evaluateCodingQuestion(qCurr407, 'lblTotalDue.Text = $"{total:C}";').earnedMarks, qCurr407.marks);
+
+    // Local shadow variable on q_su-exam_424 must be demoted from full marks
+    const qShadow424 = DATA.questions.find(q => q.id === 'q_su-exam_424');
+    assert.equal(CSharpEngine.evaluateCodingQuestion(qShadow424, '_currentCartTotal = 0m;').earnedMarks, qShadow424.marks);
+    assert.ok(CSharpEngine.evaluateCodingQuestion(qShadow424, 'decimal _currentCartTotal = 0m;').earnedMarks < qShadow424.marks);
 
     // Empty / wrong answer
     const emptyEval = CSharpEngine.evaluateShortAnswerQuestion(qShortTrace, '   ');

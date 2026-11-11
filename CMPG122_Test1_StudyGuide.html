@@ -2609,7 +2609,8 @@ button:disabled {
                 <select id="practiceFormatSelect" class="select-input" style="flex:1 1 150px;max-width:100%;min-width:0;">
                   <option value="all">All Formats (MCQ + C# Coding)</option>
                   <option value="mcq">Multiple-Choice Only</option>
-                  <option value="coding">Interactive C# Coding Only</option>
+                  <option value="coding">1:1 Direct Answer &amp; C# Coding Only</option>
+                  <option value="short-answer">Written / Short Answer</option>
                   <option value="code-cloze">Code Cloze (Fill-in-Blank)</option>
                   <option value="code-snippet">Short C# Snippet</option>
                   <option value="code-full">Full C# Programming</option>
@@ -2661,7 +2662,8 @@ button:disabled {
                 <select id="customFormatFilter" class="select-input">
                   <option value="all" selected>All Formats (MCQ + C# Coding)</option>
                   <option value="mcq">Multiple-Choice Only</option>
-                  <option value="coding">Interactive C# Coding Only</option>
+                  <option value="coding">1:1 Direct Answer &amp; C# Coding Only</option>
+                  <option value="short-answer">Written / Short Answer</option>
                   <option value="code-cloze">Code Cloze (Fill-in-Blank)</option>
                   <option value="code-snippet">Short C# Snippet</option>
                   <option value="code-full">Full C# Programming</option>
@@ -20322,7 +20324,8 @@ button:disabled {
           "id": "blank_1",
           "expected": "txtDays",
           "alternatives": [
-            "\"txtDays\""
+            "\"txtDays\"",
+            "txtRentalDays"
           ],
           "marks": 2,
           "hint": "Control Name"
@@ -20488,7 +20491,7 @@ button:disabled {
           "criterion": "Multiplies days by 150m",
           "marks": 3,
           "patterns": [
-            "days\\s*\\*\\s*150m?|150m?\\s*\\*\\s*days"
+            "days\\s*\\*\\s*150(?:\\.0+)?m?|150(?:\\.0+)?m?\\s*\\*\\s*days"
           ]
         }
       ]
@@ -20592,7 +20595,7 @@ button:disabled {
           "criterion": "Adds days * 80m to total",
           "marks": 3,
           "patterns": [
-            "total\\s*(?:\\+=|=\\s*total\\s*\\+)\\s*\\(?days\\s*\\*\\s*80m?"
+            "total\\s*(?:\\+=|=\\s*total\\s*\\+)\\s*\\(?(?:days\\s*\\*\\s*80(?:\\.0+)?m?|80(?:\\.0+)?m?\\s*\\*\\s*days)"
           ]
         }
       ]
@@ -20627,7 +20630,10 @@ button:disabled {
       "modelSolution": "lblTotalDue.Text = totalDue.ToString(\"C\");",
       "acceptedAlternatives": [
         "lblTotalDue.Text = totalDue.ToString(\"C2\");",
-        "lblTotalDue.Text = totalDue.ToString(\"c\");"
+        "lblTotalDue.Text = totalDue.ToString(\"c\");",
+        "lblTotalDue.Text = $\"{totalDue:C}\";",
+        "lblTotalDue.Text = $\"{totalDue:C2}\";",
+        "lblTotalDue.Text = string.Format(\"{0:C}\", totalDue);"
       ],
       "controls": [
         "lblTotalDue"
@@ -20646,7 +20652,7 @@ button:disabled {
           "criterion": "Formats totalDue using .ToString(\"C\")",
           "marks": 3,
           "patterns": [
-            "totalDue\\.ToString\\s*\\(\\s*[\"']C2?[\"']\\s*\\)"
+            "totalDue(?:\\.ToString\\s*\\(\\s*[\"']C2?[\"']\\s*\\)|:C2?)|string\\.Format\\s*\\(\\s*[\"']\\{0:C2?\\}[\"']\\s*,\\s*totalDue\\s*\\)"
           ]
         }
       ]
@@ -20765,7 +20771,7 @@ button:disabled {
           "criterion": "Clears lblTotalDue, lstReceipt.Items.Clear(), and calls txtDays.Focus()",
           "marks": 2,
           "patterns": [
-            "lstReceipt\\.Items\\.Clear\\s*\\(\\)[\\s\\S]*txtDays\\.Focus\\s*\\(\\)"
+            "(?=[\\s\\S]*lstReceipt\\.Items\\.Clear\\s*\\(\\))(?=[\\s\\S]*txtDays\\.Focus\\s*\\(\\))"
           ]
         }
       ]
@@ -20915,7 +20921,7 @@ button:disabled {
         "Returns false, preventing an unhandled FormatException",
         "false, FormatException",
         "false; prevents FormatException",
-        "false"
+        "false and FormatException"
       ],
       "rubric": [
         {
@@ -21119,7 +21125,9 @@ button:disabled {
       "modelSolution": "txtCredits",
       "expectedAnswer": "txtCredits",
       "acceptedAnswers": [
-        "txtCredits"
+        "txtCredits",
+        "txtCredit",
+        "txtCreditCount"
       ],
       "rubric": [
         {
@@ -21127,7 +21135,7 @@ button:disabled {
           "criterion": "Uses txt prefix with PascalCase identifier txtCredits",
           "marks": 4,
           "patterns": [
-            "^\\s*txtCredits\\s*$"
+            "^\\s*txtCredits?(?:Count)?\\s*$"
           ]
         }
       ]
@@ -21224,7 +21232,7 @@ button:disabled {
           "criterion": "Tests rdoScience.Checked and assigns 2500m",
           "marks": 2,
           "patterns": [
-            "rdoScience\\.Checked[\\s\\S]*2500m?"
+            "rdoScience\\.Checked[\\s\\S]*2_?500(?:\\.0+)?m?"
           ]
         },
         {
@@ -21232,7 +21240,7 @@ button:disabled {
           "criterion": "Tests else if (rdoCommerce.Checked) and assigns 1000m",
           "marks": 2,
           "patterns": [
-            "else\\s+if\\s*\\(\\s*rdoCommerce\\.Checked[\\s\\S]*1000m?"
+            "else\\s+if\\s*\\(\\s*rdoCommerce\\.Checked[\\s\\S]*1_?000(?:\\.0+)?m?"
           ]
         },
         {
@@ -21240,7 +21248,7 @@ button:disabled {
           "criterion": "Assigns 500m for Humanities in else branch",
           "marks": 2,
           "patterns": [
-            "else[\\s\\S]*500m?"
+            "else[\\s\\S]*500(?:\\.0+)?m?"
           ]
         }
       ]
@@ -21493,7 +21501,7 @@ button:disabled {
           "criterion": "Checks out-of-range condition (credits < 1 || credits > 25)",
           "marks": 2,
           "patterns": [
-            "credits\\s*<\\s*1\\s*\\|\\|\\s*credits\\s*>\\s*25"
+            "credits\\s*(?:<\\s*1|<=\\s*0)\\s*\\|\\|\\s*credits\\s*(?:>\\s*25|>=\\s*26)|credits\\s*(?:>\\s*25|>=\\s*26)\\s*\\|\\|\\s*credits\\s*(?:<\\s*1|<=\\s*0)|!\\s*\\(\\s*credits\\s*>=\\s*1\\s*&&\\s*credits\\s*<=\\s*25\\s*\\)"
           ]
         },
         {
@@ -21501,7 +21509,7 @@ button:disabled {
           "criterion": "Displays error MessageBox and calls txtCredits.Focus()",
           "marks": 2,
           "patterns": [
-            "MessageBox\\.Show[\\s\\S]*txtCredits\\.Focus\\s*\\(\\s*\\)"
+            "(?=[\\s\\S]*MessageBox\\.Show)(?=[\\s\\S]*txtCredits\\.Focus\\s*\\(\\s*\\))"
           ]
         },
         {
@@ -22681,7 +22689,9 @@ button:disabled {
       "modelSolution": "txtNights",
       "expectedAnswer": "txtNights",
       "acceptedAnswers": [
-        "txtNights"
+        "txtNights",
+        "txtBookingNights",
+        "txtNumNights"
       ],
       "rubric": [
         {
@@ -22689,7 +22699,7 @@ button:disabled {
           "criterion": "Identifies txtNights",
           "marks": 4,
           "patterns": [
-            "^\\s*txtNights\\s*$"
+            "^\\s*txt(?:Booking|Num)?Nights?\\s*$"
           ]
         }
       ]
@@ -22886,7 +22896,7 @@ button:disabled {
           "criterion": "Checks lower bound nights >= 1",
           "marks": 2.5,
           "patterns": [
-            "nights\\s*(?:>=\\s*1|>\\s*0)"
+            "nights\\s*(?:>=\\s*1|>\\s*0)|1\\s*<=\\s*nights|0\\s*<\\s*nights"
           ]
         },
         {
@@ -22894,7 +22904,7 @@ button:disabled {
           "criterion": "Checks upper bound && nights <= 30",
           "marks": 2.5,
           "patterns": [
-            "&&\\s*nights\\s*(?:<=\\s*30|<\\s*31)"
+            "&&[\\s\\S]*(?:nights\\s*(?:<=\\s*30|<\\s*31)|30\\s*>=\\s*nights)"
           ]
         }
       ]
@@ -23076,7 +23086,10 @@ button:disabled {
       "modelSolution": "lblTotalDue.Text = total.ToString(\"C\");",
       "acceptedAlternatives": [
         "lblTotalDue.Text = total.ToString(\"C2\");",
-        "lblTotalDue.Text = total.ToString(\"c\");"
+        "lblTotalDue.Text = total.ToString(\"c\");",
+        "lblTotalDue.Text = $\"{total:C}\";",
+        "lblTotalDue.Text = $\"{total:C2}\";",
+        "lblTotalDue.Text = string.Format(\"{0:C}\", total);"
       ],
       "controls": [
         "lblTotalDue"
@@ -23095,7 +23108,7 @@ button:disabled {
           "criterion": "Formats total with .ToString(\"C\")",
           "marks": 3,
           "patterns": [
-            "total\\.ToString\\s*\\(\\s*[\"']C2?[\"']\\s*\\)"
+            "total(?:\\.ToString\\s*\\(\\s*[\"']C2?[\"']\\s*\\)|:C2?)|string\\.Format\\s*\\(\\s*[\"']\\{0:C2?\\}[\"']\\s*,\\s*total\\s*\\)"
           ]
         }
       ]
@@ -23448,7 +23461,8 @@ button:disabled {
       "expectedAnswer": "txtPrice",
       "acceptedAnswers": [
         "txtPrice",
-        "txtUnitPrice"
+        "txtUnitPrice",
+        "txtItemPrice"
       ],
       "rubric": [
         {
@@ -23456,7 +23470,7 @@ button:disabled {
           "criterion": "Identifies txtPrice",
           "marks": 4,
           "patterns": [
-            "^\\s*txt(?:Unit)?Price\\s*$"
+            "^\\s*txt(?:Unit|Item)?Price\\s*$"
           ]
         }
       ]
@@ -23611,7 +23625,7 @@ button:disabled {
           "criterion": "Calculates discount = subtotal * 0.15m",
           "marks": 3,
           "patterns": [
-            "discount\\s*=\\s*subtotal\\s*\\*\\s*0\\.15m?"
+            "discount\\s*=\\s*(?:subtotal\\s*\\*\\s*0\\.15m?|0\\.15m?\\s*\\*\\s*subtotal)"
           ]
         }
       ]
@@ -23646,7 +23660,8 @@ button:disabled {
       "modelSolution": "int points = (int)(netTotal / 50m);",
       "acceptedAlternatives": [
         "points = (int)(netTotal / 50m);",
-        "int points = (int)(netTotal / 50);"
+        "int points = (int)(netTotal / 50);",
+        "int points = (int)(netTotal / 50.00m);"
       ],
       "rubric": [
         {
@@ -23654,7 +23669,7 @@ button:disabled {
           "criterion": "Divides netTotal by 50m",
           "marks": 3,
           "patterns": [
-            "netTotal\\s*/\\s*50m?"
+            "netTotal\\s*/\\s*50(?:\\.0+)?m?"
           ]
         },
         {
@@ -23808,7 +23823,7 @@ button:disabled {
           "criterion": "Initializes field to 0m;",
           "marks": 3,
           "patterns": [
-            "=\\s*0m?\\s*;"
+            "=\\s*0(?:\\.0+)?m?\\s*;"
           ]
         }
       ]
@@ -23892,7 +23907,7 @@ button:disabled {
           "criterion": "Reassigns _currentCartTotal = 0m; without redeclaring type",
           "marks": 6,
           "patterns": [
-            "_currentCartTotal\\s*=\\s*0m?\\s*;"
+            "(?:this\\.)?_currentCartTotal\\s*=\\s*0(?:\\.0+)?m?\\s*;"
           ],
           "forbiddenPattern": "\\bdecimal\\s+_currentCartTotal"
         }
@@ -24077,7 +24092,7 @@ button:disabled {
           "criterion": "Deducts 5% (subtotal * 0.95m or subtotal - subtotal * 0.05m)",
           "marks": 4,
           "patterns": [
-            "subtotal\\s*\\*\\s*0\\.95m?|subtotal\\s*-\\s*\\(?\\s*subtotal\\s*\\*\\s*0\\.05m?"
+            "subtotal\\s*\\*\\s*0\\.95m?|0\\.95m?\\s*\\*\\s*subtotal|subtotal\\s*-\\s*\\(?\\s*(?:subtotal\\s*\\*\\s*0\\.05m?|0\\.05m?\\s*\\*\\s*subtotal)"
           ]
         }
       ]
@@ -36704,6 +36719,17 @@ button:disabled {
           if (/^(?:public\s+|private\s+|protected\s+|internal\s+)?(?:static\s+|override\s+|virtual\s+)?(?:void|[a-zA-Z0-9_<>\[\]]+)\s+[a-zA-Z0-9_]+\s*\([^)]*\)$/.test(clean)) {
             return;
           }
+          // Allow single-line C# expression/condition snippets (e.g., TryParse expressions, boolean conditions, .ToString() expressions, or enum/property settings)
+          const nonEmptyCount = lines.filter(l => stripSingleLineCommentSafe(l).trim().length > 0).length;
+          if (nonEmptyCount === 1 && !/[{}]/.test(clean)) {
+            const isSingleExpr =
+              /(?:&&|\|\||==|!=|<=|>=|^!|\bTryParse\s*\(|\bIsNullOr(?:WhiteSpace|Empty)\s*\()/i.test(clean) ||
+              /\.ToString\s*\([^)]*\)$/.test(clean) ||
+              /^(?:(?:this\.)?[A-Z][A-Za-z0-9_]*\s*=\s*)?[A-Z][A-Za-z0-9_]*\.[A-Z][A-Za-z0-9_]*$/.test(clean);
+            if (isSingleExpr) {
+              return;
+            }
+          }
           diagnostics.push({
             code: 'CS1002',
             severity: 'error',
@@ -39159,17 +39185,33 @@ button:disabled {
       .replace(/\s+/g, ' ');
   }
 
+  function parseFlexibleNumberToken(token) {
+    let s = String(token || '').trim();
+    if (!s) return null;
+    s = s
+      .replace(/^(?:ZAR|R)\s*/i, '')
+      .replace(/\s*(?:rand|rands|zar|surcharge|total|installments?|items?|units?|credits?|nights?|days?|km|kms|m)\s*$/i, '')
+      .trim();
+    // Convert decimal comma at end (e.g., 2600,00 or 2 600,50 or 977,5) into decimal point
+    s = s.replace(/,(\d{1,2})$/, '.$1');
+    // Remove thousands commas (e.g., 2,600 or 10,200.00) and spaces
+    s = s.replace(/,(?=\d{3}(?:\D|$))/g, '').replace(/\s+/g, '');
+    if (/^-?\d+(?:\.\d+)?$/.test(s)) {
+      const n = Number(s);
+      return Number.isNaN(n) ? null : n;
+    }
+    return null;
+  }
+
   function normalizeShortNumeric(s) {
     const raw = String(s || '').trim();
     if (!raw) return null;
-    const cleaned = raw.replace(/^[rR]\s*/, '').replace(/,/g, '').replace(/\s+/g, '');
-    if (/^-?\d+(\.\d+)?$/.test(cleaned)) {
-      return Number(cleaned);
-    }
-    const eqMatch = raw.match(/=\s*[rR]?\s*(-?\d[\d,]*(?:\.\d+)?)\s*$/);
-    if (eqMatch) {
-      const numStr = eqMatch[1].replace(/,/g, '');
-      if (!Number.isNaN(Number(numStr))) return Number(numStr);
+    const direct = parseFlexibleNumberToken(raw);
+    if (direct !== null) return direct;
+    const eqIdx = raw.lastIndexOf('=');
+    if (eqIdx !== -1) {
+      const rhs = parseFlexibleNumberToken(raw.slice(eqIdx + 1));
+      if (rhs !== null) return rhs;
     }
     return null;
   }
@@ -42917,6 +42959,7 @@ button:disabled {
         randomize: false
       });
       const formatLabel = format === 'coding' ? ' (Interactive C# Coding)'
+        : format === 'short-answer' ? ' (Written Short Answer)'
         : format === 'code-cloze' ? ' (Code Cloze)'
         : format === 'code-snippet' ? ' (Short C# Snippets)'
         : format === 'code-full' ? ' (Full C# Programming)'
@@ -43130,7 +43173,7 @@ button:disabled {
       if (!q) return;
       const qState = this.homeSession.getQuestionState(q.id);
       const isGraded = qState && qState.status === 'submitted';
-      const canSubmit = qState && typeof qState.selectedAnswer === 'number' && !isGraded;
+      const canSubmit = Boolean(qState && !isGraded && ExamMod.hasQuestionResponse(q, qState));
 
       host.innerHTML = `
         <div class="section-bar" style="margin-bottom:0.75rem;">
@@ -45032,13 +45075,16 @@ button:disabled {
       const visibleTests = (evalRes && Array.isArray(evalRes.testResults))
         ? evalRes.testResults.filter(t => !t.hidden)
         : [];
+      const rubricChecks = (evalRes && Array.isArray(evalRes.rubricResults))
+        ? evalRes.rubricResults
+        : [];
 
       box.classList.remove('hidden');
-      box.innerHTML = `
-        <div class="sandbox-out-header">
-          <strong>Simulated WinForms Execution (${visibleTests.filter(t => t.passed).length}/${visibleTests.length} Sample Tests Passed)</strong>
-        </div>
-        ${visibleTests.length > 0 ? `
+      if (visibleTests.length > 0) {
+        box.innerHTML = `
+          <div class="sandbox-out-header">
+            <strong>Simulated WinForms Execution (${visibleTests.filter(t => t.passed).length}/${visibleTests.length} Sample Tests Passed)</strong>
+          </div>
           <div class="table-responsive-wrap" style="margin-top:0.4rem;">
             <table class="memo-rubric-table">
               <thead><tr><th>Sample Case</th><th>Expected</th><th>Actual</th><th>Status</th></tr></thead>
@@ -45052,8 +45098,33 @@ button:disabled {
               </tbody>
             </table>
           </div>
-        ` : `<div style="font-size:0.82rem;color:var(--text-secondary);">Code executed cleanly inside the virtual WinForms sandbox.</div>`}
-      `;
+        `;
+      } else if (rubricChecks.length > 0) {
+        const passedCount = rubricChecks.filter(r => r.status === 'passed').length;
+        box.innerHTML = `
+          <div class="sandbox-out-header">
+            <strong>Simulated WinForms &amp; Statement Verification (${passedCount}/${rubricChecks.length} Checkpoints Passed)</strong>
+          </div>
+          <div class="table-responsive-wrap" style="margin-top:0.4rem;">
+            <table class="memo-rubric-table">
+              <thead><tr><th>Verification Checkpoint</th><th>Status</th></tr></thead>
+              <tbody>
+                ${rubricChecks.map(rc => `<tr>
+                  <td>${esc(rc.criterion)}</td>
+                  <td><span class="rubric-status-pill ${rc.status === 'passed' ? 'rubric-status-pass' : (rc.status === 'partial' ? 'rubric-status-partial' : 'rubric-status-fail')}">${rc.status === 'passed' ? 'Pass' : (rc.status === 'partial' ? 'Partial' : 'Fail')}</span></td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      } else {
+        box.innerHTML = `
+          <div class="sandbox-out-header">
+            <strong>Simulated WinForms Execution</strong>
+          </div>
+          <div style="font-size:0.82rem;color:var(--text-secondary);">Code executed cleanly inside the virtual WinForms sandbox.</div>
+        `;
+      }
     }
 
     _resetInteractiveCodingQuestion(questionId) {

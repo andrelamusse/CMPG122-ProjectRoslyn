@@ -702,6 +702,17 @@
           if (/^(?:public\s+|private\s+|protected\s+|internal\s+)?(?:static\s+|override\s+|virtual\s+)?(?:void|[a-zA-Z0-9_<>\[\]]+)\s+[a-zA-Z0-9_]+\s*\([^)]*\)$/.test(clean)) {
             return;
           }
+          // Allow single-line C# expression/condition snippets (e.g., TryParse expressions, boolean conditions, .ToString() expressions, or enum/property settings)
+          const nonEmptyCount = lines.filter(l => stripSingleLineCommentSafe(l).trim().length > 0).length;
+          if (nonEmptyCount === 1 && !/[{}]/.test(clean)) {
+            const isSingleExpr =
+              /(?:&&|\|\||==|!=|<=|>=|^!|\bTryParse\s*\(|\bIsNullOr(?:WhiteSpace|Empty)\s*\()/i.test(clean) ||
+              /\.ToString\s*\([^)]*\)$/.test(clean) ||
+              /^(?:(?:this\.)?[A-Z][A-Za-z0-9_]*\s*=\s*)?[A-Z][A-Za-z0-9_]*\.[A-Z][A-Za-z0-9_]*$/.test(clean);
+            if (isSingleExpr) {
+              return;
+            }
+          }
           diagnostics.push({
             code: 'CS1002',
             severity: 'error',
@@ -3157,17 +3168,33 @@
       .replace(/\s+/g, ' ');
   }
 
+  function parseFlexibleNumberToken(token) {
+    let s = String(token || '').trim();
+    if (!s) return null;
+    s = s
+      .replace(/^(?:ZAR|R)\s*/i, '')
+      .replace(/\s*(?:rand|rands|zar|surcharge|total|installments?|items?|units?|credits?|nights?|days?|km|kms|m)\s*$/i, '')
+      .trim();
+    // Convert decimal comma at end (e.g., 2600,00 or 2 600,50 or 977,5) into decimal point
+    s = s.replace(/,(\d{1,2})$/, '.$1');
+    // Remove thousands commas (e.g., 2,600 or 10,200.00) and spaces
+    s = s.replace(/,(?=\d{3}(?:\D|$))/g, '').replace(/\s+/g, '');
+    if (/^-?\d+(?:\.\d+)?$/.test(s)) {
+      const n = Number(s);
+      return Number.isNaN(n) ? null : n;
+    }
+    return null;
+  }
+
   function normalizeShortNumeric(s) {
     const raw = String(s || '').trim();
     if (!raw) return null;
-    const cleaned = raw.replace(/^[rR]\s*/, '').replace(/,/g, '').replace(/\s+/g, '');
-    if (/^-?\d+(\.\d+)?$/.test(cleaned)) {
-      return Number(cleaned);
-    }
-    const eqMatch = raw.match(/=\s*[rR]?\s*(-?\d[\d,]*(?:\.\d+)?)\s*$/);
-    if (eqMatch) {
-      const numStr = eqMatch[1].replace(/,/g, '');
-      if (!Number.isNaN(Number(numStr))) return Number(numStr);
+    const direct = parseFlexibleNumberToken(raw);
+    if (direct !== null) return direct;
+    const eqIdx = raw.lastIndexOf('=');
+    if (eqIdx !== -1) {
+      const rhs = parseFlexibleNumberToken(raw.slice(eqIdx + 1));
+      if (rhs !== null) return rhs;
     }
     return null;
   }

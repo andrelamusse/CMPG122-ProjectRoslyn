@@ -15266,7 +15266,8 @@
           "id": "blank_1",
           "expected": "txtDays",
           "alternatives": [
-            "\"txtDays\""
+            "\"txtDays\"",
+            "txtRentalDays"
           ],
           "marks": 2,
           "hint": "Control Name"
@@ -15432,7 +15433,7 @@
           "criterion": "Multiplies days by 150m",
           "marks": 3,
           "patterns": [
-            "days\\s*\\*\\s*150m?|150m?\\s*\\*\\s*days"
+            "days\\s*\\*\\s*150(?:\\.0+)?m?|150(?:\\.0+)?m?\\s*\\*\\s*days"
           ]
         }
       ]
@@ -15536,7 +15537,7 @@
           "criterion": "Adds days * 80m to total",
           "marks": 3,
           "patterns": [
-            "total\\s*(?:\\+=|=\\s*total\\s*\\+)\\s*\\(?days\\s*\\*\\s*80m?"
+            "total\\s*(?:\\+=|=\\s*total\\s*\\+)\\s*\\(?(?:days\\s*\\*\\s*80(?:\\.0+)?m?|80(?:\\.0+)?m?\\s*\\*\\s*days)"
           ]
         }
       ]
@@ -15571,7 +15572,10 @@
       "modelSolution": "lblTotalDue.Text = totalDue.ToString(\"C\");",
       "acceptedAlternatives": [
         "lblTotalDue.Text = totalDue.ToString(\"C2\");",
-        "lblTotalDue.Text = totalDue.ToString(\"c\");"
+        "lblTotalDue.Text = totalDue.ToString(\"c\");",
+        "lblTotalDue.Text = $\"{totalDue:C}\";",
+        "lblTotalDue.Text = $\"{totalDue:C2}\";",
+        "lblTotalDue.Text = string.Format(\"{0:C}\", totalDue);"
       ],
       "controls": [
         "lblTotalDue"
@@ -15590,7 +15594,7 @@
           "criterion": "Formats totalDue using .ToString(\"C\")",
           "marks": 3,
           "patterns": [
-            "totalDue\\.ToString\\s*\\(\\s*[\"']C2?[\"']\\s*\\)"
+            "totalDue(?:\\.ToString\\s*\\(\\s*[\"']C2?[\"']\\s*\\)|:C2?)|string\\.Format\\s*\\(\\s*[\"']\\{0:C2?\\}[\"']\\s*,\\s*totalDue\\s*\\)"
           ]
         }
       ]
@@ -15709,7 +15713,7 @@
           "criterion": "Clears lblTotalDue, lstReceipt.Items.Clear(), and calls txtDays.Focus()",
           "marks": 2,
           "patterns": [
-            "lstReceipt\\.Items\\.Clear\\s*\\(\\)[\\s\\S]*txtDays\\.Focus\\s*\\(\\)"
+            "(?=[\\s\\S]*lstReceipt\\.Items\\.Clear\\s*\\(\\))(?=[\\s\\S]*txtDays\\.Focus\\s*\\(\\))"
           ]
         }
       ]
@@ -15859,7 +15863,7 @@
         "Returns false, preventing an unhandled FormatException",
         "false, FormatException",
         "false; prevents FormatException",
-        "false"
+        "false and FormatException"
       ],
       "rubric": [
         {
@@ -16063,7 +16067,9 @@
       "modelSolution": "txtCredits",
       "expectedAnswer": "txtCredits",
       "acceptedAnswers": [
-        "txtCredits"
+        "txtCredits",
+        "txtCredit",
+        "txtCreditCount"
       ],
       "rubric": [
         {
@@ -16071,7 +16077,7 @@
           "criterion": "Uses txt prefix with PascalCase identifier txtCredits",
           "marks": 4,
           "patterns": [
-            "^\\s*txtCredits\\s*$"
+            "^\\s*txtCredits?(?:Count)?\\s*$"
           ]
         }
       ]
@@ -16168,7 +16174,7 @@
           "criterion": "Tests rdoScience.Checked and assigns 2500m",
           "marks": 2,
           "patterns": [
-            "rdoScience\\.Checked[\\s\\S]*2500m?"
+            "rdoScience\\.Checked[\\s\\S]*2_?500(?:\\.0+)?m?"
           ]
         },
         {
@@ -16176,7 +16182,7 @@
           "criterion": "Tests else if (rdoCommerce.Checked) and assigns 1000m",
           "marks": 2,
           "patterns": [
-            "else\\s+if\\s*\\(\\s*rdoCommerce\\.Checked[\\s\\S]*1000m?"
+            "else\\s+if\\s*\\(\\s*rdoCommerce\\.Checked[\\s\\S]*1_?000(?:\\.0+)?m?"
           ]
         },
         {
@@ -16184,7 +16190,7 @@
           "criterion": "Assigns 500m for Humanities in else branch",
           "marks": 2,
           "patterns": [
-            "else[\\s\\S]*500m?"
+            "else[\\s\\S]*500(?:\\.0+)?m?"
           ]
         }
       ]
@@ -16437,7 +16443,7 @@
           "criterion": "Checks out-of-range condition (credits < 1 || credits > 25)",
           "marks": 2,
           "patterns": [
-            "credits\\s*<\\s*1\\s*\\|\\|\\s*credits\\s*>\\s*25"
+            "credits\\s*(?:<\\s*1|<=\\s*0)\\s*\\|\\|\\s*credits\\s*(?:>\\s*25|>=\\s*26)|credits\\s*(?:>\\s*25|>=\\s*26)\\s*\\|\\|\\s*credits\\s*(?:<\\s*1|<=\\s*0)|!\\s*\\(\\s*credits\\s*>=\\s*1\\s*&&\\s*credits\\s*<=\\s*25\\s*\\)"
           ]
         },
         {
@@ -16445,7 +16451,7 @@
           "criterion": "Displays error MessageBox and calls txtCredits.Focus()",
           "marks": 2,
           "patterns": [
-            "MessageBox\\.Show[\\s\\S]*txtCredits\\.Focus\\s*\\(\\s*\\)"
+            "(?=[\\s\\S]*MessageBox\\.Show)(?=[\\s\\S]*txtCredits\\.Focus\\s*\\(\\s*\\))"
           ]
         },
         {
@@ -17625,7 +17631,9 @@
       "modelSolution": "txtNights",
       "expectedAnswer": "txtNights",
       "acceptedAnswers": [
-        "txtNights"
+        "txtNights",
+        "txtBookingNights",
+        "txtNumNights"
       ],
       "rubric": [
         {
@@ -17633,7 +17641,7 @@
           "criterion": "Identifies txtNights",
           "marks": 4,
           "patterns": [
-            "^\\s*txtNights\\s*$"
+            "^\\s*txt(?:Booking|Num)?Nights?\\s*$"
           ]
         }
       ]
@@ -17830,7 +17838,7 @@
           "criterion": "Checks lower bound nights >= 1",
           "marks": 2.5,
           "patterns": [
-            "nights\\s*(?:>=\\s*1|>\\s*0)"
+            "nights\\s*(?:>=\\s*1|>\\s*0)|1\\s*<=\\s*nights|0\\s*<\\s*nights"
           ]
         },
         {
@@ -17838,7 +17846,7 @@
           "criterion": "Checks upper bound && nights <= 30",
           "marks": 2.5,
           "patterns": [
-            "&&\\s*nights\\s*(?:<=\\s*30|<\\s*31)"
+            "&&[\\s\\S]*(?:nights\\s*(?:<=\\s*30|<\\s*31)|30\\s*>=\\s*nights)"
           ]
         }
       ]
@@ -18020,7 +18028,10 @@
       "modelSolution": "lblTotalDue.Text = total.ToString(\"C\");",
       "acceptedAlternatives": [
         "lblTotalDue.Text = total.ToString(\"C2\");",
-        "lblTotalDue.Text = total.ToString(\"c\");"
+        "lblTotalDue.Text = total.ToString(\"c\");",
+        "lblTotalDue.Text = $\"{total:C}\";",
+        "lblTotalDue.Text = $\"{total:C2}\";",
+        "lblTotalDue.Text = string.Format(\"{0:C}\", total);"
       ],
       "controls": [
         "lblTotalDue"
@@ -18039,7 +18050,7 @@
           "criterion": "Formats total with .ToString(\"C\")",
           "marks": 3,
           "patterns": [
-            "total\\.ToString\\s*\\(\\s*[\"']C2?[\"']\\s*\\)"
+            "total(?:\\.ToString\\s*\\(\\s*[\"']C2?[\"']\\s*\\)|:C2?)|string\\.Format\\s*\\(\\s*[\"']\\{0:C2?\\}[\"']\\s*,\\s*total\\s*\\)"
           ]
         }
       ]
@@ -18392,7 +18403,8 @@
       "expectedAnswer": "txtPrice",
       "acceptedAnswers": [
         "txtPrice",
-        "txtUnitPrice"
+        "txtUnitPrice",
+        "txtItemPrice"
       ],
       "rubric": [
         {
@@ -18400,7 +18412,7 @@
           "criterion": "Identifies txtPrice",
           "marks": 4,
           "patterns": [
-            "^\\s*txt(?:Unit)?Price\\s*$"
+            "^\\s*txt(?:Unit|Item)?Price\\s*$"
           ]
         }
       ]
@@ -18555,7 +18567,7 @@
           "criterion": "Calculates discount = subtotal * 0.15m",
           "marks": 3,
           "patterns": [
-            "discount\\s*=\\s*subtotal\\s*\\*\\s*0\\.15m?"
+            "discount\\s*=\\s*(?:subtotal\\s*\\*\\s*0\\.15m?|0\\.15m?\\s*\\*\\s*subtotal)"
           ]
         }
       ]
@@ -18590,7 +18602,8 @@
       "modelSolution": "int points = (int)(netTotal / 50m);",
       "acceptedAlternatives": [
         "points = (int)(netTotal / 50m);",
-        "int points = (int)(netTotal / 50);"
+        "int points = (int)(netTotal / 50);",
+        "int points = (int)(netTotal / 50.00m);"
       ],
       "rubric": [
         {
@@ -18598,7 +18611,7 @@
           "criterion": "Divides netTotal by 50m",
           "marks": 3,
           "patterns": [
-            "netTotal\\s*/\\s*50m?"
+            "netTotal\\s*/\\s*50(?:\\.0+)?m?"
           ]
         },
         {
@@ -18752,7 +18765,7 @@
           "criterion": "Initializes field to 0m;",
           "marks": 3,
           "patterns": [
-            "=\\s*0m?\\s*;"
+            "=\\s*0(?:\\.0+)?m?\\s*;"
           ]
         }
       ]
@@ -18836,7 +18849,7 @@
           "criterion": "Reassigns _currentCartTotal = 0m; without redeclaring type",
           "marks": 6,
           "patterns": [
-            "_currentCartTotal\\s*=\\s*0m?\\s*;"
+            "(?:this\\.)?_currentCartTotal\\s*=\\s*0(?:\\.0+)?m?\\s*;"
           ],
           "forbiddenPattern": "\\bdecimal\\s+_currentCartTotal"
         }
@@ -19021,7 +19034,7 @@
           "criterion": "Deducts 5% (subtotal * 0.95m or subtotal - subtotal * 0.05m)",
           "marks": 4,
           "patterns": [
-            "subtotal\\s*\\*\\s*0\\.95m?|subtotal\\s*-\\s*\\(?\\s*subtotal\\s*\\*\\s*0\\.05m?"
+            "subtotal\\s*\\*\\s*0\\.95m?|0\\.95m?\\s*\\*\\s*subtotal|subtotal\\s*-\\s*\\(?\\s*(?:subtotal\\s*\\*\\s*0\\.05m?|0\\.05m?\\s*\\*\\s*subtotal)"
           ]
         }
       ]

@@ -191,6 +191,7 @@
         randomize: false
       });
       const formatLabel = format === 'coding' ? ' (Interactive C# Coding)'
+        : format === 'short-answer' ? ' (Written Short Answer)'
         : format === 'code-cloze' ? ' (Code Cloze)'
         : format === 'code-snippet' ? ' (Short C# Snippets)'
         : format === 'code-full' ? ' (Full C# Programming)'
@@ -404,7 +405,7 @@
       if (!q) return;
       const qState = this.homeSession.getQuestionState(q.id);
       const isGraded = qState && qState.status === 'submitted';
-      const canSubmit = qState && typeof qState.selectedAnswer === 'number' && !isGraded;
+      const canSubmit = Boolean(qState && !isGraded && ExamMod.hasQuestionResponse(q, qState));
 
       host.innerHTML = `
         <div class="section-bar" style="margin-bottom:0.75rem;">
@@ -2306,13 +2307,16 @@
       const visibleTests = (evalRes && Array.isArray(evalRes.testResults))
         ? evalRes.testResults.filter(t => !t.hidden)
         : [];
+      const rubricChecks = (evalRes && Array.isArray(evalRes.rubricResults))
+        ? evalRes.rubricResults
+        : [];
 
       box.classList.remove('hidden');
-      box.innerHTML = `
-        <div class="sandbox-out-header">
-          <strong>Simulated WinForms Execution (${visibleTests.filter(t => t.passed).length}/${visibleTests.length} Sample Tests Passed)</strong>
-        </div>
-        ${visibleTests.length > 0 ? `
+      if (visibleTests.length > 0) {
+        box.innerHTML = `
+          <div class="sandbox-out-header">
+            <strong>Simulated WinForms Execution (${visibleTests.filter(t => t.passed).length}/${visibleTests.length} Sample Tests Passed)</strong>
+          </div>
           <div class="table-responsive-wrap" style="margin-top:0.4rem;">
             <table class="memo-rubric-table">
               <thead><tr><th>Sample Case</th><th>Expected</th><th>Actual</th><th>Status</th></tr></thead>
@@ -2326,8 +2330,33 @@
               </tbody>
             </table>
           </div>
-        ` : `<div style="font-size:0.82rem;color:var(--text-secondary);">Code executed cleanly inside the virtual WinForms sandbox.</div>`}
-      `;
+        `;
+      } else if (rubricChecks.length > 0) {
+        const passedCount = rubricChecks.filter(r => r.status === 'passed').length;
+        box.innerHTML = `
+          <div class="sandbox-out-header">
+            <strong>Simulated WinForms &amp; Statement Verification (${passedCount}/${rubricChecks.length} Checkpoints Passed)</strong>
+          </div>
+          <div class="table-responsive-wrap" style="margin-top:0.4rem;">
+            <table class="memo-rubric-table">
+              <thead><tr><th>Verification Checkpoint</th><th>Status</th></tr></thead>
+              <tbody>
+                ${rubricChecks.map(rc => `<tr>
+                  <td>${esc(rc.criterion)}</td>
+                  <td><span class="rubric-status-pill ${rc.status === 'passed' ? 'rubric-status-pass' : (rc.status === 'partial' ? 'rubric-status-partial' : 'rubric-status-fail')}">${rc.status === 'passed' ? 'Pass' : (rc.status === 'partial' ? 'Partial' : 'Fail')}</span></td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      } else {
+        box.innerHTML = `
+          <div class="sandbox-out-header">
+            <strong>Simulated WinForms Execution</strong>
+          </div>
+          <div style="font-size:0.82rem;color:var(--text-secondary);">Code executed cleanly inside the virtual WinForms sandbox.</div>
+        `;
+      }
     }
 
     _resetInteractiveCodingQuestion(questionId) {

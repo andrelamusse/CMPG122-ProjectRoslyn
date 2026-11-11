@@ -282,9 +282,13 @@ def run_suite():
 
             # Answer first 3 questions using 1:1 direct inputs and flag question 4; verify circular Next Unanswered cycles Q4 -> Q5
             page.locator('#codeInput_q_su-exam_351').fill('Mutual exclusion')
-            page.locator('[data-cloze-q-id="q_su-exam_352"]').first.fill('int.TryParse')
+            page.locator('[data-cloze-q-id="q_su-exam_352"]').first.fill('txtDays')
             q3_sol = page.evaluate('window.CMPG122_DATA.questions.find(q => q.id === "q_su-exam_353").modelSolution')
             page.locator('#codeInput_q_su-exam_353').fill(q3_sol)
+            page.locator('[data-check-syntax-q="q_su-exam_353"]').click()
+            assert_true('0 Diagnostic(s)' in page.locator('#liveSandbox_q_su-exam_353').inner_text(), 'Check Syntax on exam snippet must report 0 Diagnostics')
+            page.locator('[data-run-snippet-q="q_su-exam_353"]').click()
+            assert_true('2/2 Checkpoints Passed' in page.locator('#liveSandbox_q_su-exam_353').inner_text(), 'Run Snippet on exam snippet must verify rubric checkpoints')
             page.locator('#continuousPaperArea .paper-q-card').nth(3).locator('[data-flag-q]').click()
 
             page.locator('#btnJumpNextUnanswered').click()
