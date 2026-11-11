@@ -35747,6 +35747,11 @@ button:disabled {
                 col += 2;
                 continue;
               }
+              if (isVerbatim && line[i] === '"' && line[i + 1] === '"') {
+                i += 2;
+                col += 2;
+                continue;
+              }
               if (line[i] === '"') {
                 i++;
                 col++;
@@ -35859,17 +35864,34 @@ button:disabled {
   function findMatchingBraceInCode(text, openBraceIdx) {
     let depth = 1;
     let inStr = false;
+    let isVerbatim = false;
     let strChar = '';
     let i = openBraceIdx + 1;
     while (i < text.length && depth > 0) {
       const c = text[i];
       if (inStr) {
-        if (c === '\\') { i += 2; continue; }
-        if (c === strChar) inStr = false;
+        if (isVerbatim) {
+          if (c === '"' && text[i + 1] === '"') {
+            i += 2;
+            continue;
+          }
+          if (c === '"') {
+            inStr = false;
+            isVerbatim = false;
+          }
+        } else {
+          if (c === '\\') { i += 2; continue; }
+          if (c === '\n' || c === '\r') {
+            inStr = false;
+          } else if (c === strChar) {
+            inStr = false;
+          }
+        }
       } else {
         if (c === '"' || c === "'") {
           inStr = true;
           strChar = c;
+          isVerbatim = (c === '"' && (text[i - 1] === '@' || (text[i - 1] === '$' && text[i - 2] === '@')));
         } else if (c === '/' && text[i + 1] === '/') {
           const nl = text.indexOf('\n', i + 2);
           if (nl === -1) break;
@@ -36380,7 +36402,7 @@ button:disabled {
     };
   }
 
-  function transpileCSharpStatementsToJs(codeSlice) {
+  function transpileCSharpStatementsToJs(codeSlice, extraIntVars = []) {
     let js = String(codeSlice || '');
 
     // 1. Transpile C# String Interpolation: $"Year {currentYear}: {balance:C}" or {balance:C2}
@@ -36465,15 +36487,21 @@ button:disabled {
     js = js.replace(/@"((?:[^"]|"")*)"/g, (_m, inner) => JSON.stringify(inner.replace(/""/g, '"')));
 
     // Track declared C# int variables before type erasure so int / int division truncates like C#
-    const intVars = new Set();
+    const intVars = new Set(extraIntVars || []);
     const outIntRe = /\bout\s+(?:int|Int32)\s+([a-zA-Z_][a-zA-Z0-9_]*)\b/g;
     let im;
     while ((im = outIntRe.exec(js)) !== null) intVars.add(im[1]);
-    const intDeclLineRe = /\b(?:const\s+)?(?:int|Int32)\s+(?!\s*\[)([^;{()]+?)(?=[;)])/g;
+    const intDeclLineRe = /\b(?:const\s+)?(?:int|Int32)\s+(?!\s*\[)([^;\n{]+)/g;
     while ((im = intDeclLineRe.exec(js)) !== null) {
-      im[1].split(',').forEach(seg => {
-        const vm = seg.trim().match(/^([a-zA-Z_][a-zA-Z0-9_]*)\b/);
-        if (vm) intVars.add(vm[1]);
+      let declTail = im[1];
+      let prevTail;
+      do {
+        prevTail = declTail;
+        declTail = declTail.replace(/\([^()]*\)/g, '()');
+      } while (declTail !== prevTail);
+      declTail.split(',').forEach(seg => {
+        const vm = seg.trim().match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*(?:=|$|\))/);
+        if (vm && !CSHARP_KEYWORDS.has(vm[1])) intVars.add(vm[1]);
       });
     }
 
@@ -36618,11 +36646,14 @@ button:disabled {
     // MessageBox.Show(...) -> _msgBox(...)
     js = js.replace(/\bMessageBox\.Show\s*\(/g, '_msgBox(');
 
-    // this.Close() / this.Hide() / this.BackColor / this.Text
+    // this.Close() / this.Hide() / this.BackColor / this.Text / this.AcceptButton / this.CancelButton
     js = js.replace(/\bthis\.Close\s*\(\s*\)/g, '_closeForm()');
     js = js.replace(/\bthis\.Hide\s*\(\s*\)/g, '_hideForm()');
-    js = js.replace(/\bthis\.BackColor\b/g, 'BackColor');
-    js = js.replace(/\bthis\.Text\b/g, '_formText');
+    js = js.replace(/\bthis\.BackColor\b/g, '_env.IFormState.BackColor');
+    js = js.replace(/\bthis\.ForeColor\b/g, '_env.IFormState.ForeColor');
+    js = js.replace(/\bthis\.Text\b/g, '_env.IFormState.Text');
+    js = js.replace(/\bthis\.AcceptButton\b/g, '_env.IFormState.AcceptButton');
+    js = js.replace(/\bthis\.CancelButton\b/g, '_env.IFormState.CancelButton');
 
     // 9. Balanced-delimiter Infinite-Loop Guard on braced AND braceless while / for / do loops
     maskedLiterals.length = 0;
@@ -36645,8 +36676,16 @@ button:disabled {
       jsOutput += transpileCSharpStatementsToJs(extracted.remainder) + '\n';
     }
 
-    let autoEntryHandler = null;
+    const nameCounts = {};
     extracted.methods.forEach(m => {
+      nameCounts[m.name] = (nameCounts[m.name] || 0) + 1;
+    });
+    const overloadGroups = {};
+
+    let autoEntryHandler = null;
+    extracted.methods.forEach((m, mIdx) => {
+      const isOverloaded = nameCounts[m.name] > 1;
+      const fnIdent = isOverloaded ? `${m.name}__ov${mIdx}` : m.name;
       const jsParamNames = m.params.map(p => (p.isRef || p.isOut) ? `_ref_${p.name}` : p.name);
       let unpackHeader = '';
       let writeBackFooter = '';
@@ -36660,20 +36699,46 @@ button:disabled {
         }
       });
 
-      const transpiledBody = transpileCSharpStatementsToJs(m.body);
+      const methodIntParams = m.params.filter(p => p.type === 'int' || p.type === 'Int32').map(p => p.name);
+      const transpiledBody = transpileCSharpStatementsToJs(m.body, methodIntParams);
       if (writeBackFooter) {
-        jsOutput += `function ${m.name}(${jsParamNames.join(', ')}) {\n${unpackHeader}try {\n${transpiledBody}\n} finally {\n${writeBackFooter}}\n}\n`;
+        jsOutput += `function ${fnIdent}(${jsParamNames.join(', ')}) {\n${unpackHeader}try {\n${transpiledBody}\n} finally {\n${writeBackFooter}}\n}\n`;
       } else {
-        jsOutput += `function ${m.name}(${jsParamNames.join(', ')}) {\n${transpiledBody}\n}\n`;
+        jsOutput += `function ${fnIdent}(${jsParamNames.join(', ')}) {\n${transpiledBody}\n}\n`;
       }
 
-      if (typeof _customMethods === 'object') {
-        jsOutput += `_registerMethod("${m.name}", ${m.name}, ${JSON.stringify(m.params)});\n`;
+      if (isOverloaded) {
+        if (!overloadGroups[m.name]) overloadGroups[m.name] = [];
+        overloadGroups[m.name].push({ fnIdent, params: m.params });
       }
+
+      jsOutput += `if (typeof _registerMethod === "function") { _registerMethod("${m.name}", ${fnIdent}, ${JSON.stringify(m.params)}); }\n`;
 
       if (m.isEventHandler && !autoEntryHandler) {
         autoEntryHandler = m.name;
       }
+    });
+
+    Object.keys(overloadGroups).forEach(mName => {
+      const ovList = overloadGroups[mName];
+      let dispatchBody = '';
+      ovList.forEach(ov => {
+        const sameArityCount = ovList.filter(x => x.params.length === ov.params.length).length;
+        if (sameArityCount > 1 && ov.params.length > 0) {
+          const typeChecks = ov.params.map((p, idx) => {
+            if (p.type === 'string' || p.type === 'char') return `typeof _ovArgs[${idx}] === 'string'`;
+            if (p.type === 'bool') return `typeof _ovArgs[${idx}] === 'boolean'`;
+            if (['int', 'decimal', 'double', 'float', 'long'].includes(p.type)) return `typeof _ovArgs[${idx}] === 'number'`;
+            return 'true';
+          }).join(' && ');
+          dispatchBody += `if (_ovArgs.length === ${ov.params.length} && (${typeChecks})) { return ${ov.fnIdent}(..._ovArgs); }\n`;
+        }
+      });
+      ovList.forEach(ov => {
+        dispatchBody += `if (_ovArgs.length === ${ov.params.length}) { return ${ov.fnIdent}(..._ovArgs); }\n`;
+      });
+      dispatchBody += `return ${ovList[ovList.length - 1].fnIdent}(..._ovArgs);`;
+      jsOutput += `function ${mName}(..._ovArgs) {\n${dispatchBody}\n}\n`;
     });
 
     if (autoEntryHandler) {
@@ -37290,7 +37355,13 @@ button:disabled {
       _cartTotal: 0,
       _customMethods: customMethods,
       _registerMethod: function(name, fn, params) {
-        customMethods[name] = { fn, params };
+        if (!customMethods[name]) {
+          customMethods[name] = { fn, params, overloads: [{ fn, params }] };
+        } else {
+          customMethods[name].overloads.push({ fn, params });
+          customMethods[name].fn = fn;
+          customMethods[name].params = params;
+        }
       },
       _skipAutoEventHandler: Boolean(tc.callMethod || tc.harness),
       _returnValue: undefined,
@@ -37402,22 +37473,24 @@ button:disabled {
       DetailsForm: env.IMultiFormSandbox.createFormConstructor('DetailsForm')
     };
 
-    // Initialize controls from test inputs (skipping internal _ keys)
+    const isValidJsIdent = (k) => /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(k);
+
+    // Initialize controls from test inputs (skipping internal _ keys and dotted pseudo-keys like Form.Text)
     Object.keys(tc.inputs || {}).forEach(k => {
-      if (k.startsWith('_') || k === 'virtualFiles') return;
+      if (k.startsWith('_') || k === 'virtualFiles' || !isValidJsIdent(k)) return;
       sandbox[k] = env.IFormControls.createControl(k, tc.inputs[k]);
     });
 
     // Initialize expected outputs if not already present
     (context.expectedOutputs || []).forEach(k => {
-      if (!sandbox[k] && !k.startsWith('_')) {
+      if (!sandbox[k] && !k.startsWith('_') && isValidJsIdent(k)) {
         sandbox[k] = env.IFormControls.createControl(k, '');
       }
     });
 
     // Initialize controls list if not already present
     (context.controls || []).forEach(k => {
-      if (!sandbox[k] && !k.startsWith('_')) {
+      if (!sandbox[k] && !k.startsWith('_') && isValidJsIdent(k)) {
         sandbox[k] = env.IFormControls.createControl(k, '');
       }
     });
@@ -37429,7 +37502,7 @@ button:disabled {
     }
 
     try {
-      const keys = Object.keys(sandbox);
+      const keys = Object.keys(sandbox).filter(isValidJsIdent);
       const vals = keys.map(k => sandbox[k]);
       const runner = new Function(
         ...keys,
@@ -37438,6 +37511,8 @@ button:disabled {
         "use strict";
         try {
           ${fullJsToRun}
+          if (typeof BackColor !== "undefined" && BackColor !== "White") { _env.IFormState.BackColor = BackColor; }
+          if (typeof _formText !== "undefined" && _formText !== "MainForm") { _env.IFormState.Text = _formText; }
         } catch(e) {
           throw e;
         }
@@ -37455,6 +37530,21 @@ button:disabled {
           throw new Error(`Required method '${targetName}' was not found or could not be compiled.`);
         }
         const rawArgs = tc.callMethod.args || [];
+        if (entry.overloads && entry.overloads.length > 1) {
+          const arityMatches = entry.overloads.filter(ov => ov.params.length === rawArgs.length);
+          if (arityMatches.length === 1) {
+            entry = arityMatches[0];
+          } else if (arityMatches.length > 1) {
+            const typeMatched = arityMatches.find(ov => ov.params.every((p, idx) => {
+              const argVal = rawArgs[idx];
+              if (p.type === 'string' || p.type === 'char') return typeof argVal === 'string';
+              if (p.type === 'bool') return typeof argVal === 'boolean';
+              if (['int', 'decimal', 'double', 'float', 'long'].includes(p.type)) return typeof argVal === 'number';
+              return true;
+            }));
+            entry = typeMatched || arityMatches[arityMatches.length - 1];
+          }
+        }
         const refBoxes = {};
         const invokeArgs = entry.params.map((p, idx) => {
           const initialArg = rawArgs[idx];
@@ -38301,11 +38391,16 @@ button:disabled {
       });
     });
 
+    const anyAnswered = blankResults.some(b => Boolean(b.studentValue && b.studentValue.trim().length > 0));
+    if (!anyAnswered) {
+      earnedMarks = 0;
+    }
     earnedMarks = Math.min(maxMarks, Math.round(earnedMarks * 2) / 2);
     const percentage = maxMarks > 0 ? Math.round((earnedMarks / maxMarks) * 100) : 0;
 
     return {
       questionType: 'code-cloze',
+      answered: anyAnswered,
       earnedMarks,
       maxMarks,
       percentage,
@@ -38663,6 +38758,8 @@ button:disabled {
       if (tcDef.isHidden && options.revealSolution === false) {
         return {
           name: `Hidden Memorandum Test Case #${idx + 1}`,
+          hidden: true,
+          isHidden: true,
           passed: tr.passed,
           expected: '(Hidden during active assessment)',
           actual: tr.passed ? 'Passed' : 'Failed',
@@ -38671,6 +38768,8 @@ button:disabled {
       }
       return {
         name: tr.name,
+        hidden: false,
+        isHidden: Boolean(tcDef.isHidden),
         passed: tr.passed,
         expected: tr.expected,
         actual: tr.actual,
@@ -39182,11 +39281,19 @@ button:disabled {
         if (qId === '__proto__' || qId === 'constructor' || qId === 'prototype' || qId.length > 80) continue;
         const h = raw.questionHistory[qId];
         if (!h || typeof h !== 'object') continue;
+        let safeLastSelected = null;
+        if (typeof h.lastSelected === 'number') {
+          safeLastSelected = h.lastSelected;
+        } else if (typeof h.lastSelected === 'string') {
+          safeLastSelected = h.lastSelected.slice(0, 20000);
+        } else if (h.lastSelected && typeof h.lastSelected === 'object' && !Array.isArray(h.lastSelected)) {
+          safeLastSelected = copySafeMap(h.lastSelected, v => typeof v === 'string' && v.length <= 2000);
+        }
         out.questionHistory[qId] = {
           attempts: Math.max(0, Math.floor(Number(h.attempts) || 0)),
           correct: Math.max(0, Math.floor(Number(h.correct) || 0)),
           incorrect: Math.max(0, Math.floor(Number(h.incorrect) || 0)),
-          lastSelected: typeof h.lastSelected === 'number' ? h.lastSelected : null,
+          lastSelected: safeLastSelected,
           isCorrect: Boolean(h.isCorrect),
           lastAttemptAt: Number(h.lastAttemptAt) || Date.now(),
           totalTimeMs: Math.max(0, Math.floor(Number(h.totalTimeMs) || 0)),
@@ -39671,12 +39778,14 @@ button:disabled {
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  const CODE_TRACING_TYPES = new Set(['code-tracing', 'code-output', 'debugging', 'method-execution', 'loop-execution']);
+  const CODE_TRACING_TYPES = new Set(['code-tracing', 'code-output', 'debugging', 'method-execution', 'loop-execution', 'code-cloze', 'code-snippet', 'code-full']);
 
   function computeAnalytics(state, data) {
     const units = (data && data.units) || [];
     const questions = (data && data.questions) || [];
-    const qMap = new Map(questions.map(q => [q.id, q]));
+    const codingQuestions = (data && data.codingQuestions) || [];
+    const allQuestions = [...questions, ...codingQuestions];
+    const qMap = new Map(allQuestions.map(q => [q.id, q]));
     const history = (state && state.questionHistory) || {};
     const completedTopics = (state && state.completedTopics) || {};
     const flaggedMap = (state && state.flaggedQuestions) || {};
@@ -40095,6 +40204,8 @@ button:disabled {
         topicId: contextSnapshot.topicId || null,
         questionId: contextSnapshot.questionId || null,
         selectedAnswer: contextSnapshot.selectedAnswer !== undefined ? contextSnapshot.selectedAnswer : null,
+        codeAnswer: typeof contextSnapshot.codeAnswer === 'string' ? contextSnapshot.codeAnswer : undefined,
+        clozeAnswers: (contextSnapshot.clozeAnswers && typeof contextSnapshot.clozeAnswers === 'object') ? { ...contextSnapshot.clozeAnswers } : undefined,
         submissionStatus: contextSnapshot.submissionStatus || null,
         scrollY: Number(contextSnapshot.scrollY) || 0,
         activeSection: contextSnapshot.activeSection || null,
@@ -43445,6 +43556,8 @@ button:disabled {
           topicId: extraSource.topicId || null,
           questionId: targetQId,
           selectedAnswer: qState ? qState.selectedAnswer : null,
+          codeAnswer: qState && typeof qState.codeAnswer === 'string' ? qState.codeAnswer : undefined,
+          clozeAnswers: qState && qState.clozeAnswers ? { ...qState.clozeAnswers } : undefined,
           submissionStatus: qState ? qState.status : null,
           scrollY: typeof window !== 'undefined' ? window.scrollY : 0,
           activeSection: this.currentRoute === 'practice' ? this.practiceSubTab : this.reviewSubTab,
@@ -43512,9 +43625,21 @@ button:disabled {
           if (qIdx !== -1) targetSession.goToIndex(qIdx);
         }
         const st = targetSession.getQuestionState(ctx.questionId);
-        if (st && typeof ctx.selectedAnswer === 'number' && st.status !== 'submitted') {
-          st.selectedAnswer = ctx.selectedAnswer;
-          st.status = 'answered_unsubmitted';
+        if (st && st.status !== 'submitted') {
+          if (typeof ctx.selectedAnswer === 'number') {
+            st.selectedAnswer = ctx.selectedAnswer;
+            st.status = 'answered_unsubmitted';
+          }
+          if (typeof ctx.codeAnswer === 'string') {
+            st.codeAnswer = ctx.codeAnswer;
+            if (ctx.codeAnswer.trim()) st.status = 'answered_unsubmitted';
+          }
+          if (ctx.clozeAnswers && typeof ctx.clozeAnswers === 'object') {
+            st.clozeAnswers = { ...ctx.clozeAnswers };
+            if (Object.values(ctx.clozeAnswers).some(v => String(v || '').trim().length > 0)) {
+              st.status = 'answered_unsubmitted';
+            }
+          }
         }
         this.renderCurrentRoute();
       }
@@ -43608,16 +43733,24 @@ button:disabled {
       if (this.reviewSubTab === 'incorrect') {
         reviewItemsHtml = stats.incorrectQueue.length === 0
           ? `<p style="color:var(--text-muted);margin:0;">No unresolved incorrect questions right now.</p>`
-          : stats.incorrectQueue.map(({ question, history }, i) => `
+          : stats.incorrectQueue.map(({ question, history }, i) => {
+              const isCoding = Renderer.isCodingQuestion(question);
+              const lastSubLabel = isCoding
+                ? (question.questionType === 'code-cloze' ? 'Last Submission: Cloze Blanks' : 'Last Submission: C# Code')
+                : `Last Choice: Option ${Renderer.LETTERS[history.lastSelected] || '?'}`;
+              const cardState = {
+                status: 'submitted',
+                selectedAnswer: typeof history.lastSelected === 'number' ? history.lastSelected : null,
+                codeAnswer: typeof history.lastSelected === 'string' ? history.lastSelected : '',
+                clozeAnswers: (history.lastSelected && typeof history.lastSelected === 'object') ? history.lastSelected : {},
+                outcome: 'incorrect'
+              };
+              return `
               <div style="margin-bottom:1rem;">
                 <div style="font-size:0.78rem;color:var(--status-error-text);margin-bottom:0.3rem;font-weight:700;">
-                  Missed ${history.incorrect} time(s) • Last Choice: Option ${Renderer.LETTERS[history.lastSelected] || '?'}
+                  Missed ${history.incorrect} time(s) • ${lastSubLabel}
                 </div>
-                ${Renderer.renderQuestionCard(question, {
-                  status: 'submitted',
-                  selectedAnswer: history.lastSelected,
-                  outcome: 'incorrect'
-                }, {
+                ${Renderer.renderQuestionCard(question, cardState, {
                   index: i,
                   total: stats.incorrectQueue.length,
                   csharpEngine: CSharpEngine,
@@ -43628,7 +43761,8 @@ button:disabled {
                   isUnderstood: false
                 })}
               </div>
-            `).join('');
+            `;
+            }).join('');
       } else if (this.reviewSubTab === 'unanswered') {
         reviewItemsHtml = stats.unansweredQueue.length === 0
           ? `<div style="display:flex;justify-content:space-between;align-items:center;gap:0.75rem;flex-wrap:wrap;">
@@ -43666,11 +43800,17 @@ button:disabled {
             </div>` +
             stats.flaggedQueue.map((question, i) => {
               const h = state.questionHistory[question.id];
-              const hasAttempt = Boolean(h && typeof h.lastSelected === 'number');
+              const hasAttempt = Boolean(h && (
+                typeof h.lastSelected === 'number' ||
+                (typeof h.lastSelected === 'string' && h.lastSelected.trim().length > 0) ||
+                (h.lastSelected && typeof h.lastSelected === 'object' && Object.keys(h.lastSelected).length > 0)
+              ));
               return `<div style="margin-bottom:1rem;">
                 ${Renderer.renderQuestionCard(question, {
                   status: 'submitted',
-                  selectedAnswer: hasAttempt ? h.lastSelected : null,
+                  selectedAnswer: (hasAttempt && typeof h.lastSelected === 'number') ? h.lastSelected : null,
+                  codeAnswer: (hasAttempt && typeof h.lastSelected === 'string') ? h.lastSelected : '',
+                  clozeAnswers: (hasAttempt && h.lastSelected && typeof h.lastSelected === 'object') ? h.lastSelected : {},
                   bookmarkedReview: !hasAttempt
                 }, {
                   index: i,

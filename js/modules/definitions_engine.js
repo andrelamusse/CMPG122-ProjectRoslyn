@@ -158,6 +158,8 @@
         topicId: contextSnapshot.topicId || null,
         questionId: contextSnapshot.questionId || null,
         selectedAnswer: contextSnapshot.selectedAnswer !== undefined ? contextSnapshot.selectedAnswer : null,
+        codeAnswer: typeof contextSnapshot.codeAnswer === 'string' ? contextSnapshot.codeAnswer : undefined,
+        clozeAnswers: (contextSnapshot.clozeAnswers && typeof contextSnapshot.clozeAnswers === 'object') ? { ...contextSnapshot.clozeAnswers } : undefined,
         submissionStatus: contextSnapshot.submissionStatus || null,
         scrollY: Number(contextSnapshot.scrollY) || 0,
         activeSection: contextSnapshot.activeSection || null,

@@ -364,6 +364,10 @@ def run_suite():
             page.reload(wait_until='networkidle')
             assert_true(page.evaluate('document.documentElement.getAttribute("data-theme")') == 'light', 'Chosen theme must persist across reload')
             assert_true(page.locator('#viewProgress.active').count() == 1, 'Hash route #progress must restore on reload')
+            assert_true(
+                page.evaluate('typeof (window.CMPG122_APP.persistence.getState().questionHistory.q_code_su3_003 || {}).lastSelected === "string" && window.CMPG122_APP.persistence.getState().questionHistory.q_code_su3_003.lastSelected.length > 10'),
+                'Coding question C# submission must persist in questionHistory.lastSelected across browser reload'
+            )
             page.locator('.sidebar-link[data-route="home"]').click()
             pct_after_reload = page.locator('#homeOverallPct').inner_text().strip()
             assert_true(pct_after_reload != '0%', f'Progress must persist in IndexedDB/storage across reload (got {pct_after_reload})')

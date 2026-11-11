@@ -266,6 +266,11 @@
                 col += 2;
                 continue;
               }
+              if (isVerbatim && line[i] === '"' && line[i + 1] === '"') {
+                i += 2;
+                col += 2;
+                continue;
+              }
               if (line[i] === '"') {
                 i++;
                 col++;
@@ -378,17 +383,34 @@
   function findMatchingBraceInCode(text, openBraceIdx) {
     let depth = 1;
     let inStr = false;
+    let isVerbatim = false;
     let strChar = '';
     let i = openBraceIdx + 1;
     while (i < text.length && depth > 0) {
       const c = text[i];
       if (inStr) {
-        if (c === '\\') { i += 2; continue; }
-        if (c === strChar) inStr = false;
+        if (isVerbatim) {
+          if (c === '"' && text[i + 1] === '"') {
+            i += 2;
+            continue;
+          }
+          if (c === '"') {
+            inStr = false;
+            isVerbatim = false;
+          }
+        } else {
+          if (c === '\\') { i += 2; continue; }
+          if (c === '\n' || c === '\r') {
+            inStr = false;
+          } else if (c === strChar) {
+            inStr = false;
+          }
+        }
       } else {
         if (c === '"' || c === "'") {
           inStr = true;
           strChar = c;
+          isVerbatim = (c === '"' && (text[i - 1] === '@' || (text[i - 1] === '$' && text[i - 2] === '@')));
         } else if (c === '/' && text[i + 1] === '/') {
           const nl = text.indexOf('\n', i + 2);
           if (nl === -1) break;
@@ -899,7 +921,7 @@
     };
   }
 
-  function transpileCSharpStatementsToJs(codeSlice) {
+  function transpileCSharpStatementsToJs(codeSlice, extraIntVars = []) {
     let js = String(codeSlice || '');
 
     // 1. Transpile C# String Interpolation: $"Year {currentYear}: {balance:C}" or {balance:C2}
@@ -984,15 +1006,21 @@
     js = js.replace(/@"((?:[^"]|"")*)"/g, (_m, inner) => JSON.stringify(inner.replace(/""/g, '"')));
 
     // Track declared C# int variables before type erasure so int / int division truncates like C#
-    const intVars = new Set();
+    const intVars = new Set(extraIntVars || []);
     const outIntRe = /\bout\s+(?:int|Int32)\s+([a-zA-Z_][a-zA-Z0-9_]*)\b/g;
     let im;
     while ((im = outIntRe.exec(js)) !== null) intVars.add(im[1]);
-    const intDeclLineRe = /\b(?:const\s+)?(?:int|Int32)\s+(?!\s*\[)([^;{()]+?)(?=[;)])/g;
+    const intDeclLineRe = /\b(?:const\s+)?(?:int|Int32)\s+(?!\s*\[)([^;\n{]+)/g;
     while ((im = intDeclLineRe.exec(js)) !== null) {
-      im[1].split(',').forEach(seg => {
-        const vm = seg.trim().match(/^([a-zA-Z_][a-zA-Z0-9_]*)\b/);
-        if (vm) intVars.add(vm[1]);
+      let declTail = im[1];
+      let prevTail;
+      do {
+        prevTail = declTail;
+        declTail = declTail.replace(/\([^()]*\)/g, '()');
+      } while (declTail !== prevTail);
+      declTail.split(',').forEach(seg => {
+        const vm = seg.trim().match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*(?:=|$|\))/);
+        if (vm && !CSHARP_KEYWORDS.has(vm[1])) intVars.add(vm[1]);
       });
     }
 
@@ -1137,11 +1165,14 @@
     // MessageBox.Show(...) -> _msgBox(...)
     js = js.replace(/\bMessageBox\.Show\s*\(/g, '_msgBox(');
 
-    // this.Close() / this.Hide() / this.BackColor / this.Text
+    // this.Close() / this.Hide() / this.BackColor / this.Text / this.AcceptButton / this.CancelButton
     js = js.replace(/\bthis\.Close\s*\(\s*\)/g, '_closeForm()');
     js = js.replace(/\bthis\.Hide\s*\(\s*\)/g, '_hideForm()');
-    js = js.replace(/\bthis\.BackColor\b/g, 'BackColor');
-    js = js.replace(/\bthis\.Text\b/g, '_formText');
+    js = js.replace(/\bthis\.BackColor\b/g, '_env.IFormState.BackColor');
+    js = js.replace(/\bthis\.ForeColor\b/g, '_env.IFormState.ForeColor');
+    js = js.replace(/\bthis\.Text\b/g, '_env.IFormState.Text');
+    js = js.replace(/\bthis\.AcceptButton\b/g, '_env.IFormState.AcceptButton');
+    js = js.replace(/\bthis\.CancelButton\b/g, '_env.IFormState.CancelButton');
 
     // 9. Balanced-delimiter Infinite-Loop Guard on braced AND braceless while / for / do loops
     maskedLiterals.length = 0;
@@ -1164,8 +1195,16 @@
       jsOutput += transpileCSharpStatementsToJs(extracted.remainder) + '\n';
     }
 
-    let autoEntryHandler = null;
+    const nameCounts = {};
     extracted.methods.forEach(m => {
+      nameCounts[m.name] = (nameCounts[m.name] || 0) + 1;
+    });
+    const overloadGroups = {};
+
+    let autoEntryHandler = null;
+    extracted.methods.forEach((m, mIdx) => {
+      const isOverloaded = nameCounts[m.name] > 1;
+      const fnIdent = isOverloaded ? `${m.name}__ov${mIdx}` : m.name;
       const jsParamNames = m.params.map(p => (p.isRef || p.isOut) ? `_ref_${p.name}` : p.name);
       let unpackHeader = '';
       let writeBackFooter = '';
@@ -1179,20 +1218,46 @@
         }
       });
 
-      const transpiledBody = transpileCSharpStatementsToJs(m.body);
+      const methodIntParams = m.params.filter(p => p.type === 'int' || p.type === 'Int32').map(p => p.name);
+      const transpiledBody = transpileCSharpStatementsToJs(m.body, methodIntParams);
       if (writeBackFooter) {
-        jsOutput += `function ${m.name}(${jsParamNames.join(', ')}) {\n${unpackHeader}try {\n${transpiledBody}\n} finally {\n${writeBackFooter}}\n}\n`;
+        jsOutput += `function ${fnIdent}(${jsParamNames.join(', ')}) {\n${unpackHeader}try {\n${transpiledBody}\n} finally {\n${writeBackFooter}}\n}\n`;
       } else {
-        jsOutput += `function ${m.name}(${jsParamNames.join(', ')}) {\n${transpiledBody}\n}\n`;
+        jsOutput += `function ${fnIdent}(${jsParamNames.join(', ')}) {\n${transpiledBody}\n}\n`;
       }
 
-      if (typeof _customMethods === 'object') {
-        jsOutput += `_registerMethod("${m.name}", ${m.name}, ${JSON.stringify(m.params)});\n`;
+      if (isOverloaded) {
+        if (!overloadGroups[m.name]) overloadGroups[m.name] = [];
+        overloadGroups[m.name].push({ fnIdent, params: m.params });
       }
+
+      jsOutput += `if (typeof _registerMethod === "function") { _registerMethod("${m.name}", ${fnIdent}, ${JSON.stringify(m.params)}); }\n`;
 
       if (m.isEventHandler && !autoEntryHandler) {
         autoEntryHandler = m.name;
       }
+    });
+
+    Object.keys(overloadGroups).forEach(mName => {
+      const ovList = overloadGroups[mName];
+      let dispatchBody = '';
+      ovList.forEach(ov => {
+        const sameArityCount = ovList.filter(x => x.params.length === ov.params.length).length;
+        if (sameArityCount > 1 && ov.params.length > 0) {
+          const typeChecks = ov.params.map((p, idx) => {
+            if (p.type === 'string' || p.type === 'char') return `typeof _ovArgs[${idx}] === 'string'`;
+            if (p.type === 'bool') return `typeof _ovArgs[${idx}] === 'boolean'`;
+            if (['int', 'decimal', 'double', 'float', 'long'].includes(p.type)) return `typeof _ovArgs[${idx}] === 'number'`;
+            return 'true';
+          }).join(' && ');
+          dispatchBody += `if (_ovArgs.length === ${ov.params.length} && (${typeChecks})) { return ${ov.fnIdent}(..._ovArgs); }\n`;
+        }
+      });
+      ovList.forEach(ov => {
+        dispatchBody += `if (_ovArgs.length === ${ov.params.length}) { return ${ov.fnIdent}(..._ovArgs); }\n`;
+      });
+      dispatchBody += `return ${ovList[ovList.length - 1].fnIdent}(..._ovArgs);`;
+      jsOutput += `function ${mName}(..._ovArgs) {\n${dispatchBody}\n}\n`;
     });
 
     if (autoEntryHandler) {
@@ -1809,7 +1874,13 @@
       _cartTotal: 0,
       _customMethods: customMethods,
       _registerMethod: function(name, fn, params) {
-        customMethods[name] = { fn, params };
+        if (!customMethods[name]) {
+          customMethods[name] = { fn, params, overloads: [{ fn, params }] };
+        } else {
+          customMethods[name].overloads.push({ fn, params });
+          customMethods[name].fn = fn;
+          customMethods[name].params = params;
+        }
       },
       _skipAutoEventHandler: Boolean(tc.callMethod || tc.harness),
       _returnValue: undefined,
@@ -1921,22 +1992,24 @@
       DetailsForm: env.IMultiFormSandbox.createFormConstructor('DetailsForm')
     };
 
-    // Initialize controls from test inputs (skipping internal _ keys)
+    const isValidJsIdent = (k) => /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(k);
+
+    // Initialize controls from test inputs (skipping internal _ keys and dotted pseudo-keys like Form.Text)
     Object.keys(tc.inputs || {}).forEach(k => {
-      if (k.startsWith('_') || k === 'virtualFiles') return;
+      if (k.startsWith('_') || k === 'virtualFiles' || !isValidJsIdent(k)) return;
       sandbox[k] = env.IFormControls.createControl(k, tc.inputs[k]);
     });
 
     // Initialize expected outputs if not already present
     (context.expectedOutputs || []).forEach(k => {
-      if (!sandbox[k] && !k.startsWith('_')) {
+      if (!sandbox[k] && !k.startsWith('_') && isValidJsIdent(k)) {
         sandbox[k] = env.IFormControls.createControl(k, '');
       }
     });
 
     // Initialize controls list if not already present
     (context.controls || []).forEach(k => {
-      if (!sandbox[k] && !k.startsWith('_')) {
+      if (!sandbox[k] && !k.startsWith('_') && isValidJsIdent(k)) {
         sandbox[k] = env.IFormControls.createControl(k, '');
       }
     });
@@ -1948,7 +2021,7 @@
     }
 
     try {
-      const keys = Object.keys(sandbox);
+      const keys = Object.keys(sandbox).filter(isValidJsIdent);
       const vals = keys.map(k => sandbox[k]);
       const runner = new Function(
         ...keys,
@@ -1957,6 +2030,8 @@
         "use strict";
         try {
           ${fullJsToRun}
+          if (typeof BackColor !== "undefined" && BackColor !== "White") { _env.IFormState.BackColor = BackColor; }
+          if (typeof _formText !== "undefined" && _formText !== "MainForm") { _env.IFormState.Text = _formText; }
         } catch(e) {
           throw e;
         }
@@ -1974,6 +2049,21 @@
           throw new Error(`Required method '${targetName}' was not found or could not be compiled.`);
         }
         const rawArgs = tc.callMethod.args || [];
+        if (entry.overloads && entry.overloads.length > 1) {
+          const arityMatches = entry.overloads.filter(ov => ov.params.length === rawArgs.length);
+          if (arityMatches.length === 1) {
+            entry = arityMatches[0];
+          } else if (arityMatches.length > 1) {
+            const typeMatched = arityMatches.find(ov => ov.params.every((p, idx) => {
+              const argVal = rawArgs[idx];
+              if (p.type === 'string' || p.type === 'char') return typeof argVal === 'string';
+              if (p.type === 'bool') return typeof argVal === 'boolean';
+              if (['int', 'decimal', 'double', 'float', 'long'].includes(p.type)) return typeof argVal === 'number';
+              return true;
+            }));
+            entry = typeMatched || arityMatches[arityMatches.length - 1];
+          }
+        }
         const refBoxes = {};
         const invokeArgs = entry.params.map((p, idx) => {
           const initialArg = rawArgs[idx];
@@ -2820,11 +2910,16 @@
       });
     });
 
+    const anyAnswered = blankResults.some(b => Boolean(b.studentValue && b.studentValue.trim().length > 0));
+    if (!anyAnswered) {
+      earnedMarks = 0;
+    }
     earnedMarks = Math.min(maxMarks, Math.round(earnedMarks * 2) / 2);
     const percentage = maxMarks > 0 ? Math.round((earnedMarks / maxMarks) * 100) : 0;
 
     return {
       questionType: 'code-cloze',
+      answered: anyAnswered,
       earnedMarks,
       maxMarks,
       percentage,
@@ -3182,6 +3277,8 @@
       if (tcDef.isHidden && options.revealSolution === false) {
         return {
           name: `Hidden Memorandum Test Case #${idx + 1}`,
+          hidden: true,
+          isHidden: true,
           passed: tr.passed,
           expected: '(Hidden during active assessment)',
           actual: tr.passed ? 'Passed' : 'Failed',
@@ -3190,6 +3287,8 @@
       }
       return {
         name: tr.name,
+        hidden: false,
+        isHidden: Boolean(tcDef.isHidden),
         passed: tr.passed,
         expected: tr.expected,
         actual: tr.actual,

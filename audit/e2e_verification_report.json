@@ -26,5 +26,5 @@
   "customQuizShortcutsAndWeights": true,
   "interactiveCodingAssessment": true,
   "adminTelemetryDashboard": true,
-  "edgeCrossBrowser": "Skipped/Note: E2E ASSERTION FAILED: Edge must render all 7 Study Unit cards"
+  "edgeCrossBrowser": true
 }

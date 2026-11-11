@@ -113,11 +113,19 @@
         if (qId === '__proto__' || qId === 'constructor' || qId === 'prototype' || qId.length > 80) continue;
         const h = raw.questionHistory[qId];
         if (!h || typeof h !== 'object') continue;
+        let safeLastSelected = null;
+        if (typeof h.lastSelected === 'number') {
+          safeLastSelected = h.lastSelected;
+        } else if (typeof h.lastSelected === 'string') {
+          safeLastSelected = h.lastSelected.slice(0, 20000);
+        } else if (h.lastSelected && typeof h.lastSelected === 'object' && !Array.isArray(h.lastSelected)) {
+          safeLastSelected = copySafeMap(h.lastSelected, v => typeof v === 'string' && v.length <= 2000);
+        }
         out.questionHistory[qId] = {
           attempts: Math.max(0, Math.floor(Number(h.attempts) || 0)),
           correct: Math.max(0, Math.floor(Number(h.correct) || 0)),
           incorrect: Math.max(0, Math.floor(Number(h.incorrect) || 0)),
-          lastSelected: typeof h.lastSelected === 'number' ? h.lastSelected : null,
+          lastSelected: safeLastSelected,
           isCorrect: Boolean(h.isCorrect),
           lastAttemptAt: Number(h.lastAttemptAt) || Date.now(),
           totalTimeMs: Math.max(0, Math.floor(Number(h.totalTimeMs) || 0)),

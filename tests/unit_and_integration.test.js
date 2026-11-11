@@ -837,6 +837,21 @@ describe('11. Multi-Variation C# Marking Engine, Virtual Interfaces & Interactiv
     const venv = CSharpEngine.createVirtualEnvironment({ txtInput: '42' });
     assert.ok(venv.IFormState && venv.IFormControls && venv.IFileSystem && venv.IFileStreamSandbox);
     assert.ok(venv.IDialogService && venv.IMessageBoxService && venv.IRandomGenerator && venv.IMultiFormSandbox);
+
+    // 5. Every single codingQuestion (all 40) must achieve 100% marks AND pass 100% of behavioral testCases on its modelSolution
+    assert.equal(DATA.codingQuestions.length, 40);
+    for (const cq of DATA.codingQuestions) {
+      if (cq.questionType === 'code-cloze') {
+        const ans = {};
+        (cq.blanks || []).forEach(b => { ans[b.id] = b.expected; });
+        const ev = CSharpEngine.evaluateCodingQuestion(cq, ans);
+        assert.equal(ev.earnedMarks, cq.marks, `${cq.id} cloze failed full marks`);
+      } else {
+        const ev = CSharpEngine.evaluateCodingQuestion(cq, cq.modelSolution);
+        assert.equal(ev.earnedMarks, cq.marks, `${cq.id} failed full marks (${ev.earnedMarks}/${cq.marks})`);
+        assert.equal(ev.testResults.every(t => t.passed), true, `${cq.id} failed behavioral test case: ${JSON.stringify(ev.testResults)}`);
+      }
+    }
   });
 
   it('awards granular partial credit for broken syntax / incomplete code and handles empty or unsupported constructs safely', () => {
@@ -910,5 +925,132 @@ describe('11. Multi-Variation C# Marking Engine, Virtual Interfaces & Interactiv
     assert.ok(snipHtml.includes('q-code-textarea'));
     assert.ok(snipHtml.includes('Full Memorandum Credit'));
     assert.ok(snipHtml.includes('Official NWU Model Solution'));
+  });
+
+  it('dispatches overloaded C# custom methods by parameter arity and type and extracts methods with verbatim strings or unclosed quotes', () => {
+    const overloadedCode = `
+      private decimal CalcFee(decimal amount)
+      {
+          return amount * 1.15m;
+      }
+
+      private decimal CalcFee(decimal amount, decimal discountRate)
+      {
+          return (amount - (amount * discountRate)) * 1.15m;
+      }
+
+      private string FormatTag(int id)
+      {
+          return "ID#" + id.ToString();
+      }
+
+      private string FormatTag(string code)
+      {
+          return "CODE:" + code.ToUpper();
+      }
+
+      private void btnRun_Click(object sender, EventArgs e)
+      {
+          lblStandard.Text = CalcFee(100m).ToString("F2");
+          lblDiscounted.Text = CalcFee(100m, 0.20m).ToString("F2");
+          lblTagInt.Text = FormatTag(42);
+          lblTagStr.Text = FormatTag("nwu");
+      }
+    `;
+    const sim = CSharpEngine.simulateExecution(overloadedCode, [
+      {
+        name: 'event_handler_calls_overloads',
+        inputs: {},
+        expected: {
+          lblStandard: '115.00',
+          lblDiscounted: '92.00',
+          lblTagInt: 'ID#42',
+          lblTagStr: 'CODE:NWU'
+        }
+      },
+      {
+        name: 'direct_callMethod_1_arg',
+        inputs: {},
+        callMethod: { name: 'CalcFee', args: [200] },
+        expected: { _returnValue: 230 }
+      },
+      {
+        name: 'direct_callMethod_2_args',
+        inputs: {},
+        callMethod: { name: 'CalcFee', args: [200, 0.5] },
+        expected: { _returnValue: 115 }
+      }
+    ], { expectedOutputs: ['lblStandard', 'lblDiscounted', 'lblTagInt', 'lblTagStr'] });
+    assert.equal(sim.success, true, JSON.stringify(sim.testResults));
+
+    // Verbatim string ending in backslash @"C:\Data\" and unclosed single-line string inside a method
+    const verbatimAndBrokenCode = `
+      private string GetFolderPath()
+      {
+          string folder = @"C:\\Data\\";
+          return folder + "students.txt";
+      }
+
+      private void BrokenLineMethod()
+      {
+          string bad = "unclosed string on line 1
+          string next = "valid string on line 2";
+          lblStatus.Text = next;
+      }
+    `;
+    const extracted = CSharpEngine.extractCSharpMethods(verbatimAndBrokenCode);
+    assert.equal(extracted.methods.length, 2, 'Must extract both methods despite verbatim backslash and unclosed single-line string');
+    assert.equal(extracted.methods[0].name, 'GetFolderPath');
+    assert.equal(extracted.methods[1].name, 'BrokenLineMethod');
+  });
+
+  it('tracks codingQuestions in Analytics queues, preserves string/object lastSelected in Persistence, and sets answered/hidden flags', async () => {
+    const qCloze = DATA.codingQuestions.find(q => q.questionType === 'code-cloze');
+    const qFull = DATA.codingQuestions.find(q => q.questionType === 'code-full');
+    assert.ok(qCloze && qFull);
+
+    // 1. Cloze answered flag: false when empty, true when any blank filled
+    const emptyClozeRes = CSharpEngine.evaluateCodingQuestion(qCloze, {});
+    assert.equal(emptyClozeRes.answered, false);
+    assert.equal(emptyClozeRes.earnedMarks, 0);
+
+    const partialClozeRes = CSharpEngine.evaluateCodingQuestion(qCloze, { [qCloze.blanks[0].id]: qCloze.blanks[0].expected });
+    assert.equal(partialClozeRes.answered, true);
+    assert.ok(partialClozeRes.earnedMarks > 0);
+
+    // 2. Hidden test case masking sets hidden: true when revealSolution: false
+    const qWithHidden = {
+      ...qFull,
+      testCases: [
+        ...(qFull.testCases || []),
+        { name: 'Secret Edge Case', isHidden: true, inputs: {}, expected: {} }
+      ]
+    };
+    const maskedEval = CSharpEngine.evaluateCodingQuestion(qWithHidden, qFull.modelSolution, { revealSolution: false });
+    const hiddenItems = maskedEval.testResults.filter(t => t.hidden);
+    assert.equal(hiddenItems.length, 1);
+    assert.equal(hiddenItems[0].expected, '(Hidden during active assessment)');
+
+    // 3. Analytics & Persistence integration for codingQuestions (string codeAnswer and object clozeAnswers)
+    const pm = new PersistenceMod.PersistenceManager({ localStorage: createMemoryStorage(), indexedDB: null });
+    await pm.init();
+    await pm.recordQuestionAttempt(qFull, 'lblOut.Text = "wrong";', false, 2500);
+    await pm.recordQuestionAttempt(qCloze, { b1: 'wrong' }, false, 1800);
+    pm.toggleFlagQuestion(qFull.id);
+
+    // Verify migrateState preserves string and object lastSelected across backup export/import
+    const backupJson = pm.exportBackupJson();
+    const pmRestored = new PersistenceMod.PersistenceManager({ localStorage: createMemoryStorage(), indexedDB: null });
+    await pmRestored.init();
+    const imp = await pmRestored.importBackupJson(backupJson);
+    assert.equal(imp.valid, true);
+    assert.equal(pmRestored.getState().questionHistory[qFull.id].lastSelected, 'lblOut.Text = "wrong";');
+    assert.deepEqual(pmRestored.getState().questionHistory[qCloze.id].lastSelected, { b1: 'wrong' });
+
+    // Verify Analytics queues include codingQuestions
+    const stats = AnalyticsMod.computeAnalytics(pmRestored.getState(), DATA);
+    assert.ok(stats.incorrectQueue.some(item => item.question.id === qFull.id), 'incorrectQueue must include missed code-full question');
+    assert.ok(stats.incorrectQueue.some(item => item.question.id === qCloze.id), 'incorrectQueue must include missed code-cloze question');
+    assert.ok(stats.flaggedQueue.some(q => q.id === qFull.id), 'flaggedQueue must include flagged coding question');
   });
 });

@@ -15,12 +15,14 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  const CODE_TRACING_TYPES = new Set(['code-tracing', 'code-output', 'debugging', 'method-execution', 'loop-execution']);
+  const CODE_TRACING_TYPES = new Set(['code-tracing', 'code-output', 'debugging', 'method-execution', 'loop-execution', 'code-cloze', 'code-snippet', 'code-full']);
 
   function computeAnalytics(state, data) {
     const units = (data && data.units) || [];
     const questions = (data && data.questions) || [];
-    const qMap = new Map(questions.map(q => [q.id, q]));
+    const codingQuestions = (data && data.codingQuestions) || [];
+    const allQuestions = [...questions, ...codingQuestions];
+    const qMap = new Map(allQuestions.map(q => [q.id, q]));
     const history = (state && state.questionHistory) || {};
     const completedTopics = (state && state.completedTopics) || {};
     const flaggedMap = (state && state.flaggedQuestions) || {};

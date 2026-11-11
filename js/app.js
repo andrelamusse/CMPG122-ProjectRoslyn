@@ -1636,6 +1636,8 @@
           topicId: extraSource.topicId || null,
           questionId: targetQId,
           selectedAnswer: qState ? qState.selectedAnswer : null,
+          codeAnswer: qState && typeof qState.codeAnswer === 'string' ? qState.codeAnswer : undefined,
+          clozeAnswers: qState && qState.clozeAnswers ? { ...qState.clozeAnswers } : undefined,
           submissionStatus: qState ? qState.status : null,
           scrollY: typeof window !== 'undefined' ? window.scrollY : 0,
           activeSection: this.currentRoute === 'practice' ? this.practiceSubTab : this.reviewSubTab,
@@ -1703,9 +1705,21 @@
           if (qIdx !== -1) targetSession.goToIndex(qIdx);
         }
         const st = targetSession.getQuestionState(ctx.questionId);
-        if (st && typeof ctx.selectedAnswer === 'number' && st.status !== 'submitted') {
-          st.selectedAnswer = ctx.selectedAnswer;
-          st.status = 'answered_unsubmitted';
+        if (st && st.status !== 'submitted') {
+          if (typeof ctx.selectedAnswer === 'number') {
+            st.selectedAnswer = ctx.selectedAnswer;
+            st.status = 'answered_unsubmitted';
+          }
+          if (typeof ctx.codeAnswer === 'string') {
+            st.codeAnswer = ctx.codeAnswer;
+            if (ctx.codeAnswer.trim()) st.status = 'answered_unsubmitted';
+          }
+          if (ctx.clozeAnswers && typeof ctx.clozeAnswers === 'object') {
+            st.clozeAnswers = { ...ctx.clozeAnswers };
+            if (Object.values(ctx.clozeAnswers).some(v => String(v || '').trim().length > 0)) {
+              st.status = 'answered_unsubmitted';
+            }
+          }
         }
         this.renderCurrentRoute();
       }
@@ -1799,16 +1813,24 @@
       if (this.reviewSubTab === 'incorrect') {
         reviewItemsHtml = stats.incorrectQueue.length === 0
           ? `<p style="color:var(--text-muted);margin:0;">No unresolved incorrect questions right now.</p>`
-          : stats.incorrectQueue.map(({ question, history }, i) => `
+          : stats.incorrectQueue.map(({ question, history }, i) => {
+              const isCoding = Renderer.isCodingQuestion(question);
+              const lastSubLabel = isCoding
+                ? (question.questionType === 'code-cloze' ? 'Last Submission: Cloze Blanks' : 'Last Submission: C# Code')
+                : `Last Choice: Option ${Renderer.LETTERS[history.lastSelected] || '?'}`;
+              const cardState = {
+                status: 'submitted',
+                selectedAnswer: typeof history.lastSelected === 'number' ? history.lastSelected : null,
+                codeAnswer: typeof history.lastSelected === 'string' ? history.lastSelected : '',
+                clozeAnswers: (history.lastSelected && typeof history.lastSelected === 'object') ? history.lastSelected : {},
+                outcome: 'incorrect'
+              };
+              return `
               <div style="margin-bottom:1rem;">
                 <div style="font-size:0.78rem;color:var(--status-error-text);margin-bottom:0.3rem;font-weight:700;">
-                  Missed ${history.incorrect} time(s) • Last Choice: Option ${Renderer.LETTERS[history.lastSelected] || '?'}
+                  Missed ${history.incorrect} time(s) • ${lastSubLabel}
                 </div>
-                ${Renderer.renderQuestionCard(question, {
-                  status: 'submitted',
-                  selectedAnswer: history.lastSelected,
-                  outcome: 'incorrect'
-                }, {
+                ${Renderer.renderQuestionCard(question, cardState, {
                   index: i,
                   total: stats.incorrectQueue.length,
                   csharpEngine: CSharpEngine,
@@ -1819,7 +1841,8 @@
                   isUnderstood: false
                 })}
               </div>
-            `).join('');
+            `;
+            }).join('');
       } else if (this.reviewSubTab === 'unanswered') {
         reviewItemsHtml = stats.unansweredQueue.length === 0
           ? `<div style="display:flex;justify-content:space-between;align-items:center;gap:0.75rem;flex-wrap:wrap;">
@@ -1857,11 +1880,17 @@
             </div>` +
             stats.flaggedQueue.map((question, i) => {
               const h = state.questionHistory[question.id];
-              const hasAttempt = Boolean(h && typeof h.lastSelected === 'number');
+              const hasAttempt = Boolean(h && (
+                typeof h.lastSelected === 'number' ||
+                (typeof h.lastSelected === 'string' && h.lastSelected.trim().length > 0) ||
+                (h.lastSelected && typeof h.lastSelected === 'object' && Object.keys(h.lastSelected).length > 0)
+              ));
               return `<div style="margin-bottom:1rem;">
                 ${Renderer.renderQuestionCard(question, {
                   status: 'submitted',
-                  selectedAnswer: hasAttempt ? h.lastSelected : null,
+                  selectedAnswer: (hasAttempt && typeof h.lastSelected === 'number') ? h.lastSelected : null,
+                  codeAnswer: (hasAttempt && typeof h.lastSelected === 'string') ? h.lastSelected : '',
+                  clozeAnswers: (hasAttempt && h.lastSelected && typeof h.lastSelected === 'object') ? h.lastSelected : {},
                   bookmarkedReview: !hasAttempt
                 }, {
                   index: i,
