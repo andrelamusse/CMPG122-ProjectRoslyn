@@ -1170,6 +1170,21 @@ button:disabled {
   gap: var(--space-2);
   flex-wrap: wrap;
 }
+.q-short-answer-wrap {
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.q-short-answer-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+.q-short-answer-input {
+  flex: 1 1 260px;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+}
 
 /* Home Definitions Quick Search & Shortcut Card */
 .search-input-wrap {

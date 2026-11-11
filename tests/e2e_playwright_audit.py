@@ -86,6 +86,7 @@ def run_suite():
                     continue
             assert_true(browser is not None, 'Could not launch Chrome, Edge, or Chromium browser')
             context = browser.new_context(viewport={'width': 1440, 'height': 900})
+            context.route('**://ntfy.sh/**', lambda route: route.fulfill(status=200, content_type='application/json', body='{}'))
             page = context.new_page()
 
             page.on('console', lambda msg: results_summary['consoleErrors'].append(msg.text) if msg.type == 'error' else None)
@@ -276,12 +277,14 @@ def run_suite():
             page.locator('[data-start-paper="exam_2024_dec"][data-paper-timed="true"]').click()
             assert_true(page.locator('#activeExamWorkspace').is_visible(), 'Continuous exam workspace must be visible')
             assert_true(page.locator('#continuousPaperArea .paper-q-card').count() == 16, 'All 16 past paper questions must render continuously')
+            assert_true(page.locator('#continuousPaperArea .q-option-btn').count() == 0, 'Official 1:1 exam paper must render 0 multiple-choice option buttons')
             assert_true(page.locator('#examQuestionPalette .palette-pill.current').count() >= 1, 'Scroll-spy palette must highlight active current question')
 
-            # Answer first 3 questions and flag question 4; verify circular Next Unanswered cycles Q4 -> Q5
-            for i in range(3):
-                q_card = page.locator('#continuousPaperArea .paper-q-card').nth(i)
-                q_card.locator('.q-option-btn').nth(i % 4).click()
+            # Answer first 3 questions using 1:1 direct inputs and flag question 4; verify circular Next Unanswered cycles Q4 -> Q5
+            page.locator('#codeInput_q_su-exam_351').fill('Mutual exclusion')
+            page.locator('[data-cloze-q-id="q_su-exam_352"]').first.fill('int.TryParse')
+            q3_sol = page.evaluate('window.CMPG122_DATA.questions.find(q => q.id === "q_su-exam_353").modelSolution')
+            page.locator('#codeInput_q_su-exam_353').fill(q3_sol)
             page.locator('#continuousPaperArea .paper-q-card').nth(3).locator('[data-flag-q]').click()
 
             page.locator('#btnJumpNextUnanswered').click()

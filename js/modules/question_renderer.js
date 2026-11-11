@@ -45,9 +45,25 @@
 
   function isCodingQuestion(question) {
     if (!question) return false;
-    return question.questionType === 'code-cloze' ||
-      question.questionType === 'code-snippet' ||
-      question.questionType === 'code-full';
+    const qt = question.questionType || question.type;
+    return qt === 'short-answer' ||
+      qt === 'code-cloze' ||
+      qt === 'code-snippet' ||
+      qt === 'code-full';
+  }
+
+  function renderShortAnswerInteractiveBlock(question, qState, _csharpEngine, icons, isGraded, allowInstantSubmit, isCompleted) {
+    const currentAns = (qState && typeof qState.codeAnswer === 'string')
+      ? qState.codeAnswer
+      : '';
+    const disabledAttr = ((isGraded && allowInstantSubmit) || isCompleted) ? ' readonly' : '';
+    return `<div class="q-short-answer-wrap">
+      <div class="q-short-answer-row">
+        <input type="text" class="text-input q-short-answer-input" id="codeInput_${escapeHtml(question.id)}" data-code-q-id="${escapeHtml(question.id)}" value="${escapeHtml(currentAns)}" placeholder="Write your answer here..." autocomplete="off" spellcheck="false" aria-label="Written answer for question ${escapeHtml(question.id)}"${disabledAttr}>
+        ${(allowInstantSubmit && !isGraded && !isCompleted) ? `<button type="button" class="btn-primary btn-sm" data-submit-coding-q="${escapeHtml(question.id)}">${icons ? icons.icon('check-circle', { size: 14 }) : ''} Submit Answer</button>` : ''}
+        ${(!isGraded && !isCompleted && currentAns) ? `<button type="button" class="btn-ghost btn-sm" data-reset-coding-q="${escapeHtml(question.id)}">${icons ? icons.icon('repeat', { size: 14 }) : ''} Clear</button>` : ''}
+      </div>
+    </div>`;
   }
 
   function buildLineNumbersHtml(codeText, minLines = 5) {
@@ -104,7 +120,7 @@
       return `<span class="cloze-slot-wrap"><span class="cloze-slot-num">[${oneBasedIdx}]</span><input type="text" class="cloze-blank-input ${stateCls}" style="width:${widthCh}ch" data-cloze-q-id="${escapeHtml(question.id)}" data-cloze-blank-id="${escapeHtml(bId)}" data-cloze-blank-idx="${idx}" value="${escapeHtml(val)}" placeholder="${escapeHtml(bDef.placeholder || ('Blank ' + oneBasedIdx))}" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Blank ${oneBasedIdx}: ${escapeHtml(bDef.hint || 'C# code completion')}"${disabledAttr}>${inlineFeedback}</span>`;
     }).join('');
 
-    const hintsHtml = blanks.length > 0
+    const hintsHtml = (allowInstantSubmit && blanks.some(b => b.hint))
       ? `<div class="cloze-hints-bar">
           ${blanks.map((b, i) => `<span class="cloze-hint-chip"><strong>[${i + 1}]</strong> ${escapeHtml(b.hint || 'Complete C# token')} <em>(${b.marks || 1}m)</em></span>`).join('')}
         </div>`
@@ -187,11 +203,14 @@
 
   function renderCodingExplanationPanel(question, qState, deps = {}) {
     const { csharpEngine, defsEngine, icons, showSimilarBtn, isUnderstood } = deps;
+    const qt = question.questionType || question.type;
     let grading = qState && qState.gradingResult;
     if (!grading && csharpEngine) {
-      grading = question.questionType === 'code-cloze'
+      grading = qt === 'code-cloze'
         ? csharpEngine.evaluateClozeQuestion(question, (qState && qState.clozeAnswers) || {}, { revealSolution: true })
-        : csharpEngine.evaluateCodingQuestion(question, (qState && qState.codeAnswer) || '', { revealSolution: true });
+        : (qt === 'short-answer' && typeof csharpEngine.evaluateShortAnswerQuestion === 'function')
+          ? csharpEngine.evaluateShortAnswerQuestion(question, (qState && qState.codeAnswer) || '', { revealSolution: true })
+          : csharpEngine.evaluateCodingQuestion(question, (qState && qState.codeAnswer) || '', { revealSolution: true });
     }
 
     const earned = grading ? grading.earnedMarks : (qState ? qState.earnedMarks : 0);
@@ -199,16 +218,20 @@
     const pct = maxM > 0 ? Math.round((earned / maxM) * 100) : 0;
     const isCorrect = earned >= maxM;
     const isPartial = earned > 0 && earned < maxM;
+    const isUnanswered = !grading || grading.answered === false;
+    const isBookmarkedOnly = Boolean(qState && qState.bookmarkedReview && isUnanswered && earned === 0);
 
-    const statusClass = isCorrect ? 'feedback-correct' : (isPartial ? 'feedback-partial' : 'feedback-incorrect');
+    const statusClass = isBookmarkedOnly ? 'feedback-neutral' : (isCorrect ? 'feedback-correct' : (isPartial ? 'feedback-partial' : 'feedback-incorrect'));
     const statusIcon = icons
-      ? icons.icon(isCorrect ? 'check-circle' : (isPartial ? 'flag' : 'x-circle'), { size: 18 })
+      ? icons.icon(isBookmarkedOnly ? 'flag' : (isCorrect ? 'check-circle' : (isPartial ? 'flag' : 'x-circle')), { size: 18 })
       : '';
-    const statusHeading = isCorrect
-      ? `Full Memorandum Credit (+${earned} / ${maxM} marks — ${pct}%)`
-      : isPartial
-        ? `Partial Memorandum Credit (+${earned} / ${maxM} marks — ${pct}%)`
-        : `0 / ${maxM} marks — Review NWU Memorandum Breakdown`;
+    const statusHeading = isBookmarkedOnly
+      ? `Flagged for Review (Not Yet Attempted) — Official Memorandum Answer`
+      : isCorrect
+        ? `Full Memorandum Credit (+${earned} / ${maxM} marks — ${pct}%)`
+        : isPartial
+          ? `Partial Memorandum Credit (+${earned} / ${maxM} marks — ${pct}%)`
+          : `0 / ${maxM} marks — Official Memorandum Answer`;
 
     const rubricRows = (grading && Array.isArray(grading.rubricResults) ? grading.rubricResults : []).map(r => {
       const badgeCls = r.status === 'passed' ? 'rubric-status-pass' : (r.status === 'partial' ? 'rubric-status-partial' : 'rubric-status-fail');
@@ -272,27 +295,38 @@
         </div>`
       : '';
 
-    const modelSol = question.modelSolution || '';
-    const studentCodeStr = question.questionType === 'code-cloze'
+    const modelSol = question.modelSolution || question.expectedAnswer || '';
+    const studentCodeStr = qt === 'code-cloze'
       ? Object.entries((qState && qState.clozeAnswers) || {}).map(([k, v]) => `${k}: ${v}`).join('\n')
-      : ((qState && qState.codeAnswer) || '(No code submitted)');
+      : ((qState && qState.codeAnswer) || (qt === 'short-answer' ? '(No answer submitted)' : '(No code submitted)'));
+
+    const formatSol = (txt) => (qt !== 'short-answer' && csharpEngine && csharpEngine.highlightCSharp)
+      ? csharpEngine.highlightCSharp(txt)
+      : escapeHtml(txt);
 
     const sideBySideHtml = modelSol
       ? `<div class="memo-comparison-grid">
           <div class="memo-comparison-col">
-            <div class="code-block-bar"><span class="code-lang-tag">Student Submission</span></div>
-            <pre class="code-pre"><code>${(csharpEngine && csharpEngine.highlightCSharp) ? csharpEngine.highlightCSharp(studentCodeStr) : escapeHtml(studentCodeStr)}</code></pre>
+            <div class="code-block-bar"><span class="code-lang-tag">${qt === 'short-answer' ? 'Your Answer' : 'Student Submission'}</span></div>
+            <pre class="code-pre"><code>${formatSol(studentCodeStr)}</code></pre>
           </div>
           <div class="memo-comparison-col">
             <div class="code-block-bar"><span class="code-lang-tag">Official NWU Model Solution</span></div>
-            <pre class="code-pre"><code>${(csharpEngine && csharpEngine.highlightCSharp) ? csharpEngine.highlightCSharp(modelSol) : escapeHtml(modelSol)}</code></pre>
+            <pre class="code-pre"><code>${formatSol(modelSol)}</code></pre>
           </div>
         </div>`
       : '';
 
-    const expHtml = defsEngine
+    const rawExpHtml = defsEngine
       ? defsEngine.renderTextWithInlineLinks(question.explanation || question.exp || '', { maxLinks: 3 })
       : escapeHtml(question.explanation || question.exp || '');
+
+    const detailsNoteHtml = rawExpHtml
+      ? `<details class="distractor-details" data-panel-id="distractor_${escapeHtml(question.id)}">
+          <summary>Memorandum Marking Notes</summary>
+          <p>${rawExpHtml}</p>
+        </details>`
+      : '';
 
     const relDefs = Array.isArray(question.definitions) && question.definitions.length > 0 && defsEngine
       ? `<div class="feedback-defs-row">
@@ -320,10 +354,10 @@
         <span class="q-feedback-status-icon">${statusIcon}</span>
         <strong>${escapeHtml(statusHeading)}</strong>
       </div>
+      ${sideBySideHtml}
       ${rubricTableHtml}
       ${testTableHtml}
-      ${sideBySideHtml}
-      ${expHtml ? `<div class="q-feedback-body">${expHtml}</div>` : ''}
+      ${detailsNoteHtml}
       ${relDefs}
       ${reviewActions}
     </div>`;
@@ -431,12 +465,20 @@
     const diffClass = `diff-${String(question.difficulty || 'Intermediate').toLowerCase()}`;
 
     if (isCodingQuestion(question)) {
-      const formatLabel = question.questionType === 'code-cloze'
-        ? 'Code Cloze'
-        : (question.questionType === 'code-snippet' ? 'C# Snippet' : 'Full C#');
-      const interactiveBodyHtml = question.questionType === 'code-cloze'
-        ? renderClozeInteractiveBlock(question, qState, csharpEngine, icons, isGraded, allowInstantSubmit, isCompleted)
-        : renderCodeEditorInteractiveBlock(question, qState, csharpEngine, icons, isGraded, allowInstantSubmit, isCompleted);
+      const qt = question.questionType || question.type;
+      const formatLabel = qt === 'short-answer'
+        ? 'Written Answer'
+        : qt === 'code-cloze'
+          ? 'Code Cloze'
+          : (qt === 'code-snippet' ? 'C# Snippet' : 'Full C#');
+      const refCodeHtml = (qt !== 'code-cloze' && question.code)
+        ? renderCodeBlock(question.code, csharpEngine, icons, 'C# Code')
+        : '';
+      const interactiveBodyHtml = qt === 'short-answer'
+        ? renderShortAnswerInteractiveBlock(question, qState, csharpEngine, icons, isGraded, allowInstantSubmit, isCompleted)
+        : qt === 'code-cloze'
+          ? renderClozeInteractiveBlock(question, qState, csharpEngine, icons, isGraded, allowInstantSubmit, isCompleted)
+          : renderCodeEditorInteractiveBlock(question, qState, csharpEngine, icons, isGraded, allowInstantSubmit, isCompleted);
 
       const feedbackHtml = isGraded
         ? renderCodingExplanationPanel(question, qState, {
@@ -449,7 +491,7 @@
         : '';
 
       if (continuousMode) {
-        return `<article class="paper-q-card paper-coding-q-card ${isFlagged ? 'is-flagged' : ''}" id="paperQuestion_${escapeHtml(question.id)}" data-question-id="${escapeHtml(question.id)}" data-question-type="${escapeHtml(question.questionType)}">
+        return `<article class="paper-q-card paper-coding-q-card ${isFlagged ? 'is-flagged' : ''}" id="paperQuestion_${escapeHtml(question.id)}" data-question-id="${escapeHtml(question.id)}" data-question-type="${escapeHtml(qt)}">
           <div class="q-card-meta">
             <div class="q-meta-left">
               <span class="q-number-pill">Question ${index + 1}</span>
@@ -464,12 +506,13 @@
             </button>
           </div>
           <div class="q-stem-text">${stemHtml}</div>
+          ${refCodeHtml}
           ${interactiveBodyHtml}
           ${feedbackHtml}
         </article>`;
       }
 
-      return `<article class="single-q-card coding-q-card ${compact ? 'compact-q-card' : ''}" data-question-id="${escapeHtml(question.id)}" data-question-type="${escapeHtml(question.questionType)}">
+      return `<article class="single-q-card coding-q-card ${compact ? 'compact-q-card' : ''}" data-question-id="${escapeHtml(question.id)}" data-question-type="${escapeHtml(qt)}">
         <div class="q-card-meta">
           <div class="q-meta-left">
             <span class="q-su-pill">${escapeHtml(question.su)}</span>
@@ -487,6 +530,7 @@
           </div>
         </div>
         <div class="q-stem-text">${stemHtml}</div>
+        ${refCodeHtml}
         ${interactiveBodyHtml}
         ${feedbackHtml}
       </article>`;
@@ -590,6 +634,7 @@
     buildLineNumbersHtml,
     escapeHtml,
     renderCodeBlock,
+    renderShortAnswerInteractiveBlock,
     renderClozeInteractiveBlock,
     renderCodeEditorInteractiveBlock,
     renderCodingExplanationPanel,

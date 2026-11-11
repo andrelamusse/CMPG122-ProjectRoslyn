@@ -1215,11 +1215,8 @@
       if (!ex) return;
       const allPool = this._getAllQuestionsPool();
       const qMap = new Map(allPool.map(q => [q.id, q]));
-      const combinedIds = [
-        ...(Array.isArray(ex.subQuestionIds) ? ex.subQuestionIds : []),
-        ...(Array.isArray(ex.practicalQuestionIds) ? ex.practicalQuestionIds : [])
-      ];
-      const qs = combinedIds.map(id => qMap.get(id)).filter(Boolean);
+      const subIds = Array.isArray(ex.subQuestionIds) ? ex.subQuestionIds : [];
+      const qs = subIds.map(id => qMap.get(id)).filter(Boolean);
 
       this.examSession = new ExamMod.ExamSession({
         id: `${ex.id}_${Date.now()}`,
@@ -1241,7 +1238,7 @@
 
     startFullWeightedExam(timed = true) {
       const allocations = (this.data.examWeightingModel && this.data.examWeightingModel.allocations) || ExamMod.DEFAULT_WEIGHTS;
-      const qs = ExamMod.generateWeightedExam(this.data.questions || [], allocations, 100);
+      const qs = ExamMod.generateWeightedExam(this._getAllQuestionsPool(), allocations, 100, { preferDirectExamFormat: true });
       this.examSession = new ExamMod.ExamSession({
         id: `full_sim_${Date.now()}`,
         mode: 'full_exam',
@@ -1820,8 +1817,9 @@
           ? `<p style="color:var(--text-muted);margin:0;">No unresolved incorrect questions right now.</p>`
           : stats.incorrectQueue.map(({ question, history }, i) => {
               const isCoding = Renderer.isCodingQuestion(question);
+              const qt = question.questionType || question.type;
               const lastSubLabel = isCoding
-                ? (question.questionType === 'code-cloze' ? 'Last Submission: Cloze Blanks' : 'Last Submission: C# Code')
+                ? (qt === 'code-cloze' ? 'Last Submission: Cloze Blanks' : (qt === 'short-answer' ? 'Last Submission: Written Answer' : 'Last Submission: C# Code'))
                 : `Last Choice: Option ${Renderer.LETTERS[history.lastSelected] || '?'}`;
               const cardState = {
                 status: 'submitted',

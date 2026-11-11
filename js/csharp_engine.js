@@ -3148,10 +3148,202 @@
     };
   }
 
+  function normalizeShortText(s) {
+    return String(s || '')
+      .trim()
+      .toLowerCase()
+      .replace(/[\u2018\u2019]/g, "'")
+      .replace(/[\u201C\u201D]/g, '"')
+      .replace(/\s+/g, ' ');
+  }
+
+  function normalizeShortNumeric(s) {
+    const raw = String(s || '').trim();
+    if (!raw) return null;
+    const cleaned = raw.replace(/^[rR]\s*/, '').replace(/,/g, '').replace(/\s+/g, '');
+    if (/^-?\d+(\.\d+)?$/.test(cleaned)) {
+      return Number(cleaned);
+    }
+    const eqMatch = raw.match(/=\s*[rR]?\s*(-?\d[\d,]*(?:\.\d+)?)\s*$/);
+    if (eqMatch) {
+      const numStr = eqMatch[1].replace(/,/g, '');
+      if (!Number.isNaN(Number(numStr))) return Number(numStr);
+    }
+    return null;
+  }
+
+  function evaluateShortAnswerQuestion(question, studentText, options = {}) {
+    const maxMarks = Number(question && question.marks) || 4;
+    const rawStr = String(studentText || '').trim();
+    const expected = String((question && (question.expectedAnswer || question.modelSolution)) || '').trim();
+
+    if (!rawStr) {
+      return {
+        questionType: 'short-answer',
+        answered: false,
+        earnedMarks: 0,
+        maxMarks,
+        percentage: 0,
+        isCorrect: false,
+        isPartial: false,
+        rubricResults: [
+          {
+            id: 'short_1',
+            criterion: (question && question.criterion) || 'Memorandum Answer',
+            category: 'Memorandum Answer',
+            availableMarks: maxMarks,
+            earnedMarks: 0,
+            status: 'failed',
+            explanation: `Expected: ${expected}`,
+            expectedBehavior: expected,
+            actualBehavior: '(Empty)',
+            line: 1,
+            suggestion: ''
+          }
+        ],
+        testResults: [],
+        diagnostics: [],
+        unsupportedConstructs: [],
+        modelSolution: options.revealSolution === false ? undefined : expected
+      };
+    }
+
+    const normStudent = normalizeShortText(rawStr);
+    const stripCodePunct = (str) => normalizeShortText(str).replace(/^[`"']+|[`"';.]+$/g, '').trim();
+    const acceptedList = [
+      expected,
+      (question && question.modelSolution) || '',
+      ...((question && Array.isArray(question.acceptedAnswers)) ? question.acceptedAnswers : []),
+      ...((question && Array.isArray(question.acceptedAlternatives)) ? question.acceptedAlternatives : [])
+    ].filter(Boolean);
+
+    let isExactMatch = acceptedList.some(acc => {
+      if (normalizeShortText(acc) === normStudent) return true;
+      if (stripCodePunct(acc) === stripCodePunct(rawStr)) return true;
+      return false;
+    });
+
+    if (!isExactMatch && question) {
+      const expNum = question.numericAnswer !== undefined ? Number(question.numericAnswer) : normalizeShortNumeric(expected);
+      const stuNum = normalizeShortNumeric(rawStr);
+      if (expNum !== null && !Number.isNaN(expNum) && stuNum !== null && !Number.isNaN(stuNum)) {
+        if (Math.abs(expNum - stuNum) < 0.005) {
+          isExactMatch = true;
+        }
+      }
+    }
+
+    const rubricItems = (question && Array.isArray(question.rubric) && question.rubric.length > 0)
+      ? question.rubric
+      : ((question && Array.isArray(question.markingRubric) && question.markingRubric.length > 0) ? question.markingRubric : []);
+
+    let earnedMarks = 0;
+    let rubricResults = [];
+
+    if (isExactMatch) {
+      earnedMarks = maxMarks;
+      rubricResults = rubricItems.length > 0
+        ? rubricItems.map((r, i) => ({
+            id: r.id || `crit_${i + 1}`,
+            criterion: r.criterion,
+            category: 'Memorandum Answer',
+            availableMarks: Number(r.marks) || maxMarks,
+            earnedMarks: Number(r.marks) || maxMarks,
+            status: 'passed',
+            explanation: `Matches official memorandum: ${expected}`,
+            expectedBehavior: expected,
+            actualBehavior: rawStr,
+            line: 1,
+            suggestion: ''
+          }))
+        : [
+            {
+              id: 'short_1',
+              criterion: (question && question.criterion) || 'Memorandum Answer',
+              category: 'Memorandum Answer',
+              availableMarks: maxMarks,
+              earnedMarks: maxMarks,
+              status: 'passed',
+              explanation: `Matches official memorandum: ${expected}`,
+              expectedBehavior: expected,
+              actualBehavior: rawStr,
+              line: 1,
+              suggestion: ''
+            }
+          ];
+    } else if (rubricItems.length > 0) {
+      rubricResults = rubricItems.map((r, i) => {
+        const avail = Number(r.marks) || 1;
+        const pats = r.patterns || (r.pattern ? [r.pattern] : []);
+        const kws = Array.isArray(r.keywords) ? r.keywords : [];
+        let matched = false;
+        if (pats.length > 0) {
+          matched = pats.some(p => {
+            const re = p instanceof RegExp ? p : new RegExp(p, 'i');
+            return re.test(rawStr);
+          });
+        } else if (kws.length > 0) {
+          const hitCount = kws.filter(kw => normStudent.includes(normalizeShortText(kw))).length;
+          matched = hitCount >= Math.max(1, Math.ceil(kws.length / 2));
+        }
+        if (matched) earnedMarks += avail;
+        return {
+          id: r.id || `crit_${i + 1}`,
+          criterion: r.criterion,
+          category: 'Memorandum Answer',
+          availableMarks: avail,
+          earnedMarks: matched ? avail : 0,
+          status: matched ? 'passed' : 'failed',
+          explanation: matched ? `Verified: ${r.criterion}` : `Expected: ${expected}`,
+          expectedBehavior: expected,
+          actualBehavior: rawStr,
+          line: 1,
+          suggestion: ''
+        };
+      });
+      earnedMarks = Math.min(maxMarks, Math.round(earnedMarks * 2) / 2);
+    } else {
+      rubricResults = [
+        {
+          id: 'short_1',
+          criterion: (question && question.criterion) || 'Memorandum Answer',
+          category: 'Memorandum Answer',
+          availableMarks: maxMarks,
+          earnedMarks: 0,
+          status: 'failed',
+          explanation: `Expected: ${expected}`,
+          expectedBehavior: expected,
+          actualBehavior: rawStr,
+          line: 1,
+          suggestion: ''
+        }
+      ];
+    }
+
+    const percentage = maxMarks > 0 ? Math.round((earnedMarks / maxMarks) * 100) : 0;
+    return {
+      questionType: 'short-answer',
+      answered: true,
+      earnedMarks,
+      maxMarks,
+      percentage,
+      isCorrect: earnedMarks >= maxMarks,
+      isPartial: earnedMarks > 0 && earnedMarks < maxMarks,
+      rubricResults,
+      testResults: [],
+      diagnostics: [],
+      unsupportedConstructs: [],
+      modelSolution: options.revealSolution === false ? undefined : expected
+    };
+  }
+
   function evaluateCodingQuestion(question, studentCode, options = {}) {
     const qType = question.questionType || 'code-full';
     if (qType === 'code-cloze') {
       return evaluateClozeQuestion(question, studentCode, options);
+    }
+    if (qType === 'short-answer') {
+      return evaluateShortAnswerQuestion(question, studentCode, options);
     }
 
     const maxMarks = Number(question.marks) || (Array.isArray(question.rubric) ? question.rubric.reduce((s, r) => s + (Number(r.marks) || 0), 0) : 10);
@@ -3250,7 +3442,7 @@
       );
       // If behavioral tests all passed cleanly with zero syntax errors, or structural equivalence is 100% with zero syntax errors,
       // ensure alternative valid C# constructs (e.g., switch vs if/else, while vs for, C2 vs C) receive full marks on equivalent criteria!
-      if ((allTestsPassed || matchesAlternative) && fatalErrors.length === 0 && !item.strictRequirement) {
+      if ((allTestsPassed || matchesAlternative) && (fatalErrors.length === 0 || matchesAlternative) && !item.strictRequirement) {
         res.earnedMarks = res.availableMarks;
         res.status = 'passed';
         res.explanation = item.passExplanation || `Verified via behavioral execution and structural equivalence: ${item.criterion}.`;
@@ -3263,7 +3455,7 @@
 
     // Apply modest syntax penalty if code had fatal syntax errors but rubric items didn't include an explicit syntax criterion
     const hasExplicitSyntaxCrit = rubricDefs.some(r => r.checkType === 'syntax');
-    if (fatalErrors.length > 0 && !hasExplicitSyntaxCrit && earnedMarks > 0) {
+    if (fatalErrors.length > 0 && !matchesAlternative && !hasExplicitSyntaxCrit && earnedMarks > 0) {
       const penalty = Math.min(earnedMarks * 0.35, fatalErrors.length * 1);
       earnedMarks = Math.max(0.5, earnedMarks - penalty);
     }
@@ -3326,6 +3518,7 @@
     normalizeCSharp: normalizeCSharp,
     compareStructuralEquivalence: compareStructuralEquivalence,
     evaluateClozeQuestion: evaluateClozeQuestion,
+    evaluateShortAnswerQuestion: evaluateShortAnswerQuestion,
     evaluateCodingQuestion: evaluateCodingQuestion,
     CSharpCodeAuditor: CSharpCodeAuditor
   };

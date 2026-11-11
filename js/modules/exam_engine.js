@@ -48,9 +48,11 @@
 
   function isCodingQuestion(question) {
     if (!question) return false;
-    return question.questionType === 'code-cloze' ||
-      question.questionType === 'code-snippet' ||
-      question.questionType === 'code-full';
+    const qt = question.questionType || question.type;
+    return qt === 'short-answer' ||
+      qt === 'code-cloze' ||
+      qt === 'code-snippet' ||
+      qt === 'code-full';
   }
 
   function hasQuestionResponse(question, state) {
@@ -133,9 +135,12 @@
         gradingResult: null
       };
     }
-    const gradingResult = question.questionType === 'code-cloze'
+    const qt = question.questionType || question.type;
+    const gradingResult = qt === 'code-cloze'
       ? engine.evaluateClozeQuestion(question, (state && state.clozeAnswers) || {}, { revealSolution: true })
-      : engine.evaluateCodingQuestion(question, (state && state.codeAnswer) || '', { revealSolution: true });
+      : (qt === 'short-answer' && typeof engine.evaluateShortAnswerQuestion === 'function')
+        ? engine.evaluateShortAnswerQuestion(question, (state && state.codeAnswer) || '', { revealSolution: true })
+        : engine.evaluateCodingQuestion(question, (state && state.codeAnswer) || '', { revealSolution: true });
 
     return {
       answered: true,
@@ -249,9 +254,12 @@
   function generateWeightedExam(allQuestions, allocations = DEFAULT_WEIGHTS, targetMarks = 100, options = {}) {
     const rng = createRng(options.seed);
     const excludeSet = new Set(options.excludeIds || []);
+    const directPool = (allQuestions || []).filter(q => isCodingQuestion(q) && !excludeSet.has(q.id));
     const pool = (allQuestions || []).filter(q => !q.examPaperId && !excludeSet.has(q.id));
     const fallbackPool = (allQuestions || []).filter(q => !excludeSet.has(q.id));
-    const activePool = pool.length >= 30 ? pool : fallbackPool;
+    const activePool = (options.preferDirectExamFormat && directPool.length >= 15)
+      ? directPool
+      : (pool.length >= 30 ? pool : fallbackPool);
 
     const availMarksBySu = {};
     for (const q of activePool) {
@@ -289,7 +297,7 @@
         }
       }
 
-      // If 1 mark short (e.g. odd target like 15 with 2/3/4-mark items), swap or top up cleanly
+      // If short of unitTargetMarks, top up with an exact match, 1-for-1 swap, or 1-for-2 swap
       if (unitMarks < unitTargetMarks) {
         const diffNeeded = unitTargetMarks - unitMarks;
         const exact = candidates.find(q => !usedIds.has(q.id) && (Number(q.marks) || 2) === diffNeeded);
@@ -297,23 +305,44 @@
           selected.push(exact);
           usedIds.add(exact.id);
           unitMarks += diffNeeded;
-        } else if (diffNeeded === 1 && selected.length > 0) {
-          // Swap a 2-mark question in this SU for a 3-mark question (or 3 for 4) to hit exact target!
-          const swapIdx = selected.findIndex(sq => sq.su === su && (Number(sq.marks) || 2) === 2);
-          const threeMark = candidates.find(q => !usedIds.has(q.id) && (Number(q.marks) || 2) === 3);
-          if (swapIdx !== -1 && threeMark) {
-            usedIds.delete(selected[swapIdx].id);
-            selected[swapIdx] = threeMark;
-            usedIds.add(threeMark.id);
-            unitMarks += 1;
-          } else {
-            const swap3 = selected.findIndex(sq => sq.su === su && (Number(sq.marks) || 2) === 3);
-            const fourMark = candidates.find(q => !usedIds.has(q.id) && (Number(q.marks) || 2) === 4);
-            if (swap3 !== -1 && fourMark) {
-              usedIds.delete(selected[swap3].id);
-              selected[swap3] = fourMark;
-              usedIds.add(fourMark.id);
-              unitMarks += 1;
+        } else if (diffNeeded > 0 && selected.length > 0) {
+          let swapped = false;
+          for (let sIdx = 0; sIdx < selected.length; sIdx++) {
+            if (selected[sIdx].su !== su) continue;
+            const oldM = Number(selected[sIdx].marks) || 2;
+            const wantM = oldM + diffNeeded;
+            const replacement = candidates.find(q => !usedIds.has(q.id) && (Number(q.marks) || 2) === wantM);
+            if (replacement) {
+              usedIds.delete(selected[sIdx].id);
+              selected[sIdx] = replacement;
+              usedIds.add(replacement.id);
+              unitMarks += diffNeeded;
+              swapped = true;
+              break;
+            }
+          }
+          if (!swapped) {
+            const unused = candidates.filter(q => !usedIds.has(q.id));
+            for (let sIdx = 0; sIdx < selected.length && !swapped; sIdx++) {
+              if (selected[sIdx].su !== su) continue;
+              const wantPair = (Number(selected[sIdx].marks) || 2) + diffNeeded;
+              for (let i = 0; i < unused.length && !swapped; i++) {
+                const m1 = Number(unused[i].marks) || 2;
+                if (m1 >= wantPair) continue;
+                for (let j = i + 1; j < unused.length; j++) {
+                  const m2 = Number(unused[j].marks) || 2;
+                  if (m1 + m2 === wantPair) {
+                    usedIds.delete(selected[sIdx].id);
+                    selected[sIdx] = unused[i];
+                    selected.push(unused[j]);
+                    usedIds.add(unused[i].id);
+                    usedIds.add(unused[j].id);
+                    unitMarks += diffNeeded;
+                    swapped = true;
+                    break;
+                  }
+                }
+              }
             }
           }
         }
@@ -355,6 +384,24 @@
             unitSelectedMarks[su] = (unitSelectedMarks[su] || 0) + m;
             totalSelectedMarks += m;
             progressed = true;
+            break;
+          }
+        }
+      }
+
+      if (totalSelectedMarks < targetMarks) {
+        const remDiff = targetMarks - totalSelectedMarks;
+        for (let sIdx = 0; sIdx < selected.length; sIdx++) {
+          const su = selected[sIdx].su;
+          const oldM = Number(selected[sIdx].marks) || 2;
+          const list = candidatesBySu.get(su) || [];
+          const replacement = list.find(q => !usedIds.has(q.id) && (Number(q.marks) || 2) === oldM + remDiff);
+          if (replacement) {
+            usedIds.delete(selected[sIdx].id);
+            selected[sIdx] = replacement;
+            usedIds.add(replacement.id);
+            unitSelectedMarks[su] = (unitSelectedMarks[su] || 0) + remDiff;
+            totalSelectedMarks += remDiff;
             break;
           }
         }

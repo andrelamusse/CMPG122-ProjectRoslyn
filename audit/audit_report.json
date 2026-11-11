@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-11T11:36:55.780Z",
+  "timestamp": "2026-11-11T12:37:06.295Z",
   "module": "CMPG122",
   "version": "9.2.1",
   "status": "PASS",
@@ -23,7 +23,7 @@
       "SU1": 10,
       "SU2": 15
     },
-    "mobileBundleBytes": 2436523,
+    "mobileBundleBytes": 2442948,
     "failureCount": 0,
     "warningCount": 0
   },
@@ -44,16 +44,20 @@
     },
     "byQuestionType": {
       "concept-comparison": 90,
-      "hci-application": 26,
-      "application-scenario": 262,
+      "hci-application": 25,
+      "application-scenario": 222,
       "file-handling": 15,
       "error-identification": 25,
-      "logic-problem": 30,
-      "syntax-selection": 20,
-      "input-validation": 26,
+      "logic-problem": 9,
+      "syntax-selection": 14,
+      "input-validation": 14,
       "code-output": 5,
       "code-tracing": 22,
       "loop-execution": 25,
+      "short-answer": 38,
+      "code-cloze": 3,
+      "code-snippet": 34,
+      "code-full": 5,
       "method-execution": 11,
       "multiform-behaviour": 21,
       "debugging": 7

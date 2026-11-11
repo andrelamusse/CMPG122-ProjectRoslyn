@@ -555,27 +555,49 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
     assert.ok(unwM >= 10 && unwM <= 14, `Expected ~12 marks when unweighted targetMarks=12, got ${unwM}`);
   });
 
-  it('enforces numeric estimatedDifficulty, option-consistent distractorRationale, and zero textbook citations across all 585 questions', () => {
+  it('enforces numeric estimatedDifficulty, option-consistent distractorRationale on MCQs, 1:1 non-MCQ format on all 80 official exam questions, and zero textbook citations across all 585 questions', () => {
     assert.equal(DATA.questions.length, 585);
     const citationRe = /\bch(?:apters?|\.)?\s+\d|\bch\.\d|\bshneiderman\s+ch\b|\bvisual\s+c#\s+ch\b/i;
     const rationales = new Set();
     const letters = ['A', 'B', 'C', 'D', 'E'];
+    let examCount = 0;
 
     for (const q of DATA.questions) {
       assert.equal(typeof q.estimatedDifficulty, 'number', `${q.id} missing numeric estimatedDifficulty`);
       assert.ok(q.estimatedDifficulty >= 0.15 && q.estimatedDifficulty <= 0.95, `${q.id} out-of-range estimatedDifficulty`);
-      assert.equal(typeof q.distractorRationale, 'string', `${q.id} missing distractorRationale`);
-      assert.ok(q.distractorRationale.trim().length >= 25, `${q.id} distractorRationale too short`);
-      const normDr = q.distractorRationale.trim().toLowerCase();
-      assert.equal(rationales.has(normDr), false, `${q.id} has duplicate distractorRationale`);
-      rationales.add(normDr);
 
-      const ansL = letters[q.answer];
-      assert.equal(new RegExp(`\\bOption\\s+${ansL}\\b`, 'i').test(q.distractorRationale), false, `${q.id} distractorRationale cites correct Option ${ansL}`);
+      if (q.examPaperId) {
+        examCount += 1;
+        assert.ok(['short-answer', 'code-cloze', 'code-snippet', 'code-full'].includes(q.questionType), `${q.id} must use authentic 1:1 exam format, got ${q.questionType}`);
+        assert.equal(q.options, undefined, `${q.id} must not have MCQ options`);
+        assert.equal(q.distractorRationale, undefined, `${q.id} must not have MCQ distractorRationale`);
+        if (q.questionType === 'code-cloze') {
+          const ans = {};
+          (q.blanks || []).forEach(b => { ans[b.id] = b.expected; });
+          const ev = CSharpEngine.evaluateClozeQuestion(q, ans);
+          assert.equal(ev.earnedMarks, q.marks, `${q.id} cloze model solution must score full marks`);
+        } else if (q.questionType === 'short-answer') {
+          const ev = CSharpEngine.evaluateShortAnswerQuestion(q, q.modelSolution);
+          assert.equal(ev.earnedMarks, q.marks, `${q.id} short-answer model solution must score full marks`);
+        } else {
+          const ev = CSharpEngine.evaluateCodingQuestion(q, q.modelSolution);
+          assert.equal(ev.earnedMarks, q.marks, `${q.id} coding model solution must score full marks`);
+        }
+      } else {
+        assert.equal(typeof q.distractorRationale, 'string', `${q.id} missing distractorRationale`);
+        assert.ok(q.distractorRationale.trim().length >= 25, `${q.id} distractorRationale too short`);
+        const normDr = q.distractorRationale.trim().toLowerCase();
+        assert.equal(rationales.has(normDr), false, `${q.id} has duplicate distractorRationale`);
+        rationales.add(normDr);
 
-      const textBlob = [q.stem, q.explanation, q.distractorRationale, ...(q.options || [])].join(' ');
+        const ansL = letters[q.answer];
+        assert.equal(new RegExp(`\\bOption\\s+${ansL}\\b`, 'i').test(q.distractorRationale), false, `${q.id} distractorRationale cites correct Option ${ansL}`);
+      }
+
+      const textBlob = [q.stem, q.explanation, q.distractorRationale || '', q.modelSolution || '', ...(q.options || [])].join(' ');
       assert.equal(citationRe.test(textBlob), false, `${q.id} still contains textbook chapter citation`);
     }
+    assert.equal(examCount, 80, 'All 80 official past exam questions must be verified');
   });
 
   it('defines matching methodSignature and methodHeader across all 15 CodeGrade scenarios and preserves paused exams across Custom Quiz completion', async () => {
@@ -655,7 +677,15 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
     }
 
     let longestCorrectCount = 0;
+    let mcqCount = 0;
     for (const q of DATA.questions) {
+      const qBlob = [q.stem, q.code || '', ...(q.options || []), q.modelSolution || '', q.explanation || '', q.distractorRationale || ''].join(' | ');
+      assert.equal(mojibakeRe.test(qBlob), false, `${q.id} contains UTF-8 mojibake sequence`);
+      if (q.examPaperId) {
+        assert.equal(q.options, undefined, `${q.id} official exam question must not have MCQ options`);
+        continue;
+      }
+      mcqCount++;
       const opts = q.options;
       const ans = opts[q.answer];
       const dists = opts.filter((_, idx) => idx !== q.answer);
@@ -668,16 +698,14 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
       assert.ok(!(ansLen > 25 && (ansLen > maxD * 1.15 || ansLen > avgD * 1.25)), `${q.id} option length giveaway: ansLen=${ansLen}, maxD=${maxD}, avgD=${Math.round(avgD)}`);
       assert.ok(!(minD > 25 && minD > ansLen * 1.45), `${q.id} short option giveaway: ansLen=${ansLen}, minD=${minD}`);
       assert.equal(hasProseParen(ans) && !dists.some(hasProseParen), false, `${q.id} has asymmetric parenthetical prose in correct answer: ${ans}`);
-      const qBlob = [q.stem, q.code || '', ...opts, q.explanation, q.distractorRationale].join(' | ');
-      assert.equal(mojibakeRe.test(qBlob), false, `${q.id} contains UTF-8 mojibake sequence`);
       for (const o of opts) {
         assert.equal(/\b[A-Za-z0-9_]+Form\.(html|css|main|header|body|sub)\b/i.test(o), false, `${q.id} has implausible non-C# form file extension: ${o}`);
         assert.equal(cannedOptionSuffixRe.test(o), false, `${q.id} has canned boilerplate distractor suffix: ${o}`);
         assert.equal(cartoonishDistractorRe.test(o), false, `${q.id} has cartoonish distractor: ${o}`);
       }
     }
-    const longestShare = longestCorrectCount / DATA.questions.length;
-    assert.ok(longestShare >= 0.18 && longestShare <= 0.30, `Longest option is correct in ${(longestShare * 100).toFixed(1)}% of questions (${longestCorrectCount}/${DATA.questions.length})`);
+    const longestShare = longestCorrectCount / mcqCount;
+    assert.ok(longestShare >= 0.18 && longestShare <= 0.30, `Longest option is correct in ${(longestShare * 100).toFixed(1)}% of questions (${longestCorrectCount}/${mcqCount})`);
 
     for (const se of DATA.spotErrors) {
       const opts = se.options;
@@ -1052,5 +1080,49 @@ describe('11. Multi-Variation C# Marking Engine, Virtual Interfaces & Interactiv
     assert.ok(stats.incorrectQueue.some(item => item.question.id === qFull.id), 'incorrectQueue must include missed code-full question');
     assert.ok(stats.incorrectQueue.some(item => item.question.id === qCloze.id), 'incorrectQueue must include missed code-cloze question');
     assert.ok(stats.flaggedQueue.some(q => q.id === qFull.id), 'flaggedQueue must include flagged coding question');
+  });
+
+  it('grades 1:1 short-answer official exam questions (exact, numeric/currency, partial rubric, empty) and generates 1:1 weighted exams', () => {
+    const qShortTheory = DATA.questions.find(q => q.id === 'q_su-exam_351');
+    const qShortTrace = DATA.questions.find(q => q.examPaperId && q.questionType === 'short-answer' && q.modelSolution === 'R 2,600.00');
+    assert.ok(qShortTheory && qShortTrace);
+    assert.equal(qShortTheory.questionType, 'short-answer');
+    assert.equal(qShortTrace.questionType, 'short-answer');
+
+    // Exact modelSolution and accepted variant
+    assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTheory, qShortTheory.modelSolution).earnedMarks, qShortTheory.marks);
+    assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTheory, 'Mutual exclusion').earnedMarks, qShortTheory.marks);
+    assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTheory, 'So only one vehicle category can be selected at a time').earnedMarks, qShortTheory.marks);
+
+    // Numeric & currency equivalence (R 2,600.00 vs 2600 vs R2600.00)
+    assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTrace, 'R 2,600.00').earnedMarks, qShortTrace.marks);
+    assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTrace, '2600').earnedMarks, qShortTrace.marks);
+    assert.equal(CSharpEngine.evaluateShortAnswerQuestion(qShortTrace, 'R2600.00').earnedMarks, qShortTrace.marks);
+
+    // Empty / wrong answer
+    const emptyEval = CSharpEngine.evaluateShortAnswerQuestion(qShortTrace, '   ');
+    assert.equal(emptyEval.answered, false);
+    assert.equal(emptyEval.earnedMarks, 0);
+    const wrongEval = CSharpEngine.evaluateShortAnswerQuestion(qShortTrace, 'R 9999.00');
+    assert.equal(wrongEval.answered, true);
+    assert.equal(wrongEval.earnedMarks, 0);
+
+    // Render short-answer card in continuous exam mode -> 0 .q-option-btn, 1 .q-short-answer-input
+    const cardHtml = Renderer.renderQuestionCard(qShortTrace, null, {
+      csharpEngine: CSharpEngine,
+      continuousMode: true,
+      allowInstantSubmit: false
+    });
+    assert.ok(cardHtml.includes('q-short-answer-input'));
+    assert.equal(cardHtml.includes('q-option-btn'), false);
+
+    // 1:1 Weighted Exam Simulation (preferDirectExamFormat: true)
+    const directExam = ExamMod.generateWeightedExam(DATA.allQuestions, ExamMod.DEFAULT_WEIGHTS, 100, {
+      preferDirectExamFormat: true,
+      seed: 101
+    });
+    const totalM = directExam.reduce((s, q) => s + q.marks, 0);
+    assert.equal(totalM, 100);
+    assert.equal(directExam.every(q => ExamMod.isCodingQuestion(q)), true, '1:1 Weighted Exam must contain 0 MCQs');
   });
 });

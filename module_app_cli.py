@@ -295,7 +295,8 @@ const validTypes = new Set([
   'mcq', 'code-output', 'code-tracing', 'error-identification', 'debugging',
   'syntax-selection', 'concept-comparison', 'application-scenario', 'logic-problem',
   'input-validation', 'loop-execution', 'file-handling', 'method-execution',
-  'multiform-behaviour', 'hci-application'
+  'multiform-behaviour', 'hci-application',
+  'short-answer', 'code-cloze', 'code-snippet', 'code-full'
 ]);
 
 const seenIds = new Set();
@@ -305,6 +306,7 @@ const suDist = {};
 const suAnsDist = {};
 const diffDist = {};
 const qTypeDist = {};
+let mcqQuestionCount = 0;
 
 function normDupTokens(s) {
   const norm = String(s || '')
@@ -427,43 +429,66 @@ function auditOptionSymmetry(itemId, opts, answerIdx, isMainQuestion) {
     seenStems.set(normStem, qId);
   }
 
-  const opts = q.options || q.opts;
-  if (!Array.isArray(opts) || opts.length < 2) {
-    fail(qId, 'Options array missing or has fewer than 2 choices');
-  } else {
-    const exactOpts = new Set(opts.map(o => String(o).trim()));
-    if (exactOpts.size !== opts.length) fail(qId, 'Duplicate options inside single question');
-    if (typeof q.answer !== 'number' || q.answer < 0 || q.answer >= opts.length) {
-      fail(qId, `Answer index ${q.answer} out of bounds [0..${opts.length - 1}]`);
-    } else {
-      auditOptionSymmetry(qId, opts, q.answer, true);
-    }
-  }
-
   const exp = String(q.explanation || q.exp || '').trim();
   if (exp.length < 15) fail(qId, 'Explanation missing or too brief');
+  const opts = q.options || q.opts;
   const dr = String(q.distractorRationale || '').trim();
-  if (dr.length < 25) {
-    fail(qId, 'distractorRationale missing or too brief');
-  } else if (roboticDrRe.test(dr)) {
-    fail(qId, 'Contains robotic boilerplate distractorRationale filler');
-  } else {
-    const normDr = dr.toLowerCase().replace(/\s+/g, ' ');
-    if (seenRationales.has(normDr)) {
-      fail(qId, `Duplicate boilerplate distractorRationale shared with ${seenRationales.get(normDr)}`);
+
+  if (q.examPaperId) {
+    if (!['short-answer', 'code-cloze', 'code-snippet', 'code-full'].includes(q.questionType)) {
+      fail(qId, `Official exam question must use 1:1 non-MCQ format, found ${q.questionType}`);
+    }
+    if (q.options !== undefined || q.opts !== undefined || q.distractorRationale !== undefined) {
+      fail(qId, 'Official exam question must not contain artificial MCQ options or distractorRationale');
+    }
+    if (q.questionType === 'code-cloze') {
+      const clozeAns = {};
+      (q.blanks || []).forEach(b => { clozeAns[b.id] = b.expected; });
+      const ev = CSharpEngine.evaluateClozeQuestion(q, clozeAns);
+      if (ev.earnedMarks !== q.marks) fail(qId, `Official exam cloze model solution earned ${ev.earnedMarks}/${q.marks}`);
+    } else if (q.questionType === 'short-answer') {
+      const ev = CSharpEngine.evaluateShortAnswerQuestion(q, q.modelSolution);
+      if (ev.earnedMarks !== q.marks) fail(qId, `Official exam short-answer model solution earned ${ev.earnedMarks}/${q.marks}`);
     } else {
-      seenRationales.set(normDr, qId);
+      const ev = CSharpEngine.evaluateCodingQuestion(q, q.modelSolution);
+      if (ev.earnedMarks !== q.marks) fail(qId, `Official exam coding model solution earned ${ev.earnedMarks}/${q.marks}`);
     }
-    const ansLetter = optLetters[q.answer];
-    if (ansLetter && new RegExp(`\\bOption\\s+${ansLetter}\\b`, 'i').test(dr)) {
-      fail(qId, `distractorRationale erroneously cites correct answer Option ${ansLetter} as a distractor`);
+  } else {
+    mcqQuestionCount += 1;
+    if (!Array.isArray(opts) || opts.length < 2) {
+      fail(qId, 'Options array missing or has fewer than 2 choices');
+    } else {
+      const exactOpts = new Set(opts.map(o => String(o).trim()));
+      if (exactOpts.size !== opts.length) fail(qId, 'Duplicate options inside single question');
+      if (typeof q.answer !== 'number' || q.answer < 0 || q.answer >= opts.length) {
+        fail(qId, `Answer index ${q.answer} out of bounds [0..${opts.length - 1}]`);
+      } else {
+        auditOptionSymmetry(qId, opts, q.answer, true);
+      }
     }
+
+    if (dr.length < 25) {
+      fail(qId, 'distractorRationale missing or too brief');
+    } else if (roboticDrRe.test(dr)) {
+      fail(qId, 'Contains robotic boilerplate distractorRationale filler');
+    } else {
+      const normDr = dr.toLowerCase().replace(/\s+/g, ' ');
+      if (seenRationales.has(normDr)) {
+        fail(qId, `Duplicate boilerplate distractorRationale shared with ${seenRationales.get(normDr)}`);
+      } else {
+        seenRationales.set(normDr, qId);
+      }
+      const ansLetter = optLetters[q.answer];
+      if (ansLetter && new RegExp(`\\bOption\\s+${ansLetter}\\b`, 'i').test(dr)) {
+        fail(qId, `distractorRationale erroneously cites correct answer Option ${ansLetter} as a distractor`);
+      }
+    }
+    (opts || []).forEach((o, oi) => verifyRenderedTextIntegrity(qId, `options[${oi}]`, o));
+    verifyRenderedTextIntegrity(qId, 'distractorRationale', dr);
   }
 
   verifyRenderedTextIntegrity(qId, 'stem', stem);
-  (opts || []).forEach((o, oi) => verifyRenderedTextIntegrity(qId, `options[${oi}]`, o));
   verifyRenderedTextIntegrity(qId, 'explanation', exp);
-  verifyRenderedTextIntegrity(qId, 'distractorRationale', dr);
 
   if (!Array.isArray(q.definitions) || q.definitions.length === 0) {
     fail(qId, 'Missing linked technical definitions');
@@ -473,7 +498,7 @@ function auditOptionSymmetry(itemId, opts, answerIdx, isMainQuestion) {
     });
   }
 
-  const combinedText = [stem, q.code || '', ...(opts || []), exp, dr].join(' | ');
+  const combinedText = [stem, q.code || '', ...(opts || []), q.modelSolution || '', exp, dr].join(' | ');
   if (crossRefRe.test(combinedText)) fail(qId, 'Contains prohibited cross-question dependency wording');
   if (roboticFluffRe.test(combinedText)) fail(qId, `Contains prohibited meta-fluff: ${combinedText.match(roboticFluffRe)[0]}`);
   if (mojibakeRe.test(combinedText)) fail(qId, `Contains UTF-8 mojibake: ${combinedText.match(mojibakeRe)[0]}`);
@@ -500,15 +525,15 @@ function auditOptionSymmetry(itemId, opts, answerIdx, isMainQuestion) {
 
   suDist[q.su] = (suDist[q.su] || 0) + 1;
   if (!suAnsDist[q.su]) suAnsDist[q.su] = [0, 0, 0, 0];
-  if (q.answer >= 0 && q.answer < 4) suAnsDist[q.su][q.answer] += 1;
+  if (!q.examPaperId && q.answer >= 0 && q.answer < 4) suAnsDist[q.su][q.answer] += 1;
   diffDist[q.difficulty] = (diffDist[q.difficulty] || 0) + 1;
   qTypeDist[q.questionType] = (qTypeDist[q.questionType] || 0) + 1;
 });
 
 // Verify per-Study-Unit answer-key balance (no option > 36% or < 15%) and overall longest-option rate (18%-30%)
-const longestCorrectShare = longestIsCorrectCount / Math.max(1, (DATA.questions || []).length);
+const longestCorrectShare = longestIsCorrectCount / Math.max(1, mcqQuestionCount);
 if (longestCorrectShare > 0.30 || longestCorrectShare < 0.18) {
-  fail('LONGEST_OPT_BIAS', `Longest option is correct in ${(longestCorrectShare * 100).toFixed(1)}% of questions (${longestIsCorrectCount}/${(DATA.questions || []).length}); expected 18%-30%`);
+  fail('LONGEST_OPT_BIAS', `Longest option is correct in ${(longestCorrectShare * 100).toFixed(1)}% of questions (${longestIsCorrectCount}/${mcqQuestionCount}); expected 18%-30%`);
 }
 Object.entries(suAnsDist).forEach(([su, counts]) => {
   const total = counts.reduce((a, b) => a + b, 0);
