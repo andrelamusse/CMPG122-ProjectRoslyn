@@ -1,6 +1,6 @@
 /**
- * NWU CMPG122 — Comprehensive Calibrated Question Bank & Past Exam Papers
- * Total Calibrated Questions: 585
+ * NWU CMPG122 — Comprehensive Calibrated Question Bank, Interactive C# Coding Questions & Past Exam Papers
+ * Total Calibrated MCQs: 585 | Interactive Coding Questions: 40
  */
 (function (root, factory) {
   const data = factory();
@@ -42,6 +42,11 @@
         "q_su-exam_364",
         "q_su-exam_365",
         "q_su-exam_366"
+      ],
+      "practicalQuestionIds": [
+        "q_code_exam_2024_dec",
+        "q_code_su3_004",
+        "q_code_su7_004"
       ]
     },
     {
@@ -71,6 +76,11 @@
         "q_su-exam_380",
         "q_su-exam_381",
         "q_su-exam_382"
+      ],
+      "practicalQuestionIds": [
+        "q_code_exam_2023_dec",
+        "q_code_su4_001",
+        "q_code_su3_003"
       ]
     },
     {
@@ -100,6 +110,11 @@
         "q_su-exam_396",
         "q_su-exam_397",
         "q_su-exam_398"
+      ],
+      "practicalQuestionIds": [
+        "q_code_exam_2022_dec",
+        "q_code_su4_002",
+        "q_code_su2_004"
       ]
     },
     {
@@ -129,6 +144,11 @@
         "q_su-exam_412",
         "q_su-exam_413",
         "q_su-exam_414"
+      ],
+      "practicalQuestionIds": [
+        "q_code_exam_2021_nov",
+        "q_code_su4_003",
+        "q_code_su6_002"
       ]
     },
     {
@@ -158,6 +178,11 @@
         "q_su-exam_428",
         "q_su-exam_429",
         "q_su-exam_430"
+      ],
+      "practicalQuestionIds": [
+        "q_code_exam_2024_pec",
+        "q_code_su5_004",
+        "q_code_su4_004"
       ]
     }
   ],
@@ -25107,6 +25132,3534 @@
       "groupOrder": null,
       "examPaperId": null,
       "estimatedDifficulty": 0.53
+    }
+  ],
+  "codingQuestions": [
+    {
+      "id": "q_code_su7_001",
+      "su": "SU7",
+      "ch": "SU7",
+      "topic": "su7_t1_usability_measures",
+      "topicTitle": "Five Usability Measures & Universal Usability",
+      "learningObjective": "Evaluate interfaces using the five measurable usability factors and apply universal usability with keyboard mnemonics and focus restoration.",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "hci-application",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.32,
+      "marks": 4,
+      "estimatedMinutes": 3,
+      "q": "Complete the Form_Load and Clear event handlers below to support Universal Usability by assigning keyboard access keys (&) and restoring keyboard focus to the first input control.",
+      "title": "Universal Usability: Access Keys & Focus Restoration (Cloze)",
+      "stem": "Complete the C# code blanks below so that `btnCalculate` defines the `Alt+C` keyboard access key, `txtAmount` clears its text on reset, and keyboard focus returns immediately to `txtAmount`.",
+      "clozeTemplate": "private void Form1_Load(object sender, EventArgs e)\n{\n    btnCalculate.Text = {{BLANK_1}};\n}\n\nprivate void btnClear_Click(object sender, EventArgs e)\n{\n    txtAmount.{{BLANK_2}}();\n    lblTotal.Text = string.Empty;\n    txtAmount.{{BLANK_3}}();\n}",
+      "code": "private void Form1_Load(object sender, EventArgs e)\n{\n    btnCalculate.Text = {{BLANK_1}};\n}\n\nprivate void btnClear_Click(object sender, EventArgs e)\n{\n    txtAmount.{{BLANK_2}}();\n    lblTotal.Text = string.Empty;\n    txtAmount.{{BLANK_3}}();\n}",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (&Calculate mnemonic)",
+          "expected": "\"&Calculate\"",
+          "alternatives": [
+            "\"&Calculate Bill\""
+          ],
+          "marks": 2,
+          "hint": "Prefix the C in Calculate with an ampersand (&) inside double quotes.",
+          "criterion": "Assigns \"&Calculate\" access key caption to btnCalculate.Text"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (Clear TextBox)",
+          "expected": "Clear",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Method on TextBox that empties its contents.",
+          "criterion": "Calls txtAmount.Clear() to reset the input field"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (Restore keyboard focus)",
+          "expected": "Focus",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Method on Control that places the cursor back inside txtAmount.",
+          "criterion": "Calls txtAmount.Focus() to restore keyboard cursor placement"
+        }
+      ],
+      "modelSolution": "private void Form1_Load(object sender, EventArgs e)\n{\n    btnCalculate.Text = \"&Calculate\";\n}\n\nprivate void btnClear_Click(object sender, EventArgs e)\n{\n    txtAmount.Clear();\n    lblTotal.Text = string.Empty;\n    txtAmount.Focus();\n}",
+      "explanation": "Setting `btnCalculate.Text = \"&Calculate\"` creates the `Alt+C` keyboard access key for universal usability, while `txtAmount.Clear()` and `txtAmount.Focus()` speed up data-entry recovery without requiring mouse movement.",
+      "exp": "Setting `btnCalculate.Text = \"&Calculate\"` creates the `Alt+C` keyboard access key for universal usability, while `txtAmount.Clear()` and `txtAmount.Focus()` speed up data-entry recovery without requiring mouse movement.",
+      "definitions": [
+        "def_usability_measures",
+        "def_universal_usability",
+        "def_access_key",
+        "def_focus_method"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su7_002",
+      "su": "SU7",
+      "ch": "SU7",
+      "topic": "su7_t2_golden_rules",
+      "topicTitle": "Shneiderman's Eight Golden Rules in Windows Forms",
+      "learningObjective": "Translate Eight Golden Rules (Prevent Errors, Offer Informative Feedback, Yield Closure) into concrete Windows Forms event-handler code.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "hci-application",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.52,
+      "marks": 6,
+      "estimatedMinutes": 5,
+      "q": "Write the C# code inside `btnSubmitOrder_Click` to prevent empty order submissions and yield dialog closure.",
+      "title": "Golden Rules: Empty Order Prevention & Closure Feedback",
+      "stem": "Inside `btnSubmitOrder_Click`, check whether `lstItems.Items.Count == 0`. If the ListBox is empty, display `MessageBox.Show(\"Please add at least one item.\", \"Empty Order\")` and exit the handler with `return;`. Otherwise, set `lblStatus.Text = \"Order confirmed: \" + lstItems.Items.Count + \" items\";` and disable `btnSubmitOrder` (`btnSubmitOrder.Enabled = false;`) to signal closure.",
+      "controls": [
+        "lstItems",
+        "lblStatus",
+        "btnSubmitOrder"
+      ],
+      "expectedOutputs": [
+        "lblStatus",
+        "btnSubmitOrder"
+      ],
+      "starterCode": "private void btnSubmitOrder_Click(object sender, EventArgs e)\n{\n    // 1. Prevent empty order submission (check lstItems.Items.Count == 0)\n    \n    // 2. Display closure feedback in lblStatus and disable btnSubmitOrder\n    \n}",
+      "modelSolution": "private void btnSubmitOrder_Click(object sender, EventArgs e)\n{\n    if (lstItems.Items.Count == 0)\n    {\n        MessageBox.Show(\"Please add at least one item.\", \"Empty Order\");\n        return;\n    }\n    lblStatus.Text = \"Order confirmed: \" + lstItems.Items.Count + \" items\";\n    btnSubmitOrder.Enabled = false;\n}",
+      "testCases": [
+        {
+          "name": "Empty ListBox triggers error MessageBox and early return",
+          "inputs": {
+            "lstItems": [],
+            "lblStatus": "",
+            "btnSubmitOrder": "Submit"
+          },
+          "expected": {
+            "_messages": "add at least one item",
+            "lblStatus": "",
+            "btnSubmitOrder": true
+          }
+        },
+        {
+          "name": "Populated ListBox (3 items) updates lblStatus and disables btnSubmitOrder",
+          "inputs": {
+            "lstItems": [
+              "Coffee",
+              "Muffin",
+              "Juice"
+            ],
+            "lblStatus": "",
+            "btnSubmitOrder": "Submit"
+          },
+          "expected": {
+            "lblStatus": "Order confirmed: 3 items",
+            "btnSubmitOrder": false
+          }
+        },
+        {
+          "name": "Hidden Test: Single item order updates lblStatus and disables button",
+          "isHidden": true,
+          "inputs": {
+            "lstItems": [
+              "Sandwich"
+            ],
+            "lblStatus": "",
+            "btnSubmitOrder": "Submit"
+          },
+          "expected": {
+            "lblStatus": "Order confirmed: 1 items",
+            "btnSubmitOrder": false
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Checks lstItems.Items.Count == 0 guard condition",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "lstItems\\.Items\\.Count\\s*==\\s*0"
+        },
+        {
+          "id": "c2",
+          "criterion": "Shows MessageBox and returns early when ListBox is empty",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Updates lblStatus.Text and sets btnSubmitOrder.Enabled = false on valid order",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        }
+      ],
+      "explanation": "Checking `lstItems.Items.Count == 0` enforces Error Prevention (Rule 5), while updating `lblStatus.Text` and setting `btnSubmitOrder.Enabled = false` provides Informative Feedback (Rule 3) and Closure (Rule 4).",
+      "exp": "Checking `lstItems.Items.Count == 0` enforces Error Prevention (Rule 5), while updating `lblStatus.Text` and setting `btnSubmitOrder.Enabled = false` provides Informative Feedback (Rule 3) and Closure (Rule 4).",
+      "definitions": [
+        "def_eight_golden_rules",
+        "def_informative_feedback",
+        "def_error_prevention"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su7_003",
+      "su": "SU7",
+      "ch": "SU7",
+      "topic": "su7_t3_norman_gulfs",
+      "topicTitle": "Norman's Action Cycle: Gulfs of Execution & Evaluation",
+      "learningObjective": "Bridge the Gulf of Evaluation by providing immediate visual state updates in Labels and ListBoxes after user actions.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "hci-application",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.38,
+      "marks": 5,
+      "estimatedMinutes": 4,
+      "q": "Bridge the Gulf of Evaluation in `btnAddCourse_Click` by appending the course code to `lstEnrolled`, making `lblFeedback` visible, and displaying the updated enrollment count.",
+      "title": "Bridging the Gulf of Evaluation on Course Enrollment",
+      "stem": "When a student clicks `btnAddCourse`, read `txtCourseCode.Text`, add it to `lstEnrolled.Items`, ensure `lblFeedback.Visible` is set to `true`, and set `lblFeedback.Text` to `\"Enrolled in \" + lstEnrolled.Items.Count + \" module(s).\"`.",
+      "controls": [
+        "txtCourseCode",
+        "lstEnrolled",
+        "lblFeedback"
+      ],
+      "expectedOutputs": [
+        "lstEnrolled",
+        "lblFeedback"
+      ],
+      "starterCode": "private void btnAddCourse_Click(object sender, EventArgs e)\n{\n    // Add txtCourseCode.Text to lstEnrolled, make lblFeedback visible, and update its text\n    \n}",
+      "modelSolution": "private void btnAddCourse_Click(object sender, EventArgs e)\n{\n    lstEnrolled.Items.Add(txtCourseCode.Text);\n    lblFeedback.Visible = true;\n    lblFeedback.Text = \"Enrolled in \" + lstEnrolled.Items.Count + \" module(s).\";\n}",
+      "testCases": [
+        {
+          "name": "Adds CMPG122 to empty ListBox and updates feedback label",
+          "inputs": {
+            "txtCourseCode": "CMPG122",
+            "lstEnrolled": [],
+            "lblFeedback": {
+              "Text": "",
+              "Visible": false
+            }
+          },
+          "expected": {
+            "lblFeedback": "Enrolled in 1 module(s).",
+            "lstEnrolled": {
+              "exactItems": 1,
+              "contains": "CMPG122"
+            }
+          }
+        },
+        {
+          "name": "Hidden Test: Adds second module and updates count to 2",
+          "isHidden": true,
+          "inputs": {
+            "txtCourseCode": "MTHS111",
+            "lstEnrolled": [
+              "CMPG122"
+            ],
+            "lblFeedback": {
+              "Text": "",
+              "Visible": false
+            }
+          },
+          "expected": {
+            "lblFeedback": "Enrolled in 2 module(s).",
+            "lstEnrolled": {
+              "exactItems": 2,
+              "contains": "MTHS111"
+            }
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Appends txtCourseCode.Text to lstEnrolled.Items",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "lstEnrolled\\.Items\\.Add\\s*\\("
+        },
+        {
+          "id": "c2",
+          "criterion": "Sets lblFeedback.Visible = true",
+          "marks": 1,
+          "checkType": "pattern",
+          "pattern": "lblFeedback\\.Visible\\s*=\\s*true"
+        },
+        {
+          "id": "c3",
+          "criterion": "Displays accurate enrollment count in lblFeedback.Text",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        }
+      ],
+      "explanation": "Making `lblFeedback.Visible = true` and updating `lblFeedback.Text` with the new count immediately bridges the Gulf of Evaluation so the user knows their action succeeded.",
+      "exp": "Making `lblFeedback.Visible = true` and updating `lblFeedback.Text` with the new count immediately bridges the Gulf of Evaluation so the user knows their action succeeded.",
+      "definitions": [
+        "def_gulf_of_execution",
+        "def_gulf_of_evaluation",
+        "def_informative_feedback"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su7_004",
+      "su": "SU7",
+      "ch": "SU7",
+      "topic": "su7_t4_error_prevention_recovery",
+      "topicTitle": "Error Prevention, Validation & Constructive Recovery",
+      "learningObjective": "Design preventive input constraints, constructive error recovery with Focus() and SelectAll(), and reversible actions.",
+      "type": "code-full",
+      "questionType": "code-full",
+      "pedagogicalType": "hci-application",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.58,
+      "marks": 8,
+      "estimatedMinutes": 7,
+      "q": "Implement constructive error recovery in `btnValidateDeposit_Click` using `decimal.TryParse`, `MessageBox.Show`, `SelectAll()`, and `Focus()`.",
+      "title": "Constructive Error Recovery & Deposit Validation",
+      "stem": "Write the body of `btnValidateDeposit_Click` to parse `txtDeposit.Text` into a `decimal` variable using `decimal.TryParse`. If parsing fails OR the deposit is less than `100m`, show `MessageBox.Show(\"Enter a numeric deposit of at least R100.00.\", \"Invalid Deposit\")`, highlight the invalid text with `txtDeposit.SelectAll()`, return focus with `txtDeposit.Focus()`, and `return;`. If valid, display the formatted currency in `lblConfirmedDeposit.Text = deposit.ToString(\"C\");`.",
+      "controls": [
+        "txtDeposit",
+        "lblConfirmedDeposit"
+      ],
+      "expectedOutputs": [
+        "lblConfirmedDeposit"
+      ],
+      "requiresCurrency": true,
+      "starterCode": "private void btnValidateDeposit_Click(object sender, EventArgs e)\n{\n    // Validate txtDeposit.Text >= 100m with TryParse and constructive recovery\n    \n}",
+      "modelSolution": "private void btnValidateDeposit_Click(object sender, EventArgs e)\n{\n    decimal deposit;\n    if (!decimal.TryParse(txtDeposit.Text, out deposit) || deposit < 100m)\n    {\n        MessageBox.Show(\"Enter a numeric deposit of at least R100.00.\", \"Invalid Deposit\");\n        txtDeposit.SelectAll();\n        txtDeposit.Focus();\n        return;\n    }\n    lblConfirmedDeposit.Text = deposit.ToString(\"C\");\n}",
+      "testCases": [
+        {
+          "name": "Non-numeric input triggers MessageBox recovery and leaves label blank",
+          "inputs": {
+            "txtDeposit": "abc",
+            "lblConfirmedDeposit": ""
+          },
+          "expected": {
+            "_messages": "100",
+            "lblConfirmedDeposit": ""
+          }
+        },
+        {
+          "name": "Below-minimum deposit (50) triggers MessageBox recovery and leaves label blank",
+          "inputs": {
+            "txtDeposit": "50",
+            "lblConfirmedDeposit": ""
+          },
+          "expected": {
+            "_messages": "100",
+            "lblConfirmedDeposit": ""
+          }
+        },
+        {
+          "name": "Valid deposit (250.50) formats as currency in lblConfirmedDeposit",
+          "inputs": {
+            "txtDeposit": "250.50",
+            "lblConfirmedDeposit": ""
+          },
+          "expected": {
+            "lblConfirmedDeposit": "250.50"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Uses decimal.TryParse with out parameter and < 100m range check",
+          "marks": 3,
+          "checkType": "pattern",
+          "pattern": "decimal\\.TryParse\\s*\\("
+        },
+        {
+          "id": "c2",
+          "criterion": "Calls txtDeposit.SelectAll() and txtDeposit.Focus() on invalid input",
+          "marks": 3,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Formats valid deposit using ToString(\"C\") in lblConfirmedDeposit",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 2
+        }
+      ],
+      "explanation": "Constructive error recovery explains how to fix the input via `MessageBox.Show`, highlights the typo via `txtDeposit.SelectAll()`, and restores keyboard focus via `txtDeposit.Focus()` without wiping out the rest of the form.",
+      "exp": "Constructive error recovery explains how to fix the input via `MessageBox.Show`, highlights the typo via `txtDeposit.SelectAll()`, and restores keyboard focus via `txtDeposit.Focus()` without wiping out the rest of the form.",
+      "definitions": [
+        "def_error_prevention",
+        "def_tryparse",
+        "def_focus_method"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su7_005",
+      "su": "SU7",
+      "ch": "SU7",
+      "topic": "su7_t5_consistency_feedback",
+      "topicTitle": "Interface Consistency & Visual Grouping",
+      "learningObjective": "Maintain consistent currency formatting and reversible reset state across grouped Windows Forms controls.",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "hci-application",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.35,
+      "marks": 4,
+      "estimatedMinutes": 3,
+      "q": "Complete the `btnResetForm_Click` handler so all currency output labels and grouped selection controls reset consistently.",
+      "title": "Consistent Reset & Reversible State Across Grouped Controls (Cloze)",
+      "stem": "Fill in the missing C# tokens to reset the default `rdoStandard` RadioButton to checked, uncheck `chkExpress`, clear `lblTotal`, and close the form when `btnExit_Click` runs.",
+      "clozeTemplate": "private void btnResetForm_Click(object sender, EventArgs e)\n{\n    rdoStandard.{{BLANK_1}} = true;\n    chkExpress.Checked = {{BLANK_2}};\n    lblTotal.{{BLANK_3}} = string.Empty;\n}\n\nprivate void btnExit_Click(object sender, EventArgs e)\n{\n    this.{{BLANK_4}}();\n}",
+      "code": "private void btnResetForm_Click(object sender, EventArgs e)\n{\n    rdoStandard.{{BLANK_1}} = true;\n    chkExpress.Checked = {{BLANK_2}};\n    lblTotal.{{BLANK_3}} = string.Empty;\n}\n\nprivate void btnExit_Click(object sender, EventArgs e)\n{\n    this.{{BLANK_4}}();\n}",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (RadioButton selection property)",
+          "expected": "Checked",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Boolean property indicating whether a RadioButton is selected.",
+          "criterion": "Sets rdoStandard.Checked = true"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (Uncheck CheckBox)",
+          "expected": "false",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Lowercase C# boolean literal for unchecked state.",
+          "criterion": "Sets chkExpress.Checked = false"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (Label caption property)",
+          "expected": "Text",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Property storing the visible string on a Label.",
+          "criterion": "Resets lblTotal.Text to string.Empty"
+        },
+        {
+          "id": "blank_4",
+          "label": "Blank 4 (Close active form)",
+          "expected": "Close",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Method on Form (this) that closes the window.",
+          "criterion": "Calls this.Close() to close the active form"
+        }
+      ],
+      "modelSolution": "private void btnResetForm_Click(object sender, EventArgs e)\n{\n    rdoStandard.Checked = true;\n    chkExpress.Checked = false;\n    lblTotal.Text = string.Empty;\n}\n\nprivate void btnExit_Click(object sender, EventArgs e)\n{\n    this.Close();\n}",
+      "explanation": "Consistent reset handlers restore default RadioButton selections (`rdoStandard.Checked = true`), uncheck optional CheckBoxes (`chkExpress.Checked = false`), clear output labels (`lblTotal.Text = string.Empty`), and use `this.Close()` to exit.",
+      "exp": "Consistent reset handlers restore default RadioButton selections (`rdoStandard.Checked = true`), uncheck optional CheckBoxes (`chkExpress.Checked = false`), clear output labels (`lblTotal.Text = string.Empty`), and use `this.Close()` to exit.",
+      "definitions": [
+        "def_eight_golden_rules",
+        "def_radiobutton_checkbox_groupbox",
+        "def_this_close"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su1_001",
+      "su": "SU1",
+      "ch": "SU1",
+      "topic": "su1_t1_vs_ide_cycle",
+      "topicTitle": "Visual Studio IDE Windows & Six-Phase Development Cycle",
+      "learningObjective": "Identify standard Windows Forms class scaffolding, constructor initialization, and syntax vs logic error correction.",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "syntax-selection",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.28,
+      "marks": 4,
+      "estimatedMinutes": 3,
+      "q": "Complete the standard Windows Forms `Form1.cs` scaffolding and constructor initialization.",
+      "title": "Form1 Partial Class & InitializeComponent Scaffolding (Cloze)",
+      "stem": "Complete the missing keywords and method call in `Form1.cs` so the form inherits from `Form` as a `partial` class and initialises its Designer controls inside the constructor.",
+      "clozeTemplate": "using System;\nusing System.Windows.Forms;\n\nnamespace CampusPortal\n{\n    public {{BLANK_1}} class Form1 : {{BLANK_2}}\n    {\n        public Form1()\n        {\n            {{BLANK_3}}();\n        }\n    }\n}",
+      "code": "using System;\nusing System.Windows.Forms;\n\nnamespace CampusPortal\n{\n    public {{BLANK_1}} class Form1 : {{BLANK_2}}\n    {\n        public Form1()\n        {\n            {{BLANK_3}}();\n        }\n    }\n}",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (Class modifier splitting Form1.cs and Form1.Designer.cs)",
+          "expected": "partial",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Keyword that splits a class definition across two source files.",
+          "criterion": "Uses partial keyword on Form1 class definition"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (Base Windows Forms class)",
+          "expected": "Form",
+          "alternatives": [
+            "System.Windows.Forms.Form"
+          ],
+          "marks": 1,
+          "hint": "Base class in System.Windows.Forms from which Form1 inherits.",
+          "criterion": "Inherits from Form base class"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (Designer setup method call)",
+          "expected": "InitializeComponent",
+          "alternatives": [],
+          "marks": 2,
+          "hint": "Auto-generated method in Form1.Designer.cs that instantiates controls.",
+          "criterion": "Calls InitializeComponent() inside the Form1 constructor"
+        }
+      ],
+      "modelSolution": "using System;\nusing System.Windows.Forms;\n\nnamespace CampusPortal\n{\n    public partial class Form1 : Form\n    {\n        public Form1()\n        {\n            InitializeComponent();\n        }\n    }\n}",
+      "explanation": "`public partial class Form1 : Form` splits the form across `Form1.cs` and `Form1.Designer.cs`, while `InitializeComponent()` constructs and positions every control placed in the Designer.",
+      "exp": "`public partial class Form1 : Form` splits the form across `Form1.cs` and `Form1.Designer.cs`, while `InitializeComponent()` constructs and positions every control placed in the Designer.",
+      "definitions": [
+        "def_partial_form_classes",
+        "def_windows_form",
+        "def_initialize_component"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su1_002",
+      "su": "SU1",
+      "ch": "SU1",
+      "topic": "su1_t2_controls_properties",
+      "topicTitle": "Form, Button, Label & Control Name vs Text",
+      "learningObjective": "Configure Form, Button, and Label properties at runtime using control identifiers (Name) and Text properties.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "code-output",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.34,
+      "marks": 5,
+      "estimatedMinutes": 4,
+      "q": "Write the C# statements inside `btnShowCampus_Click` to display `\"Potchefstroom Campus\"` in `lblCampus`, change the form title bar (`this.Text`) to `\"NWU Directory\"`, and disable `btnShowCampus`.",
+      "title": "Updating Label.Text, Form.Text, and Button.Enabled",
+      "stem": "Inside `btnShowCampus_Click`, set `lblCampus.Text` to `\"Potchefstroom Campus\"`, set the active form caption `this.Text` to `\"NWU Directory\"`, and set `btnShowCampus.Enabled` to `false`.",
+      "controls": [
+        "lblCampus",
+        "btnShowCampus"
+      ],
+      "expectedOutputs": [
+        "lblCampus",
+        "btnShowCampus",
+        "Form.Text"
+      ],
+      "starterCode": "private void btnShowCampus_Click(object sender, EventArgs e)\n{\n    // Update lblCampus.Text, this.Text, and btnShowCampus.Enabled\n    \n}",
+      "modelSolution": "private void btnShowCampus_Click(object sender, EventArgs e)\n{\n    lblCampus.Text = \"Potchefstroom Campus\";\n    this.Text = \"NWU Directory\";\n    btnShowCampus.Enabled = false;\n}",
+      "testCases": [
+        {
+          "name": "Updates lblCampus.Text, Form title bar, and disables btnShowCampus",
+          "inputs": {
+            "lblCampus": "",
+            "btnShowCampus": "Show Campus"
+          },
+          "expected": {
+            "Form.Text": "NWU Directory",
+            "lblCampus": "Potchefstroom Campus",
+            "btnShowCampus": false
+          }
+        },
+        {
+          "name": "Hidden Test: Overwrites existing label text cleanly",
+          "isHidden": true,
+          "inputs": {
+            "lblCampus": "Pending",
+            "btnShowCampus": "Show Campus"
+          },
+          "expected": {
+            "Form.Text": "NWU Directory",
+            "lblCampus": "Potchefstroom Campus",
+            "btnShowCampus": false
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Assigns \"Potchefstroom Campus\" to lblCampus.Text",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "lblCampus\\.Text\\s*=\\s*\"Potchefstroom Campus\""
+        },
+        {
+          "id": "c2",
+          "criterion": "Assigns \"NWU Directory\" to this.Text",
+          "marks": 1,
+          "checkType": "pattern",
+          "pattern": "this\\.Text\\s*=\\s*\"NWU Directory\""
+        },
+        {
+          "id": "c3",
+          "criterion": "Disables btnShowCampus via Enabled = false",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        }
+      ],
+      "explanation": "Control identifiers (`lblCampus`, `btnShowCampus`, `this`) are referenced in C# code to modify runtime properties such as `.Text` and `.Enabled`.",
+      "exp": "Control identifiers (`lblCampus`, `btnShowCampus`, `this`) are referenced in C# code to modify runtime properties such as `.Text` and `.Enabled`.",
+      "definitions": [
+        "def_windows_form",
+        "def_button_control",
+        "def_label_control",
+        "def_control_name_vs_text"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su1_003",
+      "su": "SU1",
+      "ch": "SU1",
+      "topic": "su1_t3_picturebox",
+      "topicTitle": "PictureBox, SizeMode, and Visible",
+      "learningObjective": "Control PictureBox visibility and status labels using boolean literals true and false.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "application-scenario",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.36,
+      "marks": 5,
+      "estimatedMinutes": 4,
+      "q": "Implement `btnShowGreen_Click` for a traffic-light trainer to show `picGreen`, hide `picYellow` and `picRed`, and set `lblSignal.Text = \"GO\"`.",
+      "title": "Traffic Light PictureBox Visibility Controller",
+      "stem": "Write the C# statements inside `btnShowGreen_Click` so that `picGreen.Visible` is set to `true`, both `picYellow.Visible` and `picRed.Visible` are set to `false`, and `lblSignal.Text` is set to `\"GO\"`.",
+      "controls": [
+        "picGreen",
+        "picYellow",
+        "picRed",
+        "lblSignal"
+      ],
+      "expectedOutputs": [
+        "picGreen",
+        "picYellow",
+        "picRed",
+        "lblSignal"
+      ],
+      "starterCode": "private void btnShowGreen_Click(object sender, EventArgs e)\n{\n    // Show picGreen, hide picYellow and picRed, and set lblSignal.Text to \"GO\"\n    \n}",
+      "modelSolution": "private void btnShowGreen_Click(object sender, EventArgs e)\n{\n    picGreen.Visible = true;\n    picYellow.Visible = false;\n    picRed.Visible = false;\n    lblSignal.Text = \"GO\";\n}",
+      "testCases": [
+        {
+          "name": "Toggles PictureBox visibility states and updates lblSignal to GO",
+          "inputs": {
+            "picGreen": false,
+            "picYellow": true,
+            "picRed": true,
+            "lblSignal": "STOP"
+          },
+          "expected": {
+            "picGreen": true,
+            "picYellow": false,
+            "picRed": false,
+            "lblSignal": "GO"
+          }
+        },
+        {
+          "name": "Hidden Test: Remains consistent when picGreen is already visible",
+          "isHidden": true,
+          "inputs": {
+            "picGreen": true,
+            "picYellow": false,
+            "picRed": true,
+            "lblSignal": ""
+          },
+          "expected": {
+            "picGreen": true,
+            "picYellow": false,
+            "picRed": false,
+            "lblSignal": "GO"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Sets picGreen.Visible = true using boolean literal",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "picGreen\\.Visible\\s*=\\s*true"
+        },
+        {
+          "id": "c2",
+          "criterion": "Sets picYellow.Visible = false and picRed.Visible = false",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Sets lblSignal.Text = \"GO\"",
+          "marks": 1,
+          "checkType": "pattern",
+          "pattern": "lblSignal\\.Text\\s*=\\s*\"GO\""
+        }
+      ],
+      "explanation": "`PictureBox.Visible` accepts a lowercase C# `bool` (`true` or `false`) to dynamically show or hide images at runtime.",
+      "exp": "`PictureBox.Visible` accepts a lowercase C# `bool` (`true` or `false`) to dynamically show or hide images at runtime.",
+      "definitions": [
+        "def_picturebox",
+        "def_string_bool"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su1_004",
+      "su": "SU1",
+      "ch": "SU1",
+      "topic": "su1_t4_events_messagebox_close",
+      "topicTitle": "Event-Driven Programming, MessageBox.Show() & this.Close()",
+      "learningObjective": "Write event-driven Click handlers using MessageBox.Show() and this.Close().",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "syntax-selection",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.3,
+      "marks": 4,
+      "estimatedMinutes": 3,
+      "q": "Complete the event-handler signature and body for `btnExit_Click` so it displays a farewell dialog and closes the active form.",
+      "title": "Event Handler Signature, MessageBox.Show() & this.Close() (Cloze)",
+      "stem": "Fill in the missing C# tokens to complete the standard Windows Forms `Click` event handler that pops up `\"Session ended.\"` with title `\"Exit\"` and closes the current form.",
+      "clozeTemplate": "private void btnExit_Click(object {{BLANK_1}}, {{BLANK_2}} e)\n{\n    {{BLANK_3}}.Show(\"Session ended.\", \"Exit\");\n    this.{{BLANK_4}}();\n}",
+      "code": "private void btnExit_Click(object {{BLANK_1}}, {{BLANK_2}} e)\n{\n    {{BLANK_3}}.Show(\"Session ended.\", \"Exit\");\n    this.{{BLANK_4}}();\n}",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (First event parameter name)",
+          "expected": "sender",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Standard name for the object parameter that raised the event.",
+          "criterion": "Declares object sender parameter"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (Second event parameter type)",
+          "expected": "EventArgs",
+          "alternatives": [
+            "System.EventArgs"
+          ],
+          "marks": 1,
+          "hint": "Standard event data parameter type in a Click handler.",
+          "criterion": "Declares EventArgs e parameter"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (Modal message dialog class)",
+          "expected": "MessageBox",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Static Windows Forms class used to display pop-up dialogs (watch PascalCase!).",
+          "criterion": "Uses MessageBox.Show with exact PascalCase"
+        },
+        {
+          "id": "blank_4",
+          "label": "Blank 4 (Form close method)",
+          "expected": "Close",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Method on this that closes the current window.",
+          "criterion": "Calls this.Close() to close the active form"
+        }
+      ],
+      "modelSolution": "private void btnExit_Click(object sender, EventArgs e)\n{\n    MessageBox.Show(\"Session ended.\", \"Exit\");\n    this.Close();\n}",
+      "explanation": "Every standard Click handler takes `(object sender, EventArgs e)`, uses `MessageBox.Show(text, caption)` with exact PascalCase, and calls `this.Close()` to close the form.",
+      "exp": "Every standard Click handler takes `(object sender, EventArgs e)`, uses `MessageBox.Show(text, caption)` with exact PascalCase, and calls `this.Close()` to close the form.",
+      "definitions": [
+        "def_event_driven_programming",
+        "def_event_handler",
+        "def_messagebox_show",
+        "def_this_close"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su1_005",
+      "su": "SU1",
+      "ch": "SU1",
+      "topic": "su1_t5_hungarian_naming",
+      "topicTitle": "Control Naming & Hungarian Prefixes",
+      "learningObjective": "Apply standard Hungarian naming prefixes (btn, txt, lbl, pic, rad/rdo, chk, lst, grp) to reset a multi-control Windows Form.",
+      "type": "code-full",
+      "questionType": "code-full",
+      "pedagogicalType": "application-scenario",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.48,
+      "marks": 6,
+      "estimatedMinutes": 5,
+      "q": "Implement `btnClear_Click` using the Hungarian-named controls on the Student Registration Form.",
+      "title": "Multi-Control Form Reset with Hungarian Naming Conventions",
+      "stem": "Write the complete body of `btnClear_Click` to: (1) clear `txtStudentName` (`txtStudentName.Clear()`), (2) clear `lblStatus` (`lblStatus.Text = \"\"`), (3) set `rdoFullTime.Checked = true` and `rdoPartTime.Checked = false`, (4) uncheck `chkHostel` (`chkHostel.Checked = false`), (5) clear all items in `lstModules` (`lstModules.Items.Clear()`), and (6) return keyboard focus to `txtStudentName` (`txtStudentName.Focus()`).",
+      "controls": [
+        "txtStudentName",
+        "lblStatus",
+        "rdoFullTime",
+        "rdoPartTime",
+        "chkHostel",
+        "lstModules"
+      ],
+      "expectedOutputs": [
+        "txtStudentName",
+        "lblStatus",
+        "rdoFullTime",
+        "rdoPartTime",
+        "chkHostel",
+        "lstModules"
+      ],
+      "starterCode": "private void btnClear_Click(object sender, EventArgs e)\n{\n    // Reset all controls to their default state and focus txtStudentName\n    \n}",
+      "modelSolution": "private void btnClear_Click(object sender, EventArgs e)\n{\n    txtStudentName.Clear();\n    lblStatus.Text = \"\";\n    rdoFullTime.Checked = true;\n    rdoPartTime.Checked = false;\n    chkHostel.Checked = false;\n    lstModules.Items.Clear();\n    txtStudentName.Focus();\n}",
+      "testCases": [
+        {
+          "name": "Resets TextBox, Label, RadioButtons, CheckBox, ListBox, and restores Focus",
+          "inputs": {
+            "txtStudentName": "Thabo Mokoena",
+            "lblStatus": "Registered",
+            "rdoFullTime": false,
+            "rdoPartTime": true,
+            "chkHostel": true,
+            "lstModules": [
+              "CMPG122",
+              "STTN111"
+            ]
+          },
+          "expected": {
+            "txtStudentName": "",
+            "lblStatus": "",
+            "rdoFullTime": true,
+            "rdoPartTime": false,
+            "chkHostel": false,
+            "lstModules": {
+              "exactItems": 0
+            }
+          }
+        },
+        {
+          "name": "Hidden Test: Idempotent reset when form is already partially empty",
+          "isHidden": true,
+          "inputs": {
+            "txtStudentName": "",
+            "lblStatus": "Error",
+            "rdoFullTime": false,
+            "rdoPartTime": false,
+            "chkHostel": true,
+            "lstModules": [
+              "CMPG122"
+            ]
+          },
+          "expected": {
+            "txtStudentName": "",
+            "lblStatus": "",
+            "rdoFullTime": true,
+            "rdoPartTime": false,
+            "chkHostel": false,
+            "lstModules": {
+              "exactItems": 0
+            }
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Clears txtStudentName and lblStatus.Text",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "txtStudentName\\.(Clear\\s*\\(\\)|Text\\s*=\\s*\"\")"
+        },
+        {
+          "id": "c2",
+          "criterion": "Resets rdoFullTime, rdoPartTime, and chkHostel Checked states",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Clears lstModules.Items and focuses txtStudentName",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "lstModules\\.Items\\.Clear\\s*\\(\\)"
+        }
+      ],
+      "explanation": "Hungarian prefixes (`txt`, `lbl`, `rdo`, `chk`, `lst`) make each control type and its reset method (`Clear()`, `.Text = \"\"`, `.Checked`, `.Items.Clear()`, `.Focus()`) self-documenting.",
+      "exp": "Hungarian prefixes (`txt`, `lbl`, `rdo`, `chk`, `lst`) make each control type and its reset method (`Clear()`, `.Text = \"\"`, `.Checked`, `.Items.Clear()`, `.Focus()`) self-documenting.",
+      "definitions": [
+        "def_hungarian_notation",
+        "def_control_name_vs_text",
+        "def_focus_method"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su2_001",
+      "su": "SU2",
+      "ch": "SU2",
+      "topic": "su2_t1_types_decimals_constants",
+      "topicTitle": "Data Types, decimal m Suffix, Variables & Constants",
+      "learningObjective": "Select appropriate C# data types (int, decimal with m suffix) and declare named constants with const.",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "syntax-selection",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.33,
+      "marks": 4,
+      "estimatedMinutes": 3,
+      "q": "Complete the constant and financial variable declarations below using the `const` keyword, the `decimal` type, and the `m` literal suffix.",
+      "title": "Named Constants & decimal Literal Suffix (Cloze)",
+      "stem": "Fill in the blanks to declare a named constant `VAT_RATE` of type `decimal` equal to `0.15m`, parse `txtQuantity.Text` as an `int`, and format `totalDue` as currency.",
+      "clozeTemplate": "{{BLANK_1}} decimal VAT_RATE = {{BLANK_2}};\nint quantity = {{BLANK_3}}.Parse(txtQuantity.Text);\ndecimal unitPrice = 120.50m;\ndecimal totalDue = quantity * unitPrice * (1m + VAT_RATE);\nlblTotal.Text = totalDue.ToString({{BLANK_4}});",
+      "code": "{{BLANK_1}} decimal VAT_RATE = {{BLANK_2}};\nint quantity = {{BLANK_3}}.Parse(txtQuantity.Text);\ndecimal unitPrice = 120.50m;\ndecimal totalDue = quantity * unitPrice * (1m + VAT_RATE);\nlblTotal.Text = totalDue.ToString({{BLANK_4}});",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (Constant keyword)",
+          "expected": "const",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "C# keyword that declares an immutable compile-time constant.",
+          "criterion": "Uses const keyword for VAT_RATE declaration"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (15% decimal literal with suffix)",
+          "expected": "0.15m",
+          "alternatives": [
+            "0.15M"
+          ],
+          "marks": 1,
+          "hint": "Write 0.15 with the mandatory decimal literal suffix.",
+          "criterion": "Includes m suffix on decimal literal 0.15m"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (Whole number type)",
+          "expected": "int",
+          "alternatives": [
+            "Int32"
+          ],
+          "marks": 1,
+          "hint": "32-bit integer data type used for whole item counts.",
+          "criterion": "Uses int.Parse for discrete item quantity"
+        },
+        {
+          "id": "blank_4",
+          "label": "Blank 4 (Currency format specifier)",
+          "expected": "\"C\"",
+          "alternatives": [
+            "\"C2\"",
+            "\"c\""
+          ],
+          "marks": 1,
+          "hint": "Standard ToString format string for South African Rand currency.",
+          "criterion": "Formats totalDue using ToString(\"C\")"
+        }
+      ],
+      "modelSolution": "const decimal VAT_RATE = 0.15m;\nint quantity = int.Parse(txtQuantity.Text);\ndecimal unitPrice = 120.50m;\ndecimal totalDue = quantity * unitPrice * (1m + VAT_RATE);\nlblTotal.Text = totalDue.ToString(\"C\");",
+      "explanation": "Financial constants use `const decimal` with the `m` suffix (`0.15m`) to prevent floating-point rounding errors, while discrete counts use `int` and currency outputs use `.ToString(\"C\")`.",
+      "exp": "Financial constants use `const decimal` with the `m` suffix (`0.15m`) to prevent floating-point rounding errors, while discrete counts use `int` and currency outputs use `.ToString(\"C\")`.",
+      "definitions": [
+        "def_int_type",
+        "def_decimal_type",
+        "def_named_constant",
+        "def_tostring_formatting"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su2_002",
+      "su": "SU2",
+      "ch": "SU2",
+      "topic": "su2_t2_precedence_int_div_casting",
+      "topicTitle": "Operator Precedence, Integer Division & Explicit Casting",
+      "learningObjective": "Evaluate arithmetic expressions using integer division (/), modulus (%), and explicit (double) casting.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "logic-problem",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.54,
+      "marks": 6,
+      "estimatedMinutes": 5,
+      "q": "Write the C# code in `btnCalculateStats_Click` to convert total seconds into whole minutes and remaining seconds, and compute the exact floating-point test average using an explicit `(double)` cast.",
+      "title": "Integer Division, Modulus (%) & Explicit Type Casting",
+      "stem": "Inside `btnCalculateStats_Click`: (1) parse `txtTotalSeconds.Text` into `int totalSeconds`, (2) compute `int minutes = totalSeconds / 60;` and `int remSeconds = totalSeconds % 60;`, and display `\"Minutes: \" + minutes + \", Seconds: \" + remSeconds` in `lblTime.Text`. (3) Parse `txtTotalMarks.Text` into `int totalMarks` and `txtTestCount.Text` into `int testCount`, compute the exact average by casting `(double)totalMarks / testCount`, and display it formatted to 1 decimal place (`ToString(\"F1\")`) in `lblAverage.Text`.",
+      "controls": [
+        "txtTotalSeconds",
+        "txtTotalMarks",
+        "txtTestCount",
+        "lblTime",
+        "lblAverage"
+      ],
+      "expectedOutputs": [
+        "lblTime",
+        "lblAverage"
+      ],
+      "starterCode": "private void btnCalculateStats_Click(object sender, EventArgs e)\n{\n    int totalSeconds = int.Parse(txtTotalSeconds.Text);\n    int totalMarks = int.Parse(txtTotalMarks.Text);\n    int testCount = int.Parse(txtTestCount.Text);\n\n    // Calculate minutes, remSeconds, and exact floating-point average\n    \n}",
+      "modelSolution": "private void btnCalculateStats_Click(object sender, EventArgs e)\n{\n    int totalSeconds = int.Parse(txtTotalSeconds.Text);\n    int totalMarks = int.Parse(txtTotalMarks.Text);\n    int testCount = int.Parse(txtTestCount.Text);\n\n    int minutes = totalSeconds / 60;\n    int remSeconds = totalSeconds % 60;\n    lblTime.Text = \"Minutes: \" + minutes + \", Seconds: \" + remSeconds;\n\n    double average = (double)totalMarks / testCount;\n    lblAverage.Text = average.ToString(\"F1\");\n}",
+      "testCases": [
+        {
+          "name": "195 seconds -> 3 mins, 15 secs; 15 marks / 2 tests -> 7.5 average",
+          "inputs": {
+            "txtTotalSeconds": "195",
+            "txtTotalMarks": "15",
+            "txtTestCount": "2",
+            "lblTime": "",
+            "lblAverage": ""
+          },
+          "expected": {
+            "lblTime": "Minutes: 3, Seconds: 15",
+            "lblAverage": "7.5"
+          }
+        },
+        {
+          "name": "Hidden Test: 125 seconds -> 2 mins, 5 secs; 23 marks / 4 tests -> 5.8 average",
+          "isHidden": true,
+          "inputs": {
+            "txtTotalSeconds": "125",
+            "txtTotalMarks": "23",
+            "txtTestCount": "4",
+            "lblTime": "",
+            "lblAverage": ""
+          },
+          "expected": {
+            "lblTime": "Minutes: 2, Seconds: 5",
+            "lblAverage": "5.8"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Uses integer division (/ 60) and modulus (% 60) for minutes and remaining seconds",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "%\\s*60"
+        },
+        {
+          "id": "c2",
+          "criterion": "Applies explicit (double) cast before division to prevent integer truncation",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "\\(\\s*double\\s*\\)|1\\.0\\s*\\*"
+        },
+        {
+          "id": "c3",
+          "criterion": "Produces exact outputs in lblTime and lblAverage across test cases",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        }
+      ],
+      "explanation": "Dividing two `int` values (`totalSeconds / 60`) truncates toward zero to give whole minutes, `% 60` extracts the remainder, and `(double)totalMarks / testCount` promotes the numerator before division so `15 / 2` yields `7.5` instead of `7.0`.",
+      "exp": "Dividing two `int` values (`totalSeconds / 60`) truncates toward zero to give whole minutes, `% 60` extracts the remainder, and `(double)totalMarks / testCount` promotes the numerator before division so `15 / 2` yields `7.5` instead of `7.0`.",
+      "definitions": [
+        "def_operator_precedence",
+        "def_integer_division",
+        "def_modulus_operator",
+        "def_explicit_casting"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su2_003",
+      "su": "SU2",
+      "ch": "SU2",
+      "topic": "su2_t3_parse_tostring_math",
+      "topicTitle": "Parse, ToString() Formatting (\"C\", \"F2\", \"N2\", \"P1\") & Math Class",
+      "learningObjective": "Use System.Math methods (Math.Pow, Math.Sqrt, Math.Round) and format outputs with ToString(\"F2\") and ToString(\"C\").",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "code-output",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.5,
+      "marks": 6,
+      "estimatedMinutes": 5,
+      "q": "Implement `btnComputeCircle_Click` to calculate the area of a circle (`Math.PI * Math.Pow(radius, 2)`) and the hypotenuse of a right triangle (`Math.Sqrt(Math.Pow(radius, 2) + Math.Pow(height, 2))`), both formatted to 2 decimal places (`\"F2\"`).",
+      "title": "System.Math Methods (Pow, Sqrt) & Fixed-Point Formatting",
+      "stem": "Inside `btnComputeCircle_Click`, parse `txtRadius.Text` and `txtHeight.Text` as `double`. Compute `area = Math.PI * Math.Pow(radius, 2)` and display it in `lblArea.Text` using `.ToString(\"F2\")`. Compute `hypotenuse = Math.Sqrt(Math.Pow(radius, 2) + Math.Pow(height, 2))` and display it in `lblHypotenuse.Text` using `.ToString(\"F2\")`.",
+      "controls": [
+        "txtRadius",
+        "txtHeight",
+        "lblArea",
+        "lblHypotenuse"
+      ],
+      "expectedOutputs": [
+        "lblArea",
+        "lblHypotenuse"
+      ],
+      "starterCode": "private void btnComputeCircle_Click(object sender, EventArgs e)\n{\n    double radius = double.Parse(txtRadius.Text);\n    double height = double.Parse(txtHeight.Text);\n\n    // Compute area and hypotenuse using Math.PI, Math.Pow, and Math.Sqrt\n    \n}",
+      "modelSolution": "private void btnComputeCircle_Click(object sender, EventArgs e)\n{\n    double radius = double.Parse(txtRadius.Text);\n    double height = double.Parse(txtHeight.Text);\n\n    double area = Math.PI * Math.Pow(radius, 2);\n    double hypotenuse = Math.Sqrt(Math.Pow(radius, 2) + Math.Pow(height, 2));\n\n    lblArea.Text = area.ToString(\"F2\");\n    lblHypotenuse.Text = hypotenuse.ToString(\"F2\");\n}",
+      "testCases": [
+        {
+          "name": "Radius 3, Height 4 -> Area 28.27, Hypotenuse 5.00",
+          "inputs": {
+            "txtRadius": "3",
+            "txtHeight": "4",
+            "lblArea": "",
+            "lblHypotenuse": ""
+          },
+          "expected": {
+            "lblArea": "28.27",
+            "lblHypotenuse": "5.00"
+          }
+        },
+        {
+          "name": "Hidden Test: Radius 5, Height 12 -> Area 78.54, Hypotenuse 13.00",
+          "isHidden": true,
+          "inputs": {
+            "txtRadius": "5",
+            "txtHeight": "12",
+            "lblArea": "",
+            "lblHypotenuse": ""
+          },
+          "expected": {
+            "lblArea": "78.54",
+            "lblHypotenuse": "13.00"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Uses Math.Pow and Math.PI for circle area",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "Math\\.Pow\\s*\\("
+        },
+        {
+          "id": "c2",
+          "criterion": "Uses Math.Sqrt for hypotenuse calculation",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "Math\\.Sqrt\\s*\\("
+        },
+        {
+          "id": "c3",
+          "criterion": "Formats both outputs using ToString(\"F2\")",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        }
+      ],
+      "explanation": "`Math.Pow(base, exp)` raises a number to a power, `Math.Sqrt(x)` computes the square root, and `.ToString(\"F2\")` formats floating-point results to 2 fixed decimal places without thousands separators.",
+      "exp": "`Math.Pow(base, exp)` raises a number to a power, `Math.Sqrt(x)` computes the square root, and `.ToString(\"F2\")` formats floating-point results to 2 fixed decimal places without thousands separators.",
+      "definitions": [
+        "def_double_type",
+        "def_parse_methods",
+        "def_tostring_formatting",
+        "def_math_class"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su2_004",
+      "su": "SU2",
+      "ch": "SU2",
+      "topic": "su2_t4_try_catch_and_scope",
+      "topicTitle": "try-catch Exception Handling & Field vs Local Scope",
+      "learningObjective": "Handle runtime conversion errors with try-catch blocks and accumulate totals in a class-level field.",
+      "type": "code-full",
+      "questionType": "code-full",
+      "pedagogicalType": "error-identification",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.6,
+      "marks": 8,
+      "estimatedMinutes": 6,
+      "q": "Write `btnAddDonation_Click` using a `try-catch (FormatException)` block and the class-level accumulator field `_cartTotal`.",
+      "title": "try-catch Exception Handling & Class-Level Running Total",
+      "stem": "The form declares a class-level field `private decimal _cartTotal = 0m;`. Inside `btnAddDonation_Click`, wrap the parsing and calculation in a `try` block: parse `txtDonation.Text` using `decimal.Parse`, add the amount to `_cartTotal`, and display `_cartTotal.ToString(\"C\")` in `lblRunningTotal.Text`. In the `catch (FormatException)` block, call `MessageBox.Show(\"Invalid donation amount.\", \"Format Error\")` and restore focus to `txtDonation.Focus()`.",
+      "controls": [
+        "txtDonation",
+        "lblRunningTotal",
+        "_cartTotal"
+      ],
+      "expectedOutputs": [
+        "lblRunningTotal"
+      ],
+      "requiresCurrency": true,
+      "methodHeader": "private decimal _cartTotal = 0m;\n\nprivate void btnAddDonation_Click(object sender, EventArgs e)\n{",
+      "methodFooter": "}",
+      "starterCode": "    // Use try-catch (FormatException) to parse txtDonation.Text and accumulate _cartTotal\n    ",
+      "modelSolution": "private void btnAddDonation_Click(object sender, EventArgs e)\n{\n    try\n    {\n        decimal amount = decimal.Parse(txtDonation.Text);\n        _cartTotal += amount;\n        lblRunningTotal.Text = _cartTotal.ToString(\"C\");\n    }\n    catch (FormatException)\n    {\n        MessageBox.Show(\"Invalid donation amount.\", \"Format Error\");\n        txtDonation.Focus();\n    }\n}",
+      "testCases": [
+        {
+          "name": "Valid donation (150.00) adds to _cartTotal and formats R 150.00",
+          "inputs": {
+            "txtDonation": "150.00",
+            "lblRunningTotal": ""
+          },
+          "expected": {
+            "lblRunningTotal": "150.00"
+          }
+        },
+        {
+          "name": "Invalid text (\"fifty\") triggers catch block MessageBox without altering label",
+          "inputs": {
+            "txtDonation": "fifty",
+            "lblRunningTotal": "R 200.00"
+          },
+          "expected": {
+            "_messages": "Invalid donation",
+            "lblRunningTotal": "200.00"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Wraps decimal.Parse inside a try { ... } catch (...) block",
+          "marks": 3,
+          "checkType": "pattern",
+          "pattern": "try\\s*\\{[\\s\\S]*?catch"
+        },
+        {
+          "id": "c2",
+          "criterion": "Accumulates into class-level field _cartTotal and formats with ToString(\"C\")",
+          "marks": 3,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Catches FormatException, shows MessageBox, and focuses txtDonation",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        }
+      ],
+      "explanation": "When `decimal.Parse` encounters non-numeric text, it throws a `FormatException` and transfers control immediately to the `catch` block, leaving the class-level `_cartTotal` field intact.",
+      "exp": "When `decimal.Parse` encounters non-numeric text, it throws a `FormatException` and transfers control immediately to the `catch` block, leaving the class-level `_cartTotal` field intact.",
+      "definitions": [
+        "def_try_catch",
+        "def_scope_fields_vs_local",
+        "def_parse_methods"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su2_005",
+      "su": "SU2",
+      "ch": "SU2",
+      "topic": "su2_t5_tabindex_focus_accesskeys",
+      "topicTitle": "GUI Fine-Tuning: TabIndex, Focus() & Access Keys (&)",
+      "learningObjective": "Configure TabIndex order, programmatic Focus(), AcceptButton, CancelButton, and keyboard access keys (&).",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "syntax-selection",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.34,
+      "marks": 4,
+      "estimatedMinutes": 3,
+      "q": "Complete `Form1_Load` so `txtHours` is first in the Tab order (`0`), `Enter` triggers `btnCalculate`, `Esc` triggers `btnExit`, and `lblDept` displays `\"R&&D Payroll\"` with an escaped ampersand.",
+      "title": "TabIndex, AcceptButton, CancelButton & Escaped Ampersand (Cloze)",
+      "stem": "Fill in the blanks below to configure keyboard navigation and escape the literal ampersand in `lblDept.Text`.",
+      "clozeTemplate": "private void Form1_Load(object sender, EventArgs e)\n{\n    txtHours.{{BLANK_1}} = 0;\n    this.{{BLANK_2}} = btnCalculate;\n    this.{{BLANK_3}} = btnExit;\n    lblDept.Text = {{BLANK_4}};\n}",
+      "code": "private void Form1_Load(object sender, EventArgs e)\n{\n    txtHours.{{BLANK_1}} = 0;\n    this.{{BLANK_2}} = btnCalculate;\n    this.{{BLANK_3}} = btnExit;\n    lblDept.Text = {{BLANK_4}};\n}",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (0-based Tab order property)",
+          "expected": "TabIndex",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Integer property that determines the order in which controls receive focus when pressing Tab.",
+          "criterion": "Sets txtHours.TabIndex = 0"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (Form Enter key button property)",
+          "expected": "AcceptButton",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Form property designating the Button activated when the user presses Enter.",
+          "criterion": "Sets this.AcceptButton = btnCalculate"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (Form Esc key button property)",
+          "expected": "CancelButton",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Form property designating the Button activated when the user presses Esc.",
+          "criterion": "Sets this.CancelButton = btnExit"
+        },
+        {
+          "id": "blank_4",
+          "label": "Blank 4 (Escaped ampersand string literal)",
+          "expected": "\"R&&D Payroll\"",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Use a double ampersand (&&) inside double quotes to render a literal & on a Label.",
+          "criterion": "Escapes literal ampersand using \"R&&D Payroll\""
+        }
+      ],
+      "modelSolution": "private void Form1_Load(object sender, EventArgs e)\n{\n    txtHours.TabIndex = 0;\n    this.AcceptButton = btnCalculate;\n    this.CancelButton = btnExit;\n    lblDept.Text = \"R&&D Payroll\";\n}",
+      "explanation": "`TabIndex = 0` places `txtHours` first in the Tab sequence, `AcceptButton` and `CancelButton` bind the `Enter` and `Esc` keys, and `\"R&&D Payroll\"` escapes the ampersand so Windows renders a literal `&`.",
+      "exp": "`TabIndex = 0` places `txtHours` first in the Tab sequence, `AcceptButton` and `CancelButton` bind the `Enter` and `Esc` keys, and `\"R&&D Payroll\"` escapes the ampersand so Windows renders a literal `&`.",
+      "definitions": [
+        "def_tab_index",
+        "def_focus_method",
+        "def_access_key"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su3_001",
+      "su": "SU3",
+      "ch": "SU3",
+      "topic": "su3_t1_operators_boolean_logic",
+      "topicTitle": "Relational & Logical Operators: = vs ==, && vs ||, ! vs !=",
+      "learningObjective": "Construct accurate boolean conditions using relational (==, !=, <, >, <=, >=) and logical (&&, ||, !) operators.",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "logic-problem",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.38,
+      "marks": 4,
+      "estimatedMinutes": 3,
+      "q": "Complete the range validation and bursary eligibility checks using `||`, `&&`, and `==`.",
+      "title": "Relational & Short-Circuit Logical Operators (Cloze)",
+      "stem": "Fill in the missing operators so that `mark` outside `0..100` is rejected using logical OR (`||`), while a valid distinction bursary requires `mark >= 75` AND `chkRegistered.Checked == true`.",
+      "clozeTemplate": "if (mark < 0 {{BLANK_1}} mark > 100)\n{\n    lblResult.Text = \"Invalid Mark\";\n}\nelse if (mark {{BLANK_2}} 75 {{BLANK_3}} chkRegistered.Checked {{BLANK_4}} true)\n{\n    lblResult.Text = \"Distinction Bursary Approved\";\n}",
+      "code": "if (mark < 0 {{BLANK_1}} mark > 100)\n{\n    lblResult.Text = \"Invalid Mark\";\n}\nelse if (mark {{BLANK_2}} 75 {{BLANK_3}} chkRegistered.Checked {{BLANK_4}} true)\n{\n    lblResult.Text = \"Distinction Bursary Approved\";\n}",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (Out-of-range logical OR operator)",
+          "expected": "||",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Logical OR operator that triggers if mark is below 0 OR above 100.",
+          "criterion": "Uses || to detect out-of-range marks"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (At least 75 relational operator)",
+          "expected": ">=",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Greater-than-or-equal-to operator including boundary 75.",
+          "criterion": "Uses >= for inclusive boundary 75"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (Logical AND operator)",
+          "expected": "&&",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Short-circuit logical AND operator requiring both conditions to be true.",
+          "criterion": "Uses && to combine mark and registration checks"
+        },
+        {
+          "id": "blank_4",
+          "label": "Blank 4 (Equality comparison operator)",
+          "expected": "==",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Relational equality operator (two equals signs, not assignment).",
+          "criterion": "Uses == equality comparison operator"
+        }
+      ],
+      "modelSolution": "if (mark < 0 || mark > 100)\n{\n    lblResult.Text = \"Invalid Mark\";\n}\nelse if (mark >= 75 && chkRegistered.Checked == true)\n{\n    lblResult.Text = \"Distinction Bursary Approved\";\n}",
+      "explanation": "Out-of-bounds checks require `||` (`mark < 0 || mark > 100`) because a single number cannot be simultaneously `< 0` and `> 100`, while combined requirements use `&&` and `==`.",
+      "exp": "Out-of-bounds checks require `||` (`mark < 0 || mark > 100`) because a single number cannot be simultaneously `< 0` and `> 100`, while combined requirements use `&&` and `==`.",
+      "definitions": [
+        "def_relational_operators",
+        "def_assign_vs_equal",
+        "def_logical_operators"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su3_002",
+      "su": "SU3",
+      "ch": "SU3",
+      "topic": "su3_t2_if_else_nested_switch",
+      "topicTitle": "if-else Chains, Nested Decisions & switch-case-break-default",
+      "learningObjective": "Implement if-else-if chains for ordered numeric ranges and switch statements with break and default.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "logic-problem",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.55,
+      "marks": 6,
+      "estimatedMinutes": 5,
+      "q": "Implement `btnEvaluateGrade_Click` to classify an exam mark (`>= 75` `\"Distinction\"`, `>= 50` `\"Pass\"`, otherwise `\"Fail\"`) into `lblCategory.Text` and assign a faculty bursary using a `switch` statement on `txtCode.Text.ToUpper()`.",
+      "title": "Ordered if-else-if Grade Ladder & switch Bursary Lookup",
+      "stem": "Inside `btnEvaluateGrade_Click`: (1) parse `txtMark.Text` as `int mark`. Use an `if-else-if-else` chain to set `lblCategory.Text` to `\"Distinction\"` (`mark >= 75`), `\"Pass\"` (`mark >= 50`), or `\"Fail\"` (below 50). (2) Switch on `txtCode.Text.Trim().ToUpper()`: for `\"A\"` set `bursary = 5000m`, for `\"B\"` set `bursary = 2500m`, and in `default` set `bursary = 0m`. Display `bursary.ToString(\"C\")` in `lblBursary.Text`.",
+      "controls": [
+        "txtMark",
+        "txtCode",
+        "lblCategory",
+        "lblBursary"
+      ],
+      "expectedOutputs": [
+        "lblCategory",
+        "lblBursary"
+      ],
+      "requiresCurrency": true,
+      "starterCode": "private void btnEvaluateGrade_Click(object sender, EventArgs e)\n{\n    int mark = int.Parse(txtMark.Text);\n    string code = txtCode.Text.Trim().ToUpper();\n    decimal bursary = 0m;\n\n    // 1. Classify mark into lblCategory.Text\n    // 2. Use switch (code) to assign bursary and display in lblBursary.Text\n    \n}",
+      "modelSolution": "private void btnEvaluateGrade_Click(object sender, EventArgs e)\n{\n    int mark = int.Parse(txtMark.Text);\n    string code = txtCode.Text.Trim().ToUpper();\n    decimal bursary = 0m;\n\n    if (mark >= 75)\n    {\n        lblCategory.Text = \"Distinction\";\n    }\n    else if (mark >= 50)\n    {\n        lblCategory.Text = \"Pass\";\n    }\n    else\n    {\n        lblCategory.Text = \"Fail\";\n    }\n\n    switch (code)\n    {\n        case \"A\":\n            bursary = 5000m;\n            break;\n        case \"B\":\n            bursary = 2500m;\n            break;\n        default:\n            bursary = 0m;\n            break;\n    }\n\n    lblBursary.Text = bursary.ToString(\"C\");\n}",
+      "testCases": [
+        {
+          "name": "Mark 82 and code \"a\" -> Distinction and R 5,000.00",
+          "inputs": {
+            "txtMark": "82",
+            "txtCode": "a",
+            "lblCategory": "",
+            "lblBursary": ""
+          },
+          "expected": {
+            "lblCategory": "Distinction",
+            "lblBursary": "5000.00"
+          }
+        },
+        {
+          "name": "Mark 60 and code \"B\" -> Pass and R 2,500.00",
+          "inputs": {
+            "txtMark": "60",
+            "txtCode": "B",
+            "lblCategory": "",
+            "lblBursary": ""
+          },
+          "expected": {
+            "lblCategory": "Pass",
+            "lblBursary": "2500.00"
+          }
+        },
+        {
+          "name": "Hidden Test: Mark 42 and code \"Z\" -> Fail and R 0.00",
+          "isHidden": true,
+          "inputs": {
+            "txtMark": "42",
+            "txtCode": "Z",
+            "lblCategory": "",
+            "lblBursary": ""
+          },
+          "expected": {
+            "lblCategory": "Fail",
+            "lblBursary": "0.00"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Orders if (mark >= 75) before else if (mark >= 50) and else",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c2",
+          "criterion": "Implements switch with case \"A\", case \"B\", default, and break statements",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "switch\\s*\\("
+        },
+        {
+          "id": "c3",
+          "criterion": "Correctly handles Pass/Fail and default bursary cases",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        }
+      ],
+      "explanation": "Ordered `if-else-if` chains must check the highest threshold (`>= 75`) before `>= 50`, while `switch` statements match discrete codes and require `break;` on every case.",
+      "exp": "Ordered `if-else-if` chains must check the highest threshold (`>= 75`) before `>= 50`, while `switch` statements match discrete codes and require `break;` on every case.",
+      "definitions": [
+        "def_if_else_nested",
+        "def_switch_statement"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su3_003",
+      "su": "SU3",
+      "ch": "SU3",
+      "topic": "su3_t3_tryparse_validation",
+      "topicTitle": "TryParse with out & Defensive Input Validation",
+      "learningObjective": "Validate user input defensively using TryParse with out parameters and boundary range checks.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "input-validation",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.56,
+      "marks": 6,
+      "estimatedMinutes": 5,
+      "q": "Write the defensive input validation in `btnBookTickets_Click` using `int.TryParse` to ensure `tickets` is an integer between `1` and `10` inclusive before calculating `tickets * 125m`.",
+      "title": "Defensive int.TryParse with Inclusive Range Guard (1..10)",
+      "stem": "Inside `btnBookTickets_Click`, validate `txtTickets.Text` using `int.TryParse(txtTickets.Text, out int tickets)`. If parsing fails OR `tickets < 1 || tickets > 10`, display `MessageBox.Show(\"Enter whole tickets between 1 and 10.\", \"Validation Error\")`, call `txtTickets.Focus()`, and `return;`. When valid, compute `decimal total = tickets * 125m;` and assign `lblTicketTotal.Text = total.ToString(\"C\");`.",
+      "controls": [
+        "txtTickets",
+        "lblTicketTotal"
+      ],
+      "expectedOutputs": [
+        "lblTicketTotal"
+      ],
+      "requiresCurrency": true,
+      "starterCode": "private void btnBookTickets_Click(object sender, EventArgs e)\n{\n    // Validate 1 <= tickets <= 10 using int.TryParse and calculate total * 125m\n    \n}",
+      "modelSolution": "private void btnBookTickets_Click(object sender, EventArgs e)\n{\n    int tickets;\n    if (!int.TryParse(txtTickets.Text, out tickets) || tickets < 1 || tickets > 10)\n    {\n        MessageBox.Show(\"Enter whole tickets between 1 and 10.\", \"Validation Error\");\n        txtTickets.Focus();\n        return;\n    }\n    decimal total = tickets * 125m;\n    lblTicketTotal.Text = total.ToString(\"C\");\n}",
+      "testCases": [
+        {
+          "name": "Out-of-range input (12) shows MessageBox and leaves label blank",
+          "inputs": {
+            "txtTickets": "12",
+            "lblTicketTotal": ""
+          },
+          "expected": {
+            "_messages": "1 and 10",
+            "lblTicketTotal": ""
+          }
+        },
+        {
+          "name": "Non-integer input (\"two\") shows MessageBox and returns early",
+          "inputs": {
+            "txtTickets": "two",
+            "lblTicketTotal": ""
+          },
+          "expected": {
+            "_messages": "1 and 10",
+            "lblTicketTotal": ""
+          }
+        },
+        {
+          "name": "Valid boundary input (4 tickets) calculates R 500.00",
+          "inputs": {
+            "txtTickets": "4",
+            "lblTicketTotal": ""
+          },
+          "expected": {
+            "lblTicketTotal": "500.00"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Uses int.TryParse with out parameter",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "int\\.TryParse\\s*\\("
+        },
+        {
+          "id": "c2",
+          "criterion": "Rejects out-of-range (< 1 or > 10) and non-numeric inputs with MessageBox and Focus()",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Computes tickets * 125m and formats as currency in lblTicketTotal",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 2
+        }
+      ],
+      "explanation": "`int.TryParse` returns `false` on non-integer text without throwing an exception, and short-circuit `||` checks `tickets < 1 || tickets > 10` before computing `tickets * 125m`.",
+      "exp": "`int.TryParse` returns `false` on non-integer text without throwing an exception, and short-circuit `||` checks `tickets < 1 || tickets > 10` before computing `tickets * 125m`.",
+      "definitions": [
+        "def_tryparse",
+        "def_out_parameter",
+        "def_logical_operators"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su3_004",
+      "su": "SU3",
+      "ch": "SU3",
+      "topic": "su3_t4_radio_check_groupbox",
+      "topicTitle": "RadioButton, CheckBox & GroupBox Mutual Exclusion",
+      "learningObjective": "Build multi-option interfaces combining mutually exclusive RadioButtons (if-else-if) with independent CheckBoxes (separate if statements).",
+      "type": "code-full",
+      "questionType": "code-full",
+      "pedagogicalType": "application-scenario",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.62,
+      "marks": 8,
+      "estimatedMinutes": 6,
+      "q": "Implement `btnQuoteDelivery_Click` to calculate a courier quote from mutually exclusive speed RadioButtons (`rdoStandard` R60, `rdoExpress` R110, `rdoOvernight` R180) and independent add-on CheckBoxes (`chkInsurance` +R35, `chkSms` +R10).",
+      "title": "RadioButton Mutual Exclusion vs Independent CheckBox Accumulation",
+      "stem": "Write `btnQuoteDelivery_Click` so that: (1) if `rdoStandard.Checked` is true, base fee is `60m`; else if `rdoExpress.Checked`, `110m`; else if `rdoOvernight.Checked`, `180m`. (2) Use independent `if` statements so that if `chkInsurance.Checked` is true, `35m` is added, and if `chkSms.Checked` is true, `10m` is added (both can be checked simultaneously!). (3) Display the final fee formatted as currency (`ToString(\"C\")`) in `lblDeliveryFee.Text`.",
+      "controls": [
+        "rdoStandard",
+        "rdoExpress",
+        "rdoOvernight",
+        "chkInsurance",
+        "chkSms",
+        "lblDeliveryFee"
+      ],
+      "expectedOutputs": [
+        "lblDeliveryFee"
+      ],
+      "requiresCurrency": true,
+      "starterCode": "private void btnQuoteDelivery_Click(object sender, EventArgs e)\n{\n    decimal fee = 0m;\n    // 1. Evaluate mutually exclusive RadioButtons (rdoStandard, rdoExpress, rdoOvernight)\n    // 2. Evaluate independent CheckBoxes (chkInsurance, chkSms)\n    // 3. Format fee in lblDeliveryFee.Text\n    \n}",
+      "modelSolution": "private void btnQuoteDelivery_Click(object sender, EventArgs e)\n{\n    decimal fee = 0m;\n    if (rdoStandard.Checked)\n    {\n        fee = 60m;\n    }\n    else if (rdoExpress.Checked)\n    {\n        fee = 110m;\n    }\n    else if (rdoOvernight.Checked)\n    {\n        fee = 180m;\n    }\n\n    if (chkInsurance.Checked)\n    {\n        fee += 35m;\n    }\n    if (chkSms.Checked)\n    {\n        fee += 10m;\n    }\n\n    lblDeliveryFee.Text = fee.ToString(\"C\");\n}",
+      "testCases": [
+        {
+          "name": "Express (R110) with BOTH Insurance (+R35) and SMS (+R10) -> R 155.00",
+          "inputs": {
+            "rdoStandard": false,
+            "rdoExpress": true,
+            "rdoOvernight": false,
+            "chkInsurance": true,
+            "chkSms": true,
+            "lblDeliveryFee": ""
+          },
+          "expected": {
+            "lblDeliveryFee": "155.00"
+          }
+        },
+        {
+          "name": "Overnight (R180) with no add-ons -> R 180.00",
+          "inputs": {
+            "rdoStandard": false,
+            "rdoExpress": false,
+            "rdoOvernight": true,
+            "chkInsurance": false,
+            "chkSms": false,
+            "lblDeliveryFee": ""
+          },
+          "expected": {
+            "lblDeliveryFee": "180.00"
+          }
+        },
+        {
+          "name": "Hidden Test: Standard (R60) with SMS only (+R10) -> R 70.00",
+          "isHidden": true,
+          "inputs": {
+            "rdoStandard": true,
+            "rdoExpress": false,
+            "rdoOvernight": false,
+            "chkInsurance": false,
+            "chkSms": true,
+            "lblDeliveryFee": ""
+          },
+          "expected": {
+            "lblDeliveryFee": "70.00"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Selects base rate across rdoStandard, rdoExpress, and rdoOvernight",
+          "marks": 3,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        },
+        {
+          "id": "c2",
+          "criterion": "Uses separate independent if statements for chkInsurance and chkSms so both accumulate",
+          "marks": 3,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Formats final fee in lblDeliveryFee.Text using ToString(\"C\")",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 2
+        }
+      ],
+      "explanation": "Mutually exclusive RadioButtons belong in an `if / else if` structure, whereas independent CheckBoxes (`chkInsurance`, `chkSms`) must use separate `if` statements so checking both adds both surcharges (`110 + 35 + 10 = 155`).",
+      "exp": "Mutually exclusive RadioButtons belong in an `if / else if` structure, whereas independent CheckBoxes (`chkInsurance`, `chkSms`) must use separate `if` statements so checking both adds both surcharges (`110 + 35 + 10 = 155`).",
+      "definitions": [
+        "def_radiobutton_checkbox_groupbox",
+        "def_if_else_nested"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su3_005",
+      "su": "SU3",
+      "ch": "SU3",
+      "topic": "su3_t5_listbox_selection",
+      "topicTitle": "ListBox Selection: SelectedIndex vs SelectedItem",
+      "learningObjective": "Read and validate ListBox selections safely using SelectedIndex != -1 and SelectedItem.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "input-validation",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.52,
+      "marks": 6,
+      "estimatedMinutes": 5,
+      "q": "Write `btnSelectDestination_Click` to guard against an unselected ListBox (`lstCities.SelectedIndex == -1`) before displaying the chosen city from `lstCities.SelectedItem.ToString()`.",
+      "title": "Safe ListBox Selection Guard (SelectedIndex != -1)",
+      "stem": "Inside `btnSelectDestination_Click`, check if `lstCities.SelectedIndex == -1`. If no item is selected, call `MessageBox.Show(\"Please select a destination city.\", \"Selection Required\")` and `return;`. Otherwise, read `string city = lstCities.SelectedItem.ToString();` and set `lblSelectedCity.Text = \"Destination: \" + city;`.",
+      "controls": [
+        "lstCities",
+        "lblSelectedCity"
+      ],
+      "expectedOutputs": [
+        "lblSelectedCity"
+      ],
+      "starterCode": "private void btnSelectDestination_Click(object sender, EventArgs e)\n{\n    // Guard against SelectedIndex == -1, then display SelectedItem in lblSelectedCity.Text\n    \n}",
+      "modelSolution": "private void btnSelectDestination_Click(object sender, EventArgs e)\n{\n    if (lstCities.SelectedIndex == -1)\n    {\n        MessageBox.Show(\"Please select a destination city.\", \"Selection Required\");\n        return;\n    }\n    string city = lstCities.SelectedItem.ToString();\n    lblSelectedCity.Text = \"Destination: \" + city;\n}",
+      "testCases": [
+        {
+          "name": "Unselected ListBox (SelectedIndex == -1) shows MessageBox without throwing NullReferenceException",
+          "inputs": {
+            "lstCities": {
+              "items": [
+                "Cape Town",
+                "Durban"
+              ],
+              "selectedIndex": -1
+            },
+            "lblSelectedCity": ""
+          },
+          "expected": {
+            "_messages": "select a destination",
+            "lblSelectedCity": ""
+          }
+        },
+        {
+          "name": "Selected item index 1 (\"Durban\") displays \"Destination: Durban\"",
+          "inputs": {
+            "lstCities": {
+              "items": [
+                "Cape Town",
+                "Durban"
+              ],
+              "selectedIndex": 1
+            },
+            "lblSelectedCity": ""
+          },
+          "expected": {
+            "lblSelectedCity": "Destination: Durban"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Checks lstCities.SelectedIndex == -1 (or != -1) before accessing SelectedItem",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "SelectedIndex\\s*(==|!=|<|>=)\\s*(-1|0)"
+        },
+        {
+          "id": "c2",
+          "criterion": "Displays MessageBox and returns early when nothing is selected",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Reads lstCities.SelectedItem and sets lblSelectedCity.Text",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        }
+      ],
+      "explanation": "When no item is highlighted in a `ListBox`, `SelectedIndex` is `-1` and `SelectedItem` is `null`. Checking `SelectedIndex == -1` first prevents a `NullReferenceException` when calling `SelectedItem.ToString()`.",
+      "exp": "When no item is highlighted in a `ListBox`, `SelectedIndex` is `-1` and `SelectedItem` is `null`. Checking `SelectedIndex == -1` first prevents a `NullReferenceException` when calling `SelectedItem.ToString()`.",
+      "definitions": [
+        "def_listbox_selection",
+        "def_error_prevention"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su4_001",
+      "su": "SU4",
+      "ch": "SU4",
+      "topic": "su4_t1_loops_pretest_posttest",
+      "topicTitle": "while, do-while & for Loops (Pretest vs Posttest)",
+      "learningObjective": "Write and trace while, do-while, and for loops to populate a ListBox projection schedule.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "loop-execution",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.54,
+      "marks": 6,
+      "estimatedMinutes": 5,
+      "q": "Write the C# code in `btnProjectSavings_Click` to clear `lstSchedule` and use a count-controlled `for` loop (`year = 1` to `4`) to compound `balance` by 10% (`balance += balance * 0.10m`) each year and add `\"Year \" + year + \": \" + balance.ToString(\"C\")` to `lstSchedule.Items`.",
+      "title": "Count-Controlled for Loop & ListBox Compound Projection",
+      "stem": "Inside `btnProjectSavings_Click`, parse `txtPrincipal.Text` as `decimal balance`, clear `lstSchedule.Items`, and run a `for` loop for `int year = 1; year <= 4; year++`. On each pass, increase `balance` by 10% (`balance += balance * 0.10m;`) and add `\"Year \" + year + \": \" + balance.ToString(\"C\")` to `lstSchedule.Items`. Finally, set `lblFinalBalance.Text = balance.ToString(\"C\");`.",
+      "controls": [
+        "txtPrincipal",
+        "lstSchedule",
+        "lblFinalBalance"
+      ],
+      "expectedOutputs": [
+        "lstSchedule",
+        "lblFinalBalance"
+      ],
+      "requiresCurrency": true,
+      "starterCode": "private void btnProjectSavings_Click(object sender, EventArgs e)\n{\n    decimal balance = decimal.Parse(txtPrincipal.Text);\n    // Clear lstSchedule, loop year 1..4 compounding by 10%, and update lblFinalBalance\n    \n}",
+      "modelSolution": "private void btnProjectSavings_Click(object sender, EventArgs e)\n{\n    decimal balance = decimal.Parse(txtPrincipal.Text);\n    lstSchedule.Items.Clear();\n    for (int year = 1; year <= 4; year++)\n    {\n        balance += balance * 0.10m;\n        lstSchedule.Items.Add(\"Year \" + year + \": \" + balance.ToString(\"C\"));\n    }\n    lblFinalBalance.Text = balance.ToString(\"C\");\n}",
+      "testCases": [
+        {
+          "name": "Principal R1,000.00 compounds over 4 years to R 1,464.10",
+          "inputs": {
+            "txtPrincipal": "1000",
+            "lstSchedule": [
+              "Old entry"
+            ],
+            "lblFinalBalance": ""
+          },
+          "expected": {
+            "lblFinalBalance": "1464.10",
+            "lstSchedule": {
+              "exactItems": 4,
+              "contains": "Year 4"
+            }
+          }
+        },
+        {
+          "name": "Hidden Test: Principal R2,000.00 compounds over 4 years to R 2,928.20",
+          "isHidden": true,
+          "inputs": {
+            "txtPrincipal": "2000",
+            "lstSchedule": [],
+            "lblFinalBalance": ""
+          },
+          "expected": {
+            "lblFinalBalance": "2928.20",
+            "lstSchedule": {
+              "exactItems": 4,
+              "contains": "Year 4"
+            }
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Clears lstSchedule.Items before entering loop",
+          "marks": 1,
+          "checkType": "pattern",
+          "pattern": "lstSchedule\\.Items\\.Clear\\s*\\(\\)"
+        },
+        {
+          "id": "c2",
+          "criterion": "Uses loop iterating 4 times and compounds balance by 10%",
+          "marks": 3,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Populates all 4 formatted lines in lstSchedule and updates lblFinalBalance",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        }
+      ],
+      "explanation": "Clearing `lstSchedule.Items.Clear()` before the `for (int year = 1; year <= 4; year++)` loop prevents duplicate rows from earlier clicks, while compounding `balance += balance * 0.10m` updates the balance before adding each year to the ListBox.",
+      "exp": "Clearing `lstSchedule.Items.Clear()` before the `for (int year = 1; year <= 4; year++)` loop prevents duplicate rows from earlier clicks, while compounding `balance += balance * 0.10m` updates the balance before adding each year to the ListBox.",
+      "definitions": [
+        "def_for_loop",
+        "def_while_loop",
+        "def_accumulators_counters"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su4_002",
+      "su": "SU4",
+      "ch": "SU4",
+      "topic": "su4_t2_inc_counters_listbox_loops",
+      "topicTitle": "Prefix/Postfix ++/--, Counters, Accumulators & ListBox Iteration",
+      "learningObjective": "Iterate ListBox items from 0 to Count - 1 using a counter and accumulator without off-by-one errors.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "loop-execution",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.58,
+      "marks": 6,
+      "estimatedMinutes": 5,
+      "q": "Implement `btnSumListBox_Click` to iterate through all items in `lstPrices` from index `0` to `lstPrices.Items.Count - 1`, accumulate their `decimal` sum, and display the total in `lblSum.Text`.",
+      "title": "0-Based ListBox Iteration & Accumulator Pattern",
+      "stem": "Inside `btnSumListBox_Click`, initialise `decimal sum = 0m;` outside a loop that runs from `int i = 0` while `i < lstPrices.Items.Count` (`i++`). Inside the loop, parse `decimal.Parse(lstPrices.Items[i].ToString())` and add it to `sum`. Display `sum.ToString(\"C\")` in `lblSum.Text`.",
+      "controls": [
+        "lstPrices",
+        "lblSum"
+      ],
+      "expectedOutputs": [
+        "lblSum"
+      ],
+      "requiresCurrency": true,
+      "starterCode": "private void btnSumListBox_Click(object sender, EventArgs e)\n{\n    // Sum all items in lstPrices from index 0 to Count - 1 and display in lblSum.Text\n    \n}",
+      "modelSolution": "private void btnSumListBox_Click(object sender, EventArgs e)\n{\n    decimal sum = 0m;\n    for (int i = 0; i < lstPrices.Items.Count; i++)\n    {\n        sum += decimal.Parse(lstPrices.Items[i].ToString());\n    }\n    lblSum.Text = sum.ToString(\"C\");\n}",
+      "testCases": [
+        {
+          "name": "Sums 3 ListBox items (\"120.50\", \"79.50\", \"50.00\") -> R 250.00",
+          "inputs": {
+            "lstPrices": [
+              "120.50",
+              "79.50",
+              "50.00"
+            ],
+            "lblSum": ""
+          },
+          "expected": {
+            "lblSum": "250.00"
+          }
+        },
+        {
+          "name": "Empty ListBox sets lblSum to R 0.00 safely",
+          "inputs": {
+            "lstPrices": [],
+            "lblSum": ""
+          },
+          "expected": {
+            "lblSum": "0.00"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Initialises accumulator sum = 0m before loop",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "decimal\\s+\\w+\\s*=\\s*0"
+        },
+        {
+          "id": "c2",
+          "criterion": "Iterates with i < lstPrices.Items.Count (preventing off-by-one exception)",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Handles empty ListBox and formats sum with ToString(\"C\")",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        }
+      ],
+      "explanation": "Because `ListBox.Items` is 0-indexed, iterating from `i = 0` while `i < lstPrices.Items.Count` visits every element up to `Count - 1` without throwing an `ArgumentOutOfRangeException`.",
+      "exp": "Because `ListBox.Items` is 0-indexed, iterating from `i = 0` while `i < lstPrices.Items.Count` visits every element up to `Count - 1` without throwing an `ArgumentOutOfRangeException`.",
+      "definitions": [
+        "def_increment_decrement",
+        "def_accumulators_counters",
+        "def_infinite_off_by_one"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su4_003",
+      "su": "SU4",
+      "ch": "SU4",
+      "topic": "su4_t3_random_and_form_load",
+      "topicTitle": "Random Numbers (Next & NextDouble) & Form1_Load",
+      "learningObjective": "Generate bounded pseudo-random numbers using Random.Next(min, max) where max is exclusive.",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "syntax-selection",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.36,
+      "marks": 4,
+      "estimatedMinutes": 3,
+      "q": "Complete the `Random` instantiation and `Next` calls to generate a 6-sided die roll (`1` to `6` inclusive) and a 4-digit booking code (`1000` to `9999` inclusive).",
+      "title": "Random.Next Exclusive Upper Bound & Instantiation (Cloze)",
+      "stem": "Fill in the missing tokens so `rand` is instantiated as a `Random` object, `dieRoll` generates an integer in `1..6` inclusive, and `pinCode` generates an integer in `1000..9999` inclusive.",
+      "clozeTemplate": "Random rand = new {{BLANK_1}}();\nint dieRoll = rand.{{BLANK_2}}(1, {{BLANK_3}});\nint pinCode = rand.Next(1000, {{BLANK_4}});\nlblRoll.Text = dieRoll.ToString();",
+      "code": "Random rand = new {{BLANK_1}}();\nint dieRoll = rand.{{BLANK_2}}(1, {{BLANK_3}});\nint pinCode = rand.Next(1000, {{BLANK_4}});\nlblRoll.Text = dieRoll.ToString();",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (Random class constructor)",
+          "expected": "Random",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Class in System namespace used for pseudo-random number generation.",
+          "criterion": "Instantiates new Random()"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (Method returning random integer)",
+          "expected": "Next",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Method on Random that returns a non-negative random int.",
+          "criterion": "Calls rand.Next(min, max)"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (Exclusive upper bound for 1..6)",
+          "expected": "7",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Because the second argument to Next(min, max) is exclusive, pass max + 1 to include 6.",
+          "criterion": "Specifies exclusive upper bound 7 for 1..6 range"
+        },
+        {
+          "id": "blank_4",
+          "label": "Blank 4 (Exclusive upper bound for 1000..9999)",
+          "expected": "10000",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Exclusive upper bound required so 9999 can be generated.",
+          "criterion": "Specifies exclusive upper bound 10000 for 1000..9999 range"
+        }
+      ],
+      "modelSolution": "Random rand = new Random();\nint dieRoll = rand.Next(1, 7);\nint pinCode = rand.Next(1000, 10000);\nlblRoll.Text = dieRoll.ToString();",
+      "explanation": "In `Random.Next(minValue, maxValue)`, `minValue` is inclusive and `maxValue` is strictly exclusive, so `rand.Next(1, 7)` produces `1..6` and `rand.Next(1000, 10000)` produces `1000..9999`.",
+      "exp": "In `Random.Next(minValue, maxValue)`, `minValue` is inclusive and `maxValue` is strictly exclusive, so `rand.Next(1, 7)` produces `1..6` and `rand.Next(1000, 10000)` produces `1000..9999`.",
+      "definitions": [
+        "def_random_class",
+        "def_form_load"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su4_004",
+      "su": "SU4",
+      "ch": "SU4",
+      "topic": "su4_t4_text_files_io",
+      "topicTitle": "Text Files: StreamWriter, StreamReader, Overwrite vs Append & @ Paths",
+      "learningObjective": "Read sequential text files using System.IO StreamReader, File.OpenText, !EndOfStream, ReadLine(), and Close().",
+      "type": "code-full",
+      "questionType": "code-full",
+      "pedagogicalType": "file-handling",
+      "difficulty": "Advanced",
+      "estimatedDifficulty": 0.72,
+      "marks": 8,
+      "estimatedMinutes": 7,
+      "q": "Implement `btnLoadMarks_Click` using `StreamReader` (`File.OpenText(\"marks.txt\")`) and a `while (!inFile.EndOfStream)` loop to load every line into `lstMarks`, count the records, close the stream, and display `\"Loaded \" + count + \" marks\"` in `lblStatus.Text`.",
+      "title": "Sequential Text File Reading with StreamReader & EndOfStream",
+      "stem": "Write `btnLoadMarks_Click` to: (1) clear `lstMarks.Items`, (2) open `\"marks.txt\"` using `StreamReader inFile = File.OpenText(\"marks.txt\");`, (3) loop `while (!inFile.EndOfStream)` reading each line via `inFile.ReadLine()`, adding it to `lstMarks.Items`, and incrementing an integer counter `count`, (4) call `inFile.Close();`, and (5) set `lblStatus.Text = \"Loaded \" + count + \" marks\";`.",
+      "controls": [
+        "lstMarks",
+        "lblStatus"
+      ],
+      "expectedOutputs": [
+        "lstMarks",
+        "lblStatus"
+      ],
+      "starterCode": "private void btnLoadMarks_Click(object sender, EventArgs e)\n{\n    // Open \"marks.txt\" with File.OpenText, read all lines until EndOfStream, close file, and update lblStatus\n    \n}",
+      "modelSolution": "private void btnLoadMarks_Click(object sender, EventArgs e)\n{\n    lstMarks.Items.Clear();\n    StreamReader inFile = File.OpenText(\"marks.txt\");\n    int count = 0;\n    while (!inFile.EndOfStream)\n    {\n        string line = inFile.ReadLine();\n        lstMarks.Items.Add(line);\n        count++;\n    }\n    inFile.Close();\n    lblStatus.Text = \"Loaded \" + count + \" marks\";\n}",
+      "testCases": [
+        {
+          "name": "Reads 3 lines from virtual marks.txt into lstMarks and closes StreamReader",
+          "inputs": {
+            "lblStatus": "",
+            "lstMarks": [],
+            "virtualFiles": {
+              "marks.txt": [
+                "78",
+                "85",
+                "92"
+              ]
+            }
+          },
+          "expected": {
+            "_streamClosed": true,
+            "lblStatus": "Loaded 3 marks",
+            "lstMarks": {
+              "exactItems": 3,
+              "contains": "92"
+            }
+          }
+        },
+        {
+          "name": "Hidden Test: Reads 2 lines and overwrites previous ListBox items",
+          "isHidden": true,
+          "inputs": {
+            "lblStatus": "",
+            "lstMarks": [
+              "Old"
+            ],
+            "virtualFiles": {
+              "marks.txt": [
+                "64",
+                "71"
+              ]
+            }
+          },
+          "expected": {
+            "_streamClosed": true,
+            "lblStatus": "Loaded 2 marks",
+            "lstMarks": {
+              "exactItems": 2,
+              "contains": "71"
+            }
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Opens \"marks.txt\" using File.OpenText or new StreamReader",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "(File\\.OpenText|new\\s+StreamReader)\\s*\\("
+        },
+        {
+          "id": "c2",
+          "criterion": "Loops while (!inFile.EndOfStream) and reads lines into lstMarks",
+          "marks": 3,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Closes stream with .Close() and updates lblStatus count",
+          "marks": 3,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        }
+      ],
+      "explanation": "`File.OpenText(\"marks.txt\")` returns a `StreamReader`, `while (!inFile.EndOfStream)` reads every line via `ReadLine()` until EOF, and `inFile.Close()` releases the file handle.",
+      "exp": "`File.OpenText(\"marks.txt\")` returns a `StreamReader`, `while (!inFile.EndOfStream)` reads every line via `ReadLine()` until EOF, and `inFile.Close()` releases the file handle.",
+      "definitions": [
+        "def_streamreader",
+        "def_while_loop",
+        "def_accumulators_counters"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su4_005",
+      "su": "SU4",
+      "ch": "SU4",
+      "topic": "su4_t5_file_dialogs",
+      "topicTitle": "OpenFileDialog, SaveFileDialog & Component Tray",
+      "learningObjective": "Integrate SaveFileDialog and StreamWriter using ShowDialog() == DialogResult.OK, FileName, WriteLine, and Close().",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "file-handling",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.56,
+      "marks": 4,
+      "estimatedMinutes": 4,
+      "q": "Complete `btnExportLog_Click` to check if `sfdExport.ShowDialog()` returns `DialogResult.OK`, create the selected file using `File.CreateText(sfdExport.FileName)`, write `txtSummary.Text`, and close the `StreamWriter`.",
+      "title": "SaveFileDialog.ShowDialog(), FileName & StreamWriter.Close() (Cloze)",
+      "stem": "Fill in the missing C# tokens to complete the file export handler using `sfdExport` (`SaveFileDialog`) and `StreamWriter`.",
+      "clozeTemplate": "private void btnExportLog_Click(object sender, EventArgs e)\n{\n    if (sfdExport.ShowDialog() == DialogResult.{{BLANK_1}})\n    {\n        StreamWriter outFile = File.{{BLANK_2}}(sfdExport.{{BLANK_3}});\n        outFile.WriteLine(txtSummary.Text);\n        outFile.{{BLANK_4}}();\n    }\n}",
+      "code": "private void btnExportLog_Click(object sender, EventArgs e)\n{\n    if (sfdExport.ShowDialog() == DialogResult.{{BLANK_1}})\n    {\n        StreamWriter outFile = File.{{BLANK_2}}(sfdExport.{{BLANK_3}});\n        outFile.WriteLine(txtSummary.Text);\n        outFile.{{BLANK_4}}();\n    }\n}",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (DialogResult confirmation constant)",
+          "expected": "OK",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "DialogResult value returned when the user clicks Save/OK in a file dialog.",
+          "criterion": "Checks sfdExport.ShowDialog() == DialogResult.OK"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (File method creating/overwriting text file)",
+          "expected": "CreateText",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Static method on System.IO.File that creates or overwrites a text file.",
+          "criterion": "Uses File.CreateText to open a StreamWriter"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (Property holding chosen file path)",
+          "expected": "FileName",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Property on SaveFileDialog storing the selected path (watch capital N in FileName!).",
+          "criterion": "Accesses sfdExport.FileName with exact PascalCase"
+        },
+        {
+          "id": "blank_4",
+          "label": "Blank 4 (Flush and close stream)",
+          "expected": "Close",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Method on StreamWriter that flushes buffered text to disk and releases the lock.",
+          "criterion": "Calls outFile.Close() after writing"
+        }
+      ],
+      "modelSolution": "private void btnExportLog_Click(object sender, EventArgs e)\n{\n    if (sfdExport.ShowDialog() == DialogResult.OK)\n    {\n        StreamWriter outFile = File.CreateText(sfdExport.FileName);\n        outFile.WriteLine(txtSummary.Text);\n        outFile.Close();\n    }\n}",
+      "explanation": "`sfdExport.ShowDialog() == DialogResult.OK` ensures the user did not cancel the dialog before `File.CreateText(sfdExport.FileName)` opens the `StreamWriter` and `outFile.Close()` flushes the buffer.",
+      "exp": "`sfdExport.ShowDialog() == DialogResult.OK` ensures the user did not cancel the dialog before `File.CreateText(sfdExport.FileName)` opens the `StreamWriter` and `outFile.Close()` flushes the buffer.",
+      "definitions": [
+        "def_file_dialogs",
+        "def_dialog_result",
+        "def_streamwriter"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su5_001",
+      "su": "SU5",
+      "ch": "SU5",
+      "topic": "su5_t1_void_methods_headers",
+      "topicTitle": "Modularisation, Method Headers & void Methods",
+      "learningObjective": "Decompose event handlers into clean void helper methods and invoke them properly.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "method-execution",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.42,
+      "marks": 6,
+      "estimatedMinutes": 5,
+      "q": "Write a `private void DisplayBanner(string studentName)` helper method that adds `\"Student: \" + studentName` to `lstOutput.Items` and sets `lblHeader.Text = \"Welcome, \" + studentName`, and call `DisplayBanner(txtName.Text)` inside `btnWelcome_Click`.",
+      "title": "Declaring and Calling a Parameterised void Helper Method",
+      "stem": "Define a custom helper method `private void DisplayBanner(string studentName)` and invoke it from `btnWelcome_Click` passing `txtName.Text`. Inside `DisplayBanner`, add `\"Student: \" + studentName` to `lstOutput.Items` and set `lblHeader.Text = \"Welcome, \" + studentName;`.",
+      "controls": [
+        "txtName",
+        "lblHeader",
+        "lstOutput"
+      ],
+      "expectedOutputs": [
+        "lblHeader",
+        "lstOutput"
+      ],
+      "starterCode": "private void DisplayBanner(string studentName)\n{\n    // Add \"Student: \" + studentName to lstOutput.Items and update lblHeader.Text\n    \n}\n\nprivate void btnWelcome_Click(object sender, EventArgs e)\n{\n    // Call DisplayBanner passing txtName.Text\n    \n}",
+      "modelSolution": "private void DisplayBanner(string studentName)\n{\n    lstOutput.Items.Add(\"Student: \" + studentName);\n    lblHeader.Text = \"Welcome, \" + studentName;\n}\n\nprivate void btnWelcome_Click(object sender, EventArgs e)\n{\n    DisplayBanner(txtName.Text);\n}",
+      "testCases": [
+        {
+          "name": "Calls DisplayBanner(\"Lerato\") to update lblHeader and lstOutput",
+          "inputs": {
+            "txtName": "Lerato",
+            "lblHeader": "",
+            "lstOutput": []
+          },
+          "expected": {
+            "lblHeader": "Welcome, Lerato",
+            "lstOutput": {
+              "exactItems": 1,
+              "contains": "Student: Lerato"
+            }
+          }
+        },
+        {
+          "name": "Hidden Test: Calls DisplayBanner(\"Pieter\")",
+          "isHidden": true,
+          "inputs": {
+            "txtName": "Pieter",
+            "lblHeader": "",
+            "lstOutput": []
+          },
+          "expected": {
+            "lblHeader": "Welcome, Pieter",
+            "lstOutput": {
+              "exactItems": 1,
+              "contains": "Student: Pieter"
+            }
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Declares private void DisplayBanner(string studentName) method header",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "void\\s+DisplayBanner\\s*\\(\\s*string\\s+\\w+\\s*\\)"
+        },
+        {
+          "id": "c2",
+          "criterion": "Calls DisplayBanner(txtName.Text) inside btnWelcome_Click",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "DisplayBanner\\s*\\(\\s*txtName\\.Text\\s*\\)"
+        },
+        {
+          "id": "c3",
+          "criterion": "Updates lblHeader.Text and appends to lstOutput.Items",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        }
+      ],
+      "explanation": "A `void` method performs actions (updating `lstOutput` and `lblHeader`) without returning a value, and is invoked as a standalone statement `DisplayBanner(txtName.Text);`.",
+      "exp": "A `void` method performs actions (updating `lstOutput` and `lblHeader`) without returning a value, and is invoked as a standalone statement `DisplayBanner(txtName.Text);`.",
+      "definitions": [
+        "def_method_structure",
+        "def_void_vs_value_method"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su5_002",
+      "su": "SU5",
+      "ch": "SU5",
+      "topic": "su5_t2_value_returning_methods",
+      "topicTitle": "Value-Returning Methods & Return Path Completeness",
+      "learningObjective": "Write value-returning methods that return a compatible value on every execution path and use the returned value at the call site.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "method-execution",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.58,
+      "marks": 6,
+      "estimatedMinutes": 5,
+      "q": "Implement `private decimal CalculateNetPrice(decimal gross, bool isStaff)` so it returns `gross * 0.85m` when `isStaff` is `true` and `gross` otherwise, and call it in `btnCalcPrice_Click` to display the formatted currency in `lblNetPrice.Text`.",
+      "title": "Value-Returning Method with Complete Return Paths",
+      "stem": "Complete `CalculateNetPrice(decimal gross, bool isStaff)` so every code path returns a `decimal` (`gross * 0.85m` if `isStaff` is true, or `gross` if false). Then inside `btnCalcPrice_Click`, parse `txtGross.Text` as `decimal`, call `CalculateNetPrice(gross, chkStaff.Checked)`, and display the returned value formatted with `ToString(\"C\")` in `lblNetPrice.Text`.",
+      "controls": [
+        "txtGross",
+        "chkStaff",
+        "lblNetPrice"
+      ],
+      "expectedOutputs": [
+        "lblNetPrice"
+      ],
+      "requiresCurrency": true,
+      "starterCode": "private decimal CalculateNetPrice(decimal gross, bool isStaff)\n{\n    // Return gross * 0.85m if isStaff is true, otherwise return gross\n    \n}\n\nprivate void btnCalcPrice_Click(object sender, EventArgs e)\n{\n    decimal gross = decimal.Parse(txtGross.Text);\n    // Call CalculateNetPrice and format result in lblNetPrice.Text\n    \n}",
+      "modelSolution": "private decimal CalculateNetPrice(decimal gross, bool isStaff)\n{\n    if (isStaff)\n    {\n        return gross * 0.85m;\n    }\n    return gross;\n}\n\nprivate void btnCalcPrice_Click(object sender, EventArgs e)\n{\n    decimal gross = decimal.Parse(txtGross.Text);\n    decimal net = CalculateNetPrice(gross, chkStaff.Checked);\n    lblNetPrice.Text = net.ToString(\"C\");\n}",
+      "testCases": [
+        {
+          "name": "Gross R200.00 with chkStaff = true returns R 170.00",
+          "inputs": {
+            "txtGross": "200",
+            "chkStaff": true,
+            "lblNetPrice": ""
+          },
+          "expected": {
+            "lblNetPrice": "170.00"
+          }
+        },
+        {
+          "name": "Gross R200.00 with chkStaff = false returns R 200.00",
+          "inputs": {
+            "txtGross": "200",
+            "chkStaff": false,
+            "lblNetPrice": ""
+          },
+          "expected": {
+            "lblNetPrice": "200.00"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Returns a decimal on both true and false branches of CalculateNetPrice",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "return\\s+"
+        },
+        {
+          "id": "c2",
+          "criterion": "Computes 15% staff discount when chkStaff is checked",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Returns unmodified gross price when chkStaff is unchecked",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        }
+      ],
+      "explanation": "A value-returning method (`private decimal CalculateNetPrice(...)`) must execute a `return` statement on every reachable path (preventing compiler error `CS0161`), and the caller stores or formats the returned value.",
+      "exp": "A value-returning method (`private decimal CalculateNetPrice(...)`) must execute a `return` statement on every reachable path (preventing compiler error `CS0161`), and the caller stores or formats the returned value.",
+      "definitions": [
+        "def_void_vs_value_method",
+        "def_parameters_vs_arguments"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su5_003",
+      "su": "SU5",
+      "ch": "SU5",
+      "topic": "su5_t3_params_args_pass_by_value",
+      "topicTitle": "Parameters vs Arguments & Default Pass-by-Value",
+      "learningObjective": "Pass multiple arguments by value in the correct positional order without repeating data type keywords at the call site.",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "method-execution",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.38,
+      "marks": 4,
+      "estimatedMinutes": 3,
+      "q": "Complete the method header and call site for `ComputeTuition` using pass-by-value parameters `(int credits, decimal ratePerCredit)`.",
+      "title": "Formal Parameters vs Actual Arguments in Pass-by-Value (Cloze)",
+      "stem": "Fill in the missing C# tokens so `ComputeTuition` declares formal parameters `(int credits, decimal ratePerCredit)` and returns their product, and `btnCompute_Click` calls `ComputeTuition(enrolledCredits, rate)` without type keywords in the argument list.",
+      "clozeTemplate": "private {{BLANK_1}} ComputeTuition(int credits, {{BLANK_2}} ratePerCredit)\n{\n    {{BLANK_3}} credits * ratePerCredit;\n}\n\nprivate void btnCompute_Click(object sender, EventArgs e)\n{\n    int enrolledCredits = int.Parse(txtCredits.Text);\n    decimal rate = 850m;\n    decimal tuition = ComputeTuition({{BLANK_4}});\n    lblTuition.Text = tuition.ToString(\"C\");\n}",
+      "code": "private {{BLANK_1}} ComputeTuition(int credits, {{BLANK_2}} ratePerCredit)\n{\n    {{BLANK_3}} credits * ratePerCredit;\n}\n\nprivate void btnCompute_Click(object sender, EventArgs e)\n{\n    int enrolledCredits = int.Parse(txtCredits.Text);\n    decimal rate = 850m;\n    decimal tuition = ComputeTuition({{BLANK_4}});\n    lblTuition.Text = tuition.ToString(\"C\");\n}",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (Return type of ComputeTuition)",
+          "expected": "decimal",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Financial return type matching credits * ratePerCredit.",
+          "criterion": "Declares decimal return type in ComputeTuition header"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (Type of second formal parameter)",
+          "expected": "decimal",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Data type of ratePerCredit in the method header.",
+          "criterion": "Declares decimal parameter type for ratePerCredit"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (Return keyword)",
+          "expected": "return",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Keyword that sends the calculated value back to the caller.",
+          "criterion": "Uses return statement to output credits * ratePerCredit"
+        },
+        {
+          "id": "blank_4",
+          "label": "Blank 4 (Actual arguments passed in call)",
+          "expected": "enrolledCredits, rate",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Pass the two argument variables separated by a comma (no data types in the call!).",
+          "criterion": "Passes enrolledCredits, rate in matching positional order"
+        }
+      ],
+      "modelSolution": "private decimal ComputeTuition(int credits, decimal ratePerCredit)\n{\n    return credits * ratePerCredit;\n}\n\nprivate void btnCompute_Click(object sender, EventArgs e)\n{\n    int enrolledCredits = int.Parse(txtCredits.Text);\n    decimal rate = 850m;\n    decimal tuition = ComputeTuition(enrolledCredits, rate);\n    lblTuition.Text = tuition.ToString(\"C\");\n}",
+      "explanation": "Formal parameters in the method header declare both type and name (`int credits, decimal ratePerCredit`), whereas actual arguments in the method call pass only the expressions/variables (`enrolledCredits, rate`) in matching positional order.",
+      "exp": "Formal parameters in the method header declare both type and name (`int credits, decimal ratePerCredit`), whereas actual arguments in the method call pass only the expressions/variables (`enrolledCredits, rate`) in matching positional order.",
+      "definitions": [
+        "def_parameters_vs_arguments",
+        "def_pass_by_value"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su5_004",
+      "su": "SU5",
+      "ch": "SU5",
+      "topic": "su5_t4_ref_and_out",
+      "topicTitle": "Passing by Reference: ref vs out Parameters",
+      "learningObjective": "Write custom methods using ref and out parameters and invoke them with explicit ref and out keywords.",
+      "type": "code-full",
+      "questionType": "code-full",
+      "pedagogicalType": "method-execution",
+      "difficulty": "Advanced",
+      "estimatedDifficulty": 0.74,
+      "marks": 8,
+      "estimatedMinutes": 7,
+      "q": "Implement `TryReadOrder(string text, out int qty)` and `ApplyLoyaltyBonus(ref decimal total, int qty)` and invoke both inside `btnProcessOrder_Click`.",
+      "title": "Modular Validation & Mutation with out and ref Parameters",
+      "stem": "Complete the two helper methods and event handler: (1) `private bool TryReadOrder(string text, out int qty)` uses `int.TryParse(text, out qty)` and returns `true` if parsing succeeds and `qty >= 1`; otherwise assigns `qty = 0;` and returns `false`. (2) `private void ApplyLoyaltyBonus(ref decimal total, int qty)` deducts 10% from `total` (`total -= total * 0.10m;`) when `qty >= 5`. (3) In `btnProcessOrder_Click`, call `TryReadOrder(txtQty.Text, out int qty)`. If `false`, show `MessageBox.Show(\"Invalid quantity\")` and `return;`. Otherwise compute `decimal total = qty * 100m;`, call `ApplyLoyaltyBonus(ref total, qty);`, and display `total.ToString(\"C\")` in `lblOrderTotal.Text`.",
+      "controls": [
+        "txtQty",
+        "lblOrderTotal"
+      ],
+      "expectedOutputs": [
+        "lblOrderTotal"
+      ],
+      "requiresCurrency": true,
+      "starterCode": "private bool TryReadOrder(string text, out int qty)\n{\n    // Parse text into out qty and validate qty >= 1\n    \n}\n\nprivate void ApplyLoyaltyBonus(ref decimal total, int qty)\n{\n    // If qty >= 5, reduce ref total by 10%\n    \n}\n\nprivate void btnProcessOrder_Click(object sender, EventArgs e)\n{\n    // Call TryReadOrder with out, compute total = qty * 100m, call ApplyLoyaltyBonus with ref, and update lblOrderTotal\n    \n}",
+      "modelSolution": "private bool TryReadOrder(string text, out int qty)\n{\n    if (int.TryParse(text, out qty) && qty >= 1)\n    {\n        return true;\n    }\n    qty = 0;\n    return false;\n}\n\nprivate void ApplyLoyaltyBonus(ref decimal total, int qty)\n{\n    if (qty >= 5)\n    {\n        total -= total * 0.10m;\n    }\n}\n\nprivate void btnProcessOrder_Click(object sender, EventArgs e)\n{\n    int qty;\n    if (!TryReadOrder(txtQty.Text, out qty))\n    {\n        MessageBox.Show(\"Invalid quantity\");\n        return;\n    }\n    decimal total = qty * 100m;\n    ApplyLoyaltyBonus(ref total, qty);\n    lblOrderTotal.Text = total.ToString(\"C\");\n}",
+      "testCases": [
+        {
+          "name": "Quantity 6 (>= 5) passes TryReadOrder and applies 10% ref discount -> R 540.00",
+          "inputs": {
+            "txtQty": "6",
+            "lblOrderTotal": ""
+          },
+          "expected": {
+            "lblOrderTotal": "540.00"
+          }
+        },
+        {
+          "name": "Quantity 3 (< 5) passes TryReadOrder with no discount -> R 300.00",
+          "inputs": {
+            "txtQty": "3",
+            "lblOrderTotal": ""
+          },
+          "expected": {
+            "lblOrderTotal": "300.00"
+          }
+        },
+        {
+          "name": "Invalid quantity (\"0\") returns false from TryReadOrder and shows MessageBox",
+          "inputs": {
+            "txtQty": "0",
+            "lblOrderTotal": ""
+          },
+          "expected": {
+            "_messages": "Invalid",
+            "lblOrderTotal": ""
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Assigns out parameter qty and returns bool in TryReadOrder",
+          "marks": 3,
+          "checkType": "testCase",
+          "testCaseIndex": 2
+        },
+        {
+          "id": "c2",
+          "criterion": "Mutates caller total via ref parameter in ApplyLoyaltyBonus when qty >= 5",
+          "marks": 3,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Includes explicit out and ref keywords at both declaration and call sites",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        }
+      ],
+      "explanation": "`out` parameters need not be initialised before the call but must be assigned before the method returns (`qty = 0;`), whereas `ref` parameters must be initialised before the call (`decimal total = qty * 100m;`) and allow `ApplyLoyaltyBonus` to mutate `total` in place.",
+      "exp": "`out` parameters need not be initialised before the call but must be assigned before the method returns (`qty = 0;`), whereas `ref` parameters must be initialised before the call (`decimal total = qty * 100m;`) and allow `ApplyLoyaltyBonus` to mutate `total` in place.",
+      "definitions": [
+        "def_ref_vs_out",
+        "def_out_parameter",
+        "def_pass_by_value"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su5_005",
+      "su": "SU5",
+      "ch": "SU5",
+      "topic": "su5_t5_scope_and_debugging",
+      "topicTitle": "Method Scope & Debugger Commands (Step Into, Step Over, Step Out)",
+      "learningObjective": "Trace variable scope across caller and callee methods and pass local values explicitly as arguments.",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "method-execution",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.48,
+      "marks": 4,
+      "estimatedMinutes": 3,
+      "q": "Complete the caller and helper method below so `subtotal` (which is local to `btnCheckout_Click`) is passed into `ComputeVat` and added to `vat` without violating method scope.",
+      "title": "Local Variable Scope Across Caller and Callee Methods (Cloze)",
+      "stem": "Because local variables declared in `btnCheckout_Click` are invisible inside `ComputeVat`, fill in the blanks to pass `subtotal` as an argument, receive it as parameter `amount`, and return `amount * 0.15m`.",
+      "clozeTemplate": "private decimal ComputeVat(decimal {{BLANK_1}})\n{\n    return {{BLANK_2}} * 0.15m;\n}\n\nprivate void btnCheckout_Click(object sender, EventArgs e)\n{\n    decimal subtotal = decimal.Parse(txtSubtotal.Text);\n    decimal vat = {{BLANK_3}}({{BLANK_4}});\n    lblTotal.Text = (subtotal + vat).ToString(\"C\");\n}",
+      "code": "private decimal ComputeVat(decimal {{BLANK_1}})\n{\n    return {{BLANK_2}} * 0.15m;\n}\n\nprivate void btnCheckout_Click(object sender, EventArgs e)\n{\n    decimal subtotal = decimal.Parse(txtSubtotal.Text);\n    decimal vat = {{BLANK_3}}({{BLANK_4}});\n    lblTotal.Text = (subtotal + vat).ToString(\"C\");\n}",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (Parameter name in ComputeVat header)",
+          "expected": "amount",
+          "alternatives": [
+            "subtotal",
+            "val"
+          ],
+          "marks": 1,
+          "hint": "Name of the decimal parameter received by ComputeVat.",
+          "criterion": "Declares parameter amount in ComputeVat header"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (Parameter multiplied by 0.15m)",
+          "expected": "amount",
+          "alternatives": [
+            "subtotal",
+            "val"
+          ],
+          "marks": 1,
+          "hint": "Use the parameter declared in Blank 1.",
+          "criterion": "Multiplies parameter amount by 0.15m"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (Helper method name)",
+          "expected": "ComputeVat",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Name of the helper method that calculates 15% VAT.",
+          "criterion": "Calls ComputeVat helper method"
+        },
+        {
+          "id": "blank_4",
+          "label": "Blank 4 (Local variable argument passed from btnCheckout_Click)",
+          "expected": "subtotal",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Local variable declared in btnCheckout_Click holding the parsed subtotal.",
+          "criterion": "Passes local variable subtotal as argument"
+        }
+      ],
+      "modelSolution": "private decimal ComputeVat(decimal amount)\n{\n    return amount * 0.15m;\n}\n\nprivate void btnCheckout_Click(object sender, EventArgs e)\n{\n    decimal subtotal = decimal.Parse(txtSubtotal.Text);\n    decimal vat = ComputeVat(subtotal);\n    lblTotal.Text = (subtotal + vat).ToString(\"C\");\n}",
+      "explanation": "A local variable (`subtotal`) exists only within the stack frame of the method in which it is declared (`btnCheckout_Click`); helper methods must receive its value via a parameter (`amount`).",
+      "exp": "A local variable (`subtotal`) exists only within the stack frame of the method in which it is declared (`btnCheckout_Click`); helper methods must receive its value via a parameter (`amount`).",
+      "definitions": [
+        "def_scope_fields_vs_local",
+        "def_debugger_stepping",
+        "def_parameters_vs_arguments"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su6_001",
+      "su": "SU6",
+      "ch": "SU6",
+      "topic": "su6_t1_project_structure_startup",
+      "topicTitle": "Multiple Forms, partial Classes (Form1.cs / Designer.cs) & Program.cs",
+      "learningObjective": "Explain how Program.cs launches the startup form via Application.Run(new MainForm()).",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "multiform-behaviour",
+      "difficulty": "Foundational",
+      "estimatedDifficulty": 0.32,
+      "marks": 4,
+      "estimatedMinutes": 3,
+      "q": "Complete `Program.cs` so the application launches `LoginForm` as its startup window.",
+      "title": "Configuring the Startup Form in Program.cs (Cloze)",
+      "stem": "Fill in the missing C# tokens inside `Program.cs` so `Main()` starts the Windows Forms message loop with a new instance of `LoginForm`.",
+      "clozeTemplate": "static class Program\n{\n    [STAThread]\n    static void {{BLANK_1}}()\n    {\n        Application.EnableVisualStyles();\n        Application.SetCompatibleTextRenderingDefault(false);\n        {{BLANK_2}}.{{BLANK_3}}(new {{BLANK_4}}());\n    }\n}",
+      "code": "static class Program\n{\n    [STAThread]\n    static void {{BLANK_1}}()\n    {\n        Application.EnableVisualStyles();\n        Application.SetCompatibleTextRenderingDefault(false);\n        {{BLANK_2}}.{{BLANK_3}}(new {{BLANK_4}}());\n    }\n}",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (Application entry-point method name)",
+          "expected": "Main",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Standard C# entry-point method name in Program.cs.",
+          "criterion": "Declares static void Main() entry point"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (Windows Forms Application class)",
+          "expected": "Application",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Static class in System.Windows.Forms that manages the application run loop.",
+          "criterion": "References Application class"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (Method that launches the startup form)",
+          "expected": "Run",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Method on Application that opens the primary form and starts the message loop.",
+          "criterion": "Calls Application.Run(...)"
+        },
+        {
+          "id": "blank_4",
+          "label": "Blank 4 (Startup form class name)",
+          "expected": "LoginForm",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Class name of the startup form to instantiate with new.",
+          "criterion": "Instantiates new LoginForm() as startup form"
+        }
+      ],
+      "modelSolution": "static class Program\n{\n    [STAThread]\n    static void Main()\n    {\n        Application.EnableVisualStyles();\n        Application.SetCompatibleTextRenderingDefault(false);\n        Application.Run(new LoginForm());\n    }\n}",
+      "explanation": "Inside `Program.cs`, `Application.Run(new LoginForm());` instantiates `LoginForm` and designates it as the application startup form.",
+      "exp": "Inside `Program.cs`, `Application.Run(new LoginForm());` instantiates `LoginForm` and designates it as the application startup form.",
+      "definitions": [
+        "def_program_cs",
+        "def_partial_form_classes",
+        "def_form_instantiation"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su6_002",
+      "su": "SU6",
+      "ch": "SU6",
+      "topic": "su6_t2_instantiation_modal_modeless",
+      "topicTitle": "Instantiation with new & Modal (ShowDialog) vs Modeless (Show)",
+      "learningObjective": "Instantiate secondary forms with new and distinguish modal (ShowDialog) from modeless (Show) execution order.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "multiform-behaviour",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.56,
+      "marks": 6,
+      "estimatedMinutes": 5,
+      "q": "Implement `btnOpenReceipt_Click` to instantiate `ReceiptForm`, assign `frmReceipt.lblSummary.Text = \"Paid: \" + txtAmount.Text` BEFORE displaying the form modally via `ShowDialog()`, and set `lblMainStatus.Text = \"Receipt closed\"` after `ShowDialog()` returns.",
+      "title": "Modal Form Instantiation, Pre-Display Data Assignment & ShowDialog()",
+      "stem": "Write the C# code inside `btnOpenReceipt_Click` to: (1) instantiate `ReceiptForm frmReceipt = new ReceiptForm();`, (2) set `frmReceipt.lblSummary.Text = \"Paid: \" + txtAmount.Text;` BEFORE opening the dialog, (3) display `frmReceipt` modally using `frmReceipt.ShowDialog();`, and (4) set `lblMainStatus.Text = \"Receipt closed\";`.",
+      "controls": [
+        "txtAmount",
+        "lblMainStatus",
+        "ReceiptForm"
+      ],
+      "expectedOutputs": [
+        "lblMainStatus"
+      ],
+      "starterCode": "private void btnOpenReceipt_Click(object sender, EventArgs e)\n{\n    // Instantiate ReceiptForm, set its lblSummary.Text before ShowDialog(), then update lblMainStatus.Text\n    \n}",
+      "modelSolution": "private void btnOpenReceipt_Click(object sender, EventArgs e)\n{\n    ReceiptForm frmReceipt = new ReceiptForm();\n    frmReceipt.lblSummary.Text = \"Paid: \" + txtAmount.Text;\n    frmReceipt.ShowDialog();\n    lblMainStatus.Text = \"Receipt closed\";\n}",
+      "testCases": [
+        {
+          "name": "Populates frmReceipt.lblSummary BEFORE ShowDialog() and updates lblMainStatus",
+          "inputs": {
+            "txtAmount": "R 450.00",
+            "lblMainStatus": ""
+          },
+          "expected": {
+            "_modalShown": true,
+            "lblMainStatus": "Receipt closed"
+          }
+        },
+        {
+          "name": "Hidden Test: Populates frmReceipt.lblSummary with R 1,200.00 before modal display",
+          "isHidden": true,
+          "inputs": {
+            "txtAmount": "R 1,200.00",
+            "lblMainStatus": ""
+          },
+          "expected": {
+            "_modalShown": true,
+            "lblMainStatus": "Receipt closed"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Instantiates ReceiptForm using new ReceiptForm()",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "new\\s+ReceiptForm\\s*\\(\\)"
+        },
+        {
+          "id": "c2",
+          "criterion": "Assigns frmReceipt.lblSummary.Text BEFORE calling ShowDialog()",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Calls ShowDialog() and updates lblMainStatus.Text = \"Receipt closed\"",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        }
+      ],
+      "explanation": "Because `ShowDialog()` blocks execution of the calling method while the modal form is on screen, any data pushed to `frmReceipt.lblSummary.Text` must be assigned BEFORE `frmReceipt.ShowDialog()` is called.",
+      "exp": "Because `ShowDialog()` blocks execution of the calling method while the modal form is on screen, any data pushed to `frmReceipt.lblSummary.Text` must be assigned BEFORE `frmReceipt.ShowDialog()` is called.",
+      "definitions": [
+        "def_form_instantiation",
+        "def_modal_vs_modeless"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su6_003",
+      "su": "SU6",
+      "ch": "SU6",
+      "topic": "su6_t3_modifiers_cross_form",
+      "topicTitle": "Control Modifiers (Private vs Public) & Cross-Form Data Access",
+      "learningObjective": "Pass calculated values across forms using Public control Modifiers and display the secondary form.",
+      "type": "code-full",
+      "questionType": "code-full",
+      "pedagogicalType": "multiform-behaviour",
+      "difficulty": "Advanced",
+      "estimatedDifficulty": 0.72,
+      "marks": 8,
+      "estimatedMinutes": 7,
+      "q": "Implement `btnTransferQuote_Click` to validate `txtUnits.Text` (`int.TryParse`, `> 0`), compute `decimal total = units * 250m`, instantiate `SummaryForm`, pass the customer name and formatted currency total to `frmSummary.lblCustomer.Text` and `frmSummary.lblTotal.Text` (which have `Modifiers = Public`), and display `frmSummary` modally.",
+      "title": "Cross-Form Data Transfer via Public Control Modifiers",
+      "stem": "Write `btnTransferQuote_Click` so that: (1) it validates `txtUnits.Text` with `int.TryParse(txtUnits.Text, out int units)` and `units > 0`; if invalid, it calls `MessageBox.Show(\"Invalid units\")` and `return;`. (2) It calculates `decimal total = units * 250m;`. (3) It instantiates `SummaryForm frmSummary = new SummaryForm();`, sets `frmSummary.lblCustomer.Text = txtCustomer.Text;` and `frmSummary.lblTotal.Text = total.ToString(\"C\");`, and calls `frmSummary.ShowDialog();`.",
+      "controls": [
+        "txtCustomer",
+        "txtUnits",
+        "SummaryForm"
+      ],
+      "expectedOutputs": [],
+      "requiresCurrency": true,
+      "starterCode": "private void btnTransferQuote_Click(object sender, EventArgs e)\n{\n    // 1. Validate txtUnits.Text > 0 using int.TryParse\n    // 2. Calculate total = units * 250m\n    // 3. Instantiate SummaryForm, populate lblCustomer and lblTotal, and call ShowDialog()\n    \n}",
+      "modelSolution": "private void btnTransferQuote_Click(object sender, EventArgs e)\n{\n    int units;\n    if (!int.TryParse(txtUnits.Text, out units) || units <= 0)\n    {\n        MessageBox.Show(\"Invalid units\");\n        return;\n    }\n    decimal total = units * 250m;\n    SummaryForm frmSummary = new SummaryForm();\n    frmSummary.lblCustomer.Text = txtCustomer.Text;\n    frmSummary.lblTotal.Text = total.ToString(\"C\");\n    frmSummary.ShowDialog();\n}",
+      "testCases": [
+        {
+          "name": "Valid input (4 units, \"Amina\") opens SummaryForm modally with pre-populated labels",
+          "inputs": {
+            "txtCustomer": "Amina",
+            "txtUnits": "4"
+          },
+          "expected": {
+            "_modalShown": true
+          }
+        },
+        {
+          "name": "Invalid units (\"0\") shows MessageBox and does not open SummaryForm",
+          "inputs": {
+            "txtCustomer": "Amina",
+            "txtUnits": "0"
+          },
+          "expected": {
+            "_messages": "Invalid",
+            "_modalShown": false
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Validates txtUnits.Text > 0 with int.TryParse and early return",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        },
+        {
+          "id": "c2",
+          "criterion": "Instantiates SummaryForm and sets public labels before ShowDialog()",
+          "marks": 4,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Calls ShowDialog() on the SummaryForm instance",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "\\.ShowDialog\\s*\\(\\)"
+        }
+      ],
+      "explanation": "Setting `Modifiers = Public` on `SummaryForm` controls allows `Form1` to assign `frmSummary.lblCustomer.Text` and `frmSummary.lblTotal.Text` on the instantiated form reference prior to `frmSummary.ShowDialog()`.",
+      "exp": "Setting `Modifiers = Public` on `SummaryForm` controls allows `Form1` to assign `frmSummary.lblCustomer.Text` and `frmSummary.lblTotal.Text` on the instantiated form reference prior to `frmSummary.ShowDialog()`.",
+      "definitions": [
+        "def_cross_form_modifiers",
+        "def_form_instantiation",
+        "def_modal_vs_modeless"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su6_004",
+      "su": "SU6",
+      "ch": "SU6",
+      "topic": "su6_t4_close_vs_hide",
+      "topicTitle": "Closing vs Hiding Forms: Close() vs Hide()",
+      "learningObjective": "Choose appropriately between Close() and Hide() when navigating from a parent form to a modal child form and back.",
+      "type": "code-snippet",
+      "questionType": "code-snippet",
+      "pedagogicalType": "multiform-behaviour",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.54,
+      "marks": 6,
+      "estimatedMinutes": 4,
+      "q": "Write `btnSwitchToChild_Click` so the startup form hides itself (`this.Hide()`), opens `ChildForm` modally (`frmChild.ShowDialog()`), and updates `lblReturnState.Text = \"Returned to main form\"` once `frmChild` closes.",
+      "title": "Hiding Parent Form During Modal Child Navigation (Hide & ShowDialog)",
+      "stem": "Inside `btnSwitchToChild_Click`, instantiate `ChildForm frmChild = new ChildForm();`, hide the current form using `this.Hide();`, display `frmChild` modally via `frmChild.ShowDialog();`, and set `lblReturnState.Text = \"Returned to main form\";`.",
+      "controls": [
+        "lblReturnState",
+        "ChildForm"
+      ],
+      "expectedOutputs": [
+        "lblReturnState"
+      ],
+      "starterCode": "private void btnSwitchToChild_Click(object sender, EventArgs e)\n{\n    // Instantiate ChildForm, hide current form, show ChildForm modally, then update lblReturnState.Text\n    \n}",
+      "modelSolution": "private void btnSwitchToChild_Click(object sender, EventArgs e)\n{\n    ChildForm frmChild = new ChildForm();\n    this.Hide();\n    frmChild.ShowDialog();\n    lblReturnState.Text = \"Returned to main form\";\n}",
+      "testCases": [
+        {
+          "name": "Calls this.Hide(), opens ChildForm modally, and updates lblReturnState without closing startup form",
+          "inputs": {
+            "lblReturnState": ""
+          },
+          "expected": {
+            "_isClosed": false,
+            "_modalShown": true,
+            "lblReturnState": "Returned to main form"
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Calls this.Hide() instead of this.Close() on startup form",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "this\\.Hide\\s*\\(\\)"
+        },
+        {
+          "id": "c2",
+          "criterion": "Displays ChildForm modally via ShowDialog()",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "ShowDialog\\s*\\(\\)"
+        },
+        {
+          "id": "c3",
+          "criterion": "Updates lblReturnState after modal return without closing startup form",
+          "marks": 2,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        }
+      ],
+      "explanation": "Calling `this.Close()` on the startup form terminates the entire application, whereas `this.Hide()` conceals the startup form while `frmChild.ShowDialog()` runs.",
+      "exp": "Calling `this.Close()` on the startup form terminates the entire application, whereas `this.Hide()` conceals the startup form while `frmChild.ShowDialog()` runs.",
+      "definitions": [
+        "def_close_vs_hide",
+        "def_this_close",
+        "def_modal_vs_modeless"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_su6_005",
+      "su": "SU6",
+      "ch": "SU6",
+      "topic": "su6_t5_form_lifecycle",
+      "topicTitle": "Form Lifecycle Events: Load, Activated & FormClosing",
+      "learningObjective": "Trace Form lifecycle events and cancel premature window closure in FormClosing using FormClosingEventArgs e.Cancel = true.",
+      "type": "code-cloze",
+      "questionType": "code-cloze",
+      "pedagogicalType": "multiform-behaviour",
+      "difficulty": "Intermediate",
+      "estimatedDifficulty": 0.52,
+      "marks": 4,
+      "estimatedMinutes": 3,
+      "q": "Complete the `Form1_FormClosing` event handler to prompt a Yes/No confirmation and abort closing the form when the user clicks `No`.",
+      "title": "Cancelling Form Closure in FormClosing (e.Cancel = true) (Cloze)",
+      "stem": "Fill in the missing C# tokens inside `Form1_FormClosing` so that clicking `DialogResult.No` cancels the form closure.",
+      "clozeTemplate": "private void Form1_FormClosing(object sender, {{BLANK_1}} e)\n{\n    DialogResult choice = MessageBox.Show(\n        \"Exit without saving?\", \"Confirm\", MessageBoxButtons.{{BLANK_2}});\n    if (choice == DialogResult.{{BLANK_3}})\n    {\n        e.{{BLANK_4}} = true;\n    }\n}",
+      "code": "private void Form1_FormClosing(object sender, {{BLANK_1}} e)\n{\n    DialogResult choice = MessageBox.Show(\n        \"Exit without saving?\", \"Confirm\", MessageBoxButtons.{{BLANK_2}});\n    if (choice == DialogResult.{{BLANK_3}})\n    {\n        e.{{BLANK_4}} = true;\n    }\n}",
+      "blanks": [
+        {
+          "id": "blank_1",
+          "label": "Blank 1 (EventArgs type for FormClosing)",
+          "expected": "FormClosingEventArgs",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Specialised EventArgs class providing the Cancel property during FormClosing.",
+          "criterion": "Declares FormClosingEventArgs e parameter"
+        },
+        {
+          "id": "blank_2",
+          "label": "Blank 2 (Yes/No button enum)",
+          "expected": "YesNo",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "MessageBoxButtons member displaying Yes and No buttons.",
+          "criterion": "Specifies MessageBoxButtons.YesNo"
+        },
+        {
+          "id": "blank_3",
+          "label": "Blank 3 (DialogResult when user declines exit)",
+          "expected": "No",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "DialogResult value returned when the user clicks No.",
+          "criterion": "Checks choice == DialogResult.No"
+        },
+        {
+          "id": "blank_4",
+          "label": "Blank 4 (Property on e that aborts closing)",
+          "expected": "Cancel",
+          "alternatives": [],
+          "marks": 1,
+          "hint": "Boolean property on FormClosingEventArgs that stops the form from closing when set to true.",
+          "criterion": "Sets e.Cancel = true to abort form closure"
+        }
+      ],
+      "modelSolution": "private void Form1_FormClosing(object sender, FormClosingEventArgs e)\n{\n    DialogResult choice = MessageBox.Show(\n        \"Exit without saving?\", \"Confirm\", MessageBoxButtons.YesNo);\n    if (choice == DialogResult.No)\n    {\n        e.Cancel = true;\n    }\n}",
+      "explanation": "`FormClosing` receives `FormClosingEventArgs e`; setting `e.Cancel = true` when the user selects `DialogResult.No` aborts the close operation before the window is destroyed.",
+      "exp": "`FormClosing` receives `FormClosingEventArgs e`; setting `e.Cancel = true` when the user selects `DialogResult.No` aborts the close operation before the window is destroyed.",
+      "definitions": [
+        "def_form_lifecycle",
+        "def_dialog_result"
+      ],
+      "examPaperId": null
+    },
+    {
+      "id": "q_code_exam_2024_dec",
+      "su": "SU3",
+      "ch": "SU3",
+      "topic": "su3_t4_radio_check_groupbox",
+      "topicTitle": "RadioButton, CheckBox & GroupBox Mutual Exclusion",
+      "learningObjective": "Implement the complete DriveNow Car Rental billing event handler with TryParse validation, vehicle category rates, excess mileage surcharge, GPS add-on, and 5% voucher discount.",
+      "type": "code-full",
+      "questionType": "code-full",
+      "pedagogicalType": "application-scenario",
+      "difficulty": "Advanced",
+      "estimatedDifficulty": 0.78,
+      "marks": 15,
+      "estimatedMinutes": 15,
+      "q": "Exam Paper 1 (Dec 2024) Practical Section B: Implement `btnCalculate_Click` for the DriveNow Fleet Car Rental Billing System.",
+      "title": "Dec 2024 Practical Section B: DriveNow Car Rental Billing Handler",
+      "stem": "Write the complete `btnCalculate_Click` handler for the DriveNow Car Rental Billing System: (1) Validate `txtDays.Text` with `int.TryParse(txtDays.Text, out int days)` (`days > 0`) and `txtKms.Text` with `decimal.TryParse(txtKms.Text, out decimal kms)` (`kms >= 0m`). On invalid input, show `MessageBox.Show(...)`, focus the invalid TextBox, and `return;`. (2) Determine daily rate: `rdoSedan.Checked` (`450m`), `rdoSuv.Checked` (`650m`), or `rdoBakkie.Checked` (`750m`). Compute `baseCost = days * dailyRate`. (3) Free mileage is `days * 150m`; if `kms > freeKms`, `excessCharge = (kms - freeKms) * 3.50m`, else `0m`. (4) If `chkGps.Checked`, add `days * 80m`. (5) `grossTotal = baseCost + excessCharge + gpsCharge`. If `chkVoucher.Checked`, deduct `5%` (`grossTotal * 0.05m`). (6) Format `netTotal.ToString(\"C\")` in `lblTotalDue.Text` and add `\"Net Total: \" + netTotal.ToString(\"C\")` to `lstReceipt.Items`.",
+      "controls": [
+        "txtDays",
+        "txtKms",
+        "rdoSedan",
+        "rdoSuv",
+        "rdoBakkie",
+        "chkGps",
+        "chkVoucher",
+        "lblTotalDue",
+        "lstReceipt"
+      ],
+      "expectedOutputs": [
+        "lblTotalDue",
+        "lstReceipt"
+      ],
+      "requiresCurrency": true,
+      "starterCode": "private void btnCalculate_Click(object sender, EventArgs e)\n{\n    // 1. Validate txtDays (> 0) and txtKms (>= 0) using TryParse\n    // 2. Determine dailyRate (Sedan 450, SUV 650, Bakkie 750) and baseCost\n    // 3. Calculate excess mileage surcharge (> days * 150m at R3.50/km)\n    // 4. Add GPS surcharge (days * 80m) and apply 5% voucher discount if checked\n    // 5. Display netTotal.ToString(\"C\") in lblTotalDue.Text and add summary to lstReceipt.Items\n    \n}",
+      "modelSolution": "private void btnCalculate_Click(object sender, EventArgs e)\n{\n    int days;\n    if (!int.TryParse(txtDays.Text, out days) || days <= 0)\n    {\n        MessageBox.Show(\"Please enter valid positive rental days.\", \"Input Error\");\n        txtDays.Focus();\n        txtDays.SelectAll();\n        return;\n    }\n\n    decimal kms;\n    if (!decimal.TryParse(txtKms.Text, out kms) || kms < 0m)\n    {\n        MessageBox.Show(\"Please enter valid non-negative kilometers.\", \"Input Error\");\n        txtKms.Focus();\n        txtKms.SelectAll();\n        return;\n    }\n\n    decimal dailyRate = 450m;\n    if (rdoSedan.Checked)\n    {\n        dailyRate = 450m;\n    }\n    else if (rdoSuv.Checked)\n    {\n        dailyRate = 650m;\n    }\n    else if (rdoBakkie.Checked)\n    {\n        dailyRate = 750m;\n    }\n\n    decimal baseCost = days * dailyRate;\n    decimal freeKms = days * 150m;\n    decimal excessCharge = (kms > freeKms) ? ((kms - freeKms) * 3.50m) : 0m;\n    decimal gpsCharge = chkGps.Checked ? (days * 80m) : 0m;\n    decimal grossTotal = baseCost + excessCharge + gpsCharge;\n    decimal discount = chkVoucher.Checked ? (grossTotal * 0.05m) : 0m;\n    decimal netTotal = grossTotal - discount;\n\n    lblTotalDue.Text = netTotal.ToString(\"C\");\n    lstReceipt.Items.Add(\"Net Total: \" + netTotal.ToString(\"C\"));\n}",
+      "testCases": [
+        {
+          "name": "SUV (R650) for 3 days, 550 km (100 excess km = R350), GPS (+R240), Voucher (-5%) -> R 2,413.00",
+          "inputs": {
+            "txtDays": "3",
+            "txtKms": "550",
+            "rdoSedan": false,
+            "rdoSuv": true,
+            "rdoBakkie": false,
+            "chkGps": true,
+            "chkVoucher": true,
+            "lblTotalDue": "",
+            "lstReceipt": []
+          },
+          "expected": {
+            "lblTotalDue": "2413.00",
+            "lstReceipt": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "name": "Sedan (R450) for 2 days, 200 km (within 300 free km), no add-ons -> R 900.00",
+          "inputs": {
+            "txtDays": "2",
+            "txtKms": "200",
+            "rdoSedan": true,
+            "rdoSuv": false,
+            "rdoBakkie": false,
+            "chkGps": false,
+            "chkVoucher": false,
+            "lblTotalDue": "",
+            "lstReceipt": []
+          },
+          "expected": {
+            "lblTotalDue": "900.00"
+          }
+        },
+        {
+          "name": "Invalid days (\"0\") triggers MessageBox and aborts calculation",
+          "inputs": {
+            "txtDays": "0",
+            "txtKms": "100",
+            "rdoSedan": true,
+            "rdoSuv": false,
+            "rdoBakkie": false,
+            "chkGps": false,
+            "chkVoucher": false,
+            "lblTotalDue": "",
+            "lstReceipt": []
+          },
+          "expected": {
+            "_messages": "valid",
+            "lblTotalDue": ""
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Defensive TryParse validation on txtDays (> 0) and txtKms (>= 0) with MessageBox and Focus()",
+          "marks": 4,
+          "checkType": "testCase",
+          "testCaseIndex": 2
+        },
+        {
+          "id": "c2",
+          "criterion": "Vehicle category selection (Sedan 450, SUV 650, Bakkie 750) and free mileage allowance logic",
+          "marks": 4,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        },
+        {
+          "id": "c3",
+          "criterion": "Excess km surcharge (R3.50/km), GPS add-on (R80/day), and 5% voucher deduction",
+          "marks": 5,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c4",
+          "criterion": "Currency formatting in lblTotalDue.Text and receipt itemization in lstReceipt",
+          "marks": 2,
+          "checkType": "pattern",
+          "pattern": "lstReceipt\\.Items\\.Add\\s*\\("
+        }
+      ],
+      "explanation": "This full examination handler combines defensive `TryParse` guard clauses, `RadioButton` rate selection, conditional excess mileage (`kms > days * 150m`), independent `CheckBox` modifiers, and `.ToString(\"C\")` formatting.",
+      "exp": "This full examination handler combines defensive `TryParse` guard clauses, `RadioButton` rate selection, conditional excess mileage (`kms > days * 150m`), independent `CheckBox` modifiers, and `.ToString(\"C\")` formatting.",
+      "definitions": [
+        "def_tryparse",
+        "def_radiobutton_checkbox_groupbox",
+        "def_tostring_formatting"
+      ],
+      "examPaperId": "exam_2024_dec"
+    },
+    {
+      "id": "q_code_exam_2023_dec",
+      "su": "SU4",
+      "ch": "SU4",
+      "topic": "su4_t1_loops_pretest_posttest",
+      "topicTitle": "while, do-while & for Loops (Pretest vs Posttest)",
+      "learningObjective": "Implement the NWU Student Tuition, Residence & Bursary Assessment handler with credit validation (1..25), faculty rates, bursary remission, and a 4-month installment projection loop.",
+      "type": "code-full",
+      "questionType": "code-full",
+      "pedagogicalType": "loop-execution",
+      "difficulty": "Advanced",
+      "estimatedDifficulty": 0.78,
+      "marks": 15,
+      "estimatedMinutes": 15,
+      "q": "Exam Paper 1 (Dec 2023) Practical Section B: Implement `btnCalculate_Click` for the Student Tuition, Residence & 4-Month Installment Schedule System.",
+      "title": "Dec 2023 Practical Section B: Student Tuition & 4-Month Installment Loop",
+      "stem": "Write the complete `btnCalculate_Click` handler: (1) Validate `txtCredits.Text` with `int.TryParse(txtCredits.Text, out int credits)` and ensure `credits >= 1 && credits <= 25`; on error, show `MessageBox.Show(...)`, focus `txtCredits`, and `return;`. (2) Determine faculty cost and compulsory levy: `rdoScience.Checked` (`850m`/credit + `2500m` levy), `rdoCommerce.Checked` (`750m`/credit + `1000m` levy), or `rdoHumanities.Checked` (`650m`/credit + `500m` levy). Compute `academicFee = (credits * rate) + levy`. (3) If `chkBursary.Checked`, parse `decimal.TryParse(txtBursaryPercent.Text, out decimal pct)` and deduct `academicFee * (pct / 100m)` from `academicFee`. (4) If `chkResidence.Checked`, add `14000m` to get `totalSemesterFee`. (5) Display `totalSemesterFee.ToString(\"C\")` in `lblNetTuition.Text`, clear `lstInstallments.Items`, and use a `for (int m = 1; m <= 4; m++)` loop to add `\"Month \" + m + \": \" + (totalSemesterFee / 4m).ToString(\"C\")` to `lstInstallments.Items`.",
+      "controls": [
+        "txtCredits",
+        "rdoScience",
+        "rdoCommerce",
+        "rdoHumanities",
+        "chkBursary",
+        "txtBursaryPercent",
+        "chkResidence",
+        "lblNetTuition",
+        "lstInstallments"
+      ],
+      "expectedOutputs": [
+        "lblNetTuition",
+        "lstInstallments"
+      ],
+      "requiresCurrency": true,
+      "starterCode": "private void btnCalculate_Click(object sender, EventArgs e)\n{\n    // 1. Validate credits (1..25) with int.TryParse\n    // 2. Calculate academicFee = (credits * rate) + levy\n    // 3. Apply bursary percentage to academicFee if chkBursary.Checked\n    // 4. Add R14,000 if chkResidence.Checked, update lblNetTuition, and populate 4-month loop in lstInstallments\n    \n}",
+      "modelSolution": "private void btnCalculate_Click(object sender, EventArgs e)\n{\n    int credits;\n    if (!int.TryParse(txtCredits.Text, out credits) || credits < 1 || credits > 25)\n    {\n        MessageBox.Show(\"Credits must be a whole number between 1 and 25.\", \"Validation Error\");\n        txtCredits.Focus();\n        txtCredits.SelectAll();\n        return;\n    }\n\n    decimal rate = 850m;\n    decimal levy = 2500m;\n    if (rdoScience.Checked)\n    {\n        rate = 850m;\n        levy = 2500m;\n    }\n    else if (rdoCommerce.Checked)\n    {\n        rate = 750m;\n        levy = 1000m;\n    }\n    else if (rdoHumanities.Checked)\n    {\n        rate = 650m;\n        levy = 500m;\n    }\n\n    decimal academicFee = (credits * rate) + levy;\n    if (chkBursary.Checked)\n    {\n        decimal bursaryPct;\n        if (!decimal.TryParse(txtBursaryPercent.Text, out bursaryPct) || bursaryPct < 5m || bursaryPct > 100m)\n        {\n            MessageBox.Show(\"Enter a valid bursary percentage between 5 and 100.\", \"Validation Error\");\n            txtBursaryPercent.Focus();\n            return;\n        }\n        academicFee -= academicFee * (bursaryPct / 100m);\n    }\n\n    decimal residenceFee = chkResidence.Checked ? 14000m : 0m;\n    decimal totalSemesterFee = academicFee + residenceFee;\n    decimal monthlyAmount = totalSemesterFee / 4m;\n\n    lblNetTuition.Text = totalSemesterFee.ToString(\"C\");\n    lstInstallments.Items.Clear();\n    for (int m = 1; m <= 4; m++)\n    {\n        lstInstallments.Items.Add(\"Month \" + m + \": \" + monthlyAmount.ToString(\"C\"));\n    }\n}",
+      "testCases": [
+        {
+          "name": "Science (20 credits = R17,000 + R2,500 = R19,500), 20% bursary (-> R15,600), Residence (+R14,000) -> R 29,600.00 (R 7,400.00/mo)",
+          "inputs": {
+            "txtCredits": "20",
+            "rdoScience": true,
+            "rdoCommerce": false,
+            "rdoHumanities": false,
+            "chkBursary": true,
+            "txtBursaryPercent": "20",
+            "chkResidence": true,
+            "lblNetTuition": "",
+            "lstInstallments": []
+          },
+          "expected": {
+            "lblNetTuition": "29600.00",
+            "lstInstallments": {
+              "exactItems": 4,
+              "contains": "7,400.00"
+            }
+          }
+        },
+        {
+          "name": "Out-of-range credits (30) shows MessageBox and returns early",
+          "inputs": {
+            "txtCredits": "30",
+            "rdoScience": true,
+            "rdoCommerce": false,
+            "rdoHumanities": false,
+            "chkBursary": false,
+            "txtBursaryPercent": "0",
+            "chkResidence": false,
+            "lblNetTuition": "",
+            "lstInstallments": []
+          },
+          "expected": {
+            "_messages": "1 and 25",
+            "lblNetTuition": ""
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Validates credits in 1..25 using int.TryParse, MessageBox, and Focus()",
+          "marks": 3,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        },
+        {
+          "id": "c2",
+          "criterion": "Computes faculty rate + levy and applies bursary strictly to academicFee before residenceFee",
+          "marks": 6,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Clears lstInstallments and runs a 4-month for loop adding formatted monthly installments",
+          "marks": 6,
+          "checkType": "pattern",
+          "pattern": "for\\s*\\("
+        }
+      ],
+      "explanation": "The bursary deduction applies strictly to `academicFee` before adding `residenceFee` (`14000m`), and the `for (int m = 1; m <= 4; m++)` loop projects the 4 equal monthly installments into `lstInstallments`.",
+      "exp": "The bursary deduction applies strictly to `academicFee` before adding `residenceFee` (`14000m`), and the `for (int m = 1; m <= 4; m++)` loop projects the 4 equal monthly installments into `lstInstallments`.",
+      "definitions": [
+        "def_tryparse",
+        "def_for_loop",
+        "def_radiobutton_checkbox_groupbox"
+      ],
+      "examPaperId": "exam_2023_dec"
+    },
+    {
+      "id": "q_code_exam_2022_dec",
+      "su": "SU4",
+      "ch": "SU4",
+      "topic": "su4_t2_inc_counters_listbox_loops",
+      "topicTitle": "Prefix/Postfix ++/--, Counters, Accumulators & ListBox Iteration",
+      "learningObjective": "Implement the FitLife Club Membership Billing handler with tier selection validation, VIP locker waiver, 15% VAT calculation, and a 12-month cumulative projection loop.",
+      "type": "code-full",
+      "questionType": "code-full",
+      "pedagogicalType": "loop-execution",
+      "difficulty": "Advanced",
+      "estimatedDifficulty": 0.76,
+      "marks": 15,
+      "estimatedMinutes": 15,
+      "q": "Exam Paper 1 (Dec 2022) Practical Section B: Implement `btnCalculate_Click` for the FitLife Health & Racquet Club Membership Billing Terminal.",
+      "title": "Dec 2022 Practical Section B: FitLife Membership VAT & 12-Month Projection",
+      "stem": "Write the complete `btnCalculate_Click` handler: (1) Validate `!string.IsNullOrWhiteSpace(txtMemberName.Text)` and ensure at least one tier RadioButton (`rdoStandard`, `rdoPremium`, `rdoVip`) is checked; otherwise show `MessageBox.Show(...)` and `return;`. (2) Determine monthly base rate: `rdoStandard` (`350m`), `rdoPremium` (`500m`), or `rdoVip` (`600m`). (3) Add `250m` if `chkTrainer.Checked`. Add `100m` if `chkLocker.Checked && !rdoVip.Checked` (free for VIP). (4) Compute `subtotal`, `vatAmount = subtotal * 0.15m`, and `totalMonthly = subtotal + vatAmount`. Display all three formatted with `ToString(\"C\")` in `lblSubtotal.Text`, `lblVat.Text`, and `lblMonthlyTotal.Text`. (5) Clear `lstDebitOrders.Items` and loop `for (int month = 1; month <= 12; month++)` adding `\"Month \" + month + \": \" + (month * totalMonthly).ToString(\"C\")` to `lstDebitOrders.Items`.",
+      "controls": [
+        "txtMemberName",
+        "rdoStandard",
+        "rdoPremium",
+        "rdoVip",
+        "chkTrainer",
+        "chkLocker",
+        "lblSubtotal",
+        "lblVat",
+        "lblMonthlyTotal",
+        "lstDebitOrders"
+      ],
+      "expectedOutputs": [
+        "lblSubtotal",
+        "lblVat",
+        "lblMonthlyTotal",
+        "lstDebitOrders"
+      ],
+      "requiresCurrency": true,
+      "starterCode": "private void btnCalculate_Click(object sender, EventArgs e)\n{\n    // 1. Validate txtMemberName and tier selection\n    // 2. Compute baseRate, trainerFee, lockerFee (waived for VIP), subtotal, 15% VAT, and totalMonthly\n    // 3. Update lblSubtotal, lblVat, lblMonthlyTotal, and populate 12-month forecast in lstDebitOrders\n    \n}",
+      "modelSolution": "private void btnCalculate_Click(object sender, EventArgs e)\n{\n    if (string.IsNullOrWhiteSpace(txtMemberName.Text))\n    {\n        MessageBox.Show(\"Please enter member name.\", \"Validation Error\");\n        txtMemberName.Focus();\n        return;\n    }\n\n    if (!rdoStandard.Checked && !rdoPremium.Checked && !rdoVip.Checked)\n    {\n        MessageBox.Show(\"Please select a membership tier.\", \"Input Error\");\n        return;\n    }\n\n    decimal baseRate = rdoStandard.Checked ? 350m : (rdoPremium.Checked ? 500m : 600m);\n    decimal trainerFee = chkTrainer.Checked ? 250m : 0m;\n    decimal lockerFee = (chkLocker.Checked && !rdoVip.Checked) ? 100m : 0m;\n    decimal subtotal = baseRate + trainerFee + lockerFee;\n    decimal vatAmount = subtotal * 0.15m;\n    decimal totalMonthly = subtotal + vatAmount;\n\n    lblSubtotal.Text = subtotal.ToString(\"C\");\n    lblVat.Text = vatAmount.ToString(\"C\");\n    lblMonthlyTotal.Text = totalMonthly.ToString(\"C\");\n\n    lstDebitOrders.Items.Clear();\n    for (int month = 1; month <= 12; month++)\n    {\n        lstDebitOrders.Items.Add(\"Month \" + month + \": \" + (month * totalMonthly).ToString(\"C\"));\n    }\n}",
+      "testCases": [
+        {
+          "name": "VIP (R600) with Trainer (+R250) and Locker (waived R0) -> Subtotal R 850.00, VAT R 127.50, Total R 977.50",
+          "inputs": {
+            "txtMemberName": "Sipho Nkosi",
+            "rdoStandard": false,
+            "rdoPremium": false,
+            "rdoVip": true,
+            "chkTrainer": true,
+            "chkLocker": true,
+            "lblSubtotal": "",
+            "lblVat": "",
+            "lblMonthlyTotal": "",
+            "lstDebitOrders": []
+          },
+          "expected": {
+            "lblSubtotal": "850.00",
+            "lblVat": "127.50",
+            "lblMonthlyTotal": "977.50",
+            "lstDebitOrders": {
+              "exactItems": 12
+            }
+          }
+        },
+        {
+          "name": "Standard (R350) with Locker (+R100) -> Subtotal R 450.00, VAT R 67.50, Total R 517.50",
+          "inputs": {
+            "txtMemberName": "Annelie",
+            "rdoStandard": true,
+            "rdoPremium": false,
+            "rdoVip": false,
+            "chkTrainer": false,
+            "chkLocker": true,
+            "lblSubtotal": "",
+            "lblVat": "",
+            "lblMonthlyTotal": "",
+            "lstDebitOrders": []
+          },
+          "expected": {
+            "lblSubtotal": "450.00",
+            "lblVat": "67.50",
+            "lblMonthlyTotal": "517.50",
+            "lstDebitOrders": {
+              "exactItems": 12
+            }
+          }
+        },
+        {
+          "name": "Blank member name shows MessageBox and returns early",
+          "inputs": {
+            "txtMemberName": "   ",
+            "rdoStandard": true,
+            "rdoPremium": false,
+            "rdoVip": false,
+            "chkTrainer": false,
+            "chkLocker": false,
+            "lblSubtotal": "",
+            "lblVat": "",
+            "lblMonthlyTotal": "",
+            "lstDebitOrders": []
+          },
+          "expected": {
+            "_messages": "member name",
+            "lblMonthlyTotal": ""
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Validates non-empty txtMemberName and tier RadioButton selection",
+          "marks": 3,
+          "checkType": "testCase",
+          "testCaseIndex": 2
+        },
+        {
+          "id": "c2",
+          "criterion": "Applies VIP locker waiver (chkLocker.Checked && !rdoVip.Checked) and 15% VAT calculation",
+          "marks": 6,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Formats Subtotal, VAT, MonthlyTotal and populates 12-month loop in lstDebitOrders",
+          "marks": 6,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        }
+      ],
+      "explanation": "Checking `chkLocker.Checked && !rdoVip.Checked` waives the R100 locker fee for VIP members, while the `for (int month = 1; month <= 12; month++)` loop populates the 12-month cumulative debit order projection.",
+      "exp": "Checking `chkLocker.Checked && !rdoVip.Checked` waives the R100 locker fee for VIP members, while the `for (int month = 1; month <= 12; month++)` loop populates the 12-month cumulative debit order projection.",
+      "definitions": [
+        "def_logical_operators",
+        "def_for_loop",
+        "def_tostring_formatting"
+      ],
+      "examPaperId": "exam_2022_dec"
+    },
+    {
+      "id": "q_code_exam_2021_nov",
+      "su": "SU3",
+      "ch": "SU3",
+      "topic": "su3_t3_tryparse_validation",
+      "topicTitle": "TryParse with out & Defensive Input Validation",
+      "learningObjective": "Implement the Riverside Hotel & Conference Reservation quote handler with guest capacity validation, catering calculation, and button state activation.",
+      "type": "code-full",
+      "questionType": "code-full",
+      "pedagogicalType": "input-validation",
+      "difficulty": "Advanced",
+      "estimatedDifficulty": 0.76,
+      "marks": 15,
+      "estimatedMinutes": 15,
+      "q": "Exam Paper 1 (Nov 2021) Practical Section B: Implement `btnCalculate_Click` for the Riverside Hotel & Conference Reservation Engine.",
+      "title": "Nov 2021 Practical Section B: Hotel Room Capacity & Reservation Quote",
+      "stem": "Write `btnCalculate_Click` to: (1) Validate `txtNights.Text` (`int.TryParse`, `1..30`) and `txtGuests.Text` (`int.TryParse`, `>= 1`). (2) Determine room rate and max capacity: `rdoStandard.Checked` (`950m`/night, max `2` guests), `rdoDeluxe.Checked` (`1450m`/night, max `3` guests), `rdoPenthouse.Checked` (`2200m`/night, max `4` guests). (3) If `guests > maxCapacity`, call `MessageBox.Show(\"Selected room allows a maximum of \" + maxCapacity + \" guests.\")`, focus `txtGuests`, and `return;`. (4) Compute `roomCharge = nights * roomRate`, `breakfastCharge = chkBreakfast.Checked ? (nights * guests * 120m) : 0m`, and `shuttleCharge = chkShuttle.Checked ? 350m : 0m`. (5) Display `totalDue = roomCharge + breakfastCharge + shuttleCharge` in `lblTotalDue.Text` using `ToString(\"C\")` and set `btnConfirm.Enabled = true;`.",
+      "controls": [
+        "txtNights",
+        "txtGuests",
+        "rdoStandard",
+        "rdoDeluxe",
+        "rdoPenthouse",
+        "chkBreakfast",
+        "chkShuttle",
+        "lblTotalDue",
+        "btnConfirm"
+      ],
+      "expectedOutputs": [
+        "lblTotalDue",
+        "btnConfirm"
+      ],
+      "requiresCurrency": true,
+      "starterCode": "private void btnCalculate_Click(object sender, EventArgs e)\n{\n    // 1. Validate nights (1..30) and guests (>= 1) using int.TryParse\n    // 2. Determine roomRate and maxCapacity (Standard 950/2, Deluxe 1450/3, Penthouse 2200/4)\n    // 3. Enforce guests <= maxCapacity guard\n    // 4. Calculate totalDue, format in lblTotalDue.Text, and enable btnConfirm\n    \n}",
+      "modelSolution": "private void btnCalculate_Click(object sender, EventArgs e)\n{\n    int nights;\n    if (!int.TryParse(txtNights.Text, out nights) || nights < 1 || nights > 30)\n    {\n        MessageBox.Show(\"Enter nights between 1 and 30.\", \"Validation Error\");\n        txtNights.Focus();\n        return;\n    }\n\n    int guests;\n    if (!int.TryParse(txtGuests.Text, out guests) || guests < 1)\n    {\n        MessageBox.Show(\"Enter a valid number of guests.\", \"Validation Error\");\n        txtGuests.Focus();\n        return;\n    }\n\n    decimal roomRate = 950m;\n    int maxCapacity = 2;\n    if (rdoStandard.Checked)\n    {\n        roomRate = 950m;\n        maxCapacity = 2;\n    }\n    else if (rdoDeluxe.Checked)\n    {\n        roomRate = 1450m;\n        maxCapacity = 3;\n    }\n    else if (rdoPenthouse.Checked)\n    {\n        roomRate = 2200m;\n        maxCapacity = 4;\n    }\n\n    if (guests > maxCapacity)\n    {\n        MessageBox.Show(\"Selected room allows a maximum of \" + maxCapacity + \" guests.\", \"Capacity Exceeded\");\n        txtGuests.Focus();\n        return;\n    }\n\n    decimal roomCharge = nights * roomRate;\n    decimal breakfastCharge = chkBreakfast.Checked ? (nights * guests * 120m) : 0m;\n    decimal shuttleCharge = chkShuttle.Checked ? 350m : 0m;\n    decimal totalDue = roomCharge + breakfastCharge + shuttleCharge;\n\n    lblTotalDue.Text = totalDue.ToString(\"C\");\n    btnConfirm.Enabled = true;\n}",
+      "testCases": [
+        {
+          "name": "Deluxe (R1,450) for 2 nights, 3 guests, Breakfast (2*3*120 = R720), Shuttle (+R350) -> R 3,970.00 & btnConfirm enabled",
+          "inputs": {
+            "txtNights": "2",
+            "txtGuests": "3",
+            "rdoStandard": false,
+            "rdoDeluxe": true,
+            "rdoPenthouse": false,
+            "chkBreakfast": true,
+            "chkShuttle": true,
+            "lblTotalDue": "",
+            "btnConfirm": "Confirm"
+          },
+          "expected": {
+            "lblTotalDue": "3970.00",
+            "btnConfirm": true
+          }
+        },
+        {
+          "name": "Standard Room with 3 guests (> maxCapacity 2) shows MessageBox and leaves lblTotalDue blank",
+          "inputs": {
+            "txtNights": "2",
+            "txtGuests": "3",
+            "rdoStandard": true,
+            "rdoDeluxe": false,
+            "rdoPenthouse": false,
+            "chkBreakfast": false,
+            "chkShuttle": false,
+            "lblTotalDue": "",
+            "btnConfirm": "Confirm"
+          },
+          "expected": {
+            "_messages": "maximum of 2",
+            "lblTotalDue": ""
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Validates nights (1..30) and guests (>= 1) using int.TryParse",
+          "marks": 3,
+          "checkType": "pattern",
+          "pattern": "int\\.TryParse\\s*\\("
+        },
+        {
+          "id": "c2",
+          "criterion": "Enforces room-specific maxCapacity guard (Standard 2, Deluxe 3, Penthouse 4)",
+          "marks": 5,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        },
+        {
+          "id": "c3",
+          "criterion": "Computes roomCharge, breakfast (nights * guests * 120m), shuttle (350m), updates lblTotalDue, and enables btnConfirm",
+          "marks": 7,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        }
+      ],
+      "explanation": "Each room category sets both `roomRate` and `maxCapacity`; if `guests > maxCapacity`, an early-return guard prevents invalid bookings.",
+      "exp": "Each room category sets both `roomRate` and `maxCapacity`; if `guests > maxCapacity`, an early-return guard prevents invalid bookings.",
+      "definitions": [
+        "def_tryparse",
+        "def_radiobutton_checkbox_groupbox",
+        "def_error_prevention"
+      ],
+      "examPaperId": "exam_2021_nov"
+    },
+    {
+      "id": "q_code_exam_2024_pec",
+      "su": "SU5",
+      "ch": "SU5",
+      "topic": "su5_t2_value_returning_methods",
+      "topicTitle": "Value-Returning Methods & Return Path Completeness",
+      "learningObjective": "Implement the Campus Superstore POS Cash Register line-item and checkout logic with tiered volume discounts, Gold Card discount, class-level accumulator, and 5-digit loyalty points.",
+      "type": "code-full",
+      "questionType": "code-full",
+      "pedagogicalType": "application-scenario",
+      "difficulty": "Advanced",
+      "estimatedDifficulty": 0.8,
+      "marks": 15,
+      "estimatedMinutes": 15,
+      "q": "Comprehensive Practical Exam (PEC 2024) Section B: Implement `btnAddItem_Click` for the Campus Superstore POS Cash Register.",
+      "title": "PEC 2024 Practical Section B: POS Volume Discount, Loyalty Points & Accumulator",
+      "stem": "The form declares `private decimal _cartTotal = 0m;`. Write `btnAddItem_Click` to: (1) Validate `decimal.TryParse(txtPrice.Text, out decimal price)` (`price > 0m`) and `int.TryParse(txtQuantity.Text, out int qty)` (`qty >= 1`); on error show `MessageBox.Show(...)` and `return;`. (2) Compute `grossLine = price * qty`. Apply tiered volume discount: `qty >= 10` (`15%`), `qty >= 5` (`5%`), otherwise `0%`, yielding `netLine = grossLine - volumeDiscount`. (3) If `chkGoldCard.Checked`, deduct an additional `5%` (`netLine -= netLine * 0.05m`). (4) Add `netLine` to `_cartTotal`, display `netLine.ToString(\"C\")` in `lblCurrentTotal.Text` and `_cartTotal.ToString(\"C\")` in `lblSessionTotal.Text`, and compute loyalty points `int points = (int)(netLine / 50m);` formatted as 5 digits (`points.ToString(\"D5\")`) in `lblLoyaltyPoints.Text`.",
+      "controls": [
+        "txtPrice",
+        "txtQuantity",
+        "chkGoldCard",
+        "lblCurrentTotal",
+        "lblSessionTotal",
+        "lblLoyaltyPoints",
+        "_cartTotal"
+      ],
+      "expectedOutputs": [
+        "lblCurrentTotal",
+        "lblSessionTotal",
+        "lblLoyaltyPoints"
+      ],
+      "requiresCurrency": true,
+      "methodHeader": "private decimal _cartTotal = 0m;\n\nprivate void btnAddItem_Click(object sender, EventArgs e)\n{",
+      "methodFooter": "}",
+      "starterCode": "    // 1. Validate price (> 0) and qty (>= 1) using TryParse\n    // 2. Apply tiered volume discount (qty >= 10: 15%, qty >= 5: 5%, else 0%)\n    // 3. Apply additional 5% Gold Card discount if chkGoldCard.Checked\n    // 4. Update _cartTotal, lblCurrentTotal, lblSessionTotal, and lblLoyaltyPoints (D5)\n    ",
+      "modelSolution": "private void btnAddItem_Click(object sender, EventArgs e)\n{\n    decimal price;\n    if (!decimal.TryParse(txtPrice.Text, out price) || price <= 0m)\n    {\n        MessageBox.Show(\"Enter a valid positive unit price.\", \"Input Error\");\n        txtPrice.Focus();\n        return;\n    }\n\n    int qty;\n    if (!int.TryParse(txtQuantity.Text, out qty) || qty < 1)\n    {\n        MessageBox.Show(\"Enter a whole quantity of at least 1.\", \"Input Error\");\n        txtQuantity.Focus();\n        return;\n    }\n\n    decimal grossLine = price * qty;\n    decimal volumeDiscount = 0m;\n    if (qty >= 10)\n    {\n        volumeDiscount = grossLine * 0.15m;\n    }\n    else if (qty >= 5)\n    {\n        volumeDiscount = grossLine * 0.05m;\n    }\n\n    decimal netLine = grossLine - volumeDiscount;\n    if (chkGoldCard.Checked)\n    {\n        netLine -= netLine * 0.05m;\n    }\n\n    _cartTotal += netLine;\n    int points = (int)(netLine / 50m);\n\n    lblCurrentTotal.Text = netLine.ToString(\"C\");\n    lblSessionTotal.Text = _cartTotal.ToString(\"C\");\n    lblLoyaltyPoints.Text = points.ToString(\"D5\");\n}",
+      "testCases": [
+        {
+          "name": "10 units at R100 (R1,000 gross, -15% vol = R850, -5% Gold = R 807.50) -> Points 00016",
+          "inputs": {
+            "txtPrice": "100",
+            "txtQuantity": "10",
+            "chkGoldCard": true,
+            "lblCurrentTotal": "",
+            "lblSessionTotal": "",
+            "lblLoyaltyPoints": ""
+          },
+          "expected": {
+            "lblCurrentTotal": "807.50",
+            "lblSessionTotal": "807.50",
+            "lblLoyaltyPoints": "00016"
+          }
+        },
+        {
+          "name": "6 units at R50 (R300 gross, -5% vol = R 285.00, no Gold) -> Points 00005",
+          "inputs": {
+            "txtPrice": "50",
+            "txtQuantity": "6",
+            "chkGoldCard": false,
+            "lblCurrentTotal": "",
+            "lblSessionTotal": "",
+            "lblLoyaltyPoints": ""
+          },
+          "expected": {
+            "lblCurrentTotal": "285.00",
+            "lblSessionTotal": "285.00",
+            "lblLoyaltyPoints": "00005"
+          }
+        },
+        {
+          "name": "Invalid price (\"-10\") triggers MessageBox and leaves labels blank",
+          "inputs": {
+            "txtPrice": "-10",
+            "txtQuantity": "2",
+            "chkGoldCard": false,
+            "lblCurrentTotal": "",
+            "lblSessionTotal": "",
+            "lblLoyaltyPoints": ""
+          },
+          "expected": {
+            "_messages": "valid",
+            "lblCurrentTotal": ""
+          }
+        }
+      ],
+      "rubric": [
+        {
+          "id": "c1",
+          "criterion": "Validates price > 0 and qty >= 1 using TryParse",
+          "marks": 3,
+          "checkType": "testCase",
+          "testCaseIndex": 2
+        },
+        {
+          "id": "c2",
+          "criterion": "Applies tiered volume discount (qty >= 10: 15%, qty >= 5: 5%) and compounds Gold Card 5% discount",
+          "marks": 6,
+          "checkType": "testCase",
+          "testCaseIndex": 0
+        },
+        {
+          "id": "c3",
+          "criterion": "Accumulates _cartTotal and formats loyalty points with ToString(\"D5\")",
+          "marks": 6,
+          "checkType": "testCase",
+          "testCaseIndex": 1
+        }
+      ],
+      "explanation": "Tiered volume discounts evaluate `qty >= 10` before `qty >= 5`, the Gold Card discount applies to the post-volume `netLine`, `_cartTotal` persists across sales, and `points.ToString(\"D5\")` pads the integer quotient `(int)(netLine / 50m)` with leading zeros.",
+      "exp": "Tiered volume discounts evaluate `qty >= 10` before `qty >= 5`, the Gold Card discount applies to the post-volume `netLine`, `_cartTotal` persists across sales, and `points.ToString(\"D5\")` pads the integer quotient `(int)(netLine / 50m)` with leading zeros.",
+      "definitions": [
+        "def_tryparse",
+        "def_if_else_nested",
+        "def_scope_fields_vs_local",
+        "def_tostring_formatting"
+      ],
+      "examPaperId": "exam_2024_pec"
     }
   ]
 };

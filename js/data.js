@@ -44,6 +44,8 @@
     definitions: definitions || [],
     officialExams: questionsMod.officialExams || [],
     questions: questionsMod.questions || [],
+    codingQuestions: questionsMod.codingQuestions || [],
+    allQuestions: [...(questionsMod.questions || []), ...(questionsMod.codingQuestions || [])],
     codeScenarios: codeLabs.codeScenarios || {},
     spotErrors: codeLabs.spotErrors || [],
     auditScenarios: codeLabs.auditScenarios || []

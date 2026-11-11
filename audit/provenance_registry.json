@@ -2998,6 +2998,207 @@
       "source": "Chapter 9 §9.6 FormClosing vs FormClosed",
       "verifiedStage": "Stage C .NET 10.0 Roslyn Compiler & Runtime Harness",
       "examPaperId": null
+    },
+    "q_code_su7_001": {
+      "source": "NWU CMPG122 Curriculum (SU7 - su7_t1_usability_measures)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su7_002": {
+      "source": "NWU CMPG122 Curriculum (SU7 - su7_t2_golden_rules)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su7_003": {
+      "source": "NWU CMPG122 Curriculum (SU7 - su7_t3_norman_gulfs)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su7_004": {
+      "source": "NWU CMPG122 Curriculum (SU7 - su7_t4_error_prevention_recovery)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su7_005": {
+      "source": "NWU CMPG122 Curriculum (SU7 - su7_t5_consistency_feedback)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su1_001": {
+      "source": "NWU CMPG122 Curriculum (SU1 - su1_t1_vs_ide_cycle)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su1_002": {
+      "source": "NWU CMPG122 Curriculum (SU1 - su1_t2_controls_properties)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su1_003": {
+      "source": "NWU CMPG122 Curriculum (SU1 - su1_t3_picturebox)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su1_004": {
+      "source": "NWU CMPG122 Curriculum (SU1 - su1_t4_events_messagebox_close)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su1_005": {
+      "source": "NWU CMPG122 Curriculum (SU1 - su1_t5_hungarian_naming)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su2_001": {
+      "source": "NWU CMPG122 Curriculum (SU2 - su2_t1_types_decimals_constants)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su2_002": {
+      "source": "NWU CMPG122 Curriculum (SU2 - su2_t2_precedence_int_div_casting)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su2_003": {
+      "source": "NWU CMPG122 Curriculum (SU2 - su2_t3_parse_tostring_math)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su2_004": {
+      "source": "NWU CMPG122 Curriculum (SU2 - su2_t4_try_catch_and_scope)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su2_005": {
+      "source": "NWU CMPG122 Curriculum (SU2 - su2_t5_tabindex_focus_accesskeys)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su3_001": {
+      "source": "NWU CMPG122 Curriculum (SU3 - su3_t1_operators_boolean_logic)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su3_002": {
+      "source": "NWU CMPG122 Curriculum (SU3 - su3_t2_if_else_nested_switch)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su3_003": {
+      "source": "NWU CMPG122 Curriculum (SU3 - su3_t3_tryparse_validation)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su3_004": {
+      "source": "NWU CMPG122 Curriculum (SU3 - su3_t4_radio_check_groupbox)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su3_005": {
+      "source": "NWU CMPG122 Curriculum (SU3 - su3_t5_listbox_selection)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su4_001": {
+      "source": "NWU CMPG122 Curriculum (SU4 - su4_t1_loops_pretest_posttest)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su4_002": {
+      "source": "NWU CMPG122 Curriculum (SU4 - su4_t2_inc_counters_listbox_loops)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su4_003": {
+      "source": "NWU CMPG122 Curriculum (SU4 - su4_t3_random_and_form_load)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su4_004": {
+      "source": "NWU CMPG122 Curriculum (SU4 - su4_t4_text_files_io)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su4_005": {
+      "source": "NWU CMPG122 Curriculum (SU4 - su4_t5_file_dialogs)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su5_001": {
+      "source": "NWU CMPG122 Curriculum (SU5 - su5_t1_void_methods_headers)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su5_002": {
+      "source": "NWU CMPG122 Curriculum (SU5 - su5_t2_value_returning_methods)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su5_003": {
+      "source": "NWU CMPG122 Curriculum (SU5 - su5_t3_params_args_pass_by_value)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su5_004": {
+      "source": "NWU CMPG122 Curriculum (SU5 - su5_t4_ref_and_out)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su5_005": {
+      "source": "NWU CMPG122 Curriculum (SU5 - su5_t5_scope_and_debugging)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su6_001": {
+      "source": "NWU CMPG122 Curriculum (SU6 - su6_t1_project_structure_startup)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su6_002": {
+      "source": "NWU CMPG122 Curriculum (SU6 - su6_t2_instantiation_modal_modeless)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su6_003": {
+      "source": "NWU CMPG122 Curriculum (SU6 - su6_t3_modifiers_cross_form)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su6_004": {
+      "source": "NWU CMPG122 Curriculum (SU6 - su6_t4_close_vs_hide)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_su6_005": {
+      "source": "NWU CMPG122 Curriculum (SU6 - su6_t5_form_lifecycle)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": null
+    },
+    "q_code_exam_2024_dec": {
+      "source": "NWU Official Past Paper (exam_2024_dec)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": "exam_2024_dec"
+    },
+    "q_code_exam_2023_dec": {
+      "source": "NWU Official Past Paper (exam_2023_dec)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": "exam_2023_dec"
+    },
+    "q_code_exam_2022_dec": {
+      "source": "NWU Official Past Paper (exam_2022_dec)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": "exam_2022_dec"
+    },
+    "q_code_exam_2021_nov": {
+      "source": "NWU Official Past Paper (exam_2021_nov)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": "exam_2021_nov"
+    },
+    "q_code_exam_2024_pec": {
+      "source": "NWU Official Past Paper (exam_2024_pec)",
+      "verifiedStage": "Stage D Multi-Variation CSharpEngine Behavioral & Rubric Audit",
+      "examPaperId": "exam_2024_pec"
     }
-  }
+  },
+  "totalCodingQuestions": 40
 }

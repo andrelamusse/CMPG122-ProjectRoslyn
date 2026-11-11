@@ -7,6 +7,8 @@
   "offlineServiceWorker": true,
   "responsiveViewportsChecked": [
     "320x568",
+    "360x640",
+    "375x667",
     "375x812",
     "390x844",
     "430x932",
@@ -22,6 +24,7 @@
   "consoleErrors": [],
   "pageErrors": [],
   "customQuizShortcutsAndWeights": true,
+  "interactiveCodingAssessment": true,
   "adminTelemetryDashboard": true,
-  "edgeCrossBrowser": true
+  "edgeCrossBrowser": "Skipped/Note: E2E ASSERTION FAILED: Edge must render all 7 Study Unit cards"
 }

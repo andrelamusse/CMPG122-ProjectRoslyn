@@ -237,6 +237,15 @@
                 <select id="practiceUnitSelect" class="select-input" style="flex:1 1 140px;max-width:100%;min-width:0;"></select>
                 <label for="practiceTopicSelect" style="font-size:0.84rem;font-weight:600;">Topic:</label>
                 <select id="practiceTopicSelect" class="select-input" style="flex:1 1 160px;max-width:100%;min-width:0;"></select>
+                <label for="practiceFormatSelect" style="font-size:0.84rem;font-weight:600;">Format:</label>
+                <select id="practiceFormatSelect" class="select-input" style="flex:1 1 150px;max-width:100%;min-width:0;">
+                  <option value="all">All Formats (MCQ + C# Coding)</option>
+                  <option value="mcq">Multiple-Choice Only</option>
+                  <option value="coding">Interactive C# Coding Only</option>
+                  <option value="code-cloze">Code Cloze (Fill-in-Blank)</option>
+                  <option value="code-snippet">Short C# Snippet</option>
+                  <option value="code-full">Full C# Programming</option>
+                </select>
                 <button type="button" class="btn-secondary btn-sm" id="btnStartFilteredPractice">Load Set</button>
               </div>
               <div style="display:inline-flex;gap:0.4rem;" id="viewModeToggleGroup">
@@ -277,6 +286,17 @@
                 <label for="customTopicFilter" style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Specific Topic (Optional)</label>
                 <select id="customTopicFilter" class="select-input">
                   <option value="">All Topics in Selected Units</option>
+                </select>
+              </div>
+              <div>
+                <label for="customFormatFilter" style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Question Format</label>
+                <select id="customFormatFilter" class="select-input">
+                  <option value="all" selected>All Formats (MCQ + C# Coding)</option>
+                  <option value="mcq">Multiple-Choice Only</option>
+                  <option value="coding">Interactive C# Coding Only</option>
+                  <option value="code-cloze">Code Cloze (Fill-in-Blank)</option>
+                  <option value="code-snippet">Short C# Snippet</option>
+                  <option value="code-full">Full C# Programming</option>
                 </select>
               </div>
               <div>
@@ -322,11 +342,23 @@
           <div id="codelabSandboxPane">
             <div class="panel-card" style="margin-bottom:1rem;">
               <div style="display:flex;gap:0.75rem;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:0.75rem;">
-                <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;flex:1;">
+                <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;flex:1;min-width:0;max-width:100%;">
+                  <label for="codeLabUnitSelect" style="font-weight:700;font-size:0.86rem;">Unit:</label>
+                  <select id="codeLabUnitSelect" class="select-input" style="flex:0 1 170px;min-width:0;max-width:100%;">
+                    <option value="ALL">All Study Units</option>
+                    <option value="SU7">SU7 — HCI Principles</option>
+                    <option value="SU1">SU1 — GUI &amp; IDE</option>
+                    <option value="SU2">SU2 — Data, Types &amp; Math</option>
+                    <option value="SU3">SU3 — Decisions &amp; Validation</option>
+                    <option value="SU4">SU4 — Loops, Files &amp; Dialogs</option>
+                    <option value="SU5">SU5 — Modularising with Methods</option>
+                    <option value="SU6">SU6 — Multiform Projects</option>
+                  </select>
                   <label for="codeScenarioSelect" style="font-weight:700;font-size:0.88rem;">Scenario:</label>
-                  <select id="codeScenarioSelect" class="select-input" style="max-width:440px;"></select>
+                  <select id="codeScenarioSelect" class="select-input" style="flex:1 1 240px;max-width:440px;min-width:0;"></select>
                 </div>
                 <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                  <button type="button" class="btn-secondary btn-sm" id="btnCheckCodeLabSyntax">Check Syntax</button>
                   <button type="button" class="btn-secondary btn-sm" id="btnShowSolution">Load Model Solution</button>
                   <button type="button" class="btn-ghost btn-sm" id="btnResetScenarioCode">Reset Starter</button>
                 </div>
@@ -338,10 +370,13 @@
 
             <div class="code-editor-surface" style="margin-bottom:1rem;">
               <div id="cgMethodHeader" class="code-sig-line">private void btnCalculate_Click(object sender, EventArgs e) {</div>
-              <label for="studentCodeInput" class="sr-only">C# Event Handler Code Editor</label>
-              <textarea id="studentCodeInput" class="code-textarea" spellcheck="false" placeholder="// Write C# event-handler statements here..."></textarea>
+              <div class="code-editor-with-lines">
+                <div class="line-numbers-gutter" id="codeLabLineNumbers" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+                <label for="studentCodeInput" class="sr-only">C# Event Handler Code Editor</label>
+                <textarea id="studentCodeInput" class="code-textarea" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="// Write C# event-handler statements here..."></textarea>
+              </div>
               <div class="code-sig-line" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
-                <span>}</span>
+                <span id="cgMethodFooter">}</span>
                 <button type="button" class="btn-primary btn-sm" id="btnRunCodeGrade">
                   <span class="nav-icon" data-icon="play"></span>
                   <span>Run Diagnostics &amp; Virtual Tests</span>

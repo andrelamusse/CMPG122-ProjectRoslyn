@@ -66,6 +66,13 @@
       });
     }
 
+    _getAllQuestionsPool() {
+      if (Array.isArray(this.data.allQuestions) && this.data.allQuestions.length > 0) {
+        return this.data.allQuestions;
+      }
+      return [...(this.data.questions || []), ...(this.data.codingQuestions || [])];
+    }
+
     async init() {
       if (typeof document === 'undefined') return;
       await this.persistence.init();
@@ -79,14 +86,15 @@
       this._initDefaultPracticeSession();
 
       // Recover interrupted examination or Custom Quiz session if present
+      const allPool = this._getAllQuestionsPool();
       if (st.activeExamSession) {
-        const recovered = ExamMod.ExamSession.fromSnapshot(st.activeExamSession, this.data.questions);
+        const recovered = ExamMod.ExamSession.fromSnapshot(st.activeExamSession, allPool);
         if (recovered && !recovered.isCompleted) {
           this.examSession = recovered;
         }
       }
       if (st.activePracticeSession) {
-        const recoveredPrac = ExamMod.ExamSession.fromSnapshot(st.activePracticeSession, this.data.questions);
+        const recoveredPrac = ExamMod.ExamSession.fromSnapshot(st.activePracticeSession, allPool);
         if (recoveredPrac && !recoveredPrac.isCompleted) {
           this.practiceSession = recoveredPrac;
           this.practiceSubTab = 'session';
@@ -171,19 +179,26 @@
       });
     }
 
-    _initDefaultPracticeSession(su = 'ALL', topic = '') {
-      const isMixedAll = (!su || su === 'ALL') && !topic;
-      const qs = ExamMod.generateCustomExam(this.data.questions || [], {
+    _initDefaultPracticeSession(su = 'ALL', topic = '', format = 'all') {
+      const isMixedAll = (!su || su === 'ALL') && !topic && (!format || format === 'all' || format === 'mcq');
+      const pool = this._getAllQuestionsPool();
+      const qs = ExamMod.generateCustomExam(pool, {
         units: su && su !== 'ALL' ? [su] : [],
         topics: topic ? [topic] : [],
+        questionFormat: format || 'all',
         questionCount: 20,
         useWeightedDistribution: isMixedAll,
         randomize: false
       });
+      const formatLabel = format === 'coding' ? ' (Interactive C# Coding)'
+        : format === 'code-cloze' ? ' (Code Cloze)'
+        : format === 'code-snippet' ? ' (Short C# Snippets)'
+        : format === 'code-full' ? ' (Full C# Programming)'
+        : '';
       this.practiceSession = new ExamMod.ExamSession({
         id: `prac_${su}_${Date.now()}`,
         mode: 'practice',
-        title: su === 'ALL' ? 'Mixed Curriculum Practice' : `${su} Study Unit Practice`,
+        title: (su === 'ALL' ? 'Mixed Curriculum Practice' : `${su} Study Unit Practice`) + formatLabel,
         questions: qs,
         allowInstantSubmit: true
       });
@@ -504,6 +519,9 @@
               <button type="button" class="btn-ghost btn-sm" data-practise-topic="${esc(t.id)}" data-topic-su="${esc(unit.id)}">
                 ${Icons.icon('play', { size: 14 })} <span>Practise Topic</span>
               </button>
+              <button type="button" class="btn-ghost btn-sm" data-practise-topic-coding="${esc(t.id)}" data-topic-su="${esc(unit.id)}">
+                ${Icons.icon('codelab', { size: 14 })} <span>C# Exercise</span>
+              </button>
             </div>
           </div>
 
@@ -644,8 +662,8 @@
       }
     }
 
-    startUnitPractice(suId = 'ALL', topicId = '') {
-      this._initDefaultPracticeSession(suId, topicId);
+    startUnitPractice(suId = 'ALL', topicId = '', format = 'all') {
+      this._initDefaultPracticeSession(suId, topicId, format);
       this.persistence.saveActivePracticeSession(null);
       this.practiceSubTab = 'session';
       const unitSel = document.getElementById('practiceUnitSelect');
@@ -655,6 +673,8 @@
       }
       const topicSel = document.getElementById('practiceTopicSelect');
       if (topicSel) topicSel.value = topicId || '';
+      const fmtSel = document.getElementById('practiceFormatSelect');
+      if (fmtSel) fmtSel.value = format || 'all';
 
       const toggleGrp = document.getElementById('viewModeToggleGroup');
       if (toggleGrp) toggleGrp.style.display = 'inline-flex';
@@ -724,7 +744,8 @@
           ${quizDoneBanner}
           ${sess.questions.map((q, idx) => {
             const st = sess.getQuestionState(q.id);
-            const canSub = !sess.isCompleted && st && typeof st.selectedAnswer === 'number' && st.status !== 'submitted';
+            const hasResp = ExamMod.hasQuestionResponse ? ExamMod.hasQuestionResponse(q, st) : (st && typeof st.selectedAnswer === 'number');
+            const canSub = !sess.isCompleted && st && hasResp && st.status !== 'submitted';
             return `
               <div>
                 ${Renderer.renderQuestionCard(q, st, {
@@ -757,7 +778,8 @@
       const q = sess.getCurrentQuestion();
       const qState = sess.getQuestionState(q.id);
       const isGraded = sess.isCompleted || (qState && qState.status === 'submitted');
-      const canSubmit = !sess.isCompleted && qState && typeof qState.selectedAnswer === 'number' && !isGraded;
+      const hasResp = ExamMod.hasQuestionResponse ? ExamMod.hasQuestionResponse(q, qState) : (qState && typeof qState.selectedAnswer === 'number');
+      const canSubmit = !sess.isCompleted && qState && hasResp && !isGraded;
 
       singleArea.innerHTML = `
         ${quizDoneBanner}
@@ -834,12 +856,16 @@
       // Track which questions weren't already recorded individually
       const unsubmittedAnswered = sess.questions.filter(q => {
         const st = sess.getQuestionState(q.id);
-        return st && st.status !== 'submitted' && typeof st.selectedAnswer === 'number';
+        const hasResp = ExamMod.hasQuestionResponse ? ExamMod.hasQuestionResponse(q, st) : (st && typeof st.selectedAnswer === 'number');
+        return st && st.status !== 'submitted' && hasResp;
       });
       const result = sess.submitExamination();
       unsubmittedAnswered.forEach(q => {
         const st = sess.getQuestionState(q.id);
-        this.persistence.recordQuestionAttempt(q, st.selectedAnswer, st.outcome === 'correct', 0);
+        const ansVal = ExamMod.isCodingQuestion && ExamMod.isCodingQuestion(q)
+          ? (q.questionType === 'code-cloze' ? st.clozeAnswers : st.codeAnswer)
+          : st.selectedAnswer;
+        this.persistence.recordQuestionAttempt(q, ansVal, st.outcome === 'correct', 0);
       });
       this.persistence.recordExamResult(result);
       this._stopPracticeTimerLoop();
@@ -854,24 +880,66 @@
 
     /* ==================== C# CODE LAB, SPOT-THE-ERROR & CODE AUDITOR ==================== */
 
-    _populateCodeLabControls() {
+    _getCodeLabCatalog() {
+      const map = new Map();
+      for (const [key, sc] of Object.entries(this.data.codeScenarios || {})) {
+        map.set(key, {
+          ...sc,
+          _key: key,
+          _source: 'scenario',
+          su: sc.su || 'SU3'
+        });
+      }
+      for (const cq of (this.data.codingQuestions || [])) {
+        if (cq.questionType === 'code-snippet' || cq.questionType === 'code-full') {
+          map.set(cq.id, {
+            ...cq,
+            _key: cq.id,
+            _source: 'codingQuestion',
+            title: `[${cq.su}] ${cq.topicTitle || cq.id} (${cq.questionType === 'code-full' ? 'Full C#' : 'Snippet'})`,
+            description: cq.stem || cq.q || '',
+            methodSignature: cq.methodHeader || 'private void btnAction_Click(object sender, EventArgs e)'
+          });
+        }
+      }
+      return map;
+    }
+
+    _getCodeLabItem(scKey) {
+      const cat = this._getCodeLabCatalog();
+      return cat.get(scKey) || (this.data.codeScenarios || {})[scKey] || null;
+    }
+
+    _populateCodeLabControls(unitFilter = 'ALL') {
       const sel = document.getElementById('codeScenarioSelect');
       if (!sel) return;
-      const entries = Object.entries(this.data.codeScenarios || {});
+      const cat = this._getCodeLabCatalog();
+      const entries = [...cat.entries()].filter(([, sc]) => unitFilter === 'ALL' || sc.su === unitFilter);
       sel.innerHTML = entries.map(([key, sc]) => `<option value="${esc(key)}">${esc(sc.title)}</option>`).join('');
       if (entries.length > 0) {
-        this.activeCodeScenarioKey = entries[0][0];
+        const keepCurrent = entries.some(([k]) => k === this.activeCodeScenarioKey);
+        this.activeCodeScenarioKey = keepCurrent ? this.activeCodeScenarioKey : entries[0][0];
+        sel.value = this.activeCodeScenarioKey;
         this._loadCodeScenarioIntoEditor(this.activeCodeScenarioKey);
       }
     }
 
+    _syncCodeLabLineNumbers() {
+      const inputEl = document.getElementById('studentCodeInput');
+      const gutterEl = document.getElementById('codeLabLineNumbers');
+      if (inputEl && gutterEl && Renderer.buildLineNumbersHtml) {
+        gutterEl.innerHTML = Renderer.buildLineNumbersHtml(inputEl.value, 8);
+      }
+    }
+
     _loadCodeScenarioIntoEditor(scKey) {
-      const sc = (this.data.codeScenarios || {})[scKey];
+      const sc = this._getCodeLabItem(scKey);
       if (!sc) return;
       this.activeCodeScenarioKey = scKey;
       const titleEl = document.getElementById('scenarioTitle');
       const descEl = document.getElementById('scenarioDesc');
       const sigEl = document.getElementById('cgMethodHeader');
+      const footEl = document.getElementById('cgMethodFooter');
       const ctrlsEl = document.getElementById('scenarioControlsList');
       const inputEl = document.getElementById('studentCodeInput');
       const outEl = document.getElementById('codeGradeOutputHost');
@@ -881,24 +949,97 @@
       ).replace(/\s*\{\s*$/, '').trim();
 
       if (titleEl) titleEl.textContent = sc.title;
-      if (descEl) descEl.textContent = sc.description;
+      if (descEl) descEl.textContent = sc.description || sc.stem || '';
       if (sigEl) sigEl.textContent = `${normalizedSig} {`;
+      if (footEl) footEl.textContent = sc.methodFooter || '}';
       if (ctrlsEl) {
         ctrlsEl.innerHTML = (sc.controls || []).map(c => `<span class="inline-code">${esc(c)}</span>`).join('');
       }
       if (inputEl) inputEl.value = sc.starterCode || '';
+      this._syncCodeLabLineNumbers();
       if (outEl) outEl.innerHTML = '';
     }
 
+    _runCodeLabSyntaxCheck() {
+      const sc = this._getCodeLabItem(this.activeCodeScenarioKey);
+      const inputEl = document.getElementById('studentCodeInput');
+      const outEl = document.getElementById('codeGradeOutputHost');
+      if (!sc || !inputEl || !outEl) return;
+
+      const diags = CSharpEngine.analyzeDiagnostics(inputEl.value, sc);
+      const unsupported = CSharpEngine.detectUnsupportedConstructs
+        ? CSharpEngine.detectUnsupportedConstructs(inputEl.value)
+        : [];
+
+      outEl.innerHTML = `
+        <div class="panel-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem;">
+            <strong>C# Syntax &amp; Naming Check</strong>
+            <span class="q-diff-pill ${diags.length === 0 && unsupported.length === 0 ? 'diff-foundational' : 'diff-advanced'}">
+              ${diags.length + unsupported.length} Diagnostic(s)
+            </span>
+          </div>
+          ${unsupported.length > 0 ? `<p style="color:var(--status-warning-text);font-size:0.84rem;margin:0.3rem 0;">Unsupported Construct Notice: ${esc(unsupported.map(u => u.message).join(' '))}</p>` : ''}
+          ${diags.length > 0 ? `
+            <ul style="margin:0.4rem 0 0;padding-left:1.2rem;font-size:0.84rem;">
+              ${diags.map(d => `<li style="color:${d.severity === 'error' ? 'var(--status-error-text)' : 'var(--status-warning-text)'};">
+                <code>${esc(d.code)}</code> (Line ${d.line}): ${esc(d.message)}
+              </li>`).join('')}
+            </ul>
+          ` : `<p style="font-size:0.84rem;color:var(--status-success-text);margin:0;">0 Syntax or Control Naming Diagnostics — Ready for behavioral test execution!</p>`}
+        </div>
+      `;
+    }
+
     _runCodeGradeEvaluation() {
-      const sc = (this.data.codeScenarios || {})[this.activeCodeScenarioKey];
+      const sc = this._getCodeLabItem(this.activeCodeScenarioKey);
       const inputEl = document.getElementById('studentCodeInput');
       const outEl = document.getElementById('codeGradeOutputHost');
       if (!sc || !inputEl || !outEl) return;
 
       const res = CSharpEngine.evaluateCodeGrade(inputEl.value, sc);
+      const memoRes = CSharpEngine.evaluateCodingQuestion
+        ? CSharpEngine.evaluateCodingQuestion(sc, inputEl.value, { revealSolution: true })
+        : null;
       const diags = res.diagnostics || [];
       const tests = res.testResults || [];
+      const rubric = (memoRes && Array.isArray(memoRes.rubricResults)) ? memoRes.rubricResults : [];
+      const modelSol = sc.modelSolution || '';
+
+      const rubricHtml = rubric.length > 0 ? `
+        <div style="margin-top:1rem;">
+          <strong style="font-size:0.86rem;display:block;margin-bottom:0.4rem;">NWU Memorandum Rubric Breakdown (${memoRes.earnedMarks} / ${memoRes.maxMarks} Marks):</strong>
+          <div class="scenario-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Criterion</th><th>Marks</th><th>Status</th><th>Feedback</th></tr></thead>
+              <tbody>
+                ${rubric.map(r => `<tr>
+                  <td><strong>${esc(r.criterion)}</strong></td>
+                  <td>${r.earnedMarks} / ${r.availableMarks}</td>
+                  <td style="color:${r.status === 'passed' ? 'var(--status-success-text)' : (r.status === 'partial' ? 'var(--status-warning-text)' : 'var(--status-error-text)')};font-weight:700;">${esc(String(r.status || '').toUpperCase())}</td>
+                  <td>${esc(r.explanation || '')}${r.suggestion ? ` <em>(${esc(r.suggestion)})</em>` : ''}</td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ` : '';
+
+      const comparisonHtml = modelSol ? `
+        <details class="topic-details" style="margin-top:0.85rem;">
+          <summary>Compare Submission with Official NWU Model Solution</summary>
+          <div class="memo-comparison-grid" style="margin-top:0.65rem;">
+            <div class="memo-comparison-col">
+              <div class="code-block-bar"><span class="code-lang-tag">Student Submission</span></div>
+              <pre class="code-pre"><code>${CSharpEngine.highlightCSharp ? CSharpEngine.highlightCSharp(inputEl.value || '// (Empty)') : esc(inputEl.value || '// (Empty)')}</code></pre>
+            </div>
+            <div class="memo-comparison-col">
+              <div class="code-block-bar"><span class="code-lang-tag">Official NWU Model Solution</span></div>
+              <pre class="code-pre"><code>${CSharpEngine.highlightCSharp ? CSharpEngine.highlightCSharp(modelSol) : esc(modelSol)}</code></pre>
+            </div>
+          </div>
+        </details>
+      ` : '';
 
       outEl.innerHTML = `
         <div class="panel-card">
@@ -931,6 +1072,8 @@
               </tbody>
             </table>
           </div>
+          ${rubricHtml}
+          ${comparisonHtml}
         </div>
       `;
     }
@@ -1030,14 +1173,41 @@
           </div>
           <h3 style="margin:0.25rem 0 0.45rem;font-size:1rem;">${esc(ex.title)}</h3>
           <p style="font-size:0.84rem;color:var(--text-secondary);margin:0 0 0.9rem;">
-            Continuous single-sheet examination (${(ex.subQuestionIds || []).length} structured questions) with reference rates matrix and full memorandum review.
+            Continuous single-sheet examination (${(ex.subQuestionIds || []).length} structured questions) with reference rates matrix, Section B practical C# coding, and full memorandum review.
           </p>
           <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
             <button type="button" class="btn-primary btn-sm" data-start-paper="${esc(ex.id)}" data-paper-timed="true">Start Timed (${ex.durationMinutes}m)</button>
             <button type="button" class="btn-secondary btn-sm" data-start-paper="${esc(ex.id)}" data-paper-timed="false">Untimed Practice</button>
+            ${Array.isArray(ex.practicalQuestionIds) && ex.practicalQuestionIds.length > 0 ? `<button type="button" class="btn-ghost btn-sm" data-start-practical-paper="${esc(ex.id)}">${Icons.icon('codelab', { size: 14 })} <span>Practical C# Section B</span></button>` : ''}
           </div>
         </div>
       `).join('');
+    }
+
+    startPracticalExamSection(examId) {
+      const ex = (this.data.officialExams || []).find(e => e.id === examId);
+      if (!ex) return;
+      const allMap = new Map(this._getAllQuestionsPool().map(q => [q.id, q]));
+      const practicalIds = Array.isArray(ex.practicalQuestionIds) ? ex.practicalQuestionIds : [];
+      const qs = practicalIds.map(id => allMap.get(id)).filter(Boolean);
+      if (qs.length === 0) return;
+
+      this.examSession = new ExamMod.ExamSession({
+        id: `${ex.id}_practical_${Date.now()}`,
+        mode: 'past_paper',
+        title: `${ex.title} — Section B: Practical C# Programming`,
+        layout: 'continuous',
+        allowInstantSubmit: true,
+        scenarioHtml: ex.scenarioHtml || `<p>${esc(ex.scenario || '')}</p>`,
+        examPaperId: ex.id,
+        questions: qs,
+        durationMinutes: 60
+      });
+
+      this._lastUnansweredJumpIdx = -1;
+      this.persistence.saveActiveExamSession(this.examSession.toSnapshot());
+      this.navigate('exams');
+      this.renderContinuousExamPaper();
     }
 
     startOfficialExam(examId, timed = true) {
@@ -1139,11 +1309,12 @@
       if (paletteEl) {
         paletteEl.innerHTML = sess.questions.map((q, idx) => {
           const st = sess.getQuestionState(q.id);
+          const hasResp = ExamMod.hasQuestionResponse ? ExamMod.hasQuestionResponse(q, st) : (st && typeof st.selectedAnswer === 'number');
           let cls = 'palette-pill';
           if (idx === 0) cls += ' current';
           if (sess.isCompleted) {
-            cls += st.outcome === 'correct' ? ' graded-correct' : ' graded-incorrect';
-          } else if (typeof st.selectedAnswer === 'number') {
+            cls += st.outcome === 'correct' ? ' graded-correct' : (st.outcome === 'partial' ? ' graded-partial' : ' graded-incorrect');
+          } else if (hasResp) {
             cls += ' answered';
           }
           if (st.flagged) cls += ' flagged';
@@ -1173,7 +1344,7 @@
             defsEngine: this.defsEngine,
             icons: Icons,
             continuousMode: true,
-            allowInstantSubmit: false,
+            allowInstantSubmit: Boolean(sess.allowInstantSubmit),
             isCompleted: sess.isCompleted,
             isFlagged: sess.getQuestionState(q.id).flagged,
             isUnderstood: Boolean(this.persistence.getState().understoodQuestions[q.id])
@@ -1312,8 +1483,12 @@
       // Record individual question attempts in learner history
       this.examSession.questions.forEach(q => {
         const st = this.examSession.getQuestionState(q.id);
-        if (st && typeof st.selectedAnswer === 'number') {
-          this.persistence.recordQuestionAttempt(q, st.selectedAnswer, st.outcome === 'correct', 0);
+        const hasResp = ExamMod.hasQuestionResponse ? ExamMod.hasQuestionResponse(q, st) : (st && typeof st.selectedAnswer === 'number');
+        if (st && hasResp) {
+          const ansVal = ExamMod.isCodingQuestion && ExamMod.isCodingQuestion(q)
+            ? (q.questionType === 'code-cloze' ? st.clozeAnswers : st.codeAnswer)
+            : st.selectedAnswer;
+          this.persistence.recordQuestionAttempt(q, ansVal, st.outcome === 'correct', 0);
         }
       });
       this.persistence.recordExamResult(result);
@@ -1944,7 +2119,11 @@
       if (!q) return;
       const res = sess.submitSingleQuestion(q.id);
       if (res && !res.duplicate) {
-        this.persistence.recordQuestionAttempt(q, res.selectedAnswer, res.outcome === 'correct', 0);
+        const st = sess.getQuestionState(q.id);
+        const ansVal = ExamMod.isCodingQuestion && ExamMod.isCodingQuestion(q)
+          ? (q.questionType === 'code-cloze' ? (st ? st.clozeAnswers : {}) : (st ? st.codeAnswer : ''))
+          : res.selectedAnswer;
+        this.persistence.recordQuestionAttempt(q, ansVal, res.outcome === 'correct', 0);
         this._updateSidebarBadges();
         if (this.currentRoute === 'home') this.renderHomeView();
         else {
@@ -1999,6 +2178,170 @@
         isPaletteDrawerActive ||
         document.getElementById('appSidebar')?.classList.contains('open')
       );
+    }
+
+    _getSessionForQuestion(questionId) {
+      if (this.currentRoute === 'exams' && this.examSession && this.examSession.states && this.examSession.states[questionId]) {
+        return this.examSession;
+      }
+      if (this.currentRoute === 'practice' && this.practiceSession && this.practiceSession.states && this.practiceSession.states[questionId]) {
+        return this.practiceSession;
+      }
+      if (this.currentRoute === 'home' && this.homeSession && this.homeSession.states && this.homeSession.states[questionId]) {
+        return this.homeSession;
+      }
+      return this.practiceSession || this.examSession || this.homeSession || null;
+    }
+
+    _updateCodingDomStateWithoutRerender(sess, questionId) {
+      if (!sess || typeof document === 'undefined') return;
+      const q = sess.questions.find(item => item.id === questionId);
+      const st = sess.getQuestionState(questionId);
+      if (!q || !st) return;
+
+      const hasResp = ExamMod.hasQuestionResponse ? ExamMod.hasQuestionResponse(q, st) : false;
+
+      if (this.currentRoute === 'exams' && sess === this.examSession) {
+        this.persistence.saveActiveExamSession(sess.toSnapshot());
+        const pill = document.getElementById(`palettePill_${questionId}`);
+        if (pill) pill.classList.toggle('answered', hasResp);
+        const summaryEl = document.getElementById('examNavigatorSummary');
+        if (summaryEl && !sess.isCompleted) {
+          const pre = sess.getPreSubmitSummary();
+          summaryEl.textContent = `Answered: ${pre.answeredCount} / ${pre.totalQuestions} • Unanswered: ${pre.unansweredCount} • Flagged: ${pre.flaggedCount}`;
+        }
+      } else if (this.currentRoute === 'practice' && sess === this.practiceSession) {
+        this._persistActivePracticeIfNeeded();
+        const pracSubBtn = document.getElementById('btnPracSubmitQ');
+        if (pracSubBtn && sess.getCurrentQuestion()?.id === questionId && st.status !== 'submitted' && !sess.isCompleted) {
+          pracSubBtn.disabled = !hasResp;
+        }
+        const sheetBtn = document.querySelector(`[data-submit-sheet-q="${questionId}"]`);
+        if (sheetBtn && st.status !== 'submitted' && !sess.isCompleted) {
+          sheetBtn.disabled = !hasResp;
+        }
+      } else if (this.currentRoute === 'home' && sess === this.homeSession) {
+        const homeSubBtn = document.getElementById('btnHomeSubmitQ');
+        if (homeSubBtn && sess.getCurrentQuestion()?.id === questionId && st.status !== 'submitted') {
+          homeSubBtn.disabled = !hasResp;
+        }
+      }
+    }
+
+    _runInteractiveSyntaxCheck(questionId) {
+      const sess = this._getSessionForQuestion(questionId);
+      const q = sess ? sess.questions.find(item => item.id === questionId) : null;
+      const ta = typeof document !== 'undefined' ? document.getElementById(`codeInput_${questionId}`) : null;
+      const box = typeof document !== 'undefined' ? document.getElementById(`liveSandbox_${questionId}`) : null;
+      if (!q || !box) return;
+
+      const code = ta ? ta.value : (sess.getQuestionState(questionId)?.codeAnswer || '');
+      const diags = CSharpEngine.analyzeDiagnostics(code, q);
+      const unsupported = CSharpEngine.detectUnsupportedConstructs
+        ? CSharpEngine.detectUnsupportedConstructs(code)
+        : [];
+
+      box.classList.remove('hidden');
+      box.innerHTML = `
+        <div class="sandbox-out-header">
+          <strong>C# Syntax &amp; Control Analysis</strong>
+          <span class="q-diff-pill ${diags.length === 0 && unsupported.length === 0 ? 'diff-foundational' : 'diff-advanced'}">
+            ${diags.length + unsupported.length} Diagnostic(s)
+          </span>
+        </div>
+        ${unsupported.length > 0 ? `<div style="color:var(--status-warning-text);font-size:0.82rem;margin-bottom:0.35rem;">${esc(unsupported.map(u => u.message).join(' '))}</div>` : ''}
+        ${diags.length > 0 ? `
+          <ul style="margin:0.35rem 0 0;padding-left:1.15rem;font-size:0.82rem;">
+            ${diags.map(d => `<li style="color:${d.severity === 'error' ? 'var(--status-error-text)' : 'var(--status-warning-text)'};">
+              <code>${esc(d.code)}</code> (Line ${d.line}): ${esc(d.message)}
+            </li>`).join('')}
+          </ul>
+        ` : `<div style="color:var(--status-success-text);font-size:0.82rem;">0 Syntax or Control Naming Errors Detected.</div>`}
+      `;
+    }
+
+    _runInteractiveSnippetTests(questionId) {
+      const sess = this._getSessionForQuestion(questionId);
+      const q = sess ? sess.questions.find(item => item.id === questionId) : null;
+      const ta = typeof document !== 'undefined' ? document.getElementById(`codeInput_${questionId}`) : null;
+      const box = typeof document !== 'undefined' ? document.getElementById(`liveSandbox_${questionId}`) : null;
+      if (!q || !box) return;
+
+      const code = ta ? ta.value : (sess.getQuestionState(questionId)?.codeAnswer || '');
+      const evalRes = CSharpEngine.evaluateCodingQuestion
+        ? CSharpEngine.evaluateCodingQuestion(q, code, { revealSolution: false })
+        : null;
+      const visibleTests = (evalRes && Array.isArray(evalRes.testResults))
+        ? evalRes.testResults.filter(t => !t.hidden)
+        : [];
+
+      box.classList.remove('hidden');
+      box.innerHTML = `
+        <div class="sandbox-out-header">
+          <strong>Simulated WinForms Execution (${visibleTests.filter(t => t.passed).length}/${visibleTests.length} Sample Tests Passed)</strong>
+        </div>
+        ${visibleTests.length > 0 ? `
+          <div class="table-responsive-wrap" style="margin-top:0.4rem;">
+            <table class="memo-rubric-table">
+              <thead><tr><th>Sample Case</th><th>Expected</th><th>Actual</th><th>Status</th></tr></thead>
+              <tbody>
+                ${visibleTests.map(tr => `<tr>
+                  <td>${esc(tr.name)}</td>
+                  <td><code>${esc(tr.expected)}</code></td>
+                  <td><code>${esc(tr.actual)}</code></td>
+                  <td><span class="rubric-status-pill ${tr.passed ? 'rubric-status-pass' : 'rubric-status-fail'}">${tr.passed ? 'Pass' : 'Fail'}</span></td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        ` : `<div style="font-size:0.82rem;color:var(--text-secondary);">Code executed cleanly inside the virtual WinForms sandbox.</div>`}
+      `;
+    }
+
+    _resetInteractiveCodingQuestion(questionId) {
+      const sess = this._getSessionForQuestion(questionId);
+      if (!sess || sess.isCompleted) return;
+      const q = sess.questions.find(item => item.id === questionId);
+      const st = sess.getQuestionState(questionId);
+      if (!q || !st || st.status === 'submitted') return;
+
+      if (q.questionType === 'code-cloze') {
+        st.clozeAnswers = {};
+      } else {
+        st.codeAnswer = q.starterCode || '';
+      }
+      st.status = 'seen';
+      if (this.currentRoute === 'exams') {
+        this.persistence.saveActiveExamSession(sess.toSnapshot());
+        this.renderContinuousExamPaper();
+      } else if (this.currentRoute === 'practice') {
+        this._persistActivePracticeIfNeeded();
+        this._renderPracticeSessionArea();
+      } else if (this.currentRoute === 'home') {
+        this._renderHomeQuickPracticeCard();
+      }
+    }
+
+    _submitInteractiveCodingQuestion(questionId) {
+      const sess = this._getSessionForQuestion(questionId);
+      if (!sess || sess.isCompleted) return;
+      const res = sess.submitSingleQuestion(questionId);
+      if (res && !res.duplicate) {
+        const q = res.question;
+        const st = sess.getQuestionState(questionId);
+        const ansVal = q.questionType === 'code-cloze' ? (st ? st.clozeAnswers : {}) : (st ? st.codeAnswer : '');
+        this.persistence.recordQuestionAttempt(q, ansVal, res.outcome === 'correct', 0);
+        this._updateSidebarBadges();
+        if (this.currentRoute === 'exams') {
+          this.persistence.saveActiveExamSession(sess.toSnapshot());
+          this.renderContinuousExamPaper();
+        } else if (this.currentRoute === 'practice') {
+          this._persistActivePracticeIfNeeded();
+          this._renderPracticeSessionArea();
+        } else if (this.currentRoute === 'home') {
+          this.renderHomeView();
+        }
+      }
     }
 
     _bindGlobalEvents() {
@@ -2084,6 +2427,44 @@
               document.querySelector(`#studyUnitSelectorBar [role="tab"][data-select-su="${suId}"]`)?.focus();
             }
             return;
+          }
+        }
+
+        // Code Editor Tab & Enter auto-indentation support
+        const activeTextarea = (e.target && e.target.tagName === 'TEXTAREA' && (
+          e.target.classList.contains('q-code-textarea') ||
+          e.target.id === 'studentCodeInput' ||
+          e.target.id === 'auditCodeTextarea'
+        )) ? e.target : null;
+
+        if (activeTextarea && !activeTextarea.readOnly && !activeTextarea.disabled) {
+          if (e.key === 'Tab' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+            e.preventDefault();
+            const start = activeTextarea.selectionStart || 0;
+            const end = activeTextarea.selectionEnd || 0;
+            const val = activeTextarea.value;
+            activeTextarea.value = val.slice(0, start) + '    ' + val.slice(end);
+            activeTextarea.selectionStart = activeTextarea.selectionEnd = start + 4;
+            activeTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+            return;
+          }
+          if (e.key === 'Enter' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+            const start = activeTextarea.selectionStart || 0;
+            const end = activeTextarea.selectionEnd || 0;
+            const val = activeTextarea.value;
+            const lineStart = val.lastIndexOf('\n', start - 1) + 1;
+            const currentLine = val.slice(lineStart, start);
+            const indentMatch = currentLine.match(/^[ \t]*/);
+            const baseIndent = indentMatch ? indentMatch[0] : '';
+            const extraIndent = /\{\s*$/.test(currentLine) ? '    ' : '';
+            if (baseIndent || extraIndent) {
+              e.preventDefault();
+              const insertStr = '\n' + baseIndent + extraIndent;
+              activeTextarea.value = val.slice(0, start) + insertStr + val.slice(end);
+              activeTextarea.selectionStart = activeTextarea.selectionEnd = start + insertStr.length;
+              activeTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+              return;
+            }
           }
         }
 
@@ -2267,7 +2648,17 @@
         if (pracTopicBtn) {
           this.startUnitPractice(
             pracTopicBtn.getAttribute('data-topic-su') || 'ALL',
-            pracTopicBtn.getAttribute('data-practise-topic')
+            pracTopicBtn.getAttribute('data-practise-topic'),
+            'all'
+          );
+          return;
+        }
+        const pracTopicCodingBtn = target.closest('[data-practise-topic-coding]');
+        if (pracTopicCodingBtn) {
+          this.startUnitPractice(
+            pracTopicCodingBtn.getAttribute('data-topic-su') || 'ALL',
+            pracTopicCodingBtn.getAttribute('data-practise-topic-coding'),
+            'coding'
           );
           return;
         }
@@ -2275,12 +2666,13 @@
         if (retestTopicBtn) {
           this.startUnitPractice(
             retestTopicBtn.getAttribute('data-retest-su') || 'ALL',
-            retestTopicBtn.getAttribute('data-retest-topic')
+            retestTopicBtn.getAttribute('data-retest-topic'),
+            'all'
           );
           return;
         }
         if (target.closest('#btnPractiseActiveUnit')) {
-          this.startUnitPractice(this.activeStudyUnit, '');
+          this.startUnitPractice(this.activeStudyUnit, '', 'all');
           return;
         }
 
@@ -2294,7 +2686,8 @@
         if (target.closest('#btnStartFilteredPractice')) {
           const u = document.getElementById('practiceUnitSelect')?.value || 'ALL';
           const t = document.getElementById('practiceTopicSelect')?.value || '';
-          this.startUnitPractice(u, t);
+          const f = document.getElementById('practiceFormatSelect')?.value || 'all';
+          this.startUnitPractice(u, t, f);
           this._focusPracticeSurfaceSafely(null);
           return;
         }
@@ -2386,11 +2779,38 @@
           const qId = sheetSubBtn.getAttribute('data-submit-sheet-q');
           const res = this.practiceSession.submitSingleQuestion(qId);
           if (res && !res.duplicate) {
-            this.persistence.recordQuestionAttempt(res.question, res.selectedAnswer, res.outcome === 'correct', 0);
+            const q = res.question;
+            const st = this.practiceSession.getQuestionState(qId);
+            const ansVal = ExamMod.isCodingQuestion && ExamMod.isCodingQuestion(q)
+              ? (q.questionType === 'code-cloze' ? (st ? st.clozeAnswers : {}) : (st ? st.codeAnswer : ''))
+              : res.selectedAnswer;
+            this.persistence.recordQuestionAttempt(q, ansVal, res.outcome === 'correct', 0);
             this._updateSidebarBadges();
             this._persistActivePracticeIfNeeded();
             this._renderPracticeSessionArea();
           }
+          return;
+        }
+
+        // Interactive Coding Question Toolbar & Cloze Actions
+        const checkSynBtn = target.closest('[data-check-syntax-q]');
+        if (checkSynBtn) {
+          this._runInteractiveSyntaxCheck(checkSynBtn.getAttribute('data-check-syntax-q'));
+          return;
+        }
+        const runSnipBtn = target.closest('[data-run-snippet-q]');
+        if (runSnipBtn) {
+          this._runInteractiveSnippetTests(runSnipBtn.getAttribute('data-run-snippet-q'));
+          return;
+        }
+        const resetCodingBtn = target.closest('[data-reset-coding-q]');
+        if (resetCodingBtn) {
+          this._resetInteractiveCodingQuestion(resetCodingBtn.getAttribute('data-reset-coding-q'));
+          return;
+        }
+        const submitCodingBtn = target.closest('[data-submit-coding-q]');
+        if (submitCodingBtn) {
+          this._submitInteractiveCodingQuestion(submitCodingBtn.getAttribute('data-submit-coding-q'));
           return;
         }
 
@@ -2410,9 +2830,10 @@
         const simBtn = target.closest('[data-practise-similar]');
         if (simBtn) {
           const qId = simBtn.getAttribute('data-practise-similar');
-          const srcQ = (this.data.questions || []).find(q => q.id === qId);
+          const allPool = this._getAllQuestionsPool();
+          const srcQ = allPool.find(q => q.id === qId);
           if (srcQ) {
-            const simQs = AnalyticsMod.getSimilarQuestions(srcQ, this.data.questions, this.persistence.getState().questionHistory, 8);
+            const simQs = AnalyticsMod.getSimilarQuestions(srcQ, allPool, this.persistence.getState().questionHistory, 8);
             if (simQs.length > 0) {
               this.practiceSession = new ExamMod.ExamSession({
                 id: `similar_${qId}_${Date.now()}`,
@@ -2461,10 +2882,17 @@
           this._runCodeGradeEvaluation();
           return;
         }
+        if (target.closest('#btnCheckCodeLabSyntax')) {
+          this._runCodeLabSyntaxCheck();
+          return;
+        }
         if (target.closest('#btnShowSolution')) {
-          const sc = (this.data.codeScenarios || {})[this.activeCodeScenarioKey];
+          const sc = this._getCodeLabItem(this.activeCodeScenarioKey);
           const inp = document.getElementById('studentCodeInput');
-          if (sc && inp) inp.value = sc.modelSolution || '';
+          if (sc && inp) {
+            inp.value = sc.modelSolution || '';
+            this._syncCodeLabLineNumbers();
+          }
           return;
         }
         if (target.closest('#btnResetScenarioCode')) {
@@ -2592,6 +3020,12 @@
           const eId = paperBtn.getAttribute('data-start-paper');
           const timed = paperBtn.getAttribute('data-paper-timed') !== 'false';
           this.startOfficialExam(eId, timed);
+          return;
+        }
+        const pracPaperBtn = target.closest('[data-start-practical-paper]');
+        if (pracPaperBtn) {
+          const eId = pracPaperBtn.getAttribute('data-start-practical-paper');
+          this.startPracticalExamSection(eId);
           return;
         }
         const jumpQ = target.closest('[data-jump-paper-q]');
@@ -2736,6 +3170,8 @@
           this.navigate(t.value);
         } else if (t.id === 'practiceUnitSelect') {
           this._syncPracticeTopicDropdown(t.value);
+        } else if (t.id === 'codeLabUnitSelect') {
+          this._populateCodeLabControls(t.value);
         } else if (t.id === 'codeScenarioSelect') {
           this._loadCodeScenarioIntoEditor(t.value);
         } else if (t.id === 'auditScenarioSelect') {
@@ -2781,6 +3217,29 @@
           this._renderHomeQuickDefs(t.value);
         } else if (t.id === 'defsMainSearch') {
           this.renderDefinitionsView();
+        } else if (t.id === 'studentCodeInput') {
+          this._syncCodeLabLineNumbers();
+        } else if (typeof t.getAttribute === 'function' && t.getAttribute('data-cloze-q-id')) {
+          const qId = t.getAttribute('data-cloze-q-id');
+          const blankId = t.getAttribute('data-cloze-blank-id');
+          const sess = this._getSessionForQuestion(qId);
+          if (sess && sess.setClozeAnswer) {
+            sess.setClozeAnswer(qId, blankId, t.value);
+            this._updateCodingDomStateWithoutRerender(sess, qId);
+          }
+        } else if (typeof t.getAttribute === 'function' && t.getAttribute('data-code-q-id')) {
+          const qId = t.getAttribute('data-code-q-id');
+          const sess = this._getSessionForQuestion(qId);
+          if (sess && sess.setCodeAnswer) {
+            sess.setCodeAnswer(qId, t.value);
+            const q = sess.questions.find(item => item.id === qId);
+            const minLines = q && q.questionType === 'code-snippet' ? 6 : 12;
+            const gutter = document.getElementById(`gutter_${qId}`);
+            if (gutter && Renderer.buildLineNumbersHtml) {
+              gutter.innerHTML = Renderer.buildLineNumbersHtml(t.value, minLines);
+            }
+            this._updateCodingDomStateWithoutRerender(sess, qId);
+          }
         }
       });
     }
@@ -2789,6 +3248,7 @@
       const units = [...document.querySelectorAll('#customUnitsGroup input[type="checkbox"]:checked')].map(el => el.value);
       const diffs = [...document.querySelectorAll('#customDiffGroup input[type="checkbox"]:checked')].map(el => el.value);
       const topic = document.getElementById('customTopicFilter')?.value || '';
+      const qFormat = document.getElementById('customFormatFilter')?.value || 'all';
       const qCount = Math.max(3, Math.min(80, Number(document.getElementById('customQuestionCount')?.value) || 15));
       const targetMarks = Math.max(0, Number(document.getElementById('customTargetMarks')?.value) || 0);
       const timeLimit = Math.max(0, Number(document.getElementById('customTimeLimit')?.value) || 0);
@@ -2806,10 +3266,11 @@
         ? Object.keys(hist).filter(id => hist[id] && hist[id].isCorrect)
         : [];
 
-      const generated = ExamMod.generateCustomExam(this.data.questions || [], {
+      const generated = ExamMod.generateCustomExam(this._getAllQuestionsPool(), {
         units,
         topics: topic ? [topic] : [],
         difficulties: diffs,
+        questionFormat: qFormat,
         questionCount: targetMarks > 0 ? 0 : qCount,
         targetMarks: targetMarks > 0 ? targetMarks : 0,
         useWeightedDistribution: useWeighted,

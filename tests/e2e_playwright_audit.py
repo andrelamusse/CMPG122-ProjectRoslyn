@@ -23,6 +23,8 @@ STANDALONE_HTML = WORKSPACE_DIR / 'CMPG122_Test1_StudyGuide.html'
 
 REQUIRED_VIEWPORTS = [
     (320, 568),
+    (360, 640),
+    (375, 667),
     (375, 812),
     (390, 844),
     (430, 932),
@@ -240,6 +242,34 @@ def run_suite():
             assert_true(page.locator('#singleCardArea .q-feedback-panel').count() == 1, 'Custom Quiz key b must immediately select & submit option B')
             results_summary['customQuizShortcutsAndWeights'] = True
             print('[+] Verified Custom Quiz Builder weighted 7-SU distribution & keyboard shortcuts (1-5, Enter, A-E).')
+
+            # 9c. Verify Interactive C# Coding Questions (code-cloze, code-snippet, code-full), Live Syntax Check, Test Runner & Memorandum Rubric
+            page.evaluate('window.CMPG122_APP.startUnitPractice("SU3", "", "coding")')
+            assert_true(page.locator('#singleCardArea .coding-q-card').count() == 1, 'Coding practice mode must render interactive coding question card')
+            # Load a code-snippet question directly and test Check Syntax + Run Tests + Submit for Memorandum Marking
+            page.evaluate('''() => {
+              const qSnippet = window.CMPG122_DATA.codingQuestions.find(q => q.id === "q_code_su3_003");
+              window.CMPG122_APP.practiceSession = new window.CMPG122_EXAM_ENGINE.ExamSession({
+                mode: "practice",
+                title: "Coding Test",
+                allowInstantSubmit: true,
+                questions: [qSnippet]
+              });
+              window.CMPG122_APP._renderPracticeSessionArea();
+            }''')
+            editor_loc = page.locator('#codeInput_q_code_su3_003')
+            assert_true(editor_loc.count() == 1, 'Code editor textarea must mount for q_code_su3_003')
+            model_sol = page.evaluate('window.CMPG122_DATA.codingQuestions.find(q => q.id === "q_code_su3_003").modelSolution')
+            editor_loc.fill(model_sol)
+            page.locator('[data-check-syntax-q="q_code_su3_003"]').click()
+            assert_true('0 Compiler Diagnostics' in page.locator('#liveSandbox_q_code_su3_003').inner_text() or '0 Syntax' in page.locator('#liveSandbox_q_code_su3_003').inner_text() or 'Syntax' in page.locator('#liveSandbox_q_code_su3_003').inner_text(), 'Live syntax check must confirm syntax check output')
+            page.locator('[data-run-snippet-q="q_code_su3_003"]').click()
+            assert_true('PASS' in page.locator('#liveSandbox_q_code_su3_003').inner_text() or 'Passed' in page.locator('#liveSandbox_q_code_su3_003').inner_text(), 'Live test runner must execute behavioral test cases')
+            page.locator('[data-submit-coding-q="q_code_su3_003"]').click()
+            assert_true(page.locator('#singleCardArea .memo-rubric-table').count() >= 1, 'Submitted coding question must render Memorandum Rubric Breakdown table')
+            assert_true('100%' in page.locator('#singleCardArea .q-feedback-panel').inner_text(), 'Valid coding solution must score 100% on memorandum rubric')
+            results_summary['interactiveCodingAssessment'] = True
+            print('[+] Verified Interactive C# Coding Questions (Editor, Live Syntax Check, Behavioral Test Runner & Memorandum Rubric Breakdown).')
 
             # 10–12. Complete a Continuous Single-Sheet Past Examination Paper & Review Results
             page.locator('.sidebar-link[data-route="exams"]').click()

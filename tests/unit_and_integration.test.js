@@ -753,3 +753,162 @@ describe('10. Custom Exam Weighted Count Selection, Schema Completeness & Code L
     assert.ok(adminSrc.includes('metricActiveUsers') && adminSrc.includes('metricTotalDevices') && adminSrc.includes('metricActiveTime') && adminSrc.includes('metricQuestionsAnswered') && adminSrc.includes('metricCorrectAnswers') && adminSrc.includes('metricWrongAnswers'), 'admin.html must expose all 6 core live telemetry metrics');
   });
 });
+
+describe('11. Multi-Variation C# Marking Engine, Virtual Interfaces & Interactive Coding Questions', () => {
+  it('grades 5+ syntactically different but behaviorally equivalent C# solutions with 100% full marks', () => {
+    const qTariff = DATA.codingQuestions.find(q => q.id === 'q_code_su3_004');
+    assert.ok(qTariff, 'Expected q_code_su3_004 coding question');
+
+    const variations = [
+      // Variation 1: Canonical model solution (if/else if + += + ToString("C"))
+      qTariff.modelSolution,
+      // Variation 2: Explicit == true comparisons, binary addition fee = fee + ..., ToString("F2")
+      `
+        // Calculate delivery quote with explicit boolean comparisons
+        decimal deliveryCost = 0m;
+        if (rdoStandard.Checked == true)
+            deliveryCost = 60m;
+        else if (rdoExpress.Checked == true)
+            deliveryCost = 110m;
+        else if (rdoOvernight.Checked == true)
+            deliveryCost = 180m;
+
+        if (chkInsurance.Checked == true)
+            deliveryCost = deliveryCost + 35m;
+        if (chkSms.Checked == true)
+            deliveryCost = deliveryCost + 10m;
+
+        lblDeliveryFee.Text = "R " + deliveryCost.ToString("F2");
+      `,
+      // Variation 3: String interpolation $"R {totalDue:F2}" and different variable naming
+      `
+        decimal totalDue = 180m;
+        if (rdoStandard.Checked) { totalDue = 60m; }
+        else if (rdoExpress.Checked) { totalDue = 110m; }
+        if (chkInsurance.Checked) { totalDue += 35.00m; }
+        if (chkSms.Checked) { totalDue += 10.00m; }
+        lblDeliveryFee.Text = $"R {totalDue:F2}";
+      `,
+      // Variation 4: string.Format("R {0:F2}", quote) with double variables converted to decimal
+      `
+        double baseRate = 0.0;
+        if (rdoOvernight.Checked) baseRate = 180.0;
+        else if (rdoExpress.Checked) baseRate = 110.0;
+        else if (rdoStandard.Checked) baseRate = 60.0;
+        double extras = 0.0;
+        if (chkInsurance.Checked) extras += 35.0;
+        if (chkSms.Checked) extras += 10.0;
+        double quote = baseRate + extras;
+        lblDeliveryFee.Text = string.Format("R {0:F2}", quote);
+      `,
+      // Variation 5: Ternary ?: expressions and compact assignment
+      `
+        decimal rate = rdoStandard.Checked ? 60m : (rdoExpress.Checked ? 110m : 180m);
+        rate += chkInsurance.Checked ? 35m : 0m;
+        rate += chkSms.Checked ? 10m : 0m;
+        lblDeliveryFee.Text = rate.ToString("C2");
+      `
+    ];
+
+    for (let i = 0; i < variations.length; i++) {
+      const res = CSharpEngine.evaluateCodingQuestion(qTariff, variations[i]);
+      assert.equal(res.earnedMarks, qTariff.marks, `Variation ${i + 1} should receive full marks (${res.earnedMarks}/${qTariff.marks})`);
+      assert.equal(res.percentage, 100);
+    }
+  });
+
+  it('executes custom C# methods with void, value-returning, ref, and out parameters plus virtual StreamReader/StreamWriter & multiform transitions', () => {
+    // 1. ref and out custom methods (q_code_su5_004 & q_code_exam_2023_dec)
+    const qRefOut = DATA.codingQuestions.find(q => q.id === 'q_code_su5_004');
+    const resRefOut = CSharpEngine.evaluateCodingQuestion(qRefOut, qRefOut.modelSolution);
+    assert.equal(resRefOut.earnedMarks, qRefOut.marks);
+
+    // 2. StreamWriter + StreamReader file sandbox (q_code_su4_004 & q_code_exam_2022_dec)
+    const qFile = DATA.codingQuestions.find(q => q.id === 'q_code_su4_004');
+    const resFile = CSharpEngine.evaluateCodingQuestion(qFile, qFile.modelSolution);
+    assert.equal(resFile.earnedMarks, qFile.marks);
+
+    // 3. Multiform modal ShowDialog() vs modeless Show() execution order (q_code_su6_002 & q_code_exam_2021_nov)
+    const qMulti = DATA.codingQuestions.find(q => q.id === 'q_code_su6_002');
+    const resMulti = CSharpEngine.evaluateCodingQuestion(qMulti, qMulti.modelSolution);
+    assert.equal(resMulti.earnedMarks, qMulti.marks);
+
+    // 4. Virtual environment interfaces check
+    const venv = CSharpEngine.createVirtualEnvironment({ txtInput: '42' });
+    assert.ok(venv.IFormState && venv.IFormControls && venv.IFileSystem && venv.IFileStreamSandbox);
+    assert.ok(venv.IDialogService && venv.IMessageBoxService && venv.IRandomGenerator && venv.IMultiFormSandbox);
+  });
+
+  it('awards granular partial credit for broken syntax / incomplete code and handles empty or unsupported constructs safely', () => {
+    const qFull = DATA.codingQuestions.find(q => q.id === 'q_code_su3_005');
+    assert.ok(qFull);
+
+    // Partial submission: checks lstCities.SelectedIndex == -1 and shows MessageBox, but omits SelectedItem output and misses a semicolon
+    const partialCode = `
+      if (lstCities.SelectedIndex == -1)
+      {
+          MessageBox.Show("Please select a destination city.", "Selection Required")
+          return;
+      }
+    `;
+    const partialRes = CSharpEngine.evaluateCodingQuestion(qFull, partialCode);
+    assert.ok(partialRes.earnedMarks > 0 && partialRes.earnedMarks < qFull.marks, `Expected partial credit between 1 and ${qFull.marks - 1}, got ${partialRes.earnedMarks}`);
+
+    // Empty submission -> 0 marks, no crash
+    const emptyRes = CSharpEngine.evaluateCodingQuestion(qFull, '   ');
+    assert.equal(emptyRes.earnedMarks, 0);
+    assert.equal(emptyRes.answered, false);
+
+    // Unsupported construct detection (LINQ / async / SqlConnection)
+    const unsup = CSharpEngine.detectUnsupportedConstructs('var x = list.Where(a => a > 5).Select(a => a); await Task.Delay(10);');
+    assert.ok(unsup.length >= 2, 'Must detect unsupported LINQ and async/await constructs clearly');
+  });
+
+  it('supports code-cloze, code-snippet, and code-full in ExamSession with partial marks, snapshot recovery, and HTML rendering', () => {
+    const qCloze = DATA.codingQuestions.find(q => q.questionType === 'code-cloze');
+    const qSnippet = DATA.codingQuestions.find(q => q.questionType === 'code-snippet');
+    const qFull = DATA.codingQuestions.find(q => q.questionType === 'code-full');
+    assert.ok(qCloze && qSnippet && qFull);
+
+    const sess = new ExamMod.ExamSession({
+      mode: 'practice',
+      questions: [qCloze, qSnippet, qFull],
+      allowInstantSubmit: true
+    });
+
+    // Answer only 1 of the blanks in qCloze for partial credit
+    const firstBlank = qCloze.blanks[0];
+    sess.setClozeAnswer(qCloze.id, firstBlank.id, firstBlank.expected);
+    const subCloze = sess.submitSingleQuestion(qCloze.id);
+    assert.equal(subCloze.outcome, 'partial');
+    assert.equal(subCloze.earnedMarks, firstBlank.marks);
+
+    // Answer qSnippet with full modelSolution
+    sess.setCodeAnswer(qSnippet.id, qSnippet.modelSolution);
+    const subSnip = sess.submitSingleQuestion(qSnippet.id);
+    assert.equal(subSnip.outcome, 'correct');
+    assert.equal(subSnip.earnedMarks, qSnippet.marks);
+
+    // Snapshot & restore coding answers
+    const snap = sess.toSnapshot();
+    const restored = ExamMod.ExamSession.fromSnapshot(snap, DATA.allQuestions);
+    assert.equal(restored.getQuestionState(qCloze.id).earnedMarks, firstBlank.marks);
+    assert.equal(restored.getQuestionState(qSnippet.id).earnedMarks, qSnippet.marks);
+
+    // Render cards & explanation panels without error
+    const clozeHtml = Renderer.renderQuestionCard(qCloze, restored.getQuestionState(qCloze.id), {
+      csharpEngine: CSharpEngine,
+      allowInstantSubmit: true
+    });
+    assert.ok(clozeHtml.includes('cloze-blank-input'));
+    assert.ok(clozeHtml.includes('Partial Memorandum Credit'));
+
+    const snipHtml = Renderer.renderQuestionCard(qSnippet, restored.getQuestionState(qSnippet.id), {
+      csharpEngine: CSharpEngine,
+      allowInstantSubmit: true
+    });
+    assert.ok(snipHtml.includes('q-code-textarea'));
+    assert.ok(snipHtml.includes('Full Memorandum Credit'));
+    assert.ok(snipHtml.includes('Official NWU Model Solution'));
+  });
+});

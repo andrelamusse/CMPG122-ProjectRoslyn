@@ -83,6 +83,9 @@ def build_mobile():
 
     with open(index_path, 'r', encoding='utf-8') as f:
         bundled = f.read()
+    cmpg_app_html_path = os.path.join(APP_DIR, 'CMPG_App.html')
+    with open(cmpg_app_html_path, 'w', encoding='utf-8') as f:
+        f.write(bundled)
     with open(css_path, 'r', encoding='utf-8') as f:
         css_text = f.read()
 
@@ -634,6 +637,46 @@ scenarioKeys.forEach(scKey => {
   }
 });
 
+// 6b. Interactive Coding Questions Audit (40 items: 35 Curriculum Topics + 5 Past Paper Practicals)
+const codingQs = DATA.codingQuestions || [];
+if (codingQs.length < 40) {
+  fail('CODING_QUESTIONS_COUNT', `Expected >= 40 interactive coding questions across SU7 & SU1-SU6 + Past Papers, found ${codingQs.length}`);
+}
+const validCodingFormats = new Set(['code-cloze', 'code-snippet', 'code-full']);
+codingQs.forEach(cq => {
+  const cqId = cq && cq.id ? String(cq.id) : 'UNKNOWN_CODING_Q';
+  if (seenIds.has(cqId)) fail(cqId, 'Duplicate question ID in codingQuestions');
+  seenIds.add(cqId);
+  if (!validUnits.has(cq.su)) fail(cqId, `Invalid Study Unit on coding question: ${cq.su}`);
+  if (!validTopics.has(cq.topic)) fail(cqId, `Invalid topic on coding question: ${cq.topic}`);
+  if (!validCodingFormats.has(cq.questionType)) fail(cqId, `Invalid coding questionType: ${cq.questionType}`);
+  if ('provenance' in cq) fail(cqId, 'Internal provenance leaked onto coding question');
+  if (!provData.records || !provData.records[cqId]) fail(cqId, 'Missing provenance entry for coding question in audit/provenance_registry.json');
+  (cq.definitions || []).forEach(dId => {
+    if (!validDefs.has(dId)) fail(cqId, `Broken definition reference on coding question: ${dId}`);
+  });
+  const cqBlob = [cq.stem || '', cq.explanation || '', cq.clozeTemplate || '', cq.starterCode || '', cq.modelSolution || ''].join(' | ');
+  if (roboticFluffRe.test(cqBlob)) fail(cqId, `Coding question contains prohibited meta-fluff: ${cqBlob.match(roboticFluffRe)[0]}`);
+  if (mojibakeRe.test(cqBlob)) fail(cqId, `Coding question contains UTF-8 mojibake: ${cqBlob.match(mojibakeRe)[0]}`);
+
+  if (cq.questionType === 'code-cloze') {
+    const mockBlanks = {};
+    (cq.blanks || []).forEach((b, i) => {
+      mockBlanks[b.id || `blank_${i + 1}`] = b.expected;
+      mockBlanks[i] = b.expected;
+    });
+    const clozeRes = CSharpEngine.evaluateClozeQuestion(cq, mockBlanks);
+    if (clozeRes.earnedMarks !== clozeRes.maxMarks || clozeRes.maxMarks !== cq.marks) {
+      fail(cqId, `Cloze expected solution scored ${clozeRes.earnedMarks}/${clozeRes.maxMarks} (declared marks=${cq.marks})`);
+    }
+  } else {
+    const codeRes = CSharpEngine.evaluateCodingQuestion(cq, cq.modelSolution);
+    if (codeRes.earnedMarks !== codeRes.maxMarks || codeRes.maxMarks !== cq.marks) {
+      fail(cqId, `Coding modelSolution scored ${codeRes.earnedMarks}/${codeRes.maxMarks} (declared marks=${cq.marks})`);
+    }
+  }
+});
+
 // 7. Standalone Mobile Bundle Parity Check
 let mobileBundleBytes = 0;
 if (fs.existsSync(mobileFile)) {
@@ -662,6 +705,7 @@ const report = {
     totalStructuredTopics: validTopics.size,
     totalDefinitions: validDefs.size,
     totalQuestions: (DATA.questions || []).length,
+    totalCodingQuestions: codingQs.length,
     totalPastExams: (DATA.officialExams || []).length,
     totalCodeGradeScenarios: scenarioKeys.length,
     totalSpotErrorScenarios: (DATA.spotErrors || []).length,
@@ -684,7 +728,7 @@ const report = {
 const outReportPath = path.join(appDir, 'audit', 'audit_report.json');
 fs.writeFileSync(outReportPath, JSON.stringify(report, null, 2), 'utf8');
 
-console.log(`[+] Question Bank Audited: ${report.summary.totalQuestions} questions across ${report.summary.totalStudyUnits} Study Units`);
+console.log(`[+] Question Bank Audited: ${report.summary.totalQuestions} MCQs + ${report.summary.totalCodingQuestions} Interactive Coding Questions across ${report.summary.totalStudyUnits} Study Units`);
 console.log(`[+] Structured Topics: ${report.summary.totalStructuredTopics} | Technical Definitions: ${report.summary.totalDefinitions}`);
 console.log(`[+] Study Unit Distribution: ${JSON.stringify(suDist)}`);
 console.log(`[+] Difficulty Distribution: ${JSON.stringify(diffDist)}`);

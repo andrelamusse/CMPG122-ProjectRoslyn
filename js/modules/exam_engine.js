@@ -46,6 +46,44 @@
     return copy;
   }
 
+  function isCodingQuestion(question) {
+    if (!question) return false;
+    return question.questionType === 'code-cloze' ||
+      question.questionType === 'code-snippet' ||
+      question.questionType === 'code-full';
+  }
+
+  function hasQuestionResponse(question, state) {
+    if (!question || !state) return false;
+    if (!isCodingQuestion(question)) {
+      return typeof state.selectedAnswer === 'number' && state.selectedAnswer >= 0;
+    }
+    if (question.questionType === 'code-cloze') {
+      if (!state.clozeAnswers || typeof state.clozeAnswers !== 'object') return false;
+      return Object.values(state.clozeAnswers).some(v => String(v || '').trim().length > 0);
+    }
+    const code = typeof state.codeAnswer === 'string' ? state.codeAnswer.trim() : '';
+    if (!code) return false;
+    const starter = typeof question.starterCode === 'string' ? question.starterCode.trim() : '';
+    if (starter && code === starter) return false;
+    const strippedComments = code.replace(/\/\/[^\n]*|\/\*[\s\S]*?\*\//g, '').trim();
+    return strippedComments.length > 0;
+  }
+
+  function resolveCSharpEngine(explicitEngine) {
+    if (explicitEngine) return explicitEngine;
+    if (typeof globalThis !== 'undefined' && globalThis.CSharpEngine) return globalThis.CSharpEngine;
+    if (typeof window !== 'undefined' && window.CSharpEngine) return window.CSharpEngine;
+    if (typeof require === 'function') {
+      try {
+        return require('../csharp_engine.js');
+      } catch (_e) {
+        return null;
+      }
+    }
+    return null;
+  }
+
   function evaluateObjectiveQuestion(question, selectedIndex) {
     if (!question || typeof selectedIndex !== 'number' || selectedIndex < 0) {
       return {
@@ -63,6 +101,49 @@
       isCorrect,
       earnedMarks: isCorrect ? maxMarks : 0,
       maxMarks
+    };
+  }
+
+  function evaluateQuestion(question, state, explicitEngine = null) {
+    if (!question) {
+      return { answered: false, isCorrect: false, isPartial: false, earnedMarks: 0, maxMarks: 2, gradingResult: null };
+    }
+    if (!isCodingQuestion(question)) {
+      return evaluateObjectiveQuestion(question, state ? state.selectedAnswer : null);
+    }
+    const maxMarks = Number(question.marks) || 5;
+    if (!hasQuestionResponse(question, state)) {
+      return {
+        answered: false,
+        isCorrect: false,
+        isPartial: false,
+        earnedMarks: 0,
+        maxMarks,
+        gradingResult: null
+      };
+    }
+    const engine = resolveCSharpEngine(explicitEngine);
+    if (!engine) {
+      return {
+        answered: true,
+        isCorrect: false,
+        isPartial: false,
+        earnedMarks: 0,
+        maxMarks,
+        gradingResult: null
+      };
+    }
+    const gradingResult = question.questionType === 'code-cloze'
+      ? engine.evaluateClozeQuestion(question, (state && state.clozeAnswers) || {}, { revealSolution: true })
+      : engine.evaluateCodingQuestion(question, (state && state.codeAnswer) || '', { revealSolution: true });
+
+    return {
+      answered: true,
+      isCorrect: Boolean(gradingResult.isCorrect),
+      isPartial: Boolean(gradingResult.isPartial),
+      earnedMarks: Number(gradingResult.earnedMarks) || 0,
+      maxMarks: Number(gradingResult.maxMarks) || maxMarks,
+      gradingResult
     };
   }
 
@@ -297,6 +378,27 @@
    * Custom Examination & Practice Generator supporting Study Units, Topics,
    * Difficulty, Question Count / Target Marks, Weighting, Randomisation, and Exclusions.
    */
+  function matchesFormatFilter(q, formatFilter) {
+    if (!formatFilter || formatFilter === 'all') return true;
+    const qType = q.questionType || 'mcq';
+    if (Array.isArray(formatFilter)) {
+      if (formatFilter.includes('all')) return true;
+      if (formatFilter.includes('coding') && isCodingQuestion(q)) return true;
+      return formatFilter.includes(qType);
+    }
+    if (formatFilter === 'mcq') return !isCodingQuestion(q);
+    if (formatFilter === 'coding') return isCodingQuestion(q);
+    return qType === formatFilter;
+  }
+
+  function orderMcqBeforeCoding(list) {
+    if (!Array.isArray(list) || list.length <= 1) return list;
+    const mcqs = list.filter(q => !isCodingQuestion(q));
+    const coding = list.filter(q => isCodingQuestion(q));
+    if (mcqs.length === 0 || coding.length === 0) return list;
+    return [...mcqs, ...coding];
+  }
+
   function generateCustomExam(allQuestions, config = {}) {
     const rng = createRng(config.seed);
     const orderedUnits = Array.isArray(config.units) && config.units.length > 0
@@ -307,12 +409,14 @@
     const difficulties = Array.isArray(config.difficulties) && config.difficulties.length > 0 ? new Set(config.difficulties) : null;
     const excludeIds = new Set(config.excludeIds || []);
     const randomize = config.randomize !== false;
+    const formatFilter = config.questionFormat || config.questionFormats || null;
 
     let candidates = (allQuestions || []).filter(q => {
       if (excludeIds.has(q.id)) return false;
       if (units && !units.has(q.su)) return false;
       if (topics && !topics.has(q.topic)) return false;
       if (difficulties && !difficulties.has(q.difficulty)) return false;
+      if (formatFilter && !matchesFormatFilter(q, formatFilter)) return false;
       return true;
     });
 
@@ -322,6 +426,7 @@
         if (units && !units.has(q.su)) return false;
         if (topics && !topics.has(q.topic)) return false;
         if (difficulties && !difficulties.has(q.difficulty)) return false;
+        if (formatFilter && !matchesFormatFilter(q, formatFilter)) return false;
         return true;
       });
     }
@@ -380,8 +485,9 @@
         picked.push(...unitPool.slice(0, need));
       }
 
-      if (config.preserveUnitOrder) return picked;
-      return randomize ? shuffleArray(picked, rng) : interleaveByUnit(picked, orderedUnits);
+      if (config.preserveUnitOrder) return orderMcqBeforeCoding(picked);
+      const finalWeighted = randomize ? shuffleArray(picked, rng) : interleaveByUnit(picked, orderedUnits);
+      return orderMcqBeforeCoding(finalWeighted);
     }
 
     const ordered = randomize
@@ -399,11 +505,11 @@
           if (sum >= targetM) break;
         }
       }
-      return picked;
+      return orderMcqBeforeCoding(picked);
     }
 
     const count = Math.max(1, Math.min(ordered.length, Number(config.questionCount) || 15));
-    return ordered.slice(0, count);
+    return orderMcqBeforeCoding(ordered.slice(0, count));
   }
 
   class ExamSession {
@@ -445,6 +551,9 @@
           status: saved ? saved.status : (i === this.currentIndex ? 'seen' : 'unseen'),
           outcome: saved ? saved.outcome : null,
           selectedAnswer: saved && typeof saved.selectedAnswer === 'number' ? saved.selectedAnswer : null,
+          codeAnswer: saved && typeof saved.codeAnswer === 'string' ? saved.codeAnswer : (q.starterCode || ''),
+          clozeAnswers: saved && saved.clozeAnswers && typeof saved.clozeAnswers === 'object' ? { ...saved.clozeAnswers } : {},
+          gradingResult: saved && saved.gradingResult ? saved.gradingResult : null,
           flagged: saved ? Boolean(saved.flagged) : false,
           earnedMarks: saved && typeof saved.earnedMarks === 'number' ? saved.earnedMarks : 0,
           maxMarks: Number(q.marks) || 2,
@@ -478,7 +587,6 @@
       const q = this.questionMap.get(questionId);
       const st = this.states[questionId];
       if (!q || !st) return false;
-      // In single-card instant practice mode, once submitted do not overwrite graded answer
       if (this.allowInstantSubmit && st.status === 'submitted') return false;
       const opts = q.options || q.opts || [];
       if (typeof optionIndex !== 'number' || optionIndex < 0 || optionIndex >= opts.length) return false;
@@ -490,24 +598,55 @@
       return true;
     }
 
-    submitSingleQuestion(questionId, nowMs = Date.now()) {
+    setCodeAnswer(questionId, codeText) {
+      if (this.isCompleted) return false;
+      const q = this.questionMap.get(questionId);
+      const st = this.states[questionId];
+      if (!q || !st) return false;
+      if (this.allowInstantSubmit && st.status === 'submitted') return false;
+
+      st.codeAnswer = String(codeText !== undefined && codeText !== null ? codeText : '');
+      if (st.status !== 'submitted') {
+        st.status = hasQuestionResponse(q, st) ? 'answered_unsubmitted' : 'seen';
+      }
+      return true;
+    }
+
+    setClozeAnswer(questionId, blankKey, value) {
+      if (this.isCompleted) return false;
+      const q = this.questionMap.get(questionId);
+      const st = this.states[questionId];
+      if (!q || !st) return false;
+      if (this.allowInstantSubmit && st.status === 'submitted') return false;
+
+      if (!st.clozeAnswers || typeof st.clozeAnswers !== 'object') {
+        st.clozeAnswers = {};
+      }
+      st.clozeAnswers[blankKey] = String(value !== undefined && value !== null ? value : '');
+      if (st.status !== 'submitted') {
+        st.status = hasQuestionResponse(q, st) ? 'answered_unsubmitted' : 'seen';
+      }
+      return true;
+    }
+
+    submitSingleQuestion(questionId, nowMs = Date.now(), csharpEngine = null) {
       if (this.isCompleted) return null;
       const q = this.questionMap.get(questionId);
       const st = this.states[questionId];
       if (!q || !st) return null;
       if (st.status === 'submitted') {
-        // Prevent duplicate submissions from re-scoring
         return { ...st, duplicate: true };
       }
-      if (typeof st.selectedAnswer !== 'number') {
+      if (!hasQuestionResponse(q, st)) {
         return null;
       }
 
-      const evalRes = evaluateObjectiveQuestion(q, st.selectedAnswer);
+      const evalRes = evaluateQuestion(q, st, csharpEngine);
       st.status = 'submitted';
-      st.outcome = evalRes.isCorrect ? 'correct' : 'incorrect';
+      st.outcome = evalRes.isCorrect ? 'correct' : (evalRes.isPartial ? 'partial' : 'incorrect');
       st.earnedMarks = evalRes.earnedMarks;
       st.maxMarks = evalRes.maxMarks;
+      st.gradingResult = evalRes.gradingResult || null;
       st.submittedAtMs = nowMs;
       return { ...st, duplicate: false, question: q };
     }
@@ -556,7 +695,7 @@
 
       this.questions.forEach((q, idx) => {
         const st = this.states[q.id];
-        const hasAns = st && typeof st.selectedAnswer === 'number';
+        const hasAns = hasQuestionResponse(q, st);
         if (hasAns) answeredCount += 1;
         else unansweredNumbers.push({ index: idx, number: idx + 1, id: q.id });
         if (st && st.flagged) flaggedNumbers.push({ index: idx, number: idx + 1, id: q.id });
@@ -572,7 +711,7 @@
       };
     }
 
-    submitExamination(nowMs = Date.now()) {
+    submitExamination(nowMs = Date.now(), csharpEngine = null) {
       if (this.isCompleted && this.finalResult) {
         return this.finalResult;
       }
@@ -587,6 +726,7 @@
       let rawMarks = 0;
       let totalMarks = 0;
       let correctCount = 0;
+      let partialCount = 0;
       let incorrectCount = 0;
       let unansweredCount = 0;
       const byUnit = {};
@@ -610,20 +750,26 @@
         byTopic[q.topic].totalMarks += maxM;
         byTopic[q.topic].total += 1;
 
-        if (typeof st.selectedAnswer === 'number') {
-          const evalRes = evaluateObjectiveQuestion(q, st.selectedAnswer);
+        const hasAns = hasQuestionResponse(q, st);
+        if (hasAns) {
+          const evalRes = evaluateQuestion(q, st, csharpEngine);
           st.status = 'submitted';
-          st.outcome = evalRes.isCorrect ? 'correct' : 'incorrect';
+          st.outcome = evalRes.isCorrect ? 'correct' : (evalRes.isPartial ? 'partial' : 'incorrect');
           st.earnedMarks = evalRes.earnedMarks;
+          st.gradingResult = evalRes.gradingResult || st.gradingResult || null;
           st.submittedAtMs = st.submittedAtMs || nowMs;
 
+          rawMarks += evalRes.earnedMarks;
+          byUnit[q.su].earnedMarks += evalRes.earnedMarks;
+          byTopic[q.topic].earnedMarks += evalRes.earnedMarks;
+
           if (evalRes.isCorrect) {
-            rawMarks += evalRes.earnedMarks;
             correctCount += 1;
-            byUnit[q.su].earnedMarks += evalRes.earnedMarks;
             byUnit[q.su].correct += 1;
-            byTopic[q.topic].earnedMarks += evalRes.earnedMarks;
             byTopic[q.topic].correct += 1;
+          } else if (evalRes.isPartial) {
+            partialCount += 1;
+            incorrectCount += 1;
           } else {
             incorrectCount += 1;
           }
@@ -631,28 +777,40 @@
           st.status = 'submitted';
           st.outcome = 'incorrect';
           st.earnedMarks = 0;
+          if (isCodingQuestion(q)) {
+            const evalRes = evaluateQuestion(q, st, csharpEngine);
+            st.gradingResult = evalRes.gradingResult || null;
+          }
           unansweredCount += 1;
         }
 
         detailedItems.push({
           number: i + 1,
           questionId: q.id,
+          questionType: q.questionType || 'mcq',
           su: q.su,
           topic: q.topic,
           topicTitle: q.topicTitle,
           selectedAnswer: st.selectedAnswer,
+          codeAnswer: st.codeAnswer,
+          clozeAnswers: st.clozeAnswers,
+          gradingResult: st.gradingResult,
           correctAnswer: q.answer !== undefined ? q.answer : q.ans,
-          outcome: typeof st.selectedAnswer === 'number' ? st.outcome : 'unanswered',
+          outcome: hasAns ? st.outcome : 'unanswered',
           earnedMarks: st.earnedMarks,
           maxMarks: maxM,
           flagged: st.flagged
         });
       }
 
+      rawMarks = Math.round(rawMarks * 100) / 100;
+
       for (const u of Object.values(byUnit)) {
+        u.earnedMarks = Math.round(u.earnedMarks * 100) / 100;
         u.percentage = u.totalMarks > 0 ? Math.round((u.earnedMarks / u.totalMarks) * 100) : 0;
       }
       for (const t of Object.values(byTopic)) {
+        t.earnedMarks = Math.round(t.earnedMarks * 100) / 100;
         t.percentage = t.totalMarks > 0 ? Math.round((t.earnedMarks / t.totalMarks) * 100) : 0;
       }
 
@@ -671,6 +829,7 @@
         totalMarks,
         percentage,
         correctCount,
+        partialCount,
         incorrectCount,
         unansweredCount,
         durationSeconds: this.getElapsedSeconds(nowMs),
@@ -731,7 +890,10 @@
 
   return {
     DEFAULT_WEIGHTS,
+    isCodingQuestion,
+    hasQuestionResponse,
     evaluateObjectiveQuestion,
+    evaluateQuestion,
     generateWeightedExam,
     generateCustomExam,
     ExamSession,

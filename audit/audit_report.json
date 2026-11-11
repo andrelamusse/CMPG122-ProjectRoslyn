@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-10T11:09:05.039Z",
+  "timestamp": "2026-11-11T09:50:48.056Z",
   "module": "CMPG122",
   "version": "9.2.1",
   "status": "PASS",
@@ -8,6 +8,7 @@
     "totalStructuredTopics": 35,
     "totalDefinitions": 82,
     "totalQuestions": 585,
+    "totalCodingQuestions": 40,
     "totalPastExams": 5,
     "totalCodeGradeScenarios": 15,
     "totalSpotErrorScenarios": 24,
@@ -22,7 +23,7 @@
       "SU1": 10,
       "SU2": 15
     },
-    "mobileBundleBytes": 2124507,
+    "mobileBundleBytes": 2428640,
     "failureCount": 0,
     "warningCount": 0
   },
