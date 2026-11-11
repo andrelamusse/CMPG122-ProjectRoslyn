@@ -43133,8 +43133,13 @@ button:disabled {
     startOfficialExam(examId, timed = true) {
       const ex = (this.data.officialExams || []).find(e => e.id === examId);
       if (!ex) return;
-      const qMap = new Map((this.data.questions || []).map(q => [q.id, q]));
-      const qs = (ex.subQuestionIds || []).map(id => qMap.get(id)).filter(Boolean);
+      const allPool = this._getAllQuestionsPool();
+      const qMap = new Map(allPool.map(q => [q.id, q]));
+      const combinedIds = [
+        ...(Array.isArray(ex.subQuestionIds) ? ex.subQuestionIds : []),
+        ...(Array.isArray(ex.practicalQuestionIds) ? ex.practicalQuestionIds : [])
+      ];
+      const qs = combinedIds.map(id => qMap.get(id)).filter(Boolean);
 
       this.examSession = new ExamMod.ExamSession({
         id: `${ex.id}_${Date.now()}`,
